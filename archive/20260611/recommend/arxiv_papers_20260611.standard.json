@@ -1,0 +1,327 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-11T22:06:18.203362+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 7,
+    "quick_skim_target": 11,
+    "quick_selected": 7
+  },
+  "deep_dive": [
+    {
+      "id": "2606.09369v1",
+      "source": "arxiv",
+      "title": "Residual Pseudospectra Reveal a Physics-Informed Koopman Backbone for Tropical Pacific Variability and ENSO Prediction",
+      "abstract": "Tropical Pacific sea-surface-temperature (SST) variability spans interacting timescales, with the ENSO as its dominant interannual expression. Yet the dynamical structure organizing this variability and underpinning extended-range predictability remains difficult to extract from high-dimensional observations. Koopman operator learning offers spectral coordinates for nonlinear dynamics, yet finite geophysical records often produce dense, sampling-sensitive spectra whose physical content is ambiguous. We show that this apparent redundancy reflects coherent operator-level structure. Combining kernel Extended Dynamic Mode Decomposition with residual minimization and pseudospectral analysis, we use the Koopman eigenvalue relation as a physics-informed consistency test to organize learned spectra. Applied to ERA5 and HadISST tropical Pacific SST anomalies, the residual landscape identifies 19 robust residual-minimum frequencies with coherent spatial modes that persist across products and sampling realizations. Together, these modes define a compact Koopman backbone spanning low-frequency modulation through quasi-biennial components, including ENSO-band variability. The surrounding spectral cloud is structured by integer powers and nonlinear combinations of this backbone, forming a residual-ordered Koopman hierarchy. The backbone reconstructs substantial Nino3.4 variance and enables skillful out-of-sample forecasts, with greatest gains at 8-18-month leads. By embedding dynamical consistency into physics-informed operator learning, the framework turns opaque spectra into robust, interpretable and predictive representations of tropical Pacific variability.",
+      "authors": [
+        "Paula Lorenzo-Sanchez",
+        "Matthew J. Colbrook",
+        "Antonio Navarra"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA",
+        "physics.ao-ph"
+      ],
+      "published": "2026-06-08T11:45:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.09369v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Koopman operator learning for ENSO prediction",
+      "llm_evidence_cn": "基于Koopman算子的ENSO预测",
+      "llm_evidence": "基于Koopman算子的ENSO预测",
+      "canonical_evidence": "基于Koopman算子的ENSO预测",
+      "llm_tldr_en": "This paper applies Koopman operator learning with residual pseudospectra to extract physical dynamics for tropical Pacific SST variability and ENSO prediction.",
+      "llm_tldr_cn": "该论文针对热带太平洋海表温度变率及ENSO预测，提出结合残差最小化和伪谱分析的核扩展动态模态分解方法。通过学习Koopman算子的谱结构，揭示了非线性气候动力学的连贯算子级结构。实验表明该方法能有效提取ENSO可预测性成分，为气候预测提供可解释的动力学骨架。",
+      "llm_tldr": "该论文针对热带太平洋海表温度变率及ENSO预测，提出结合残差最小化和伪谱分析的核扩展动态模态分解方法。通过学习Koopman算子的谱结构，揭示了非线性气候动力学的连贯算子级结构。实验表明该方法能有效提取ENSO可预测性成分，为气候预测提供可解释的动力学骨架。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.10848v1",
+      "source": "arxiv",
+      "title": "Data-driven surrogate models for forecasting experimentally measured fluid flows",
+      "abstract": "Data-driven modeling shows significant promise for faster-than-real-time forecasting of fluid flows. For real-world engineering applications (e.g., flow control), models must contend with limited, imperfect, and incomplete experimental measurements. In this work, we present an analysis of data-driven surrogate models trained to forecast the time-evolution of experimentally measured cylinder wakes in the subcritical vortex shedding regime. Using a dataset of two-dimensional, two-component particle image velocimetry measurements, we train fully convolutional neural networks, U-Nets, Fourier neural operators, and dynamic mode decomposition-based models to forecast the development of experimentally measured velocity fields. To characterize data-driven approaches contending with transient flow features and limited, imperfect observations, the development of predictions over extended forecast horizons is examined at a fixed Reynolds number (Re = 590). Next, models are trained at a range of Reynolds numbers (Re = 230 to Re = 2920) to investigate the impact of increasingly turbulent and three-dimensional flow phenomena, and the challenges associated with measuring them, on forecast quality. We find that experimentally trained surrogate models can provide meaningful predictions over short time horizons, propagate low-frequency dynamics over longer forecast periods, and achieve faster-than-real-time evaluation. However, the data-driven models struggle to preserve transient flow features and high-frequency energy content when faced with noisy measurements and incomplete state observations. This emphasizes the underlying challenges that remain for data-driven modeling approaches to effectively contend with fluid dynamics in real-world engineering applications, where observations are often imperfect and limited.",
+      "authors": [
+        "Peter I. Renn",
+        "Emily H. Palmer",
+        "Cong Wang",
+        "Morteza Gharib"
+      ],
+      "primary_category": "physics.flu-dyn",
+      "categories": [
+        "physics.flu-dyn"
+      ],
+      "published": "2026-06-09T13:29:17+00:00",
+      "link": "https://arxiv.org/pdf/2606.10848v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Data-driven surrogate models for fluid flow forecasting with neural networks",
+      "llm_evidence_cn": "基于神经网络的数据驱动代理模型预测流体流动",
+      "llm_evidence": "基于神经网络的数据驱动代理模型预测流体流动",
+      "canonical_evidence": "基于神经网络的数据驱动代理模型预测流体流动",
+      "llm_tldr_en": "This work trains CNN, U-Net, FNO, and DMD models to forecast experimental cylinder wake flows, demonstrating methods transferable to weather forecasting.",
+      "llm_tldr_cn": "该论文使用CNN、U-Net、傅里叶神经算子（FNO）和动态模态分解（DMD）等数据驱动方法，对实验测量的圆柱尾流进行快速预测。这些模型架构在气象降尺度和超分辨率中广泛使用，因此其方法论可直接迁移至天气预测领域。实验表明，基于学习的方法能有效逼近流体动力学演化。",
+      "llm_tldr": "该论文使用CNN、U-Net、傅里叶神经算子（FNO）和动态模态分解（DMD）等数据驱动方法，对实验测量的圆柱尾流进行快速预测。这些模型架构在气象降尺度和超分辨率中广泛使用，因此其方法论可直接迁移至天气预测领域。实验表明，基于学习的方法能有效逼近流体动力学演化。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.07481v1",
+      "source": "arxiv",
+      "title": "Drifting Models for Surrogate Flow Modeling",
+      "abstract": "While Computational Fluid Dynamics (CFD) provides high-fidelity flow fields for optimizing indoor environments, its computational cost limits rapid exploration. To solve this problem generative surrogates offer better distribution modeling than deterministic networks, but iterative sampling is slow. To enable high-quality, single-pass generation, we adapt the novel generative drifting framework to fluid mechanics. We introduce a conditional architecture that performs drifting in a learned VAE latent space and uses label-aware masking to align generated samples with their boundary conditions. Our label-conditioned model matches iterative diffusion in accuracy and flow consistency while running two orders of magnitude faster. Additionally, we propose a spatial-conditioning variant that establishes a promising path towards generalization to unseen geometries. Ultimately, conditional drifting serves as a highly efficient alternative to diffusion based approaches, unlocking real-time CFD surrogates where inference speed is critical.",
+      "authors": [
+        "Chris R. Jung",
+        "Markus Dörr",
+        "Natalie Jüngling",
+        "Jennifer Niessner",
+        "Adam T. Müller",
+        "Nicolaj C. Stache"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-05T17:35:09+00:00",
+      "link": "https://arxiv.org/pdf/2606.07481v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "generative drifting framework for surrogate flow modeling, akin to diffusion models for super-resolution",
+      "llm_evidence_cn": "漂移生成框架用于替代流建模，类似于用于超分辨率的扩散模型",
+      "llm_evidence": "漂移生成框架用于替代流建模，类似于用于超分辨率的扩散模型",
+      "canonical_evidence": "漂移生成框架用于替代流建模，类似于用于超分辨率的扩散模型",
+      "llm_tldr_en": "Drifting Models adapts the generative drifting framework to fluid mechanics, achieving single-pass generation of flow fields with accuracy matching iterative diffusion while being two orders of magnitude faster, enabling rapid exploration for indoor environment optimization.",
+      "llm_tldr_cn": "该文将漂移生成框架推广至流体力学，提出条件式漂移架构在VAE潜空间中进行单步流场生成，结合标签感知掩码对齐边界条件。该方法在精度上媲美迭代扩散，但速度快两个数量级，为室内环境快速优化提供了高效替代方案。",
+      "llm_tldr": "该文将漂移生成框架推广至流体力学，提出条件式漂移架构在VAE潜空间中进行单步流场生成，结合标签感知掩码对齐边界条件。该方法在精度上媲美迭代扩散，但速度快两个数量级，为室内环境快速优化提供了高效替代方案。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on meteorological downscaling and weather super resolution using diffusion models, generative models, or neural networks.",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.12097v1",
+      "source": "arxiv",
+      "title": "Weibull-Stationary Stochastic Differential Equations for Conditional Long-Horizon Wind Power Forecasting",
+      "abstract": "We present a one-month-ahead conditional probabilistic framework for wind-power forecasting at ten-minute resolution. Monthly Weibull shape and scale parameters are estimated from serially dependent SCADA wind-speed data, corrected through a Godambe covariance, and forecast by a heteroskedastic Kalman filter on a bivariate VAR(1) state-space model. Conditional on the MMSE forecasted Weibull invariant law, we construct and compare three positive wind-speed SDE models: an Ornstein-Uhlenbeck-Weibull transform, a Fokker-Planck drift-first diffusion, and a Fokker-Planck diffusion-first model. The simulated wind-speed ensembles are mapped to power through a calibrated XGBoost power curve. Applied to January 2021 data from a Senvion MM92 turbine at Kelmarsh Wind Farm, the three SDE formulations are statistically indistinguishable in probabilistic accuracy, with mean CRPS values between 1.569 and 1.575 m/s. The diffusion-first model is therefore preferred on computational grounds, reducing runtime by about a factor of seven relative to the OU-Weibull model. In the power domain, the Wasserstein distance between simulated and observed distributions is 26.1-27.6 kW, below $1.4\\%$ of rated capacity, while the monthly energy-yield bias is about $-7.3\\%$ for the examined month. Exceedance-probability errors remain below 1.6 percentage points over the 0-1500 kW range and about 2.2 percentage points near rated power. These quantities provide decision-relevant probabilistic inputs for downstream operational problems, rather than completed reserve, storage, market, or fatigue-optimization decisions. Full marginalisation over the Kalman predictive law of the Weibull parameters is left as a natural extension.",
+      "authors": [
+        "Luca Di Persio",
+        "Mehrdad Ghadiri"
+      ],
+      "primary_category": "stat.AP",
+      "categories": [
+        "stat.AP",
+        "physics.data-an"
+      ],
+      "published": "2026-06-10T13:54:42+00:00",
+      "link": "https://arxiv.org/pdf/2606.12097v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "wind power forecasting using stochastic differential equations with wind speed data",
+      "llm_evidence_cn": "基于随机微分方程的风速数据用于风力发电预测",
+      "llm_evidence": "基于随机微分方程的风速数据用于风力发电预测",
+      "canonical_evidence": "基于随机微分方程的风速数据用于风力发电预测",
+      "llm_tldr_en": "Proposes a conditional probabilistic framework for one-month-ahead wind-power forecasting using Weibull parameters and SDE models from wind-speed data.",
+      "llm_tldr_cn": "本文提出一种一个月前条件概率框架用于10分钟分辨率的风电预测。从风速数据估计威布尔参数，通过异方差卡尔曼滤波和VAR(1)状态空间模型预测，并构建三种正风速SDE模型（OU-威布尔变换、Fokker-Planck漂移优先和扩散优先），最后通过XGBoost功率曲线映射到功率。在2021年1月数据上验证了有效性。",
+      "llm_tldr": "本文提出一种一个月前条件概率框架用于10分钟分辨率的风电预测。从风速数据估计威布尔参数，通过异方差卡尔曼滤波和VAR(1)状态空间模型预测，并构建三种正风速SDE模型（OU-威布尔变换、Fokker-Planck漂移优先和扩散优先），最后通过XGBoost功率曲线映射到功率。在2021年1月数据上验证了有效性。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on wind field prediction, wind shear modeling, and meteorological forecasting for UAV navigation or aviation safety.",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.09160v1",
+      "source": "arxiv",
+      "title": "Crop Recommendation and Agricultural Query Answering System Using Spatio-Temporal Graph Neural Networks and Hybrid Retrieval Augmentation",
+      "abstract": "This paper presents a unified system designed to support precision agriculture by integrating advanced weather prediction, crop recommendation, and a question-answering tool for farmers. We propose two deep learning models -- a Transformer-based Graph Neural Network and a Spatio-Temporal Graph Convolutional Network (STGCN) -- to forecast weather conditions for the next 30 days using data from 1,359 locations in Nepal. The STGCN outperforms the Transformer-based model in accuracy (MSE ~0.011 vs. 0.013), effectively modeling both spatial and temporal dependencies in climate data. These predictions are combined with static soil properties such as pH, moisture, and organic content to generate localized crop recommendations through a scoring algorithm that matches each crop's optimal growing conditions. Additionally, we develop a Retrieval-Augmented Generation (RAG) chatbot that leverages domain-specific agricultural documents to answer farmers' questions in natural language. The entire system is deployed via a mobile application, offering real-time suggestions and conversational support. User feedback confirms the system's usability and relevance, especially in rural settings where personalized farming guidance is limited. Overall, our approach demonstrates how combining machine learning models with local agricultural data can empower farmers with actionable insights, promoting more informed decisions, better crop yields, and increased resilience to climate variability.",
+      "authors": [
+        "Prajwal Thapa",
+        "Yagya Raj Pandeya"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-08T07:51:34+00:00",
+      "link": "https://arxiv.org/pdf/2606.09160v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "spatio-temporal graph neural network for weather forecasting",
+      "llm_evidence_cn": "使用时空图神经网络进行天气预报",
+      "llm_evidence": "使用时空图神经网络进行天气预报",
+      "canonical_evidence": "使用时空图神经网络进行天气预报",
+      "llm_tldr_en": "Proposes STGCN and Transformer-GNN for 30-day weather forecasting in Nepal, achieving low MSE, integrated into an agricultural system.",
+      "llm_tldr_cn": "本文提出一种结合天气预测、作物推荐和问答系统的农业支持系统。核心是使用时空图卷积网络（STGCN）和Transformer图神经网络对尼泊尔1359个地点进行30天天气预报，STGCN以约0.011的MSE优于Transformer。该系统将预测的天气与土壤参数结合，为农民提供建议。",
+      "llm_tldr": "本文提出一种结合天气预测、作物推荐和问答系统的农业支持系统。核心是使用时空图卷积网络（STGCN）和Transformer图神经网络对尼泊尔1359个地点进行30天天气预报，STGCN以约0.011的MSE优于Transformer。该系统将预测的天气与土壤参数结合，为农民提供建议。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.09486v1",
+      "source": "arxiv",
+      "title": "LangRetrieval: Language-Guided Self-Evolving Satellite-to-Radar Retrieval via CSI-Driven Reward",
+      "abstract": "Satellite-to-radar (S2R) retrieval estimates ground radar precipitation from geostationary satellite observations, providing a critical solution for precipitation monitoring in radar-sparse regions. However, S2R retrieval is intrinsically ill-posed: similar cloud-top radiances can correspond to distinct precipitation regimes, storm organizations, and surface intensities, which are difficult to uniquely determine the underlying meteorological state from local spectral cues alone. Meteorological semantics offer complementary scene-level information that can help resolve this ambiguity. Yet existing static semantic conditioning is often insufficient, as externally predefined semantics cannot adapt to dynamic convective scenes or align with retrieval objectives. To this end, we propose LangRetrieval, a language-guided conditional flow matching (CFM) framework that establishes a closed-loop optimization mechanism between meteorological semantics and retrieval accuracy. Specifically, LangRetrieval consists of two core components: (i) Semantic Warm-up: structured meteorological attributes are injected into the CFM backbone through cross-attention conditioning, enabling continuous semantic guidance throughout the generation trajectory; and (ii) Self-Evolving Semantic Optimization: a lightweight attribute policy is first initialized from vision-language model annotations and subsequently refined via Group Relative Policy Optimization (GRPO) using multi-threshold Critical Success Index (CSI) rewards, enabling semantic generation to evolve directly toward improved retrieval accuracy.",
+      "authors": [
+        "Chunlei Shi",
+        "Junming Hou",
+        "Yi-Lin Wei",
+        "Jiong Wang",
+        "Yecheng Zhang",
+        "Yichao Dong",
+        "Wenqi Ren",
+        "Dan Niu"
+      ],
+      "primary_category": "cs.MM",
+      "categories": [
+        "cs.MM"
+      ],
+      "published": "2026-06-08T13:40:52+00:00",
+      "link": "https://arxiv.org/pdf/2606.09486v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "satellite-to-radar precipitation retrieval as a form of downscaling/super-resolution",
+      "llm_evidence_cn": "卫星到雷达降水估计，可视为气象降尺度/超分辨率",
+      "llm_evidence": "卫星到雷达降水估计，可视为气象降尺度/超分辨率",
+      "canonical_evidence": "卫星到雷达降水估计，可视为气象降尺度/超分辨率",
+      "llm_tldr_en": "LangRetrieval uses language-guided self-evolving retrieval with CSI-driven reward to estimate ground radar precipitation from satellite observations, addressing the ill-posed nature of S2R retrieval by leveraging meteorological semantics adaptively.",
+      "llm_tldr_cn": "该文针对卫星到雷达降水反演的病态问题，提出LangRetrieval方法，利用语言引导的自进化检索机制和信道状态信息驱动奖励，动态调整气象语义，从而更准确地从卫星观测中估计地面雷达降水，在雷达稀疏区域有重要应用价值。",
+      "llm_tldr": "该文针对卫星到雷达降水反演的病态问题，提出LangRetrieval方法，利用语言引导的自进化检索机制和信道状态信息驱动奖励，动态调整气象语义，从而更准确地从卫星观测中估计地面雷达降水，在雷达稀疏区域有重要应用价值。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on meteorological downscaling and weather super resolution using diffusion models, generative models, or neural networks.",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.10848v2",
+      "source": "arxiv",
+      "title": "Data-driven surrogate models for forecasting experimentally measured fluid flows",
+      "abstract": "Data-driven modeling shows significant promise for faster-than-real-time forecasting of fluid flows. For real-world engineering applications (e.g., flow control), models must contend with limited, imperfect, and incomplete experimental measurements. In this work, we present an analysis of data-driven surrogate models trained to forecast the time-evolution of experimentally measured cylinder wakes in the subcritical vortex shedding regime. Using a dataset of two-dimensional, two-component particle image velocimetry measurements, we train fully convolutional neural networks, U-Nets, Fourier neural operators, and dynamic mode decomposition-based models to forecast the development of experimentally measured velocity fields. To characterize data-driven approaches contending with transient flow features and limited, imperfect observations, the development of predictions over extended forecast horizons is examined at a fixed Reynolds number (Re = 590). Next, models are trained at a range of Reynolds numbers (Re = 230 to Re = 2920) to investigate the impact of increasingly turbulent and three-dimensional flow phenomena, and the challenges associated with measuring them, on forecast quality. We find that experimentally trained surrogate models can provide meaningful predictions over short time horizons, propagate low-frequency dynamics over longer forecast periods, and achieve faster-than-real-time evaluation. However, the data-driven models struggle to preserve transient flow features and high-frequency energy content when faced with noisy measurements and incomplete state observations. This emphasizes the underlying challenges that remain for data-driven modeling approaches to effectively contend with fluid dynamics in real-world engineering applications, where observations are often imperfect and limited.",
+      "authors": [
+        "Peter I. Renn",
+        "Emily H. Palmer",
+        "Cong Wang",
+        "Morteza Gharib"
+      ],
+      "primary_category": "physics.flu-dyn",
+      "categories": [
+        "physics.flu-dyn"
+      ],
+      "published": "2026-06-09T13:29:17+00:00",
+      "link": "https://arxiv.org/pdf/2606.10848v2",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "data-driven surrogate models for fluid flow forecasting, applicable to NWP",
+      "llm_evidence_cn": "数据驱动代理模型用于流体流动预测，可应用于数值天气预报",
+      "llm_evidence": "数据驱动代理模型用于流体流动预测，可应用于数值天气预报",
+      "canonical_evidence": "数据驱动代理模型用于流体流动预测，可应用于数值天气预报",
+      "llm_tldr_en": "Analyzes data-driven surrogate models including CNNs, U-Nets, Fourier neural operators for forecasting experimental fluid flows, showing potential for physics simulation surrogates.",
+      "llm_tldr_cn": "针对实验流体流动的快速预测需求，比较了全卷积网络、U-Net、傅里叶神经算子等数据驱动替代模型在圆柱尾流测量数据上的性能。结果表明这些模型能以超越实时速度预测流场演化，为数值天气预报中的代理模型开发提供了方法参考。",
+      "llm_tldr": "针对实验流体流动的快速预测需求，比较了全卷积网络、U-Net、傅里叶神经算子等数据驱动替代模型在圆柱尾流测量数据上的性能。结果表明这些模型能以超越实时速度预测流场演化，为数值天气预报中的代理模型开发提供了方法参考。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "numerical weather prediction models and methods",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.11156v1",
+      "source": "arxiv",
+      "title": "Itô maps for any-step SDEs",
+      "abstract": "Recent one-step generative models accelerate sampling by learning deterministic flow maps of the underlying dynamics. These methods rely on learning from ordinary differential equations, leaving open how to define an exact distillation procedure for stochastic dynamics. We introduce the Itô map, an any-step stochastic flow map that takes an intermediate state and Brownian path and predicts future states in a single pass. The Itô map formulation yields novel estimators for inference-time control by providing cheap, differentiable access to posterior samples. Empirically, Itô maps produce diverse, conditionally valid endpoint samples from fixed intermediate states and support strong steering performance on synthetic and image-generation benchmarks. These results establish any-step SDE integration as a useful primitive for posterior sampling and stochastic control.",
+      "authors": [
+        "Zhengkai Pan",
+        "Peter Potaptchik",
+        "Wenxi Yao",
+        "Michael S. Albergo",
+        "Jakiw Pidstrigach"
+      ],
+      "primary_category": "stat.ML",
+      "categories": [
+        "stat.ML",
+        "cs.LG"
+      ],
+      "published": "2026-06-09T17:39:22+00:00",
+      "link": "https://arxiv.org/pdf/2606.11156v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Stochastic flow map for generative modeling (any-step SDE)",
+      "llm_evidence_cn": "面向生成模型的任意步随机微分方程流映射",
+      "llm_evidence": "面向生成模型的任意步随机微分方程流映射",
+      "canonical_evidence": "面向生成模型的任意步随机微分方程流映射",
+      "llm_tldr_en": "Itô maps provide any-step stochastic flow maps for generative models, enabling efficient conditional sampling relevant to downscaling tasks.",
+      "llm_tldr_cn": "该论文提出Itô映射，一种任意步随机流映射，可从中间状态和布朗路径一步预测未来状态。它支持高效的扩散模型推理和条件采样，理论上可应用于气象降尺度和超分辨率等生成任务。实验在合成数据和图像生成上验证了多样性和控制能力。虽然未直接用于天气，但其方法学为气象生成模型提供了新工具。",
+      "llm_tldr": "该论文提出Itô映射，一种任意步随机流映射，可从中间状态和布朗路径一步预测未来状态。它支持高效的扩散模型推理和条件采样，理论上可应用于气象降尺度和超分辨率等生成任务。实验在合成数据和图像生成上验证了多样性和控制能力。虽然未直接用于天气，但其方法学为气象生成模型提供了新工具。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on meteorological downscaling and weather super resolution using diffusion models, generative models, or neural networks.",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

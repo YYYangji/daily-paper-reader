@@ -1,0 +1,1131 @@
+Title: LangRetrieval: Language-Guided Self-Evolving Satellite-to-Radar Retrieval via CSI-Driven Reward
+
+URL Source: https://arxiv.org/pdf/2606.09486v1
+
+Published Time: Tue, 09 Jun 2026 02:21:28 GMT
+
+Number of Pages: 17
+
+Markdown Content:
+> JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 1
+
+# LangRetrieval: Language-Guided Self-Evolving Satellite-to-Radar Retrieval via CSI-Driven Reward 
+
+Chunlei Shi, Junming Hou, Yi-Lin Wei, Jiong Wang, Yecheng Zhang, Yichao Dong, Wenqi Ren, Senior Member, IEEE , and Dan Niu, Member, IEEE 
+
+Abstract —Satellite-to-radar (S2R) retrieval estimates ground radar precipitation from geostationary satellite observations, providing a critical solution for precipitation monitoring in radar-sparse regions. However, S2R retrieval is intrinsically ill-posed: similar cloud-top radiances can correspond to distinct precipita-tion regimes, storm organizations, and surface intensities, which are difficult to uniquely determine the underlying meteorological state from local spectral cues alone. Meteorological semantics offer complementary scene-level information that can help resolve this ambiguity. Yet existing static semantic conditioning is often insufficient, as externally predefined semantics cannot adapt to dynamic convective scenes or align with retrieval objectives. To this end, we propose LangRetrieval, a language-guided conditional flow matching (CFM) framework that establishes a closed-loop optimization mechanism between meteorological semantics and retrieval accuracy. Specifically, LangRetrieval consists of two core components: (i) Semantic Warm-up: structured meteorological attributes are injected into the CFM backbone through cross-attention conditioning, enabling continuous semantic guidance throughout the generation trajectory; and (ii) Self-Evolving Semantic Optimization: a lightweight attribute policy is first initialized from vision-language model annotations and subse-quently refined via Group Relative Policy Optimization (GRPO) using multi-threshold Critical Success Index (CSI) rewards, enabling semantic generation to evolve directly toward improved retrieval accuracy. Experiments on both the FY-4B and public SEVIR datasets demonstrate that LangRetrieval achieves state-of-the-art performance with a favorable performance-efficiency trade-off. Beyond performance gains, our framework transforms meteorological semantics from static auxiliary input into a task-dependent optimizable variable, providing a promising solution for language-guided S2R retrieval. 
+
+Index Terms —Satellite-to-radar retrieval, vision-language model, GRPO, self-evolving. 
+
+I. I NTRODUCTION 
+
+Accurate prediction and monitoring of severe convective weather systems and extreme precipitation events are essential 
+
+This work was supported by the Heavy Rainfall Research Foundation of China (No. BYKJ2025M14), China Meteorological Administration Xiong’an Atmospheric Boundary Layer Key Laboratory (No. 2025LABL-B12), and by the National Natural Science Foundation of China (62374031, 62331009), and by NSFC-Jiangsu Province (BK20240173). ( Chunlei Shi, and Junming Hou have contributed equally to this work. Corresponding author: Wenqi Ren and Dan Niu. )Chunlei Shi, Junming Hou, Yichao Dong and Dan Niu are with the Department of Automation, Southeast University, Nanjing 210096, China, and also with the State Key Laboratory of Millimeter Waves, School of Information Science and Engineering, Southeast University, Nanjing 210096, China (e-mail: 230238514@seu.edu.cn, junming_hou@seu.edu.cn, danniu1@163.com). Yi-Lin Wei is with the School of Computer Science and Engineering, Sun Yat-sen University, Guangzhou 510006, China. Jiong Wang is with the Department of Information Science and Technology, Fudan University, Shanghai 200433, China. Yecheng Zhang is with the Department of Architecture, Tsinghua University, Beijing 100084, China. Wenqi Ren is with the School of Cyber Science and Technology, Shenzhen campus of Sun Yat-sen University, Shenzhen 518107, China (e-mail: renwq3@mail.sysu.edu.cn). Moderate                  
+
+> Convection
+> Moderate Precipitation
+> 25 dBZ
+> BT=240K
+> Cirrus/High Cloud
+> Weak/No Precipitation
+> 10 dBZ
+> BT=240K
+> Strong Convection
+> Heavy Precipitation
+> 45 dBZ
+> BT=240K
+> Observation Space
+> (Low Dimension)
+> Severely
+> Structural
+> Underdetermined
+> State Space
+> (High Dimension)
+> dim 𝒪 =𝑚
+> dim 𝒮 =𝑛
+> 𝑚 ≪𝑛
+> Cannot be resolved by local spectral features alone
+> Many -to -One Mapping: 𝒪 (low -dim) →𝒮 (high -dim) is highly non -unique
+> Completely Different Surface Precipitation
+
+Fig. 1: The many-to-one ambiguity in S2R retrieval: similar cloud-top satellite signatures, such as comparable brightness temperatures, can correspond to markedly different radar-observed precipitation intensities near the surface. for public safety and disaster mitigation, with significant implications for fields such as weather forecasting, flood early-warning systems, and agricultural risk management [ 1, 2, 3, 4 ,5]. Ground-based weather radar provides the high-resolution precipitation measurements for detecting and tracking these systems [ 6], yet its coverage is largely restricted to populated land areas, leaving vast radar-sparse regions vulnerable to undetected extreme weather. In contrast, geostationary satellites such as Himawari-8, GOES-R, and FY-4B offer continuous global observation at 10–15 minute intervals with 1 km spatial resolution, making them ideal candidates for supplementing radar coverage gaps. Consequently, satellite-to-radar (S2R) retrieval, which estimates ground-based radar precipitation from satellite observations, emerges as a critical capability for extending convective detection to radar-sparse regions and providing timely warnings for extreme weather events [ 7]. However, despite its practical importance, S2R retrieval is not a conventional image-to-image mapping problem. Satellite sensors mainly observe cloud-top radiances, whereas radar reflects near-surface precipitation structures; this observation-state mismatch makes S2R intrinsically ill-posed, since near-identical cloud-top signatures may correspond to markedly different precipitation states (Fig. 1). Over the past few years, the S2R community has wit-nessed rapid progress in deep learning methodologies, rang-ing from CNN-based architectures [ 8, 9 ] and transformer-    
+
+> arXiv:2606.09486v1 [cs.MM] 8 Jun 2026 JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 2Our Unet -based GT
+> (d) Quality -speed trade -off
+> 20 -Step (Ours)
+> 1-Step (Ours)
+> 355 ms
+> 27 ms
+> (diffusion -based)
+> Slow
+> (3303ms)
+> Fast
+> (27ms)
+
+122.33x             
+
+> (Our)
+> VIL Field
+> (a) Traditional S2R methods
+> Satellite Input 𝑋
+> VIS/IR/Light
+> No Global weather semantics
+> Black -Box
+> Vision -Based
+> Backbone
+> [CNN/RNN/Diffusion -Based]
+> Local Pixel
+> Textures Only
+> (b) Unified Multi -task Methods
+> (e.g., Omni -weather)
+> Weather Input
+> Satellite/Radar
+> Gen. Enc. Und. Enc.
+> Weather Gen.
+> (VIL, Precip .)
+> NOT closed -loop: CoT quality ≠Retrieval accuracy
+> Text Enc.
+> CoT Reasoning/
+> Understanding
+> Task Instruction
+> (Fixed text)
+> No Reward
+> Feedback
+> Shared Self -Attention Backbone Text -Guide
+> Satellite data
+> (c) LangRetrieval (Ours)
+> VIL Field
+> CSI
+> Reward
+> GRPO
+> Update
+> Flow matching
+> Backbone
+> Closed -Loop
+> Semantic
+> Evolution
+> Semantic
+> Policy model
+> Satellite Input 𝑋
+> VIS/IR/Light
+> Global Content + Closed -Loop
+> SPEED
+
+Fig. 2: Comparison of S2R retrieval paradigms. (a) Traditional methods directly regress VIL from multi-spectral satellite inputs without meteorological semantic guidance, causing cirrus false alarms and extreme-precipitation underestimation. (b) Unified multi-task methods (e.g., Omni-Weather) introduce language via task instructions and supervised CoT reasoning, but the semantic signal remains open-loop and not optimized by retrieval metrics. (c) LangRetrieval (Ours) closes this loop: a learnable attribute policy steers the CFM backbone via attention-guided and is self-evolved by GRPO with multi-threshold CSI rewards. (d) Quality-speed trade-off , showing that LangRetrieval balances retrieval accuracy, perceptual quality, and inference efficiency. based approaches [ 10 ] to generative models represented by GANs and diffusion models [ 7, 11 , 12 ]. Despite these ad-vances, most existing methods learn the radiance-to-reflectivity mapping mainly from local spectral and spatial cues, such as brightness-temperature gradients, cloud-top textures, and pixel-level patterns (Fig. 2a). Such cues are informative but incomplete, because satellite channels provide only partial cloud-top observations, whereas radar precipitation is governed by latent scene-level states, including cloud microphysics, convective organization, storm maturity, vertical development, and environmental moisture. This information gap leads to structural non-uniqueness: visually similar satellite signatures may correspond to meteorologically different precipitation states. In practice, this ambiguity manifests as cirrus false alarms when thin cirrus and deep convective anvils share similar cloud-top appearances, and as weakened or underestimated convective cores when pixel-level optimization averages over multiple plausible radar solutions. These limitations suggest that accurate S2R retrieval requires constraints beyond local visual cues, namely scene-level meteorological context that can narrow the plausible radar solution space. Structured meteorological semantics provide a natural com-plement to local spectral cues for resolving the ambiguity of S2R retrieval. Recent multimodal weather foundation models have shown that language can encode global me-teorological context and benefit weather understanding or generation tasks [ 13 , 14 , 15 , 16 ]. For example, Omni-Weather introduces language-based task instructions and reasoning prompts to guide weather modeling, indicating that semantic information can provide useful high-level cues beyond raw meteorological fields (Fig. 2b). Nevertheless, existing uses of language in weather modeling remain largely auxiliary and open-loop: semantics are typically provided as fixed prompts, task instructions, or external annotations, without being explicitly tied to downstream retrieval accuracy. This is insufficient for S2R retrieval, where one-shot semantic cues may weaken along the radar generation trajectory, and externally generated descriptions may be meteorologically plausible but misaligned with retrieval-oriented metrics. In addition, online VLM inference can be costly for resource-constrained deployment. These limitations call for a task-specific semantic mechanism that remains effective throughout generation and can be adapted according to downstream retrieval performance. To address these challenges, we propose LangRetrieval, a language-guided S2R retrieval framework that establishes closed-loop optimization between structured meteorological semantics and radar retrieval accuracy (Fig. 2c). LangRe-trieval addresses the above limitations through two comple-mentary mechanisms: trajectory-level semantic conditioning and retrieval-driven semantic optimization. First, Semantic Warm-up injects structured meteorological semantics into a conditional flow matching (CFM) backbone through cross-attention conditioning, allowing scene-level meteorological context to guide velocity estimation throughout the generation trajectory instead of being used only once at the input. Second, Self-Evolving Semantic Optimization introduces a lightweight attribute policy that is initialized from offline vision-language model (VLM) annotations and subsequently refined via Group Relative Policy Optimization (GRPO) with multi-threshold Critical Success Index (CSI) rewards. This refinement moves semantic generation beyond merely imitating external annotations and aligns it with downstream retrieval skill, while avoiding online VLM inference at test time. Together, these designs transform structured meteorological semantics from passive auxiliary cues into CSI-aligned, retrieval-optimized representations for ill-posed S2R retrieval. As shown in Fig. 2d, LangRetrieval achieves a favorable quality-speed trade-off, maintaining strong perceptual quality while attaining up to 
+
+122 .33 × lower inference latency than the diffusion baseline. The main contributions are summarized as follows: JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 3 
+
+> ●
+
+We propose LangRetrieval, a language-guided S2R re-trieval framework that establishes closed-loop optimization between meteorological semantics and retrieval accuracy, treating language as a learnable component directly optimized by task performance.  
+
+> ●
+
+We introduce attention-guided semantic conditioning within conditional flow matching, enabling continuous meteorological steering throughout the generation trajec-tory and addressing the global-context blindness of purely pixel-driven approaches.  
+
+> ●
+
+We develop a self-evolving attribute policy that com-bines supervised warm-up on VLM annotations with autonomous refinement via GRPO using retrieval-aware CSI rewards, achieving task-specific semantic optimization without VLM inference overhead at test time. II. R ELATED WORK 
+
+A. Satellite-to-radar retrieval 
+
+Satellite-to-radar (S2R) retrieval, which estimates ground-based radar reflectivity from geostationary satellite observations, is a critical capability for extending precipitation monitor-ing to radar-sparse regions. Deep learning approaches have substantially advanced this domain, from CNN-based UNet architectures [ 17 , 18 ] to recent generative models. These include diffusion-based methods like DiffSR [ 12 , 19 ], which reconstructs composite radar reflectivity from satellite infrared and lightning inputs, and frequency-domain decomposition approaches like WaveC2R [ 7]. Furthermore, recent conditional flow matching approaches [ 20 ] have demonstrated superior computational efficiency and training stability over tradi-tional diffusion models. With initial validation in weather nowcasting showing improvements in both inference speed and prediction accuracy [ 21 ], flow-matching architectures have emerged as highly attractive backbones for weather generation tasks. However, despite these advances, existing S2R methods primarily operate on local spectral features-brightness temperature gradients, spatial patterns, pixel-level textures-without explicit modeling of the global meteorological semantics that govern precipitation intensity. Consequently, existing S2R retrievals have not yet leveraged the continuous, fine-grained guidance capabilities that flow matching enables to address these semantic shortcomings. 
+
+B. Language-guided weather models 
+
+Recent advances in multimodal weather foundation models have explored incorporating language into weather under-standing and generation pipelines [ 22 , 23 , 24 , 25 , 26 , 27 ]. Foundation models such as ClimaX [ 13 ], FengWu [ 14 ], and WeatherGFM [ 15 ] leverage textual metadata as auxiliary conditioning signals, while Omni-Weather [ 16 ] demonstrates multi-task reasoning through language descriptions and chain-of-thought prompts. These models show that language can provide interpretability and multi-task flexibility in weather modeling.Yet these approaches treat language as a fixed, externally-provided signal-either auxiliary supervision during training or static inference prompts-without establishing mech-anisms to optimize semantic content against downstream task objectives [ 28 , 29 , 30 , 31 , 32 , 33 , 34 ]. Critically, no closed-loop mechanism exists where semantic quality directly determines prediction accuracy: better descriptions do not systematically lead to better retrievals, because language remains decoupled from task-specific optimization. This represents a fundamental gap between language as auxiliary conditioning versus language as an actively-optimized component of the generation pipeline. 
+
+C. Semantic optimization through reinforcement learning 
+
+Reinforcement learning from human feedback (RLHF) [ 35 ]has become standard for aligning language models with human preferences [ 36 , 37 , 38 , 39 , 40 ]. More recent approaches such as Group Relative Policy Optimization (GRPO) [ 41 ]achieve comparable or superior performance with reduced computational overhead by replacing learned critics with group-relative baselines, as demonstrated in DeepSeek-R1 [ 42 ]for reasoning tasks.Moreover, practical deployment scenarios often involve hardware-limited environments where full-scale foundation models are prohibitive, necessitating lightweight yet semantically-aware retrieval pipelines. In this paper, to our knowledge, this work is the first to apply RL-based semantic optimization with a purely physical reward signal (multi-threshold CSI) to a weather generation task. More fundamentally, we establish the first closed-loop mechanism between semantic content and prediction quality: a learned policy network generates task-specific meteorological descriptions that are directly optimized through downstream retrieval metrics, creating an explicit causal chain where semantic quality deterministically improves retrieval accuracy. This transforms language from a static auxiliary feature into a learnable, task-optimized component of the generation pipeline. III. M ETHODOLOGY 
+
+A. Problem Definition 
+
+We formulate S2R retrieval as a conditional dense prediction problem from geostationary satellite observations to radar-based precipitation fields. Given synchronous multi-spectral satellite observations X ∈ Rs×H×W , comprising visible imagery Xvis 
+
+and dual-channel infrared imagery Xir069 and Xir107 , where s
+
+denotes the number of input channels, the goal is to generate the corresponding radar-based precipitation field ˆY ∈ R1×H×W
+
+that approximates the ground truth Y ∈ R1×H×W :
+
+ˆY = fθ (X),θ∗ = arg min  
+
+> θ
+
+E(X,Y )∼D [Lret (fθ (X), Y )] , (1) where fθ denotes the retrieval model with learnable parameters 
+
+θ, D is the joint distribution of satellite–radar pairs, and Lret 
+
+represents a task-driven retrieval objective. In LangRetrieval, 
+
+fθ is instantiated as a language-guided generative pipeline in which structured meteorological semantics inferred from 
+
+X condition the radar-field generation process, as detailed in Section III-C. JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 4Stage II: Self -Evolving Policy Optimization     
+
+> Policy Model
+> 𝝅 𝝋
+> (𝒕 )
+> Sampled response
+> 𝓛 𝑮𝑹𝑷𝑶 =𝓛 𝒑𝒐𝒍𝒊𝒄𝒚 +𝓛 𝑲𝑳
+> CSI
+> Reward
+
+Phase 2a: VLM -Guide Policy Pre -training 
+
+Phase 2b: GRPO Iterative Refinement          
+
+> 𝑋 ෠𝑌
+> (𝐵 ,𝐶 𝑖 ,𝐻 ,𝑊 )(𝐵 ,𝐶 𝑜 ,𝐻 ,𝑊 )(𝐵 ,77 ,768 )
+
+LangRetrieval  Inference 
+
+> Text Enc.
+> ( CLIP )
+
+Stage I: Semantic Warm -up          
+
+> 𝑋
+> ×Nstep 𝒁 𝟎 =𝒁 𝑻 −න
+> 𝟎
+> 𝑻
+> 𝒖 𝜽 (𝒁 𝒕 ,𝟎 ,𝒕 )𝒅𝒕
+
+𝓤 𝜽             
+
+> Text Enc.
+> ( CLIP )
+> Enc.
+> 𝓛 𝑪𝑴𝑭 =𝔼 𝒕 ,𝒛 𝟎 ,𝒀 ,𝑿 ,𝑻 𝑼 𝜽 𝒛 𝒕 ,𝒕 ,𝑿 ,𝑻 −(𝒀 −𝒛 𝟎 )𝟐
+
+𝑧 𝑇  Denoising  Unet 
+
+> 3 Offline
+> Attributio
+> n (rule)
+> 𝑌
+> Cross
+> Attention
+> …
+
+…         
+
+> Cond.
+> ℒ𝑃𝑟𝑒 =1
+> 𝐵 ∙𝒜 ෍
+> 𝑏 =1
+> 𝐵
+> ෍
+> 𝑎 ∈𝒜
+> 𝐶𝐸 (𝜋 𝜑 (𝑋 𝑏 )𝑎 ,𝑦 𝑏
+> 𝑎 )
+> Good start
+> 𝑋
+> Qwen2.5 -VL
+> VLM
+> Annotation
+> 5 Offline
+> Attribution
+> (3 rule, 2 Vlm )
+> a1: cloud type ★
+> a2: convective depth
+> a3: storm mode ★
+> a4: overshooting top
+> a5: cirrus shield
+> Initial Policy Model
+> 𝜋 𝜑
+> (0)(Pretrain)
+
+Stage I  𝓤 𝜽       
+
+> 1. xxxxx
+> 2. xxxxx
+> ……
+> K. xxxxx
+> Sample K
+> Prompts
+> Rollout K Retrieval
+> ෠𝑌 𝑌
+> Policy Gradient Update
+> 𝝅 𝒓𝒆𝒇
+> (𝒕 +𝟏 )←𝒅𝒆𝒆𝒑𝒄𝒐𝒑𝒚 (𝝅 𝝋
+> (𝒕 ))
+> KL
+> Policy Model
+> 𝝅 𝝋
+> CFM 𝓤 𝜽
+> cloud
+> type…convect
+> ive…storm
+> mode…oversh
+> ooting…shield
+> …
+> Prompts
+
+Fig. 3: Overview of the proposed LangRetrieval framework. Stage I (Semantic Warm-up): a CFM backbone Uθ transports noise to radar reflectivity via an ODE, conditioned on meteorological semantic tokens via per-step cross-attention. Stage II 
+
+(Self-Evolving Policy Optimization): Phase 2a pre-trains policy πϕ on VLM-annotated attributes via supervised cross-entropy; Phase 2b refines πϕ via GRPO with multi-threshold CSI rewards and KL regularisation. At inference, πϕ generates semantic prompts from satellite input, which are CLIP-encoded and fed into Uθ to produce the final VIL estimate. 
+
+B. Preliminary of Conditional Flow Matching 
+
+Conditional flow matching (CFM) [ 43 ] learns a time-dependent velocity field that transports samples from a source distribution N (0, I ) to a target data distribution via an ODE, conditioned on auxiliary context. Given an initial noise sample 
+
+z0 ∼ N (0, I ) and target Y ∼ pdata , CFM constructs a probability path by linear interpolation: 
+
+zt = (1 − t) z0 + t Y, t ∈ [0, 1], (2) where zt is the interpolated state at time t.The conditional vector field along this path has an analytic closed-form expression: ut(zt ∣ Y ) = Y − z0. A velocity estimator Uθ is trained to regress this target by minimizing the following objective: 
+
+LCFM (θ) = Et, z 0, Y [ ∥ Uθ (zt, t ) − (Y − z0) ∥ 2 ], (3) where Uθ (zt, t ) is the predicted velocity field at state zt and time t. At inference, starting from z0 ∼ N (0, I ), we obtain 
+
+ˆY = z1 by integrating dzt/dt = Uθ (zt, t ) using a fixed-step Euler solver, requiring substantially fewer function evaluations than score-based diffusion models. In our LangRetrieval framework, we extend Eqs. (2) – (3) to the conditional setting by augmenting the velocity estimator with satellite observations 
+
+X and structured semantic tokens T ∈ Rd, i.e., Uθ (zt, t, X, T )
+
+(see Section III-D for details). 
+
+C. Framework Overview 
+
+LangRetrieval decomposes the end-to-end mapping X ↦ ˆY
+
+into a three-component closed-loop pipeline illustrated in Fig. 3: 
+
+a = πϕ(X)´¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¸¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¶ 
+
+> attribute policy
+
+Ð→ T = Eψ (s(a)) ´¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¸¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¶ 
+
+> text encoder
+
+Ð→ ˆY = ODE [Uθ ( ⋅ , ⋅ , X, T )] ´¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¸¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¹¶ 
+
+> retrieval backbone
+
+,
+
+(4) where a = (a1, . . . , a 5) is a five-dimensional meteorological attribute vector, πϕ denotes the attribute policy network, s(⋅)
+
+is a text template function, Eψ is a frozen CLIP text encoder, and Uθ is the CFM retrieval backbone conditioned on both 
+
+X and T as defined in Eq. (6) . The mutual dependency between πϕ and Uθ renders naive end-to-end optimization intractable, necessitating the sequential two-stage bootstrap strategy summarized in Table I. 
+
+Stage I: Semantic Warm-Up. Resolving the ill-posed radiance-to-reflectivity mapping requires semantics to persis-tently constrain the generation trajectory at every ODE step rather than being consumed once at the input boundary. To acti-vate this capability, Stage I trains Uθ in isolation to internalize structured meteorological semantics into its CFM backbone via per-step cross-attention conditioning. The three pixel-verifiable attributes {a2, a 4, a 5} are deterministically derived from satellite input fields and serve as reliable conditioning signals at this stage, while a1 (cloud type) and a3 (storm mode), which require holistic morphological reasoning beyond pixel-level statistics, are held as Unknown . Under this partial but objective conditioning, Uθ learns to modulate its generation trajectory in response to semantic tokens at each integration step, establishing the semantic-conditioned generation space that serves as a functional reward environment for Stage II. 
+
+Stage II: Self-Evolving Policy Optimization. While Stage I equips Uθ with semantic responsiveness, the semantics are never optimized for retrieval: a1 and a3 remain absent, static rules cannot capture real-world meteorological variability, and no offline supervision signal can anticipate which attribute combinations maximize CSI within the evolving generation space of Uθ . Closed-loop optimization between semantic generation and retrieval feedback is therefore indispensable. JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 5
+
+TABLE I: Parameter update schedule across training stages. 
+
+: updated; : frozen.    
+
+> Stage UθEψπϕ
+> Stage I: Semantic Warm-Up
+> Phase 2a: Policy Pre-training
+> Phase 2b: GRPO Fine-tuning
+
+To this end, we introduce a lightweight πϕ that predicts all five attributes directly from X with a single forward pass, eliminating VLM dependency at test time while enabling scene-adaptive semantic generation. πϕ is first pretrained on Qwen-VL annotations via supervised cross-entropy to establish a coherent semantic prior and prevent reward collapse. Subsequently, πϕ
+
+and Uθ are jointly optimized via GRPO under multi-threshold CSI rewards, realigning the optimization target of πϕ from descriptive fidelity toward retrieval accuracy. 
+
+D. Stage I: Semantic Warm-Up 
+
+This stage establishes a semantically-warmed retrieval back-bone Uθ to mitigate the underdetermined radiance-to-reflectivity mapping by incorporating structured meteorological semantics into the generation process. We instantiate Uθ as a CFM-based backbone, whose deterministic ODE formulation delivers high-fidelity retrieval with substantially fewer function evaluations than stochastic diffusion models [ 21 , 44 ], making it well-suited for resource-constrained deployment. Since the generation unfolds as a continuous ODE trajectory, semantic tokens T
+
+are injected at every integration step via cross-attention rather than applied once at the input boundary, ensuring that global meteorological context persistently constrains the generation trajectory throughout. Uθ follows a UNet architecture with base channel width 64, channel multipliers {1, 2, 4, 8}, and time-conditioned ResBlocks (see supplementary material for full architecture details). 
+
+a) Partial Semantic Prompt: Since πϕ is not yet avail-able in this stage, only the three pixel-verifiable attributes 
+
+{a2, a 4, a 5} enter the prompt, while the remaining attributes a1
+
+and a3 are set to the placeholder Unknown . The resulting text 
+
+s(a) is encoded by the frozen CLIP text encoder Eψ (CLIP ViT-L/14, dtext = 768 ), producing semantic tokens T ∈ RL×dtext .
+
+b) Semantic Cross-Attention Injection: Satellite visual features encode where precipitation is likely to occur, while the semantic tokens characterize what kind of meteorological structure is present. To exploit this complementarity, we assign 
+
+Vt as the query source, enabling each spatial location to actively attend to and retrieve relevant global scene context from T ,rather than receiving it via passive broadcast. Concretely, at two intermediate UNet resolutions ( 32 ×32 and 64 ×64 ), the flattened visual feature map Vt ∈ RN ×C is projected into queries, where 
+
+N and C denote the number of spatial locations and channels. The semantic tokens T are projected to keys and values.The resulting attention output is then added via a residual connection and followed by layer normalization to produce the updated feature ¯Vt. This process is formally defined as: 
+
+¯Vt = LN (Attn (VtWQ, T W K , T W V ) + Vt), (5) where Attn (Q, K, V ) = Softmax (QK ⊺/√dk) V . WQ ∈
+
+RC×dk , WK , W V ∈ Rdtext ×dk are learnable projection matrices, and LN (⋅) denotes layer normalization. This mechanism injects global meteorological context into the generation process at every ODE step. 
+
+c) Training Objective: Extending Eq. (3) to the condi-tional setting, we sample the timestep t from a logit-normal distribution logit (t)∼N (−0.4, 1.0) to up-weight informative intermediate steps. We can formulate the training objective as: 
+
+LCFM (θ) = Et, z 0, Y, X, T [ ∥ Uθ (zt, t, X, T ) − (Y − z0) ∥ 2 ],
+
+(6) where Uθ (zt, t, X, T ) is the predicted velocity field conditioned on satellite input X and semantic tokens T . Although this objective yields strong structural fidelity, the semantic tokens 
+
+T are produced by a large frozen vision-language encoder 
+
+Eψ , which is prohibitively expensive for edge meteorological platforms with tight memory and compute constraints. Stage II therefore replaces this VLM dependency with a lightweight self-evolving policy πϕ, shifting the optimization focus from generation fidelity to retrieval accuracy. 
+
+E. Stage II: Self-Evolving Policy Optimization 
+
+To further improve retrieval accuracy by aligning semantic generation directly with CSI objectives, and to enable practical deployment in resource-constrained environments where online VLM inference is unavailable, Stage II introduces a self-evolving attribute policy πϕ instantiated as a lightweight CNN. 
+
+πϕ first imitates VLM-derived annotations via supervised pre-training (Phase 2a) to establish a coherent semantic prior, then refines its predictions through closed-loop reward optimization (Phase 2b), with both πϕ and Uθ jointly optimized under multi-threshold CSI rewards to evolve beyond the VLM teacher toward retrieval accuracy. Formally, πϕ maps satellite observa-tion X to categorical distributions over the five attributes: 
+
+pϕ(ai ∣ X) = softmax (hi(f (X))) , i = 1, . . . , 5, (7) where f denotes a convolutional encoder followed by global average pooling, hi is the linear prediction head for the i-th attribute, and pϕ(ai ∣ X) represents the predicted categorical distribution for attribute ai. Directly optimizing πϕ from random initialization using only task rewards is highly unstable. Therefore, training is conducted in two sequential phases. 
+
+1) Phase 2a: Semantic-Guide Policy Pre-training: a) Five-Attribute Semantic Taxonomy.: We describe each satellite observation with a structured five-attribute vector P =
+
+(a1, a 2, a 3, a 4, a 5) that encodes the global cloud properties governing the radiance-precipitation relationship, comprising three cloud-structure attributes (a1, a 2, a 3) and two convective indicators (a4, a 5): 
+
+> ●
+
+a1 (cloud_type ): Cb, Ci, Ns, Sc;  
+
+> ●
+
+a2 (convective_depth ): Deep, Moderate, Shallow, None;  
+
+> ●
+
+a3 (storm_mode ): Supercell, Squall-line, MCS, Isolated, Stratiform;  
+
+> ●
+
+a4 (overshooting_top ): Present, Absent;  
+
+> ●
+
+a5 (cirrus_shield ): Dominant, Partial, Absent. JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 6
+
+Attributes a2, a 4, a 5 are deterministically derived from the IR 10.7 μm brightness temperature field, requiring no external model during training or inference (see rules in supplementary material). In contrast, a1 and a3 require holistic visual reasoning over cloud morphology beyond pixel-level statistics, and we therefore obtain them via offline annotations from Qwen-VL on the training set. At inference stage, all five attributes are predicted by the policy network πϕ. The predicted attributes are concatenated into a structured textual prompt s and encoded by a frozen CLIP ViT-L/14 text encoder to produce semantic tokens T = Eψ (s) ∈ RL×dtext .
+
+b) Pre-training Objective.: The policy πϕ is pretrained using a cross-entropy objective on the Qwen-VL annotations: 
+
+Lpre (ϕ) = 1
+
+∣B∣ ⋅ ∣A∣ ∑
+
+> b∈B
+
+∑
+
+> i∈A
+
+CE (pϕ(ai ∣ Xb), ˆa(b) 
+
+> i
+
+), (8) where B is the mini-batch, A = {1, . . . , 5} is the attribute index set, ˆa(b) 
+
+> i
+
+is the pseudo-ground-truth label for attribute 
+
+i in sample b, and CE denotes cross-entropy loss. This stage yields an initialization π(0) 
+
+> ϕ
+
+that encapsulates VLM-derived semantic priors, providing a stable foundation for subsequent reward-driven optimization. 
+
+2) Phase 2b: GRPO Iterative Refinement: Phase 2b drives the self-evolution of πϕ and Uθ beyond the VLM imita-tion ceiling: both modules are jointly optimized so that πϕ
+
+autonomously discovers which attribute vectors maximize downstream CSI while Uθ simultaneously adapts to leverage the evolving semantics. This closed-loop optimization is conducted over N Iterative Refinement Rounds (IRRs) using GRPO. The overall procedure is formalized in Algorithm 1, with each training step within a round detailed as follows: 
+
+a) Group Sampling: For each input sample Xb, we draw 
+
+K candidate attribute vectors {a(k) 
+
+> b
+
+}Kk=1 from πϕ(⋅ ∣ Xb) using temperature Ts, and record their joint log-probabilities ℓ(k) 
+
+> b
+
+=
+
+log πϕ(a(k) 
+
+> b
+
+∣ Xb), where b indexes samples in the batch and 
+
+k indexes the candidates within each group. 
+
+b) Backbone Rollout: Each attribute vector a(k) 
+
+> b
+
+is en-coded via the frozen CLIP encoder Eψ to obtain semantic tokens T (k) 
+
+> b
+
+. Uθ is then integrated jointly with πϕ to produce the radar precipitation estimate: 
+
+ˆY (k) 
+
+> b
+
+= EulerODE (Uθ , X b, T (k) 
+
+> b
+
+), (9) where ˆY (k) 
+
+> b
+
+∈ R1×H×W denotes the predicted radar reflectivity for candidate k of sample b.
+
+c) Reward and Advantage Estimation: We define an objective, annotation-free reward based on the multi-threshold Critical Success Index (CSI): 
+
+r( ˆY , Y ) = ∑ 
+
+> τ∈T
+
+wτ ⋅ TP τ
+
+TP τ + FP τ + FN τ
+
+, (10) where T dBZ is the set of reflectivity thresholds, wτ are corresponding weights. TP τ , FP τ , FN τ denote true positives, false positives, and false negatives at threshold τ . The largest weight is assigned to the heavy-precipitation regime, which is operationally most consequential. The group-relative advantage is computed as: 
+
+A(k) 
+
+> b
+
+= r(k) 
+
+> b
+
+− ¯rb, ¯rb = 1
+
+K
+
+> K
+
+∑
+
+> k=1
+
+r(k) 
+
+> b
+
+, (11) 
+
+Algorithm 1 Self-Evolving Policy Optimisation via GRPO with Progressive Reference Reset 
+
+Require: πϕ, Uθ , frozen Eψ , D, rounds N , group size K, KL weight β 
+
+> 1:
+
+πref ← πϕ 
+
+> 2:
+
+for n = 1, . . . , N do  
+
+> 3:
+
+for each (Xb, Y b) ∈ D do  
+
+> 4:
+
+Sample {a(k) 
+
+> b
+
+, ℓ (k) 
+
+> b
+
+}Kk=1 from πϕ(⋅ ∣ Xb) 
+
+> 5:
+
+ˆY (k) 
+
+> b
+
+← EulerODE (Uθ , X b, Eψ (a(k) 
+
+> b
+
+)) (9)  
+
+> 6:
+
+Compute r(k) 
+
+> b
+
+, A(k) 
+
+> b
+
+(10)(11)  
+
+> 7:
+
+ϕ ← ϕ − α∇ϕLGRPO (12)  
+
+> 8:
+
+θ ← θ − α∇θ LGRPO (joint backbone update)  
+
+> 9:
+
+end for  
+
+> 10:
+
+πref ← deepcopy (πϕ) (progressive reference reset)  
+
+> 11:
+
+end for Ensure: Optimised πϕ, Uθ
+
+where r(k) 
+
+> b
+
+= r( ˆY (k) 
+
+> b
+
+, Y b) is the reward for candidate k of sample b, ¯rb is the group mean reward serving as the baseline. 
+
+d) Policy Update: The GRPO objective combines an advantage-weighted policy gradient with KL regularization: 
+
+LGRPO (ϕ) = − 1
+
+BK ∑
+
+> b,k
+
+A(k) 
+
+> b
+
+⋅ ℓ(k)
+
+> b
+
++ β
+
+> 5
+
+∑
+
+> i=1
+
+KL (pϕ(ai ∣ X) ∥ pref (ai ∣ X)) ,
+
+(12) where β is the KL penalty coefficient, and pref denotes the reference policy distribution. At the end of each IRR, the reference policy is updated via: πref ← deepcopy (πϕ), so that subsequent rounds explore from the best-performing policy obtained so far. This progressive update enables continual self-improvement across rounds, while the within-round KL regularization prevents collapse of the attribute distribution. 
+
+F. Inference 
+
+At test time, all three components are frozen, and the pipeline requires only the satellite observation X as input. The lightweight policy πϕ performs a single forward pass to predict the most likely attribute vector ˆa = arg max a πϕ(a ∣ X),which is then assembled into a structured text prompt and encoded by the frozen CLIP encoder to produce semantic tokens T . Conditioned on (X, T ), the backbone Uθ integrates the velocity field from z0 ∼ N (0, I ) to produce the final radar estimate ˆY = z1 via a fixed-step Euler solver. Notably, the in-ference process requires no VLM calls, no iterative refinement, and no additional inputs beyond satellite observation X.IV. E XPERIMENTS 
+
+A. Experimental Setup 
+
+Datasets. We conduct experiments on two precipitation fore-casting datasets (Fig. 4). The SEVIR 1 dataset [ 45 ] covers the United States with over 20,000 storm events (2017-2019) at 1 km spatial resolution ( 384 × 384 pixels) and 5-minute  
+
+> 1https://registry.opendata.aws/sevir/ JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 7SEVIR Data
+> (USA)
+> FY-4B Data
+> (China)
+
+Fig. 4: Geographic distribution of evaluation datasets. The SEVIR dataset covers the continental United States (blue region), while the Southeast China FY-4B dataset spans 100 ○–120 ○E and 20 ○–40 ○N (red region). The dashed line indicates cross-domain validation between the two datasets. temporal intervals, comprising visible, IR069, IR107, Vertically Integrated Liquid (VIL), and lightning observations. The 
+
+Southeast China FY-4B 2 dataset spans 100 ○–120 ○E, 20 ○–40 ○N(2023) with paired satellite observations (VIS, WV, IR) and radar reflectivity at 4 km resolution ( 500 × 500 pixels) and 30-minute intervals. Following standard practice, all images are reshaped to 128 × 128 for consistent evaluation. Dataset splits are provided in Table II. TABLE II: Summary of datasets used for evaluation.                
+
+> Dataset Ntrain Nval Ntest Resolution Temporal
+> SEVIR 12,331 4,389 4,943 1 km 5 min FY4B-SEChina 4,568 1,144 1,114 4 km 30 min
+
+Evaluation Metrics. Following established practices in weather nowcasting [ 7], we employ multiple evaluation metrics. For meteorological assessment, Critical Success Index (CSI) and Heidke Skill Score (HSS) are computed at multiple thresholds. For SEVIR, thresholds are {74, 133, 160, 181, 219} kg/m 2;for FY-4B, thresholds are {10, 20, 25, 30, 35} dBZ. We report mean CSI (Avg.CSI) and mean HSS (Avg.HSS) for overall accuracy. For image quality, we report Structural Similarity Index Measure (SSIM), Peak Signal-to-Noise Ratio (PSNR), Mean Absolute Error (MAE), and Learned Perceptual Image Patch Similarity (LPIPS). Additionally, False Alarm Rate (FAR) is reported for FY-4B. 
+
+Baseline Methods. We compare LangRetrieval against six competitive baselines: AA-TransUnet (CNN-Transformer hy-brid), Earthformer (meteorology-oriented), Smaat-Unet (CNN-based), Diffcast (diffusion-based generative), Pix2Pix (GAN-based generative), and MeanFlow (flow-based). 
+
+Implementation Details. Our framework LangRetrieval is trained in two stages on four NVIDIA GeForce RTX 3090 GPUs. In Stage I, Uθ network is optimized with AdamW (lr = 3×10 −4, weight decay 10 −5) for 80K iterations with batch size 16. In Stage II, the attribute policy πϕ is first warm-started 
+
+> 2https://satellite.nsmc.org.cn/portalsite/Data/DataView.aspx?SatelliteType= 1&SatelliteCode=FY4B
+
+via supervised cross-entropy on VLM-annotated samples for 5K steps ( lr = 10 −3), then refined by GRPO over T =3 rounds of 10K steps each. Both πϕ and Uθ are jointly optimized during Phase 2b: the policy uses lr = 10 −4 (group size K = 8,KL coefficient β = 0.04 ), sampling temperature Ts = 0.8. All inputs are resized to 128 ×128 . Further architecture and training details are provided in the supplementary material. 
+
+B. Main Results 
+
+Quantitative Performance. Table III presents quantitative comparisons on the SEVIR dataset. LangRetrieval achieves an average CSI of 0.360, outperforming the second-best method (Diffcast, 0.310) by 16.1%. Improvements are most pronounced at high precipitation thresholds: CSI@219 reaches 0.185 (+46.8% vs. Diffcast) and CSI@133 reaches 0.405 (+24.7% vs. the second-best), demonstrating that scene-level semantic guidance effectively resolves the many-to-one ambiguity be-tween visually similar cloud-top signatures and distinct surface precipitation regimes that purely pixel-driven methods fail to disambiguate. Avg.HSS reaches 0.467 (+4.2% vs. Diffcast), confirming that the gains are not obtained at the cost of inflated false alarms. LPIPS is 0.202 (best), improving by 14.4% relative to Diffcast (0.236), suggesting that language-guided generation yields more physically consistent precipitation structures alongside improved detection skill. Table IV demonstrates consistent improvements on the geographically distinct Southeast China FY-4B dataset. Lan-gRetrieval attains strong operational gains across thresholds: CSI@20 is 0.309 (+15.7% vs. the second-best) and CSI@25 is 0.282 (+24.2% vs. the second-best). Avg.CSI on FY-4B is 0.268 and Avg.HSS is 0.383, representing substantial improvements over competitive baselines (Avg.CSI +17.0% and Avg.HSS +14.7% vs. the second-best). FAR analysis indicates a favorable detection-to-false-alarm trade-off: FAR@20 is 0.303 (better than Diffcast’s 0.316, i.e., ∼4.1% improvement), and Avg.FAR is 0.379 (best). These results demonstrate robust cross-domain generalization across different spatial resolutions (1 km for SEVIR vs. 4 km for FY-4B) and climatologies. 
+
+Perceptual Quality and Metric Balance. Table V shows that LangRetrieval also leads in image-quality metrics on FY-4B: SSIM = 0.594, PSNR = 22.66, MAE = 2.555, and LPIPS = 0.206 (all best). Compared with Diffcast, PSNR improves by 5.6% and SSIM is slightly higher (+0.7%). LPIPS is substantially improved relative to flow- and baseline methods (e.g., +14.9% vs. MeanFlow). Crucially, LangRetrieval simul-taneously improves meteorological skill (Avg.CSI, Avg.HSS) while maintaining or improving perceptual fidelity, indicating the GRPO-driven semantic optimization refines task-relevant structures without degrading visual realism. 
+
+Computational Efficiency and Deployment Feasibility. Ta-ble VI highlights computational efficiency. For a full 20-step ODE integration, LangRetrieval requires 354.7 ms, yielding a 
+
+9.3× speedup over Diffcast (3302.8 ms). LangRetrieval supports flexible inference budgets: 1-step inference is 27.3 ms, 5-step is 97.6 ms, 10-step is 186.5 ms, and 20-step is 354.7 ms, enabling dynamic latency–accuracy trade-offs without architec-tural changes. Crucially, at test time the semantic tokens are JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 8
+
+TABLE III: Quantitative comparison with state-of-the-art methods on SEVIR test set. CSI, HSS ↑: higher is better; LPIPS, MAE ↓: lower is better. Bold : best; underline: second best. 
+
+Type Model CSI ↑ HSS ↑ Perceptual quality 
+
+@74 @133 @160 @181 @219 Avg. @74 @133 @160 @181 @219 Avg. MAE ↓ LPIPS ↓
+
+> SEVIR
+
+AA-TransUnet [46] 0.506 0.329 0.317 0.262 0.095 0.301 0.638 0.483 0.476 0.412 0.174 0.437 9.76 0.318 Earthformer [10] 0.524 0.321 0.304 0.249 0.069 0.293 0.653 0.474 0.461 0.395 0.129 0.422 9.71 0.360 Smaat-Unet [8] 0.516 0.324 0.313 0.256 0.055 0.292 0.646 0.478 0.471 0.404 0.105 0.420 9.77 0.362 Diffcast [12] 0.501 0.322 0.321 0.282 0.126 0.310 0.629 0.473 0.479 0.436 0.223 0.448 11.42 0.236 Pix2Pix [47] 0.418 0.259 0.269 0.241 0.014 0.240 0.547 0.397 0.417 0.384 0.028 0.355 11.77 0.349 MeanFlow [48] 0.425 0.215 0.177 0.141 0.044 0.200 0.550 0.333 0.290 0.242 0.084 0.299 14.20 0.300 LangRetrieval (Ours) 0.536 0.405 0.369 0.307 0.185 0.360 0.645 0.537 0.501 0.425 0.228 0.467 10.44 0.202 
+
+Improv. vs 2 nd +2.3% +24.7% +14.9% +8.9% +46.8% +16.1% – +11.2% +4.6% – +2.2% +4.2% – +14.4% 
+
+Improv. vs MeanFlow +20.7% +69.8% +91.0% +102.1% +234.1% +64.5% +15.6% +53.5% +67.6% +75.2% +170.2% +52.5% +21.9% +38.7% TABLE IV: Quantitative comparison with state-of-the-art methods on Southeast China FY-4B test set. CSI, HSS ↑: higher is better; FAR ↓: lower is better. Bold : best; underline: second best. 
+
+Type Model CSI ↑ HSS ↑ FAR ↓
+
+@10 @20 @25 @30 @35 @10 @20 @25 @30 @35 @10 @20 @25 @30 @35 
+
+> FY-4B
+
+AA-TransUnet [46] 0.323 0.234 0.186 0.130 0.075 0.425 0.347 0.297 0.223 0.084 0.350 0.430 0.480 0.518 0.606 Earthformer [10] 0.346 0.264 0.215 0.145 0.060 0.454 0.387 0.336 0.245 0.066 0.319 0.386 0.442 0.497 0.603 Smaat-Unet [8] 0.253 0.203 0.164 0.118 0.070 0.327 0.294 0.257 0.199 0.092 0.480 0.591 0.648 0.701 0.770 Diffcast [12] 0.345 0.263 0.227 0.174 0.106 0.457 0.389 0.355 0.289 0.120 0.270 0.316 0.373 0.430 0.521 
+
+Pix2Pix [47] 0.324 0.267 0.233 0.189 0.132 0.422 0.386 0.357 0.305 0.198 0.386 0.459 0.523 0.608 0.712 MeanFlow [48] 0.307 0.241 0.201 0.148 0.092 0.407 0.358 0.316 0.249 0.128 0.395 0.475 0.555 0.639 0.752 LangRetrieval (Ours) 0.381 0.309 0.282 0.228 0.142 0.487 0.435 0.413 0.349 0.233 0.275 0.303 0.349 0.412 0.558 
+
+Improv. vs 2 nd +10.1% +15.7% +24.2% +20.6% +7.6% +6.6% +11.8% +15.7% +14.4% +17.7% – +4.1% +6.4% +4.2% –
+
+Improv. vs MeanFlow +24.1% +28.2% +40.3% +54.1% +54.3% +19.7% +21.5% +30.7% +40.2% +81.9% +30.4% +36.2% +37.1% +35.5% +25.8% TABLE V: Perceptual quality and inference speed comparison on Southeast China FY-4B benchmarks. SSIM, PSNR ↑: higher is better; MAE, LPIPS ↓: lower is better.                                                                       
+
+> Model FY-4B
+> SSIM ↑PSNR ↑MAE ↓LPIPS ↓Avg.CSI ↑Avg.HSS ↑Avg.FAR ↓
+> AA-TransUnet [46] 0.539 20.49 2.980 0.280 0.189 0.275 0.476 Earthformer [10] 0.555 20.86 2.864 0.338 0.206 0.297 0.449 Smaat-Unet [8] 0.501 19.18 3.498 0.333 0.161 0.233 0.638 Diffcast [12] 0.590 21.23 2.681 0.274 0.223 0.322 0.380 Pix2Pix [47] 0.523 19.88 2.979 0.257 0.229 0.334 0.538 MeanFlow [48] 0.498 20.85 3.086 0.249 0.197 0.292 0.563 LangRetrieval (Ours) 0.594 22.66 2.555 0.206 0.268 0.383 0.379
+> Improv. vs 2 nd +0.7% +5.6% +1.6% +14.9% +17.0% +14.7% +0.3%
+> Improv. vs MeanFlow +16.5% +7.5% +14.5% +14.9% +36.0% +31.2% +32.7%
+
+generated by the lightweight policy πϕ in a single forward pass without any VLM call, making the full pipeline deployable on resource-constrained operational platforms where large foundation model inference is unavailable. With 45.21M trainable parameters (excluding the frozen CLIP encoder), the model remains parameter-efficient among the baselines. 
+
+Qualitative Analysis and Language-Guided Precipitation Generation. Fig. 5 and Fig. 6 provide visual evidence of the quantitative improvements. The language guidance encodes five meteorologically-meaningful satellite-derived attributes: cloud type (Cb: cumulonimbus for intense cores, Ci: cirrus for high clouds, Ns: nimbostratus for sustained rain, Sc: stratocumulus for weak precipitation); convective depth (Deep/Moderate/Shal-low/None); storm mode (Supercell, Squall-line, MCS, Isolated cell, Stratiform rain); overshooting top (presence of tropopause-penetrating thunderstorms, BT <195K in local 5 ×5 region); and 
+
+cirrus shield (dominant >50%, partial 15–50%, or absent <15% coverage-a primary source of false alarms). Three key qualitative advantages emerge across both datasets. 
+
+First , LangRetrieval accurately localizes extreme precipitation cores (high threshold), whereas deterministic methods (AA-TransUnet, Earthformer, Smaat-Unet) produce overly smooth predictions with underestimated intensity, and generative meth-ods (Diffcast, Pix2Pix) introduce spurious scattered precipi-tation in clear-sky regions. Second , the language constraints-particularly cloud type and cirrus shield attributes-effectively suppress false alarms in meteorologically implausible regions, a problem that unconstrained generative models struggle with. Third , LangRetrieval better preserves vertical convective structure as inferred from multi-spectral satellite channels (VIS, IR 6.9 μm, IR 10.7 μm), as evidenced by the VIL maps which show coherent organization matching ground truth, while baseline predictions lack spatial consistency (Fig. 5). On FY-4B (Fig. 6), these patterns persist: LangRetrieval generates sharper convective boundaries and more realistic mesoscale precipitation organization compared to all baselines. This consistency across datasets with different resolutions and geographic domains demonstrates that language-guided conditioning provides a robust inductive bias for S2R. JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 9
+
+TABLE VI: Efficiency comparison of all methods. Params denotes the total number of trainable parameters. FLOPs denotes the total floating-point operations for a single inference. Time is measured on a single GPU with batch size 1, averaged over 100 runs. †Params and FLOPs of LangRetrieval exclude the frozen CLIP ViT-L/14 encoder (427.62M / 61.60G). Bold : best; underline: second best. 
+
+Method Steps FLOPs (G) Time (ms) Params (M) LPIPS ↓ PSNR ↑ SSIM ↑ CSI@30 ↑ HSS@30 ↑
+
+AA-TransUNet [46] 1 3.78 6.7 39.88 0.280 20.49 0.539 0.130 0.223 EarthFormer [10] 1 2.53 13.4 8.68 0.338 20.86 0.555 0.145 0.245 Smaat-UNet [8] 1 2.40 3.6 4.02 0.333 19.18 0.501 0.118 0.199 DiffCast [12] 250 7459.11 3302.8 46.25 0.274 21.23 0.590 0.174 0.289 Pix2Pix [47] 1 8.25 7.4 31.36 0.257 19.88 0.523 0.189 0.305 MeanFlow [48] 1 12.96 22.3 107.80 0.249 20.85 0.498 0.148 0.249 
+
+LangRetrieval (Ours) † 1 33.87 27.3 45.21 0.206 22.66 0.594 0.228 0.349 LangRetrieval (Ours) † 5 169.39 97.6 45.21 0.208 22.57 0.599 0.221 0.341 
+
+LangRetrieval (Ours) † 10 338.71 186.5 45.21 0.210 22.48 0.586 0.219 0.338 
+
+LangRetrieval (Ours) † 20 677.18 354.7 45.21 0.212 22.41 0.580 0.218 0.337 Input Frames 
+
+VIS  6.9 𝝁 𝒎  Light 
+
+Diffcast AA -TransU  Earthformer  Smaat -Unet  Ours 10.7 𝝁 𝒎  WaveC2R Pix2pix 
+
+IR  0 16  31  59  74  100  133  160  181  219  255 
+
+MeanFlow  GT  Task:This  is a satellite    
+
+> retrieval task. The input
+> consists of satellite visible,
+> IR6.9 μm , IR10.7 μm , and
+> lightning channels . The
+> output is the simultaneous
+> VIL field.
+
+Attributes 
+
+Prompt                             
+
+> a1: cloud type ★
+> Cb Cumulonimbus –intense
+> convective core
+> Ci Cirrus –high -level thin cloud
+> Ns Nimbostratus –layered
+> cloud, no convection
+> Sc Stratocumulus –shallow,
+> weak precipitation
+> a2: convective depth
+> Deep Strong deep convection
+> Moderate Mid -level convection
+> Shallow Shallow convection
+> None Clear sky
+> a3: storm mode ★
+> Supercell Supercell –isolated,
+> extremely intense
+> Squall -line Squall line
+> MCS Mesoscale convective
+> system
+> Isolated convective cell
+> Stratiform Stratiform
+> precipitation
+> a4: overshooting top
+> Present Strong overshooting
+> top detected; local 5 ×5 region
+> BT < 195 K
+> Absent No overshooting cloud
+> top
+> a5: cirrus shield
+> Dominant >50 % pixels are cold
+> uniform cloud; cirrus dominates
+> Partial 15 –50 %, partial
+> coverage
+> Absent <15 %, no significant
+> cirrus
+> Guidance:
+> Use satellite channels VIS,
+> IR107, IR069 from the
+> SEVIR dataset as input to
+> generate the radar VIL.
+> VIS shows a compact, high -
+> reflectance core indicating
+> dense cloud -top scattering…,
+> IR107 shows a sharp
+> brightness -temperature
+> depression, forming a
+> compact cold spot…,
+> consistent with a high and
+> cold cloud top...,
+> Consequently …
+
+Fig. 5: Qualitative comparison of radar reflectivity predictions for six heavy precipitation events from the SEVIR dataset. Red boxes highlight magnified convective regions where our LangRetrieval demonstrates superior intensity accuracy. Input modalities include visible, dual-channel infrared, and lightning observations. 
+
+C. Ablation Study 
+
+Effect of Semantic Conditioning Strategy. To assess the contribution of policy-based attribute prediction, we compare three conditioning variants on the public SEVIR dataset (see Fig. 7), holding all other components fixed. The unconditioned baseline (No Semantic ) receives no language guidance and yields CSI@219 = 0.1052 and HSS@219 = 0.1457. Replacing this with rule-derived attributes (Offline ) improves detection skill: CSI@219 = 0.1253 ( +19.1%) and HSS@219 = 0.1824 ( +25.2%), confirming that semantic structure carries useful meteorological information. Our Policy variant learns the attribute mapping end-to-end under the CSI reward, achieving CSI@219 = 0.1471 ( +17.3% over Offline) and HSS@219 = 0.2278 ( +24.8%). Consistent gains across both metrics demonstrate that learned attributes are meteorologically discriminative, whereas rigid threshold rules cannot adapt to convective morphology diversity. 
+
+Iterative Refinement Round (IRR) Dynamics. Fig. 8 val-idates CSI-driven self-evolution across three GRPO rounds on SEVIR. After Phase 2a warm-up, the policy achieves baseline CSI@181 = 0.2357 and CSI@219 = 0.1309. Each IRR advances both metrics monotonically: IRR-3 converges to CSI@181 = 0.3076 ( +30.5%) and CSI@219 = 0.1853 ( +41.5%). Notably, extreme-precipitation gains (CSI@219) dominate in IRR-1 ( +19.7%), indicating rapid discovery of severe-weather-JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 10 Input Frames                    
+
+> VIS Diffcast AA -TransUnet Earthformer Smaat -Unet GT Ours Pix2pix IR Hvmunet
+> 010 15 20 25 30 35 40 45 50 55 60 65 70
+
+Fig. 6: Qualitative comparison of satellite-to-radar retrieval results on the Southeast China FY-4B test set. From top to bottom: input satellite imagery (VIS and IR channels), outputs of AA-TransUnet, Earthformer, Smaat-Unet, Hvmunet, Pix2Pix, DiffCast, Ground Truth (GT), and our proposed LangRetrieval. The semantic prompt describes key meteorological features ( e.g. , deep convective cores), guiding our model to generate more accurate radar reflectivity fields. Color bar (dBZ) ranges from 0 to 70. CSI@219   
+
+> 0.1444
+> 0.1546
+> 0.1648
+> 0.1751
+> 0.1853
+> HSS@219
+> 0.1953
+> 0.2036
+> 0.2118
+> 0.2201
+> 0.2284
+> CSI@181
+> 0.2624
+> 0.2737
+> 0.2850
+> 0.2963
+> 0.3076
+> HSS@181
+> 0.3894
+> 0.3985
+> 0.4076
+> 0.4166
+> 0.4257
+> No Semantic Offline (rule) Policy (Ours)
+
+Fig. 7: Component-level ablation of semantic injection modes on SEVIR. We compare three strategies: (i) No Semantic , an unconditioned baseline with empty text prompt; (ii) Offline (rule-based) , attributes derived from fixed meteorological thresholds; and (iii) Policy (Ours) , attributes learned via policy optimization ( πϕ after IRR-3). The learned policy achieves the best performance across high- and mid-threshold precipitation skill metrics. Warm-Up IRR-1 IRR-2 IRR-3    
+
+> IRR Round
+> 0.15
+> 0.20
+> 0.25
+> 0.30
+> CSI Score  0.2357 0.2410
+> 0.2722
+> 0.3076
+> 0.1309
+> 0.1567 0.1637
+> 0.1853
+> CSI@181 CSI@219
+
+Fig. 8: Ablation studies: Iterative Refinement Rounds (IRR) on SEVIR. Progressive application of IRR substantially improves high-threshold detection performance compared to Warm-Up. critical attributes. The consistent multi-threshold improvement demonstrates that self-evolved meteorological attributes, opti-mized under retrieval-aware rewards, systematically enhance detection across precipitation intensity regimes and substantially surpass the VLM teacher initialized in Phase 2a. V. C ONCLUSION 
+
+This work introduces a paradigm for satellite-to-radar precipitation retrieval that treats meteorological semantics as a learnable, task-optimized variable rather than a fixed auxiliary input. The core innovation lies in establishing closed-loop optimization between two historically disconnected pathways: semantic generation and retrieval accuracy. We demonstrate that the semantic gap inherent in precipitation mapping can be systematically bridged through two coupled mechanisms. First, semantic warm-up (Stage I) anchors learned attributes to vision-language knowledge via attention-guided conditioning, providing fine-grained semantic-visual grounding. Second, self-evolving semantic optimization (Stage II) replaces expen-sive annotation-driven semantics with a lightweight learnable policy that directly optimizes under retrieval-aware rewards. Extensive validation on FY-4B and SEVIR demonstrates that LangRetrieval achieves state-of-the-art performance, with consistent multi-threshold improvements confirming that self-evolved semantics, optimized under task rewards, systematically enhance retrieval across precipitation intensity regimes. JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 11 
+
+REFERENCES 
+
+[1] K. Lin, B. Zhang, D. Yu, W. Feng, S. Chen, F. Gao, X. Li, and Y. Ye, “Alphapre: Amplitude-phase disentanglement model for precipitation nowcasting,” in Proceedings of the Computer Vision and Pattern Recognition Conference ,2025, pp. 17 841–17 850. [2] F. Gao, C. Luo, G. Deng, X. Li, B. Zhang, D. Yu, and Y. Ye, “Lmcast: A pretrained language model guided long-term memory transformer for precipitation nowcasting,” 
+
+Neural Networks , p. 108168, 2025. [3] D. Yu, W. Du, K. Lin, X. Li, Y. Ye, C. Luo, and X. Chen, “Pimmnet: Introducing multi-modal precipitation nowcast-ing via a physics-informed perspective,” in Proceedings of the 33rd ACM International Conference on Multimedia ,2025, pp. 11 522–11 531. [4] A. Allen, S. Markou, W. Tebbutt, J. Requeima, W. P. Bruinsma, T. R. Andersson, M. Herzog, N. D. Lane, M. Chantry, J. S. Hosking et al. , “End-to-end data-driven weather prediction,” Nature , vol. 641, no. 8065, pp. 1172– 1179, 2025. [5] D. Niu, C. Shi, T. Zhang, H. Wang, Z. Zang, M. Jiang, and J. Yang, “M4caster: Multi-source, multi-spatial, multi-temporal modeling for precipitation nowcasting,” 
+
+Neurocomputing , vol. 648, p. 130621, 2025. [6] K. Xu, J. Gong, Z. Zhou, Z. Li, Y. Pu, Y. Liu, B. Fei, F. Ling, W. Zhang, and L. Bai, “Synweather: Weather observation data synthesis across multiple regions and variables via a general diffusion transformer,” in Proceed-ings of the AAAI Conference on Artificial Intelligence ,vol. 40, no. 2, 2026, pp. 1346–1354. [7] C. Shi, H. Xu, Y. Li, Y.-L. Wei, Y. Feng, Y. Zhang, and D. Niu, “Wavec2r: Wavelet-driven coarse-to-refined hierarchical learning for radar retrieval,” in Proceedings of the AAAI Conference on Artificial Intelligence , vol. 40, no. 11, 2026, pp. 8951–8959. [8] T. Kevin, “Smaat-unet: Precipitation nowcasting using a small attention-unet architecture,” Pattern Recognit. Lett. ,vol. 145, pp. 178–186, 2021. [9] R. Wu, Y. Liu, P. Liang, and Q. Chang, “H-vmunet: High-order vision mamba unet for medical image segmentation,” 
+
+Neurocomputing , p. 129447, 2025. [10] Z. Gao, X. Shi, H. Wang, Y. Zhu, Y. B. Wang, M. Li, and D.-Y. Yeung, “Earthformer: Exploring space-time transformers for earth system forecasting,” in Proc. Adv. Neural Inf. Process. Syst. (NeurIPS) , vol. 35, 2022, pp. 25 390–25 403. [11] S. Akter, “Generative ai: A pix2pix-gan-based machine learning approach for robust and efficient lung segmenta-tion,” arXiv preprint arXiv:2412.10826 , 2024. [12] D. Yu, X. Li, Y. Ye, B. Zhang, C. Luo, K. Dai, R. Wang, and X. Chen, “Diffcast: A unified framework via residual diffusion for precipitation nowcasting,” in 
+
+Proc. IEEE/CVF Conf. Comput. Vis. Pattern Recognit. (CVPR) , 2024, pp. 27 758–27 767. [13] T. Nguyen, J. Brandstetter, A. Kapoor, J. K. Gupta, and A. Grover, “Climax: A foundation model for weather and climate,” arXiv preprint arXiv:2301.10343 , 2023. [14] K. Chen, T. Han, J. Gong, L. Bai, F. Ling, J.-J. Luo, X. Chen, L. Ma, T. Zhang, R. Su et al. , “Fengwu: Pushing the skillful global medium-range weather forecast beyond 10 days lead,” arXiv preprint arXiv:2304.02948 , 2023. [15] X. Zhao, Z. Zhou, W. Zhang, Y. Liu, X. Chen, J. Gong, H. Chen, B. Fei, S. Chen, W. Ouyang et al. , “Weathergfm: Learning a weather generalist foundation model via in-context learning,” arXiv preprint arXiv:2411.05420 , 2024. [16] Z. Zhou, Y. Pu, X. He, Y. Liu, Y. Chen, J. Gong, X. Zhuang, W. Xu, Q. Cao, S. Tang et al. , “Omni-weather: Unified multimodal foundation model for weather genera-tion and understanding,” arXiv preprint arXiv:2512.21643 ,2025. [17] Z. Jin, H. Lin, and X. Xu, “Rda-unet: A retrieval model for radar composite reflectivity factor from himawari-8 observations,” in Proc. IEEE Int. Conf. High Perform. Comput. Commun. (HPCC) , 2023, pp. 994–1000. [18] J. Zhao, J. Tan, S. Chen, Q. Huang, L. Gao, Y. Li, and C. Wei, “Intelligent reconstruction of radar composite reflectivity based on satellite observations and deep learning,” Remote Sens. , vol. 16, no. 2, p. 275, 2024. [19] X. He, Z. Zhou, W. Zhang, X. Zhao, H. Chen, S. Chen, and L. Bai, “Diffsr: Learning radar reflectivity syn-thesis via diffusion model from satellite observations,” in ICASSP 2025-2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) .IEEE, 2025, pp. 1–5. [20] A. Tong, N. Malkin, G. Huguet, Y. Zhang, J. Rector-Brooks, K. Fatras, G. Wolf, and Y. Bengio, “Conditional flow matching: Simulation-free dynamic optimal trans-port,” arXiv preprint arXiv:2302.00482 , vol. 2, no. 3, 2023. [21] B. P. Ribeiro and J. F. Pucer, “Flowcast: Advancing precipitation nowcasting with conditional flow matching,” 
+
+arXiv preprint arXiv:2511.09731 , 2025. [22] M. Waqas, U. W. Humphries, B. Chueasa, and A. Wang-wongchai, “Artificial intelligence and numerical weather prediction models: A technical survey,” Natural Hazards Research , vol. 5, no. 2, pp. 306–320, 2025. [23] S. Varambally, V. V. Manivannan, Y. Jafari, L. Han, Z. Novack, Z. Xia, S. R. Cachay, S. Eranky, R. Niu, T. Berg-Kirkpatrick et al. , “Aquilon: Towards building multimodal weather llms,” in ICML 2025 Workshop on Assessing World Models .[24] H. Li, Z. Wang, J. Wang, Y. Wang, A. K. H. Lau, and H. Qu, “Cllmate: A multimodal benchmark for weather and climate events forecasting,” in Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing , 2025, pp. 17 547–17 573. [25] J. Han, H. Chen, K. Han, X. Huang, Y. Hu, W. Xu, D. Tao, and P. Zhang, “A physics-guided multimodal transformer path to weather and climate sciences,” arXiv preprint arXiv:2504.14174 , 2025. [26] J. Shi, A. Shirali, B. Jin, S. Zhou, W. Hu, R. Rangaraj, S. Wang, J. Han, Z. Wang, U. Lall et al. , “Deep learning and foundation models for weather prediction: A survey,” 
+
+arXiv preprint arXiv:2501.06907 , 2025. [27] D. Hong, C. Li, X. Li, G. Camps-Valls, and J. Chanussot, JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 12 
+
+“Foundation models in remote sensing: Evolving from unimodality to multimodality,” IEEE Geoscience and Remote Sensing Magazine , 2026. [28] Y.-Y. Chen, S.-Y. Jhong, H.-C. Lin, and Y.-C. Wu, “Visionâ ˘ A ¸ Slanguage-guided adaptive cross-modal fusion for multispectral object detection under adverse weather conditions,” IEEE MultiMedia , vol. 32, no. 2, pp. 22–32, 2025. [29] Z. Liu, Y. Lu, H. Yu, and D. Yang, “Vl-ur: Vision-language-guided universal restoration of images degraded by adverse weather conditions,” in 2025 IEEE Interna-tional Conference on Multimedia and Expo (ICME) , 2025, pp. 1–6. [30] Y. Su, X. Liu, Z. Huang, Y. Zhao, R. Hong, and M. Wang, “Attriprompt: Class attribute-aware prompt tuning for vision-language model,” IEEE Transactions on Image Processing , vol. 35, pp. 1395–1407, 2026. [31] H. Zhang, Z. Ji, J. Liu, Y. Pang, and J. Han, “Multi-stage knowledge integration of vision-language models for continual learning,” IEEE Transactions on Image Processing , vol. 35, pp. 615–628, 2026. [32] H. Fu, H. Zhao, J. Dong, H. Ding, C. Zhang, and H. Qian, “Iap: Improving continual learning of vision-language models via instance-aware prompting,” IEEE Transactions on Image Processing , vol. 35, pp. 717–731, 2026. [33] M. Chen, W. Ma, M. Zeng, X. He, J. Xiong, L. Wang, A. Al-Dulaimi, and S. Mumtaz, “Foundation model empowered real-time video conference with semantic communications,” IEEE Transactions on Image Process-ing , vol. 35, pp. 1740–1755, 2026. [34] Y. Ren, J. Du, X. Liu, Q. Su, Y. Deng, and H. Li, “Mtrag: Multi-target referring and grounding via hybrid semantic-spatial integration,” IEEE Transactions on Image Processing , vol. 35, pp. 2167–2181, 2026. [35] Y. Bai, A. Jones, K. Ndousse, A. Askell, A. Chen, N. DasSarma, D. Drain, S. Fort, D. Ganguli, T. Henighan 
+
+et al. , “Training a helpful and harmless assistant with reinforcement learning from human feedback,” arXiv preprint arXiv:2204.05862 , 2022. [36] Z. Yang, A. Sun, Y. Zhao, Y. Yang, D. Li, and C. Zhou, “Rlhf fine-tuning of llms for alignment with implicit user feedback in conversational recommenders,” in 2025 4th International Conference on Artificial Intelligence, Internet of Things and Cloud Computing Technology (AIoTC) , 2025, pp. 587–591. [37] J. Zhao, Y. Lei, W. Zheng, S. Lai, H. Ding, and C. Zhao, “Optimizing rlhf reward models with fairness constraints,” in 2025 5th International Conference on Computer Science and Blockchain (CCSB) , 2025, pp. 218–221. [38] T. Hu, W. Zhu, and Y. Yan, “Reward hacking in reinforce-ment learning and rlhf: A multidisciplinary examination of vulnerabilities, mitigation strategies, and alignment chal-lenges,” in 2025 5th Intelligent Cybersecurity Conference (ICSC) , 2025, pp. 272–275. [39] A. Kumar, A. Perrault, and D. S. Williamson, “Using rlhf to align speech enhancement approaches to mean-opinion quality scores,” in ICASSP 2025 - 2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) , 2025, pp. 1–5. [40] X. Yan, F. Xiumei, K.-L. A. Yau, X. Zhixin, M. Rui, and Y. Gang, “A review of reinforcement learning for semantic communications,” Journal of Network and Systems Management , vol. 33, no. 3, p. 52, 2025. [41] Y. Cai, S. Cai, Y. Shi, Z. Xu, L. Chen, Y. Qin, X. Tan, G. Li, Z. Li, H. Lin et al. , “Training-free group relative policy optimization,” arXiv preprint arXiv:2510.08191 ,2025. [42] D. Guo, D. Yang, H. Zhang, J. Song, P. Wang, Q. Zhu, R. Xu, R. Zhang, S. Ma, X. Bi et al. , “Deepseek-r1: In-centivizing reasoning capability in llms via reinforcement learning,” arXiv preprint arXiv:2501.12948 , 2025. [43] Y. Lipman, R. T. Chen, H. Ben-Hamu, M. Nickel, and M. Le, “Flow matching for generative modeling,” arXiv preprint arXiv:2210.02747 , 2022. [44] W. Feng, X. Li, Z. Wu, K. Lin, D. Yu, Y. Ye, and Y. Wang, “Perceptually constrained precipitation nowcasting model,” in Forty-second International Conference on Machine Learning , 2025. [45] M. Veillette, S. Samsi, and C. Mattioli, “Sevir: A storm event imagery dataset for deep learning applications in radar and satellite meteorology,” in Proc. Adv. Neural Inf. Process. Syst. (NeurIPS) , vol. 33, 2020, pp. 22 009– 22 019. [46] Yang, “Aa-transunet: Attention augmented transunet for nowcasting tasks,” in Proc. Int. Joint Conf. Neural Netw. (IJCNN) , 2022, pp. 01–08. [47] S. Akter, “Generative ai: A pix2pix-gan-based machine learning approach for robust and efficient lung segmenta-tion,” arXiv preprint arXiv:2412.10826 , 2024. [48] Z. Geng, M. Deng, X. Bai, J. Z. Kolter, and K. He, “Mean flows for one-step generative modeling,” arXiv preprint arXiv:2505.13447 , 2025. JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 1
+
+APPENDIX 
+
+This supplementary material is organised as follows. Ap-pendix A formalises the deterministic rules used to compute the three pixel-verifiable attributes ( a2, a 4, a 5) from the IR brightness temperature field. Appendix B provides the com-plete training configurations for Stage I (Semantic Warm-Up) and Stage II (GRPO Policy Optimisation), including all hyperparameters, reward weights, and hardware specifications. Appendix C presents the multi-VLM annotation fusion abla-tion (V3), which investigates whether combining annotations from Qwen-VL-Max, Kimi-VL, and DeepSeek-VL via the proposed TASRE framework improves upon the single-source configuration adopted in the main experiment. Appendix D discusses the practical significance of satellite-based radar retrieval in observationally-sparse regions, with cross-regional transfer results on Xinjiang Province and oceanic coverage analysis for southeastern China. 
+
+A. Pixel-verifiable attributes ( a2, a 4, a 5). 
+
+Let BT denote the brightness temperature field derived from the normalised IR channel. 
+
+Convective depth is determined by the spatial gradient statistics of BT: 
+
+a2 = C(P95 (∥ ∇ BT ∥)) , (13) where C is a threshold classifier mapping gradient magnitude to four ordinal categories. 
+
+Overshooting top is detected via localised cold-point anomalies: 
+
+a4 =
+
+⎧⎪⎪⎨⎪⎪⎩
+
+Present if min Ω(BT ) < τot ,
+
+Absent otherwise, (14) where Ω denotes a local neighbourhood and τot is a temperature threshold. 
+
+Cirrus shield is identified by low-texture cold regions: 
+
+a5 = C′( ∣{( i, j ) ∶ σ2Ω(i, j ) < ϵ ∧ BT (i, j ) < τci }∣ 
+
+HW ) , (15) where σ2Ω is the local variance and C′ maps coverage fraction to three ordinal categories. 
+
+B. Training Details 1) Stage I: Semantic Warm-Up Training Details: Stage I trains the conditional flow matching retrieval backbone Uθ with semantic cross-attention, using offline rule-based prompts. The three pixel-verifiable attributes (convective depth, overshooting top, cirrus shield) are computed directly from the satellite imagery, while the two VLM-dependent attributes (cloud type, storm mode) are set to sentinel values. Table VII summarises the Stage I hyperparameters. 
+
+2) Stage II: Policy Optimisation Training Details: Stage II trains a lightweight policy network πϕ (AttributePredictor, 
+
+∼1.7M parameters) that maps satellite images to five-attribute semantic prompts. It consists of two phases. 
+
+a) Phase IIa: Supervised Pre-Training.: πϕ is initialised via cross-entropy loss on VLM annotations (Eq. 8 in main text). In the main experiment, we use single-source Qwen-VL-Max 
+
+annotations exclusively. TABLE VII: Stage I (Semantic Warm-Up) training configura-tion.                                                   
+
+> Hyperparameter Value
+> Data
+> Dataset FY-4B (Southeast China) Input channels 3 (VIS, IR069, IR107) Output Radar reflectivity, 1 channel Resolution 128 ×128
+> Normalisation [0,1]; physical value =pixel ×70 dBZ
+> Model Architecture
+> Backbone VelocityUNet UNet base channels 64 Channel multipliers [1,2,4,8]
+> Cross-attention resolutions {32 ,64 }(5 injection points) Cross-attention dk64 CLIP encoder ViT-L/14 (frozen), d=768
+> Total parameters ∼44.8M (incl. cross-attention ∼1.3M)
+> Flow Matching
+> Time distribution Log-normal ( μ=−0.4, σ =1.0)Flow ratio 0.50 NFE (inference) 20 (Euler ODE)
+> Training
+> Loss LCFM
+> Optimiser AdamW (weight decay 10 −5)Learning rate 3×10 −4
+> Batch size 16 Training steps 80,000 VLM loss weight λ0.1 Hardware 4×NVIDIA GeForce RTX 3090 (24 GB)
+
+b) Phase IIb: GRPO Iterative Refinement.: With the Stage I backbone frozen, πϕ is optimised with Group Relative Policy Optimisation (GRPO) across N = 3 rounds. At the end of each round, the reference policy is progressively reset. Table VIII presents the complete Stage II configuration. 
+
+c) Evaluation Protocol.: All models are evaluated on the held-out test set (1,114 samples) with NFE = 20 and batch size 16. We report CSI, FAR, POD, and HSS at thresholds τ ∈
+
+{10 , 20 , 25 , 30 , 35 , 40 } dBZ, along with pixel (PSNR, MAE) and perceptual (SSIM, LPIPS) metrics. 
+
+C. Multi-VLM Annotation Fusion Ablation (V3) 
+
+A natural question is whether combining annotations from multiple VLMs can further improve the quality of pseudo-labels used in Phase IIa, thereby producing a better-initialised policy for GRPO. We investigate this through the TASRE 
+
+(Task-Aligned Source Reliability Evaluation) framework, which evaluates and fuses annotations from three state-of-the-art VLMs using the downstream CSI metric as the reliability signal. 
+
+1) TASRE Framework: Given M VLM annotation sources 
+
+{s1, . . . , s M }, TASRE assigns fusion weights proportional to each source’s downstream retrieval performance: 
+
+wm = exp (CSI m/T )
+
+∑Mj=1 exp (CSI j /T ) , (16) where CSI m is the mean CSI score achieved when using source 
+
+sm’s annotations exclusively with the frozen Stage I backbone, and T is a softmax temperature controlling the sharpness of the weight distribution. We evaluate three VLMs: nosep,leftmargin=1.5em JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 2
+
+TABLE VIII: Stage II (GRPO Policy Optimisation) training configuration — main experiment.                                                         
+
+> Hyperparameter Value
+> Policy Network ( πϕ)
+> Architecture CNN encoder + GAP + per-attribute linear heads Input channels 3 (same as satellite) Parameters ∼1.7M Number of attributes 5
+> Phase IIa: Supervised Pre-Training
+> Annotation source Qwen-VL-Max (single VLM) Loss Cross-entropy on 5-attribute labels Steps 5,000 Learning rate 1×10 −3
+> Optimiser Adam Gradient clipping 1.0
+> Phase IIb: GRPO Iterative Refinement
+> IRR rounds ( N)3Steps per round 10,000 Group size ( K)8Sampling temperature ( Ts)0.8 KL penalty ( β)0.04 Learning rate 1×10 −4
+> Optimiser Adam Gradient clipping 1.0 Reference reset Progressive (deepcopy after each round)
+> Common
+> Batch size 8NFE (ODE steps) 20 Backbone UθFrozen (Stage I checkpoint) CLIP encoder Frozen (ViT-L/14)
+> CSI Reward Weights ( wτ)
+> τ=10 dBZ 0.15
+> τ=20 dBZ 0.15
+> τ=25 dBZ 0.20
+> τ=30 dBZ 0.25
+> τ=35 dBZ 0.15
+> τ=40 dBZ 0.10
+> ●
+
+Qwen-VL-Max : Alibaba’s multimodal model (used in the main experiment)  
+
+> ●
+
+Kimi-VL : Moonshot AI’s vision-language model  
+
+> ●
+
+DeepSeek-VL : DeepSeek’s multimodal model In addition to TASRE, we compare four alternative fusion strategies: TABLE IX: Five annotation fusion strategies evaluated in the V3 ablation.         
+
+> Strategy Description Single Use only Qwen-VL-Max annotations (equivalent to V2 main experi-ment)
+> Majority Vote Per-attribute majority voting across three VLMs
+> Uniform Equal-weight ( 13) averaging of VLM confidence scores
+> Confidence Self-reported confidence-weighted fusion
+> TASRE Task-aligned CSI-weighted fusion (Eq. 16)
+
+2) VLM Source Reliability Evaluation: Table X reports the per-source CSI scores and the resulting TASRE fusion weights under three temperature settings. All evaluations use the frozen Stage I backbone on the validation set. 
+
+Key observation: All three VLMs achieve nearly identical CSI scores ( 0.242 ± 0.0004 ), yielding approximately uniform TASRE weights ( ∼0.333) across all temperatures. This indicates that, for this particular five-attribute annotation task on satellite imagery, the three VLMs produce annotations of equivalent quality when measured by the downstream retrieval metric. 
+
+3) V3 Ablation Training Configuration: To efficiently com-pare fusion strategies, we use a faster configuration for the ablation runs while keeping the Stage I backbone identical. TABLE X: VLM source reliability measured by downstream CSI and corresponding TASRE weights under different tem-peratures. All three VLMs achieve comparable performance (∼0.242 CSI), resulting in nearly uniform weights regardless of temperature. 
+
+VLM Source CSI Score TASRE Weight 
+
+T =0.5 T =1.0 T =2.0 T =0.5 T =1.0 T =2.0
+
+Qwen-VL-Max 0.2427 0.2420 0.2423 0.3334 0.3332 0.3334 Kimi-VL 0.2424 0.2428 0.2423 0.3332 0.3334 0.3334 DeepSeek-VL 0.2428 0.2427 0.2420 0.3334 0.3334 0.3330 
+
+Std Dev 0.0002 0.0004 0.0001 0.0001 0.0001 0.0002 
+
+TABLE XI: Training configuration comparison: main experi-ment (V2) vs. V3 ablation. Red values highlight differences.                                    
+
+> Hyperparameter V2 (Main Experiment) V3 (Ablation)
+> Phase IIa: Supervised Pre-Training
+> Annotation source Qwen only 5 strategies (Table IX) Pretrain steps 5,000 5,000 Learning rate 1×10 −31×10 −3
+> Phase IIb: GRPO
+> IRR rounds ( N)33Steps per round 10,000 500 Group size ( K)84Sampling temperature ( Ts)0.8 0.1 KL penalty ( β)0.04 0.01
+> Common
+> Batch size 88NFE (ODE steps) 20 20 Stage I backbone Frozen Frozen TASRE temperature —T∈{0.5,1.0,2.0}
+
+Rationale: The V3 ablation uses fewer steps per round (500 vs. 10,000) and more aggressive sampling ( Ts = 0.1) to rapidly identify relative performance trends across fusion strategies, rather than achieving the absolute optimal performance obtained in the main experiment. 
+
+4) Experimental Design: The V3 ablation consists of two experiment groups: 
+
+Experiment 1: Fusion Strategy Comparison (Fixed T =
+
+1.0). We train five independent runs, each using a different fusion strategy from Table IX, all with TASRE temperature 
+
+T = 1.0. This isolates the effect of annotation source / fusion method from temperature. 
+
+Experiment 2: TASRE Temperature Ablation. For the TASRE strategy specifically, we vary the softmax temperature 
+
+T ∈ {0.5, 1.0, 2.0}: nosep,leftmargin=1.5em  
+
+> ●
+
+T = 0.5: Sharp distribution, biasing toward the highest-CSI source  
+
+> ●
+
+T = 1.0: Standard softmax (default)  
+
+> ●
+
+T = 2.0: Smooth distribution, approaching uniform weighting All models are evaluated identically: CSI, FAR, POD, HSS at 
+
+τ ∈ {10 , 20 , 25 , 30 , 35 , 40 } dBZ on the test set (1,114 samples), with NFE = 20 and evaluation batch size 16. 
+
+5) Results and Discussion: a) Experiment 1: Fusion Strategy Comparison.: Ta-ble XII reports the retrieval performance of all five fusion strategies under identical GRPO training (with fast ablation settings). Mean values are computed over thresholds τ ∈
+
+{10 , 20 , 25 , 30 , 35 , 40 } dBZ. JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 3
+
+TABLE XII: Fusion strategy comparison (fixed T = 1.0). Mean metrics are averaged over all six thresholds. Bold : best per column. Bottom row: range across strategies.                                
+
+> Strategy CSI-Mean ↑FAR-Mean ↓POD-Mean ↑HSS-Mean ↑
+> Single (Qwen) 0.2238 0.4756 0.2719 0.3254 Majority Vote 0.2241 0.4697 0.2722 0.3262 Uniform 0.2240 0.4700 0.2721 0.3259 Confidence 0.2234 0.4726 0.2713 0.3249 TASRE ( T=1.0)0.2239 0.4701 0.2720 0.3259
+> Max −Min 0.0007 0.0059 0.0009 0.0013
+
+Table XIII provides the per-threshold CSI breakdown. TABLE XIII: Per-threshold CSI comparison across fusion strategies (fixed T = 1.0). Bold : best per column. 
+
+Strategy @10 @20 @25 @30 @35 @40 
+
+Single (Qwen) 0.365 0.306 0.280 0.222 0.130 0.040 Majority Vote 0.365 0.305 0.280 0.223 0.130 0.041 Uniform 0.365 0.305 0.280 0.222 0.131 0.041 Confidence 0.365 0.306 0.280 0.223 0.130 0.037 TASRE ( T =1.0) 0.365 0.305 0.281 0.221 0.129 0.040 
+
+Max − Min 0.000 0.001 0.001 0.002 0.002 0.004 
+
+All five strategies produce nearly indistinguishable results. The largest inter-strategy variation occurs at τ = 40 dBZ (CSI range = 0.004 ), which is within stochastic training noise. The mean CSI spread across all strategies is only 0.0007 , confirming that the choice of fusion method has negligible impact on final retrieval performance. 
+
+b) Experiment 2: TASRE Temperature Ablation.: Ta-ble XIV reports the effect of the softmax temperature T on TASRE-fused training. TABLE XIV: TASRE temperature ablation. Mean metrics averaged over all six thresholds. Bold : best per column.                             
+
+> Temperature CSI-Mean ↑FAR-Mean ↓POD-Mean ↑HSS-Mean ↑
+> T=0.50.2238 0.4709 0.2716 0.3255
+> T=1.00.2239 0.4701 0.2720 0.3259
+> T=2.00.2232 0.4717 0.2710 0.3245
+> Max −Min 0.0007 0.0016 0.0010 0.0014
+
+TABLE XV: Per-threshold CSI for TASRE temperature ablation. 
+
+Bold : best per column. 
+
+Temperature @10 @20 @25 @30 @35 @40 
+
+T = 0.5 0.365 0.305 0.280 0.222 0.130 0.041 
+
+T = 1.0 0.365 0.305 0.281 0.221 0.129 0.039 
+
+T = 2.0 0.365 0.305 0.280 0.222 0.128 0.039 
+
+Max − Min 0.000 0.000 0.001 0.001 0.002 0.002 
+
+Temperature variation has virtually no effect: the CSI-Mean spread is 0.0007 and the maximum per-threshold CSI difference is 0.002. This is expected given that the three VLM sources have nearly identical CSI scores (Table X), making the softmax temperature irrelevant. 
+
+c) Summary.: Table X reveals the central finding: all three VLMs produce annotations of nearly identical downstream quality (CSI standard deviation < 0.0004 ). Consequently: nosep,leftmargin=1.5em 1) The TASRE weights converge to approximately uniform (∼0.333 each), making TASRE indistinguishable from the Uniform strategy. 2) Temperature has negligible effect on the weight distribu-tion, as exp (CSI m/T ) ≈ exp (CSI m′ /T ) when the CSI scores are tightly clustered. 3) All five fusion strategies produce functionally equivalent pseudo-labels, since the three annotation sources agree to within noise. These results carry important implications: 
+
+d) Justification for Single-VLM (V2) as the Main Ex-periment.: Since multi-VLM fusion offers no measurable improvement over single-source Qwen annotations, the added complexity of the TASRE pipeline—querying multiple VLM APIs, computing fusion weights, maintaining multiple annota-tion files—constitutes over-engineering for this task. The main experiment therefore uses V2 (Qwen-only), which achieves the same downstream performance with a simpler pipeline. 
+
+e) Why VLMs Agree.: The five-attribute taxonomy (cloud type, convective depth, storm mode, overshooting top, cirrus shield) defines a structured, constrained labelling space. Modern VLMs, trained on overlapping corpora with similar visual reasoning capabilities, converge to similar predictions in this well-defined categorical space. The inter-model variance is dominated by stochastic sampling rather than systematic disagreement. 
+
+f) When Multi-VLM Fusion May Help (Future Work).: We hypothesise that TASRE-style fusion would become valuable in settings where: nosep,leftmargin=1.5em  
+
+> ●
+
+The attribute taxonomy is more fine-grained , e.g., distin-guishing sub-types of MCS or multiple cirrus morpholo-gies, where VLM biases diverge.  
+
+> ●
+
+The task requires open-ended text generation rather than categorical selection, amplifying inter-model variance.  
+
+> ●
+
+VLMs are applied to novel domains (e.g., planetary atmo-spheres) where pre-training coverage varies substantially across models. We consider the design of more refined multi-VLM fusion strategies that can exploit such inter-model diversity as a promising direction for future work. 
+
+D. Practical Significance of Satellite-Based Radar Retrieval 
+
+Ground-based weather radar networks, while providing high-resolution precipitation observations, face significant opera-tional limitations that restrict comprehensive meteorological monitoring. Our satellite-based radar retrieval framework addresses these critical observational gaps, offering a com-plementary solution for enhanced weather surveillance. As demonstrated in Fig. 9, ground-based radar networks face inherent limitations including terrain blockage in mountainous regions, limited detection range over oceanic areas, and sparse coverage in remote locations. These observational gaps pose JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 4Prediction Observation ( limited )GPM Data    
+
+> Remote inland region with terrain
+> blockage and limited detection range
+> (a)
+> (b)
+> GPM Data Observation ( limited )Remote oceanic regions with limited
+> detection range
+> (c)
+
+Fig. 9: Practical applications of satellite-based radar retrieval in observationally-sparse regions. (a) Cross-regional transfer from southeastern China to Xinjiang Province, demonstrating retrieval capability in terrain-blocked mountainous regions through comparison of GPM precipitation data, limited ground radar observations, and our prediction results. (b) Oceanic coverage enhancement in southeastern China coastal areas where ground-based radar detection range is insufficient. (c) Multi-source satellite observations (VIS and IR channels) for both regions, showing convective systems visible in satellite imagery over southern Xinjiang where no ground radar coverage exists. Red circles highlight regions with limited radar coverage. significant challenges for severe weather monitoring and early warning systems. Fig. 9(a) illustrates the application of our method to Xinjiang Province, China, a high-altitude mountainous region where radar observations are severely limited due to topographic blockage and sparse radar station deployment. Notably, the southern regions of Xinjiang completely lack ground radar coverage, yet satellite observations in Fig. 9(b) and Fig. 9(c) clearly reveal active convective systems in these areas. The comparison between GPM precipitation data (10 km resolution satellite product), limited ground radar observations, and our retrieval results demonstrates successful domain adaptation capability. Our model effectively reconstructs precipitation patterns in these radar-blind regions, successfully retrieving convective activity that is visible in satellite imagery but undetectable by ground-based radar networks. 
+
+E. Analysis and Discussion 
+
+Is a single VLM annotator sufficient for Phase 2a? 
+
+Phase 2a initialises πϕ on pseudo-labels produced by a frozen VLM, so annotation quality directly sets the starting point for GRPO. A practical concern is whether relying on a single source (Qwen-VL-Max) introduces systematic labelling bias that a multi-source ensemble could correct. We test this via a controlled study under the TASRE (Task-Aligned Source Reliability Evaluation) framework (Appendix V-C ), which weights each annotation source by its downstream retrieval skill measured through the frozen Uθ :
+
+wm = exp (CSI m/τw)
+
+∑j exp (CSI j /τw) , (17) where CSI m is the mean CSI obtained when training πϕ on source m exclusively, and τw is a softmax temperature control-ling weight sharpness. We evaluate three VLMs—Qwen-VL-Max, Kimi-VL, and DeepSeek-VL—under five fusion strategies (Single, Majority Vote, Uniform, Confidence-weighted, and TASRE), with results in Table XVI. TABLE XVI: Multi-VLM annotation fusion strategies evaluated on the FY-4B test set. Metrics are averaged over thresholds 
+
+τ ∈ {10 , 20 , 25 , 30 , 35 , 40 } dBZ under identical GRPO config-uration (Appendix V-C).                              
+
+> Strategy CSI-Mean ↑FAR-Mean ↓POD-Mean ↑HSS-Mean ↑
+> Single (Qwen) 0.2238 0.4756 0.2719 0.3254 Majority Vote 0.2241 0.4697 0.2722 0.3262 Uniform 0.2240 0.4700 0.2721 0.3259 Confidence 0.2234 0.4726 0.2713 0.3249 TASRE ( τw=1.0)0.2239 0.4701 0.2720 0.3259
+> Max −Min 0.0007 0.0059 0.0009 0.0013
+
+All three VLMs produce annotations of essentially identical downstream quality: the inter-source CSI standard deviation JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 5
+
+is below 0.0004 (Appendix Table XI), and the five fusion strategies are indistinguishable within stochastic training noise (CSI-Mean spread = 0.0007). The underlying reason is struc-tural. The five-attribute taxonomy imposes a tightly constrained categorical label space—four cloud types, five storm modes, and three binary-valued convective indicators—that leaves little room for systematic inter-model disagreement among modern VLMs sharing overlapping pre-training corpora; as Appendix Table XI confirms, all three sources cluster near 
+
+CSI = 0.242 ± 0.0004 , so TASRE weights collapse to ≈ 0.333 
+
+regardless of τw.Two decisions follow directly. First , varying τw ∈
+
+{0.5, 1.0, 2.0} has negligible effect (CSI-Mean spread = 0.0007 across temperatures; Appendix Table XV): when source CSI scores are this tightly clustered, the exponential terms in Eq. (17) are trivially equal, reducing TASRE to the Uniform strategy regardless of τw. Second , the overhead of querying multiple VLM APIs, managing per-source annotation files, and estimating fusion weights constitutes over-engineering that yields no measurable retrieval benefit for the present task. We therefore adopt a single Qwen-VL-Max annotator throughout the main experiment. This equivalence is specific to the current constrained taxonomy. In settings with finer-grained label spaces—such as distinguishing MCS sub-types or multiple cirrus morphologies— predictions across VLMs are more likely to diverge, at which point source-reliability weighting may provide a genuine signal. The same applies to novel observation domains with uneven model pre-training coverage, such as planetary or high-latitude atmospheres. We identify TASRE-style fusion under these conditions as an open direction for future work. 
+
+F. Disscusion 
+
+The current approach learns coarse-grained semantic at-tributes without explicit spatial grounding; integrating posi-tion encoding and local region-specific context may improve precipitation localization and morphology fidelity. Moreover, the fixed-size patch-based design restricts scalability to higher-resolution or full-domain inference; efficient semantic injection mechanisms (e.g., neural operators) are needed to maintain computational tractability.
