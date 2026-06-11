@@ -1,16 +1,667 @@
 {
   "mode": "standard",
-  "generated_at": "2026-06-11T09:31:18.345565+00:00",
+  "generated_at": "2026-06-11T11:36:07.160283+00:00",
   "stats": {
     "mode": "standard",
-    "tag_count": 0,
-    "deep_divecandidates": 0,
-    "deep_cap": null,
-    "deep_selected": 0,
-    "quick_candidates": 0,
-    "quick_skim_target": 10,
-    "quick_selected": 0
+    "tag_count": 1,
+    "deep_divecandidates": 10,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 20,
+    "quick_skim_target": 11,
+    "quick_selected": 11
   },
-  "deep_dive": [],
-  "quick_skim": []
+  "deep_dive": [
+    {
+      "id": "2606.06348v1",
+      "source": "arxiv",
+      "title": "Performance Evaluation of GraphCast for Medium-Range Weather Forecasting over Brazil",
+      "abstract": "The paradigm of global weather forecasting is rapidly shifting with the emergence of Machine Learning Weather Prediction models (MLWP). While these data-driven architectures demonstrate remarkable global skill, regional benchmarks in the Global South remain scarce, leaving their efficacy in complex, highly convective environments largely unverified. This study evaluates the performance of GraphCast operational against the deterministic ECMWF IFS HRES as baseline across four distinct Brazilian climatic sub-regions. Utilizing a scalable, cloud-native pipeline and the WeatherBench-X framework for benchmarking weather models, we assess selected tropospheric variables ($T_{850}$, $Q_{850}$, $Z_{500}$) over four selected seasonal windows, employing the operational IFS analysis as the ground truth to calculate the statistical metrics for both models. Results reveal a regime-dependent skill profile. During the austral winter, GraphCast underperforms in the medium range (lead days 2-7) for $Z_{500}$ when resolving fast-propagating baroclinic systems over southern Brazil, but regains an advantage in the extended range, where its inherent smoothing of chaotic small-scale variability becomes beneficial under deterministic skill metrics. Conversely, during the austral summer wet season, GraphCast accurately captures large-scale moisture transport while intrinsically dampening the high-frequency convective variability that degrades deterministic NWP temperature forecasts. These findings establish a baseline for Brazil and define the specific physical boundaries that will guide future ``tropicalization'' efforts, aiming to optimize these foundational AI models for regional resilience.",
+      "authors": [
+        "Wolfgang R. Rowell",
+        "Lucas S. Kupssinskü"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-04T16:19:29+00:00",
+      "link": "https://arxiv.org/pdf/2606.06348v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "evaluates GraphCast for medium-range weather forecasting over Brazil",
+      "llm_evidence_cn": "评估GraphCast在巴西地区的中期天气预报性能",
+      "llm_evidence": "评估GraphCast在巴西地区的中期天气预报性能",
+      "canonical_evidence": "评估GraphCast在巴西地区的中期天气预报性能",
+      "llm_tldr_en": "Benchmarks GraphCast against ECMWF IFS over four Brazilian regions, assessing tropospheric variables and finding competitive performance.",
+      "llm_tldr_cn": "基于WeatherBench-X框架，在巴西四个气候子区域评估了GraphCast与ECMWF IFS HRES的对流层预报性能。结果显示GraphCast在中等范围内具有竞争力，但在复杂对流环境下仍需改进。",
+      "llm_tldr": "基于WeatherBench-X框架，在巴西四个气候子区域评估了GraphCast与ECMWF IFS HRES的对流层预报性能。结果显示GraphCast在中等范围内具有竞争力，但在复杂对流环境下仍需改进。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.10642v1",
+      "source": "arxiv",
+      "title": "PhysMetrics.Weather: An Evaluation Framework for Physical Consistency in ML Weather Models",
+      "abstract": "Machine learning weather prediction (MLWP) models have achieved impressive forecasting performance at a small fraction of the computational costs required for traditional physics-based methods. However, they are primarily (1) data-driven and (2) evaluated using pixel-wide error metrics (e.g., RMSE), so there are no guarantees that their forecasts are consistent with known physical laws. We introduce PhysMetrics.Weather, an evaluation framework that assesses the physical realism of MLWP models across three types of metrics: conservation, spectral, and dynamical. By quantifying physical realism, this tool guides the development of physics-informed architectures and helps evaluate whether MLWP models are reliable for operational use. Our framework is available on Github at https://github.com/Emmakast/PhysMetrics.Weather.",
+      "authors": [
+        "Emma Kasteleyn",
+        "Timo Maier",
+        "Axel Lauer",
+        "Veronika Eyring",
+        "Pierre Gentine",
+        "Ana Lucic"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "physics.ao-ph"
+      ],
+      "published": "2026-06-09T09:45:52+00:00",
+      "link": "https://arxiv.org/pdf/2606.10642v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "evaluation framework for physical consistency in ML weather prediction models; directly addresses deep learning weather forecasting",
+      "llm_evidence_cn": "评估机器学习天气预报模型物理一致性的框架，直接针对深度学习天气预报",
+      "llm_evidence": "评估机器学习天气预报模型物理一致性的框架，直接针对深度学习天气预报",
+      "canonical_evidence": "评估机器学习天气预报模型物理一致性的框架，直接针对深度学习天气预报",
+      "llm_tldr_en": "PhysMetrics.Weather provides conservation, spectral, and dynamical metrics to assess physical realism of MLWP models, guiding development of reliable weather forecasts.",
+      "llm_tldr_cn": "该论文提出PhysMetrics.Weather评估框架，用于衡量机器学习天气预报模型（如Pangu-Weather、GraphCast）的物理一致性，包括守恒、谱和动力学指标。通过量化物理真实性，该工具帮助开发物理信息架构，并评估模型是否可靠用于业务。对深度学习天气预报方法的可信度提升有重要意义。",
+      "llm_tldr": "该论文提出PhysMetrics.Weather评估框架，用于衡量机器学习天气预报模型（如Pangu-Weather、GraphCast）的物理一致性，包括守恒、谱和动力学指标。通过量化物理真实性，该工具帮助开发物理信息架构，并评估模型是否可靠用于业务。对深度学习天气预报方法的可信度提升有重要意义。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.07898v1",
+      "source": "arxiv",
+      "title": "Temporal Coverage over Density: Parsimonious Training-Set Design for ML Climate Downscaling",
+      "abstract": "High-resolution regional climate simulations provide critical information for climate impacts assessments but remain computationally expensive, motivating the development of machine-learning downscalers and emulators. A key challenge is determining how limited high-resolution simulations should be distributed across a changing climate trajectory to capture both forced climate response and internal variability. Using the CESM2 Large Ensemble over the western United States, we compare three training-year selection strategies under fixed data budgets: a contiguous block of historical years, years drawn from both the beginning and end of the simulation period, and years distributed throughout the full climate trajectory. Including both historical and future years consistently outperforms training on historical years alone, demonstrating the importance of exposing downscaling models to climate states outside the historical record and highlighting limitations of stationarity assumptions common in statistical downscaling. Training on years distributed throughout the full climate trajectory performs best overall, indicating that broad sampling of internal variability provides additional information beyond exposure to the forced climate response alone. Models trained on temporally distributed subsets more successfully reproduce variability in unseen ensemble members while retaining strong performance across a wide range of climate diagnostics. Even when trained on only one-tenth of the available high-resolution years, temporally distributed models remain highly competitive with full-data training. These results suggest that, under fixed computational budgets, broad sampling of climate states is more valuable than temporal continuity when allocating scarce high-resolution simulations. The findings provide practical guidance for regional climate downscaling and large-ensemble projection workflows.",
+      "authors": [
+        "Karandeep Singh",
+        "Stefan Rahimi",
+        "Chad W. Thackeray",
+        "Stephen Cropper",
+        "Alex Hall"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.CE"
+      ],
+      "published": "2026-06-05T23:16:38+00:00",
+      "link": "https://arxiv.org/pdf/2606.07898v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Directly addresses ML climate downscaling training-set design",
+      "llm_evidence_cn": "直接研究机器学习气候降尺度的训练集设计",
+      "llm_evidence": "直接研究机器学习气候降尺度的训练集设计",
+      "canonical_evidence": "直接研究机器学习气候降尺度的训练集设计",
+      "llm_tldr_en": "Compares training-year selection strategies for ML downscalers under fixed data budgets, showing including end-of-century years improves skill.",
+      "llm_tldr_cn": "针对机器学习气候降尺度中有限高分辨率模拟数据的训练集设计问题，比较了三种年份选择策略。基于美国西部CESM2大集合实验，发现包含世纪末年份的方案在捕捉气候响应和内部变率方面更有效，为高效降尺度提供了指导。",
+      "llm_tldr": "针对机器学习气候降尺度中有限高分辨率模拟数据的训练集设计问题，比较了三种年份选择策略。基于美国西部CESM2大集合实验，发现包含世纪末年份的方案在捕捉气候响应和内部变率方面更有效，为高效降尺度提供了指导。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "statistical and dynamical downscaling of weather data",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.08535v1",
+      "source": "arxiv",
+      "title": "NGram-MoSE: Efficient Remote Sensing Super-Resolution via N-Gram Context and Mixture-of-Experts",
+      "abstract": "Remote sensing applications for environmental monitoring and disaster management are frequently constrained by a spatial--temporal trade-off: imagery with fine spatial detail is often acquired less frequently, whereas more temporally available observations are typically coarser. Single-image super-resolution provides a practical means to enhance coarse imagery without changing acquisition schedules, yet many Transformer-based SR models remain computationally expensive and can be sensitive to limited or geographically biased training data, which degrades robustness under out-of-distribution conditions. This paper presents NGram-MoSE, a lightweight Transformer architecture designed to improve both efficiency and texture continuity. NGram-MoSE introduces N-Gram Context Injection to strengthen cross-window local consistency and mitigate window-boundary artifacts, and incorporates a Mixture-of-Experts (MoE) feed-forward design to scale capacity through sparse activation without proportional growth in inference cost. Experiments on a geographically disjoint OOD test set show that NGram-MoSE achieves 31.68\\,dB PSNR while reducing FLOPs by \\(14\\times\\) relative to a heavyweight Transformer reference. Downstream evaluation on a landslide segmentation benchmark further demonstrates that restoring degraded inputs to the detector training scale improves performance, yielding a 4.47\\% absolute gain in mAP@50 over bicubic upsampling, and exhibits stronger cross-scale consistency under scale extrapolation. These results indicate that NGram-MoSE provides an effective SR module for resource-constrained remote sensing pipelines requiring robust generalization.",
+      "authors": [
+        "Yun-Hsuan Huang",
+        "Trong-An Bui",
+        "Chih-Hung Chuang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-07T09:30:49+00:00",
+      "link": "https://arxiv.org/pdf/2606.08535v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "remote sensing super-resolution, directly applicable to meteorological satellite imagery",
+      "llm_evidence_cn": "遥感超分辨率，直接可用于气象卫星图像",
+      "llm_evidence": "遥感超分辨率，直接可用于气象卫星图像",
+      "canonical_evidence": "遥感超分辨率，直接可用于气象卫星图像",
+      "llm_tldr_en": "Proposes a lightweight Transformer for remote sensing super-resolution using N-gram context and mixture-of-experts, enhancing spatial detail efficiently.",
+      "llm_tldr_cn": "针对遥感图像空间分辨率与时间分辨率的矛盾，本文提出NGram-MoSE，一种轻量级Transformer超分辨率模型，通过N-gram上下文和混合专家机制提升纹理连续性。在遥感数据集上效率高且鲁棒，可直接应用于气象卫星图像的降尺度增强。",
+      "llm_tldr": "针对遥感图像空间分辨率与时间分辨率的矛盾，本文提出NGram-MoSE，一种轻量级Transformer超分辨率模型，通过N-gram上下文和混合专家机制提升纹理连续性。在遥感数据集上效率高且鲁棒，可直接应用于气象卫星图像的降尺度增强。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "meteorological super-resolution",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.08563v1",
+      "source": "arxiv",
+      "title": "Physics-Guided Dual Decoding and Spectral Supervision for Global 3D Hydrometeor Prediction",
+      "abstract": "While global data-driven models excel at predicting continuous atmospheric variables, three-dimensional hydrometeor forecasting remains challenging due to the zero-inflated, long-tailed distributions of these variables. Standard deep learning optimization often yields overly smooth forecasts, attenuating extreme events and spatial textures. We propose PredHydro-Net, a physics-guided dual-decoding framework that mitigates this smoothing. To resolve multi-variable optimization conflicts, it employs a decoupled architecture where macroscopic thermodynamic and dynamic fields unidirectionally modulate hydrometeor generation. By integrating wavelet-based frequency decoupling, spectral amplitude matching, and adversarial training, the model achieves a favorable trade-off between quantitative accuracy and spatial fidelity. In a 72-h global evaluation, PredHydro-Net outperforms both spatiotemporal deep learning baselines (Earthformer and PredRNNv2) and the operational Global Forecast System (GFS) in extreme-event detection and spectral representation. Furthermore, it demonstrates strong climatological consistency with Global Precipitation Measurement (GPM) satellite retrievals. The model reasonably reproduces the three-dimensional cloud structures in extreme weather events, such as Hurricane Ian. Feature attribution confirms its dependence on physical precursors such as relative humidity and wind convergence, offering a robust, physics-informed approach to long-tailed atmospheric prediction.",
+      "authors": [
+        "Dandan Chen",
+        "Yaqiang Wang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "physics.ao-ph"
+      ],
+      "published": "2026-06-07T10:38:37+00:00",
+      "link": "https://arxiv.org/pdf/2606.08563v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "deep learning for global 3D hydrometeor prediction with physics guidance",
+      "llm_evidence_cn": "物理引导的深度学习全球三维水凝物预测",
+      "llm_evidence": "物理引导的深度学习全球三维水凝物预测",
+      "canonical_evidence": "物理引导的深度学习全球三维水凝物预测",
+      "llm_tldr_en": "Proposes PredHydro-Net, a physics-guided dual-decoding framework with wavelet frequency decoupling and adversarial training to improve hydrometeor prediction by mitigating oversmoothing.",
+      "llm_tldr_cn": "针对全球数据驱动模型在三维水凝物预测中存在的过度平滑问题，提出物理引导的双解码框架PredHydro-Net。该框架采用解耦架构，利用宏观热力学和动态场单向调制水凝物生成，并整合小波频率解耦、频谱幅度匹配和对抗训练。实验表明该方法能有效保留极端事件和空间纹理。",
+      "llm_tldr": "针对全球数据驱动模型在三维水凝物预测中存在的过度平滑问题，提出物理引导的双解码框架PredHydro-Net。该框架采用解耦架构，利用宏观热力学和动态场单向调制水凝物生成，并整合小波频率解耦、频谱幅度匹配和对抗训练。实验表明该方法能有效保留极端事件和空间纹理。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.08630v1",
+      "source": "arxiv",
+      "title": "Tyan-WP: A Wind Power Foundation Model for Ultra-Short-Term Probabilistic Forecasting",
+      "abstract": "Global wind power capacity, especially in China, is booming, with new farms spanning diverse terrains and climates. The industry urgently needs accurate wind power foundation models to shorten commissioning and accelerate grid connection. This is because site-specific time series models (TSMs) are not well suited to data-scarce scenarios and generalize poorly, while generic large time series models (LTSMs) are mostly limited to univariate inputs and cannot fully exploit static site attributes or the dependencies between power and meteorological covariates, leading to insufficient accuracy. To fill this gap, we propose \\textbf{Tyan-WP}, the first wind power foundation model for ultra-short-term probabilistic forecasting. Pretrained on a large-scale wind power dataset covering more than 126,000 U.S. sites over seven years, Tyan-WP further improves zero-shot forecasting through two domain-specific module designs: static site embedding using coordinate, terrain, and ecoregion metadata, and a power-aware meteorological fusion (PAMF) module that models interactions between historical power and meteorological covariates. Under a unified evaluation protocol, Tyan-WP surpasses eight site-specific supervised TSMs on 10 in-domain sites and outperforms eleven generic LTSMs on 127 in-domain sites, reducing MAE by 19.9%, RMSE by 16.6%, CRPS by 22.2%, and AQL by 21.7%, while raising R^2 by 16.7%. It further demonstrates strong cross-geography generalization on six real U.K. sites. These results show that the wind power foundation model can achieve accurate zero-shot forecasting without target-site training, providing a practical pathway for rapid turbine onboarding and probabilistic risk management at new wind farms.",
+      "authors": [
+        "Jiahui Huang",
+        "Ao Luo",
+        "Lei Liu",
+        "Hongwei Zhao",
+        "Tengyuan Liu",
+        "Ruibo Guo",
+        "Bo Wang",
+        "Zhao Wang",
+        "Bin Li"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-07T13:50:09+00:00",
+      "link": "https://arxiv.org/pdf/2606.08630v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "wind power foundation model for ultra-short-term probabilistic forecasting using meteorological covariates",
+      "llm_evidence_cn": "使用气象协变量的超短期概率风电基础模型",
+      "llm_evidence": "使用气象协变量的超短期概率风电基础模型",
+      "canonical_evidence": "使用气象协变量的超短期概率风电基础模型",
+      "llm_tldr_en": "Presents Tyan-WP, the first foundation model for ultra-short-term probabilistic wind power forecasting, pretrained on a large corpus and leveraging static site attributes and meteorological covariates, outperforming site-specific and generic time-series models.",
+      "llm_tldr_cn": "针对风电行业急需的基础模型，提出了Tyan-WP——首个超短期概率风电预测基础模型。模型在海量数据上预训练，充分利用静态场址属性和气象协变量（如风速、风向、温度等），克服了站点特定模型泛化差和通用大模型仅支持单变量的局限。在多个实际风电场数据上，Tyan-WP在概率预测精度上显著优于现有方法，可加速风电场并网调试。对气象降尺度和超分辨率也有借鉴意义。",
+      "llm_tldr": "针对风电行业急需的基础模型，提出了Tyan-WP——首个超短期概率风电预测基础模型。模型在海量数据上预训练，充分利用静态场址属性和气象协变量（如风速、风向、温度等），克服了站点特定模型泛化差和通用大模型仅支持单变量的局限。在多个实际风电场数据上，Tyan-WP在概率预测精度上显著优于现有方法，可加速风电场并网调试。对气象降尺度和超分辨率也有借鉴意义。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on wind field prediction, wind shear modeling, and meteorological forecasting for UAV navigation or aviation safety.",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.09581v1",
+      "source": "arxiv",
+      "title": "AeroMesa: Efficient Data Management System for Multi-Dimensional Spatio-Temporal Trajectories",
+      "abstract": "The rapid growth of trajectory data -- especially the dense 4D traces generated by unmanned aerial vehicles (UAVs) -- is placing mounting pressure on spatio-temporal data management systems. Existing HBase-based trajectory indexes suffer from three limitations: coarse-grained temporal pruning, locality-unfriendly XZ2 spatial encodings with workload-blind ordering, and severe row-key interval fragmentation when altitude is jointly encoded with the horizontal dimensions. We present AeroMesa, a unified system that natively supports $(x,y)$, $(x,y,t)$, $(x,y,z)$, and $(x,y,z,t)$ queries within a single storage framework. AeroMesa integrates three complementary designs: a temporal index (TI$^{+}$) that refines pruning to second-level granularity, a Hilbert-BFS spatial index with a Workload-Aware Jaccard ordering, and a decoupled 4D architecture that separates horizontal indexing from altitude-aware secondary indexing to eliminate isotropic-encoding fragmentation. We implement AeroMesa on Apache HBase and Redis and evaluate it on a real-world dataset (T-Drive) and a high-fidelity 90,000-trajectory UAV simulation dataset. AeroMesa consistently outperforms all baselines: TI$^{+}$ cuts temporal-query candidates by up to 51% over MCTM, the Hilbert-BFS/WAJ index lowers 2D latency by up to 17.9% over the state-of-the-art TMan, and the decoupled 4D design reduces latency by up to 30$\\times$ while cutting merged scan ranges by up to three orders of magnitude over XZ3/TXZ3 joint-encoding approaches.",
+      "authors": [
+        "Yue Zhang",
+        "Zizhong Ding",
+        "Lin Sun",
+        "Haopeng Chen",
+        "Yan Jiao",
+        "Yongming Xu"
+      ],
+      "primary_category": "cs.DB",
+      "categories": [
+        "cs.DB"
+      ],
+      "published": "2026-06-08T14:55:31+00:00",
+      "link": "https://arxiv.org/pdf/2606.09581v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "data management system for UAV trajectory data",
+      "llm_evidence_cn": "无人机轨迹数据管理系统",
+      "llm_evidence": "无人机轨迹数据管理系统",
+      "canonical_evidence": "无人机轨迹数据管理系统",
+      "llm_tldr_en": "Presents AeroMesa, a unified spatio-temporal data management system for multi-dimensional trajectories including UAV 4D traces, supporting queries over (x,y,z,t) with a temporal index and enhanced spatial encoding.",
+      "llm_tldr_cn": "针对无人机轨迹数据爆炸式增长，提出了AeroMesa统一时空数据管理系统。该原生支持(x,y)、(x,y,t)、(x,y,z)和(x,y,z,t)查询，通过改进的时间索引和空间编码克服了现有HBase系统在细粒度时间剪枝和空间编码局部性方面的局限。实验结果证明了其在高效存储和查询大规模无人机轨迹方面的优势，对无人机导航和气象辅助决策具有支撑作用。",
+      "llm_tldr": "针对无人机轨迹数据爆炸式增长，提出了AeroMesa统一时空数据管理系统。该原生支持(x,y)、(x,y,t)、(x,y,z)和(x,y,z,t)查询，通过改进的时间索引和空间编码克服了现有HBase系统在细粒度时间剪枝和空间编码局部性方面的局限。实验结果证明了其在高效存储和查询大规模无人机轨迹方面的优势，对无人机导航和气象辅助决策具有支撑作用。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on wind field prediction, wind shear modeling, and meteorological forecasting for UAV navigation or aviation safety.",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.05590v1",
+      "source": "arxiv",
+      "title": "A stochastic model for fog forecasting",
+      "abstract": "Despite significant advancements in parameterizations of boundary layer processes, forecasting, and nowcasting low-level clouds using numerical models remain challenging. The purpose of this study is to test a prototype of a high-resolution stochastic-deterministic model designed to simulate the life cycle of fog cover based on the Ising model from statistical mechanics. The case of advection fog around St. John's Airport in Newfoundland (Canada) has been considered. The model demonstrates promising capabilities in forecasting mean fog cover and replicating the horizontal structure observed in satellite imagery, including bands, rolls, and closed or open cells. We evaluate the model's predictive skill by analyzing its effectiveness in reproducing the evolution of fog cover across three representative cases. A contingency table and associated performance metrics are used to assess its accuracy.",
+      "authors": [
+        "Elsa Cardoso-Bihlo",
+        "Boualem Khouider"
+      ],
+      "primary_category": "math-ph",
+      "categories": [
+        "math-ph"
+      ],
+      "published": "2026-06-04T02:12:33+00:00",
+      "link": "https://arxiv.org/pdf/2606.05590v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "stochastic model for fog forecasting based on Ising model, a numerical prediction method",
+      "llm_evidence_cn": "基于Ising模型的雾预报随机模型，属于数值预报方法",
+      "llm_evidence": "基于Ising模型的雾预报随机模型，属于数值预报方法",
+      "canonical_evidence": "基于Ising模型的雾预报随机模型，属于数值预报方法",
+      "llm_tldr_en": "Despite challenges in forecasting low-level clouds, this study presents a high-resolution stochastic-deterministic model for fog lifecycle simulation based on the Ising model. Tested on advection fog at St. John's Airport, the model successfully predicts mean fog cover and replicates horizontal structures like bands and cells observed in satellite imagery. It shows promise for operational fog forecasting.",
+      "llm_tldr_cn": "针对低云层预报的挑战，本文基于统计力学中的Ising模型，提出了一种高分辨率随机-确定性模型来模拟雾的生命周期。在加拿大圣约翰斯机场的平流雾案例中，该模型成功预测了平均雾覆盖，并再现了卫星图像中观测到的带状、滚轴和细胞状水平结构。该原型展示了在雾预报中的应用潜力，为数值天气预报提供了新方法。",
+      "llm_tldr": "针对低云层预报的挑战，本文基于统计力学中的Ising模型，提出了一种高分辨率随机-确定性模型来模拟雾的生命周期。在加拿大圣约翰斯机场的平流雾案例中，该模型成功预测了平均雾覆盖，并再现了卫星图像中观测到的带状、滚轴和细胞状水平结构。该原型展示了在雾预报中的应用潜力，为数值天气预报提供了新方法。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "numerical weather prediction models and methods",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.03275v1",
+      "source": "arxiv",
+      "title": "Reduced Order Model for a Convective Rotating Annulus with Localized Forcing",
+      "abstract": "A low-order Galerkin model is developed for a rotating fluid annulus driven by localized heating at the outer bottom periphery, with uniform cooling at the inner cylindrical wall. The model retains the full cylindrical geometry and employs Bessel-function radial eigenfunctions satisfying physically correct Dirichlet-Neumann boundary conditions. A dual-series least-squares procedure determines the conductive base state under the mixed thermal boundary condition. Galerkin projection onto the leading radial and vertical basis functions yields a 10-variable dynamical system governing the mean meridional overturning, thermal wind, baroclinic wave amplitudes, and their nonlinear interactions. Linear stability analysis yields explicit critical Rayleigh numbers for both mean and wave instabilities, showing that rotation raises Ra_c in proportion to T^2. The model reproduces the Nu ~ Ra^(1/4) scaling, rotational suppression at low Ra, and the boundary-layer-dominated flow structure observed in companion axisymmetric simulations.",
+      "authors": [
+        "Sagar Suresh",
+        "Ayan Kumar Banerjee"
+      ],
+      "primary_category": "physics.flu-dyn",
+      "categories": [
+        "physics.flu-dyn"
+      ],
+      "published": "2026-06-02T07:37:59+00:00",
+      "link": "https://arxiv.org/pdf/2606.03275v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "reduced order model for convective rotating annulus, a simplified atmospheric dynamics model",
+      "llm_evidence_cn": "对流旋转环的降阶模型，简化的大气动力学模型",
+      "llm_evidence": "对流旋转环的降阶模型，简化的大气动力学模型",
+      "canonical_evidence": "对流旋转环的降阶模型，简化的大气动力学模型",
+      "llm_tldr_en": "Develops a 10-variable Galerkin reduced-order model for a rotating fluid annulus with localized heating, capturing baroclinic waves and meridional overturning.",
+      "llm_tldr_cn": "针对局部加热的旋转流体环，发展了一个10变量Galerkin降阶模型。该模型采用贝塞尔函数径向本征函数，保留了完整圆柱几何并满足物理边界条件。线性稳定性分析给出了显式临界瑞利数，揭示了平均经向环流、热成风与斜压波之间的非线性相互作用。",
+      "llm_tldr": "针对局部加热的旋转流体环，发展了一个10变量Galerkin降阶模型。该模型采用贝塞尔函数径向本征函数，保留了完整圆柱几何并满足物理边界条件。线性稳定性分析给出了显式临界瑞利数，揭示了平均经向环流、热成风与斜压波之间的非线性相互作用。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "numerical weather prediction models and methods",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.09941v1",
+      "source": "arxiv",
+      "title": "Stochastic weather generators for high-frequency wind vector time series",
+      "abstract": "Surface winds can vary substantially from one minute to the next, so there is scope for studying its variation on this fine time scale. Restricting to the month of June to minimize seasonality, this work develops a range of machine learning models for generating realistic time series of surface wind vectors at a site in Lamont, Oklahoma based on more than 30 years of high quality measurements at the minute time scale. Such a generator could be used as an input into models from a range of disciplines, notably for wind energy, but also wildfire spread and aviation, among others. The data show complex diurnal structures in both wind speed and direction that would be challenging to capture with standard time series models, so we consider a number of machine learning approaches to producing a stochastic wind generator based on time vector-quantized variational autoencoders. We consider generating a day's worth of data at a time and generating a day of wind vectors conditional on the previous day's winds. We also study methods for incorporating a discrete weather state variable in the generator. We evaluate the generators using a wide range of formal and informal methods. The best of these generators can capture many but not all of the complex features present in the observational data. In particular, the best of our approaches accurately mimic diurnal changes in wind volatility but struggle to match the observed distribution of extreme wind speeds.",
+      "authors": [
+        "Mingshi Cui",
+        "Kevin Eng",
+        "Justin T. Greene",
+        "Zern Ke",
+        "Abolfazl Sodagartojgi",
+        "Zhiqiu Xia",
+        "Gemma E. Moran",
+        "Michael L. Stein"
+      ],
+      "primary_category": "stat.AP",
+      "categories": [
+        "stat.AP",
+        "cs.LG",
+        "stat.OT"
+      ],
+      "published": "2026-06-08T00:42:51+00:00",
+      "link": "https://arxiv.org/pdf/2606.09941v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "stochastic wind vector generator for aviation and wind energy",
+      "llm_evidence_cn": "用于航空和风能的风矢量随机生成器",
+      "llm_evidence": "用于航空和风能的风矢量随机生成器",
+      "canonical_evidence": "用于航空和风能的风矢量随机生成器",
+      "llm_tldr_en": "Develops ML-based stochastic weather generators for high-frequency surface wind vector time series at a single site, capturing complex diurnal structures. Useful for aviation, wildfire spread, and wind energy applications.",
+      "llm_tldr_cn": "针对高频表面风矢量时间序列，该工作开发了一系列机器学习随机天气生成器，基于俄克拉荷马州Lamont站点超过30年的分钟级观测数据。模型能够捕捉风速和风向中复杂的日变化结构，生成逼真的时间序列。该生成器可作为航空、野火蔓延和风能等领域的输入模型，弥补了标准时间序列模型难以处理高频风场变化的问题。",
+      "llm_tldr": "针对高频表面风矢量时间序列，该工作开发了一系列机器学习随机天气生成器，基于俄克拉荷马州Lamont站点超过30年的分钟级观测数据。模型能够捕捉风速和风向中复杂的日变化结构，生成逼真的时间序列。该生成器可作为航空、野火蔓延和风能等领域的输入模型，弥补了标准时间序列模型难以处理高频风场变化的问题。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on wind field prediction, wind shear modeling, and meteorological forecasting for UAV navigation or aviation safety.",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.06102v1",
+      "source": "arxiv",
+      "title": "Step-adaptive multimodal fusion network with multi-scale cloud feature learning for ultra-short-term solar irradiance forecasting",
+      "abstract": "Ultra-short-term solar irradiance prediction is critical for photovoltaic system dispatch and power grid stability. Existing approaches suffer from three key shortcomings: single time-series models cannot capture the spatial dynamics of clouds under complex conditions, standard convolutions inadequately represent multi-scale cloud features, and fixed low-frequency compensation strategies fail to adapt to different prediction steps. To address these issues, this proposes a multi-source data fusion model for ultra-short-term irradiance prediction. The model first employs InceptionNeXt to extract multi-scale, multi-directional spatial features from ground-based cloud images. A step-adaptive low-frequency compensation unit is then introduced to dynamically modulate global low-frequency information based on the prediction step. Eventually, the enhanced image features are combined with meteorological time-series features, and a TempAttnLSTM network captures global temporal dependencies for multi-step prediction. Experiments on the public NREL dataset and practical photovoltaic stations in Shandong illustrate the effectiveness of the proposed method compared with several state-of-the-art approaches.",
+      "authors": [
+        "Jingxin Zhang Xiaoqin Wang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-04T12:42:52+00:00",
+      "link": "https://arxiv.org/pdf/2606.06102v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "deep learning model for ultra-short-term solar irradiance forecasting using cloud image features; weather prediction application",
+      "llm_evidence_cn": "利用云图像特征的超短期太阳辐照度深度学习预测模型，天气预报应用",
+      "llm_evidence": "利用云图像特征的超短期太阳辐照度深度学习预测模型，天气预报应用",
+      "canonical_evidence": "利用云图像特征的超短期太阳辐照度深度学习预测模型，天气预报应用",
+      "llm_tldr_en": "Step-adaptive multimodal fusion network with InceptionNeXt extracts multi-scale cloud features for accurate irradiance forecasting; advances deep learning weather prediction.",
+      "llm_tldr_cn": "该论文针对超短期太阳辐照度预测，提出多源数据融合模型，使用InceptionNeXt从地面云图像提取多尺度空间特征，并设计步自适应低频补偿策略。实验证明该模型优于单时序模型和固定补偿方法。该工作展示了深度学习融合云图与气象数据提升天气预报的潜力，属于深度学习天气预报技术。",
+      "llm_tldr": "该论文针对超短期太阳辐照度预测，提出多源数据融合模型，使用InceptionNeXt从地面云图像提取多尺度空间特征，并设计步自适应低频补偿策略。实验证明该模型优于单时序模型和固定补偿方法。该工作展示了深度学习融合云图与气象数据提升天气预报的潜力，属于深度学习天气预报技术。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.03393v2",
+      "source": "arxiv",
+      "title": "Flicker-DDPM: Accelerating Denoising Diffusion via 1/f Colored Noise Injection",
+      "abstract": "We propose a novel diffusion model, Flicker-DDPM, which incorporates flicker (1/f) noise inspired by self-organized criticality (SOC), a widely observed phenomenon in natural systems. Unlike denoising diffusion probabilistic models (DDPMs), which employ isotropic white noise in the forward process, Flicker-DDPM adopts colored noise with power-law spectra to better match the spectral statistics of natural images, whose power spectra typically follow P(k) proportional to 1/k^α. To this end, we develop a colored-noise module based on a spatial correlation kernel, σ(d) = (d + 1)^{-η}, and theoretically establish that adjusting η controls the spectral exponent α of the generated 1/fα noise, enabling adaptation to datasets with diverse spectral characteristics. On CIFAR-10, Flicker DDPM matches or surpasses the generation quality of a standard DDPM baseline using 3.33 times fewer sampling steps, with negligible additional computational cost per step. We further develop a frequency-domain linear theory demonstrating that spectrally matched colored noise linearizes the reverse trajectory, theoretically explaining the observed sampling acceleration.",
+      "authors": [
+        "KeXiang Mao",
+        "FanCheng Li"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-02T09:36:09+00:00",
+      "link": "https://arxiv.org/pdf/2606.03393v2",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "diffusion model with colored noise for image generation; method transferable to meteorological downscaling",
+      "llm_evidence_cn": "使用彩色噪声的扩散模型，方法可迁移到气象降尺度",
+      "llm_evidence": "使用彩色噪声的扩散模型，方法可迁移到气象降尺度",
+      "canonical_evidence": "使用彩色噪声的扩散模型，方法可迁移到气象降尺度",
+      "llm_tldr_en": "Flicker-DDPM accelerates denoising diffusion by injecting 1/f colored noise, improving spectral matching and sampling efficiency; potentially useful for weather super-resolution.",
+      "llm_tldr_cn": "该论文提出Flicker-DDPM，通过注入1/f彩色噪声替代传统白噪声，加速去噪扩散过程，并更好地匹配自然图像的频谱统计。实验表明该方法在图像生成上取得更快的采样和更好的质量。虽然未直接应用于气象，但其扩散模型改进可迁移至气象超分辨率任务，为生成高分辨率天气场提供新工具。",
+      "llm_tldr": "该论文提出Flicker-DDPM，通过注入1/f彩色噪声替代传统白噪声，加速去噪扩散过程，并更好地匹配自然图像的频谱统计。实验表明该方法在图像生成上取得更快的采样和更好的质量。虽然未直接应用于气象，但其扩散模型改进可迁移至气象超分辨率任务，为生成高分辨率天气场提供新工具。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on meteorological downscaling and weather super resolution using diffusion models, generative models, or neural networks.",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.09959v1",
+      "source": "arxiv",
+      "title": "Temporal Context Conditioning for Seasonality-Aware Precipitation Nowcasting of High-Intensity Rainfall",
+      "abstract": "Precipitation nowcasting is increasingly being approached with deep learning models that learn directly from recent radar observations. Although such models can efficiently capture short-term precipitation motion, they often lack broader contextual information about the meteorological conditions under which rainfall develops. This paper investigates whether lightweight temporal context can improve radar-based nowcasting, particularly for high-intensity rainfall. We propose the Time-Aware Small-Attention U-Net (TA-SmaAt-UNet), which extends the core SmaAt-UNet model with temporal conditioning layers that use cyclical encodings of time-of-day and time-of-year to modulate intermediate feature representations. Experiments on KNMI radar precipitation data show that temporal conditioning is most beneficial for rare, high-intensity precipitation events, while also improving the representation of seasonal variability and predicted rainfall-intensity distributions. A layer conductance analysis further indicates that the added temporal conditioning layers are actively used by the model despite their small parameter cost. These findings suggest that simple, physically motivated temporal context can improve the realism and reliability of deep learning-based precipitation nowcasts. The implementation of our models and training setup is available on \\href{https://github.com/gijsvn/TA-SmaAt-UNet}{GitHub}.",
+      "authors": [
+        "Gijs van Nieuwkoop",
+        "Siamak Mehrkanoon"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-08T12:28:28+00:00",
+      "link": "https://arxiv.org/pdf/2606.09959v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "deep learning precipitation nowcasting with temporal conditioning",
+      "llm_evidence_cn": "深度学习降水临近预报，加入时间条件",
+      "llm_evidence": "深度学习降水临近预报，加入时间条件",
+      "canonical_evidence": "深度学习降水临近预报，加入时间条件",
+      "llm_tldr_en": "Proposes TA-SmaAt-UNet with cyclical temporal encodings for seasonality-aware nowcasting of high-intensity rainfall from radar data.",
+      "llm_tldr_cn": "该文针对深度学习降水临近预报缺乏季节气象背景的问题，提出Time-Aware Small-Attention U-Net (TA-SmaAt-UNet)，通过在SmaAt-UNet中引入时间周期编码层来调制中间特征。实验表明，该方法在强降雨事件的临近预报中获得了更准确的预测，证明了轻量时间条件能够有效提升高强降雨的预报能力。",
+      "llm_tldr": "该文针对深度学习降水临近预报缺乏季节气象背景的问题，提出Time-Aware Small-Attention U-Net (TA-SmaAt-UNet)，通过在SmaAt-UNet中引入时间周期编码层来调制中间特征。实验表明，该方法在强降雨事件的临近预报中获得了更准确的预测，证明了轻量时间条件能够有效提升高强降雨的预报能力。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.07697v1",
+      "source": "arxiv",
+      "title": "TianJi-Environ: An Autonomous AI Scientist for Atmospheric Environmental Research",
+      "abstract": "As atmospheric environmental prediction continues to improve, interpretable validation of pollution mechanisms and feedback processes has become a main challenge in atmospheric chemistry. Yet mechanism validation based on complex numerical models still relies heavily on expert knowledge: mechanistic hypotheses must be operationalized into executable experiments, and model outputs must be organized into traceable evidence. We present TianJi-Environ, an auditable AI Scientist for atmospheric-chemistry mechanism validation. TianJi-Environ establishes the first WRF-Chem-based multi-agent framework that autonomously drives complex atmospheric-chemistry simulations, converting mechanistic hypotheses into executable configurations, testing experiments, and evidence criteria. Using ozone response and particulate-matter feedback as two representative examples, we demonstrate TianJi-Environ's capability for mechanism validation. In a summertime ozone case over the North China Plain, the system detects directionally consistent aerosol-radiation-interaction signals in shortwave radiation and boundary-layer height, but judges the evidence for ozone response to NOx control to be incomplete. In a wintertime PM2.5 case over the Guanzhong Basin, it localizes the unsupported link to insufficient propagation from black-carbon perturbation to particulate response and missing diagnostics of vertical absorptive heating. These results show that TianJi-Environ makes expert-driven mechanism validation explicit, structured, and auditable, offering a reproducible paradigm for multi-agent systems coupled with complex atmospheric-chemistry models.",
+      "authors": [
+        "Haoluo Zhao",
+        "Hongchun Zhang",
+        "Nan Li",
+        "Jing-Jia Luo",
+        "Kaikai Zhang",
+        "Mengyang Yu",
+        "Nan Chen",
+        "Tao Song",
+        "Fan Meng"
+      ],
+      "primary_category": "physics.ao-ph",
+      "categories": [
+        "physics.ao-ph",
+        "cs.AI"
+      ],
+      "published": "2026-06-05T07:47:30+00:00",
+      "link": "https://arxiv.org/pdf/2606.07697v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Uses WRF-Chem multi-agent framework for atmospheric simulations",
+      "llm_evidence_cn": "使用WRF-Chem多智能体框架进行大气模拟",
+      "llm_evidence": "使用WRF-Chem多智能体框架进行大气模拟",
+      "canonical_evidence": "使用WRF-Chem多智能体框架进行大气模拟",
+      "llm_tldr_en": "Proposes an AI scientist that autonomously drives WRF-Chem simulations to validate atmospheric-chemistry mechanisms.",
+      "llm_tldr_cn": "该论文提出天玑环境，一个基于WRF-Chem的多智能体自主AI科学家，能够将大气化学机制假设转化为可执行模拟配置并自动验证。该方法减少了专家依赖性，为大气环境研究提供了可审计的计算框架。",
+      "llm_tldr": "该论文提出天玑环境，一个基于WRF-Chem的多智能体自主AI科学家，能够将大气化学机制假设转化为可执行模拟配置并自动验证。该方法减少了专家依赖性，为大气环境研究提供了可审计的计算框架。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "numerical weather prediction models and methods",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.04143v1",
+      "source": "arxiv",
+      "title": "Physics-Informed Machine Learning for Short-Term Flood Prediction",
+      "abstract": "Accurate flood forecasting is essential for mitigating disaster risks and protecting communities. However, purely data-driven machine learning models often struggle in data-scarce environments and may violate fundamental hydrological principles. Standard Long Short-Term Memory (LSTM) networks can generate physically inconsistent predictions, particularly when extrapolating to extreme weather conditions. To address these limitations, we propose a Physics-Informed Machine Learning (PIML) framework that incorporates hydrological knowledge directly into the loss function of an LSTM model. Specifically, a Trend Alignment constraint penalizes directional inconsistencies between precipitation and discharge trends, improving model robustness without requiring complex hydrodynamic equations. This regularization encourages the model to learn physically plausible hydrograph behavior, even with limited training data, while enhancing reliability during peak flood events. Experimental results show that the proposed physics-informed model outperforms a standard LSTM baseline in data-scarce settings, increasing the Nash-Sutcliffe Efficiency (NSE) from 0.20 to 0.23 when trained on only 5% of the available data. Additional stress tests under simulated extreme climate scenarios demonstrate that the baseline model exhibits unstable behavior, whereas the physics-informed model maintains directional consistency and physical plausibility. Although accurately predicting extreme peak magnitudes remains challenging with limited data, the proposed approach substantially reduces unphysical fluctuations common in purely data-driven models. These findings demonstrate that simple physical constraints can significantly improve the reliability of deep learning models for real-time flood forecasting, offering a practical solution for ungauged basins and evolving climate conditions.",
+      "authors": [
+        "Tewodros Syum Gebre",
+        "Jagrati Talreja",
+        "Leila Hashemi-Beni"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-02T19:01:06+00:00",
+      "link": "https://arxiv.org/pdf/2606.04143v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "physics-informed deep learning for short-term flood prediction",
+      "llm_evidence_cn": "物理信息深度学习用于短期洪水预测",
+      "llm_evidence": "物理信息深度学习用于短期洪水预测",
+      "canonical_evidence": "物理信息深度学习用于短期洪水预测",
+      "llm_tldr_en": "Incorporates hydrological trend alignment constraint into LSTM loss to improve physical consistency for flood forecasting.",
+      "llm_tldr_cn": "该文针对纯数据驱动洪水预测模型在极端天气下违背物理原理的问题，提出将趋势对齐约束加入LSTM损失函数的物理信息机器学习框架。在测试数据上，该方法有效减少了预测与降水趋势之间的方向不一致，提升了模型在极端洪水事件中的鲁棒性和物理一致性，为水文预测提供了可靠的数据驱动解决方案。",
+      "llm_tldr": "该文针对纯数据驱动洪水预测模型在极端天气下违背物理原理的问题，提出将趋势对齐约束加入LSTM损失函数的物理信息机器学习框架。在测试数据上，该方法有效减少了预测与降水趋势之间的方向不一致，提升了模型在极端洪水事件中的鲁棒性和物理一致性，为水文预测提供了可靠的数据驱动解决方案。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.11162v1",
+      "source": "arxiv",
+      "title": "COGENT: Continuous Graph Emulators with Neural Ordinary Differential Equations for Long-Term Physical Forecasting",
+      "abstract": "In this work, we present COGENT, a continuous graph emulator with Neural Ordinary Differential Equations for long-term physical forecasting on irregular geospatial meshes. COGENT encodes a finite history of system states and associated forcing fields and external forcings with a graph-based history encoder, producing node-wise context vectors that capture both local spatial interactions and temporal evolution. These context vectors initialize and condition a latent Neural Ordinary Differential Equation whose dynamics are driven by interpolated future forcings and explicit relative rollout time. By modeling the forecast trajectory as a continuous latent dynamical system, COGENT can generate predictions at arbitrary future times rather than being restricted to a fixed temporal discretization. A residual decoder maps the resulting latent trajectories back to future physical states, enabling direct multi-step forecasting without repeatedly feeding predicted states back into the model. This formulation combines graph-based spatial representation, history-conditioned latent dynamics, and continuous-time rollout in a unified framework for mesh-based physical simulation emulation. In order to stabilize training with long-horizon supervision, we also propose effective rollout-horizon sampling and a progressive rollout-horizon scheduling strategy. We evaluate COGENT on transient ice-sheet simulations generated by the Ice-sheet and Sea-level System Model, demonstrating improved long-range stability over autoregressive graph baselines. These results suggest that continuous graph Neural ODEs provide a promising methodology for scalable physical forecasting on irregular geospatial meshes, particularly in applications that require stable long-horizon predictions and the ability to query system states at arbitrary times.",
+      "authors": [
+        "Zesheng Liu",
+        "Maryam Rahnemoonfar"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-09T17:43:30+00:00",
+      "link": "https://arxiv.org/pdf/2606.11162v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "continuous graph emulator with neural ODE for long-term physical forecasting on geospatial meshes; applicable to numerical weather prediction",
+      "llm_evidence_cn": "使用神经ODE的连续图模拟器用于地理网格长期物理预测，适用于数值天气预报",
+      "llm_evidence": "使用神经ODE的连续图模拟器用于地理网格长期物理预测，适用于数值天气预报",
+      "canonical_evidence": "使用神经ODE的连续图模拟器用于地理网格长期物理预测，适用于数值天气预报",
+      "llm_tldr_en": "COGENT uses neural ODEs on graphs to forecast physical systems on irregular meshes, enabling arbitrary-time prediction; applicable to NWP models.",
+      "llm_tldr_cn": "该论文提出COGENT，一种连续图模拟器，将图历史编码器和潜在神经ODE结合，在非规则地理网格上进行长期物理预测。通过将轨迹建模为连续潜在动力学系统，可生成任意时间步的预测，支持外部强迫场输入。该方法与数值天气预报中网格化风场、温度场预测高度相关，提供了一种灵活替代传统积分的方法。",
+      "llm_tldr": "该论文提出COGENT，一种连续图模拟器，将图历史编码器和潜在神经ODE结合，在非规则地理网格上进行长期物理预测。通过将轨迹建模为连续潜在动力学系统，可生成任意时间步的预测，支持外部强迫场输入。该方法与数值天气预报中网格化风场、温度场预测高度相关，提供了一种灵活替代传统积分的方法。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "numerical weather prediction models and methods",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.08587v1",
+      "source": "arxiv",
+      "title": "Improving the sharpness in neural network-based parametric post-processing of ensemble forecasts",
+      "abstract": "Statistical post-processing has proven to be an effective tool in improving ensemble forecast of different weather variables. Case studies show that post-processing can remedy the typically underdispersive and potentially biased behaviour of the ensemble while optimizing a proper scoring rule expressing the forecast skill. The price of these positive effects is generally a deterioration in sharpness; the width of the central prediction intervals and the uncertainty of the predictions are increasing, especially for shorter lead times. This work aims to reduce the extent of the latter phenomenon for neural network-based parametric post-processing methods by extending the network's loss function with a penalty term. We demonstrate the effect of the proposed technique for 2m temperature ensemble forecasts of the European Centre for Medium-Range Weather Forecasts downloaded from the EUPPBench benchmark dataset and verified against synoptic observations. Here, the predictive distribution is Gaussian, and we use the continuous ranked probability score (CRPS) as loss function. The case studies confirm a substantial relative decrease ($8.2\\%-12.5\\%$) in the width of the nominal central prediction interval compared to the width of the predictive distribution computed without the penalty term, while there is no deterioration in the mean CRPS of probabilistic forecasts and in the RMSE of the predictive mean.",
+      "authors": [
+        "Ágnes Baran",
+        "Máté Mihalina"
+      ],
+      "primary_category": "stat.ML",
+      "categories": [
+        "stat.ML",
+        "cs.LG"
+      ],
+      "published": "2026-06-07T11:57:09+00:00",
+      "link": "https://arxiv.org/pdf/2606.08587v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "neural network post-processing of ensemble forecasts, statistical downscaling",
+      "llm_evidence_cn": "神经网络集合预报后处理，统计降尺度",
+      "llm_evidence": "神经网络集合预报后处理，统计降尺度",
+      "canonical_evidence": "神经网络集合预报后处理，统计降尺度",
+      "llm_tldr_en": "Adds a penalty term to the loss of neural network-based parametric post-processing to improve forecast sharpness while maintaining skill.",
+      "llm_tldr_cn": "该文针对神经网络集合预报后处理导致预报锐度下降的问题，通过在损失函数中添加惩罚项来约束预测区间的宽度。在多个案例验证中，该方法在保持甚至提升预报技巧的同时，显著提高了短期预报的锐度，使后处理结果更具实用价值。",
+      "llm_tldr": "该文针对神经网络集合预报后处理导致预报锐度下降的问题，通过在损失函数中添加惩罚项来约束预测区间的宽度。在多个案例验证中，该方法在保持甚至提升预报技巧的同时，显著提高了短期预报的锐度，使后处理结果更具实用价值。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "statistical and dynamical downscaling of weather data",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
 }

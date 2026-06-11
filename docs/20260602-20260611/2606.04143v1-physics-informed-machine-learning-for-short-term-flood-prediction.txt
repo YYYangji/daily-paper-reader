@@ -1,0 +1,162 @@
+Title: Physics-Informed Machine Learning for Short-Term Flood Prediction
+
+URL Source: https://arxiv.org/pdf/2606.04143v1
+
+Published Time: Thu, 04 Jun 2026 00:08:18 GMT
+
+Number of Pages: 5
+
+Markdown Content:
+# PHYSICS-INFORMED MACHINE LEARNING FOR SHORT-TERM FLOOD PREDICTION 
+
+Tewodros Syum Gebre 
+
+North Carolina A&T State University 
+
+Greensboro, NC 27407, USA tsgebre@ncat.edu 
+
+Jagrati Talreja 
+
+North Carolina A&T State University 
+
+Greensboro, NC 27407, USA jtalreja@ncat.edu 
+
+Leila Hashemi-Beni 
+
+North Carolina A&T State University 
+
+Greensboro, NC 27407, USA lhashemibeni@ncat.edu 
+
+Abstract —Accurate flood forecasting is critical for mitigating disaster risks and ensuring public safety, yet purely data-driven machine learning models often lack reliability in data-scarce regimes and fail to adhere to fundamental hydrological principles. Standard LSTM networks, while powerful, risk generating phys-ically inconsistent predictions, particularly when extrapolating to unseen extreme weather events. To address these limitations, we propose a Physics-Informed Machine Learning (PIML) frame-work that integrates hydrological constraints directly into the loss function of an LSTM network. Specifically, we demonstrate that enforcing a ”Trend Alignment” constraint, which penalizes directional disagreements between precipitation and discharge trends, significantly enhances model robustness without requir-ing complex hydrodynamic equations. This approach effectively regularizes the model, guiding it to learn physically plausible hydrograph shapes even when training data is severely limited, with a specific focus on improving reliability during peak flood events. Our experiments reveal that the physics-informed model outperforms the standard baseline in data-scarce environments, improving the Nash-Sutcliffe Efficiency (NSE) from 0.20 to 0.23 when trained on only 5% of the available data.Furthermore, stress tests simulating extreme climate scenarios demonstrate that while baseline models exhibit erratic behavior, the physics-constrained model maintains directional consistency and physical plausibility. Although capturing the exact magnitude of extreme peaks remains a challenge in sparse regimes, the proposed method successfully eliminates unphysical fluctuations found in purely data-driven approaches. This study establishes that simple, targeted physical constraints can transform standard deep learning models into reliable tools for real-time flood forecasting, offering a robust solution for ungauged basins and changing climates. 
+
+Index Terms —Physics-Informed Machine Learning, Flood Pre-diction, LSTM (Long Short-Term Memory), Extreme Flood Events, Hydrological Forecasting, Deep Learning in Hydrology, 
+
+This research article has been made possible partly with the support of Microsoft’s Accelerate Foundation Models Academic Research Initiative (AFMR) and in part by the National Science Foundation (NSF) Grant under Award 2401942. Copyright 2026 IEEE. Published in the 2026 IEEE International Geoscience and Remote Sensing Symposium (IGARSS 2026), scheduled for 9–14 August 2026 in Washington, D.C. Personal use of this material is permitted. However, permission to reprint/republish this material for advertising or promotional purposes or for creating new collective works for resale or redistribution to servers or lists, or to reuse any copyrighted component of this work in other works, must be obtained from the IEEE. Contact: Manager, Copyrights and Permissions / IEEE Service Center / 445 Hoes Lane / P.O. Box 1331 / Piscataway, NJ 08855-1331, USA. Telephone: + Intl. 908-562-3966. This version is the accepted manuscript submitted to arXiv. The final version will be published in the Proceedings of IGARSS 2026 and available via IEEE Xplore. For citation, please refer to the published version in IGARSS 2026. * Correspondence to lhashemibeni@ncat.edu. 
+
+Physical Consistency in Models, Flood Modeling with ML, Machine Learning for Environmental Prediction, Hydrological Data Modeling, Rainfall-Runoff Models, Data-Driven Hydrology. 
+
+I. I NTRODUCTION 
+
+Floods represent one of the most destructive natural hazards globally, accounting for approximately 40% of all natural disasters and causing estimated annual damages exceeding $100 billion [1, 2]. Accurate, real-time prediction of river discharge is paramount for early warning systems that can significantly mitigate these economic losses and protect hu-man life. However, while purely data-driven approaches like machine learning have become ubiquitous, they fundamentally lack physical grounding, often leading to unreliable or phys-ically inconsistent predictions during critical extreme events where historical training data is scarce. Long Short-Term Memory (LSTM) networks and other deep learning architectures have set new benchmarks for rainfall-runoff modeling, yet they struggle significantly in data-scarce regimes, ungauged basins, and during peak flood levels. Because these models optimize solely for statistical correlation rather than hydrological causation, they frequently violate basic physical laws, such as the monotonic relationship between precipitation and runoff, resulting in erratic predic-tions when extrapolating beyond the training distribution [3– 5]. Consequently, there is a pressing need for methods that can leverage the predictive power of deep learning while strictly adhering to fundamental hydrological principles [6–8]. This study introduces a lightweight Physics-Informed Ma-chine Learning (PIML) framework that integrates a simple ”Trend Alignment” constraint directly into the LSTM loss function to guide model learning. We demonstrate that this targeted physical regularization allows the model to outper-form traditional ML methods, particularly in data-limited environments and synthetic extreme climate stress tests. By prioritizing directional consistency and temporal smoothness over complex hydrodynamic equations, our approach offers a practical, scalable, and robust solution for reliable real-time flood forecasting. II. R ELATED WORKS 
+
+Data-driven models, particularly Long Short-Term Memory (LSTM) networks, have been used for rainfall-runoff modeling 
+
+> arXiv:2606.04143v1 [cs.LG] 2 Jun 2026
+
+due to their ability to capture long-term temporal dependencies in catchment dynamics among other applications [9, 10]. While these models have shown impressive performance on standard benchmarks, they often operate as ”black boxes,” failing to integrate fundamental hydrological principles. This lack of physical grounding can lead to physically incon-sistent predictions, such as violations of mass conservation or unrealistic discharge fluctuations, especially when applied to data-scarce basins or extreme events [11]. Additionally, LSTM-based models are prone to overfitting in regions with limited data, which exacerbates these issues in hydrological forecasting. The paradigm of Physics-Informed Machine Learning (PIML) has been successfully applied in fields like fluid dy-namics and material science by embedding partial differential equations (PDEs) into neural network loss functions [11–14]. In hydrology, recent efforts have combined deep learning with process-based models, but these approaches often introduce significant computational complexity, requiring the solution of PDEs that can be both resource-intensive and time-consuming. In contrast, our approach demonstrates that enforcing simple, high-level constraints, such as trend alignment and temporal smoothness, provides a lightweight, effective mechanism to ensure physical plausibility without the need for explicit hydrodynamic solutions. This makes our method not only more computationally efficient but also easier to implement in real-world flood forecasting systems. III. M ETHODOLOGY 
+
+We utilized a subset of the CAMELS-US dataset (Basin 01022500), comprising daily time-series records of precipi-tation and discharge over a multi-year period. The data was preprocessed using Min-Max scaling to normalize features, and sequences were generated with a lookback window of 30 days to capture antecedent catchment conditions for the LSTM models (see Figure 1). LSTM As a baseline, we deliberately employed a standard Long Short-Term Memory (LSTM) network. While more com-plex architectures exist, the standard LSTM serves as a highly controlled baseline, allowing us to isolate and quantify the specific performance gains attributable solely to the physics-informed loss function, free from the confounding variables of advanced architectural modifications. The baseline model was trained to minimize the Mean Squared Error (MSE) between predicted and observed discharge, relying solely on statistical correlations within the training data without explicit physical constraints. Physics-Informed LSTM Our proposed framework aug-ments the standard LSTM by integrating hydrological prin-ciples directly into the training objective via a composite loss function. Rather than solving complex partial differential equations, we enforce high-level physical consistency through soft constraints: Trend Alignment, which penalizes directional disagreements between precipitation inputs and discharge trends (ensuring rainfall leads to rising water levels), and 
+
+> Fig. 1. Flowchart of the proposed methodology for discharge prediction using a Physics-Informed LSTM model. The process includes dataset preprocessing, model training (Baseline LSTM vs. Physics-Informed LSTM), loss function components, and the optimization procedure.
+
+Temporal Smoothness, which discourages unrealistic, high-frequency fluctuations in the hydrograph. Physics-Informed Loss The total loss function combines the standard data fidelity term (MSE) with weighted penalties for physical violations. Specifically, the Trend Alignment term ( Ltrend ) enforces that a positive precipitation event at time t correlates with a non-negative trend in discharge over a short lag window ( k=3 ), while the Smoothness term ( Lsmooth ) penalizes abrupt changes between consecutive time steps, collectively guiding the model toward physically plausible predictions during peak flow events. 
+
+Mathematical Framework and Optimization Procedure 1) Problem Formulation: Let D = {(Xi, y i)}Ni=1 represent the dataset, where Xi ∈ RT ×F is the input sequence of length 
+
+T with F features (precipitation), and yi ∈ R is the target discharge at the final timestep. The model fθ , parameterized by θ, maps inputs to predicted discharge: ˆyi = fθ (Xi).
+
+2) Loss Function Components: To enforce physical con-sistency, the training objective minimizes a composite loss function Ltotal consisting of three terms: Data fidelity (MSE): standard supervision to match observed discharge: 
+
+Ldata = 1
+
+N
+
+> N
+
+X
+
+> i=1
+
+(ˆ yi − yi)2
+
+Trend alignment constraint (Physics): ensures the directional change in discharge matches the presence of precipitation over a lag window K = 3 . If rain occurs ( rt > 0), discharge should not decrease: 
+
+Ltrend = 1
+
+N
+
+> N
+
+X
+
+> i=1
+
+max (0 , −sign (rt) · (ˆ yt+K − ˆyt)) 
+
+Temporal Smoothness Constraint: Regularizes high-frequency noise to ensure realistic hydrograph shapes: 
+
+Lsmooth = 1
+
+N
+
+> N
+
+X
+
+> i=2
+
+(ˆ yt − ˆyt−1)2
+
+3) Optimization Procedure: We employ a gradient-based optimization strategy with the following steps: 1) Initialization : Initialize LSTM parameters θ ∼N (0 , σ 2).2) Forward Pass : For each batch B: 
+
+> •
+
+Compute predictions: ˆY = LSTM θ (X) 
+
+> •
+
+Extract corresponding precipitation inputs R.3) Loss Calculation : 
+
+> •
+
+Compute Data Loss: Ldata ( ˆY , Y ) 
+
+> •
+
+Compute Physics Penalties: Ltrend ( ˆY , R ) and 
+
+Lsmooth ( ˆY ) 
+
+> •
+
+Aggregate: Ltotal = Ldata + 0 .1 · L trend + 0 .01 · L smooth 
+
+4) Backpropagation : Compute gradients ∇θ Ltotal .5) Parameter Update : Update weights using Adam opti-mizer: θ ← θ − η · ∇ θ Ltotal .IV. E XPERIMENTS & R ESULTS 
+
+A. Evaluation Setup 
+
+To rigorously evaluate the proposed Physics-Informed LSTM, the CAMELS-US dataset was partitioned into achronological 80/20 split for training and testing, respectively. Model performance was assessed using Root Mean Squared Error (RMSE) for global accuracy and the Nash-Sutcliffe Efficiency (NSE) to quantify hydrological skill. Crucially, we introduced a Peak Event MAPE metric, calculating the Mean Absolute Percentage Error specifically on the top 5% of discharge events, to assess reliability during critical flood periods. We also conducted a ”Data Scarcity” experiment by training on only 5% of the data and a ”Stress Test” by artificially doubling precipitation inputs to simulate extreme climate scenarios. 
+
+B. Performance Comparison 
+
+Standard Regime (Full Data): On the complete dataset, the Physics-Informed model (utilizing the Trend Alignment constraint) marginally outperformed the Baseline LSTM. The Physics model achieved an NSE of 0.2558 compared to the Baseline’s 0.2441 , and reduced the RMSE from 4.1410 mm/d 
+
+to 4.1090 mm/d . In terms of extreme events, the Physics model showed a slight improvement in Peak MAPE ( 39.73% 
+
+vs. 39.97% ), indicating that soft physical constraints do not hinder, and can slightly enhance, the model’s ability to capture high-flow dynamics. 
+
+Data-Scarce Regime (5% Data): The benefits of the physics-informed approach became most apparent in the data-limited experiment. When trained on only 78 samples (5% of the data), the Baseline model’s performance degraded signifi-cantly to an NSE of 0.2037 . In contrast, the Physics-Informed model maintained a robust NSE of 0.2321 . This demonstrates that when historical data is insufficient to learn statistical correlations, the embedded physical laws act as a critical regularizer, guiding the model toward plausible solutions.   
+
+> Fig. 2. Robustness evaluation of model performance using NSE (Nash-Sutcliffe Efficiency) values. The left bar chart represents the performance of the baseline vs. physics-informed models on the full dataset, while the right bar chart shows the performance with only 5% of the dataset.
+> Fig. 3. Extreme climate stress test results for model performance under doubled precipitation. The plot shows the discharge rates over time, comparing the model’s performance during a scenario where the precipitation input is doubled. This test evaluates the model’s robustness and response to extreme climatic conditions.
+
+Quantitative Metrics (Full Dataset):              
+
+> TABLE I QUANTITATIVE PERFORMANCE METRICS FOR FULL DATASET .
+> Model RMSE (mm/d) NSE Peak MAPE (Top 5%)
+> Baseline LSTM 4.14 0.24 39.97% Physics-Informed LSTM 4.11 0.26 39.73%
+
+Quantitative Metrics (Sparse Dataset - 5%):         
+
+> TABLE II QUANTITATIVE PERFORMANCE METRICS FOR SPARSE DATASET (5% DATA ).
+> Model NSE (Generalization Score)
+> Baseline LSTM 0.2037
+> Physics-Informed LSTM 0.2321
+
+The comparative hydrographs reveal that during the syn-thetic ”Extreme Climate” stress test (2x Precipitation), the Physics-Informed model produced a directionally consistent rise in discharge. In contrast, the Baseline model exhibited saturation and erratic fluctuations, failing to extrapolate the causal relationship between intense rainfall and river flow. The results underscore a critical trade-off: while deep learn-ing models like LSTMs are powerful feature extractors, they are prone to overfitting and physical inconsistency when data is scarce or out-of-distribution. The Physics-Informed LSTM bridges this gap. By enforcing a Trend Alignment constraint, the model ensures that rainfall consistently translates to rising water levels, eliminating the ”physical hallucinations” ob-served in the Baseline. This improved robustness, evidenced by the 14% relative improvement in NSE under data scarcity, is vital for real-time flood forecasting in ungauged basins or under changing climate conditions, where historical patterns may no longer hold. V. C ONCLUSION 
+
+This study successfully demonstrates that integrating sim-ple, high-level physical constraints into deep learning models significantly enhances their robustness and reliability for flood forecasting. While the standard LSTM performs adequately on abundant data, our Physics-Informed LSTM proved superior in challenging conditions, achieving a 14% improvement in NSE when training data was scarce (5% subset) and maintaining physical consistency during extreme climate stress tests where the baseline model failed. These results have profound implications for disaster man-agement and early warning systems. By ensuring that predic-tions adhere to fundamental hydrological behaviors, such as the directional alignment between rainfall and discharge, our approach offers a ”safety net” against the hallucinations com-mon in pure data-driven models. This makes the framework particularly valuable for ungauged basins and non-stationary climates , where historical data is insufficient to guarantee reliable performance from standard machine learning methods. While this study deliberately focuses on a single basin to clearly establish the fundamental mechanism and impact of physics-based regularization, future research will focus on scaling this approach to multi-basin datasets to test generaliza-tion across diverse hydrological regimes and integrating these constraints into more complex, modern recurrent architectures. Additionally, exploring adaptive mechanisms to automati-cally learn basin-specific parameters (such as the optimal lag window K) and hybridizing this framework with process-based models could further bridge the gap between data science and physical hydrology. ACKNOWLEDGMENT 
+
+This work is supported by NASA Award 80NSSC23M0051 and NSF Award 2401942. REFERENCES 
+
+[1] O. for Economic Co-operation and D. (OECD), “The economic consequences of flooding,” 2016, accessed: 2026-01-06. [Online]. Available: https://www.oecd.org/environment/ the-economic-consequences-of-flooding.htm [2] C. for Research on the Epidemiology of Disasters (CRED), “The human cost of natural disasters 2020,” 2020, accessed: 2026-01-06. [Online]. Available: https://www.cred.be/sites/ default/files/2020 CRED HumanCostNaturalDisasters.pdf [3] M. Reichstein, G. Camps-Valls, B. Stevens, M. Jung, J. Denzler, N. Carvalhais, and F. Prabhat, “Deep learning and process understanding for data-driven earth system science,” Nature ,vol. 566, no. 7743, pp. 195–204, 2019. [4] M. Fawakherji and L. Hashemi-Beni, “Multi-head encoder-decoder deep learning architecture for flood segmentation and mapping through multi-sensor data fusion,” in IGARSS 2024-2024 IEEE International Geoscience and Remote Sensing Sym-posium . IEEE, 2024, pp. 1191–1195. [5] L. Hashemi Beni, “Integrating lidar and multispectral remote sensing data for understanding wetland-flood dynamics: A lit-erature review,” Frontiers in Environmental Science , vol. 14, p. 1757715. [6] J. Blay, M. Fawakherji, and L. Hashemi-Beni, “Flood impact risk mapping in settlement areas from a 3d perspective: A case study of hurricane matthew,” in IGARSS 2024-2024 IEEE Inter-national Geoscience and Remote Sensing Symposium . IEEE, 2024, pp. 3939–3942. [7] M. Fawakherji, J. Blay, M. Anokye, L. Hashemi-Beni, and J. Dorton, “Deepflood for inundated vegetation high-resolution dataset for accurate flood mapping and segmentation,” Scientific Data , vol. 12, no. 1, p. 271, 2025. [8] M. Fawakherji and L. Hashemi-Beni, “Flood detection and mapping through multi-resolution sensor fusion: integrating uav optical imagery and satellite sar data,” Geomatics, Natural Hazards and Risk , vol. 16, no. 1, p. 2493225, 2025. [9] F. Kratzert, D. Klotz, C. Brenner, K. Schulz, and M. Herrneg-ger, “Rainfall–runoff modelling using long short-term memory (lstm) networks,” Hydrology and Earth System Sciences , vol. 22, no. 11, pp. 6005–6022, 2018. [10] T. S. Gebre, L. Beni, E. T. Wasehun, and F. E. Dorbu, “Ai-integrated traffic information system: A synergistic approach of physics informed neural network and gpt-4 for traffic estimation and real-time assistance,” IEEE Access , vol. 12, pp. 65 869– 65 882, 2024. [11] G. S. Nearing, F. Kratzert, A. K. Sampson, C. S. Pelissier, D. Klotz, J. M. Frame, C. Prieto, and H. V. Gupta, “What role does hydrological science play in the age of machine learning?” Water Resources Research , vol. 57, no. 3, p. e2020WR028091, 2021. [12] T. S. Gebre, “Smart traffic solutions: Enhanced uav-based traffic monitoring, object detection and ai-enhanced guidance system,” Ph.D. dissertation, North Carolina Agricultural and Technical State University, 2025. [13] M. Raissi, P. Perdikaris, and G. E. Karniadakis, “Physics-informed neural networks: A deep learning framework for solv-ing forward and inverse problems involving nonlinear partial differential equations,” Journal of Computational physics , vol. 378, pp. 686–707, 2019. [14] T. S. Gebre, S. E. Ashebir, J. Blay, and L. H. Beni, “Real-time traffic insights with physics-informed neural networks: Integrating the aw-rascle model and llms,” IEEE Access , vol. PP, no. 99, pp. 1–1, 2025.
