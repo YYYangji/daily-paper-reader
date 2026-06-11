@@ -25,3 +25,55 @@ subscriptions:
     stage: A
     diff_threshold_pct: 15
   keyword_recall_mode: or
+  intent_profiles:
+    - tag: mm
+      description: >-
+        用于检索气象模型、数值天气预报、人工智能天气预测、气象降尺度、气象超分辨率、风场预测和无人机气象导航相关论文，重点关注
+        WRF、ECMWF、GraphCast、Pangu-Weather、FourCastNet、CorrDiff、扩散模型等方向。
+      enabled: true
+      paper_sources:
+        - arxiv
+      keywords:
+        - keyword: meteorological super-resolution
+          keyword_cn: 气象超分辨率
+          query: meteorological super-resolution
+        - keyword: weather downscaling
+          keyword_cn: 气象降尺度
+          query: statistical and dynamical downscaling of weather data
+        - keyword: deep learning weather forecasting
+          keyword_cn: 深度学习气象预测
+          query: deep learning weather forecasting
+        - keyword: AI weather forecasting
+          keyword_cn: 人工智能天气预报
+          query: numerical weather prediction models and methods
+      intent_queries:
+        - query: >-
+            Find papers on wind field prediction, wind shear modeling, and meteorological forecasting for UAV navigation
+            or aviation safety.
+          query_cn: 查找风场预测、风切变建模以及面向无人机导航或航空安全的气象预测论文。
+          enabled: true
+          source: manual
+          note: ''
+        - query: >-
+            Find papers on meteorological downscaling and weather super resolution using diffusion models, generative
+            models, or neural networks.
+          query_cn: 查找利用扩散模型、生成模型或神经网络进行气象降尺度和气象超分辨率的论文。
+          enabled: true
+          source: manual
+          note: ''
+      updated_at: '2026-06-11T11:30:59.502Z'
+source_backends:
+  arxiv:
+    papers_table: arxiv_papers
+    use_vector_rpc: true
+    vector_rpc: match_arxiv_papers
+    vector_rpc_exact: match_arxiv_papers_exact
+    use_bm25_rpc: true
+    bm25_rpc: match_arxiv_papers_bm25
+    sync_table: arxiv_sync_status
+    sync_success_value: success
+    schema: public
+    kind: supabase
+    enabled: true
+    url: https://lyucdwgefyfbmaiopjbk.supabase.co
+    anon_key: sb_publishable_lX-oi64Uxyd7SIVv3_w2Uw_MTOojeKq
