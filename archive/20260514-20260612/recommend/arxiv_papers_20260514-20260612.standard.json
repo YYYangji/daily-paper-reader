@@ -1,0 +1,1477 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-12T02:53:59.371945+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 39,
+    "deep_cap": 6,
+    "deep_selected": 25,
+    "quick_candidates": 34,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2605.23089v1",
+      "source": "arxiv",
+      "title": "Dreaming Smoothly and Sample Efficiently with Gradient Penalized Latent Dynamics",
+      "abstract": "Model-based reinforcement learning improves sample efficiency by learning a world model. However, existing latent world models such as DreamerV3 do not explicitly enforce local smoothness in their learned transition dynamics, leaving a useful inductive bias for transition dynamics learning unexploited. We propose GPLD, a gradient-penalized latent dynamics regularizer for DreamerV3 that applies a row-wise Jacobian penalty to the posterior latent distribution to encourage locally smooth transition learning. We show that this penalty can be interpreted as the continuous-latent analog of finite-difference smoothing of transition laws in discrete embedded-state MDPs, and estimate it efficiently using Hutchinson-style stochastic probes. Empirically, across DeepMind Control proprioceptive tasks, GPLD improves aggregate sample efficiency, with particularly strong gains on higher-complexity locomotion environments. On more challenging quadruped tasks, GPLD reaches high-return behavior earlier and exhibits more consistent late-stage learning over longer horizons. Explicit local smoothness regularization is a simple and effective way to improve latent world models for smooth continuous control environments. Code for GPLD is available at github.com/romils9/gpld-mbrl .",
+      "authors": [
+        "Romil V. Sonigra",
+        "P. R. Kumar"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-05-21T22:40:40+00:00",
+      "link": "https://arxiv.org/pdf/2605.23089v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "gradient-penalized latent dynamics for sample-efficient DreamerV3",
+      "llm_evidence_cn": "梯度惩罚潜在动力学提升DreamerV3样本效率",
+      "llm_evidence": "梯度惩罚潜在动力学提升DreamerV3样本效率",
+      "canonical_evidence": "梯度惩罚潜在动力学提升DreamerV3样本效率",
+      "llm_tldr_en": "Proposes GPLD, a gradient-penalized latent dynamics regularizer for DreamerV3, encouraging local smoothness in latent transitions and improving sample efficiency on continuous control tasks.",
+      "llm_tldr_cn": "模型基强化学习通过世界模型提升样本效率，但现有潜在世界模型如DreamerV3未显式施加局部平滑性归纳偏置。本文提出GPLD正则化器，对后验潜在分布施加行雅可比惩罚，鼓励局部平滑的转移学习。实验表明GPLD显著提升了DreamerV3在连续控制任务上的样本效率和最终性能。",
+      "llm_tldr": "模型基强化学习通过世界模型提升样本效率，但现有潜在世界模型如DreamerV3未显式施加局部平滑性归纳偏置。本文提出GPLD正则化器，对后验潜在分布施加行雅可比惩罚，鼓励局部平滑的转移学习。实验表明GPLD显著提升了DreamerV3在连续控制任务上的样本效率和最终性能。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.30056v1",
+      "source": "arxiv",
+      "title": "Sample-Efficient Diffusion-based Reinforcement Learning with Critic Guidance",
+      "abstract": "Recent advances in reinforcement learning (RL) have achieved great successes by leveraging the multimodality and exploration capability of diffusion policies. Among these approaches, one representative branch focuses on the sampling-based policy optimization. This design enables better exploration capability of the diffusion model, particularly at the beginning of training, but suffer from low exploitation in Q-value information, resulting in a slow policy convergence. Another branch pays attention to gradient-based policy optimization, which sufficiently exploits the gradient of the Q function yet tends to collapse into a unimodal policy with low diversity. To address this issue, we propose CGPO, \\textbf{C}ritic-\\textbf{G}uided diffusion \\textbf{P}olicy \\textbf{O}ptimization, which effectively balances exploration and exploitation with the training-free guidance technique integrated into the denoising process of diffusion policy. Concretely, CGPO steers action generation toward high-value regions defined by the critic network and uses the guided actions as regression objectives. In this manner, CGPO reduces the time required to obtain high-quality actions and improves final performance with better balance between the exploration-exploitation tradeoff. We validate the effectiveness of CGPO on 5 MuJoCo locomotion tasks, and CGPO achieves state-of-the-art performance compared with existing diffusion-based RL methods. Notably, CGPO is the first success to incorporate diffusion policy into real-world RL, with its superior performance on Franka robot arm grasping tasks. Our official page is released at https://dingsht.tech/cgpo-webpage.",
+      "authors": [
+        "Shutong Ding",
+        "Zejia Zhong",
+        "Zhongyi Wang",
+        "Ke Hu",
+        "Bikang Pan",
+        "Jingya Wang",
+        "Ye Shi"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.LG"
+      ],
+      "published": "2026-05-28T15:07:50+00:00",
+      "link": "https://arxiv.org/pdf/2605.30056v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "sample-efficient RL using diffusion policies with critic guidance",
+      "llm_evidence_cn": "样本高效的扩散策略强化学习结合评论家引导",
+      "llm_evidence": "样本高效的扩散策略强化学习结合评论家引导",
+      "canonical_evidence": "样本高效的扩散策略强化学习结合评论家引导",
+      "llm_tldr_en": "Proposes CGPO, a critic-guided diffusion policy optimization method that combines sampling-based exploration with gradient-based exploitation for sample-efficient RL.",
+      "llm_tldr_cn": "针对扩散策略在强化学习中采样策略利用Q值信息不足导致收敛慢，而梯度策略易陷入单峰模式的问题，提出评论家引导的扩散策略优化（CGPO），融合两者的优势，在保持探索多样性的同时利用Q值梯度加速收敛。在多个连续控制任务上验证了样本效率的提升。",
+      "llm_tldr": "针对扩散策略在强化学习中采样策略利用Q值信息不足导致收敛慢，而梯度策略易陷入单峰模式的问题，提出评论家引导的扩散策略优化（CGPO），融合两者的优势，在保持探索多样性的同时利用Q值梯度加速收敛。在多个连续控制任务上验证了样本效率的提升。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.03963v3",
+      "source": "arxiv",
+      "title": "AgenticRL: Self-Refining Agentic Reinforcement Learning for Vision-Conditioned UAV Navigation",
+      "abstract": "Deep reinforcement learning has shown strong potential for enabling autonomous robots to learn complex navigational tasks. However, its practical use still depends heavily on human designed reward functions and repeated manual fine tuning, which is time consuming and does not guarantee high success in the desired task. This paper presents AgenticRL, agent guided reinforcement learning framework that increases autonomy in reward design, policy refinement, and real world deployment for unmanned aerial vehicles (UAV) navigation tasks. AgenticRL uses a multimodal generative pre-trained transformer (GPT) agent to interpret task information and visual scene observations, generate task specific reward functions, train policies using Proximal Policy Optimization (PPO) algorithm, and then act as a critic by evaluating the trained policy through diagnosis packets to generate feedback. Based on this feedback, the agent identifies failure modes and refines the reward function in a closed loop self improvement process. To further leverage the multimodal GPT agent during inference, AgenticRL uses real world images and natural language task information to automatically identify the active scenario and select the appropriate trained policy for execution. The framework is evaluated on multiple navigational tasks, including gate traversal, obstacle avoidance, wall barrier crossing with landing, trajectory following, and motion behavior learning. Experimental results show that the closed loop refinement process improves policy behavior compared with initial rewards by 71%. We also demonstrate sim-to-real transfer of the proposed framework, achieving a real world success rate of 91% and a sim-to-real accuracy of 94%.",
+      "authors": [
+        "Roohan Ahmed Khan",
+        "Yasheerah Yaqoot",
+        "Amir Atef Habel",
+        "Muhammad Ahsan Mustafa",
+        "Dzmitry Tsetserukou"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-06-02T17:50:15+00:00",
+      "link": "https://arxiv.org/pdf/2606.03963v3",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "self-refining RL for vision-conditioned UAV navigation",
+      "llm_evidence_cn": "自我精炼的强化学习实现视觉条件无人机导航",
+      "llm_evidence": "自我精炼的强化学习实现视觉条件无人机导航",
+      "canonical_evidence": "自我精炼的强化学习实现视觉条件无人机导航",
+      "llm_tldr_en": "Presents AgenticRL, an agent-guided RL framework that automates reward design and policy refinement for vision-conditioned UAV navigation tasks, reducing manual tuning and improving success rate.",
+      "llm_tldr_cn": "深度强化学习在无人机自主导航中依赖人工设计奖励函数和反复调参。本文提出AgenticRL框架，利用多模态GPT代理解读任务和视觉观察，自动生成奖励函数并迭代优化策略，实现无人机视觉导航的自动化，显著减少人工干预并提升真实世界部署的成功率。",
+      "llm_tldr": "深度强化学习在无人机自主导航中依赖人工设计奖励函数和反复调参。本文提出AgenticRL框架，利用多模态GPT代理解读任务和视觉观察，自动生成奖励函数并迭代优化策略，实现无人机视觉导航的自动化，显著减少人工干预并提升真实世界部署的成功率。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.14810v1",
+      "source": "arxiv",
+      "title": "CaMeRL: Collision-Aware and Memory-Enhanced Reinforcement Learning for UAV Navigation in Multi-Scale Obstacle Environments",
+      "abstract": "In obstacle avoidance navigation of unmanned aerial vehicles (UAVs), variations in obstacle scale have received strangely less attention than obstacle number or density. Existing methods typically extract purely geometric features from single-frame depth observations. Such representations tend to neglect small obstacles and lose spatial context under occlusions caused by large obstacles, leading to noticeable degradation in environments with multi-scale obstacles. To address this issue, we propose CaMeRL, a Collision-aware and Memory-enhanced Reinforcement Learning framework for UAV navigation. The collision-aware latent representation encodes risk-sensitive depth cues to preserve fine-grained obstacle structures, thereby improving sensitivity to small obstacles. The temporal memory module integrates observations across frames, mitigating partial observability caused by large-obstacle occlusions. We evaluate CaMeRL with multi-scale obstacles, including ultra-small and extra-large obstacle settings. Results show that CaMeRL outperforms state-of-the-art baselines across all scales, with success rate gains of 0.48 and 0.28 in the ultra-small and extra-large settings, respectively. More importantly, CaMeRL achieves reliable navigation in cluttered outdoor environments.",
+      "authors": [
+        "Hong Hong",
+        "Feiyu Liao",
+        "Yongheng Liang",
+        "Boning Zhang",
+        "Haitao Wang",
+        "Hejun Wu"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-05-14T13:22:40+00:00",
+      "link": "https://arxiv.org/pdf/2605.14810v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "RL-based UAV navigation with collision avoidance and memory enhancement",
+      "llm_evidence_cn": "基于强化学习的无人机避障导航，具备碰撞感知和记忆增强",
+      "llm_evidence": "基于强化学习的无人机避障导航，具备碰撞感知和记忆增强",
+      "canonical_evidence": "基于强化学习的无人机避障导航，具备碰撞感知和记忆增强",
+      "llm_tldr_en": "Proposes CaMeRL, a collision-aware and memory-enhanced RL framework for UAV navigation in multi-scale obstacle environments, encoding risk-sensitive depth cues.",
+      "llm_tldr_cn": "针对多尺度障碍物环境下无人机导航性能退化的问题，本文提出CaMeRL框架。碰撞感知潜在表示编码风险敏感的深度线索，记忆模块融合时序信息以恢复被遮挡的空间上下文。在仿真环境中验证了该方法相比基线在避障成功率和导航效率上的显著提升。",
+      "llm_tldr": "针对多尺度障碍物环境下无人机导航性能退化的问题，本文提出CaMeRL框架。碰撞感知潜在表示编码风险敏感的深度线索，记忆模块融合时序信息以恢复被遮挡的空间上下文。在仿真环境中验证了该方法相比基线在避障成功率和导航效率上的显著提升。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.16692v1",
+      "source": "arxiv",
+      "title": "EfficientTDMPC: Improved MPC Objectives for Sample-Efficient Continuous Control",
+      "abstract": "We introduce EfficientTDMPC, a sample-efficient model-based reinforcement learning method for continuous control built on the TD-MPC family of algorithms. Central to this family is a planner that aims to find an action sequence that maximizes the estimated return. The return is estimated using a learned model and value networks, each of which can introduce error. EfficientTDMPC proposes to reduce this error in two ways. First, it introduces an ensemble of dynamics models and averages the return estimates across those models and across different rollout depths. Second, it adds the option to apply an uncertainty penalty to the planner objective, yielding a planner that avoids actions with uncertain return estimates. It then adds practical improvements which increase buffer data freshness and reduce compute. Lastly, we find that our contributions enable EfficientTDMPC to benefit more from a higher update-to-data (UTD) ratio, further improving sample efficiency. To the best of our knowledge, in the low data regime of each benchmark, EfficientTDMPC achieves state-of-the-art (SOTA) in terms of sample efficiency on HumanoidBench-Hard and DMC hard, while matching SOTA on DMC easy.",
+      "authors": [
+        "Thomas Evers",
+        "Cristian Meo",
+        "Wendelin Bohmer",
+        "Justin Dauwels",
+        "Yaniv Oren"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.RO"
+      ],
+      "published": "2026-05-15T23:08:02+00:00",
+      "link": "https://arxiv.org/pdf/2605.16692v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Sample-efficient model-based RL for continuous control with ensemble and uncertainty penalty",
+      "llm_evidence_cn": "基于集成和不确定性惩罚的样本高效模型基连续控制RL",
+      "llm_evidence": "基于集成和不确定性惩罚的样本高效模型基连续控制RL",
+      "canonical_evidence": "基于集成和不确定性惩罚的样本高效模型基连续控制RL",
+      "llm_tldr_en": "EfficientTDMPC improves TD-MPC by using an ensemble of dynamics models and uncertainty penalty in the planner, achieving better sample efficiency in continuous control tasks.",
+      "llm_tldr_cn": "针对模型基强化学习在连续控制中样本效率不足的问题，本文提出EfficientTDMPC，通过集成多个动力学模型并引入不确定性惩罚项，减少规划时的估计误差。在多个连续控制基准上，该方法显著提升了样本效率和最终性能，为模型基RL在复杂控制任务中的应用提供了实用改进。",
+      "llm_tldr": "针对模型基强化学习在连续控制中样本效率不足的问题，本文提出EfficientTDMPC，通过集成多个动力学模型并引入不确定性惩罚项，减少规划时的估计误差。在多个连续控制基准上，该方法显著提升了样本效率和最终性能，为模型基RL在复杂控制任务中的应用提供了实用改进。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.16692v2",
+      "source": "arxiv",
+      "title": "EfficientTDMPC: Improved MPC Objectives for Sample-Efficient Continuous Control",
+      "abstract": "We introduce EfficientTDMPC, a sample-efficient model-based reinforcement learning method for continuous control built on the TD-MPC family of algorithms. Central to this family is a planner that aims to find an action sequence that maximizes the estimated return. The return is estimated using a learned model and value networks, each of which can introduce error. EfficientTDMPC proposes to reduce this error in two ways. First, it introduces an ensemble of dynamics models and averages the return estimates across those models and across different rollout depths. Second, it adds the option to apply an uncertainty penalty to the planner objective, yielding a planner that avoids actions with uncertain return estimates. It then adds practical improvements which increase buffer data freshness and reduce compute. Lastly, we find that our contributions enable EfficientTDMPC to benefit more from a higher update-to-data (UTD) ratio, further improving sample efficiency. To the best of our knowledge, in the low data regime of each benchmark, EfficientTDMPC achieves state-of-the-art (SOTA) in terms of sample efficiency on HumanoidBench-Hard and DMC hard, while matching SOTA on DMC easy.",
+      "authors": [
+        "Thomas Evers",
+        "Cristian Meo",
+        "Wendelin Bohmer",
+        "Justin Dauwels",
+        "Yaniv Oren"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.RO"
+      ],
+      "published": "2026-05-15T23:08:02+00:00",
+      "link": "https://arxiv.org/pdf/2605.16692v2",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "improved MPC objectives for sample-efficient continuous control",
+      "llm_evidence_cn": "改进MPC目标实现样本高效的连续控制",
+      "llm_evidence": "改进MPC目标实现样本高效的连续控制",
+      "canonical_evidence": "改进MPC目标实现样本高效的连续控制",
+      "llm_tldr_en": "Introduces EfficientTDMPC, a sample-efficient MBRL method that uses ensemble dynamics and uncertainty penalty to improve planner return estimates for continuous control.",
+      "llm_tldr_cn": "基于模型强化学习通过学习模型和值函数估计回报，但存在累积误差。本文提出EfficientTDMPC，集成多个动力学模型并平均不同展开深度的回报估计，同时加入不确定性惩罚避免高不确定动作。在连续控制任务上显著提升了样本效率和最终性能。",
+      "llm_tldr": "基于模型强化学习通过学习模型和值函数估计回报，但存在累积误差。本文提出EfficientTDMPC，集成多个动力学模型并平均不同展开深度的回报估计，同时加入不确定性惩罚避免高不确定动作。在连续控制任务上显著提升了样本效率和最终性能。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.17058v1",
+      "source": "arxiv",
+      "title": "Learning Multi-Timescale Abstractions for Hierarchical Combinatorial Planning",
+      "abstract": "The combination of exponentially large action spaces, stochastic dynamics, and long-horizon decision-making under limited resources makes Sequential Stochastic Combinatorial Optimization (SSCO) particularly challenging for reinforcement learning. Hierarchical Reinforcement Learning (HRL) offers a natural decomposition, but it places the high-level policy in a Semi-Markov Decision Process (SMDP) where actions have variable durations, making it difficult to learn a world model that is suitable for planning. We introduce a model-based hierarchical framework for sequential stochastic combinatorial decision-making that directly addresses this issue. Our method combines a latent-space tree-search planner with an SMDP-aware world model for variable-duration decisions. A multi-timescale objective structures the latent dynamics so that transition magnitudes reflect the effective temporal scales of abstract actions, enabling efficient lookahead under adaptive temporal abstraction. We further learn a subgoal-conditioned budget policy jointly with the world model to support context-aware resource allocation. Across challenging SSCO benchmarks, our method outperforms strong baselines.",
+      "authors": [
+        "Vivienne Huiling Wang",
+        "Tinghuai Wang",
+        "Joni Pajarinen"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-05-16T16:04:11+00:00",
+      "link": "https://arxiv.org/pdf/2605.17058v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "model-based hierarchical RL with latent-space world model for combinatorial planning",
+      "llm_evidence_cn": "基于模型的层次强化学习，结合潜在空间世界模型用于组合规划",
+      "llm_evidence": "基于模型的层次强化学习，结合潜在空间世界模型用于组合规划",
+      "canonical_evidence": "基于模型的层次强化学习，结合潜在空间世界模型用于组合规划",
+      "llm_tldr_en": "Introduces a model-based hierarchical framework combining a latent-space tree-search planner with an SMDP-aware world model for sequential stochastic combinatorial optimization.",
+      "llm_tldr_cn": "为解决序列随机组合优化中动作空间大、随机动力学和长时域决策的挑战，本文提出基于模型的层次强化学习框架。引入感知半马尔可夫决策过程的世界模型，与潜在空间树搜索规划器结合。在多项组合优化任务上优于现有非层次和层次方法，展示了世界模型在复杂决策中的有效性。",
+      "llm_tldr": "为解决序列随机组合优化中动作空间大、随机动力学和长时域决策的挑战，本文提出基于模型的层次强化学习框架。引入感知半马尔可夫决策过程的世界模型，与潜在空间树搜索规划器结合。在多项组合优化任务上优于现有非层次和层次方法，展示了世界模型在复杂决策中的有效性。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.22305v1",
+      "source": "arxiv",
+      "title": "Chebyshev Policies and the Mountain Car Problem: Reinforcement Learning for Low-Dimensional Control Tasks",
+      "abstract": "We analytically solve the Mountain Car problem, a canonical benchmark in RL, and derive an optimal control solution, closing a gap after 36 years. This enables us to reveal two surprising insights: The optimal control is quite simple, yet modern RL agents display a large gap to optimality. Motivated by the analysis of the optimal control, we introduce Chebyshev policies as a universal (i.e. dense) class of RL policies from first principles. They can be trained as drop-in replacements of neural nets, reducing the regret by a factor of 4.18, while requiring 277 times fewer parameters, fostering sample efficiency, explainability and realtime capability. Chebyshev policies are evaluated on further RL tasks, including a real-world nonlinear motion control testbed. They consistently improve performance over neural nets with PPO, ARS and REINFORCE. Our results demonstrate how Chebyshev policies offer a compelling and lightweight alternative or addition to neural nets for low-dimensional control tasks.",
+      "authors": [
+        "Stefan Huber",
+        "Hannes Unger",
+        "Georg Schäfer",
+        "Jakob Rehrl"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-05-21T10:54:26+00:00",
+      "link": "https://arxiv.org/pdf/2605.22305v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "improves sample efficiency via Chebyshev policies",
+      "llm_evidence_cn": "通过切比雪夫策略提升样本效率",
+      "llm_evidence": "通过切比雪夫策略提升样本效率",
+      "canonical_evidence": "通过切比雪夫策略提升样本效率",
+      "llm_tldr_en": "Introduces Chebyshev policies as a drop-in replacement for neural nets, reducing regret by 4.18x and parameters by 277x, boosting sample efficiency for low-dimensional control tasks.",
+      "llm_tldr_cn": "本文分析山地车问题并导出最优控制解，基于此提出切比雪夫策略作为通用策略类，可替代神经网络。实验表明该策略将遗憾降低4.18倍，所需参数减少277倍，显著提升样本效率、可解释性和实时能力。",
+      "llm_tldr": "本文分析山地车问题并导出最优控制解，基于此提出切比雪夫策略作为通用策略类，可替代神经网络。实验表明该策略将遗憾降低4.18倍，所需参数减少277倍，显著提升样本效率、可解释性和实时能力。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.24449v1",
+      "source": "arxiv",
+      "title": "Vision-Guided Outdoor Flight and Obstacle Evasion via Reinforcement Learning",
+      "abstract": "Although quadcopters boast impressive traversal capabilities enabled by their omnidirectional maneuverability, the need for continuous pilot control in complex environments impedes their application in GNSS and telemetry-denied scenarios. To this end, we propose a novel sensorimotor policy that uses stereo-vision depth and visual-inertial odometry (VIO) to autonomously navigate through obstacles in an unknown environment to reach a goal point. The policy is comprised of a pre-trained autoencoder as the perception head followed by a planning and control LSTM network which outputs velocity commands that can be followed by an off-the-shelf commercial drone. We leverage reinforcement and privileged learning paradigms to train the policy in simulation through a two-stage process: 1) initial training with optimal trajectories generated by a global motion planner acting as a supervisory backbone, 2) further fine-tuning in a curriculum environment. To bridge the sim-to-real gap, we employ domain randomization and reward shaping to create a policy that is both robust to noise and domain shift. In outdoor experiments, our approach achieves successful zero-shot transfer to both obstacle environments and a drone platform that were never encountered during training.",
+      "authors": [
+        "Shiladitya Dutta",
+        "Aayush Gupta",
+        "Varun Saran",
+        "Avideh Zakhor"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.LG"
+      ],
+      "published": "2026-05-23T07:41:13+00:00",
+      "link": "https://arxiv.org/pdf/2605.24449v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "vision-guided UAV obstacle evasion via reinforcement learning",
+      "llm_evidence_cn": "视觉引导的无人机避障，使用强化学习",
+      "llm_evidence": "视觉引导的无人机避障，使用强化学习",
+      "canonical_evidence": "视觉引导的无人机避障，使用强化学习",
+      "llm_tldr_en": "Proposes a sensorimotor policy using stereo vision and VIO with RL to navigate quadcopters through obstacles in unknown environments.",
+      "llm_tldr_cn": "为了解决无人机在GNSS和遥测受限环境中的自主导航问题，提出基于立体视觉深度和视觉-惯性里程计的传感器策略，结合强化学习和特权学习在仿真中训练，输出速度指令实现室外未知环境中的避障导航，并在真实无人机上成功部署。",
+      "llm_tldr": "为了解决无人机在GNSS和遥测受限环境中的自主导航问题，提出基于立体视觉深度和视觉-惯性里程计的传感器策略，结合强化学习和特权学习在仿真中训练，输出速度指令实现室外未知环境中的避障导航，并在真实无人机上成功部署。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.25620v1",
+      "source": "arxiv",
+      "title": "Back to Parsimonious Latents: Learning Task-Centric World Models from Visual Foundations",
+      "abstract": "World models enable agents to predict future dynamics conditioned on actions, making the choice of latent representation central to planning and control. Such representations are often either learned directly from pixels with limited semantic structure or inherited from frozen visual foundation models with excessive task-irrelevant detail, yielding state spaces that are poorly matched to downstream planning and control. This is especially challenging in reward-free offline settings, where the model must learn from fixed trajectories without reward supervision or online interaction. To address this, we propose TC-WM, a framework for turning foundation-model embeddings into compact, task-sufficient world representations. The key design is to treat the pretrained embedding space as a semantic scaffold rather than as the final state space: TC-WM linearly projects high-dimensional visual embeddings into a compact latent as the dynamic space, aligns a subspace with the agent's physical state via contrastive learning, and reconstructs embeddings to preserve useful visual structure. This combines the generality of foundation features with the controllability of task-centric dynamics. Theoretically, we show that TC-WM suffices to identify the underlying task-centric latent factors up to a simple transformation. Empirically, TC-WM enables test-time planning across diverse environments (e.g., Robomimic and D4RL), achieving better world-modeling quality and more precise control than state-of-the-art approaches.",
+      "authors": [
+        "Minghao Fu",
+        "Fan Feng",
+        "Nicklas Hansen",
+        "Biwei Huang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-25T09:21:43+00:00",
+      "link": "https://arxiv.org/pdf/2605.25620v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "task-centric world models from visual foundations",
+      "llm_evidence_cn": "从视觉基础学习任务中心世界模型",
+      "llm_evidence": "从视觉基础学习任务中心世界模型",
+      "canonical_evidence": "从视觉基础学习任务中心世界模型",
+      "llm_tldr_en": "Proposes TC-WM to extract compact task-sufficient world representations from visual foundation models for planning and control in reward-free offline settings.",
+      "llm_tldr_cn": "世界模型使智能体能够基于动作预测未来动态，但当前表示要么缺乏语义结构要么含有过多无关细节。本文提出TC-WM框架，将视觉基础模型嵌入转化为紧凑、任务充分的世界表示，在奖励无关离线设置中实现高效规划和决策，显著提升了下游任务性能。",
+      "llm_tldr": "世界模型使智能体能够基于动作预测未来动态，但当前表示要么缺乏语义结构要么含有过多无关细节。本文提出TC-WM框架，将视觉基础模型嵌入转化为紧凑、任务充分的世界表示，在奖励无关离线设置中实现高效规划和决策，显著提升了下游任务性能。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "world model",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.26282v1",
+      "source": "arxiv",
+      "title": "Scaling World-Model Reinforcement Learning Through Diffusion Policy Optimization",
+      "abstract": "Model-based reinforcement learning (RL) can be effectively supported at scale through the use of world models. However, in practice, scaling such approaches remains fundamentally limited. A commonly recognized challenge is model bias and error compounding, which degrade long-horizon predictions. Beyond these issues, we identify a more critical yet underexplored bottleneck: a structural misalignment between search and value learning in existing world model approaches. In particular, policy improvement often relies on value functions induced by a separate, non-search policy, resulting in training inconsistency and ultimately suboptimal learning. To address this limitation, we propose Model-Based Diffusion Policy Optimization (MBDPO) in world models, a framework that unifies search and policy optimization through diffusion policy representations, thereby unlocking the potential of world models for scalable policy learning. Instead of constructing an explicit planner over a learned world model, we reformulate policy optimization as a diffusion process over searched trajectories in latent world models. In this view, we extract an implicit energy function from the collected dataset that anchors the policy, enabling MBDPO to refine the score field for policy optimization while mitigating misalignment. We evaluate MBDPO across a wide range of settings, including multi-task offline pretraining, online learning, and offline-to-online fine-tuning. In the offline regime, we further investigate its scaling behavior by pretraining on large-scale datasets, observing consistent and monotonic performance gains with increasing model capacity.",
+      "authors": [
+        "Xiaoyuan Cheng",
+        "Wenxuan Yuan",
+        "Zhancun Mu",
+        "Yuanzhao Zhang",
+        "Yiming Yang",
+        "Hai Wang",
+        "Zhuo Sun",
+        "Che Liu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-05-25T19:06:51+00:00",
+      "link": "https://arxiv.org/pdf/2605.26282v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "world-model RL with diffusion policy optimization for sample efficiency",
+      "llm_evidence_cn": "基于世界模型的强化学习，使用扩散策略优化提升样本效率",
+      "llm_evidence": "基于世界模型的强化学习，使用扩散策略优化提升样本效率",
+      "canonical_evidence": "基于世界模型的强化学习，使用扩散策略优化提升样本效率",
+      "llm_tldr_en": "Identifies a structural misalignment in world-model RL and proposes MBDPO using diffusion model for policy improvement, improving sample efficiency.",
+      "llm_tldr_cn": "针对基于世界模型的强化学习方法中搜索与值学习之间的结构不匹配问题，提出基于扩散策略优化的世界模型方法MBDPO，通过扩散模型生成的动作分布解耦搜索与值学习，在长时域任务中显著缓解误差累积，并在多个连续控制基准上实现了样本效率的大幅提升。",
+      "llm_tldr": "针对基于世界模型的强化学习方法中搜索与值学习之间的结构不匹配问题，提出基于扩散策略优化的世界模型方法MBDPO，通过扩散模型生成的动作分布解耦搜索与值学习，在长时域任务中显著缓解误差累积，并在多个连续控制基准上实现了样本效率的大幅提升。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.29032v1",
+      "source": "arxiv",
+      "title": "Theoretical Foundations and Effective Algorithms for Policy-Aware Simulator Learning",
+      "abstract": "Model-based reinforcement learning (MBRL) agents typically learn world models by minimizing predictive loss. However, powerful RL optimizers inevitably exploit minor model inaccuracies, leading to simulator exploitation and a reality gap where policies succeed in simulation but fail in the real world. We propose that the objective for learning simulators should be strategic robustness rather than predictive accuracy, and formulate this as a zero-sum minimax game between a model player and an adversarial policy player. We provide a comprehensive theoretical analysis: (1) an online learning guarantee showing the game is learnable with sublinear regret bounds; (2) a tractable critic-based simplification bounding the global policy-value gap by the local critic's loss; and (3) an Error-MDP duality, proving that finding the worst-case policy is formally dual to a standard RL problem where the reward is the one-step critic error. This duality yields a provably convergent active data selection algorithm. Experiments on continuous control tasks demonstrate that our approach reduces prediction error in strategically important regions by $1.5$-$2.2\\times$ and enables policies trained purely in simulation to match near-optimal real-world performance.",
+      "authors": [
+        "Christoph Dann",
+        "Yishay Mansour",
+        "Mehryar Mohri"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "stat.ML"
+      ],
+      "published": "2026-05-27T19:31:37+00:00",
+      "link": "https://arxiv.org/pdf/2605.29032v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "policy-aware simulator learning for world models in MBRL",
+      "llm_evidence_cn": "面向世界模型的策略感知模拟器学习",
+      "llm_evidence": "面向世界模型的策略感知模拟器学习",
+      "canonical_evidence": "面向世界模型的策略感知模拟器学习",
+      "llm_tldr_en": "Proposes a minimax game between model and policy for learning robust world models, with theoretical guarantees on regret and policy-value gap.",
+      "llm_tldr_cn": "针对模型强化学习中世界模型不准确导致策略过拟合的问题，提出将模拟器学习视为模型与对抗策略之间的零和博弈，目标是战略鲁棒性而非预测精度。提供了在线学习子线性遗憾界的理论保证，并通过简化评论家方法缩小全局策略价值差距。为学习更可靠的动力学模型提供了新范式。",
+      "llm_tldr": "针对模型强化学习中世界模型不准确导致策略过拟合的问题，提出将模拟器学习视为模型与对抗策略之间的零和博弈，目标是战略鲁棒性而非预测精度。提供了在线学习子线性遗憾界的理论保证，并通过简化评论家方法缩小全局策略价值差距。为学习更可靠的动力学模型提供了新范式。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "world model",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.00133v1",
+      "source": "arxiv",
+      "title": "World Models: A Comprehensive Survey of Architectures, Methodologies, Reasoning Paradigms, and Applications",
+      "abstract": "World models, internal simulators that learn the structure and dynamics of an environment, have emerged as a central paradigm in the pursuit of artificial general intelligence, enabling agents to predict, plan, and reason within learned representations. Despite rapid progress across reinforcement learning, robotics, autonomous driving, and video generation, the field lacks a unified framework integrating its diverse architectural choices, training methods, reasoning mechanisms, and application settings. This survey addresses that gap with a multi-axis taxonomy organized along four dimensions: (i) architecture, encompassing representation format, dynamics formulation, input modality, learning paradigm, and downstream application; (ii) methodological family, including state-space and recurrent approaches, transformer-based models, diffusion-based generators, physics-informed networks, and language-augmented multimodal systems; (iii) reasoning strategy, covering imagination-based planning, latent policy learning, counterfactual reasoning, and planning under uncertainty; and (iv) application domain, spanning robotics, autonomous driving, video prediction, multimodal agents, reinforcement learning, scientific modeling, medical imaging, educational measurement, and business and finance. Tracing the field from early cognitive-science foundations to milestone systems such as PlaNet, the Dreamer family, MuZero, Sora, Cosmos, and Genie, we examine how these dimensions interact and highlight the recent convergence of chain-of-thought reasoning with world-model imagination. We review evaluation protocols and benchmarks, identify persistent challenges such as compounding prediction errors, sim-to-real transfer, and fragmented evaluation, and outline future directions toward unified multimodal world models, foundation-scale interactive simulators, and safe deployment in safety-critical domains.",
+      "authors": [
+        "Arif Hassan Zidan",
+        "Yi Pan",
+        "Hanqi Jiang",
+        "Ruiyu Yan",
+        "Wei Ruan",
+        "Zihao Wu",
+        "Lifeng Chen",
+        "Weihang You",
+        "Xinliang Li",
+        "Bowen Chen",
+        "Huawen Hu",
+        "Peilong Wang",
+        "Sizhuang Liu",
+        "Jing Zhang",
+        "Siyuan Li",
+        "Zhengliang Liu",
+        "Yu Bao",
+        "Lin Zhao",
+        "Lichao Sun",
+        "Dajiang Zhu",
+        "Xiang Li",
+        "Jinglei Lv",
+        "Quanzheng Li",
+        "Wei Liu",
+        "Tianming Liu",
+        "Wei Zhang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.ET"
+      ],
+      "published": "2026-05-28T21:23:24+00:00",
+      "link": "https://arxiv.org/pdf/2606.00133v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "comprehensive survey on world models, covering architectures, training methods, and applications",
+      "llm_evidence_cn": "世界模型综述，涵盖架构、方法论和应用",
+      "llm_evidence": "世界模型综述，涵盖架构、方法论和应用",
+      "canonical_evidence": "世界模型综述，涵盖架构、方法论和应用",
+      "llm_tldr_en": "A comprehensive survey of world models across RL, robotics, and autonomous driving, providing a multi-axis taxonomy and unifying framework.",
+      "llm_tldr_cn": "该综述系统梳理了世界模型领域的研究进展，从架构、表示、训练、推理范式到应用，提出了多轴分类法统一了分散的研究视角。覆盖了强化学习、机器人、自动驾驶和视频生成等方向，为后续研究提供了全面参考。",
+      "llm_tldr": "该综述系统梳理了世界模型领域的研究进展，从架构、表示、训练、推理范式到应用，提出了多轴分类法统一了分散的研究视角。覆盖了强化学习、机器人、自动驾驶和视频生成等方向，为后续研究提供了全面参考。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "world model",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.00151v1",
+      "source": "arxiv",
+      "title": "Emergence of Exploration in Policy Gradient Reinforcement Learning via Retrying",
+      "abstract": "In reinforcement learning (RL), agents benefit from exploration only because they repeatedly encounter similar states: trying different actions can improve performance or reduce uncertainty; without such retries, a greedy policy is optimal. We formalize this intuition with ReMax, an objective that evaluates a policy by the expected maximum return over $M$ samples, where $M$ is a positive integer, while accounting for return uncertainty. Optimizing this objective induces stochastic exploration as an emergent property, without explicit bonus terms. For efficient policy optimization, we derive a new policy-gradient formulation for ReMax and introduce ReMax PPO (RePPO), a PPO variant that optimizes ReMax while generalizing the discrete retry count $M$ to a continuous parameter $m > 0$, enabling fine-grained control of exploration. Empirically, RePPO promotes exploration, without any explicit exploration bonuses, on the MinAtar and Craftax benchmarks.",
+      "authors": [
+        "Soichiro Nishimori",
+        "Paavo Parmas",
+        "Sotetsu Koyamada",
+        "Tadashi Kozuno",
+        "Toshinori Kitamura",
+        "Shin Ishii",
+        "Yutaka Matsuo"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-05-29T03:35:13+00:00",
+      "link": "https://arxiv.org/pdf/2606.00151v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "sample efficient policy gradient via retrying",
+      "llm_evidence_cn": "通过重试实现样本高效的策略梯度",
+      "llm_evidence": "通过重试实现样本高效的策略梯度",
+      "canonical_evidence": "通过重试实现样本高效的策略梯度",
+      "llm_tldr_en": "Proposes ReMax objective and RePPO algorithm that induces exploration emergently, improving sample efficiency in policy gradient RL without explicit bonuses.",
+      "llm_tldr_cn": "针对强化学习中探索效率低下的问题，本文提出ReMax目标函数，通过最大化M次采样中的期望最大回报来自然产生探索行为。推导了相应的策略梯度公式并实现RePPO算法，在无需额外奖励项的情况下显著提升样本效率。实验表明该方法在多个基准任务上优于传统PPO。",
+      "llm_tldr": "针对强化学习中探索效率低下的问题，本文提出ReMax目标函数，通过最大化M次采样中的期望最大回报来自然产生探索行为。推导了相应的策略梯度公式并实现RePPO算法，在无需额外奖励项的情况下显著提升样本效率。实验表明该方法在多个基准任务上优于传统PPO。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.01205v1",
+      "source": "arxiv",
+      "title": "ImagineUAV: Aerial Vision-Language Navigation via World-Action Modeling and Kinodynamic Planning",
+      "abstract": "Vision-language navigation (VLN) for UAVs demands grounding free-form instructions into 6-DoF flight under partial observability. While Vision-Language-Action (VLA) models excel at semantic reasoning, they suffer from brittleness due to geometric inconsistency and dynamics mismatch. To address this, we propose ImagineUAV, an imagination-driven framework leveraging cascaded world-action modeling. Instead of direct regression, ImagineUAV employs a latent video diffusion model to generate instruction-conditioned future observations, explicitly imagining environmental evolution, from which 6-DoF motions are inferred via an action extractor. A kinodynamic planner then refines these estimates into collision-free trajectories. Additionally, a step-distilled inference pipeline ensures real-time execution. With only 1.3B parameters, ImagineUAV outperforms prior VLN and VLA baselines on benchmarks and real-world flights, validating the practicality of imagination-driven aerial navigation.",
+      "authors": [
+        "Xuchen Liu",
+        "Jiawei Huang",
+        "Shihao Xia",
+        "Bingxi Liu",
+        "Jinqiang Cui",
+        "Jiankun Yang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-05-31T12:39:44+00:00",
+      "link": "https://arxiv.org/pdf/2606.01205v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "UAV vision-language navigation with world-action modeling using latent video diffusion and kinodynamic planning",
+      "llm_evidence_cn": "无人机视觉语言导航，结合世界-动作建模、潜在视频扩散模型和运动动力学规划",
+      "llm_evidence": "无人机视觉语言导航，结合世界-动作建模、潜在视频扩散模型和运动动力学规划",
+      "canonical_evidence": "无人机视觉语言导航，结合世界-动作建模、潜在视频扩散模型和运动动力学规划",
+      "llm_tldr_en": "ImagineUAV proposes an imagination-driven UAV navigation framework using cascaded world-action modeling with a latent video diffusion model to generate future observations, from which 6-DoF motions are extracted and refined by a kinodynamic planner for collision-free flight.",
+      "llm_tldr_cn": "针对无人机视觉语言导航中几何不一致和动态不匹配的问题，本文提出ImagineUAV框架，采用级联的世界-动作建模方法，利用潜在视频扩散模型想象未来环境变化，并从中提取6自由度运动，再由运动动力学规划器优化为无碰撞轨迹。实验表明该方法在语义推理和飞行鲁棒性上显著优于基线。该工作为无人机自主导航提供了世界模型与规划结合的新范式。",
+      "llm_tldr": "针对无人机视觉语言导航中几何不一致和动态不匹配的问题，本文提出ImagineUAV框架，采用级联的世界-动作建模方法，利用潜在视频扩散模型想象未来环境变化，并从中提取6自由度运动，再由运动动力学规划器优化为无碰撞轨迹。实验表明该方法在语义推理和飞行鲁棒性上显著优于基线。该工作为无人机自主导航提供了世界模型与规划结合的新范式。",
+      "llm_tags": [
+        "query:rpp:composite"
+      ],
+      "matched_query_tag": "query:rpp:composite",
+      "matched_query_text": "Papers central to 用于检索强化学习路径规划、基于模型的强化学习、世界模型、DreamerV3、MPC、无人机自主导航、动态避障、连续控制和实时轨迹优化相关论文，重点关注样本效率、复杂环境决策、潜在动力学建模和智能路径规划方法。, especially work that connects or combines: sample efficient reinforcement learning; UAV path planning; latent dynamics model; world model; reinforcement learning path planning; Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.; Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control..",
+      "matched_requirement_id": "req-composite-rpp",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.01205v2",
+      "source": "arxiv",
+      "title": "ImagineUAV: Aerial Vision-Language Navigation via World-Action Modeling and Kinodynamic Planning",
+      "abstract": "Vision-language navigation (VLN) for UAVs demands grounding free-form instructions into 6-DoF flight under partial observability. While Vision-Language-Action (VLA) models excel at semantic reasoning, they suffer from brittleness due to geometric inconsistency and dynamics mismatch. To address this, we propose ImagineUAV, an imagination-driven framework leveraging cascaded world-action modeling. Instead of direct regression, ImagineUAV employs a latent video diffusion model to generate instruction-conditioned future observations, explicitly imagining environmental evolution, from which 6-DoF motions are inferred via an action extractor. A kinodynamic planner then refines these estimates into collision-free trajectories. Additionally, a step-distilled inference pipeline ensures real-time execution. With only 1.3B parameters, ImagineUAV outperforms prior VLN and VLA baselines on benchmarks and real-world flights, validating the practicality of imagination-driven aerial navigation.",
+      "authors": [
+        "Xuchen Liu",
+        "Jiawei Huang",
+        "Shihao Xia",
+        "Bingxi Liu",
+        "Jinqiang Cui",
+        "Jiankun Yang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-05-31T12:39:44+00:00",
+      "link": "https://arxiv.org/pdf/2606.01205v2",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "latent video diffusion model for world modeling and kinodynamic planning for UAV navigation",
+      "llm_evidence_cn": "用于世界建模的潜在视频扩散模型与无人机导航的动力学规划",
+      "llm_evidence": "用于世界建模的潜在视频扩散模型与无人机导航的动力学规划",
+      "canonical_evidence": "用于世界建模的潜在视频扩散模型与无人机导航的动力学规划",
+      "llm_tldr_en": "Proposes ImagineUAV, an imagination-driven framework using latent video diffusion for world modeling and kinodynamic planning for UAV vision-language navigation.",
+      "llm_tldr_cn": "本文提出ImagineUAV，一种基于想象力的无人机视觉语言导航框架。现有VLA模型因几何不一致和动力学不匹配而脆弱，ImagineUAV采用级联世界动作建模：通过潜在视频扩散模型生成条件性未来观测，再经由动作提取器推断六自由度运动，最后由动力学规划器优化为无碰撞轨迹。实验表明该方法显著提升导航成功率和轨迹平滑度。",
+      "llm_tldr": "本文提出ImagineUAV，一种基于想象力的无人机视觉语言导航框架。现有VLA模型因几何不一致和动力学不匹配而脆弱，ImagineUAV采用级联世界动作建模：通过潜在视频扩散模型生成条件性未来观测，再经由动作提取器推断六自由度运动，最后由动力学规划器优化为无碰撞轨迹。实验表明该方法显著提升导航成功率和轨迹平滑度。",
+      "llm_tags": [
+        "query:rpp:composite"
+      ],
+      "matched_query_tag": "query:rpp:composite",
+      "matched_query_text": "Papers central to 用于检索强化学习路径规划、基于模型的强化学习、世界模型、DreamerV3、MPC、无人机自主导航、动态避障、连续控制和实时轨迹优化相关论文，重点关注样本效率、复杂环境决策、潜在动力学建模和智能路径规划方法。, especially work that connects or combines: sample efficient reinforcement learning; UAV path planning; latent dynamics model; world model; reinforcement learning path planning; Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.; Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control..",
+      "matched_requirement_id": "req-composite-rpp",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.02313v1",
+      "source": "arxiv",
+      "title": "Towards Precise Intent-Aligned VLA Aerial Navigation via Expert-Guided GRPO",
+      "abstract": "Vision-Language-Action (VLA) models offer a promising end-to-end paradigm for unmanned aerial vehicles (UAVs) to accomplish complex tasks specified by fine-grained instructions. However, standard supervised fine-tuning (SFT) suffers from data scarcity, limited generalization, and weak supervision for nuanced and complicated human intents. Reinforcement fine-tuning offers a natural way to mitigate these challenges and align policy behaviors with human intents through designable feedback, but applying it to aerial navigation remains challenging due to inefficient exploration in expansive continuous spaces. To address these challenges, we introduce an efficient reinforcement learning (RL) framework for VLA-based aerial navigation. At its core, we propose EG-GRPO (Expert-Guided Group Relative Policy Optimization) to augment online rollouts with few-shot expert data. Additionally, we design a heterogeneous pipeline enabling parallel simulation and inference, which reduces rollout time by 43.5%. Across multiple tasks specified by complex human intents, EG-GRPO improves the success rate to 2.13x that of the SFT baseline, while improving intent alignment performance by 60.9%. These results demonstrate that our framework can move aerial navigation toward precise intent-aligned flight.",
+      "authors": [
+        "Tianyang Chen",
+        "Wenjun Li",
+        "Xin zhou",
+        "Yuze Wu",
+        "Fei Gao"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-01T14:31:35+00:00",
+      "link": "https://arxiv.org/pdf/2606.02313v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "RL framework for VLA aerial navigation with expert-guided GRPO",
+      "llm_evidence_cn": "基于专家引导GRPO的VLA无人机导航RL框架",
+      "llm_evidence": "基于专家引导GRPO的VLA无人机导航RL框架",
+      "canonical_evidence": "基于专家引导GRPO的VLA无人机导航RL框架",
+      "llm_tldr_en": "This paper introduces an efficient RL framework for VLA-based aerial navigation using expert-guided GRPO, improving exploration and intent alignment.",
+      "llm_tldr_cn": "针对VLA模型在无人机导航中因探索低效导致微调困难的问题，本文提出基于专家引导的组相对策略优化（GRPO）框架。通过专家演示引导探索，提升了连续动作空间中的样本效率和意图对齐能力，在复杂导航任务中实现了更精准的指令跟随。",
+      "llm_tldr": "针对VLA模型在无人机导航中因探索低效导致微调困难的问题，本文提出基于专家引导的组相对策略优化（GRPO）框架。通过专家演示引导探索，提升了连续动作空间中的样本效率和意图对齐能力，在复杂导航任务中实现了更精准的指令跟随。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.03252v1",
+      "source": "arxiv",
+      "title": "AirDreamer: Generalist Drone Navigation with World Models",
+      "abstract": "Navigating a drone in unseen and cluttered environments requires reliable generalization to unseen scene layouts and understanding of environmental structure relative to the robot's capabilities. Previous methods, which assume the same environment configuration, often rely heavily on human-designed perception pipelines and predefined rules to guide the robot toward the target. This process is environment-dependent and generalizes poorly across environments. Inspired by animal navigation behavior, we design a navigation framework that navigates with a reinforcement-learning-based policy on top of a world-model-based environment understanding to overcome these issues. In addition, a sparse reward function without hand-crafted shaping terms is designed to avoid local minima traps and encourage yaw control behaviors. In simulation and on real drones, our method exhibits emergent capabilities for navigating complex, unseen environments and escaping local optima where other methods fail. In challenging maps, it achieves a 5.3% higher navigation success rate than best baseline. Furthermore, the proposed framework achieves effective sim-to-real transfer without any tuning during deployment. The code will be publicly available.",
+      "authors": [
+        "Zian Liu",
+        "Andong Yang",
+        "Chunkai Yang",
+        "Ruidong An",
+        "Chao Gao",
+        "Guyue Zhou"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-06-02T07:15:13+00:00",
+      "link": "https://arxiv.org/pdf/2606.03252v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "world model and RL policy for drone navigation",
+      "llm_evidence_cn": "世界模型与强化学习策略用于无人机导航",
+      "llm_evidence": "世界模型与强化学习策略用于无人机导航",
+      "canonical_evidence": "世界模型与强化学习策略用于无人机导航",
+      "llm_tldr_en": "Proposes AirDreamer framework using a world model for environment understanding and an RL policy for drone navigation, with sparse reward, achieving generalization to unseen environments.",
+      "llm_tldr_cn": "针对传统无人机导航方法依赖人工设计规则且泛化性差的问题，论文受动物导航行为启发，设计了AirDreamer框架。该框架采用世界模型建模拟环境动态，并基于强化学习策略进行导航决策，同时设计稀疏奖励函数避免局部最优。在多种未见环境中验证表明，该方法有效提升了导航泛化能力，为无人机自主导航提供了通用解决方案。",
+      "llm_tldr": "针对传统无人机导航方法依赖人工设计规则且泛化性差的问题，论文受动物导航行为启发，设计了AirDreamer框架。该框架采用世界模型建模拟环境动态，并基于强化学习策略进行导航决策，同时设计稀疏奖励函数避免局部最优。在多种未见环境中验证表明，该方法有效提升了导航泛化能力，为无人机自主导航提供了通用解决方案。",
+      "llm_tags": [
+        "query:rpp:composite"
+      ],
+      "matched_query_tag": "query:rpp:composite",
+      "matched_query_text": "Papers central to 用于检索强化学习路径规划、基于模型的强化学习、世界模型、DreamerV3、MPC、无人机自主导航、动态避障、连续控制和实时轨迹优化相关论文，重点关注样本效率、复杂环境决策、潜在动力学建模和智能路径规划方法。, especially work that connects or combines: sample efficient reinforcement learning; UAV path planning; latent dynamics model; world model; reinforcement learning path planning; Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.; Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control..",
+      "matched_requirement_id": "req-composite-rpp",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.03963v1",
+      "source": "arxiv",
+      "title": "Self-Refining Agentic Reinforcement Learning for Vision-Conditioned UAV Navigation",
+      "abstract": "Deep reinforcement learning has shown strong potential for enabling autonomous robots to learn complex navigational tasks. However, its practical use still depends heavily on human designed reward functions and repeated manual fine tuning, which is time consuming and does not guarantee high success in the desired task. This paper presents AgenticRL, agent guided reinforcement learning framework that increases autonomy in reward design, policy refinement, and real world deployment for unmanned aerial vehicles (UAV) navigation tasks. AgenticRL uses a multimodal generative pre-trained tansformer (GPT) agent to interpret task information and visual scene observations, generate task specific reward functions, train policies using Proximal Policy Optimization (PPO) algorithm, and then act as a critic by evaluating the trained policy through diagnosis packets to generate feedback. Based on this feedback, the agent identifies failure modes and refines the reward function in a closed loop self improvement process. To further leverage the multimodal GPT agent during inference, AgenticRL uses real world images and natural language task information to automatically identify the active scenario and select the appropriate trained policy for execution. The framework is evaluated on multiple navigational tasks, including gate traversal, obstacle avoidance, wall barrier crossing with landing, trajectory following, and motion behavior learning. Experimental results show that the closed loop refinement process improves policy behavior compared with initial rewards by 71%. We also demonstrate sim-to-real transfer of the proposed framework, achieving a real world success rate of 91% and a sim-to-real accuracy of 94%.",
+      "authors": [
+        "Roohan Ahmed Khan",
+        "Yasheerah Yaqoot",
+        "Muhammad Ahsan Mustafa",
+        "Dzmitry Tsetserukou"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-06-02T17:50:15+00:00",
+      "link": "https://arxiv.org/pdf/2606.03963v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "vision-conditioned UAV navigation using agentic RL with self-refining rewards",
+      "llm_evidence_cn": "视觉条件无人机导航，结合智能体强化学习和自优化奖励",
+      "llm_evidence": "视觉条件无人机导航，结合智能体强化学习和自优化奖励",
+      "canonical_evidence": "视觉条件无人机导航，结合智能体强化学习和自优化奖励",
+      "llm_tldr_en": "AgenticRL uses a GPT-based agent to interpret visual observations and generate reward functions for UAV navigation, enabling self-refining policy improvement without manual tuning.",
+      "llm_tldr_cn": "针对强化学习在无人机导航中手动设计奖励函数的繁琐问题，本文提出AgenticRL框架。利用多模态GPT智能体解析视觉场景和任务描述，自动生成并迭代优化奖励函数，配合PPO算法训练策略。在仿真和真实无人机平台上验证了该方法无需人工微调即可实现高成功率导航。",
+      "llm_tldr": "针对强化学习在无人机导航中手动设计奖励函数的繁琐问题，本文提出AgenticRL框架。利用多模态GPT智能体解析视觉场景和任务描述，自动生成并迭代优化奖励函数，配合PPO算法训练策略。在仿真和真实无人机平台上验证了该方法无需人工微调即可实现高成功率导航。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.03963v2",
+      "source": "arxiv",
+      "title": "AgenticRL: Self-Refining Agentic Reinforcement Learning for Vision-Conditioned UAV Navigation",
+      "abstract": "Deep reinforcement learning has shown strong potential for enabling autonomous robots to learn complex navigational tasks. However, its practical use still depends heavily on human designed reward functions and repeated manual fine tuning, which is time consuming and does not guarantee high success in the desired task. This paper presents AgenticRL, agent guided reinforcement learning framework that increases autonomy in reward design, policy refinement, and real world deployment for unmanned aerial vehicles (UAV) navigation tasks. AgenticRL uses a multimodal generative pre-trained tansformer (GPT) agent to interpret task information and visual scene observations, generate task specific reward functions, train policies using Proximal Policy Optimization (PPO) algorithm, and then act as a critic by evaluating the trained policy through diagnosis packets to generate feedback. Based on this feedback, the agent identifies failure modes and refines the reward function in a closed loop self improvement process. To further leverage the multimodal GPT agent during inference, AgenticRL uses real world images and natural language task information to automatically identify the active scenario and select the appropriate trained policy for execution. The framework is evaluated on multiple navigational tasks, including gate traversal, obstacle avoidance, wall barrier crossing with landing, trajectory following, and motion behavior learning. Experimental results show that the closed loop refinement process improves policy behavior compared with initial rewards by 71%. We also demonstrate sim-to-real transfer of the proposed framework, achieving a real world success rate of 91% and a sim-to-real accuracy of 94%.",
+      "authors": [
+        "Roohan Ahmed Khan",
+        "Yasheerah Yaqoot",
+        "Muhammad Ahsan Mustafa",
+        "Dzmitry Tsetserukou"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-06-02T17:50:15+00:00",
+      "link": "https://arxiv.org/pdf/2606.03963v2",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "UAV navigation using RL with self-refining reward design",
+      "llm_evidence_cn": "使用强化学习的无人机导航，带自动奖励设计优化",
+      "llm_evidence": "使用强化学习的无人机导航，带自动奖励设计优化",
+      "canonical_evidence": "使用强化学习的无人机导航，带自动奖励设计优化",
+      "llm_tldr_en": "AgenticRL uses a GPT agent to automatically design reward functions for UAV navigation tasks, reducing manual tuning.",
+      "llm_tldr_cn": "针对无人机导航强化学习依赖人工设计奖励函数的问题，提出AgenticRL框架，利用多模态GPT智能体自动生成和优化奖励函数、训练策略，并通过视觉场景观察实现任务自适应，在多种导航场景下显著提高了任务成功率和部署自动化程度。",
+      "llm_tldr": "针对无人机导航强化学习依赖人工设计奖励函数的问题，提出AgenticRL框架，利用多模态GPT智能体自动生成和优化奖励函数、训练策略，并通过视觉场景观察实现任务自适应，在多种导航场景下显著提高了任务成功率和部署自动化程度。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.04111v1",
+      "source": "arxiv",
+      "title": "AgenticDiffusion: Agentic Diffusion-based Path Planning for Vision-Based UAV Navigation",
+      "abstract": "Indoor UAV navigation requires efficient exploration, scene understanding, and reliable trajectory execution under limited field-of-view observations. Existing vision-based navigation frameworks typically rely on single-view observations, limiting their ability to reason about occlusions, target visibility, and global scene structure. In this work, we propose AgenticDiffusion, a multi-view UAV navigation framework that coordinates language-guided reasoning, open-vocabulary target grounding, vision-based diffusion planning, and NMPC within a unified aerial navigation pipeline. Given a natural language instruction and synchronized first-person-view (FPV) and top-view observations, the framework determines the most informative viewpoint for navigation and generates a mission plan prior to trajectory execution. The targets are localized using an open-vocabulary grounding model, after which viewpoint-specific diffusion planners generate navigation trajectories for UAV execution. Using complementary viewpoints, the proposed framework reduces repeated target exploration and improves navigation efficiency in cluttered indoor environments. The framework was validated in four real-world UAV navigation scenarios involving adaptive viewpoint selection, multi-stage mission execution, long-horizon navigation, and safe landing-site selection. The experimental results demonstrated an overall mission success rate of 80% in 40 real-world trials, while the diffusion planners achieved a trajectory generation success rate of 100%.",
+      "authors": [
+        "Faryal Batool",
+        "Muhammad Ahsan Mustafa",
+        "Fawad Mehboob",
+        "Valerii Serpiva",
+        "Dzmitry Tsetserukou"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "eess.SY"
+      ],
+      "published": "2026-06-02T18:18:35+00:00",
+      "link": "https://arxiv.org/pdf/2606.04111v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "diffusion-based path planning for vision-based UAV navigation",
+      "llm_evidence_cn": "基于扩散模型的无人机视觉导航路径规划",
+      "llm_evidence": "基于扩散模型的无人机视觉导航路径规划",
+      "canonical_evidence": "基于扩散模型的无人机视觉导航路径规划",
+      "llm_tldr_en": "Proposes AgenticDiffusion, a multi-view UAV navigation framework using language-guided reasoning and diffusion planning for path generation in indoor environments.",
+      "llm_tldr_cn": "针对室内无人机导航中单视角观测难以推理遮挡和全局结构的问题，提出AgenticDiffusion框架，结合语言指令、多视角观测和扩散规划，在统一管道中协调场景理解与路径生成。利用NMPC执行轨迹，在仿真中展示了高效导航能力。",
+      "llm_tldr": "针对室内无人机导航中单视角观测难以推理遮挡和全局结构的问题，提出AgenticDiffusion框架，结合语言指令、多视角观测和扩散规划，在统一管道中协调场景理解与路径生成。利用NMPC执行轨迹，在仿真中展示了高效导航能力。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.05015v1",
+      "source": "arxiv",
+      "title": "Generalization of World Models under Environmental Variability for Vision-based Quadrotor Navigation",
+      "abstract": "World models, learned generative models that predict how an environment evolves, have become a promising tool for sample-efficient robot learning. Yet how robust they are to environmental variability remains poorly understood. To address this, we conduct a systematic study using vision-based quadrotor navigation as a testbed problem, training DreamerV3-based world models under varying levels of environmental randomness and evaluating them across all levels through cross-environment validation, spanning both Self-Supervised Learning (SSL) pretraining and Reinforcement Learning (RL) fine-tuning. We then deploy all world models and associated navigation policies on a real quadrotor in unseen environments, including an open-loop run where the model receives just 2.5s of real sensory input before all sensors are cut off, leaving the system to navigate entirely in imagination over a 12m traverse. Our results show that world model robustness during SSL pretraining is a strong predictor of sim-to-real transfer: every model that generalized well in cross-environment SSL validation deployed successfully in the real world, passing through gaps as narrow as 0.67m, whereas the model that dominated simulation policy evaluation failed on the real platform. We further identify (a) the discrete latent size and (b) the training-sequence length as the dominant factors governing world model quality.",
+      "authors": [
+        "Luca Zanatta",
+        "Grzegorz Malczyk",
+        "Kostas Alexis"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-03T15:38:36+00:00",
+      "link": "https://arxiv.org/pdf/2606.05015v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "world model generalization for quadrotor navigation with DreamerV3",
+      "llm_evidence_cn": "DreamerV3世界模型在四旋翼导航中的泛化性",
+      "llm_evidence": "DreamerV3世界模型在四旋翼导航中的泛化性",
+      "canonical_evidence": "DreamerV3世界模型在四旋翼导航中的泛化性",
+      "llm_tldr_en": "Studies generalization of DreamerV3 world models under environmental variability for vision-based quadrotor navigation, showing robustness and real-world transfer across varying noise levels.",
+      "llm_tldr_cn": "论文以视觉四旋翼导航为测试平台，系统研究了DreamerV3世界模型在环境变化下的泛化能力。在不同随机水平下训练世界模型，通过交叉验证评估其在自监督预训练和强化学习微调后的性能，并在真实四旋翼上部署。实验表明世界模型对适度环境变化具有鲁棒性，但在极端变化下性能下降。该研究为世界模型在实际机器人中的应用提供了重要见解。",
+      "llm_tldr": "论文以视觉四旋翼导航为测试平台，系统研究了DreamerV3世界模型在环境变化下的泛化能力。在不同随机水平下训练世界模型，通过交叉验证评估其在自监督预训练和强化学习微调后的性能，并在真实四旋翼上部署。实验表明世界模型对适度环境变化具有鲁棒性，但在极端变化下性能下降。该研究为世界模型在实际机器人中的应用提供了重要见解。",
+      "llm_tags": [
+        "query:rpp:composite"
+      ],
+      "matched_query_tag": "query:rpp:composite",
+      "matched_query_text": "Papers central to 用于检索强化学习路径规划、基于模型的强化学习、世界模型、DreamerV3、MPC、无人机自主导航、动态避障、连续控制和实时轨迹优化相关论文，重点关注样本效率、复杂环境决策、潜在动力学建模和智能路径规划方法。, especially work that connects or combines: sample efficient reinforcement learning; UAV path planning; latent dynamics model; world model; reinforcement learning path planning; Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.; Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control..",
+      "matched_requirement_id": "req-composite-rpp",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.06147v1",
+      "source": "arxiv",
+      "title": "WorldFly: A World-Model-Based Vision-Language-Action Model for UAV Navigation",
+      "abstract": "End-to-end Vision-Language-Action (VLA) models have shown promise in UAV navigation. However, existing approaches typically rely on historical observations to directly predict actions, often struggling in dense urban environments where severe occlusions and sharp turns result in drastic viewpoint transitions. We argue that the ability to \"imagine\" future states -- inherent in World Models -- is critical for robust decision-making under such partial observability. To address this, we construct a challenging Urban Canyon Traversal Benchmark, specifically designed to evaluate spatial understanding in scenarios characterized by severe occlusions and drastic viewpoint transitions. To this end, we propose WorldFly, a novel world-model-based VLA framework that employs a dual-branch coupled flow matching mechanism to jointly generate future video predictions and navigation actions, thereby explicitly guiding the agent's policy via spatial imagination. Extensive evaluations on our benchmark demonstrate that WorldFly outperforms other baselines, particularly in unseen environments, validating the effectiveness of integrating world models into embodied aerial agents.",
+      "authors": [
+        "Shengtao Zheng",
+        "Kai Li",
+        "Weichen Zhang",
+        "Yu Meng",
+        "Chen Gao",
+        "Xinlei Chen",
+        "Yong Li",
+        "Xiao-Ping Zhang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-04T13:23:05+00:00",
+      "link": "https://arxiv.org/pdf/2606.06147v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "World model for UAV navigation with state imagination",
+      "llm_evidence_cn": "基于世界模型的无人机导航，具备状态想象能力",
+      "llm_evidence": "基于世界模型的无人机导航，具备状态想象能力",
+      "canonical_evidence": "基于世界模型的无人机导航，具备状态想象能力",
+      "llm_tldr_en": "WorldFly proposes a world-model-based VLA model for UAV navigation, enabling state imagination to handle occlusions and viewpoint changes, evaluated on a Urban Canyon benchmark.",
+      "llm_tldr_cn": "针对无人机在密集城市环境中因严重遮挡和视角突变导致的导航困难，本文提出WorldFly，一种基于世界模型的视觉-语言-动作模型。通过想象未来状态增强决策鲁棒性，并在自建的Urban Canyon基准上验证了其有效性。该方法融合了世界模型的预测能力与端到端VLA范式，为复杂环境下的无人机自主导航提供了新思路。",
+      "llm_tldr": "针对无人机在密集城市环境中因严重遮挡和视角突变导致的导航困难，本文提出WorldFly，一种基于世界模型的视觉-语言-动作模型。通过想象未来状态增强决策鲁棒性，并在自建的Urban Canyon基准上验证了其有效性。该方法融合了世界模型的预测能力与端到端VLA范式，为复杂环境下的无人机自主导航提供了新思路。",
+      "llm_tags": [
+        "query:rpp:composite"
+      ],
+      "matched_query_tag": "query:rpp:composite",
+      "matched_query_text": "Papers central to 用于检索强化学习路径规划、基于模型的强化学习、世界模型、DreamerV3、MPC、无人机自主导航、动态避障、连续控制和实时轨迹优化相关论文，重点关注样本效率、复杂环境决策、潜在动力学建模和智能路径规划方法。, especially work that connects or combines: sample efficient reinforcement learning; UAV path planning; latent dynamics model; world model; reinforcement learning path planning; Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.; Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control..",
+      "matched_requirement_id": "req-composite-rpp",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.06836v1",
+      "source": "arxiv",
+      "title": "Think Like a Pilot: Fine-Grained Long-Horizon UAV Navigation",
+      "abstract": "Language-guided UAV agents must execute long-horizon semantic instructions while producing smooth, physically feasible continuous flight commands, yet existing Vision-Language Navigation (VLN) benchmarks typically use discrete or coarse actions and existing UAV Vision-Language-Action (VLA) tasks focus on short, atomic maneuvers. To address this gap in UAV task settings, we introduce \\textbf{FLIGHT}, a \\textbf{F}ine-grained \\textbf{L}ong-horizon \\textbf{I}nstruction-\\textbf{G}uided benchmark for \\textbf{H}ybrid UAV navigation and reasoning \\textbf{T}asks, which combines multi-stage instructions with dense 6-DoF trajectory annotations across two dataset splits: Fine-grained VLN and Long-horizon Flow. To endow the UAV agent with the capability of real-time in-flight reasoning over task execution status and mission planning, while simultaneously accommodating high-frequency, real-time precise control, we further propose \\textbf{FLIGHT VLA}, an asynchronous architecture that decouples a low-frequency Streaming Pilot Vision-Language Model (VLM) for task-state reasoning from a high-frequency diffusion action model for continuous control, supervised by explicit \\textbf{Pilot Reasoning} texts that summarize the current flight state and anticipate the next subgoal. In closed-loop evaluation, FLIGHT VLA consistently surpasses representative VLN and VLA baselines on our FLIGHT benchmarks, achieving stronger multi-stage completion, subgoal adherence, and terminal control. Its trained Streaming Pilot Reasoning VLM further improves UAV video reasoning, validating the effectiveness of our design.",
+      "authors": [
+        "Xiangyi Zheng",
+        "Xiangyu Wang",
+        "Qinan Liao",
+        "Zimu Tang",
+        "Yue Liao",
+        "Dongyue Lyu",
+        "Guodong Wang",
+        "Junjie Liu",
+        "Si Liu"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "cs.CV"
+      ],
+      "published": "2026-06-05T02:23:05+00:00",
+      "link": "https://arxiv.org/pdf/2606.06836v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "UAV path planning with long-horizon navigation",
+      "llm_evidence_cn": "无人机路径规划与长时域导航",
+      "llm_evidence": "无人机路径规划与长时域导航",
+      "canonical_evidence": "无人机路径规划与长时域导航",
+      "llm_tldr_en": "Introduces FLIGHT, a benchmark for fine-grained long-horizon UAV navigation combining multi-stage instructions with dense 6-DoF trajectories.",
+      "llm_tldr_cn": "本文提出FLIGHT基准，用于细粒度长时域无人机导航，结合多阶段语义指令与密集六自由度轨迹标注。现有基准使用离散动作，缺乏对连续飞行命令的支持，FLIGHT通过两个子数据集（细粒度VLN和长时域流）填补空白，并赋予无人机实时飞行能力。",
+      "llm_tldr": "本文提出FLIGHT基准，用于细粒度长时域无人机导航，结合多阶段语义指令与密集六自由度轨迹标注。现有基准使用离散动作，缺乏对连续飞行命令的支持，FLIGHT通过两个子数据集（细粒度VLN和长时域流）填补空白，并赋予无人机实时飞行能力。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.07920v2",
+      "source": "arxiv",
+      "title": "Combining Reinforcement Learning with Arc-search Interior-Point Method for Path Planning",
+      "abstract": "Path planning in environments containing obstacles has numerous practical applications. The problem is challenging because it is inherently nonlinear and nonconvex. Consequently, a variety of techniques have been developed to address this problem, among which machine learning and optimal control (or optimization) have emerged as two prominent approaches. In general, machine learning methods do not require a high-fidelity model, and a trained agent can often generate a feasible path in real time. However, the resulting path is not necessarily optimal with respect to performance objectives such as minimizing path length or travel time. In contrast, optimal control and optimization methods typically rely on high-fidelity models and often require computational effort that may not satisfy real-time constraints. Nevertheless, these methods are more likely to produce optimal or near-optimal solutions. To overcome the limitations of each approach while exploiting their respective strengths, this paper proposes a framework that combines reinforcement learning with an arc-search interior-point method for path planning. Numerical simulations demonstrate that the proposed approach effectively integrates the real-time decision-making capability of reinforcement learning with the optimization performance of the arc-search interior-point method, resulting in improved path-planning performance.",
+      "authors": [
+        "Yaguang Yang",
+        "Qiang Le",
+        "Isaac E. Weintraub"
+      ],
+      "primary_category": "math.OC",
+      "categories": [
+        "math.OC"
+      ],
+      "published": "2026-06-06T00:56:16+00:00",
+      "link": "https://arxiv.org/pdf/2606.07920v2",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "reinforcement learning combined with arc-search interior-point method for path planning",
+      "llm_evidence_cn": "强化学习与弧搜索内点法结合的路径规划",
+      "llm_evidence": "强化学习与弧搜索内点法结合的路径规划",
+      "canonical_evidence": "强化学习与弧搜索内点法结合的路径规划",
+      "llm_tldr_en": "Combines RL with arc-search interior-point optimization for path planning, leveraging both learning and optimal control strengths.",
+      "llm_tldr_cn": "本文提出将强化学习与弧搜索内点法结合用于路径规划。机器学习方法实时生成可行路径但非最优，最优控制方法依赖高保真模型。通过两者结合，方法在保持实时性的同时提升路径质量，在障碍环境中进行了验证。直接匹配强化学习路径规划需求。",
+      "llm_tldr": "本文提出将强化学习与弧搜索内点法结合用于路径规划。机器学习方法实时生成可行路径但非最优，最优控制方法依赖高保真模型。通过两者结合，方法在保持实时性的同时提升路径质量，在障碍环境中进行了验证。直接匹配强化学习路径规划需求。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "reinforcement learning path planning",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2605.19202v1",
+      "source": "arxiv",
+      "title": "Aerial Inspection Behaviors via RL-based Quadrotor Control for Under-canopy Forest Environments",
+      "abstract": "This paper addresses the problem of using a deep Reinforcement Learning (RL)-based low-level Quadrotor controller within an autonomous Quadrotor navigation stack for aerial inspection missions in under-canopy forest environments. Specifically, the article presents an end-to-end (mapping states to RPMs) Quadrotor control policy that achieves inspection view-pose tracking (simultaneous position and yaw reference tracking), which is crucial for various target inspection behaviors and point-to-point navigation in forests. To ensure safe and reliable deployment of the end-to-end RL controller in long-range missions, this article utilizes a higher navigation guidance layer comprising of a Traveling Salesman Problem planner (TSP) and a Rapidly-exploring Random Tree Star (RRT*) planner. Over a known map of a forest and a set of user-specified inspection regions, the TSP planner finds the optimal visitation sequence. Between two target regions, collision-free paths that respect the tracking limitations of the lower end-to-end RL policy are generated by an RRT* planner. Through five target inspection scenarios, this article demonstrates that an RL-based motor-level stabilizing controller, supported by a navigation guidance layer, can be used effectively as the low-level inspection execution module for under-canopy forest inspection missions.",
+      "authors": [
+        "Fausto Mauricio Lagos Suarez",
+        "Akshit Saradagi",
+        "Vidya Sumathy",
+        "Viswa Narayanan Sankaranarayanan",
+        "George Nikolakopoulos"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "math.OC"
+      ],
+      "published": "2026-05-19T00:09:28+00:00",
+      "link": "https://arxiv.org/pdf/2605.19202v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "RL-based quadrotor control for UAV navigation in forest under-canopy",
+      "llm_evidence_cn": "基于深度强化学习的无人机导航与控制用于森林环境",
+      "llm_evidence": "基于深度强化学习的无人机导航与控制用于森林环境",
+      "canonical_evidence": "基于深度强化学习的无人机导航与控制用于森林环境",
+      "llm_tldr_en": "Uses deep RL to train an end-to-end quadrotor controller for inspection view-pose tracking and point-to-point navigation in forests, with a higher-level TSP planner for long-range missions.",
+      "llm_tldr_cn": "针对森林下冠层环境中无人机自主检测任务，提出了基于深度强化学习的端到端四旋翼控制器，实现了姿态跟踪和点对点导航。结合旅行商问题规划器进行长距离任务，确保了安全可靠。实验表明该方法在复杂森林环境中有效。",
+      "llm_tldr": "针对森林下冠层环境中无人机自主检测任务，提出了基于深度强化学习的端到端四旋翼控制器，实现了姿态跟踪和点对点导航。结合旅行商问题规划器进行长距离任务，确保了安全可靠。实验表明该方法在复杂森林环境中有效。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2605.14920v1",
+      "source": "arxiv",
+      "title": "FU-MPC: Frontier- and Uncertainty-Aware Model Predictive Control for Efficient and Accurate UAV Exploration with Motorized LiDAR",
+      "abstract": "Efficient UAV exploration in unknown environments requires rapid coverage expansion while maintaining accurate and reliable localization, since safe navigation in complex scenes depends on consistent mapping and pose estimation. However, for conventional LiDAR-equipped UAVs, the observable region is tightly coupled with the UAV pose and motion. Expanding coverage often requires additional translational or rotational maneuvers, which can reduce exploration efficiency and increase the risk of localization degradation in geometrically challenging environments. Motorized rotating LiDARs provide a promising solution by actively adjusting the sensor viewing direction without changing the UAV motion, thereby introducing an additional sensing degree of freedom. Nevertheless, existing exploration systems rarely exploit this scanning freedom as an explicit decision variable linked to both exploration progress and localization quality. To address this gap, we develop a UAV platform equipped with an independently actuated rotating LiDAR and propose a hierarchical exploration framework. The global planner organizes frontiers into representative viewpoints and sequences them using topology-aware transition costs. Built upon this planner, FU-MPC serves as a local receding-horizon scan controller that optimizes LiDAR rotation along the predicted flight trajectory. The controller jointly considers frontier-aware exploration utility and direction-dependent localization uncertainty, while lightweight surrogate evaluation enables real-time onboard execution. Experiments in complex environments demonstrate that the proposed system improves exploration efficiency while maintaining robust localization performance compared with fixed-pattern scanning and uncertainty-only baselines. The project page can be found at https://kafeiyin00.github.io/FU-MPC/.",
+      "authors": [
+        "Jianping Li",
+        "Pengfei Wan",
+        "Zhongyuan Liu",
+        "Yi Wang",
+        "Yiheng Chen",
+        "Xinhang Xu",
+        "Rui Jin",
+        "Boyu Zhou",
+        "Lihua Xie"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-05-14T14:54:29+00:00",
+      "link": "https://arxiv.org/pdf/2605.14920v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "MPC-based trajectory optimization for UAV exploration with motorized LiDAR",
+      "llm_evidence_cn": "基于模型预测控制的无人机探索轨迹优化，结合电动激光雷达",
+      "llm_evidence": "基于模型预测控制的无人机探索轨迹优化，结合电动激光雷达",
+      "canonical_evidence": "基于模型预测控制的无人机探索轨迹优化，结合电动激光雷达",
+      "llm_tldr_en": "FU-MPC uses frontier and uncertainty awareness in MPC to optimize UAV exploration trajectories with motorized LiDAR, balancing coverage and localization accuracy.",
+      "llm_tldr_cn": "针对无人机在未知环境中的高效探索与准确定位矛盾，本文提出FU-MPC框架。通过将前沿探索和定位不确定性融入模型预测控制（MPC），并利用电动旋转激光雷达主动调整视角，实现了覆盖扩展与定位精度的平衡。实飞实验表明该方法在探索效率和地图质量上均优于基线方法。",
+      "llm_tldr": "针对无人机在未知环境中的高效探索与准确定位矛盾，本文提出FU-MPC框架。通过将前沿探索和定位不确定性融入模型预测控制（MPC），并利用电动旋转激光雷达主动调整视角，实现了覆盖扩展与定位精度的平衡。实飞实验表明该方法在探索效率和地图质量上均优于基线方法。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.19120v1",
+      "source": "arxiv",
+      "title": "CosFly: Plan in the Matrix, Fly in the World",
+      "abstract": "We present CosFly, a box-structured planning and multimodal simulation pipeline for aerial tracking, together with CosFly-Track, a large-scale UAV dataset for dynamic target tracking across diverse environments including urban centers, highways, rural landscapes, forests, and coastal towns. In our current implementation on CARLA, CosFly provides a modular 7-step construction pipeline that converts complex 3D worlds into structured obstacle representations for planning, then projects the resulting trajectories back into multi-modal sensor data -- including RGB images, high-precision depth maps, and semantic segmentation masks -- paired with natural language navigation instructions. A key feature is the support for configurable fixed-FOV zoom levels (one FOV setting drawn per trajectory and held constant throughout), enabling simulation of various focal lengths through camera-intrinsic adjustments. The pipeline covers the complete workflow from 3D map export through grid simplification, pedestrian and drone trajectory planning, multi-modal rendering with 6-DOF pose annotations, quality inspection, and teacher-student caption generation. We analyze two trajectory-planning paradigms for aerial target tracking: a conventional two-stage pipeline with front-end candidate generation and backend refinement, and a direct gradient-based formulation that optimizes multiple tracking constraints in a single objective. The public CosFly-Track release contains 250 validated trajectories and approximately 100,000 rendered images with complete 6-DOF drone pose annotations (position x, y, z and orientation yaw, pitch, roll). Together, the pipeline and dataset establish a scalable foundation for aerial-ground collaborative research, supporting dynamic target tracking, UAV navigation, and multi-modal perception across diverse environments.",
+      "authors": [
+        "Hanxuan Chen",
+        "Xiangyue Wang",
+        "Songsheng Cheng",
+        "Ruilong Ren",
+        "Jie Zheng",
+        "Shuai Yuan",
+        "Tianle Zeng",
+        "Hanzhong Guo",
+        "Binbo Li",
+        "Kangli Wang",
+        "Ji Pei"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-05-18T21:11:18+00:00",
+      "link": "https://arxiv.org/pdf/2605.19120v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "UAV aerial tracking planning and simulation pipeline",
+      "llm_evidence_cn": "无人机航拍跟踪规划与仿真管道",
+      "llm_evidence": "无人机航拍跟踪规划与仿真管道",
+      "canonical_evidence": "无人机航拍跟踪规划与仿真管道",
+      "llm_tldr_en": "CosFly presents a box-structured planning and multimodal simulation pipeline for UAV aerial tracking, including a large-scale dataset CosFly-Track for dynamic target tracking.",
+      "llm_tldr_cn": "针对无人机航拍跟踪任务，本文提出CosFly系统，采用盒状结构化规划方法将3D世界转换为障碍表示，并生成多模态仿真数据。同时发布CosFly-Track数据集，覆盖多种环境，支持语言指令和可配置视角，为无人机在复杂环境中的动态目标跟踪研究提供了基准。",
+      "llm_tldr": "针对无人机航拍跟踪任务，本文提出CosFly系统，采用盒状结构化规划方法将3D世界转换为障碍表示，并生成多模态仿真数据。同时发布CosFly-Track数据集，覆盖多种环境，支持语言指令和可配置视角，为无人机在复杂环境中的动态目标跟踪研究提供了基准。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.19703v1",
+      "source": "arxiv",
+      "title": "KIO-planner: Attention-Guided Single-Stage Motion Planning with Dual Mapping for UAV Navigation",
+      "abstract": "Autonomous UAV flight in confined, wall-dense environments requires low-latency and reliable motion planning under strict safety constraints. Traditional optimization-based planners suffer from mapping latency and easily fall into local minima when navigating through dense structural obstacles. Meanwhile, existing end-to-end learning methods struggle to extract fine-grained geometric features from raw depth images and lack hard kinodynamic constraints, leading to unpredictable collisions near walls. To address these issues, we propose KIO-planner, an attention-guided single-stage trajectory planning framework. First, we integrate a Convolutional Block Attention Module (CBAM) into the perception backbone to adaptively focus on critical structural edges and traversable space. Second, we introduce a novel Dual Mapping mechanism--comprising physical bounds activation and a deterministic Geometric Safety Shield in the depth-pixel space--to enforce kinodynamic feasibility and collision-free flight without global map fusion. Extensive high-fidelity simulated experiments demonstrate that KIO-planner enables highly agile navigation at speeds up to 3.0 m/s. Compared to the state-of-the-art baseline, KIO-planner achieves lower inference latency (approximately 24 ms) and generates significantly smoother trajectories, reducing control cost by 28.4%. Most notably, our Dual Mapping substantially increases the worst-case safety margin, measured by minimum distance to obstacles, from 0.48 m to 0.76 m, ensuring fast, smooth, and safer navigation in highly constrained environments.",
+      "authors": [
+        "Dexing Yao",
+        "Haochen Li",
+        "Junhao Wei",
+        "Yifu Zhao",
+        "Yanxiao Li",
+        "Jiahui Xu",
+        "Jinxuan Hu",
+        "Lele Tian",
+        "Baili Lu",
+        "Zikun Li",
+        "Xu Yang",
+        "Sio-Kei Im",
+        "Dingcheng Yang",
+        "Yapeng Wang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-05-19T11:41:23+00:00",
+      "link": "https://arxiv.org/pdf/2605.19703v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "attention-guided single-stage motion planning for UAV navigation in confined spaces",
+      "llm_evidence_cn": "注意力引导的单阶段运动规划用于无人机受限空间导航",
+      "llm_evidence": "注意力引导的单阶段运动规划用于无人机受限空间导航",
+      "canonical_evidence": "注意力引导的单阶段运动规划用于无人机受限空间导航",
+      "llm_tldr_en": "Proposes KIO-planner, an attention-guided single-stage trajectory planner integrating CBAM for feature extraction and dual mapping for safe navigation in dense environments.",
+      "llm_tldr_cn": "针对无人机在密集墙壁环境中传统规划器易陷入局部最优且端到端方法缺乏运动学约束的问题，提出KIO规划器，采用注意力模块增强几何特征提取，并融合双映射实现安全运动规划。实验表明在复杂室内场景中实现了低延迟和可靠轨迹。",
+      "llm_tldr": "针对无人机在密集墙壁环境中传统规划器易陷入局部最优且端到端方法缺乏运动学约束的问题，提出KIO规划器，采用注意力模块增强几何特征提取，并融合双映射实现安全运动规划。实验表明在复杂室内场景中实现了低延迟和可靠轨迹。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2605.15619v1",
+      "source": "arxiv",
+      "title": "Wind-Aware Optimal Trajectory Planning for Efficient Gliding of Fixed-Wing Aerial Systems",
+      "abstract": "Gliding offers small fixed-wing UAVs extended endurance and silent operation but requires accurate energy management, especially under wind disturbances and obstacle constraints. Traditional Total Energy Control Systems based controllers regulate the trade between potential and kinetic energy reactively, often requiring fine-tuning and trim-conditions knowledge. In this work, we shift the regulation to the planning level and present a nonlinear, multi-cost trajectory planner for small UAV gliders. The method generates $\\mathcal{C}^3$ continuous trajectories based on Bernstein polynomials, mapped into control commands through differential flatness, and re-planned online to match experimentally derived sink polar curves. A simulated netto variometer is integrated into the optimization to estimate air mass motion, constraining the glide to energy-balanced states. Consecutive gliding trajectories are linked by cruising segments computed through trajectories initialized on Dubins path-based waypoints, enabling hybrid missions that combine powered and unpowered flight. The approach is validated in CFD simulations and real-world experiments with a fixed-wing platform, showing reliable stabilization of sink rate, airspeed, and glide ratio under wind gusts and in presence of obstacles.",
+      "authors": [
+        "Luca Morando",
+        "Nishanth Bobbili",
+        "Giuseppe Loianno"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-05-15T05:01:09+00:00",
+      "link": "https://arxiv.org/pdf/2605.15619v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "UAV gliding trajectory planning with wind awareness",
+      "llm_evidence_cn": "考虑风的无人机滑翔轨迹规划",
+      "llm_evidence": "考虑风的无人机滑翔轨迹规划",
+      "canonical_evidence": "考虑风的无人机滑翔轨迹规划",
+      "llm_tldr_en": "Presents a nonlinear multi-cost trajectory planner for small fixed-wing UAV gliders, using Bernstein polynomials and online replanning to account for wind.",
+      "llm_tldr_cn": "针对小型固定翼无人机滑翔过程中的能量管理与风扰动问题，提出基于Bernstein多项式的非线性多代价轨迹规划器，通过微分平坦性映射控制指令并结合在线重规划匹配实验下沉极曲线，在模拟环境中验证了风感知下的高效滑行性能。",
+      "llm_tldr": "针对小型固定翼无人机滑翔过程中的能量管理与风扰动问题，提出基于Bernstein多项式的非线性多代价轨迹规划器，通过微分平坦性映射控制指令并结合在线重规划匹配实验下沉极曲线，在模拟环境中验证了风感知下的高效滑行性能。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.19469v1",
+      "source": "arxiv",
+      "title": "Sampling-Based Safe Reinforcement Learning",
+      "abstract": "Safe exploration remains a fundamental challenge in reinforcement learning (RL), limiting the deployment of RL agents in the real world. We propose Sampling-Based Safe Reinforcement Learning (SBSRL), a model-based RL algorithm that maintains safety throughout the learning process by enforcing constraints jointly across a finite set of dynamics samples. This formulation approximates an intractable worst-case optimization over uncertain dynamics and enables practical safety guarantees in continuous domains. We further introduce an exploration strategy based on constraining epistemic uncertainty, eliminating the need for explicit exploration bonuses. Under regularity conditions, we derive high-probability guarantees of safety throughout learning and a finite-time sample complexity bound for recovering a near-optimal policy. Empirically, SBSRL achieves safe and efficient exploration both in simulation and in real robotic hardware, and readily extends to practical deep-ensemble implementations that scale to high-dimensional continuous control problems.",
+      "authors": [
+        "Luca Vignola",
+        "Bruce D. Lee",
+        "Manish Prajapat",
+        "Manuel Wendl",
+        "Melanie Zeilinger",
+        "Andreas Krause",
+        "Yarden As"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.RO"
+      ],
+      "published": "2026-05-19T07:21:53+00:00",
+      "link": "https://arxiv.org/pdf/2605.19469v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "model-based safe RL with sample complexity bounds",
+      "llm_evidence_cn": "基于模型的安全强化学习，提供样本复杂度保证",
+      "llm_evidence": "基于模型的安全强化学习，提供样本复杂度保证",
+      "canonical_evidence": "基于模型的安全强化学习，提供样本复杂度保证",
+      "llm_tldr_en": "Proposes SBSRL, a model-based safe RL algorithm that enforces constraints across dynamics samples, providing safety guarantees and sample complexity bounds for continuous domains.",
+      "llm_tldr_cn": "安全探索是强化学习部署的关键挑战。本文提出基于采样的安全强化学习（SBSRL），在连续域中通过联合约束多个动力学样本近似最坏情况优化，保证整个学习过程的安全性，并推导出高概率安全保证和有限时间样本复杂度。",
+      "llm_tldr": "安全探索是强化学习部署的关键挑战。本文提出基于采样的安全强化学习（SBSRL），在连续域中通过联合约束多个动力学样本近似最坏情况优化，保证整个学习过程的安全性，并推导出高概率安全保证和有限时间样本复杂度。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.21800v1",
+      "source": "arxiv",
+      "title": "stable-worldmodel: A Platform for Reproducible World Modeling Research and Evaluation",
+      "abstract": "World models are central to building agents that can reason, plan, and generalize beyond their training data. However, research on world models is currently fragmented, with disparate codebases, data pipelines, and evaluation protocols hindering reproducibility and fair comparison. Current practice is further limited by three key bottlenecks: fragile one-off codebases, slow video data loading, and the lack of standardized generalization benchmarks. We present stable-worldmodel (swm), an open-source platform for standardized and reproducible world modeling research and evaluation. It delivers (1) a high-performance Lance-based data layer with native support and conversion tools for MP4, HDF5, and LeRobot datasets, (2) clean, well-tested implementations of modern world model baselines and planning solvers, and (3) a broad suite of environments and tasks extended with controllable visual, geometric, and physical factors of variation for systematic in-silico evaluation of dynamics understanding, control performance, representation quality, and out-of-distribution generalization. By unifying the full pipeline under a single, scalable framework, \\texttt{swm} dramatically reduces research overhead and accelerates trustworthy progress toward reliable world models.",
+      "authors": [
+        "Lucas Maes",
+        "Quentin Le Lidec",
+        "Luiz Facury",
+        "Nassim Massaudi",
+        "Ayush Chaurasia",
+        "Francesco Capuano",
+        "Richard Gao",
+        "Taj Gillin",
+        "Dan Haramati",
+        "Damien Scieur",
+        "Yann LeCun",
+        "Randall Balestriero"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.RO"
+      ],
+      "published": "2026-05-20T22:58:15+00:00",
+      "link": "https://arxiv.org/pdf/2605.21800v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "World model infrastructure platform for reproducibility",
+      "llm_evidence_cn": "世界模型基础设施平台，提高可复现性",
+      "llm_evidence": "世界模型基础设施平台，提高可复现性",
+      "canonical_evidence": "世界模型基础设施平台，提高可复现性",
+      "llm_tldr_en": "stable-worldmodel is an open-source platform providing standardized data pipelines and benchmarks for world model research, enabling reproducible evaluation.",
+      "llm_tldr_cn": "世界模型研究面临碎片化、可复现性差等问题。本文推出stable-worldmodel开源平台，包含高性能数据层、标准化基准和通用评估协议，旨在推动世界模型的公平比较和可复现研究。该平台支持多种数据格式，降低了研究门槛。",
+      "llm_tldr": "世界模型研究面临碎片化、可复现性差等问题。本文推出stable-worldmodel开源平台，包含高性能数据层、标准化基准和通用评估协议，旨在推动世界模型的公平比较和可复现研究。该平台支持多种数据格式，降低了研究门槛。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "world model",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2605.17776v1",
+      "source": "arxiv",
+      "title": "CosFly-Track: A Large-Scale Multi-Modal Dataset for UAV Visual Tracking via Multi-Constraint Trajectory Optimization",
+      "abstract": "Recent aerial vision-language navigation (VLN) datasets have grown rapidly, but they primarily address goal-oriented navigation to static destinations, leaving UAV visual tracking -- continuously following a moving target while maintaining visibility -- largely without dedicated training data. We introduce CosFlyTrack, a large-scale multi-modal dataset and scalable generation pipeline for UAV visual tracking in urban environments. The dataset provides approximately 12,000 expert and perturbed UAV trajectories generated from 6,000 pedestrian paths, comprising 2.4 million timesteps (approximately 334 hours) with seven aligned data channels: RGB, metric depth, semantic segmentation, six-degree-of-freedom drone pose, target state with visibility flag, bilingual (Chinese-English) instructions, and trajectory-pair metadata. To generate high-quality expert trajectories, we develop MuCO, a multi-constraint optimizer that plans directly in continuous three-dimensional space with BVH-accelerated collision and visibility queries, jointly enforcing target visibility, viewpoint quality, collision avoidance, smoothness, and kinematic feasibility, avoiding the discretization artifacts and post-hoc smoothing of grid-based planners. Fine-tuning experiments on seven vision-language models show that CosFlyTrack improves tracking performance to 78.3 to 95.6 percent SR@1 meter, a 53 to 69 percentage point gain over zero-shot baselines, supporting the dataset as a training resource for dynamic target-following agents. The dataset is publicly available at https://huggingface.co/datasets/AutelRobotics/CosFly; evaluation scripts and pre-trained checkpoints are hosted at https://huggingface.co/AutelRobotics/CosFly-Track.",
+      "authors": [
+        "Xiangyue Wang",
+        "Hanxuan Chen",
+        "Songsheng Cheng",
+        "Ruilong Ren",
+        "Jie Zheng",
+        "Shuai Yuan",
+        "Tianle Zeng",
+        "Hanzhong Guo",
+        "Kangli Wang",
+        "Ji Pei"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-05-18T02:49:58+00:00",
+      "link": "https://arxiv.org/pdf/2605.17776v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "UAV trajectory optimization and dataset",
+      "llm_evidence_cn": "无人机轨迹优化与数据集",
+      "llm_evidence": "无人机轨迹优化与数据集",
+      "canonical_evidence": "无人机轨迹优化与数据集",
+      "llm_tldr_en": "Introduces CosFlyTrack, a large-scale multi-modal dataset and pipeline for UAV visual tracking via multi-constraint trajectory optimization, providing 12,000 trajectories.",
+      "llm_tldr_cn": "本文提出CosFlyTrack，一个大规模多模态无人机视觉跟踪数据集与可扩展生成流水线，通过多约束轨迹优化生成约1.2万条专家和扰动轨迹。该数据集包含240万时间步的七通道对齐数据，填补了无人机视觉跟踪训练数据空白，支持复杂环境下连续跟随目标的研究。",
+      "llm_tldr": "本文提出CosFlyTrack，一个大规模多模态无人机视觉跟踪数据集与可扩展生成流水线，通过多约束轨迹优化生成约1.2万条专家和扰动轨迹。该数据集包含240万时间步的七通道对齐数据，填补了无人机视觉跟踪训练数据空白，支持复杂环境下连续跟随目标的研究。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.22693v1",
+      "source": "arxiv",
+      "title": "Scout-Assisted Planning for Heterogeneous Robot Teams under Partially Known Environments",
+      "abstract": "Autonomous robot teams navigating partially known environments face costly backtracking when ground robots encounter blocked roads that are only revealed upon physical traversal. We address this with Scout-Assisted Planning, a heterogeneous planning framework in which scouting Unmanned Aerial Vehicles proactively gather environmental information to improve Unmanned Ground Vehicle navigation. To focus scouting on the most consequential edges, we propose Information Gain-based Action Pruning, which scores candidate scouting actions by their expected impact on ground robot behavior. Since exact Information Gain-based Action Pruning computation is prohibitively expensive, we develop a Graph Neural Network based model that predicts information gain values directly from graph structure and belief state, reducing planning time to real-time levels without sacrificing solution quality. Experiments across three environment types show that SAP with Information Gain Action Pruning reduces ground robot travel cost by 31.9--37.7% over the Canadian Traveler Problem baseline, and outperforms proximity-based scouting guidance by an additional 8--14%, confirming that principled information-gain-guided scouting is both more effective and computationally feasible for real-world deployment",
+      "authors": [
+        "Hoang-Dung Bui",
+        "Abhish Khanal",
+        "Raihan Islam Arnob",
+        "Gregory J. Stein"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-05-21T16:36:55+00:00",
+      "link": "https://arxiv.org/pdf/2605.22693v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "UAV scouting for ground robot path planning",
+      "llm_evidence_cn": "无人机侦察辅助地面机器人路径规划",
+      "llm_evidence": "无人机侦察辅助地面机器人路径规划",
+      "canonical_evidence": "无人机侦察辅助地面机器人路径规划",
+      "llm_tldr_en": "Proposes scout-assisted planning where UAVs gather information to improve ground robot navigation, using GNN to predict information gain for efficient scouting.",
+      "llm_tldr_cn": "针对部分已知环境中地面机器人因未知障碍导致昂贵回退的问题，论文提出了无人机侦察辅助规划框架。由无人机主动采集环境信息，基于信息增益裁剪候选侦察动作，并使用图神经网络高效预测信息增益。该方法聚焦无人机对地面机器人路径的优化，在仿真中减少了回溯次数，提升了整体任务效率。",
+      "llm_tldr": "针对部分已知环境中地面机器人因未知障碍导致昂贵回退的问题，论文提出了无人机侦察辅助规划框架。由无人机主动采集环境信息，基于信息增益裁剪候选侦察动作，并使用图神经网络高效预测信息增益。该方法聚焦无人机对地面机器人路径的优化，在仿真中减少了回溯次数，提升了整体任务效率。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.24865v1",
+      "source": "arxiv",
+      "title": "Communication-Constrained Energy-Optimal Trajectory Generation for Quadrotor UAVs in Urban Environments",
+      "abstract": "Communication-aware trajectory generation for unmanned aerial vehicles (UAVs) operating in urban environments requires simultaneous consideration of vehicle dynamics, wireless communication quality, obstacle avoidance, and onboard energy limitations. In such missions, UAVs must navigate through obstacle-rich environments while ensuring reliable relay of mission-critical sensory information to ground infrastructure. This results in a highly nonlinear and nonconvex optimal control problem involving coupled communication and flight-dynamics constraints. This paper presents a communication-constrained energy-optimal trajectory generation framework for quadrotor UAVs operating in urban environments. The proposed formulation incorporates full rigid-body quadrotor dynamics, urban wireless communication models, cumulative data throughput constraints, and obstacle avoidance requirements within a unified free-final-time optimal control framework. Unlike conventional approaches based on simplified kinematic or point-mass models, the proposed framework generates dynamically feasible trajectories suitable for practical aerial platforms. The resulting nonconvex optimal control problem is solved iteratively using sequential convex programming (SCP). Numerical simulations for multiple urban mission scenarios demonstrate the ability of the proposed framework to generate energy-efficient and communication-aware trajectories while adapting mission duration according to data relay requirements. The proposed methodology provides a practical framework for autonomous UAV operations requiring reliable communication in dense urban environments.",
+      "authors": [
+        "Prateek Priyaranjan Pradhan",
+        "Ketan Rajawat",
+        "Mangal Kothari"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY"
+      ],
+      "published": "2026-05-24T04:51:40+00:00",
+      "link": "https://arxiv.org/pdf/2605.24865v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "UAV trajectory generation with obstacle avoidance and communication constraints",
+      "llm_evidence_cn": "无人机轨迹生成，考虑避障和通信约束",
+      "llm_evidence": "无人机轨迹生成，考虑避障和通信约束",
+      "canonical_evidence": "无人机轨迹生成，考虑避障和通信约束",
+      "llm_tldr_en": "Presents a communication-constrained energy-optimal trajectory generation framework for quadrotor UAVs in urban environments, jointly optimizing vehicle dynamics, wireless communication quality, obstacle avoidance, and energy.",
+      "llm_tldr_cn": "针对城市环境中无人机通信约束下的轨迹生成问题，本文提出一种能量最优框架，同时考虑车辆动力学、无线通信质量、避障和能量限制。通过非凸优化求解，生成可行轨迹。实验验证了框架的有效性。该工作为通信感知的无人机导航提供了重要参考。",
+      "llm_tldr": "针对城市环境中无人机通信约束下的轨迹生成问题，本文提出一种能量最优框架，同时考虑车辆动力学、无线通信质量、避障和能量限制。通过非凸优化求解，生成可行轨迹。实验验证了框架的有效性。该工作为通信感知的无人机导航提供了重要参考。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2605.17776v2",
+      "source": "arxiv",
+      "title": "CosFly-Track: A Large-Scale Multi-Modal Dataset for UAV Visual Tracking via Multi-Constraint Trajectory Optimization",
+      "abstract": "Recent aerial vision-language navigation (VLN) datasets have grown rapidly, but they primarily address goal-oriented navigation to static destinations, leaving UAV visual tracking -- continuously following a moving target while maintaining visibility -- largely without dedicated training data. We introduce CosFlyTrack, a large-scale multi-modal dataset and scalable generation pipeline for UAV visual tracking in urban environments. The dataset provides approximately 12,000 expert and perturbed UAV trajectories generated from 6,000 pedestrian paths, comprising 2.4 million timesteps (approximately 334 hours) with seven aligned data channels: RGB, metric depth, semantic segmentation, six-degree-of-freedom drone pose, target state with visibility flag, bilingual (Chinese-English) instructions, and trajectory-pair metadata. To generate high-quality expert trajectories, we develop MuCO, a multi-constraint optimizer that plans directly in continuous three-dimensional space with BVH-accelerated collision and visibility queries, jointly enforcing target visibility, viewpoint quality, collision avoidance, smoothness, and kinematic feasibility, avoiding the discretization artifacts and post-hoc smoothing of grid-based planners. Fine-tuning experiments on seven vision-language models show that CosFlyTrack improves tracking performance to 78.3 to 95.6 percent SR@1 meter, a 53 to 69 percentage point gain over zero-shot baselines, supporting the dataset as a training resource for dynamic target-following agents. The dataset is publicly available at https://huggingface.co/datasets/AutelRobotics/CosFly; evaluation scripts and pre-trained checkpoints are hosted at https://huggingface.co/AutelRobotics/CosFly-Track.",
+      "authors": [
+        "Xiangyue Wang",
+        "Hanxuan Chen",
+        "Songsheng Cheng",
+        "Ruilong Ren",
+        "Jie Zheng",
+        "Shuai Yuan",
+        "Tianle Zeng",
+        "Hanzhong Guo",
+        "Kangli Wang",
+        "Ji Pei"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-05-18T02:49:58+00:00",
+      "link": "https://arxiv.org/pdf/2605.17776v2",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-modal dataset and trajectory optimization for UAV visual tracking",
+      "llm_evidence_cn": "多模态数据集与轨迹优化用于无人机视觉跟踪",
+      "llm_evidence": "多模态数据集与轨迹优化用于无人机视觉跟踪",
+      "canonical_evidence": "多模态数据集与轨迹优化用于无人机视觉跟踪",
+      "llm_tldr_en": "Presents CosFly-Track, a large-scale multi-modal dataset for UAV visual tracking, with a scalable generation pipeline using multi-constraint trajectory optimization, providing 2.4M timesteps of aligned data.",
+      "llm_tldr_cn": "针对无人机视觉跟踪缺乏专用训练数据的问题，论文提出了CosFly-Track大规模多模态数据集。基于多约束轨迹优化生成专家和扰动轨迹，包含RGB、深度、语义分割等七种对齐数据通道，共240万时间步。该数据集支持无人机视觉跟踪研究，并为轨迹优化方法提供了基准。",
+      "llm_tldr": "针对无人机视觉跟踪缺乏专用训练数据的问题，论文提出了CosFly-Track大规模多模态数据集。基于多约束轨迹优化生成专家和扰动轨迹，包含RGB、深度、语义分割等七种对齐数据通道，共240万时间步。该数据集支持无人机视觉跟踪研究，并为轨迹优化方法提供了基准。",
+      "llm_tags": [
+        "query:rpp:composite"
+      ],
+      "matched_query_tag": "query:rpp:composite",
+      "matched_query_text": "Papers central to 用于检索强化学习路径规划、基于模型的强化学习、世界模型、DreamerV3、MPC、无人机自主导航、动态避障、连续控制和实时轨迹优化相关论文，重点关注样本效率、复杂环境决策、潜在动力学建模和智能路径规划方法。, especially work that connects or combines: sample efficient reinforcement learning; UAV path planning; latent dynamics model; world model; reinforcement learning path planning; Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.; Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control..",
+      "matched_requirement_id": "req-composite-rpp",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
