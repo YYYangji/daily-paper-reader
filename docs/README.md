@@ -6,128 +6,85 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-05-14 ~ 2026-06-12
-- 运行时间：2026-06-12 03:19:08 UTC
+- 最新运行日期：2026-06-12
+- 运行时间：2026-06-12 21:54:11 UTC
 - 运行状态：成功
-- 本次总论文数：36
-- 精读区：25
-- 速读区：11
+- 本次总论文数：21
+- 精读区：9
+- 速读区：12
 
 ### 今日简报（AI）
-今日精读25篇，速读11篇，共36篇，聚焦强化学习与采样效率提升。最值得关注的两篇满分精读均涉及扩散模型与梯度惩罚潜动力学，显著提高样本效率。建议后续关注这些方法在机器人控制与环境感知中的实际应用。
-- 详情：[/20260514-20260612/README](/20260514-20260612/README)
+1) 今日速览21篇论文，聚焦机器人路径规划与导航，精读9篇中DDPG强化学习和世界模型驱动无人机导航最受关注。  
+2) 最值得看两个方向：基于深度确定性策略梯度的路径规划（模型端到端策略）、以及利用世界模型实现视觉-语言-动作联合导航（提升环境理解能力）。  
+3) 建议普通读者优先阅读精读中的《Path Planning Using Deep Deterministic Policy Gradient》与《WorldFly》，学习如何将强化学习和世界模型应用于实际移动机器人。
+- 详情：[/202606/12/README](/202606/12/README)
 
 ### 精读区论文标签
-1. [Dreaming Smoothly and Sample Efficiently with Gradient Penalized Latent Dynamics](/20260514-20260612/2605.23089v1-dreaming-smoothly-and-sample-efficiently-with-gradient-penalized-latent-dynamics)  
+1. [Path Planning Using Deep Deterministic Policy Gradient: A Reinforcement Learning Approach](/202606/12/2606.07855v1-path-planning-using-deep-deterministic-policy-gradient-a-reinforcement-learning-approach)  
    标签：评分：10.0/10、query:rpp
-   evidence：梯度惩罚潜在动力学提升DreamerV3样本效率
-2. [Sample-Efficient Diffusion-based Reinforcement Learning with Critic Guidance](/20260514-20260612/2605.30056v1-sample-efficient-diffusion-based-reinforcement-learning-with-critic-guidance)  
-   标签：评分：10.0/10、query:rpp
-   evidence：样本高效的扩散策略强化学习结合评论家引导
-3. [AgenticRL: Self-Refining Agentic Reinforcement Learning for Vision-Conditioned UAV Navigation](/20260514-20260612/2606.03963v3-agenticrl-self-refining-agentic-reinforcement-learning-for-vision-conditioned-uav-navigation)  
-   标签：评分：10.0/10、query:rpp
-   evidence：自我精炼的强化学习实现视觉条件无人机导航
-4. [CaMeRL: Collision-Aware and Memory-Enhanced Reinforcement Learning for UAV Navigation in Multi-Scale Obstacle Environments](/20260514-20260612/2605.14810v1-camerl-collision-aware-and-memory-enhanced-reinforcement-learning-for-uav-navigation-in-multi-scale-obstacle-environments)  
+   evidence：使用DDPG强化学习的路径规划
+2. [WorldFly: A World-Model-Based Vision-Language-Action Model for UAV Navigation](/202606/12/2606.06147v1-worldfly-a-world-model-based-vision-language-action-model-for-uav-navigation)  
    标签：评分：9.0/10、query:rpp
-   evidence：基于强化学习的无人机避障导航，具备碰撞感知和记忆增强
-5. [EfficientTDMPC: Improved MPC Objectives for Sample-Efficient Continuous Control](/20260514-20260612/2605.16692v1-efficienttdmpc-improved-mpc-objectives-for-sample-efficient-continuous-control)  
+   evidence：基于世界模型的无人机视觉语言行动导航
+3. [Combining Reinforcement Learning with Arc-search Interior-Point Method for Path Planning](/202606/12/2606.07920v1-combining-reinforcement-learning-with-arc-search-interior-point-method-for-path-planning)  
    标签：评分：9.0/10、query:rpp
-   evidence：基于集成和不确定性惩罚的样本高效模型基连续控制RL
-6. [EfficientTDMPC: Improved MPC Objectives for Sample-Efficient Continuous Control](/20260514-20260612/2605.16692v2-efficienttdmpc-improved-mpc-objectives-for-sample-efficient-continuous-control)  
+   evidence：结合强化学习与弧搜索内点法进行路径规划
+4. [Unifying Object-Centric World Models and Diffusion Policy: A Hierarchical Framework for Multi-Stage Robotic Tasks](/202606/12/2606.08775v1-unifying-object-centric-world-models-and-diffusion-policy-a-hierarchical-framework-for-multi-stage-robotic-tasks)  
    标签：评分：9.0/10、query:rpp
-   evidence：改进MPC目标实现样本高效的连续控制
-7. [Learning Multi-Timescale Abstractions for Hierarchical Combinatorial Planning](/20260514-20260612/2605.17058v1-learning-multi-timescale-abstractions-for-hierarchical-combinatorial-planning)  
+   evidence：用于多阶段机器人任务的世界模型
+5. [$ω$-EVA: Envision, Verify, and Act with Latent Interactive World Models](/202606/12/2606.09457v1--eva-envision-verify-and-act-with-latent-interactive-world-models)  
    标签：评分：9.0/10、query:rpp
-   evidence：基于模型的层次强化学习，结合潜在空间世界模型用于组合规划
-8. [Chebyshev Policies and the Mountain Car Problem: Reinforcement Learning for Low-Dimensional Control Tasks](/20260514-20260612/2605.22305v1-chebyshev-policies-and-the-mountain-car-problem-reinforcement-learning-for-low-dimensional-control-tasks)  
+   evidence：潜在交互世界模型实现想象-验证-行动循环
+6. [AllDayNav: Lifelong Navigation via Real-World Reinforcement Learning](/202606/12/2606.10927v1-alldaynav-lifelong-navigation-via-real-world-reinforcement-learning)  
    标签：评分：9.0/10、query:rpp
-   evidence：通过切比雪夫策略提升样本效率
-9. [Vision-Guided Outdoor Flight and Obstacle Evasion via Reinforcement Learning](/20260514-20260612/2605.24449v1-vision-guided-outdoor-flight-and-obstacle-evasion-via-reinforcement-learning)  
+   evidence：通过真实世界强化学习实现终身导航，动态避障
+7. [Vision-Language-Action Models Meet World Models: Embodied Agentic AI for Low-Altitude Wireless Networks](/202606/12/2606.11618v1-vision-language-action-models-meet-world-models-embodied-agentic-ai-for-low-altitude-wireless-networks)  
    标签：评分：9.0/10、query:rpp
-   evidence：视觉引导的无人机避障，使用强化学习
-10. [Back to Parsimonious Latents: Learning Task-Centric World Models from Visual Foundations](/20260514-20260612/2605.25620v1-back-to-parsimonious-latents-learning-task-centric-world-models-from-visual-foundations)  
+   evidence：融合视觉-语言-动作模型与世界模型的无人机框架
+8. [Explore From Sketch: Accelerating UAV Exploration in Large-scale Environments with Prior Maps](/202606/12/2606.11708v1-explore-from-sketch-accelerating-uav-exploration-in-large-scale-environments-with-prior-maps)  
    标签：评分：9.0/10、query:rpp
-   evidence：从视觉基础学习任务中心世界模型
-11. [Scaling World-Model Reinforcement Learning Through Diffusion Policy Optimization](/20260514-20260612/2605.26282v1-scaling-world-model-reinforcement-learning-through-diffusion-policy-optimization)  
+   evidence：利用先验地图加速无人机探索
+9. [UGV-Conditioned Multi-UAV Informative Planning on a Shared Exposure Belief](/202606/12/2606.12306v1-ugv-conditioned-multi-uav-informative-planning-on-a-shared-exposure-belief)  
    标签：评分：9.0/10、query:rpp
-   evidence：基于世界模型的强化学习，使用扩散策略优化提升样本效率
-12. [Theoretical Foundations and Effective Algorithms for Policy-Aware Simulator Learning](/20260514-20260612/2605.29032v1-theoretical-foundations-and-effective-algorithms-for-policy-aware-simulator-learning)  
-   标签：评分：9.0/10、query:rpp
-   evidence：面向世界模型的策略感知模拟器学习
-13. [World Models: A Comprehensive Survey of Architectures, Methodologies, Reasoning Paradigms, and Applications](/20260514-20260612/2606.00133v1-world-models-a-comprehensive-survey-of-architectures-methodologies-reasoning-paradigms-and-applications)  
-   标签：评分：9.0/10、query:rpp
-   evidence：世界模型综述，涵盖架构、方法论和应用
-14. [Emergence of Exploration in Policy Gradient Reinforcement Learning via Retrying](/20260514-20260612/2606.00151v1-emergence-of-exploration-in-policy-gradient-reinforcement-learning-via-retrying)  
-   标签：评分：9.0/10、query:rpp
-   evidence：通过重试实现样本高效的策略梯度
-15. [ImagineUAV: Aerial Vision-Language Navigation via World-Action Modeling and Kinodynamic Planning](/20260514-20260612/2606.01205v1-imagineuav-aerial-vision-language-navigation-via-world-action-modeling-and-kinodynamic-planning)  
-   标签：评分：9.0/10、query:rpp
-   evidence：无人机视觉语言导航，结合世界-动作建模、潜在视频扩散模型和运动动力学规划
-16. [ImagineUAV: Aerial Vision-Language Navigation via World-Action Modeling and Kinodynamic Planning](/20260514-20260612/2606.01205v2-imagineuav-aerial-vision-language-navigation-via-world-action-modeling-and-kinodynamic-planning)  
-   标签：评分：9.0/10、query:rpp
-   evidence：用于世界建模的潜在视频扩散模型与无人机导航的动力学规划
-17. [Towards Precise Intent-Aligned VLA Aerial Navigation via Expert-Guided GRPO](/20260514-20260612/2606.02313v1-towards-precise-intent-aligned-vla-aerial-navigation-via-expert-guided-grpo)  
-   标签：评分：9.0/10、query:rpp
-   evidence：基于专家引导GRPO的VLA无人机导航RL框架
-18. [AirDreamer: Generalist Drone Navigation with World Models](/20260514-20260612/2606.03252v1-airdreamer-generalist-drone-navigation-with-world-models)  
-   标签：评分：9.0/10、query:rpp
-   evidence：世界模型与强化学习策略用于无人机导航
-19. [Self-Refining Agentic Reinforcement Learning for Vision-Conditioned UAV Navigation](/20260514-20260612/2606.03963v1-self-refining-agentic-reinforcement-learning-for-vision-conditioned-uav-navigation)  
-   标签：评分：9.0/10、query:rpp
-   evidence：视觉条件无人机导航，结合智能体强化学习和自优化奖励
-20. [AgenticRL: Self-Refining Agentic Reinforcement Learning for Vision-Conditioned UAV Navigation](/20260514-20260612/2606.03963v2-agenticrl-self-refining-agentic-reinforcement-learning-for-vision-conditioned-uav-navigation)  
-   标签：评分：9.0/10、query:rpp
-   evidence：使用强化学习的无人机导航，带自动奖励设计优化
-21. [AgenticDiffusion: Agentic Diffusion-based Path Planning for Vision-Based UAV Navigation](/20260514-20260612/2606.04111v1-agenticdiffusion-agentic-diffusion-based-path-planning-for-vision-based-uav-navigation)  
-   标签：评分：9.0/10、query:rpp
-   evidence：基于扩散模型的无人机视觉导航路径规划
-22. [Generalization of World Models under Environmental Variability for Vision-based Quadrotor Navigation](/20260514-20260612/2606.05015v1-generalization-of-world-models-under-environmental-variability-for-vision-based-quadrotor-navigation)  
-   标签：评分：9.0/10、query:rpp
-   evidence：DreamerV3世界模型在四旋翼导航中的泛化性
-23. [WorldFly: A World-Model-Based Vision-Language-Action Model for UAV Navigation](/20260514-20260612/2606.06147v1-worldfly-a-world-model-based-vision-language-action-model-for-uav-navigation)  
-   标签：评分：9.0/10、query:rpp
-   evidence：基于世界模型的无人机导航，具备状态想象能力
-24. [Think Like a Pilot: Fine-Grained Long-Horizon UAV Navigation](/20260514-20260612/2606.06836v1-think-like-a-pilot-fine-grained-long-horizon-uav-navigation)  
-   标签：评分：9.0/10、query:rpp
-   evidence：无人机路径规划与长时域导航
-25. [Combining Reinforcement Learning with Arc-search Interior-Point Method for Path Planning](/20260514-20260612/2606.07920v2-combining-reinforcement-learning-with-arc-search-interior-point-method-for-path-planning)  
-   标签：评分：9.0/10、query:rpp
-   evidence：强化学习与弧搜索内点法结合的路径规划
+   evidence：多无人机信息规划以保障地面车辆安全
 
 ### 速读区论文标签
-1. [Aerial Inspection Behaviors via RL-based Quadrotor Control for Under-canopy Forest Environments](/20260514-20260612/2605.19202v1-aerial-inspection-behaviors-via-rl-based-quadrotor-control-for-under-canopy-forest-environments)  
+1. [Convex-Neural RRT*: Fast and Reliable Learning-Guided Sampling for High-Quality Robot Path Planning](/202606/12/2605.25006v1-convex-neural-rrt-fast-and-reliable-learning-guided-sampling-for-high-quality-robot-path-planning)  
    标签：评分：8.0/10、query:rpp
-   evidence：基于深度强化学习的无人机导航与控制用于森林环境
-2. [KIO-planner: Attention-Guided Single-Stage Motion Planning with Dual Mapping for UAV Navigation](/20260514-20260612/2605.19703v1-kio-planner-attention-guided-single-stage-motion-planning-with-dual-mapping-for-uav-navigation)  
+   evidence：学习引导采样的机器人路径规划，增强RRT*
+2. [Behavior-Invariant Task Representation Learning with Transformer-based World Models for Offline Meta-Reinforcement Learning](/202606/12/2606.00780v1-behavior-invariant-task-representation-learning-with-transformer-based-world-models-for-offline-meta-reinforcement-learning)  
    标签：评分：8.0/10、query:rpp
-   evidence：注意力引导的单阶段运动规划用于无人机受限空间导航
-3. [stable-worldmodel: A Platform for Reproducible World Modeling Research and Evaluation](/20260514-20260612/2605.21800v1-stable-worldmodel-a-platform-for-reproducible-world-modeling-research-and-evaluation)  
+   evidence：基于Transformer的随机世界模型用于离线元强化学习
+3. [Robust Integrated Planning and Control for Quadrotors in Dynamic Environments via NMPC with CBF Penalties](/202606/12/2606.01038v1-robust-integrated-planning-and-control-for-quadrotors-in-dynamic-environments-via-nmpc-with-cbf-penalties)  
    标签：评分：8.0/10、query:rpp
-   evidence：世界模型基础设施平台，提高可复现性
-4. [Communication-Constrained Energy-Optimal Trajectory Generation for Quadrotor UAVs in Urban Environments](/20260514-20260612/2605.24865v1-communication-constrained-energy-optimal-trajectory-generation-for-quadrotor-uavs-in-urban-environments)  
+   evidence：无人机路径规划、动态避障、实时轨迹优化，使用带CBF的NMPC
+4. [COP-Q: Safety-First Reinforcement Learning for Robot Control via Cholesky-Ordered Projection](/202606/12/2606.04749v1-cop-q-safety-first-reinforcement-learning-for-robot-control-via-cholesky-ordered-projection)  
    标签：评分：8.0/10、query:rpp
-   evidence：无人机轨迹生成，考虑避障和通信约束
-5. [FU-MPC: Frontier- and Uncertainty-Aware Model Predictive Control for Efficient and Accurate UAV Exploration with Motorized LiDAR](/20260514-20260612/2605.14920v1-fu-mpc-frontier--and-uncertainty-aware-model-predictive-control-for-efficient-and-accurate-uav-exploration-with-motorized-lidar)  
+   evidence：通过协方差建模提升安全强化学习的样本效率
+5. [Representation Learning Enables Scalable Multitask Deep Reinforcement Learning](/202606/12/2606.05555v1-representation-learning-enables-scalable-multitask-deep-reinforcement-learning)  
    标签：评分：7.0/10、query:rpp
-   evidence：基于模型预测控制的无人机探索轨迹优化，结合电动激光雷达
-6. [Wind-Aware Optimal Trajectory Planning for Efficient Gliding of Fixed-Wing Aerial Systems](/20260514-20260612/2605.15619v1-wind-aware-optimal-trajectory-planning-for-efficient-gliding-of-fixed-wing-aerial-systems)  
+   evidence：无规划的可扩展多任务强化学习中的表示学习
+6. [Merging model-based control with multi-agent reinforcement learning for multi-agent cooperative teaming strategies](/202606/12/2606.06011v1-merging-model-based-control-with-multi-agent-reinforcement-learning-for-multi-agent-cooperative-teaming-strategies)  
    标签：评分：7.0/10、query:rpp
-   evidence：考虑风的无人机滑翔轨迹规划
-7. [CosFly-Track: A Large-Scale Multi-Modal Dataset for UAV Visual Tracking via Multi-Constraint Trajectory Optimization](/20260514-20260612/2605.17776v1-cosfly-track-a-large-scale-multi-modal-dataset-for-uav-visual-tracking-via-multi-constraint-trajectory-optimization)  
+   evidence：基于模型的控制与多智能体强化学习融合实现安全合作
+7. [Counterfactual Transport Flows for Offline Conservative Trajectory Refinement](/202606/12/2606.09115v1-counterfactual-transport-flows-for-offline-conservative-trajectory-refinement)  
    标签：评分：7.0/10、query:rpp
-   evidence：无人机轨迹优化与数据集
-8. [CosFly-Track: A Large-Scale Multi-Modal Dataset for UAV Visual Tracking via Multi-Constraint Trajectory Optimization](/20260514-20260612/2605.17776v2-cosfly-track-a-large-scale-multi-modal-dataset-for-uav-visual-tracking-via-multi-constraint-trajectory-optimization)  
+   evidence：离线保守轨迹优化提升样本效率
+8. [Learning Unions of Convex Sets via Invertible Latent Decomposition for Path Planning](/202606/12/2606.12027v1-learning-unions-of-convex-sets-via-invertible-latent-decomposition-for-path-planning)  
    标签：评分：7.0/10、query:rpp
-   evidence：多模态数据集与轨迹优化用于无人机视觉跟踪
-9. [CosFly: Plan in the Matrix, Fly in the World](/20260514-20260612/2605.19120v1-cosfly-plan-in-the-matrix-fly-in-the-world)  
+   evidence：通过可逆隐分解将碰撞空间表示为凸集并用于路径规划
+9. [GenPO++: Generative Policy Optimization with Jacobian-free Likelihood Ratios](/202606/12/2606.06967v1-genpo-generative-policy-optimization-with-jacobian-free-likelihood-ratios)  
    标签：评分：6.0/10、query:rpp
-   evidence：无人机航拍跟踪规划与仿真管道
-10. [Sampling-Based Safe Reinforcement Learning](/20260514-20260612/2605.19469v1-sampling-based-safe-reinforcement-learning)  
+   evidence：面向样本高效连续控制的生成策略优化
+10. [Neuro-Symbolic Injection of LTLf Constraints in Autoregressive Reinforcement Learning Policies](/202606/12/2606.08312v1-neuro-symbolic-injection-of-ltlf-constraints-in-autoregressive-reinforcement-learning-policies)  
    标签：评分：6.0/10、query:rpp
-   evidence：基于模型的安全强化学习，提供样本复杂度保证
-11. [Scout-Assisted Planning for Heterogeneous Robot Teams under Partially Known Environments](/20260514-20260612/2605.22693v1-scout-assisted-planning-for-heterogeneous-robot-teams-under-partially-known-environments)  
+   evidence：结合时序逻辑约束的神经符号强化学习用于路径规划
+11. [Reinforcement Learning for Flow-Matching Policies with Density Transport](/202606/12/2606.08602v1-reinforcement-learning-for-flow-matching-policies-with-density-transport)  
    标签：评分：6.0/10、query:rpp
-   evidence：无人机侦察辅助地面机器人路径规划
+   evidence：面向流匹配策略的在线强化学习算法
+12. [A Hybrid Generative Reduced-Order Model for the Minimal Flow Unit](/202606/12/2606.09044v1-a-hybrid-generative-reduced-order-model-for-the-minimal-flow-unit)  
+   标签：评分：6.0/10、query:mm
+   evidence：基于VAE-GAN和Transformer的生成式降阶模型用于流动力学，类似气象降尺度
 
 
 <div class="dpr-home-promo-card">
