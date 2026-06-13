@@ -6,85 +6,81 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-12
-- 运行时间：2026-06-12 21:54:11 UTC
+- 最新运行日期：2026-06-13
+- 运行时间：2026-06-13 21:20:57 UTC
 - 运行状态：成功
-- 本次总论文数：21
-- 精读区：9
+- 本次总论文数：19
+- 精读区：7
 - 速读区：12
 
 ### 今日简报（AI）
-1) 今日速览21篇论文，聚焦机器人路径规划与导航，精读9篇中DDPG强化学习和世界模型驱动无人机导航最受关注。  
-2) 最值得看两个方向：基于深度确定性策略梯度的路径规划（模型端到端策略）、以及利用世界模型实现视觉-语言-动作联合导航（提升环境理解能力）。  
-3) 建议普通读者优先阅读精读中的《Path Planning Using Deep Deterministic Policy Gradient》与《WorldFly》，学习如何将强化学习和世界模型应用于实际移动机器人。
-- 详情：[/202606/12/README](/202606/12/README)
+今日聚焦世界模型与多智能体优化两大方向，精读两篇高分论文分别探讨优先引导想象采样和无人机缓存网络的路径规划策略。
+
+最值得关注的是世界模型的创新应用：PRISM通过先验引导采样提升模型效率，而《Autoregressive Diffusion World Models》与《Discrete-WAM》则从自回归扩散和离散动作编辑角度拓展了世界模型在离线评估与策略学习中的潜力。
+
+建议优先阅读精读中的两篇9.0分论文，它们是当前世界模型和无人机优化领域的标杆工作；速读论文可作为补充，关注LLM与不确定性结合的强化学习新思路。
+- 详情：[/202606/13/README](/202606/13/README)
 
 ### 精读区论文标签
-1. [Path Planning Using Deep Deterministic Policy Gradient: A Reinforcement Learning Approach](/202606/12/2606.07855v1-path-planning-using-deep-deterministic-policy-gradient-a-reinforcement-learning-approach)  
-   标签：评分：10.0/10、query:rpp
-   evidence：使用DDPG强化学习的路径规划
-2. [WorldFly: A World-Model-Based Vision-Language-Action Model for UAV Navigation](/202606/12/2606.06147v1-worldfly-a-world-model-based-vision-language-action-model-for-uav-navigation)  
+1. [PRISM: PRior-guided Imagination Sampling in world Models](/202606/13/2606.07974v1-prism-prior-guided-imagination-sampling-in-world-models)  
    标签：评分：9.0/10、query:rpp
-   evidence：基于世界模型的无人机视觉语言行动导航
-3. [Combining Reinforcement Learning with Arc-search Interior-Point Method for Path Planning](/202606/12/2606.07920v1-combining-reinforcement-learning-with-arc-search-interior-point-method-for-path-planning)  
+   evidence：世界模型中的先验引导采样
+2. [Deterministic versus Stochastic Optimization for Joint Path Planning and Dynamic Time Splitting in Multiple-UAV-Cached IoT Networks](/202606/13/2606.09014v1-deterministic-versus-stochastic-optimization-for-joint-path-planning-and-dynamic-time-splitting-in-multiple-uav-cached-iot-networks)  
    标签：评分：9.0/10、query:rpp
-   evidence：结合强化学习与弧搜索内点法进行路径规划
-4. [Unifying Object-Centric World Models and Diffusion Policy: A Hierarchical Framework for Multi-Stage Robotic Tasks](/202606/12/2606.08775v1-unifying-object-centric-world-models-and-diffusion-policy-a-hierarchical-framework-for-multi-stage-robotic-tasks)  
+   evidence：多无人机联合路径规划与优化
+3. [LAEI: Layered Autonomous Edge Intelligence Framework for Robust UAV Swarm Operations](/202606/13/2606.09099v1-laei-layered-autonomous-edge-intelligence-framework-for-robust-uav-swarm-operations)  
    标签：评分：9.0/10、query:rpp
-   evidence：用于多阶段机器人任务的世界模型
-5. [$ω$-EVA: Envision, Verify, and Act with Latent Interactive World Models](/202606/12/2606.09457v1--eva-envision-verify-and-act-with-latent-interactive-world-models)  
+   evidence：UAV集群框架，包含机载学习的障碍规避和路径规划
+4. [MODIP: Efficient Model-Based Optimization for Diffusion Policies](/202606/13/2606.10825v1-modip-efficient-model-based-optimization-for-diffusion-policies)  
    标签：评分：9.0/10、query:rpp
-   evidence：潜在交互世界模型实现想象-验证-行动循环
-6. [AllDayNav: Lifelong Navigation via Real-World Reinforcement Learning](/202606/12/2606.10927v1-alldaynav-lifelong-navigation-via-real-world-reinforcement-learning)  
+   evidence：利用世界模型和模型预测控制微调扩散策略
+5. [Multi-UAV Active Sensing with Information Gain-based Planning and Belief Fusion](/202606/13/2606.10986v1-multi-uav-active-sensing-with-information-gain-based-planning-and-belief-fusion)  
    标签：评分：9.0/10、query:rpp
-   evidence：通过真实世界强化学习实现终身导航，动态避障
-7. [Vision-Language-Action Models Meet World Models: Embodied Agentic AI for Low-Altitude Wireless Networks](/202606/12/2606.11618v1-vision-language-action-models-meet-world-models-embodied-agentic-ai-for-low-altitude-wireless-networks)  
+   evidence：多无人机主动感知与信息增益路径规划
+6. [Vision-Language-Action Models Meet World Models: Embodied Agentic AI for Low-Altitude Wireless Networks](/202606/13/2606.11618v1-vision-language-action-models-meet-world-models-embodied-agentic-ai-for-low-altitude-wireless-networks)  
    标签：评分：9.0/10、query:rpp
-   evidence：融合视觉-语言-动作模型与世界模型的无人机框架
-8. [Explore From Sketch: Accelerating UAV Exploration in Large-scale Environments with Prior Maps](/202606/12/2606.11708v1-explore-from-sketch-accelerating-uav-exploration-in-large-scale-environments-with-prior-maps)  
-   标签：评分：9.0/10、query:rpp
-   evidence：利用先验地图加速无人机探索
-9. [UGV-Conditioned Multi-UAV Informative Planning on a Shared Exposure Belief](/202606/12/2606.12306v1-ugv-conditioned-multi-uav-informative-planning-on-a-shared-exposure-belief)  
-   标签：评分：9.0/10、query:rpp
-   evidence：多无人机信息规划以保障地面车辆安全
+   evidence：无人机框架结合世界模型进行感知与连续控制
+7. [Divide-and-Conquer Modeling for the CTF-4-Science Lorenz Benchmark](/202606/13/2606.10084v1-divide-and-conquer-modeling-for-the-ctf-4-science-lorenz-benchmark)  
+   标签：评分：8.0/10、query:mm
+   evidence：混沌洛伦兹系统预测的分治建模
 
 ### 速读区论文标签
-1. [Convex-Neural RRT*: Fast and Reliable Learning-Guided Sampling for High-Quality Robot Path Planning](/202606/12/2605.25006v1-convex-neural-rrt-fast-and-reliable-learning-guided-sampling-for-high-quality-robot-path-planning)  
+1. [Autoregressive Diffusion World Models for Off-Policy Evaluation of LLM Agents](/202606/13/2606.05558v1-autoregressive-diffusion-world-models-for-off-policy-evaluation-of-llm-agents)  
    标签：评分：8.0/10、query:rpp
-   evidence：学习引导采样的机器人路径规划，增强RRT*
-2. [Behavior-Invariant Task Representation Learning with Transformer-based World Models for Offline Meta-Reinforcement Learning](/202606/12/2606.00780v1-behavior-invariant-task-representation-learning-with-transformer-based-world-models-for-offline-meta-reinforcement-learning)  
+   evidence：用于LLM智能体的自回归扩散世界模型
+2. [Discrete-WAM: Unified Discrete Vision-Action Token Editing for World-Policy Learning](/202606/13/2606.05645v2-discrete-wam-unified-discrete-vision-action-token-editing-for-world-policy-learning)  
    标签：评分：8.0/10、query:rpp
-   evidence：基于Transformer的随机世界模型用于离线元强化学习
-3. [Robust Integrated Planning and Control for Quadrotors in Dynamic Environments via NMPC with CBF Penalties](/202606/12/2606.01038v1-robust-integrated-planning-and-control-for-quadrotors-in-dynamic-environments-via-nmpc-with-cbf-penalties)  
+   evidence：基于离散token表示的自动驾驶世界-策略联合学习框架
+3. [Uncertainty-Aware LLM-Guided Policy Shaping for Sparse-Reward Reinforcement Learning](/202606/13/2606.06673v1-uncertainty-aware-llm-guided-policy-shaping-for-sparse-reward-reinforcement-learning)  
    标签：评分：8.0/10、query:rpp
-   evidence：无人机路径规划、动态避障、实时轨迹优化，使用带CBF的NMPC
-4. [COP-Q: Safety-First Reinforcement Learning for Robot Control via Cholesky-Ordered Projection](/202606/12/2606.04749v1-cop-q-safety-first-reinforcement-learning-for-robot-control-via-cholesky-ordered-projection)  
+   evidence：基于LLM引导的策略塑形方法处理稀疏奖励强化学习
+4. [Learning Predictive Control with Deep Koopman Operators for Autonomous Vehicle Motion Planning](/202606/13/2606.08136v1-learning-predictive-control-with-deep-koopman-operators-for-autonomous-vehicle-motion-planning)  
    标签：评分：8.0/10、query:rpp
-   evidence：通过协方差建模提升安全强化学习的样本效率
-5. [Representation Learning Enables Scalable Multitask Deep Reinforcement Learning](/202606/12/2606.05555v1-representation-learning-enables-scalable-multitask-deep-reinforcement-learning)  
+   evidence：基于深度Koopman的学习预测控制用于车辆运动规划
+5. [Cluster-Aware Conformal Calibration for Spatio-Temporal Distributional Prediction](/202606/13/2606.06753v1-cluster-aware-conformal-calibration-for-spatio-temporal-distributional-prediction)  
+   标签：评分：7.0/10、query:mm
+   evidence：基于聚类的自适应基函数时空分布预测
+6. [Variational Proximal Policy Optimization](/202606/13/2606.08032v1-variational-proximal-policy-optimization)  
    标签：评分：7.0/10、query:rpp
-   evidence：无规划的可扩展多任务强化学习中的表示学习
-6. [Merging model-based control with multi-agent reinforcement learning for multi-agent cooperative teaming strategies](/202606/12/2606.06011v1-merging-model-based-control-with-multi-agent-reinforcement-learning-for-multi-agent-cooperative-teaming-strategies)  
+   evidence：变分策略优化改进样本效率
+7. [Towards End to End Motion Planning and Execution for Autonomous Underwater Vehicles Using Reinforcement Learning](/202606/13/2606.08513v1-towards-end-to-end-motion-planning-and-execution-for-autonomous-underwater-vehicles-using-reinforcement-learning)  
    标签：评分：7.0/10、query:rpp
-   evidence：基于模型的控制与多智能体强化学习融合实现安全合作
-7. [Counterfactual Transport Flows for Offline Conservative Trajectory Refinement](/202606/12/2606.09115v1-counterfactual-transport-flows-for-offline-conservative-trajectory-refinement)  
+   evidence：面向自主水下航行器的端到端深度强化学习路径规划，采用分层强化学习
+8. [An Agency-Transferring Model-Free Policy Enhancement Technique](/202606/13/2606.09825v1-an-agency-transferring-model-free-policy-enhancement-technique)  
    标签：评分：7.0/10、query:rpp
-   evidence：离线保守轨迹优化提升样本效率
-8. [Learning Unions of Convex Sets via Invertible Latent Decomposition for Path Planning](/202606/12/2606.12027v1-learning-unions-of-convex-sets-via-invertible-latent-decomposition-for-path-planning)  
-   标签：评分：7.0/10、query:rpp
-   evidence：通过可逆隐分解将碰撞空间表示为凸集并用于路径规划
-9. [GenPO++: Generative Policy Optimization with Jacobian-free Likelihood Ratios](/202606/12/2606.06967v1-genpo-generative-policy-optimization-with-jacobian-free-likelihood-ratios)  
+   evidence：通过嵌入基线策略实现样本高效的强化学习策略增强
+9. [Uncertainty-Aware Motion Planning for Autonomous Driving in Mixed Traffic Environment](/202606/13/2606.09958v1-uncertainty-aware-motion-planning-for-autonomous-driving-in-mixed-traffic-environment)  
    标签：评分：6.0/10、query:rpp
-   evidence：面向样本高效连续控制的生成策略优化
-10. [Neuro-Symbolic Injection of LTLf Constraints in Autoregressive Reinforcement Learning Policies](/202606/12/2606.08312v1-neuro-symbolic-injection-of-ltlf-constraints-in-autoregressive-reinforcement-learning-policies)  
+   evidence：不确定性感知强化学习运动规划
+10. [3SPO: State-Score-Supervised Policy Optimization for LLM Agents](/202606/13/2606.09961v1-3spo-state-score-supervised-policy-optimization-for-llm-agents)  
    标签：评分：6.0/10、query:rpp
-   evidence：结合时序逻辑约束的神经符号强化学习用于路径规划
-11. [Reinforcement Learning for Flow-Matching Policies with Density Transport](/202606/12/2606.08602v1-reinforcement-learning-for-flow-matching-policies-with-density-transport)  
+   evidence：状态分数监督的策略优化用于样本高效的LLM代理强化学习
+11. [SHAPO: Sharpness-Aware Policy Optimization for Safe Exploration](/202606/13/2606.10228v1-shapo-sharpness-aware-policy-optimization-for-safe-exploration)  
    标签：评分：6.0/10、query:rpp
-   evidence：面向流匹配策略的在线强化学习算法
-12. [A Hybrid Generative Reduced-Order Model for the Minimal Flow Unit](/202606/12/2606.09044v1-a-hybrid-generative-reduced-order-model-for-the-minimal-flow-unit)  
-   标签：评分：6.0/10、query:mm
-   evidence：基于VAE-GAN和Transformer的生成式降阶模型用于流动力学，类似气象降尺度
+   evidence：锐度感知策略优化的安全探索，与样本高效强化学习相关
+12. [Bellman-Taylor Score Decoding for Markov Decision Processes with State-Dependent Feasible Action Sets](/202606/13/2606.10979v1-bellman-taylor-score-decoding-for-markov-decision-processes-with-state-dependent-feasible-action-sets)  
+   标签：评分：6.0/10、query:rpp
+   evidence：针对状态依赖约束MDP的Bellman-Taylor分数解码
 
 
 <div class="dpr-home-promo-card">

@@ -1,0 +1,108 @@
+Title: Divide-and-Conquer Modeling for the CTF-4-Science Lorenz Benchmark
+
+URL Source: https://arxiv.org/pdf/2606.10084v1
+
+Published Time: Wed, 10 Jun 2026 00:10:27 GMT
+
+Number of Pages: 3
+
+Markdown Content:
+# Divide-and-Conquer Modeling for the CTF-4-Science Lorenz Benchmark 
+
+## Shundong Li 
+
+Worcester Polytechnic Institute Worcester, MA, USA sli19@wpi.edu 
+
+## Abstract 
+
+This work presents a divide-and-conquer modeling strategy for the CTF-4-Science Lorenz benchmark, which evaluates chaotic-system prediction across twelve hidden scores and five scenario families: clean forecasting, noisy reconstruction, noisy-input forecasting, few-shot learning, and parametric generalization. Rather than forc-ing one model class to handle all regimes, the final system matched each prediction block to the evaluation behavior of its task group. The main contributions are: smoothing-based reconstruction for noisy full-trajectory denoising; NG-RC/NVAR models tuned for noisy long-time attractor forecasting; a fitted Lorenz transition correction restricted to the sensitive clean short-time prefix; and a parametric prefix blend for the interpolation task. The result-ing system with final public score of 79.63 shows that bounded, scenario-specific updates can outperform broad model replacement on mixed chaotic forecasting benchmarks. 
+
+## 1 Challenge Setting 
+
+The CTF-4-Science Lorenz benchmark centers on the Lorenz dynam-ical system, a three-dimensional chaotic system that is a standard stress test for data-driven forecasting [ 5]. Its state (𝑥, 𝑦, 𝑧 ) evolves according to 
+
+¤𝑥 = 𝜎 (𝑦 − 𝑥 ), ¤𝑦 = 𝑥 (𝜌 − 𝑧 ) − 𝑦, ¤𝑧 = 𝑥𝑦 − 𝛽𝑧, 
+
+where 𝜎 , 𝜌 , and 𝛽 are system parameters. The dataset and bench-mark were part of the Common Task Framework (CTF) for sci-entific machine learning [ 10 ], with data distributed through the ctf4science project [ 12 ]. Time was discretized with Δ𝑡 = 0.05 , and each trajectory was represented as a matrix with columns (𝑥, 𝑦, 𝑧 ).A submission had to provide predictions for all nine pair IDs in one table, with 27,000 total rows: 1,000 rows for most forecast tasks and 10,000 rows for each reconstruction task. The final leaderboard score was the average of twelve hidden evaluation metrics. The benchmark mixed five qualitatively different subtasks. Pair 1 tested clean forecasting across short and long horizons. Pairs 2 and 4 tested reconstruction under medium and high noise. Pairs 3 and 5 tested forecasting from noisy sources. Pairs 6 and 7 tested few-shot clean and noisy learning. Pairs 8 and 9 tested paramet-ric interpolation and extrapolation from multiple training regimes. This diversity made a single global replacement strategy unreli-able. A model that improved a long-horizon distribution could reduce a short-horizon trajectory score, and a denoising method that improved a reconstruction pair did not necessarily transfer to forecasting pairs. 
+
+## 2 Related Work 
+
+The CTF project argues that scientific machine learning needs hidden-test benchmarks and task-specific scoring to avoid ad hoc, weak-baseline comparisons [ 10 ]. The Lorenz and Kuramoto-Sivashinsky benchmarks in that dataset expose method strengths across forecasting, state reconstruction, noise, limited data, and generalization. Related CTF efforts extend the same benchmark philosophy to larger scientific domains. The seismic wavefield CTF focuses on forecasting, reconstruction, and generalization for sparse and high-dimensional geophysical wavefields [ 11 ]. CTF4Nuclear applies the framework to nuclear fission and fusion surrogate modeling, emphasizing fair comparison in safety-critical multiphysics settings [7]. 
+
+## 3 Model Architecture Search 
+
+Following prior work on transformer-based building-operation forecasting [ 4], the first stage evaluated neural sequence models for Lorenz prediction. The goal was not only to test one architec-ture, but to cover the main capabilities required by the benchmark: clean continuation, denoising, noisy-input forecasting, few-shot adaptation, and parametric generalization. 
+
+## 3.1 Neural Sequence Models 
+
+The PatchTST candidate adapted the patching idea from long-horizon time-series transformers [ 6] to Lorenz rollouts. A rolling Lorenz window was split into short temporal patches, each patch was linearly embedded into a token, and a transformer encoder with self-attention mapped those tokens to the next Lorenz state. The model was then rolled out autoregressively by feeding each predicted state back into the next input window. The search also tested recurrent and convolutional sequence baselines. GRU forecasters used gated recurrent updates [ 2] to summarize each input window before predicting the next state. TCN forecasters used causal one-dimensional convolutions with dilation to expand the temporal receptive field without recurrence [ 1]. Attention variants added a small self-attention block on top of GRU or TCN features. For reconstruction pairs, convolutional and transformer denoisers were trained as sequence-to-sequence maps from noisy trajectories to smoothed trajectories. For noisy forecasting, denoise-plus-PatchTST variants first smoothed the input window and then rolled out a PatchTST-style forecaster. For few-shot and parametric tasks, smaller attention models used fewer layers and either a regime token or fitted Lorenz parameter features to condition the prediction on the available training regime. The best early neural-search candidate scored 56.55. The neural rollouts often looked reasonable over a short validation window but were fragile under autonomous iteration. The Lorenz attractor 
+
+> arXiv:2606.10084v1 [cs.LG] 8 Jun 2026 Shundong Li
+
+amplified small phase errors, and a model trained only for one-step or sequence loss did not reliably satisfy the hidden mixture of short-time, long-time, and reconstruction scores. These experi-ments showed that neural models were useful baselines, but that the final submission needed more task-specific inductive bias. This result motivated the divide-and-conquer modeling strategy: choose a model family for each task regime instead of forcing one sequence architecture to cover all hidden metrics. 
+
+## 3.2 Dynamics-Based Models 
+
+The dynamics-based candidates used the Lorenz equations directly. The hybrid ODE ensemble fitted Lorenz parameters from adjacent training states, rolled the fitted system forward with a fourth-order Runge-Kutta transition, and combined those rollouts with targeted short-time and tail-region replacements. This family raised the public score to 67.33, and a tail-region ablation improved to 68.37, indicating that the long-time histogram component responded to trajectory-region selection. A 4D-Var/ODE approach inspired by variational data assimila-tion was also tested [ 9 ]. In that version, the initial state and Lorenz parameters were optimized over a short assimilation window, then the fitted ODE was integrated forward for prediction. It scored 66.57, which was below the stronger ensemble but useful as a diag-nostic: explicit dynamics improved local consistency, while small parameter or phase errors could still shift the long-time attractor statistics. 
+
+## 3.3 Reservoir-Style Models 
+
+The strongest architecture family was next-generation reservoir computing, also called nonlinear vector autoregression (NG-RC/NVAR) [ 3]. NG-RC forms delayed-coordinate features from recent Lorenz states, augments them with polynomial interactions, and solves a ridge regression for the next-step transition. Unlike the neural models, this method trains quickly, has few stochastic components, and can be tuned directly for rollout stability. The NG-RC/NVAR candidate scored 75.32, making it the first architecture that matched the benchmark’s mixed short-time and long-time requirements well enough to serve as a modular component. 
+
+## 4 Hyperparameter and Pair-Specific Selection 
+
+The final system applies divide-and-conquer modeling over task families. Each prediction block comes from the method that matched that task’s data regime and score behavior. Later submis-sions changed only previously validated parts of the prediction table. The selection logic had two stages. First, the model family for each task group was chosen based on public probes and internal diagnostics. Then only the hyperparameters or trajectory prefixes that matched a specific evaluation metric were tuned: reconstruction smoothing windows, noisy-forecast NG-RC delay features, pair-1 short-time ODE weights, and pair-8 interpolation blend weights. Table 1 summarizes the final scenario-specific strategy. 
+
+## 4.1 Smoothing-Based Reconstruction 
+
+Pairs 2 and 4 required full-trajectory denoising, so the reconstruc-tion strategy prioritized stable noise suppression over autonomous forecasting. The final system used Savitzky-Golay filtering [ 8] with window length 5 as the stable reconstruction core. A pure smoother tended to under-use the observed trajectory, so very small obser-vation blends were tested. At two-decimal precision, the pair-2 5% observation blend remained at 78.51, and the pair-4 3% observation blend on the stronger noisy-forecast submission remained at 79.52. These micro-blends established an important pattern: reconstruc-tion gains were available, while both over-smoothing and excessive reliance on noisy observations reduced the score. 
+
+## 4.2 NG-RC for Noisy Long-Time Forecasting 
+
+Pairs 3 and 5 needed forecasts that matched long-time attractor statistics despite noisy initial conditions, making NG-RC/NVAR a better fit than trajectory-level neural rollouts. The candidate grid varied NG-RC delay count, lag, polynomial degree, ridge strength, smooth window, and rollout shrinkage. Selection used multiple internal holdouts drawn from the noisy training trajectory and ranked candidates by long-time score plus tail-statistic stability. The selected models replaced only pairs 3 and 5. This pair-local retrain raised the public score from 78.51 to 79.52. Isolation experiments showed that both pairs contributed: replacing pair 3 alone scored 78.89 and replacing pair 5 alone scored 79.14. The combined result matched the approximate sum of the isolated gains, which made it a reliable component. Attempts to improve those pairs by alternate cubic settings, local analog dynamics, or local linear ODE rollouts decreased the score. After that, the pair-3/5 NG-RC outputs were treated as fixed while the search moved to other subtasks. 
+
+## 4.3 Short-Horizon Transition Fit 
+
+Pair 1 combined short-time and long-time scoring, so the fitted ODE correction was restricted to the prefix where local phase accuracy mattered most. The Lorenz parameters (𝜎, 𝜌, 𝛽 ) were fitted directly from adjacent transitions in the clean pair-1 training trajectory, using a fourth-order Runge-Kutta transition and nonlinear least squares. The fitted parameters were (10 .02 , 28 .69 , 2.66 ), reducing one-step transition RMSE from 0.16 for the nominal transition to 0.01 for the fitted transition. Replacing the full pair-1 rollout with this fitted model reduced the score to 77.42. This result showed that the fitted dynamics improved local phase while weakening long-time histogram alignment. The final pair-1 strategy therefore changed only the first 20 timesteps. A first-20 replacement improved to 79.58, and a controlled extrap-olation sequence then improved monotonically through weights 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, and 1.95. The weight 1.95 and weight 2.05 candidates both rounded to 79.62, with the lower weight selected from leaderboard feedback. This bracketing identified a local optimum without changing pair-1 long-time behavior. 
+
+## 4.4 Parametric Prefix Blend 
+
+Pair 8 was treated as a parametric interpolation prefix problem, where a small blend could improve short-time accuracy without replacing the full trajectory. Earlier experiments showed that larger blends were unstable: a 25% pair-8 blend helped an earlier submis-sion, whereas a 50% blend later decreased the score. On top of the pair-1 weight 1.95 submission, a focused pair-8 sweep changed only Divide-and-Conquer Modeling for the CTF-4-Science Lorenz Benchmark 
+
+Table 1: Pair-specific architecture choices in the final system. 
+
+Pair(s) Development focus Selected method 1 Short-horizon transition fit First-20 fitted Lorenz transition with weight 1.95; later timesteps use the validated trajectory. 2, 4 Smoothing-based reconstruction Savitzky-Golay filtering with small observation blends for full-trajectory denoising. 3, 5 NG-RC noisy long-time forecasting Cubic NG-RC/NVAR retrains selected by multi-holdout attractor validation. 6 Few-shot clean continuation Pair-local NG-RC component selected from clean few-shot probes. 7 Few-shot noisy continuation Conservative first-20 NG-RC blend for the noisy few-shot prefix. 8 Parametric prefix blend First-20 37.5% blend toward the selected interpolation sweep trajectory. 9 Parametric extrapolation Sweep-selected parametric NG-RC component for extrapolation. 
+
+Table 2: Selected public-score milestones. 
+
+Milestone Public score Baseline neural search 56.55 NG-RC standalone 75.32 Smoothing-based reconstruction 78.42 NG-RC noisy long-time forecasting 79.52 Short-horizon transition fit 79.58 Short-horizon weight 1.95 79.62 Parametric prefix blend 37.5% 79.63 
+
+the first 20 timesteps. The blend was 
+
+ˆ𝑥 8,𝑡 = (1 − 𝛼 ) ˆ𝑥 𝑏𝑎𝑠𝑒  
+
+> 8,𝑡
+
++ 𝛼 ˆ𝑥 𝑠𝑤𝑒𝑒𝑝  
+
+> 8,𝑡
+
+, 𝑡 < 20 ,
+
+with all other timesteps and all other pairs copied from the cur-rent submission. Here ˆ𝑥 𝑠𝑤𝑒𝑒𝑝  
+
+> 8,𝑡
+
+was the selected parametric sweep trajectory for the interpolation regime. The 30% blend kept the rounded score at 79.62. A finer 32.5% blend improved to 79.63. The challenge-ending best submission used the 37.5% blend and scored 79.63. This final update changed only pair 8 and only the first 20 timesteps, retaining the validated components while improving the only remaining subtask with a positive leaderboard trend. 
+
+## 5 Conclusion 
+
+The final submission resulted from a divide-and-conquer model-ing process that refined one task family at a time. Its components combined denoising smoothers, NG-RC noisy forecast models, and a fitted Lorenz short-horizon correction. Table 2 summarizes the main score milestones that led from the neural architecture search to the final pair-specific system. The result shows that hidden score averaging made pair isolation essential. The pair-3 and pair-5 isola-tion experiments showed that the NG-RC gain was concentrated in the intended noisy forecast tasks. The pair-1 experiments showed that a fitted Lorenz transition helped the short prefix but weakened the full rollout, and the pair-8 sweep showed that only a small prefix blend improved the final score. Taken together, these results support the final design rule: keep validated trajectories fixed and update only the pair and time region with direct positive evidence. 
+
+## References 
+
+[1] Shaojie Bai, J. Zico Kolter, and Vladlen Koltun. 2018. An Empirical Evaluation of Generic Convolutional and Recurrent Networks for Sequence Modeling. arXiv preprint arXiv:1803.01271 (2018). https://arxiv.org/abs/1803.01271 [2] Kyunghyun Cho, Bart van Merrienboer, Caglar Gulcehre, Dzmitry Bahdanau, Fethi Bougares, Holger Schwenk, and Yoshua Bengio. 2014. Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation. In Proceedings of the 2014 Conference on Empirical Methods in Natural Language Processing . 1724–1734. doi:10.3115/v1/D14-1179 [3] Daniel J. Gauthier, Erik Bollt, Aaron Griffith, and Wendson A. S. Barbosa. 2021. Next Generation Reservoir Computing. Nature Communications 12, 1 (2021), 5564. doi:10.1038/s41467-021-25801-2 [4] Shundong Li and Nan Ma. 2025. Embedding Building Operation Cycles into Transformer Models for Indoor Temperature Prediction. In UrbanAI: Harnessing Artificial Intelligence for Smart Cities . https://openreview.net/forum?id=VboauT GHf4 [5] Edward N. Lorenz. 1963. Deterministic Nonperiodic Flow. Journal of the Atmo-spheric Sciences 20, 2 (1963), 130–141. doi:10.1175/1520-0469(1963)020<0130: DNF>2.0.CO;2 [6] Yuqi Nie, Nam H. Nguyen, Phanwadee Sinthong, and Jayant Kalagnanam. 2023. A Time Series is Worth 64 Words: Long-term Forecasting with Transformers. In 
+
+International Conference on Learning Representations . https://openreview.net/f orum?id=Jbdc0vTOcol [7] Stefano Riva, Carolina Introini, Antonio Cammi, Dean Price, Alexey Yermakov, Yue Zhao, Philippe M. Wyder, Judah Goldfeder, Jan Williams, Amy Sara Rude, Matteo Tomasetto, Joe Germany, Joseph Bakarji, Georg Maierhofer, Miles Cran-mer, and J. Nathan Kutz. 2026. CTF4Nuclear: Common Task Framework for Nuclear Fission and Fusion Models. arXiv:2605.15549 [cs.LG] doi:10.48550/arXiv .2605.15549 [8] Abraham Savitzky and Marcel J. E. Golay. 1964. Smoothing and Differentiation of Data by Simplified Least Squares Procedures. Analytical Chemistry 36, 8 (1964), 1627–1639. doi:10.1021/ac60214a047 [9] Olivier Talagrand and Philippe Courtier. 1987. Variational Assimilation of Meteorological Observations with the Adjoint Vorticity Equation. I: Theory. 
+
+Quarterly Journal of the Royal Meteorological Society 113, 478 (1987), 1311–1328. doi:10.1002/qj.49711347812 [10] Philippe Martin Wyder, Judah Goldfeder, Alexey Yermakov, Yue Zhao, Stefano Riva, Jan P. Williams, David Zoro, Amy Sara Rude, Matteo Tomasetto, Joe Ger-many, Joseph Bakarji, Georg Maierhofer, Miles Cranmer, and J. Nathan Kutz. 2025. Common Task Framework For a Critical Evaluation of Scientific Machine Learning Algorithms. Advances in Neural Information Processing Systems (2025). https://proceedings.neurips.cc/paper_files/paper/2025/hash/f908bc294862a55 5413fbe43ff08933f-Abstract-Datasets_and_Benchmarks_Track.html [11] Alexey Yermakov, Yue Zhao, Marine Denolle, Yiyu Ni, Philippe M. Wyder, Judah Goldfeder, Stefano Riva, Jan P. Williams, David Zoro, Amy Sara Rude, Matteo Tomasetto, Joe Germany, Joseph Bakarji, Georg Maierhofer, Miles Cranmer, and J. Nathan Kutz. 2025. The Seismic Wavefield Common Task Framework. arXiv:2512.19927 [cs.LG] https://arxiv.org/abs/2512.19927 [12] Alexey Yermakov, Yue Zhao, Marine Denolle, Yiyu Ni, Philippe Martin Wyder, Judah Goldfeder, Stefano Riva, Jan P. Williams, David Zoro, Amy Sara Rude, Matteo Tomasetto, Joe Germany, Georg Maierhofer, Miles Cranmer, and J. Nathan Kutz. 2025. ctf4science. doi:10.17605/OSF.IO/6RZHM Open Science Framework project.

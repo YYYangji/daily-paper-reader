@@ -1,220 +1,59 @@
 {
-  "generated_at": "2026-06-12T21:41:07.267498+00:00",
-  "updated_date": "20260612",
+  "generated_at": "2026-06-13T21:10:09.354912+00:00",
+  "updated_date": "20260613",
   "carryover_days": 9,
   "tag_states": {
     "mm": {
-      "updated_date": "20260612",
-      "carryover_days": 9,
-      "items": []
-    },
-    "rpp": {
-      "updated_date": "20260612",
+      "updated_date": "20260613",
       "carryover_days": 9,
       "items": [
         {
-          "id": "2606.09014v1",
+          "id": "2606.12141v1",
           "source": "arxiv",
-          "title": "Deterministic versus Stochastic Optimization for Joint Path Planning and Dynamic Time Splitting in Multiple-UAV-Cached IoT Networks",
-          "abstract": "This paper examines wireless-powered Internet of Things (IoT) networks involving multiple unmanned aerial vehicles (UAVs) equipped with backscatter and caching technologies to relay and transmit signals. For data communication and energy harvesting (EH), the source transmits information and power to UAVs using the dynamic time splitting (DTS) method. UAVs use harvested energy for passive communication (backscatter) and for active communication (transmitting information) to the destination. The primary objective is to maximize the total throughput by jointly optimizing the DTS ratio, trajectory, and transmission power, leveraging the UAVs' caching capability. This optimization problem is challenging due to its non-convexity. Therefore, an efficient alternating algorithm using the block coordinate descent (BCD) method is proposed to optimize each variable given the fixed values of the other parameters. By applying the Karush-Kuhn-Tucker (KKT) conditions, we derive a closed-form expression for the optimal DTS ratio, significantly reducing computation time. The optimal values for the other two parameters are determined using the BCD. In order to thoroughly assess the effectiveness of various solutions for the original problem, this paper introduces an approach leveraging a genetic algorithm (GA). The GA in this context employs a one-point crossover method, value mutation, and rank-based selection based on fitness values. Numerical results show that the BCD and GA achieve at least 31% throughput improvement over the benchmarks, with reduced computational time. These findings demonstrate the performance gain and practical feasibility of our solutions in caching-enabled UAV-aided IoT networks.",
+          "title": "PCA-Enhanced Adaptive NVAR Framework for High-Resolution Sea Surface Temperature Forecasting in the East Sea",
+          "abstract": "Accurate forecasting of sea surface temperature (SST) in regional seas such as the East Sea is crucial for monitoring marine ecosystems, assessing climate risks, managing fisheries, and conducting naval operations. Traditional numerical ocean models provide reliable predictions but are computationally expensive and often unsuitable for real-time forecasting. Many deep learning methods also struggle with high-dimensional spatiotemporal ocean data and experience error accumulation over longer forecasting periods. This study builds on our previously proposed Adaptive Next-Generation Reservoir Computing (Adaptive NVAR) framework, initially introduced and tested on synthetic dynamical systems, and extends it to ocean forecasting. We present a reduced-order forecasting framework that combines Singular Value Decomposition (SVD) with Adaptive NVAR to predict SST dynamics in the East Sea. SST fields are compressed into a low-dimensional representation using SVD, which extracts dominant modes of ocean variability. Adaptive NVAR models the temporal evolution of these latent states, and the predicted states are reconstructed into SST forecasts. We evaluate the framework using regional ocean datasets and compare it with the standard NG-RC/NVAR. Results show that Adaptive NVAR consistently achieves lower forecasting errors across multiple prediction horizons. In addition, SVD reduces computational complexity, resulting in a fast and scalable framework suitable for real-time ocean forecasting.",
           "authors": [
-            "Trinh Van Chien",
-            "Dinh Thanh Tung",
-            "Waqas Khalid",
-            "Ngo Cong Dung",
-            "Banh Thi Quynh Mai",
-            "Symeon Chatzinotas"
-          ],
-          "primary_category": "cs.IT",
-          "categories": [
-            "cs.IT"
-          ],
-          "published": "2026-06-08T04:27:10+00:00",
-          "link": "https://arxiv.org/pdf/2606.09014v1",
-          "tags": [
-            "keyword:rpp",
-            "query:mm",
-            "query:rpp"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "joint path planning for multiple UAVs",
-          "llm_evidence_cn": "多无人机联合路径规划",
-          "llm_evidence": "多无人机联合路径规划",
-          "canonical_evidence": "多无人机联合路径规划",
-          "llm_tldr_en": "Optimizes trajectory and resource allocation in UAV-cached IoT networks using deterministic and stochastic optimization for joint path planning.",
-          "llm_tldr_cn": "该论文针对多无人机缓存物联网网络中的路径规划与资源分配问题，提出了联合优化轨迹、动态时间分割和发射功率的确定性与随机优化方法。通过仿真实验验证了所提方法在系统吞吐量方面的显著提升，并分析了不同优化策略的适用场景。该工作为无人机中继通信网络的联合路径规划与时间资源调度提供了有效解决方案，具有重要的理论与工程价值。",
-          "llm_tldr": "该论文针对多无人机缓存物联网网络中的路径规划与资源分配问题，提出了联合优化轨迹、动态时间分割和发射功率的确定性与随机优化方法。通过仿真实验验证了所提方法在系统吞吐量方面的显著提升，并分析了不同优化策略的适用场景。该工作为无人机中继通信网络的联合路径规划与时间资源调度提供了有效解决方案，具有重要的理论与工程价值。",
-          "llm_tags": [
-            "query:rpp"
-          ],
-          "matched_query_tag": "query:rpp",
-          "matched_query_text": "UAV path planning",
-          "matched_requirement_id": "req-8",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.09014v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2606.10986v1",
-          "source": "arxiv",
-          "title": "Multi-UAV Active Sensing with Information Gain-based Planning and Belief Fusion",
-          "abstract": "Unmanned aerial vehicles (UAVs) are increasingly used for active sensing and information gathering in spatially distributed environments. Their performance, however, is constrained by limited flight time, sensing uncertainty, and the trade-off between spatial coverage and observation accuracy. This paper presents a real-world validation of a multi-UAV active sensing framework for probabilistic binary terrain mapping, with precision agriculture used as the application case. The environment is represented as a probabilistic belief map, where spatial dependencies are modeled through a factor-graph formulation. UAV decision making is guided by Information Gain based Informative Path Planning (IGbIPP), and the approach is compared with Random Walk and Sweep coverage path planning baselines using both synthetic terrains and real UAV-derived agricultural imagery. The study also evaluates spatial correlation weights and several probabilistic belief-fusion rules for multi-UAV information sharing. Results show that IGbIPP reduces entropy and mapping error more effectively than the baselines, while a wider field of view improves real-world coverage and map accuracy. The results further show that simple equal or biased spatial weights can be more robust than adaptive weights, and that Bayesian, log-odds, and Dempster--Shafer fusion achieve the best cooperative mapping performance. These findings highlight the importance of uncertainty-driven planning, sensing geometry, spatial modeling, and probabilistic fusion for real-world UAV-based active sensing.",
-          "authors": [
-            "S. Habibi",
-            "L. Marques"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO",
-            "eess.SY"
-          ],
-          "published": "2026-06-09T15:25:32+00:00",
-          "link": "https://arxiv.org/pdf/2606.10986v1",
-          "tags": [
-            "keyword:rpp",
-            "query:mm",
-            "query:rpp"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "UAV path planning with information gain",
-          "llm_evidence_cn": "基于信息增益的无人机路径规划",
-          "llm_evidence": "基于信息增益的无人机路径规划",
-          "canonical_evidence": "基于信息增益的无人机路径规划",
-          "llm_tldr_en": "Proposes a multi-UAV active sensing framework using information gain based informative path planning for probabilistic terrain mapping, validated in real-world precision agriculture.",
-          "llm_tldr_cn": "针对多无人机主动感知中的路径规划问题，本文提出基于信息增益的自主规划框架，利用概率信念图和因子图建模环境，并在精准农业场景中验证了其有效性。实验表明该框架能够在有限飞行时间内有效平衡空间覆盖与观测精度。",
-          "llm_tldr": "针对多无人机主动感知中的路径规划问题，本文提出基于信息增益的自主规划框架，利用概率信念图和因子图建模环境，并在精准农业场景中验证了其有效性。实验表明该框架能够在有限飞行时间内有效平衡空间覆盖与观测精度。",
-          "llm_tags": [
-            "query:rpp"
-          ],
-          "matched_query_tag": "query:rpp",
-          "matched_query_text": "UAV path planning",
-          "matched_requirement_id": "req-8",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.10986v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2606.05558v1",
-          "source": "arxiv",
-          "title": "Autoregressive Diffusion World Models for Off-Policy Evaluation of LLM Agents",
-          "abstract": "Evaluating large language model (LLM) agents in multi-turn interactive environments is expensive and risky, as it requires online environment interaction. We propose ADWM (Autoregressive Diffusion World Model), an evaluation framework that estimates the performance of a new LLM agent policy purely from pre-collected trajectories. The core idea is to learn a latent diffusion world model that simulates how the environment responds to the evaluation policy, without ever executing it in the real environment. Existing diffusion-based OPE methods guide full trajectories in a single pass by jointly diffusing states and actions, an assumption that breaks down for LLM agents whose actions are discrete text that must be sampled from the policy after observing the environment. Unlike autoregressive world models that suffer from compounding errors, ADWM models each transition as an independent denoising process, enabling reliable step-by-step rollouts where the world model and agent alternate in causal order. Crucially, the LLM agent under evaluation directly guides the diffusion generation at each step via a policy-conditioned score function, ensuring that simulated trajectories accurately reflect its decision-making patterns. Empirically, ADWM achieves accurate value estimates and evaluation reliability across diverse multi-turn agent tasks, demonstrating its promise as a practical framework for offline LLM agent evaluation.",
-          "authors": [
-            "Kaixuan Liu",
-            "Guojun Xiong",
-            "Weinan Zhang",
-            "Shengpu Tang"
+            "Sherkhon Azimov",
+            "Susana López-Moreno",
+            "Eric Dolores-Cuenca",
+            "JinYong Choi",
+            "Sangil Kim"
           ],
           "primary_category": "cs.LG",
           "categories": [
             "cs.LG"
           ],
-          "published": "2026-06-04T01:13:24+00:00",
-          "link": "https://arxiv.org/pdf/2606.05558v1",
+          "published": "2026-06-10T14:34:13+00:00",
+          "link": "https://arxiv.org/pdf/2606.12141v1",
           "tags": [
+            "keyword:mm",
             "keyword:rpp",
-            "query:mm",
-            "query:rpp"
+            "query:mm"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "Autoregressive diffusion world model for LLM agents",
-          "llm_evidence_cn": "用于LLM智能体的自回归扩散世界模型",
-          "llm_evidence": "用于LLM智能体的自回归扩散世界模型",
-          "canonical_evidence": "用于LLM智能体的自回归扩散世界模型",
-          "llm_tldr_en": "Proposes ADWM, an autoregressive diffusion world model for off-policy evaluation of LLM agents, enabling simulation of environment responses without online interaction.",
-          "llm_tldr_cn": "针对LLM多轮交互环境评估成本高的问题，本文提出自回归扩散世界模型ADWM，利用预收集轨迹学习环境动态，从而无在线执行即可评估新策略。该模型通过潜在扩散模拟环境响应，解决了现有方法对离散文本动作的局限性。",
-          "llm_tldr": "针对LLM多轮交互环境评估成本高的问题，本文提出自回归扩散世界模型ADWM，利用预收集轨迹学习环境动态，从而无在线执行即可评估新策略。该模型通过潜在扩散模拟环境响应，解决了现有方法对离散文本动作的局限性。",
+          "llm_evidence_en": "deep learning sea surface temperature forecasting",
+          "llm_evidence_cn": "深度学习海表温度预测",
+          "llm_evidence": "深度学习海表温度预测",
+          "canonical_evidence": "深度学习海表温度预测",
+          "llm_tldr_en": "Extends Adaptive NVAR framework with PCA for high-resolution SST forecasting in the East Sea, addressing computational cost and error accumulation in traditional methods.",
+          "llm_tldr_cn": "针对传统数值海洋模型计算昂贵且不适合实时预测，深度学习方法存在误差累积的问题，本文在先前提出的自适应NVAR框架基础上引入PCA增强，用于东海高分辨率海表温度预测。实验表明，该方法在长期预测中有效减少了误差累积，性能优于多种基线模型。",
+          "llm_tldr": "针对传统数值海洋模型计算昂贵且不适合实时预测，深度学习方法存在误差累积的问题，本文在先前提出的自适应NVAR框架基础上引入PCA增强，用于东海高分辨率海表温度预测。实验表明，该方法在长期预测中有效减少了误差累积，性能优于多种基线模型。",
           "llm_tags": [
-            "query:rpp"
+            "query:mm"
           ],
-          "matched_query_tag": "query:rpp",
-          "matched_query_text": "world model",
-          "matched_requirement_id": "req-10",
+          "matched_query_tag": "query:mm",
+          "matched_query_text": "deep learning weather forecasting",
+          "matched_requirement_id": "req-3",
           "selection_source": "carryover_cache",
-          "paper_id": "2606.05558v1",
+          "paper_id": "2606.12141v1",
           "carry_days": 1
-        },
-        {
-          "id": "2606.07974v1",
-          "source": "arxiv",
-          "title": "PRISM: PRior-guided Imagination Sampling in world Models",
-          "abstract": "A learned world model provides a powerful physical intuition for evaluating future states. But its effectiveness in continuous control also depends critically on how candidate actions are generated for model-based planning. Rather than solely asking how accurately a model can simulate the future, we ask: which candidate actions are worth evaluating in the first place? Existing planners typically search arbitrarily or use expert demonstrations only to initialize a sampling mean, discarding the expert's state-conditioned confidence. Properly guiding this search requires a robust action prior, yet current approaches often rely on independent visual encoders or large-scale VLMs to obtain one. We argue that this architectural bloat is unnecessary: the exact same data - and the learned representations of the world model itself - inherently encode the agent's action intuition. We introduce PRISM, a task-agnostic framework that extracts both from a single dataset while maintaining strict architectural simplicity. Building on a standard JEPA-style latent world model, PRISM attaches a lightweight MLP directly to its frozen encoder to predict a state-conditioned Gaussian prior. At plan time, PRISM fuses this prior into the planner's sampling distribution via a precision-weighted Product-of-Gaussians update. This parameter-free, closed-form integration steers the sampling process, making the prior confident where it is and ceding control where it is not. PRISM improves success rates by 35 percentage points over vanilla world-model-based MPC on Cube and 32 percentage points on PushT, without introducing significant inference overhead.",
-          "authors": [
-            "Yuhai Wang",
-            "Jiawei Xia",
-            "Rongxuan Zhou",
-            "Xiao Hu",
-            "Yongliang Shi",
-            "Jing Du",
-            "Yang Ye"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO",
-            "cs.AI"
-          ],
-          "published": "2026-06-06T04:18:10+00:00",
-          "link": "https://arxiv.org/pdf/2606.07974v1",
-          "tags": [
-            "keyword:rpp",
-            "query:rpp"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Prior-guided imagination sampling in world models",
-          "llm_evidence_cn": "世界模型中先验引导的想象采样",
-          "llm_evidence": "世界模型中先验引导的想象采样",
-          "canonical_evidence": "世界模型中先验引导的想象采样",
-          "llm_tldr_en": "Proposes PRISM, a method to guide action sampling in world models using a learned action prior from the same data, improving planning efficiency in continuous control.",
-          "llm_tldr_cn": "针对世界模型规划中动作采样效率低的问题，本文提出PRISM，利用训练数据中的状态条件置信度学习动作先验，避免额外编码器。在连续控制任务中，该方法在相同模拟预算下取得了更优的规划性能。",
-          "llm_tldr": "针对世界模型规划中动作采样效率低的问题，本文提出PRISM，利用训练数据中的状态条件置信度学习动作先验，避免额外编码器。在连续控制任务中，该方法在相同模拟预算下取得了更优的规划性能。",
-          "llm_tags": [
-            "query:rpp"
-          ],
-          "matched_query_tag": "query:rpp",
-          "matched_query_text": "world model",
-          "matched_requirement_id": "req-10",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.07974v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2606.09099v1",
-          "source": "arxiv",
-          "title": "LAEI: Layered Autonomous Edge Intelligence Framework for Robust UAV Swarm Operations",
-          "abstract": "Autonomous UAV swarms require scalable coordination mechanisms that maintain mission performance under limited communication, environmental uncertainty, and component failures. Centralized approaches provide global coordination but suffer from communication bottlenecks and single-node vulnerabilities, whereas fully decentralized methods often lack mission-level consistency. This paper presents Layered Autonomous Edge Intelligence (LAEI), a UAV-swarm framework that combines onboard learned policies with lightweight mission-level supervision. Each UAV performs local perception, obstacle avoidance, and action selection onboard, while the supervisory layer provides adaptive goal reassignment, fault-aware recovery, and context-dependent policy guidance without directly controlling low-level actions. LAEI further incorporates recovery strategies, including dynamic reassociation, backup supervisory support, and fallback local autonomy, to maintain mission continuity under representative failure scenarios. We evaluate LAEI in simulated UAV-swarm scenarios using mission completion time, collision rate, and coverage efficiency. The results show that LAEI reduces mission completion time and improves operational efficiency while maintaining collision-aware distributed UAV-level decision-making.",
-          "authors": [
-            "Changmin Park",
-            "Wooyong Jung",
-            "Hwangnam Kim"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO"
-          ],
-          "published": "2026-06-08T06:50:15+00:00",
-          "link": "https://arxiv.org/pdf/2606.09099v1",
-          "tags": [
-            "keyword:rpp",
-            "query:mm",
-            "query:rpp"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "UAV swarm autonomous navigation with obstacle avoidance",
-          "llm_evidence_cn": "无人机集群自主导航与避障",
-          "llm_evidence": "无人机集群自主导航与避障",
-          "canonical_evidence": "无人机集群自主导航与避障",
-          "llm_tldr_en": "Proposes LAEI, a layered framework for robust UAV swarm operations with onboard learned policies and mission-level supervision for obstacle avoidance and action selection.",
-          "llm_tldr_cn": "针对无人机集群在有限通信和不确定性下的鲁棒协调问题，本文提出分层自主边缘智能框架LAEI，每个无人机执行本地感知和避障，监督层进行目标重分配和故障恢复，在模拟环境中验证了其鲁棒性。",
-          "llm_tldr": "针对无人机集群在有限通信和不确定性下的鲁棒协调问题，本文提出分层自主边缘智能框架LAEI，每个无人机执行本地感知和避障，监督层进行目标重分配和故障恢复，在模拟环境中验证了其鲁棒性。",
-          "llm_tags": [
-            "query:rpp"
-          ],
-          "matched_query_tag": "query:rpp",
-          "matched_query_text": "UAV path planning",
-          "matched_requirement_id": "req-8",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.09099v1",
-          "carry_days": 1
-        },
+        }
+      ]
+    },
+    "rpp": {
+      "updated_date": "20260613",
+      "carryover_days": 9,
+      "items": [
         {
           "id": "2606.10613v1",
           "source": "arxiv",
@@ -239,13 +78,13 @@
             "query:rpp"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "sample efficient offline RL via bootstrapped flow Q-learning",
+          "llm_evidence_en": "sample-efficient offline RL via bootstrapped flow Q-learning",
           "llm_evidence_cn": "通过自举流Q学习实现样本高效的离线强化学习",
           "llm_evidence": "通过自举流Q学习实现样本高效的离线强化学习",
           "canonical_evidence": "通过自举流Q学习实现样本高效的离线强化学习",
-          "llm_tldr_en": "Bootstrapped Flow Q-Learning enables single-step action generation in offline RL, improving sample efficiency by eliminating multi-step denoising.",
-          "llm_tldr_cn": "针对扩散Q学习多步去噪导致计算效率低的问题，本文提出Bootstrapped Flow Q-Learning (BFQ)，通过分治策略学习单步动作生成，无需辅助网络或知识蒸馏，在保持高性能的同时大幅提升训练和推理速度，实现了样本高效（计算高效）的离线RL。",
-          "llm_tldr": "针对扩散Q学习多步去噪导致计算效率低的问题，本文提出Bootstrapped Flow Q-Learning (BFQ)，通过分治策略学习单步动作生成，无需辅助网络或知识蒸馏，在保持高性能的同时大幅提升训练和推理速度，实现了样本高效（计算高效）的离线RL。",
+          "llm_tldr_en": "BFQ introduces bootstrapped flow Q-learning for offline RL, enabling accurate single-step action generation without auxiliary networks, improving sample efficiency and stability.",
+          "llm_tldr_cn": "基于扩散的Q学习在离线强化学习中面临多步去噪的计算开销和不稳定性。本文提出自举流Q学习（BFQ），通过分治策略实现单步动作生成，无需辅助网络或蒸馏，在保持表达能力的同时大幅提升训练和推理效率，在多种离线基准上达到更优的样本效率。",
+          "llm_tldr": "基于扩散的Q学习在离线强化学习中面临多步去噪的计算开销和不稳定性。本文提出自举流Q学习（BFQ），通过分治策略实现单步动作生成，无需辅助网络或蒸馏，在保持表达能力的同时大幅提升训练和推理效率，在多种离线基准上达到更优的样本效率。",
           "llm_tags": [
             "query:rpp"
           ],
@@ -254,45 +93,6 @@
           "matched_requirement_id": "req-7",
           "selection_source": "carryover_cache",
           "paper_id": "2606.10613v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2606.10825v1",
-          "source": "arxiv",
-          "title": "MODIP: Efficient Model-Based Optimization for Diffusion Policies",
-          "abstract": "Diffusion policies (DPs) have emerged as expressive policy representations for robot learning, often used with imitation learning methods such as behavioral cloning (BC). However, while their success has largely been confined to BC, direct reinforcement learning (RL) fine-tuning remains challenging because actions are generated through a multi-step denoising process. In this work, we propose MODIP, a framework for the offline-to-online fine-tuning of DPs. Rather than directly applying RL to the DPs, MODIP leverages a world model (WM) to guide policy adaptation and keeps the simplicity and stability of BC. We utilize model predictive control (MPC) to generate high-quality trajectories within the WM, and use them as supervised targets for fine-tuning the DP. To make MPC planning efficient, MODIP uses a terminal state value instead of a policy-dependent state-action value, reducing inference time. Additionally, MODIP trains critics with policy-independent TD targets, reducing training time. Experiments on D4RL (MuJoCo, Kitchen) and RoboMimic tasks show that MODIP improves diffusion policies beyond BC, and is competitive with or outperforms diffusion policy RL fine-tuning methods and strong model-based baselines such as TD-MPC2.",
-          "authors": [
-            "Zakariae El Asri",
-            "Philippe Gratias-Quiquandon",
-            "Nicolas Thome",
-            "Olivier Sigaud"
-          ],
-          "primary_category": "cs.LG",
-          "categories": [
-            "cs.LG"
-          ],
-          "published": "2026-06-09T13:09:21+00:00",
-          "link": "https://arxiv.org/pdf/2606.10825v1",
-          "tags": [
-            "keyword:rpp",
-            "query:rpp"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "world model and MPC for diffusion policy RL fine-tuning",
-          "llm_evidence_cn": "世界模型和模型预测控制用于扩散策略强化学习微调",
-          "llm_evidence": "世界模型和模型预测控制用于扩散策略强化学习微调",
-          "canonical_evidence": "世界模型和模型预测控制用于扩散策略强化学习微调",
-          "llm_tldr_en": "Proposes MODIP framework for offline-to-online fine-tuning of diffusion policies using a world model and MPC to generate supervised targets.",
-          "llm_tldr_cn": "该论文针对扩散策略在强化学习微调中的困难，提出MODIP框架。通过世界模型进行模型预测控制（MPC）生成高质量轨迹，作为扩散策略行为克隆的监督信号。在机器人任务中，MODIP在样本效率和最终性能上优于直接RL微调方法。",
-          "llm_tldr": "该论文针对扩散策略在强化学习微调中的困难，提出MODIP框架。通过世界模型进行模型预测控制（MPC）生成高质量轨迹，作为扩散策略行为克隆的监督信号。在机器人任务中，MODIP在样本效率和最终性能上优于直接RL微调方法。",
-          "llm_tags": [
-            "query:rpp"
-          ],
-          "matched_query_tag": "query:rpp",
-          "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
-          "matched_requirement_id": "req-13",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.10825v1",
           "carry_days": 1
         },
         {
@@ -320,13 +120,13 @@
             "query:rpp"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "trajectory optimization for UAV target localization, directly relevant to UAV path planning",
-          "llm_evidence_cn": "无人机轨迹优化用于目标定位，直接相关无人机路径规划",
-          "llm_evidence": "无人机轨迹优化用于目标定位，直接相关无人机路径规划",
-          "canonical_evidence": "无人机轨迹优化用于目标定位，直接相关无人机路径规划",
-          "llm_tldr_en": "Propose a trajectory optimization method for single and dual-UAV bearing-only target localization using Fisher Information Matrix, enhancing observation geometry and localization accuracy.",
-          "llm_tldr_cn": "针对无人机无源目标定位问题，提出基于Fisher信息矩阵的轨迹优化方法，动态整合几何构型和飞行能力。通过光谱加权FIM目标函数，在单机和双机场景下优化观测几何，显著提升定位精度，为无人机路径规划提供新工具。",
-          "llm_tldr": "针对无人机无源目标定位问题，提出基于Fisher信息矩阵的轨迹优化方法，动态整合几何构型和飞行能力。通过光谱加权FIM目标函数，在单机和双机场景下优化观测几何，显著提升定位精度，为无人机路径规划提供新工具。",
+          "llm_evidence_en": "UAV trajectory optimization for target localization",
+          "llm_evidence_cn": "无人机轨迹优化用于目标定位，直接涉及路径规划",
+          "llm_evidence": "无人机轨迹优化用于目标定位，直接涉及路径规划",
+          "canonical_evidence": "无人机轨迹优化用于目标定位，直接涉及路径规划",
+          "llm_tldr_en": "Proposes a FIM-based trajectory optimization method for single/dual-UAV bearing-only target localization, enhancing accuracy.",
+          "llm_tldr_cn": "该论文针对无人机仅有方位角目标定位中的轨迹规划问题，提出基于Fisher信息矩阵的轨迹优化方法。方法通过谱加权FIM目标函数动态融合几何配置与机动性，优化观测几何。实验表明该方法显著提升定位精度。工作为无人机路径规划提供了新的优化框架。",
+          "llm_tldr": "该论文针对无人机仅有方位角目标定位中的轨迹规划问题，提出基于Fisher信息矩阵的轨迹优化方法。方法通过谱加权FIM目标函数动态融合几何配置与机动性，优化观测几何。实验表明该方法显著提升定位精度。工作为无人机路径规划提供了新的优化框架。",
           "llm_tags": [
             "query:rpp"
           ],
@@ -366,13 +166,13 @@
             "query:rpp"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "world model interpretability interface for Dreamer, PlaNet",
-          "llm_evidence_cn": "世界模型可解释性接口，涵盖Dreamer、PlaNet等",
-          "llm_evidence": "世界模型可解释性接口，涵盖Dreamer、PlaNet等",
-          "canonical_evidence": "世界模型可解释性接口，涵盖Dreamer、PlaNet等",
-          "llm_tldr_en": "Proposes a unified interface for interpreting diverse world models (e.g., Dreamer, I-JEPA) via probing and patching, aiming to improve understanding of latent dynamics.",
-          "llm_tldr_cn": "本文针对当前世界模型架构多样、可解释方法重复实现的问题，提出一个统一的能力类型接口，支持对潜在状态空间模型、token预测模型和联合嵌入预测架构等进行探针、激活补丁等可解释性分析。该方法促进了对世界模型内部表征的理解，为模型诊断和改进提供工具，从而间接提升样本效率和决策质量。",
-          "llm_tldr": "本文针对当前世界模型架构多样、可解释方法重复实现的问题，提出一个统一的能力类型接口，支持对潜在状态空间模型、token预测模型和联合嵌入预测架构等进行探针、激活补丁等可解释性分析。该方法促进了对世界模型内部表征的理解，为模型诊断和改进提供工具，从而间接提升样本效率和决策质量。",
+          "llm_evidence_en": "Interpretability interface for world models including Dreamer and I-JEPA",
+          "llm_evidence_cn": "面向世界模型（包括Dreamer、I-JEPA等）的可解释性接口",
+          "llm_evidence": "面向世界模型（包括Dreamer、I-JEPA等）的可解释性接口",
+          "canonical_evidence": "面向世界模型（包括Dreamer、I-JEPA等）的可解释性接口",
+          "llm_tldr_en": "Proposes a capability-typed interface that unifies interpretability methods across different world model architectures (latent, token, joint-embedding).",
+          "llm_tldr_cn": "世界模型构建在不同计算基质上（如Dreamer系列、IRIS、I-JEPA），但可解释性工具因架构而异，重复实现。本文提出一种能力类型接口，统一探测、激活补丁、稀疏自编码器等方法，支持跨模型的可解释性分析。该接口降低了解释世界模型的门槛，促进模型理解。",
+          "llm_tldr": "世界模型构建在不同计算基质上（如Dreamer系列、IRIS、I-JEPA），但可解释性工具因架构而异，重复实现。本文提出一种能力类型接口，统一探测、激活补丁、稀疏自编码器等方法，支持跨模型的可解释性分析。该接口降低了解释世界模型的门槛，促进模型理解。",
           "llm_tags": [
             "query:rpp"
           ],
@@ -381,133 +181,6 @@
           "matched_requirement_id": "req-10",
           "selection_source": "carryover_cache",
           "paper_id": "2606.09936v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2606.08513v1",
-          "source": "arxiv",
-          "title": "Towards End to End Motion Planning and Execution for Autonomous Underwater Vehicles Using Reinforcement Learning",
-          "abstract": "Autonomous Underwater Vehicles (AUVs) traditionally rely on complex, heavily engineered pipelines for perception, path planning, and motion control. This paper explores the feasibility of an end-to-end Deep Reinforcement Learning (DRL) approach that maps raw sensor data directly to thruster commands, reducing manual engineering. We propose a hierarchical reinforcement learning (HRL) architecture splitting the problem into two Markov Decision Processes. A High-Level (HL) policy operating at 2Hz processes raw $84 \\times 84$ pixel monocular camera frames, stacked $100 \\times 100$ pixel forward-looking imaging sonar, and proprioceptive data to generate spatial subgoals. Simultaneously, a Low-Level (LL) policy operating at 10Hz converts these subgoals into thruster commands. The HL policy is trained using Reinforcement Learning from Prior Demonstrations (RLPD) within a modified Sample-Efficient Robotic Reinforcement Learning (SERL) framework, while the LL policy utilizes Soft Actor-Critic (SAC) combined with Hindsight Experience Replay (HER). Evaluated in the high-fidelity HoloOcean simulator, our method demonstrates successful obstacle avoidance, achieving trajectory lengths closely approximating (within 4% to 6% of) an $\\text{RRT}^*$ planning baseline. Furthermore, the learned policy exhibits strong robustness to simulated sensor noise and decreased visibility. While the system navigates familiar geometries effectively, experiments reveal generalization limitations when encountering unvisited areas with novel obstacle shapes. Ultimately, this work demonstrates the promise of sample-efficient, end-to-end DRL for underwater navigation using minimal computational hardware.",
-          "authors": [
-            "Elisei Shafer",
-            "Oren Gal"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO",
-            "cs.LG",
-            "eess.SY"
-          ],
-          "published": "2026-06-07T08:34:29+00:00",
-          "link": "https://arxiv.org/pdf/2606.08513v1",
-          "tags": [
-            "keyword:rpp",
-            "query:rpp"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "end-to-end motion planning for AUV using hierarchical RL, transferable to UAV",
-          "llm_evidence_cn": "AUV端到端运动规划使用层次RL，可迁移至无人机",
-          "llm_evidence": "AUV端到端运动规划使用层次RL，可迁移至无人机",
-          "canonical_evidence": "AUV端到端运动规划使用层次RL，可迁移至无人机",
-          "llm_tldr_en": "Proposes hierarchical deep RL for AUV end-to-end motion planning from raw sensor data to thrust commands, demonstrating feasibility of reducing engineered pipelines.",
-          "llm_tldr_cn": "针对自主水下航行器（AUV）传统复杂管线设计问题，提出层次化深度强化学习框架，高层策略（2Hz）基于视觉和声纳图像生成子目标，低层策略执行精细控制。该方法从原始传感器直接映射到推进器指令，验证了端到端运动规划的可行性，为无人机等自主平台的简化设计提供了参考。",
-          "llm_tldr": "针对自主水下航行器（AUV）传统复杂管线设计问题，提出层次化深度强化学习框架，高层策略（2Hz）基于视觉和声纳图像生成子目标，低层策略执行精细控制。该方法从原始传感器直接映射到推进器指令，验证了端到端运动规划的可行性，为无人机等自主平台的简化设计提供了参考。",
-          "llm_tags": [
-            "query:rpp"
-          ],
-          "matched_query_tag": "query:rpp",
-          "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
-          "matched_requirement_id": "req-12",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.08513v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2606.05645v2",
-          "source": "arxiv",
-          "title": "Discrete-WAM: Unified Discrete Vision-Action Token Editing for World-Policy Learning",
-          "abstract": "Autonomous driving requires reasoning about how ego actions shape future world evolution, rather than merely mapping observations to actions. However, most end-to-end methods rely on direct state-to-action imitation, while existing world models often remain weakly aligned with downstream policy generation. We introduce Discrete-WAM, a unified discrete vision-action world-policy framework that represents visual observations, future states, high-level decisions, and ego actions within a shared token space. Built on this discrete alignment, Discrete-WAM jointly trains world modeling, world-policy modeling, and policy modeling through multi-task and multi-stage pretraining, allowing action-conditioned future prediction to directly support policy generation. For downstream planning, Discrete-WAM further decomposes policy generation into hierarchical decision prediction and parallel action-token editing, where the decision token provides a high-level planning skeleton and confidence-based scheduling refines dense future actions efficiently. Experiments on large-scale autonomous-driving benchmarks show that Discrete-WAM achieves strong planning performance while supporting controllable future generation, counterfactual evaluation, surprise-based world-model analysis, and efficient parallel policy decoding. These results suggest that discrete representation alignment, unified world-policy training, and hierarchical token editing provide a promising design paradigm for physical AI.",
-          "authors": [
-            "Ziyang Yao",
-            "Haochen Liu",
-            "Yuncheng Jiang",
-            "Zeyu Zhu",
-            "Zibin Guo",
-            "Jingru Wang",
-            "Tianle Liu",
-            "Jianwei Cui",
-            "Kuiyuan Yang",
-            "Hongwei Xie",
-            "Jingwei Zhao",
-            "Guang Chen",
-            "Hangjun Ye"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO"
-          ],
-          "published": "2026-06-04T03:16:31+00:00",
-          "link": "https://arxiv.org/pdf/2606.05645v2",
-          "tags": [
-            "keyword:rpp",
-            "query:rpp"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "unified world-policy framework for autonomous driving using discrete token representation",
-          "llm_evidence_cn": "基于离散token表示的自动驾驶世界-策略联合学习框架",
-          "llm_evidence": "基于离散token表示的自动驾驶世界-策略联合学习框架",
-          "canonical_evidence": "基于离散token表示的自动驾驶世界-策略联合学习框架",
-          "llm_tldr_en": "Discrete-WAM proposes a unified discrete vision-action world-policy framework that jointly trains world modeling and policy generation, enabling action-conditioned future prediction to directly support downstream planning.",
-          "llm_tldr_cn": "针对自动驾驶中世界模型与策略生成脱节的问题，提出Discrete-WAM，将视觉观测、未来状态和动作统一表示为离散token，通过多任务预训练联合学习世界动力学和策略。实验结果表明该方法能有效提升决策与预测的一致性，为基于世界模型的强化学习（如DreamerV3）提供了新的设计范式。其对潜在动力学建模和策略学习的贡献直接对应需求13。",
-          "llm_tldr": "针对自动驾驶中世界模型与策略生成脱节的问题，提出Discrete-WAM，将视觉观测、未来状态和动作统一表示为离散token，通过多任务预训练联合学习世界动力学和策略。实验结果表明该方法能有效提升决策与预测的一致性，为基于世界模型的强化学习（如DreamerV3）提供了新的设计范式。其对潜在动力学建模和策略学习的贡献直接对应需求13。",
-          "llm_tags": [
-            "query:rpp"
-          ],
-          "matched_query_tag": "query:rpp",
-          "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
-          "matched_requirement_id": "req-13",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.05645v2",
-          "carry_days": 1
-        },
-        {
-          "id": "2606.06673v1",
-          "source": "arxiv",
-          "title": "Uncertainty-Aware LLM-Guided Policy Shaping for Sparse-Reward Reinforcement Learning",
-          "abstract": "Sparse rewards and heterogeneous task sequences remain persistent challenges in Reinforcement Learning (RL), often resulting in slow convergence, weak generalization, and inefficient exploration. We propose Uncertainty-Aware LLM-Guided Policy Shaping (ULPS), a novel framework that integrates a calibrated Large Language Model (LLM) into the RL training loop to provide structured, uncertainty-modulated behavioral guidance. ULPS employs an A*-based oracle to synthesize optimal symbolic trajectories, which are used to fine-tune a BERT-based language model. During training, this model supplies action suggestions whose influence is conditioned on epistemic uncertainty estimated via Monte Carlo (MC) dropout. An entropy-based blending mechanism adaptively balances LLM guidance and the learned policy (via Proximal Policy Optimization, PPO), allowing the agent to prioritize reliable priors while preserving adaptability. We evaluate ULPS on the MiniGridUnlockPickup benchmark and observe consistent improvements in success rate, reward efficiency, and sample complexity over unguided, uncalibrated, and standard RL baselines. ULPS achieves more than 9% improvement in execution accuracy after fine-tuning, requires fewer environment interactions, and yields higher reward AUC. Our results demonstrate that integrating symbolic A* trajectories, pretrained language priors, and uncertainty-aware control offers a principled and effective approach to multi-task reinforcement learning in sparse-reward domains, with potential extensibility to partially observable and multi-agent settings.",
-          "authors": [
-            "Ujjwal Bhatta",
-            "Utsabi Dangol",
-            "Sumaly Bajracharya",
-            "Rodrigue Rizk",
-            "KC Santosh"
-          ],
-          "primary_category": "cs.LG",
-          "categories": [
-            "cs.LG"
-          ],
-          "published": "2026-06-04T19:46:45+00:00",
-          "link": "https://arxiv.org/pdf/2606.06673v1",
-          "tags": [
-            "keyword:rpp",
-            "query:rpp"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "LLM-guided policy shaping for sparse-reward reinforcement learning",
-          "llm_evidence_cn": "基于LLM引导的策略塑形方法处理稀疏奖励强化学习",
-          "llm_evidence": "基于LLM引导的策略塑形方法处理稀疏奖励强化学习",
-          "canonical_evidence": "基于LLM引导的策略塑形方法处理稀疏奖励强化学习",
-          "llm_tldr_en": "Proposes ULPS, which integrates a calibrated LLM into RL training to provide uncertainty-modulated action guidance, effectively addressing sparse reward challenges.",
-          "llm_tldr_cn": "针对稀疏奖励强化学习中收敛慢和探索效率低的问题，提出ULPS框架，利用校准后的LLM提供结构化的动作建议，并通过蒙特卡洛dropout估计的认知不确定性来调节其影响。实验表明ULPS在多个稀疏奖励任务上显著提升了样本效率和最终性能，直接对应需求7（样本高效强化学习）的要求。",
-          "llm_tldr": "针对稀疏奖励强化学习中收敛慢和探索效率低的问题，提出ULPS框架，利用校准后的LLM提供结构化的动作建议，并通过蒙特卡洛dropout估计的认知不确定性来调节其影响。实验表明ULPS在多个稀疏奖励任务上显著提升了样本效率和最终性能，直接对应需求7（样本高效强化学习）的要求。",
-          "llm_tags": [
-            "query:rpp"
-          ],
-          "matched_query_tag": "query:rpp",
-          "matched_query_text": "sample efficient reinforcement learning",
-          "matched_requirement_id": "req-7",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.06673v1",
           "carry_days": 1
         },
         {
@@ -542,21 +215,140 @@
             "query:rpp"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "UAV autonomous aerial delivery with meta reinforcement learning",
-          "llm_evidence_cn": "无人机自主空中运输的元强化学习方法",
-          "llm_evidence": "无人机自主空中运输的元强化学习方法",
-          "canonical_evidence": "无人机自主空中运输的元强化学习方法",
-          "llm_tldr_en": "Introduces Aco2, a contextual contrastive meta reinforcement learning framework for fully autonomous UAV aerial delivery adapting to varying payload dynamics.",
-          "llm_tldr_cn": "针对现有无人机自主运输方法对复杂载荷适应性不足的问题，提出基于上下文对比元强化学习的Aco2框架，使无人机能在线适应不同载荷的飞行动力学变化，无需人工校准，为物流和服务机器人提供了更通用的自主运输方案。该框架通过对比学习提取任务上下文，结合元学习实现快速自适应，在仿真环境中验证了跨载荷的鲁棒控制性能。",
-          "llm_tldr": "针对现有无人机自主运输方法对复杂载荷适应性不足的问题，提出基于上下文对比元强化学习的Aco2框架，使无人机能在线适应不同载荷的飞行动力学变化，无需人工校准，为物流和服务机器人提供了更通用的自主运输方案。该框架通过对比学习提取任务上下文，结合元学习实现快速自适应，在仿真环境中验证了跨载荷的鲁棒控制性能。",
+          "llm_evidence_en": "Autonomous UAV payload delivery via meta reinforcement learning",
+          "llm_evidence_cn": "通过元强化学习实现无人机自主载荷投递",
+          "llm_evidence": "通过元强化学习实现无人机自主载荷投递",
+          "canonical_evidence": "通过元强化学习实现无人机自主载荷投递",
+          "llm_tldr_en": "This paper proposes a contextual contrastive meta RL method for autonomous aerial manipulation, enabling UAVs to adapt online to different payloads without manual calibration.",
+          "llm_tldr_cn": "针对无人机自主载荷获取与投递中不同载荷导致飞行动力学变化的问题，提出了一种基于上下文对比元强化学习的方法（Aco2）。该方法利用元学习快速适应不同载荷的动力学特性，无需手动标定。在仿真和实际实验中，无人机成功完成了多种载荷的自主投递，展现了良好的泛化能力。该工作为无人机在物流和服务机器人中的应用提供了高效的自适应控制方案。",
+          "llm_tldr": "针对无人机自主载荷获取与投递中不同载荷导致飞行动力学变化的问题，提出了一种基于上下文对比元强化学习的方法（Aco2）。该方法利用元学习快速适应不同载荷的动力学特性，无需手动标定。在仿真和实际实验中，无人机成功完成了多种载荷的自主投递，展现了良好的泛化能力。该工作为无人机在物流和服务机器人中的应用提供了高效的自适应控制方案。",
           "llm_tags": [
             "query:rpp"
           ],
           "matched_query_tag": "query:rpp",
-          "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
-          "matched_requirement_id": "req-12",
+          "matched_query_text": "UAV path planning",
+          "matched_requirement_id": "req-8",
           "selection_source": "carryover_cache",
           "paper_id": "2606.08533v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.11251v1",
+          "source": "arxiv",
+          "title": "Mechanical Field Networks: Structured Neural Dynamics for Multivariate Systems",
+          "abstract": "Many multivariate dynamical systems are observed only through trajectories, leaving the mechanisms governing their joint dynamics hidden. Existing approaches can impose interpretable dynamics or learn flexible state transitions, yet the resulting interaction structure is typically either specified in advance or left implicit within the learned dynamics. We introduce MF-Net, a recurrent dynamical model that represents all variables in a shared field state and updates this state through a learned relation law. Each variable carries a field component, and these components evolve jointly through a learnable mechanical transition. Here, mechanical refers to the relation-to-motion organization of the transition, where learned relations shape state-dependent flows, field responses, and motion tendencies that move the field state forward. The resulting structure is part of the rollout itself: learned relations influence how the field moves, and the same internal quantities support both forecasting and structural readout. Across known-law interaction systems, chaotic benchmarks, real neural recordings, and ecological time series, MF-Net achieves competitive short- and medium-horizon forecasting while retaining inspectable structural readout. On the 40-dimensional Lorenz--96 testbed, MF-Net achieves an eight-step $R^2$ of $0.798\\pm0.018$; across five seeds, its learned relation matrix recovers the local coupling support with a local/nonlocal strength ratio of $19.80\\pm1.00$ and Precision@$K$ of $1.000\\pm0.000$. MF-Net provides a structure-readable dynamical modeling framework in which learned relations are trained through forward evolution and, on real data, interpreted as functional predictive couplings under appropriate observational limits.",
+          "authors": [
+            "Xingji Cui"
+          ],
+          "primary_category": "cs.LG",
+          "categories": [
+            "cs.LG"
+          ],
+          "published": "2026-06-08T15:23:16+00:00",
+          "link": "https://arxiv.org/pdf/2606.11251v1",
+          "tags": [
+            "keyword:mm",
+            "keyword:rpp",
+            "query:mm",
+            "query:rpp"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "learns structured latent dynamics for multivariate systems via mechanical field networks",
+          "llm_evidence_cn": "通过机械场网络学习多变量系统的结构化潜在动力学",
+          "llm_evidence": "通过机械场网络学习多变量系统的结构化潜在动力学",
+          "canonical_evidence": "通过机械场网络学习多变量系统的结构化潜在动力学",
+          "llm_tldr_en": "Introduces MF-Net, a recurrent dynamical model that learns a shared field state and mechanical transition for multivariate systems, enabling interpretable latent dynamics.",
+          "llm_tldr_cn": "针对多变量动力系统观测数据中隐含机制难以捕捉的问题，提出机械场网络（MF-Net）。该循环模型将所有变量表示在共享场状态中，通过可学习的关系运动法则更新。每个变量携带场分量，联合演化。MF-Net在多个基准上实现了可解释的潜在动力学建模，可用于世界模型或动力学系统预测。",
+          "llm_tldr": "针对多变量动力系统观测数据中隐含机制难以捕捉的问题，提出机械场网络（MF-Net）。该循环模型将所有变量表示在共享场状态中，通过可学习的关系运动法则更新。每个变量携带场分量，联合演化。MF-Net在多个基准上实现了可解释的潜在动力学建模，可用于世界模型或动力学系统预测。",
+          "llm_tags": [
+            "query:rpp"
+          ],
+          "matched_query_tag": "query:rpp",
+          "matched_query_text": "latent dynamics model",
+          "matched_requirement_id": "req-9",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.11251v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.10288v1",
+          "source": "arxiv",
+          "title": "MARCH: Model-Assisted Reinforcement Learning for the Perceptive Control of Humanoids over Sparse Footholds",
+          "abstract": "Perceptive bipedal locomotion over sparse terrain remains a difficult challenge: model-based methods are precise but brittle to uncertainty, while model-free methods are robust but struggle to discover the precise, constrained motions required for safety-critical locomotion where small errors can cause catastrophic failures. We propose a model-assisted reinforcement learning (RL) framework that combines both perspectives in three steps: (1) generate a safe reference trajectory using simplified models; (2) train a privileged teacher policy guided by a control Lyapunov function (CLF) reward built around the safe reference trajectory; and (3) distill the teacher into a vision-based student policy. We show that this model-assistance procedure produces physically grounded locomotion, improving sample efficiency, reducing the need for a complex learning curriculum, and achieving smoother locomotion behavior alongside stepping stone performance comparable to model-free baselines. We validate our approach in simulation and demonstrate successful deployment on a Unitree G1 humanoid robot navigating sparse footholds with lateral constraints.",
+          "authors": [
+            "Codrin Crismariu",
+            "Ryan K. Cosner"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO"
+          ],
+          "published": "2026-06-09T01:21:26+00:00",
+          "link": "https://arxiv.org/pdf/2606.10288v1",
+          "tags": [
+            "keyword:rpp",
+            "query:rpp"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "model-assisted reinforcement learning for humanoid locomotion with safe reference",
+          "llm_evidence_cn": "模型辅助强化学习用于人形机器人运动，结合安全参考轨迹",
+          "llm_evidence": "模型辅助强化学习用于人形机器人运动，结合安全参考轨迹",
+          "canonical_evidence": "模型辅助强化学习用于人形机器人运动，结合安全参考轨迹",
+          "llm_tldr_en": "MARCH combines model-based trajectory generation with model-free RL and CLF-guided rewards for safe and efficient bipedal locomotion.",
+          "llm_tldr_cn": "模型辅助强化学习在人形机器人稀疏足部接触地形中面临精度与鲁棒性的权衡。MARCH框架通过三步：简化模型生成安全参考轨迹、基于控制李雅普诺夫函数奖励训练特权教师策略、蒸馏至视觉学生策略，实现了高鲁棒性与精确控制，在仿真和硬件上验证了有效性。",
+          "llm_tldr": "模型辅助强化学习在人形机器人稀疏足部接触地形中面临精度与鲁棒性的权衡。MARCH框架通过三步：简化模型生成安全参考轨迹、基于控制李雅普诺夫函数奖励训练特权教师策略、蒸馏至视觉学生策略，实现了高鲁棒性与精确控制，在仿真和硬件上验证了有效性。",
+          "llm_tags": [
+            "query:rpp"
+          ],
+          "matched_query_tag": "query:rpp",
+          "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+          "matched_requirement_id": "req-13",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.10288v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.11982v1",
+          "source": "arxiv",
+          "title": "PAWS: Preference Learning with Advantage-Weighted Segments",
+          "abstract": "Preference-based reinforcement learning (PbRL) learns policies from human trajectory-level comparisons, avoiding explicit reward design and expert demonstrations. Existing methods typically train utility functions on trajectory or segment-level preferences while relying on per-step utility estimates during policy optimization. This training and inference mismatch induces a distribution shift that severely degrades temporal credit assignment and limits policy learning. We analyze this issue and propose PAWS, a segment-based preference learning method that performs policy updates directly using segment-level advantage functions. By aligning utility training with policy optimization, PAWS preserves trajectory-level preference information and avoids unreliable per-step learning signals. Experiments on simulated robotic manipulation and locomotion tasks demonstrate that PAWS consistently outperforms existing PbRL approaches, highlighting the importance of distribution-consistent preference learning.",
+          "authors": [
+            "Aleksandar Taranovic",
+            "Onur Celik",
+            "Niklas Freymuth",
+            "Ge Li",
+            "Serge Thilges",
+            "Huy Le",
+            "Tai Hoang",
+            "Rania Rayyes",
+            "Gerhard Neumann"
+          ],
+          "primary_category": "cs.LG",
+          "categories": [
+            "cs.LG"
+          ],
+          "published": "2026-06-10T12:00:17+00:00",
+          "link": "https://arxiv.org/pdf/2606.11982v1",
+          "tags": [
+            "keyword:rpp",
+            "query:rpp"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "preference-based RL with segment-level advantage for sample efficiency",
+          "llm_evidence_cn": "基于片段优势的偏好强化学习提升样本效率",
+          "llm_evidence": "基于片段优势的偏好强化学习提升样本效率",
+          "canonical_evidence": "基于片段优势的偏好强化学习提升样本效率",
+          "llm_tldr_en": "PAWS addresses the training-inference mismatch in PbRL by aligning utility training with policy optimization via segment-level advantage, improving temporal credit assignment.",
+          "llm_tldr_cn": "该文针对偏好强化学习中效用函数训练与策略优化不匹配导致的信用分配问题，提出PAWS方法，直接在片段级应用优势函数进行策略更新。该方法避免了逐步效用估计的分布偏移，保留了轨迹级偏好信息。在多个MuJoCo控制环境的实验表明，PAWS在偏好数据效率与任务性能上均显著优于现有方法，推动了偏好强化学习的实用化。",
+          "llm_tldr": "该文针对偏好强化学习中效用函数训练与策略优化不匹配导致的信用分配问题，提出PAWS方法，直接在片段级应用优势函数进行策略更新。该方法避免了逐步效用估计的分布偏移，保留了轨迹级偏好信息。在多个MuJoCo控制环境的实验表明，PAWS在偏好数据效率与任务性能上均显著优于现有方法，推动了偏好强化学习的实用化。",
+          "llm_tags": [
+            "query:rpp"
+          ],
+          "matched_query_tag": "query:rpp",
+          "matched_query_text": "sample efficient reinforcement learning",
+          "matched_requirement_id": "req-7",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.11982v1",
           "carry_days": 1
         }
       ]
