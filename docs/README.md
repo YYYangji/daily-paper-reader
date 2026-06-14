@@ -6,81 +6,77 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-13
-- 运行时间：2026-06-13 21:20:57 UTC
+- 最新运行日期：2026-06-14
+- 运行时间：2026-06-14 21:36:22 UTC
 - 运行状态：成功
 - 本次总论文数：19
 - 精读区：7
 - 速读区：12
 
 ### 今日简报（AI）
-今日聚焦世界模型与多智能体优化两大方向，精读两篇高分论文分别探讨优先引导想象采样和无人机缓存网络的路径规划策略。
-
-最值得关注的是世界模型的创新应用：PRISM通过先验引导采样提升模型效率，而《Autoregressive Diffusion World Models》与《Discrete-WAM》则从自回归扩散和离散动作编辑角度拓展了世界模型在离线评估与策略学习中的潜力。
-
-建议优先阅读精读中的两篇9.0分论文，它们是当前世界模型和无人机优化领域的标杆工作；速读论文可作为补充，关注LLM与不确定性结合的强化学习新思路。
-- 详情：[/202606/13/README](/202606/13/README)
+今日收录19篇论文，精读7篇，重点聚焦世界模型可解释性与区域气象模拟。最值得看的是《One Lens, Many Worlds》提出的能力类型接口（9.0分）与《Comparison of Two Operational Microphysics Schemes》的微物理方案对比（9.0分）。建议优先精读这两篇高分论文，理解世界模型可解释性与气象模拟的新方法。
+- 详情：[/202606/14/README](/202606/14/README)
 
 ### 精读区论文标签
-1. [PRISM: PRior-guided Imagination Sampling in world Models](/202606/13/2606.07974v1-prism-prior-guided-imagination-sampling-in-world-models)  
+1. [One Lens, Many Worlds : A Capability-Typed Interface for World-Model Interpretability](/202606/14/2606.09936v1-one-lens-many-worlds--a-capability-typed-interface-for-world-model-interpretability)  
    标签：评分：9.0/10、query:rpp
-   evidence：世界模型中的先验引导采样
-2. [Deterministic versus Stochastic Optimization for Joint Path Planning and Dynamic Time Splitting in Multiple-UAV-Cached IoT Networks](/202606/13/2606.09014v1-deterministic-versus-stochastic-optimization-for-joint-path-planning-and-dynamic-time-splitting-in-multiple-uav-cached-iot-networks)  
+   evidence：针对PlaNet和Dreamer等潜在循环世界模型的可解释性接口
+2. [Comparison of Two Operational Microphysics Schemes Across Various Regional-MPAS Simulations](/202606/14/2606.12762v1-comparison-of-two-operational-microphysics-schemes-across-various-regional-mpas-simulations)  
+   标签：评分：9.0/10、query:mm
+   evidence：MPAS数值天气预报模型中微物理方案的比较研究
+3. [A Tutorial on World Models and Physical AI](/202606/14/2606.12783v1-a-tutorial-on-world-models-and-physical-ai)  
    标签：评分：9.0/10、query:rpp
-   evidence：多无人机联合路径规划与优化
-3. [LAEI: Layered Autonomous Edge Intelligence Framework for Robust UAV Swarm Operations](/202606/13/2606.09099v1-laei-layered-autonomous-edge-intelligence-framework-for-robust-uav-swarm-operations)  
-   标签：评分：9.0/10、query:rpp
-   evidence：UAV集群框架，包含机载学习的障碍规避和路径规划
-4. [MODIP: Efficient Model-Based Optimization for Diffusion Policies](/202606/13/2606.10825v1-modip-efficient-model-based-optimization-for-diffusion-policies)  
-   标签：评分：9.0/10、query:rpp
-   evidence：利用世界模型和模型预测控制微调扩散策略
-5. [Multi-UAV Active Sensing with Information Gain-based Planning and Belief Fusion](/202606/13/2606.10986v1-multi-uav-active-sensing-with-information-gain-based-planning-and-belief-fusion)  
-   标签：评分：9.0/10、query:rpp
-   evidence：多无人机主动感知与信息增益路径规划
-6. [Vision-Language-Action Models Meet World Models: Embodied Agentic AI for Low-Altitude Wireless Networks](/202606/13/2606.11618v1-vision-language-action-models-meet-world-models-embodied-agentic-ai-for-low-altitude-wireless-networks)  
-   标签：评分：9.0/10、query:rpp
-   evidence：无人机框架结合世界模型进行感知与连续控制
-7. [Divide-and-Conquer Modeling for the CTF-4-Science Lorenz Benchmark](/202606/13/2606.10084v1-divide-and-conquer-modeling-for-the-ctf-4-science-lorenz-benchmark)  
+   evidence：世界模型在物理AI中的教程
+4. [Trajectory Optimization in Single and Dual-UAV Bearing-Only Target Localization](/202606/14/2606.09188v1-trajectory-optimization-in-single-and-dual-uav-bearing-only-target-localization)  
+   标签：评分：8.0/10、query:rpp
+   evidence：无人机仅方位目标定位中的轨迹优化
+5. [Mechanical Field Networks: Structured Neural Dynamics for Multivariate Systems](/202606/14/2606.11251v1-mechanical-field-networks-structured-neural-dynamics-for-multivariate-systems)  
+   标签：评分：8.0/10、query:rpp
+   evidence：通过机械场网络学习多变量系统的结构化潜在动力学
+6. [PCA-Enhanced Adaptive NVAR Framework for High-Resolution Sea Surface Temperature Forecasting in the East Sea](/202606/14/2606.12141v1-pca-enhanced-adaptive-nvar-framework-for-high-resolution-sea-surface-temperature-forecasting-in-the-east-sea)  
    标签：评分：8.0/10、query:mm
-   evidence：混沌洛伦兹系统预测的分治建模
+   evidence：深度学习海表温度预测
+7. [Extracting Governing Equations from Latent Dynamics via Multi-View Contrastive Learning](/202606/14/2606.13260v1-extracting-governing-equations-from-latent-dynamics-via-multi-view-contrastive-learning)  
+   标签：评分：8.0/10、query:rpp
+   evidence：从观测中提取潜在动力学
 
 ### 速读区论文标签
-1. [Autoregressive Diffusion World Models for Off-Policy Evaluation of LLM Agents](/202606/13/2606.05558v1-autoregressive-diffusion-world-models-for-off-policy-evaluation-of-llm-agents)  
-   标签：评分：8.0/10、query:rpp
-   evidence：用于LLM智能体的自回归扩散世界模型
-2. [Discrete-WAM: Unified Discrete Vision-Action Token Editing for World-Policy Learning](/202606/13/2606.05645v2-discrete-wam-unified-discrete-vision-action-token-editing-for-world-policy-learning)  
-   标签：评分：8.0/10、query:rpp
-   evidence：基于离散token表示的自动驾驶世界-策略联合学习框架
-3. [Uncertainty-Aware LLM-Guided Policy Shaping for Sparse-Reward Reinforcement Learning](/202606/13/2606.06673v1-uncertainty-aware-llm-guided-policy-shaping-for-sparse-reward-reinforcement-learning)  
-   标签：评分：8.0/10、query:rpp
-   evidence：基于LLM引导的策略塑形方法处理稀疏奖励强化学习
-4. [Learning Predictive Control with Deep Koopman Operators for Autonomous Vehicle Motion Planning](/202606/13/2606.08136v1-learning-predictive-control-with-deep-koopman-operators-for-autonomous-vehicle-motion-planning)  
-   标签：评分：8.0/10、query:rpp
-   evidence：基于深度Koopman的学习预测控制用于车辆运动规划
-5. [Cluster-Aware Conformal Calibration for Spatio-Temporal Distributional Prediction](/202606/13/2606.06753v1-cluster-aware-conformal-calibration-for-spatio-temporal-distributional-prediction)  
+1. [MuJoCo-Drones-Gym: A GPU-Accelerated Multi-Drone Simulator for Control and Reinforcement Learning](/202606/14/2606.08039v1-mujoco-drones-gym-a-gpu-accelerated-multi-drone-simulator-for-control-and-reinforcement-learning)  
+   标签：评分：7.0/10、query:rpp
+   evidence：多无人机仿真器，支持控制与强化学习训练
+2. [MARCH: Model-Assisted Reinforcement Learning for the Perceptive Control of Humanoids over Sparse Footholds](/202606/14/2606.10288v1-march-model-assisted-reinforcement-learning-for-the-perceptive-control-of-humanoids-over-sparse-footholds)  
+   标签：评分：7.0/10、query:rpp
+   evidence：模型辅助的强化学习框架，使用CLF奖励和教师-学生蒸馏用于连续控制
+3. [Fast and Highly Expressive Policy Learning for Offline Reinforcement Learning via Bootstrapped Flow Q-Learning](/202606/14/2606.10613v1-fast-and-highly-expressive-policy-learning-for-offline-reinforcement-learning-via-bootstrapped-flow-q-learning)  
+   标签：评分：7.0/10、query:rpp
+   evidence：基于流Q学习的高效离线强化学习
+4. [PhysMetrics.Weather: An Evaluation Framework for Physical Consistency in ML Weather Models](/202606/14/2606.10642v2-physmetricsweather-an-evaluation-framework-for-physical-consistency-in-ml-weather-models)  
    标签：评分：7.0/10、query:mm
-   evidence：基于聚类的自适应基函数时空分布预测
-6. [Variational Proximal Policy Optimization](/202606/13/2606.08032v1-variational-proximal-policy-optimization)  
+   evidence：机器学习天气模型的物理一致性评估
+5. [TRACE: A Unified Rollout Budget Allocation Framework for Efficient Agentic Reinforcement Learning](/202606/14/2606.11119v1-trace-a-unified-rollout-budget-allocation-framework-for-efficient-agentic-reinforcement-learning)  
    标签：评分：7.0/10、query:rpp
-   evidence：变分策略优化改进样本效率
-7. [Towards End to End Motion Planning and Execution for Autonomous Underwater Vehicles Using Reinforcement Learning](/202606/13/2606.08513v1-towards-end-to-end-motion-planning-and-execution-for-autonomous-underwater-vehicles-using-reinforcement-learning)  
+   evidence：强化学习中的高效rollout预算分配
+6. [HERO: Hindsight-Enhanced Reflection from Environment Observations for Agentic Self-Distillation](/202606/14/2606.11559v1-hero-hindsight-enhanced-reflection-from-environment-observations-for-agentic-self-distillation)  
    标签：评分：7.0/10、query:rpp
-   evidence：面向自主水下航行器的端到端深度强化学习路径规划，采用分层强化学习
-8. [An Agency-Transferring Model-Free Policy Enhancement Technique](/202606/13/2606.09825v1-an-agency-transferring-model-free-policy-enhancement-technique)  
-   标签：评分：7.0/10、query:rpp
-   evidence：通过嵌入基线策略实现样本高效的强化学习策略增强
-9. [Uncertainty-Aware Motion Planning for Autonomous Driving in Mixed Traffic Environment](/202606/13/2606.09958v1-uncertainty-aware-motion-planning-for-autonomous-driving-in-mixed-traffic-environment)  
+   evidence：事后增强的自蒸馏方法改进多轮强化学习的信用分配，提升样本效率
+7. [Autonomous Aerial Manipulation via Contextual Contrastive Meta Reinforcement Learning](/202606/14/2606.08533v1-autonomous-aerial-manipulation-via-contextual-contrastive-meta-reinforcement-learning)  
    标签：评分：6.0/10、query:rpp
-   evidence：不确定性感知强化学习运动规划
-10. [3SPO: State-Score-Supervised Policy Optimization for LLM Agents](/202606/13/2606.09961v1-3spo-state-score-supervised-policy-optimization-for-llm-agents)  
+   evidence：基于元强化学习的自主空中操作
+8. [Test-Time Gradient Guidance of Flow Policies in Reinforcement Learning](/202606/14/2606.11087v1-test-time-gradient-guidance-of-flow-policies-in-reinforcement-learning)  
    标签：评分：6.0/10、query:rpp
-   evidence：状态分数监督的策略优化用于样本高效的LLM代理强化学习
-11. [SHAPO: Sharpness-Aware Policy Optimization for Safe Exploration](/202606/13/2606.10228v1-shapo-sharpness-aware-policy-optimization-for-safe-exploration)  
+   evidence：强化学习中流策略的测试时梯度引导
+9. [Scalable Deep Learning Framework for Global High-Resolution Land Use Reconstruction](/202606/14/2606.11793v2-scalable-deep-learning-framework-for-global-high-resolution-land-use-reconstruction)  
+   标签：评分：6.0/10、query:mm
+   evidence：使用U-Net进行高分辨率土地利用重建的深度学习框架，方法可迁移至气象超分辨率
+10. [Individual Control Barrier Functions-Guided Diffusion Model for Safe Offline Multi-Agent Reinforcement Learning](/202606/14/2606.12640v1-individual-control-barrier-functions-guided-diffusion-model-for-safe-offline-multi-agent-reinforcement-learning)  
    标签：评分：6.0/10、query:rpp
-   evidence：锐度感知策略优化的安全探索，与样本高效强化学习相关
-12. [Bellman-Taylor Score Decoding for Markov Decision Processes with State-Dependent Feasible Action Sets](/202606/13/2606.10979v1-bellman-taylor-score-decoding-for-markov-decision-processes-with-state-dependent-feasible-action-sets)  
+   evidence：在离线强化学习中使用扩散模型生成轨迹，可作为世界模型用于决策
+11. [Two-Layer Linear Auto-Regressive Models Estimate Latent States](/202606/14/2606.12691v1-two-layer-linear-auto-regressive-models-estimate-latent-states)  
    标签：评分：6.0/10、query:rpp
-   evidence：针对状态依赖约束MDP的Bellman-Taylor分数解码
+   evidence：两层线性自回归模型估计潜在状态
+12. [Active Perception for Radio Map Reconstruction in Uncharted 3D Air-Ground Environments](/202606/14/2606.12844v1-active-perception-for-radio-map-reconstruction-in-uncharted-3d-air-ground-environments)  
+   标签：评分：6.0/10、query:rpp
+   evidence：基于无人机的主动感知无线电地图重建
 
 
 <div class="dpr-home-promo-card">

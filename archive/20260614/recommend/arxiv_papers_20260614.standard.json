@@ -1,0 +1,792 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-14T21:23:11.443894+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 7,
+    "deep_cap": 7,
+    "deep_selected": 7,
+    "quick_candidates": 18,
+    "quick_skim_target": 12,
+    "quick_selected": 12
+  },
+  "deep_dive": [
+    {
+      "id": "2606.09936v1",
+      "source": "arxiv",
+      "title": "One Lens, Many Worlds : A Capability-Typed Interface for World-Model Interpretability",
+      "abstract": "World models are now built on substantially different computational substrates. Latent recurrent state-space models such as PlaNet and the Dreamer family compress observations into recurrent states; token-based models such as IRIS quantize observations into a learned codebook and predict autoregressively with a transformer; and joint-embedding predictive architectures such as I-JEPA predict in a learned latent space with no pixel decoder. The interpretability methods applied to these models, including probing, activation patching, sparse autoencoders, and surprise analysis, share a common set of primitives, yet they are re-implemented from scratch for each architecture because existing hook-and-cache tooling assumes a transformer language model with no notion of actions, environment steps, or imagined rollouts. We argue that this fragmentation reflects the tooling rather than the models, and that the shared structure of world models is captured by a small typed interface. We present WorldModelLens, an open-source interpretability substrate organized around a capability-typed adapter: every model implements four required methods (encode, transition, initial state, sample) and declares a set of optional heads (decode, reward, continue, actor, critic) through an explicit capability descriptor, so that reinforcement-learning and self-supervised world models are first-class without either imitating the other. A single hook and cache layer exposes time-indexed activations, imagination rollouts, and intervention replay over this interface, allowing each analysis to be written once.",
+      "authors": [
+        "Bhavith Chandra Challagundla",
+        "Sanskar Pandey",
+        "Param Thakkar",
+        "Rishikesh Mallagundla",
+        "Yugandhar Reddy Gogireddy",
+        "Wenhao Lu",
+        "Hindol Roy Choudhury",
+        "Shravani Challagundla",
+        "Mohamed Deraz Nasr",
+        "Spursh Deshpande"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-07T19:27:04+00:00",
+      "link": "https://arxiv.org/pdf/2606.09936v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "world-model interpretability interface for latent recurrent models like PlaNet and Dreamer",
+      "llm_evidence_cn": "针对PlaNet和Dreamer等潜在循环世界模型的可解释性接口",
+      "llm_evidence": "针对PlaNet和Dreamer等潜在循环世界模型的可解释性接口",
+      "canonical_evidence": "针对PlaNet和Dreamer等潜在循环世界模型的可解释性接口",
+      "llm_tldr_en": "A unified capability-typed interface for interpreting world models across architectures (Dreamer, IRIS, I-JEPA), enabling consistent interpretability analysis.",
+      "llm_tldr_cn": "该文提出统一的能力类型接口，支持对PlaNet/Dreamer系列、IRIS和I-JEPA等不同架构的世界模型进行可解释性分析。通过抽象探针、激活修补、稀疏自编码器等原语，避免了为每种架构重复实现工具。该工作增强了世界模型的可解释性，有助于理解基于模型的强化学习中的潜在动力学建模。",
+      "llm_tldr": "该文提出统一的能力类型接口，支持对PlaNet/Dreamer系列、IRIS和I-JEPA等不同架构的世界模型进行可解释性分析。通过抽象探针、激活修补、稀疏自编码器等原语，避免了为每种架构重复实现工具。该工作增强了世界模型的可解释性，有助于理解基于模型的强化学习中的潜在动力学建模。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "world model",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.12762v1",
+      "source": "arxiv",
+      "title": "Comparison of Two Operational Microphysics Schemes Across Various Regional-MPAS Simulations",
+      "abstract": "Accurately representing convection and precipitation remains a persistent challenge for Numerical Weather Prediction (NWP) models due to biases in convective initiation, storm organization, and rainfall distribution, particularly in subtropical/tropical environments. This study evaluated how microphysics parameterizations influence convective organization and precipitation using hindcasts with the Model for Prediction Across Scales - Atmosphere (MPAS-A) on a variable-resolution mesh down to 1-km resolution. Two operational microphysics schemes, National Severe Storm Labs (NSSL) microphysics and Thompson-Eidhammer Microphysics Parameterization for Operations (TEMPO), were examined across three subtropical/tropical regions during boreal summer under strongly- and weakly-forced regimes. Both schemes captured the general timing and placement of convection, but differed in storm structure and rainfall distribution. TEMPO produced more numerous, weaker convective cores with earlier, more widespread precipitation and cooler surface conditions, while NSSL favored fewer, stronger cores and updrafts with more cloud water, ice, and graupel hydrometeors, though less snow, and more spatially concentrated, intense rainfall. Despite these structural differences, both schemes diverged more from observations than from each other, producing scattered convective cells with minimal mesoscale organization and insufficient stratiform precipitation. The simulations also exhibited regime-dependent errors, with rainfall under- (over)-represented in strongly- (weakly)-forced regimes and forecast skill notably lower in the latter. Improving representation of localized precipitation processes remains essential for capturing convection across a wider range of scales and regimes. Future work should target microphysics evaluation across regimes and regions, with process-level improvements reducing convective biases.",
+      "authors": [
+        "Abraham I. Roseman",
+        "Falko Judt",
+        "Wei Wang",
+        "Ting-Yu Cha",
+        "Giuseppe Torri"
+      ],
+      "primary_category": "physics.ao-ph",
+      "categories": [
+        "physics.ao-ph"
+      ],
+      "published": "2026-06-11T00:00:11+00:00",
+      "link": "https://arxiv.org/pdf/2606.12762v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "comparison of microphysics schemes in MPAS NWP model",
+      "llm_evidence_cn": "MPAS数值天气预报模型中微物理方案的比较研究",
+      "llm_evidence": "MPAS数值天气预报模型中微物理方案的比较研究",
+      "canonical_evidence": "MPAS数值天气预报模型中微物理方案的比较研究",
+      "llm_tldr_en": "This study evaluates two operational microphysics schemes (NSSL and TEMPO) within MPAS-A hindcasts, examining their impact on convective organization and precipitation in subtropical/tropical regions.",
+      "llm_tldr_cn": "数值天气预报中降水和对流模拟的偏差持续存在。本研究利用MPAS-A可变分辨率网格（至1公里）的后报模拟，评估了NSSL和TEMPO两种业务微物理方案对亚热带/热带地区对流组织和降水分布的影响。结果表明微物理参数化显著影响风暴组织和降水。",
+      "llm_tldr": "数值天气预报中降水和对流模拟的偏差持续存在。本研究利用MPAS-A可变分辨率网格（至1公里）的后报模拟，评估了NSSL和TEMPO两种业务微物理方案对亚热带/热带地区对流组织和降水分布的影响。结果表明微物理参数化显著影响风暴组织和降水。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "numerical weather prediction models and methods",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.12783v1",
+      "source": "arxiv",
+      "title": "A Tutorial on World Models and Physical AI",
+      "abstract": "World modeling is emerging as a central principle for building intelligent systems capable of prediction, reasoning, and decision making. A central distinction can be drawn between explicit world models, which learn structured dynamics for rollout-based reasoning and planning, and implicit world models, which encode predictive structure within scalable learned representations. These complementary paradigms provide a foundation for physical AI in domains such as robotics and autonomous driving, enabling intelligence beyond reactive control under real-world constraints. Recent foundation models further suggest a pathway toward unified systems integrating perception, prediction, and action. Despite rapid progress, major challenges remain in hierarchical reasoning, long-horizon planning, and autonomous goal formation, which are critical for advancing toward artificial general intelligence. This tutorial presents a coherent framework in which diverse world modeling approaches are unified through shared predictive structure and differentiated by how such structure is represented and exploited.",
+      "authors": [
+        "Il-Seok Oh"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-11T00:52:39+00:00",
+      "link": "https://arxiv.org/pdf/2606.12783v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "tutorial on world models for physical AI",
+      "llm_evidence_cn": "世界模型在物理AI中的教程",
+      "llm_evidence": "世界模型在物理AI中的教程",
+      "canonical_evidence": "世界模型在物理AI中的教程",
+      "llm_tldr_en": "Comprehensive tutorial covering explicit and implicit world models for prediction, reasoning, and decision-making in robotics and autonomous driving.",
+      "llm_tldr_cn": "本文全面综述了世界模型在物理AI中的角色，区分显式（结构化动力学）和隐式（可扩展表征）两种范式，并讨论其在机器人、自动驾驶等领域的应用。概述了从感知到行动的整合方向，以及分层推理、长时程规划等未来挑战。",
+      "llm_tldr": "本文全面综述了世界模型在物理AI中的角色，区分显式（结构化动力学）和隐式（可扩展表征）两种范式，并讨论其在机器人、自动驾驶等领域的应用。概述了从感知到行动的整合方向，以及分层推理、长时程规划等未来挑战。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "world model",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.09188v1",
+      "source": "arxiv",
+      "title": "Trajectory Optimization in Single and Dual-UAV Bearing-Only Target Localization",
+      "abstract": "Bearing-only target localization is a fundamental problem in optical measurement and finds extensive applications in unmanned aerial vehicle (UAV) technology. Effective trajectory planning establishes favorable observation geometries, thereby enhancing the target localization accuracy of bearing-only UAV systems. This paper proposes an trajectory optimization method for unmanned aerial vehicles (UAVs) in bearing-only target localization scenarios. By leveraging the Fisher Information Matrix (FIM), the proposed approach dynamically integrates the geometric configuration and vehicle maneuverability into the optimization framework. Specifically, we introduce a spectrally-weighted FIM objective function that provides better gradient dynamics near degenerate configurations, enabling the planner to rapidly escape from poor observation conditions. For dual-UAV scenarios, an intersection angle sine term is introduced to optimize triangulation geometry by improving the sight-line intersection angle, thereby preventing trajectory aggregation. Furthermore, we propose an improved Particle Swarm Optimization (PSO) algorithm with motion model constraints and particle normalization to ensure the physical feasibility of the trajectory and enhance the compatibility with the objective functions. Simulation results demonstrate that the proposed method reduces the median localization error by 99.21% compared to conventional FIM-based approaches in single-UAV scenarios, and achieves a 69.70% improvement for dual-UAV configurations, exhibits superior performance in long-duration bearing-only target localization of maneuverability targets at extended ranges.",
+      "authors": [
+        "Zhijian Xiao",
+        "Huayu Huang",
+        "Bin Li",
+        "Yang Shang",
+        "Banglei Guan"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.CV"
+      ],
+      "published": "2026-06-08T08:23:32+00:00",
+      "link": "https://arxiv.org/pdf/2606.09188v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "trajectory optimization for UAV bearing-only target localization",
+      "llm_evidence_cn": "无人机仅方位目标定位中的轨迹优化",
+      "llm_evidence": "无人机仅方位目标定位中的轨迹优化",
+      "canonical_evidence": "无人机仅方位目标定位中的轨迹优化",
+      "llm_tldr_en": "Proposes trajectory optimization for UAVs in bearing-only target localization using Fisher Information Matrix, enhancing localization accuracy.",
+      "llm_tldr_cn": "本文针对无人机仅方位目标定位问题，提出基于Fisher信息矩阵的轨迹优化方法，动态融合几何构型和机动性。引入谱加权FIM目标函数改善梯度动态。实验表明该方法能有效提高定位精度，直接服务于无人机路径规划。",
+      "llm_tldr": "本文针对无人机仅方位目标定位问题，提出基于Fisher信息矩阵的轨迹优化方法，动态融合几何构型和机动性。引入谱加权FIM目标函数改善梯度动态。实验表明该方法能有效提高定位精度，直接服务于无人机路径规划。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.13260v1",
+      "source": "arxiv",
+      "title": "Extracting Governing Equations from Latent Dynamics via Multi-View Contrastive Learning",
+      "abstract": "Identifying latent dynamical systems from noisy, high-dimensional measurements is a central problem at the intersection of representation learning, system identification, and scientific discovery. We present DYSCO, a multi-view temporal contrastive learning algorithm that jointly recovers latent trajectories and the governing dynamics from such observations, by leveraging multiple independent noisy views of the same underlying process to disentangle signal from noise. By parameterizing the dynamics in a structured functional basis, our framework further enables symbolic recovery of the governing equations within an affine gauge. We offer theoretical guarantees for strong identification up to an affine indeterminacy, extending prior identifiability results to the realistic setting of noisy nonlinear observations. Empirically, we demonstrate accurate recovery of both latent trajectories and flow fields across a diverse set of dynamical regimes (e.g., chaotic, oscillatory, and metastable) under both Gaussian and Poisson observation noise, the latter being particularly relevant for neural recordings.",
+      "authors": [
+        "Paolo Muratore",
+        "Mackenzie Weygandt Mathis"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "q-bio.NC"
+      ],
+      "published": "2026-06-11T12:16:35+00:00",
+      "link": "https://arxiv.org/pdf/2606.13260v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "extracting latent dynamics from observations",
+      "llm_evidence_cn": "从观测中提取潜在动力学",
+      "llm_evidence": "从观测中提取潜在动力学",
+      "canonical_evidence": "从观测中提取潜在动力学",
+      "llm_tldr_en": "DYSCO uses multi-view temporal contrastive learning to recover latent trajectories and governing equations from noisy high-dimensional data.",
+      "llm_tldr_cn": "针对从噪声高维测量中识别潜在动力系统的问题，提出DYSCO多视图时间对比学习算法，联合恢复潜在轨迹和支配动力学方程。理论保证了仿射不确定度下的可辨识性，在多个科学数据集上验证了有效性。",
+      "llm_tldr": "针对从噪声高维测量中识别潜在动力系统的问题，提出DYSCO多视图时间对比学习算法，联合恢复潜在轨迹和支配动力学方程。理论保证了仿射不确定度下的可辨识性，在多个科学数据集上验证了有效性。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "latent dynamics model",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.12141v1",
+      "source": "arxiv",
+      "title": "PCA-Enhanced Adaptive NVAR Framework for High-Resolution Sea Surface Temperature Forecasting in the East Sea",
+      "abstract": "Accurate forecasting of sea surface temperature (SST) in regional seas such as the East Sea is crucial for monitoring marine ecosystems, assessing climate risks, managing fisheries, and conducting naval operations. Traditional numerical ocean models provide reliable predictions but are computationally expensive and often unsuitable for real-time forecasting. Many deep learning methods also struggle with high-dimensional spatiotemporal ocean data and experience error accumulation over longer forecasting periods. This study builds on our previously proposed Adaptive Next-Generation Reservoir Computing (Adaptive NVAR) framework, initially introduced and tested on synthetic dynamical systems, and extends it to ocean forecasting. We present a reduced-order forecasting framework that combines Singular Value Decomposition (SVD) with Adaptive NVAR to predict SST dynamics in the East Sea. SST fields are compressed into a low-dimensional representation using SVD, which extracts dominant modes of ocean variability. Adaptive NVAR models the temporal evolution of these latent states, and the predicted states are reconstructed into SST forecasts. We evaluate the framework using regional ocean datasets and compare it with the standard NG-RC/NVAR. Results show that Adaptive NVAR consistently achieves lower forecasting errors across multiple prediction horizons. In addition, SVD reduces computational complexity, resulting in a fast and scalable framework suitable for real-time ocean forecasting.",
+      "authors": [
+        "Sherkhon Azimov",
+        "Susana López-Moreno",
+        "Eric Dolores-Cuenca",
+        "JinYong Choi",
+        "Sangil Kim"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-10T14:34:13+00:00",
+      "link": "https://arxiv.org/pdf/2606.12141v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "deep learning sea surface temperature forecasting",
+      "llm_evidence_cn": "深度学习海表温度预测",
+      "llm_evidence": "深度学习海表温度预测",
+      "canonical_evidence": "深度学习海表温度预测",
+      "llm_tldr_en": "Extends Adaptive NVAR framework with PCA for high-resolution SST forecasting in the East Sea, addressing computational cost and error accumulation in traditional methods.",
+      "llm_tldr_cn": "针对传统数值海洋模型计算昂贵且不适合实时预测，深度学习方法存在误差累积的问题，本文在先前提出的自适应NVAR框架基础上引入PCA增强，用于东海高分辨率海表温度预测。实验表明，该方法在长期预测中有效减少了误差累积，性能优于多种基线模型。",
+      "llm_tldr": "针对传统数值海洋模型计算昂贵且不适合实时预测，深度学习方法存在误差累积的问题，本文在先前提出的自适应NVAR框架基础上引入PCA增强，用于东海高分辨率海表温度预测。实验表明，该方法在长期预测中有效减少了误差累积，性能优于多种基线模型。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "carryover_cache",
+      "paper_id": "2606.12141v1"
+    },
+    {
+      "id": "2606.11251v1",
+      "source": "arxiv",
+      "title": "Mechanical Field Networks: Structured Neural Dynamics for Multivariate Systems",
+      "abstract": "Many multivariate dynamical systems are observed only through trajectories, leaving the mechanisms governing their joint dynamics hidden. Existing approaches can impose interpretable dynamics or learn flexible state transitions, yet the resulting interaction structure is typically either specified in advance or left implicit within the learned dynamics. We introduce MF-Net, a recurrent dynamical model that represents all variables in a shared field state and updates this state through a learned relation law. Each variable carries a field component, and these components evolve jointly through a learnable mechanical transition. Here, mechanical refers to the relation-to-motion organization of the transition, where learned relations shape state-dependent flows, field responses, and motion tendencies that move the field state forward. The resulting structure is part of the rollout itself: learned relations influence how the field moves, and the same internal quantities support both forecasting and structural readout. Across known-law interaction systems, chaotic benchmarks, real neural recordings, and ecological time series, MF-Net achieves competitive short- and medium-horizon forecasting while retaining inspectable structural readout. On the 40-dimensional Lorenz--96 testbed, MF-Net achieves an eight-step $R^2$ of $0.798\\pm0.018$; across five seeds, its learned relation matrix recovers the local coupling support with a local/nonlocal strength ratio of $19.80\\pm1.00$ and Precision@$K$ of $1.000\\pm0.000$. MF-Net provides a structure-readable dynamical modeling framework in which learned relations are trained through forward evolution and, on real data, interpreted as functional predictive couplings under appropriate observational limits.",
+      "authors": [
+        "Xingji Cui"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-08T15:23:16+00:00",
+      "link": "https://arxiv.org/pdf/2606.11251v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "learns structured latent dynamics for multivariate systems via mechanical field networks",
+      "llm_evidence_cn": "通过机械场网络学习多变量系统的结构化潜在动力学",
+      "llm_evidence": "通过机械场网络学习多变量系统的结构化潜在动力学",
+      "canonical_evidence": "通过机械场网络学习多变量系统的结构化潜在动力学",
+      "llm_tldr_en": "Introduces MF-Net, a recurrent dynamical model that learns a shared field state and mechanical transition for multivariate systems, enabling interpretable latent dynamics.",
+      "llm_tldr_cn": "针对多变量动力系统观测数据中隐含机制难以捕捉的问题，提出机械场网络（MF-Net）。该循环模型将所有变量表示在共享场状态中，通过可学习的关系运动法则更新。每个变量携带场分量，联合演化。MF-Net在多个基准上实现了可解释的潜在动力学建模，可用于世界模型或动力学系统预测。",
+      "llm_tldr": "针对多变量动力系统观测数据中隐含机制难以捕捉的问题，提出机械场网络（MF-Net）。该循环模型将所有变量表示在共享场状态中，通过可学习的关系运动法则更新。每个变量携带场分量，联合演化。MF-Net在多个基准上实现了可解释的潜在动力学建模，可用于世界模型或动力学系统预测。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "latent dynamics model",
+      "matched_requirement_id": "req-9",
+      "selection_source": "carryover_cache",
+      "paper_id": "2606.11251v1"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.08039v1",
+      "source": "arxiv",
+      "title": "MuJoCo-Drones-Gym: A GPU-Accelerated Multi-Drone Simulator for Control and Reinforcement Learning",
+      "abstract": "Robotic simulators are a cornerstone of modern research in aerial robotics, serving both as a vehicle for the development of new control algorithms and as the data source for training reinforcement learning (RL) policies. Yet, existing quadcopter learning environments often face a trade-off between physical fidelity, multi-agent support, and the throughput required by modern deep RL pipelines. In this paper, we present MuJoCo-Drones-Gym, an open-source Gymnasium-compatible multi-drone environment built on top of the MuJoCo physics engine. MuJoCo-Drones-Gym supports an arbitrary number of Bitcraze Crazyflie 2.x nano-quadcopters and exposes a modular API for selecting (i)~the physics model (rigid-body MuJoCo, explicit Python dynamics, or any subset of ground effect, blade drag, and inter-drone downwash), (ii)~the action interface (per-motor RPMs, collective normalized thrust, velocity setpoints, or PID waypoint commands), and (iii)~the observation space (kinematic state vectors, RGB / depth / segmentation cameras, or neighbourhood adjacency information). A PettingZoo ParallelEnv wrapper enables drop-in multi-agent reinforcement learning, while a suite of seven task environments, hover, velocity tracking, multi-drone hover, waypoint navigation, formation flight, gate racing, and a generic multi-agent template, demonstrates the breadth of the interface. We describe the environment design, the underlying physics and quadcopter dynamics, and illustrate its use through control and learning examples that mirror those of the closely related gym-pybullet-drones project, while taking advantage of MuJoCo's improved contact handling, rendering, and parallelizability.",
+      "authors": [
+        "Manan Tayal"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-06T07:59:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.08039v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-drone simulator for UAV control and RL training",
+      "llm_evidence_cn": "多无人机仿真器，支持控制与强化学习训练",
+      "llm_evidence": "多无人机仿真器，支持控制与强化学习训练",
+      "canonical_evidence": "多无人机仿真器，支持控制与强化学习训练",
+      "llm_tldr_en": "MuJoCo-Drones-Gym is a GPU-accelerated multi-drone simulator built on MuJoCo, supporting arbitrary number of Crazyflie 2.x nano-quadcopters for control and RL training.",
+      "llm_tldr_cn": "现有四旋翼学习环境在物理保真度、多智能体支持和深度强化学习吞吐量之间存在权衡。本文提出了MuJoCo-Drones-Gym，一个基于MuJoCo物理引擎的GPU加速多无人机仿真环境，支持任意数量的Bitcraze Crazyflie 2.x纳米四旋翼，并提供模块化API选择物理模型。实验表明该仿真器能够高效支持多智能体强化学习训练，为无人机导航和避障算法开发提供了可复现的平台。",
+      "llm_tldr": "现有四旋翼学习环境在物理保真度、多智能体支持和深度强化学习吞吐量之间存在权衡。本文提出了MuJoCo-Drones-Gym，一个基于MuJoCo物理引擎的GPU加速多无人机仿真环境，支持任意数量的Bitcraze Crazyflie 2.x纳米四旋翼，并提供模块化API选择物理模型。实验表明该仿真器能够高效支持多智能体强化学习训练，为无人机导航和避障算法开发提供了可复现的平台。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.08533v1",
+      "source": "arxiv",
+      "title": "Autonomous Aerial Manipulation via Contextual Contrastive Meta Reinforcement Learning",
+      "abstract": "Unmanned aerial vehicles (UAVs) are increasingly being deployed in logistics, service robotics, and other real-world applications, creating a growing demand for autonomous payload acquisition and delivery. Existing approaches typically assume pre-attached payloads or rely on specialized grippers, leaving versatile end-to-end aerial delivery largely unresolved, where different payloads induce highly variable flight dynamics, requiring a single policy to adapt online without manual calibration or explicit system identification. To this end, we study \\textbf{A}utonomous \\textbf{A}erial Manipulation via \\textbf{Co}ntextual \\textbf{Co}ntrastive Meta Reinforcement Learning (\\textbf{\\textit{Aco2}}), a fully autonomous aerial delivery setting in which a quadrotor equipped with a lightweight hook continuously picks up, transports, and delivers diverse handle-equipped objects between randomized locations, all without human intervention. First, we design a contextual observation encoder that infers a compact latent context from recent interaction history, enabling the policy to adapt online to payload-dependent dynamics. To further improve the quality of this context, we introduce a contrastive objective that structures the context embedding around task-relevant variations, improving generalization across diverse payloads without requiring explicit system identification. Trained entirely in simulation with extensive domain randomization, \\textit{Aco2} can be directly deployed on a physical quadrotor without real-world fine-tuning.",
+      "authors": [
+        "Lixuan Jin",
+        "Bingxuan Lan",
+        "Xinyi Bao",
+        "Xiangyuan Xie",
+        "Chunjie Zhang",
+        "Zheng Chen",
+        "Tianshuo Liu",
+        "Ruijie Tian",
+        "Jinyu Ru",
+        "Gang Wang",
+        "Lei Yuan",
+        "Yang Yu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.RO"
+      ],
+      "published": "2026-06-07T09:26:11+00:00",
+      "link": "https://arxiv.org/pdf/2606.08533v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "autonomous aerial manipulation via meta reinforcement learning",
+      "llm_evidence_cn": "基于元强化学习的自主空中操作",
+      "llm_evidence": "基于元强化学习的自主空中操作",
+      "canonical_evidence": "基于元强化学习的自主空中操作",
+      "llm_tldr_en": "UAV autonomous delivery via contextual contrastive meta RL, adapting to diverse payloads without calibration.",
+      "llm_tldr_cn": "本文研究无人机自主空中递送问题，提出上下文对比元强化学习方法，使无人机能适应不同负载的动力学变化，无需手动校准。实验证明了端到端飞行策略的适应性。该工作与无人机路径规划和导航相关，但更侧重操作。",
+      "llm_tldr": "本文研究无人机自主空中递送问题，提出上下文对比元强化学习方法，使无人机能适应不同负载的动力学变化，无需手动校准。实验证明了端到端飞行策略的适应性。该工作与无人机路径规划和导航相关，但更侧重操作。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.10288v1",
+      "source": "arxiv",
+      "title": "MARCH: Model-Assisted Reinforcement Learning for the Perceptive Control of Humanoids over Sparse Footholds",
+      "abstract": "Perceptive bipedal locomotion over sparse terrain remains a difficult challenge: model-based methods are precise but brittle to uncertainty, while model-free methods are robust but struggle to discover the precise, constrained motions required for safety-critical locomotion where small errors can cause catastrophic failures. We propose a model-assisted reinforcement learning (RL) framework that combines both perspectives in three steps: (1) generate a safe reference trajectory using simplified models; (2) train a privileged teacher policy guided by a control Lyapunov function (CLF) reward built around the safe reference trajectory; and (3) distill the teacher into a vision-based student policy. We show that this model-assistance procedure produces physically grounded locomotion, improving sample efficiency, reducing the need for a complex learning curriculum, and achieving smoother locomotion behavior alongside stepping stone performance comparable to model-free baselines. We validate our approach in simulation and demonstrate successful deployment on a Unitree G1 humanoid robot navigating sparse footholds with lateral constraints.",
+      "authors": [
+        "Codrin Crismariu",
+        "Ryan K. Cosner"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-09T01:21:26+00:00",
+      "link": "https://arxiv.org/pdf/2606.10288v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "model-assisted RL framework with CLF reward and teacher-student distillation for continuous control",
+      "llm_evidence_cn": "模型辅助的强化学习框架，使用CLF奖励和教师-学生蒸馏用于连续控制",
+      "llm_evidence": "模型辅助的强化学习框架，使用CLF奖励和教师-学生蒸馏用于连续控制",
+      "canonical_evidence": "模型辅助的强化学习框架，使用CLF奖励和教师-学生蒸馏用于连续控制",
+      "llm_tldr_en": "MARCH combines model-based planning with RL via safe reference trajectory generation, CLF reward, and distillation, achieving robust perceptive locomotion over sparse footholds.",
+      "llm_tldr_cn": "在稀疏地形上的双足感知运动面临模型方法精确但脆弱、无模型方法鲁棒但难以发现精确约束动作的问题。本文提出MARCH框架，三步走：用简化模型生成安全参考轨迹；用控制李雅普诺夫函数奖励训练特权教师策略；蒸馏为视觉学生策略。实验表明该方法在复杂地形上实现鲁棒且精确的运动控制。",
+      "llm_tldr": "在稀疏地形上的双足感知运动面临模型方法精确但脆弱、无模型方法鲁棒但难以发现精确约束动作的问题。本文提出MARCH框架，三步走：用简化模型生成安全参考轨迹；用控制李雅普诺夫函数奖励训练特权教师策略；蒸馏为视觉学生策略。实验表明该方法在复杂地形上实现鲁棒且精确的运动控制。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.11087v1",
+      "source": "arxiv",
+      "title": "Test-Time Gradient Guidance of Flow Policies in Reinforcement Learning",
+      "abstract": "Expressive continuous control policies, such as diffusion and flow models, form the backbone of recent advances in scaling imitation learning for simulated and real robot control. While they are known to scale stably in the supervised imitation learning setting, incorporating them into reinforcement learning (RL) pipelines for policy improvement has proven more difficult. It often requires specialized training objectives or backpropagating through denoising processes, which cause well-known issues with stability and affect scalability. In this paper we study the question of whether simple policy improvement schemes at test time alone, leaving stable supervised policy training intact, can be a competitive alternative which sidesteps these issues. To this end, we propose QGF (Q-Guided Flow), an RL algorithm that performs policy optimization entirely at test time. QGF works by pre-training both a reference flow policy (via a standard behavioral cloning objective) and a value function critic and, at test time, using the value gradient to guide the reference policy to generate higher-value actions without any additional policy learning. Empirically, QGF outperforms prior test-time RL methods on single-task and goal-conditioned offline RL benchmarks with high-dimensional action spaces, and is competitive with state-of-the-art training-time algorithms while being much cheaper to run. Moreover, it exhibits favorable scaling with model size by avoiding the instability of actor-critic training, offering a practical and effective alternative RL algorithm with expressive policies.",
+      "authors": [
+        "Zhiyuan Zhou",
+        "Andy Peng",
+        "Charles Xu",
+        "Qiyang Li",
+        "Tobias Springenberg",
+        "Kevin Frans",
+        "Sergey Levine"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-09T16:45:57+00:00",
+      "link": "https://arxiv.org/pdf/2606.11087v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "test-time gradient guidance for flow policies in RL",
+      "llm_evidence_cn": "强化学习中流策略的测试时梯度引导",
+      "llm_evidence": "强化学习中流策略的测试时梯度引导",
+      "canonical_evidence": "强化学习中流策略的测试时梯度引导",
+      "llm_tldr_en": "Proposes test-time gradient guidance for flow policies in RL, enabling simple policy improvement without backpropagation through denoising.",
+      "llm_tldr_cn": "该论文针对扩散/流策略在强化学习中微调困难的问题，提出测试时梯度引导方法，在推理阶段直接改进策略，避免反向传播。实验显示该方法在连续控制任务中效果可与标准方法媲美，且更稳定。这为提高样本效率和策略优化提供了简洁方案。",
+      "llm_tldr": "该论文针对扩散/流策略在强化学习中微调困难的问题，提出测试时梯度引导方法，在推理阶段直接改进策略，避免反向传播。实验显示该方法在连续控制任务中效果可与标准方法媲美，且更稳定。这为提高样本效率和策略优化提供了简洁方案。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.10613v1",
+      "source": "arxiv",
+      "title": "Fast and Highly Expressive Policy Learning for Offline Reinforcement Learning via Bootstrapped Flow Q-Learning",
+      "abstract": "Diffusion-based Q-learning has emerged as a powerful paradigm for offline reinforcement learning, but its reliance on multi-step denoising makes both training and inference computationally expensive and brittle. Recent efforts to accelerate diffusion Q-learning toward single-step action generation typically introduce auxiliary networks, policy distillation, or multi-phase training, which frequently compromise simplicity, stability, or performance. To address these limitations, we introduce Bootstrapped Flow Q-Learning (BFQ), a novel framework that enables accurate single-step action generation during both training and inference, without auxiliary networks or distillation procedures. BFQ adopts a divide-and-conquer view of the displacement vector along the flow path: it begins by learning short-range displacements that can be accurately estimated from the Flow Matching marginal velocity, and bootstraps these components to directly learn a noise-to-action mapping in a single step. This formulation eliminates multi-step denoising, resulting in a learning procedure that is substantially faster, simpler, and more robust. Extensive D4RL evaluations show that BFQ improves performance while significantly reducing computational cost compared to multi-step diffusion baselines, demonstrating that single-step action generation suffices for high-performance offline Reinforcement Learning.",
+      "authors": [
+        "Thanh Nguyen",
+        "Tri Ton",
+        "Hongbin Choe",
+        "Tung M. Luu",
+        "Chang D. Yoo"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-09T09:12:12+00:00",
+      "link": "https://arxiv.org/pdf/2606.10613v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "sample efficient offline RL via flow Q-learning",
+      "llm_evidence_cn": "基于流Q学习的高效离线强化学习",
+      "llm_evidence": "基于流Q学习的高效离线强化学习",
+      "canonical_evidence": "基于流Q学习的高效离线强化学习",
+      "llm_tldr_en": "Introduces Bootstrapped Flow Q-Learning (BFQ) for single-step action generation in offline RL, eliminating multi-step denoising.",
+      "llm_tldr_cn": "针对扩散Q学习推理慢、训练脆弱的问题，提出自举流Q学习，通过单步动作生成实现高效离线RL，避免辅助网络和蒸馏。",
+      "llm_tldr": "针对扩散Q学习推理慢、训练脆弱的问题，提出自举流Q学习，通过单步动作生成实现高效离线RL，避免辅助网络和蒸馏。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.11793v2",
+      "source": "arxiv",
+      "title": "Scalable Deep Learning Framework for Global High-Resolution Land Use Reconstruction",
+      "abstract": "Uncertainty in the terrestrial carbon cycle remains a major constraint in climate projections, partly driven by the uncertainties affecting the land surface representation and variability in Earth system models. To address this limitation, we present a data-driven framework AI4Land, for generating high-resolution historical reconstructions and future projections of key land surface variables. The framework follows a two-phase approach using a U-Net architecture. In the first phase, which is the focus of this work, it reconstructs annual land use and land cover by integrating coarse-resolution scenario data with static geophysical features. In a planned second phase, the resulting high-resolution maps will be used to predict dynamic biophysical variables, particularly leaf area index, at finer temporal scales. Trained on Earth observation data, the models learn to reproduce spatially explicit and physically consistent land surface patterns, extending temporal coverage to periods lacking direct observations. AI4Land was developed and trained on MareNostrum5, demonstrating how GPU-accelerated HPC infrastructure enables global-scale climate AI pipelines. The final product is a suite of open-source emulators designed for real-time coupling with digital twin platforms, such as those developed under the Destination Earth initiative. By delivering realistic and evolving land surface conditions on demand, this work aims to reduce critical uncertainties and improve the predictive power of next-generation climate simulations.",
+      "authors": [
+        "Amirpasha Mozaffari",
+        "Marina Castaño",
+        "Stefano Materia",
+        "Etienne Tourigny",
+        "Oscar Molina-Sedano",
+        "Jordi Varela-Agrelo",
+        "Dario Garcia-Gasulla",
+        "Miguel Castrillo Melguizo",
+        "Mario Acosta",
+        "Amanda Duarte"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "physics.ao-ph"
+      ],
+      "published": "2026-06-10T08:26:05+00:00",
+      "link": "https://arxiv.org/pdf/2606.11793v2",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "deep learning framework for high-resolution land use reconstruction using U-Net, method transferable to meteorological super-resolution",
+      "llm_evidence_cn": "使用U-Net进行高分辨率土地利用重建的深度学习框架，方法可迁移至气象超分辨率",
+      "llm_evidence": "使用U-Net进行高分辨率土地利用重建的深度学习框架，方法可迁移至气象超分辨率",
+      "canonical_evidence": "使用U-Net进行高分辨率土地利用重建的深度学习框架，方法可迁移至气象超分辨率",
+      "llm_tldr_en": "Presents a scalable deep learning framework (AI4Land) using U-Net to reconstruct high-resolution land use from coarse scenario data, demonstrating resolution enhancement techniques applicable to meteorological super-resolution.",
+      "llm_tldr_cn": "该论文针对地球系统模型中陆地表面表示的不确定性，提出AI4Land框架，采用U-Net架构将粗分辨率情景数据重建为年度高分辨率土地利用图。虽然直接对象是土地利用，但其超分辨率方法（从粗到细的映射）可直接迁移至气象变量降尺度与超分辨重建，为气象超分辨率研究提供了可借鉴的深度学习方案。",
+      "llm_tldr": "该论文针对地球系统模型中陆地表面表示的不确定性，提出AI4Land框架，采用U-Net架构将粗分辨率情景数据重建为年度高分辨率土地利用图。虽然直接对象是土地利用，但其超分辨率方法（从粗到细的映射）可直接迁移至气象变量降尺度与超分辨重建，为气象超分辨率研究提供了可借鉴的深度学习方案。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "meteorological super-resolution",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.10642v2",
+      "source": "arxiv",
+      "title": "PhysMetrics.Weather: An Evaluation Framework for Physical Consistency in ML Weather Models",
+      "abstract": "Machine learning weather prediction (MLWP) models have achieved impressive forecasting performance at a small fraction of the computational costs required for traditional physics-based methods. However, they are primarily (1) data-driven and (2) evaluated using pixel-wide error metrics (e.g., RMSE), so there are no guarantees that their forecasts are consistent with known physical laws. We introduce PhysMetrics$.$Weather, an evaluation framework that assesses the physical realism of MLWP models across three types of metrics: conservation, spectral, and dynamical. By quantifying physical realism, this tool guides the development of physics-informed architectures and helps evaluate whether MLWP models are reliable for operational use. Our framework is available on Github at https://github.com/Emmakast/PhysMetrics.Weather.",
+      "authors": [
+        "Emma Kasteleyn",
+        "Timo Maier",
+        "Axel Lauer",
+        "Veronika Eyring",
+        "Pierre Gentine",
+        "Ana Lucic"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "physics.ao-ph"
+      ],
+      "published": "2026-06-09T09:45:52+00:00",
+      "link": "https://arxiv.org/pdf/2606.10642v2",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "physical consistency evaluation for ML weather models",
+      "llm_evidence_cn": "机器学习天气模型的物理一致性评估",
+      "llm_evidence": "机器学习天气模型的物理一致性评估",
+      "canonical_evidence": "机器学习天气模型的物理一致性评估",
+      "llm_tldr_en": "Introduces PhysMetrics.Weather, a framework to evaluate physical realism of MLWP models using conservation, spectral, and dynamical metrics, guiding development of physics-informed architectures.",
+      "llm_tldr_cn": "机器学习天气模型虽预测精度高但缺乏物理约束保证。本文提出PhysMetrics.Weather评估框架，从守恒性、频谱和动力学三个维度量化物理真实性。该工具可指导设计物理信息架构，并帮助判断MLWP模型是否可靠用于业务化。该工作为天气预报模型的可靠性评估提供了标准化手段。",
+      "llm_tldr": "机器学习天气模型虽预测精度高但缺乏物理约束保证。本文提出PhysMetrics.Weather评估框架，从守恒性、频谱和动力学三个维度量化物理真实性。该工具可指导设计物理信息架构，并帮助判断MLWP模型是否可靠用于业务化。该工作为天气预报模型的可靠性评估提供了标准化手段。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.12640v1",
+      "source": "arxiv",
+      "title": "Individual Control Barrier Functions-Guided Diffusion Model for Safe Offline Multi-Agent Reinforcement Learning",
+      "abstract": "Offline reinforcement learning allows control policies to be learned directly from data without online interaction, making it suitable for safety-critical tasks. Recent studies have applied diffusion models to offline reinforcement learning to leverage their strong capacity for modeling complex data distributions. However, existing approaches primarily focus on single-agent settings, leaving the safety challenges in multi-agent environments largely unexplored. In this work, we propose a safe offline multi-agent reinforcement learning algorithm that embeds neural individual control barrier functions into the diffusion model to enhance safety during trajectory generation, with control policies recovered through inverse dynamics. We evaluate our algorithm across diverse benchmarks, demonstrating substantial safety improvements while maintaining competitive rewards.",
+      "authors": [
+        "Qingyun Guo",
+        "Junyi Shi",
+        "Jianuo Huang",
+        "Tianyu Shi"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.RO",
+        "eess.SY"
+      ],
+      "published": "2026-06-10T20:03:58+00:00",
+      "link": "https://arxiv.org/pdf/2606.12640v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Diffusion model for trajectory generation in offline RL, can serve as world model for decision making",
+      "llm_evidence_cn": "在离线强化学习中使用扩散模型生成轨迹，可作为世界模型用于决策",
+      "llm_evidence": "在离线强化学习中使用扩散模型生成轨迹，可作为世界模型用于决策",
+      "canonical_evidence": "在离线强化学习中使用扩散模型生成轨迹，可作为世界模型用于决策",
+      "llm_tldr_en": "Proposes a safe offline multi-agent RL algorithm embedding neural control barrier functions into a diffusion model for trajectory generation, enhancing safety.",
+      "llm_tldr_cn": "针对离线多智能体强化学习中的安全性挑战，提出将个体控制屏障函数嵌入扩散模型中以生成安全轨迹，并基于此恢复策略。该方法利用扩散模型建模复杂数据分布的能力，在多个多智能体任务上实现了安全高效的离线学习，可视为一种基于模型的世界模型方法。",
+      "llm_tldr": "针对离线多智能体强化学习中的安全性挑战，提出将个体控制屏障函数嵌入扩散模型中以生成安全轨迹，并基于此恢复策略。该方法利用扩散模型建模复杂数据分布的能力，在多个多智能体任务上实现了安全高效的离线学习，可视为一种基于模型的世界模型方法。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.11119v1",
+      "source": "arxiv",
+      "title": "TRACE: A Unified Rollout Budget Allocation Framework for Efficient Agentic Reinforcement Learning",
+      "abstract": "Reinforcement learning with verifiable rewards (RLVR) is a promising approach for enhancing reasoning and agentic behavior in large language models. However, rollout-intensive policy optimization is often limited by insufficient reward contrast, arising when overly simple or complex prompts generate low-variance feedback and when outcome-only rewards assign the same terminal assessment to every decision in a multi-turn rollout. Past efforts have focused on allocating available rollout resources to promising prompts, yet they only leverage sample informativeness at the prompt level and neglect variation in prefix-level informativeness across turns within the same rollout. This work targets multi-turn agentic RL by modeling each ReAct-style thought-action-observation turn as a semantically distinct node, allowing budget allocation to extend from prompt roots to turn-level prefixes with further continuations, which naturally forms tree-structured rollouts. We introduce Tree Rollout Allocation for Contrastive Exploration (TRACE), a unified rollout allocation framework that enhances reward contrast within a fixed sampling budget. Technically, TRACE allocates rollout budget to both prompt roots and intermediate prefixes that are most likely to yield mixed terminal rewards. A shared generalizable predictor estimates conditional success probability at these anchors from prefix histories to guide this allocation. The resulting adaptive tree structure enriches outcome-only feedback and amplifies the policy-update signal. Empirically, TRACE achieves competitive performance and efficiency gains on typical agentic benchmarks, e.g., improving Qwen3-14B Multi-Hop QA average accuracy by 2.8 points over competitive baselines at equal sampling cost.",
+      "authors": [
+        "Heming Zou",
+        "Qi Wang",
+        "Yun Qu",
+        "Yuhang Jiang",
+        "Lizhou Cai",
+        "Yixiu Mao",
+        "Ru Peng",
+        "Xin Xu",
+        "Weijie Liu",
+        "Kai Yang",
+        "Saiyong Yang",
+        "Xiangyang Ji"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-06-09T17:16:03+00:00",
+      "link": "https://arxiv.org/pdf/2606.11119v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "efficient rollout budget allocation for RL",
+      "llm_evidence_cn": "强化学习中的高效rollout预算分配",
+      "llm_evidence": "强化学习中的高效rollout预算分配",
+      "canonical_evidence": "强化学习中的高效rollout预算分配",
+      "llm_tldr_en": "TRACE framework improves sample efficiency in agentic RL by allocating rollout budgets adaptively across prompts and turns.",
+      "llm_tldr_cn": "本文针对多轮智能体强化学习中rollout资源浪费问题，提出TRACE框架，在提示词层面和回合内部前缀层面动态分配预算，提升样本效率。实验表明该方法能有效提高奖励对比度和策略优化效果。该工作为样本高效强化学习提供了新思路。",
+      "llm_tldr": "本文针对多轮智能体强化学习中rollout资源浪费问题，提出TRACE框架，在提示词层面和回合内部前缀层面动态分配预算，提升样本效率。实验表明该方法能有效提高奖励对比度和策略优化效果。该工作为样本高效强化学习提供了新思路。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.12691v1",
+      "source": "arxiv",
+      "title": "Two-Layer Linear Auto-Regressive Models Estimate Latent States",
+      "abstract": "Auto-regressive models have emerged as powerful tools for sequential data, from language to video. Understanding how and why these models learn latent representations remains an open theoretical question. In this work, we demonstrate that when trained by empirical risk minimization on data from partially observed linear dynamical systems, two-layer linear auto-regressive models naturally learn to approximate Kalman filtering. In particular, we show that the learned hidden representation coincides, up to a similarity transformation, with the state estimates produced by the optimal (Kalman) filter, even though the model has no explicit knowledge of the underlying dynamics or state. The result follows from three main insights. First, we establish that the Kalman filter is well approximated by an auto-regressive model with bounded truncation error. Second, we show that despite non-convexity, the two-layer optimization landscape is benign, i.e., all stationary points are either strict saddles or global minima. Finally, as our main contributions, we provide finite-sample guarantees on prediction error, parameter estimation error, and latent state recovery. Numerical simulations support the theoretical results and demonstrate that the latent representations of auto-regressive models recover state estimates.",
+      "authors": [
+        "Yahya Sattar",
+        "Sunmook Choi",
+        "Leo Maynard-Zhang",
+        "Yassir Jedra",
+        "Maryam Fazel",
+        "Sarah Dean"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "eess.SY",
+        "math.OC",
+        "stat.ML"
+      ],
+      "published": "2026-06-10T21:25:16+00:00",
+      "link": "https://arxiv.org/pdf/2606.12691v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "two-layer linear auto-regressive models estimate latent states",
+      "llm_evidence_cn": "两层线性自回归模型估计潜在状态",
+      "llm_evidence": "两层线性自回归模型估计潜在状态",
+      "canonical_evidence": "两层线性自回归模型估计潜在状态",
+      "llm_tldr_en": "Demonstrates that two-layer linear auto-regressive models trained on partially observed linear dynamical systems learn to approximate Kalman filtering, providing theoretical insight into latent representation learning.",
+      "llm_tldr_cn": "本文从理论上证明，在部分观测线性动态系统数据上训练的两层线性自回归模型，能够自然学习近似卡尔曼滤波。研究发现，学习到的隐藏表示与最优卡尔曼滤波器产生的状态估计相差一个相似变换，揭示了自回归模型学习潜在表示的内在机制。该结果通过三个主要洞见建立，为理解潜在动力学模型提供了理论基础。",
+      "llm_tldr": "本文从理论上证明，在部分观测线性动态系统数据上训练的两层线性自回归模型，能够自然学习近似卡尔曼滤波。研究发现，学习到的隐藏表示与最优卡尔曼滤波器产生的状态估计相差一个相似变换，揭示了自回归模型学习潜在表示的内在机制。该结果通过三个主要洞见建立，为理解潜在动力学模型提供了理论基础。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "latent dynamics model",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.11559v1",
+      "source": "arxiv",
+      "title": "HERO: Hindsight-Enhanced Reflection from Environment Observations for Agentic Self-Distillation",
+      "abstract": "Reinforcement learning typically improves multi-turn agent capabilities through the terminal outcome of the trajectories, which makes it difficult to determine credit assignments for each intermediate turns. Recent on-policy self-distillation methods offer a promising alternative by converting privileged feedback into dense token-level supervision through a self-teacher. Our study is motivated by the unexpected performance degradation observed when naively extending this paradigm to multi-turn settings, which we attribute to a lack of alignment between privileged feedback, such as successful trajectories or terminal outcomes, and the student's current decision context. We introduce HERO, a hindsight-enhanced self-distillation framework that uses next environment observations as locally aligned feedback. After each rollout, HERO reflects on the completed interaction to convert each observation into a compact turn-level diagnosis, that captures actionable feedback about the original action such as its necessity, validity or failure cause. On TauBench and WebShop, HERO improves task success and reduces unnecessary turns over environment-feedback-only self-distillation and GRPO. It is especially effective under limited training turn budgets, where successful rollouts are rare and GRPO provides weak reward-contrast signals.",
+      "authors": [
+        "Haoran Liu",
+        "Yuwei Zhang",
+        "Xiyao Li",
+        "Bohan Lyu",
+        "Jingbo Shang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-10T01:35:34+00:00",
+      "link": "https://arxiv.org/pdf/2606.11559v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "hindsight-enhanced self-distillation for credit assignment in multi-turn RL improves sample efficiency",
+      "llm_evidence_cn": "事后增强的自蒸馏方法改进多轮强化学习的信用分配，提升样本效率",
+      "llm_evidence": "事后增强的自蒸馏方法改进多轮强化学习的信用分配，提升样本效率",
+      "canonical_evidence": "事后增强的自蒸馏方法改进多轮强化学习的信用分配，提升样本效率",
+      "llm_tldr_en": "Introduces HERO, a hindsight-enhanced self-distillation framework that aligns privileged feedback with the student's context to improve credit assignment and sample efficiency in multi-turn RL settings.",
+      "llm_tldr_cn": "该论文针对多轮强化学习中的信用分配难题，提出一种事后增强的自蒸馏方法（HERO）。通过引入事后反思机制，将成功轨迹等特权反馈与学生当前决策上下文对齐，转化为密集的令牌级监督信号。实验表明，HERO在多个多轮任务中显著提升了样本效率和最终性能，解决了传统自蒸馏在多轮设置中的性能退化问题。",
+      "llm_tldr": "该论文针对多轮强化学习中的信用分配难题，提出一种事后增强的自蒸馏方法（HERO）。通过引入事后反思机制，将成功轨迹等特权反馈与学生当前决策上下文对齐，转化为密集的令牌级监督信号。实验表明，HERO在多个多轮任务中显著提升了样本效率和最终性能，解决了传统自蒸馏在多轮设置中的性能退化问题。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.12844v1",
+      "source": "arxiv",
+      "title": "Active Perception for Radio Map Reconstruction in Uncharted 3D Air-Ground Environments",
+      "abstract": "Radio maps provide the essential foundation for low altitude networking systems. Unlike terrestrial radio maps that are typically generated via drive test measurements, mapping the air-ground environment requires the deployment of unmanned aerial vehicles (UAVs). This shift introduces two formidable challenges in uncharted 3D scenarios. First, sparse radio measurements and incomplete geometric observations hinder accurate reconstruction. Second, the large 3D action space and strict power constraints from high spectrum scanner energy consumption make informative exploration difficult. To address these issues, this paper proposes 3D uncertainty aware radio active mapping (3D-URAM), a closed loop active perception framework that decouples the mapping process into two offline trained stages. In Stage I, a Bayesian UNet is developed to recover radio maps from sparse measurements and partial geometry while providing calibrated predictive uncertainty. In Stage II, a dynamic probabilistic roadmap and a transformer based waypoint selection policy trained via proximal policy optimization maximize long horizon uncertainty reduction under travel budgets. Experimental results demonstrate that 3D-URAM reduces reconstruction error by over 50% compared to representative baselines. Real-world field tests within a 300mx200mx100m space also validate the potential of active radio map reconstruction.",
+      "authors": [
+        "Wenlihan Lu",
+        "Miaowen Wen",
+        "Shijian Gao"
+      ],
+      "primary_category": "eess.SP",
+      "categories": [
+        "eess.SP"
+      ],
+      "published": "2026-06-11T03:17:57+00:00",
+      "link": "https://arxiv.org/pdf/2606.12844v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "UAV-based active perception for radio map reconstruction",
+      "llm_evidence_cn": "基于无人机的主动感知无线电地图重建",
+      "llm_evidence": "基于无人机的主动感知无线电地图重建",
+      "canonical_evidence": "基于无人机的主动感知无线电地图重建",
+      "llm_tldr_en": "Proposes 3D-URAM, an active perception framework for UAV-based radio map reconstruction in uncharted 3D air-ground environments, addressing sparse measurements and exploration challenges.",
+      "llm_tldr_cn": "本文针对未知3D空地环境中无线电地图重建的挑战，提出3D不确定性感知主动映射框架（3D-URAM）。该框架通过闭环主动感知，解耦稀疏测量与几何观测，并设计信息性探索策略以应对大规模3D动作空间和功耗约束。在仿真中验证了其有效重建无线电地图的能力。",
+      "llm_tldr": "本文针对未知3D空地环境中无线电地图重建的挑战，提出3D不确定性感知主动映射框架（3D-URAM）。该框架通过闭环主动感知，解耦稀疏测量与几何观测，并设计信息性探索策略以应对大规模3D动作空间和功耗约束。在仿真中验证了其有效重建无线电地图的能力。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

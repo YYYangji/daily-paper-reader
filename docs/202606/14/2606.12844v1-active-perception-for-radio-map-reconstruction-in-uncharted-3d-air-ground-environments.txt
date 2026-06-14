@@ -1,0 +1,892 @@
+Title: Active Perception for Radio Map Reconstruction in Uncharted 3D Air-Ground Environments
+
+URL Source: https://arxiv.org/pdf/2606.12844v1
+
+Published Time: Fri, 12 Jun 2026 00:34:55 GMT
+
+Number of Pages: 12
+
+Markdown Content:
+> JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2015 1
+
+# Active Perception for Radio Map Reconstruction in Uncharted 3D Air-Ground Environments 
+
+Wenlihan Lu, Graduate Student Member, IEEE , Miaowen Wen, Senior Member, IEEE , and Shijian Gao, Member, IEEE 
+
+Abstract —Radio maps provide the essential foundation for low altitude networking systems. Unlike terrestrial radio maps that are typically generated via drive test measurements, mapping the air-ground environment requires the deployment of unmanned aerial vehicles (UAVs). This shift introduces two formidable chal-lenges in uncharted 3D scenarios. First, sparse radio measure-ments and incomplete geometric observations hinder accurate reconstruction. Second, the large 3D action space and strict power constraints from high spectrum scanner energy consumption make informative exploration difficult. To address these issues, this paper proposes 3D uncertainty aware radio active mapping (3D-URAM), a closed loop active perception framework that decouples the mapping process into two offline trained stages. In Stage I, a Bayesian UNet is developed to recover radio maps from sparse measurements and partial geometry while providing cali-brated predictive uncertainty. In Stage II, a dynamic probabilistic roadmap and a transformer based waypoint selection policy trained via proximal policy optimization maximize long horizon uncertainty reduction under travel budgets. Experimental results demonstrate that 3D-URAM reduces reconstruction error by over 50% compared to representative baselines. Real-world field tests within a 300m ×200m ×100m space also validate the potential of active radio map reconstruction. 
+
+Index Terms —3D radio map, air-ground environment, active perception, Bayesian deep learning, uncertainty quantification, reinforcement learning. 
+
+I. I NTRODUCTION 
+
+Emerging 6G mobile computing applications require wire-less networks to evolve from reactive communication to proac-tive, environment aware intelligence. Radio maps provide a digital representation of the physical radio environment by characterizing the spatial variation of wireless propagation over a region of interest [2]–[4]. It can encode key channel metrics, including reference signal received power (RSRP), which is widely used to reflect large scale signal coverage and link quality [5]–[7]. Such spatial intelligence is particu-larly crucial for emerging low altitude wireless networks [8], where UAV operations demand reliable and high capacity connectivity in dense near ground airspace [9]. Despite its importance, constructing accurate radio maps in 3D low alti-tude environments remains a formidable challenge [10]. Unlike two dimensional terrestrial networks, aerial signal propagation is intrinsically three dimensional and highly heterogeneous, frequently subjected to severe shadowing and multipath fading within complex urban canyons [11]. Deterministic ray tracing (RT) models [12] provide physically rigorous predictions, but they rely on exhaustive and up to date geometric priors, which are often unavailable in practical deployments [13]. 
+
+Part of work has been presented at 2025 IEEE International Conference on Wireless Communications and Signal Processing [1]. 
+
+To mitigate RT’s complete geometric knowledge and heavy computation limitations, extensive efforts have explored al-ternative reconstruction paradigms. Statistical interpolation techniques, including kriging [14], matrix completion [15] and gaussian processes (GP) [16], exploit spatial correlations but oversimplify the complex radio propagation patterns. Recently, deep learning has become the dominant approach for high fidelity radio map reconstruction [17]. Representative deep learning methods, including RadioUNet [18], GAN based models [19], graph neural network (GNN) based methods [20], transformer based architectures [21], and diffusion based frameworks [22], [23], improve both reconstruction fidelity and spatial realism. Despite their good performance in certain scenarios, these reconstruction advances fundamentally rely on the availability of pre-collected and sufficiently dense datasets. A crucial challenge lies in how such informative measurements are acquired. In realistic deployments, establishing a massive net-work of static sensors to guarantee dense coverage is difficult, making mobile agents like UAVs a preferred alternative to sample radio signals. However, UAV-borne measurement is constrained by strict power consumption budgets, induced by both the UAV’s limited battery capacity and the energy required by the carried onboard spectrum scanner, inevitably rendering sparse observations [24]. This reality necessitates active radio mapping: the agent autonomously orchestrates its exploration to acquire the most informative measurements under limited power budgets, deeply coupling map estimation with sequential path planning. Existing mobile agent based active radio mapping methods attempt to address the coupling between reconstruction and exploration by guiding sampling with predictive uncertainty or heuristic next-best-viewpoint criteria. Early studies use GP to jointly model signal distribution and predictive variance [25], [26], but they suffer from scalability limitations and insuffi-cient representational power in complex environments. Other approaches rely on neural predictors with post-hoc uncertainty estimators [24], [27], which can produce poorly calibrated confidence in unseen regions. More importantly, existing meth-ods remain limited in uncharted 3D airspace for two reasons: they typically rely on short-horizon greedy planners [28] that cannot effectively balance long-term information gain against energy budgets, and they often assume known free space or static geographic databases that fail to capture transient obstructions [29], [30]. As a result, they are not well suited to active sensing in realistic 3D environments with only partial geometric priors. To solve the challenges of partial geometric prior, obstacle- 
+
+> arXiv:2606.12844v1 [eess.SP] 11 Jun 2026 JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2015 2
+
+aware navigation and long-horizon active sensing, we propose 3D uncertainty aware radio active mapping (3D-URAM), a closed loop framework that tightly integrates online ge-ometric perception, uncertainty aware radio reconstruction, and budget constrained long horizon exploration in uncharted 3D environments. In Stage I, a Bayesian UNet trained with dual masked inpainting recovers a dense 3D radio map from sparse measurements and partial geometry, while quantifying predictive uncertainty to identify where additional measure-ments are valuable. In Stage II, a reinforcement learning policy operates on an online constructed dynamic probabilistic roadmap (PRM) [31] to select obstacle free waypoints that maximize long horizon uncertainty reduction under travel budget. The two modules are trained offline and composed into an iterative perception action loop for autonomous 3D radio map acquisition. The main contributions of this paper are summarized as follows:  
+
+> •
+
+A 3D Bayesian UNet is built to address the radio map re-construction under sparse measurements and incomplete geometric priors. This approach is powerful in its ability to recover signal fields while simultaneously quantifying both aleatoric and epistemic uncertainty.  
+
+> •
+
+A 3D dynamic probabilistic mapping is proposed to handle large volumetric action spaces in unknown envi-ronments. This component enables the incremental con-struction of a collision free waypoint graph online directly from partial geometric perception.  
+
+> •
+
+A transformer based waypoint selection policy is crafted to maximize the long horizon uncertainty reduction. This policy represents a significant advancement by optimizing information gain under strict travel budgets.  
+
+> •
+
+Extensive evaluations on a large scale benchmark demon-strate that 3D-URAM achieves substantially higher re-construction accuracy than representative baselines. Real-world field validation in a 300m ×200m ×100m space confirms its practical potential for real world applications. The remainder of this paper is organized as follows. Section II formulates the problem. Sections III and IV detail the pro-posed Stage I reconstruction and Stage II active exploration, respectively. Section V discusses closed-loop deployment and complexity, followed by experimental results in Section VI. Section VII concludes the paper. Notations are listed in Table I. II. P ROBLEM STATEMENT 
+
+This section establishes the system model for 3D active radio map construction and formulates the optimization of reconstruction and exploration under UAV travel budget. 
+
+A. System Model 
+
+Environmental Map Construction. Consider an au-tonomous UAV operating within an unknown 3D region Ω.We discretize Ω into a 3D voxel grid and represent the environment using an occupancy map for navigation and radio map reconstruction. Let pk = [ xk, y k, z k]⊤ ∈ Ω denote the UAV’s position at discrete decision step k. The UAV’s onboard camera provides real time geometric perception: at each step                           
+
+> TABLE I: Notation Table
+> Variables Definition
+> Ω3D region of interest.
+> pkUAV position at decision step k.
+> C(pk)Camera field-of-view coverage region at pk.
+> MkGlobal occupancy map fused up to step k.
+> WkCandidate waypoint set at step k.
+> wk,j j-th candidate waypoint in Wk.
+> ΨkRadio measurements collected along
+> seg( pk,pk+1 ).
+> YkCumulative radio measurements available at step k.
+> P, ˆPGround-truth and reconstructed radio map (received power field).
+> fθReconstruction network with parameters θ.
+> πSensing (waypoint-selection) policy.
+> BUAV travel budget.
+> Fig. 1: UAV camera FoV at different altitudes.
+
+k, it observes a local region C(pk) ⊂ Ω and estimates a height map of surrounding structures within the field of view (FoV). The scope of visual perception is intrinsically coupled with the UAV’s flight altitude. Let ψcam denote the camera aperture angle and zk the altitude at step k. The coverage region C(pk)
+
+expands with altitude and can be approximated as a pyramidal projection whose lateral extent scales with zk · tan( ψcam /2) ;thus, a higher flight altitude enables the agent to capture a broader spatial area within a single observation as shown in Fig. 1. To support radio map reconstruction and safe navigation, the agent maintains a voxelized occupancy map 
+
+Mk inferred from camera based geometric perception. At each step k, the estimated height map in C(pk) is voxelized into a local occupancy grid; voxels corresponding to buildings and obstacles are marked as occupied and fused into the global map Mk, which persists across steps and provides geometric information for radio map reconstruction. 
+
+Mk =
+
+> k
+
+[
+
+> i=0
+
+C(pi).
+
+At each step k, the agent generates a fixed size set of can-didate waypoints Wk = {wk, 1, wk, 2, . . . , wk,m } by sampling from the obstacle free portion of the current camera view. A candidate waypoint wk,j is valid only if the straight line segment seg( pk, wk,j ) is not blocked by obstacles and not intersect occupied voxels in Mk.
+
+Radio Map Sampling. The radio map is assumed time in-variant over the acquisition period. The radio map is character-JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2015 3
+
+ized by a reference received signal power field P : Ω → R. In addition to the camera, the UAV carries a lightweight spectrum scanner that continuously acquires signal measurements along its flight path. At step k, the sampling policy selects an optimal target waypoint w⋆k ∈ W k, and the UAV position is updated as 
+
+pk+1 = w⋆k. During the transition along seg( pk, pk+1 ), the scanner collects a dense set of observations formally defined as: 
+
+Ψk ≜   x, P (x) | x ∈ seg( pk, pk+1 ) ,
+
+The cumulative radio sampling available for radio map re-construction up to step T is given by the union of all trajectory segments: YT = ST −1 
+
+> k=0
+
+Ψk. For convenience, we denote the cumulative measurements available at step k as 
+
+Yk = Sk−1 
+
+> i=0
+
+Ψi.
+
+B. Problem Formulation 
+
+Given the cumulative measurements YT and the incremen-tally built environmental map MT at the final step T , a neural estimator fθ reconstructs the global radio map: 
+
+ˆP = fθ
+
+ YT , MT
+
+.
+
+Our goal is to minimize the expected reconstruction error, measured by a metric E(·, ·) such as the mean squared error (MSE), over the region of interest. Because the environment and the radio map are initially unknown, this requires jointly learning the reconstruction parameters θ and the sensing policy 
+
+π that maps the current agent state to the next waypoint pk+1 .The joint optimization problem is formulated as: 
+
+min  
+
+> θ, π
+
+ETπ ∼π
+
+h
+
+E
+
+
+
+P, f θ (YT , MT )
+
+i 
+
+s.t. C(Tπ ) ≤ B, 
+
+(1) where Tπ = {p0, p1, . . . , pT } is the trajectory induced by π,and C(Tπ ) ≜ PT −1 
+
+> k=0
+
+∥pk − pk+1 ∥2 is the cumulative travel distance serving as a surrogate for energy consumption. Equation (1) couples two interdependent components: the reconstruction network fθ , which defines a belief over the radio map from sparse measurements, and the sensing policy 
+
+π, which determines future measurements under the travel budget. Directly optimizing this problem end-to-end is highly intractable because (i) the environment and radio map are only partially observable during exploration, requiring the policy to act on a θ-dependent belief state; (ii) the loop requires expensive on-policy rollouts and non-differentiable operations such as waypoint sampling, graph reconstruction, and collision checking, leading to high sample complexity. 
+
+C. Solution Overview: Two Stage Decoupled Framework 
+
+To address these challenges, a two stage decoupling is adopted, comprising two offline training stages followed by an online closed-loop deployment, as summarized in Fig. 2. 1) Stage I: The reconstruction parameters θ are optimized under dense supervision with dual masked inpainting, yielding a Bayesian predictor fθ⋆ that outputs the pos-terior mean radio map and predictive uncertainty, as detailed in Sec. III. The uncertainty map provides an intrinsic reward signal, serving as a computable surro-gate for the ground truth reconstruction error in Eq. (1), which is unavailable online. 2) Stage II: With θ⋆ frozen, the sensing policy π is trained via reinforcement learning to select collision free waypoints that maximize long horizon reduction of the predicted uncertainty under the travel budget, as detailed in Sec. IV. This decomposition ensures that exploration is guided by a well calibrated belief state, while the reconstruction network remains agnostic to the specific exploration strategy. III. S TAGE I: U NCERTAINTY -A WARE RADIO MAP 
+
+RECONSTRUCTION 
+
+In active radio mapping, the autonomous agent must explic-itly identify poorly reconstructed regions to guide subsequent measurements. Consequently, Stage I constructs a Bayesian reconstruction architecture that recovers radio map while si-multaneously quantifying prediction uncertainty. 
+
+A. Observation Modeling via Dual Masked Mechanism 
+
+While existing approaches to radio map reconstruction typically assume that the complete environmental geometry is known, they rarely account for the complex, multimodal sensing patterns encountered in uncharted environments. In practical active mapping, the building layout is initially un-known; a deployed agent must incrementally perceive the geometry and infer P from partial observations collected. More importantly, these practical observations arrive through two sensing modalities with fundamentally different spatial structures: the spectrum scanner acquires received radio power samples along the UAV trajectory, yielding sparse, scattered point like radio signals on the 2D grid, whereas the on-board camera reveals building geometry only within its FoV, producing block like contiguous regions of valid geometric priors. By neglecting the partial observability of environmental geometry and the structural dichotomy between point wise signal sampling and block wise visual sensing, conventional generic masking schemes fail to faithfully emulate the complex observation missingness characteristic of actual deployment. To explicitly model this heterogeneous missingness, we generate two factorized masks during offline training:  
+
+> •
+
+Sparse radio mask. The radio mask Mr ∈ { 0, 1}H×W
+
+is sampled as independent and identically distributed random variables on each grid cell as [Mr ]u,v ∼
+
+Bernoulli( pr ), which follows the conventional random sampling based masking approaches in radio map re-construction. The retention probability pr controls the expected measurement density and therefore the difficulty of the inpainting problem.  
+
+> •
+
+Block wise geometric mask. To emulate FoV limited perception, the height map Hk (rasterized from Mk) is partitioned into non overlapping s×s patches {P j }. Each patch is retained with probability pg by sampling gj ∼
+
+Bernoulli( pg ) and setting [Mg ]u,v = gj for all (u, v ) ∈JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2015 4
+
+> Fig. 2: 3D-URAM overview: Stage I trains a Bayesian reconstructor to output a radio map belief from sparse measurements and partial geometry; Stage II uses a dynamic PRM and a Transformer based policy to select informative collision free waypoints under a travel budget.
+
+Pj . In practice, we randomize pg within a range to cover varying visible ratios caused by viewpoint and occlusion. During early online exploration, the acquired radio channel observations can be extremely sparse. Directly training the reconstruction network with a near zero radio mask Mr from scratch often exacerbates the ill posed nature of the inpainting problem, leading to severe optimization instability and poorly calibrated uncertainty estimates. To mitigate this, a curriculum learning schedule is adopted where the retention probability 
+
+pr is linearly annealed over the training epochs. Specifically, the training initiates with a relatively dense masking regime. By initially providing a larger number of samples, the network can more effectively capture the underlying spatial correlations between the observed sample points and the overall radio environment. As training progresses, pr is progressively decre-mented to approach the target extreme sparsity regime encoun-tered during actual deployment. This staged, monotonically increasing training difficulty effectively stabilizes convergence and substantially enhances both reconstruction robustness and uncertainty awareness under severe observation scarcity. Given the cumulative observations (Yk, Mk) at decision step k, we rasterize them into fixed resolution grids. Let 
+
+Pobs  
+
+> k
+
+≜ RP (Yk) ∈ RH×W denote the sparse radio ob-servation grid (unobserved cells filled with zero), and let 
+
+Hk ≜ RH (Mk) ∈ RH×W denote the rasterized height map. The network input Xk concatenates the rasterized radio observations and the partially observed height map: 
+
+Xk = Concat (Pobs  
+
+> k
+
+, Hk ⊙ Mg ), (2) where ⊙ denotes the Hadamard product. During offline train-ing, Pobs  
+
+> k
+
+is simulated via Pobs  
+
+> k
+
+= P ⊙ Mr , while during online deployment it is directly rasterized from the cumulative measurements Yk.
+
+B. Bayesian UNet Network Architecture 
+
+Building upon the success of prior studies [32], the UNet architecture is adopted as the backbone for radio map recon-struction due to its proven empirical performance and rapid inference speed. The efficacy of UNet in this domain primarily stems from its encoder–decoder structure augmented with skip connections. The encoder efficiently extracts multiscale spatial features from the raw inputs, capturing both local propagation 
+
+> Fig. 3: Bayesian UNet for map reconstruction and uncertainty estimation.
+
+phenomena and macroscopic pathloss trends. Concurrently, the skip connections preserve high resolution spatial details by directly routing information to the decoder, enabling the network to accurately recover fine grained structural variations such as shadow boundaries and diffraction effects introduced by the complex urban topology. As detailed in Fig. 3, the proposed Bayesian UNet pro-cesses the concatenated masked heightmap and masked radio map inputs through a symmetric four stage encoder–decoder architecture. Each of the four encoder stages consists of a 2D Max Pooling layer for spatial downsampling, a Convolutional layer, a rectified linear unit (ReLU) activation function, and a Monte Carlo (MC) Dropout layer. Symmetrically, each of the four decoder stages employs an Interpolation layer for spatial upsampling, followed by a Conv layer, a ReLU activation, and an MC Dropout layer. Skip connections are utilized to directly route intermediate multiscale feature maps from the encoder to the corresponding decoder stages. At the end of the decoder, the network uses two output heads: one predicts the mean signal strength ˆPk, and the other predicts heteroscedastic variance ˆσ2
+
+> k
+
+. Together with the MC Dropout layers, this structural design transforms the reconstructor into a Bayesian predictor fθ . During inference, it aggregates stochastic samples to output a posterior mean radio map ¯Pk and a calibrated uncertainty map Uk. The theoretical formulation of this joint uncertainty quantification is detailed in the subsequent section. JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2015 5
+
+C. Bayesian Uncertainty Quantification 
+
+Uncertainty in radio map reconstruction arises from two complementary sources: aleatoric uncertainty due to inherent channel randomness, fading and measurement noise, and epis-temic uncertainty due to model ignorance under sparse and biased sampling. We quantifies both within a unified Bayesian framework and generates a belief state that can be consumed by downstream active exploration. 
+
+1) Aleatoric Uncertainty via Heteroscedastic Negative Log Likelihood (NLL) Loss: Observation noise in practical radio propagation is inherently spatially non-stationary . In open line-of-sight (LoS) regions, macroscopic attenuation is pri-marily governed by smooth, distance dependent decay, re-sulting in high predictability and consequently bounded noise levels. Conversely, in the vicinity of dense building clusters, particularly around non-line-of-sight (NLoS) transitions, com-plex physical phenomena, such as diffraction, multifaceted scattering, and shadow fading, induce rapid, high frequency signal fluctuations. These stochastic variations cannot be deter-ministically resolved from partial geometric priors alone. By explicitly estimating a heteroscedastic variance map ˆσ2 
+
+> i
+
+, the proposed architecture is physically grounded to differentiate between intrinsically predictable areas and highly volatile environments, thereby capturing the spatial heterogeneity of aleatoric uncertainty with high fidelity. This motivates a spa-tially varying noise model, implemented via the variance head. Leveraging the dual head output, the decoder departs from conventional deterministic map reconstruction by predicting a mean–variance pair ( ˆPi, ˆσ2 
+
+> i
+
+) for each spatial grid cell i.During the training stage, the complete radio map P serves as the dense groundtruth target, while the dual masks sim-ulate the severe observation missingness encountered during inference. To explicitly account for the spatially non-stationary observation noise, the network is optimized by minimizing a heteroscedastic negative log-likelihood loss across the set of valid grid cells Q:
+
+Lnll (θ) = − 1
+
+|Q| 
+
+X
+
+> i∈Q
+
+ln p
+
+
+
+Pi | ˆPi, ˆσ2
+
+> i
+
+
+
+= 1
+
+|Q| 
+
+X
+
+> i∈Q
+
+(Pi − ˆPi)2
+
+2ˆ σ2
+
+> i
+
++ 12 log(2 πˆσ2 
+
+> i
+
+)
+
+!
+
+.
+
+(3) In this formulation, the squared residual term is adaptively attenuated by the predicted variance ˆσ2 
+
+> i
+
+, enhancing robustness against noisy observations, whereas the logarithmic term in-troduces a regularization penalty that prevents variance infla-tion. Consequently, this dual head learning paradigm yields a rigorous estimation of aleatoric uncertainty representing the irreducible, data inherent unpredictability that persists despite perfect model optimization. 
+
+2) Epistemic Uncertainty via MC Dropout: Aleatoric un-certainty does not vanish with more samples, whereas epis-temic uncertainty reflects model ambiguity due to limited and sparse training data and is precisely what active sensing aims to reduce. Because UAV driven measurements are expen-sive, many parameter configurations can explain the training set equally well, implying a non degenerate posterior over weights. Let Dtrain = {(Xn, Pn)}Nn=1 denote the training set. Here, Dtrain denotes the offline training dataset and should not be confused with the online cumulative measurement set Yk
+
+in Sec. II-A. A Bayesian treatment seeks the weight posterior 
+
+p(θ | D train ) = p(Dtrain | θ) p(θ)
+
+p(Dtrain ) , (4) where p(θ) is a prior and p(Dtrain ) = R p(Dtrain | θ)p(θ) dθ
+
+is the evidence. The predictive distribution for a new input X∗
+
+is obtained by marginalizing over this posterior: 
+
+p(P∗ | X∗, Dtrain ) = 
+
+Z
+
+p(P∗ | X∗, θ) p(θ | D train ) dθ. (5) Computing Eq. (4) exactly is intractable for deep networks. Variational inference (VI) overcomes this by approximating 
+
+p(θ | D train ) with a tractable variational distribution qϕ(θ).This is achieved by maximizing the evidence lower bound: 
+
+LELBO (ϕ) = Eqϕ(θ)[log p(Dtrain | θ)] − KL( qϕ(θ) ∥ p(θ)) .
+
+(6) Maximizing LELBO (ϕ) is mathematically equivalent to min-imizing the Kullback–Leibler (KL) divergence between the approximate distribution qϕ(θ) and the true posterior p(θ |Dtrain ). Following [33], MC dropout provides an efficient VI approximation by interpreting dropout masks as sampling from a Bernoulli variational family. Concretely, inserting dropout (especially in intermediate decoder layers) induces stochastic network realizations that can be viewed as drawing weight samples ˆθ ∼ qϕ(θ). During training, the expected data fit term Eqϕ [log p(Dtrain | θ)] is optimized via stochastic dropout samples (e.g., the heteroscedastic NLL in Eq. (3)), while the KL regularizer KL( qϕ ∥ p(θ)) is commonly approximated by weight decay under a Gaussian prior. Unlike standard dropout, which is disabled at test time, MC dropout keeps dropout active during inference [33]. Given the current observations (Yk, Mk), S stochastic forward passes— each corresponding to a different sampled sub-network —approximate the predictive integral in Eq. (5), yielding an ensemble { ˆP (j) 
+
+> k
+
+, ˆσ2,(j) 
+
+> k
+
+}Sj=1 . The posterior mean radio map is ¯Pk = 1
+
+> S
+
+PSj=1 ˆP (j) 
+
+> k
+
+. Combining MC dropout with the heteroscedastic variance head enables a principled uncertainty decomposition. For each grid cell i, the predictive variance is decomposed into aleatoric and epistemic components, which can be estimated from the S stochastic passes as: 
+
+var( P ∗ 
+
+> i
+
+| X∗, Dtrain ) ≈ Eqϕ(θ)
+
+ˆσ2 
+
+> i
+
+(X∗; θ)| {z }
+
+> aleatoric
+
++var qϕ(θ)
+
+  ˆPi(X∗; θ)| {z }
+
+> epistemic
+
+≈ 1
+
+S
+
+> S
+
+X
+
+> j=1
+
+
+
+ˆσ2,(j) 
+
+> i
+
++ ( ˆP (j) 
+
+> i
+
+− ¯Pi)2
+
+. (7) In practice, the aggregate uncertainty map used for planning weights the two empirical components with a calibration coefficient η:
+
+Uk = 1
+
+S
+
+> S
+
+X
+
+> j=1
+
+( ˆP (j) 
+
+> k
+
+− ¯Pk)2 + η · 1
+
+S
+
+> S
+
+X
+
+> j=1
+
+ˆσ2,(j) 
+
+> k
+
+. (8) JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2015 6
+
+Algorithm 1 Training for the masked radio map reconstruc-tion. 
+
+Require: Training data {(P, H)}; total number of training epochs Nepoch ; radio sampling schedule {p(t) 
+
+> r
+
+}Nepoch  
+
+> t=1
+
+de-creasing across epochs; patch size s; random geometric retention pg ∼ Uniform( pmin  
+
+> g
+
+, p max  
+
+> g
+
+); MC samples S
+
+Ensure: Trained Bayesian UNet fθ ; belief state ( ¯Pk, U k) at step k 
+
+> 1:
+
+for t = 1 , 2, . . . , N epoch do  
+
+> 2:
+
+Set radio retention probability pr ← p(t) 
+
+> r
+> 3:
+
+for each minibatch (P, H) do  
+
+> 4:
+
+Sample sparse radio mask Mr ∼ Bernoulli( pr ) on a pixel-wise basis  
+
+> 5:
+
+Sample pg and generate geometric mask Mg by retaining s×s patches w.p. pg 
+
+> 6:
+
+Form sparse radio observation Pobs ← P ⊙ Mr 
+
+> 7:
+
+Form masked input X ← Concat (Pobs , H ⊙ Mg ) 
+
+> 8:
+
+Forward pass with dropout: fθ (X) → ( ˆP , ˆσ2) 
+
+> 9:
+
+Update θ by minimizing Eq. (3)  
+
+> 10:
+
+end for  
+
+> 11:
+
+end for  
+
+> 12:
+
+Online inference at step k: rasterize (Yk, Mk) into Xk
+
+via Eq. (2)  
+
+> 13:
+
+for j = 1 , 2, . . . , S do  
+
+> 14:
+
+Stochastic pass: fθ (Xk) → ( ˆP (j) 
+
+> k
+
+, ˆσ2,(j) 
+
+> k
+
+) 
+
+> 15:
+
+end for  
+
+> 16:
+
+Compute ¯Pk and Uk using Eq (8); return ( ¯Pk, U k)
+
+The resulting belief state ( ¯Pk, U k) serves as the output of the perception module. High uncertainty regions indicate un-reliable predictions and are thus prioritized by the down-stream planner for information gathering. In Stage II, the reinforcement learning agent aggregates Uk into a scalar Σk =P 
+
+> q∈Q
+
+Uk(q) and is rewarded for its reduction (Eq. (12)), providing a computable information gain surrogate when the groundtruth reconstruction error is unavailable online. Algorithm 1 summarizes Stage I, encompassing offline training with dual masked inpainting and online inference via MC dropout. The key output is the frozen predictor fθ⋆ , which produces a calibrated belief state ( ¯Pk, U k) for any observation pattern encountered during deployment. IV. S TAGE II: B UDGET CONSTRAINED ACTIVE 
+
+EXPLORATION VIA DRL While Stage I successfully yields a Bayesian reconstructor capable of quantifying prediction uncertainty, it relies on static observational patterns and does not dictate how the UAV should continually acquire future measurements. To bridge this gap, Stage II leverages the generated dense uncertainty map as an intrinsic reward surrogate to learn an active sensing policy. 
+
+A. Construction of Dynamic Local Graph 
+
+The operating environment Ω is continuous and initially unknown, revealed only incrementally through onboard per-ception. Classical planners that assume full observability and static search space but they are inapplicable. To bridge the gap between the continuous physical domain and tractable sequential decision making, the proposed framework adopts a dynamic graph-based abstraction and constructs a transient local Probabilistic Roadmap Gk online from the current per-ception at each decision step k. Unlike conventional PRMs that rely on a precomputed global topology, this dynamic PRM discretizes the currently known free space into a finite set of collision free candidate waypoints. As new observations arrive from onboard camera, the graph is regenerated to synchronized with the evolving occupancy map Mk and the radio map belief state. At step k, let pk denote the UAV’s current position. A star topology graph Gk = ( Vk, Ek) centered at pk is constructed. The node set Vk consists of the current position and a fixed size set of mk candidate waypoints sampled from the local ob-servation space. Candidate waypoints are sampled uniformly within a kinematic radius R centered at pk and filtered by safety constraints induced by the current occupancy map Mk.The node set is defined as: 
+
+Vk = {pk} ∪ W k,
+
+Wk = {wk,i | ∥ wk,i − pk∥2 ≤ R, i = 1 , . . . , m k} , (9) The edge set Ek comprises directed edges from pk to each valid candidate wk,i ∈ W k.Beyond geometric feasibility, each node is augmented with radio map attributes derived directly from the probabilistic reconstruction. At step k, the Bayesian UNet produces a posterior mean radio map ¯Pk and a corresponding uncertainty map Uk, consistent with Eq. (8). For each candidate waypoint 
+
+wk,i , the UNet prediction is queried at its spatial location, and the resulting mean and uncertainty are concatenated with the waypoint’s absolute coordinate: 
+
+xi = wk,i , ¯Pk(wk,i ), U k(wk,i ) . (10) This parameterization couples geometric reachability with predicted radio informativeness, allowing the policy to favor waypoints that are expected to reduce reconstruction uncer-tainty. 
+
+B. Markov Decision Process (MDP) Formulation 
+
+The dynamic graph formulation naturally admits a Markov Decision Process (MDP) abstraction. In active mapping, di-rectly planning over the ever-expanding trajectory history violates the Markov property. To resolve this, the Bayesian UNet compresses the cumulative observations ( Yk, Mk) into the belief state ( ¯Pk, U k), while the Dynamic PRM distills the local free space into the candidate set Wk. Together, they form a sufficient statistic that summarizes all task-relevant past information. Conditioned on this aggregated state, future transitions are independent of the specific historical path taken, thereby satisfying the Markov property. 
+
+1) State Space: The state sk ∈ S encodes both the global belief and the local candidate set at decision step k:
+
+sk =
+
+
+
+sglobal  
+
+> k
+
+, {xi}mk
+
+> i=1
+
+
+
+, (11) where sglobal  
+
+> k
+
+denotes the global context, consisting of the dense uncertainty map Uk ∈ RH×W and a low dimensional JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2015 7
+
+> Fig. 4: Transformer actor–critic and PPO loop for waypoint selection.
+
+agent state vector that concatenates the normalized remaining budget bk with the current UAV position pk. The set {xi}mk
+
+> i=1
+
+is a fixed size collection of candidate waypoint attributes extracted from Gk, as defined in Eq. (10). 
+
+2) Action Space: The action space A(sk) corresponds to the set of outgoing edges in Gk. An action ak ∈ { 1, . . . , m k}
+
+selects a candidate waypoint index; specifically, ak = i
+
+commands the UAV to navigate from pk to wk,i . Since Wk is regenerated online from local perception, the action setevolves over time in spatial configuration, while its cardinality mk
+
+remains fixed. 
+
+3) Reward Structure: The reward rk is designed to max-imize uncertainty reduction under a finite budget. The ag-gregate map uncertainty at step k is defined as Σk =P 
+
+> q∈Q
+
+Uk(q), where Q denotes the set of grid locations. The instantaneous reward is then given by 
+
+rk =
+
+
+
+α · Σk−1 − Σk
+
+Σk−1
+
+, if bk+1 > 0,
+
+−β · Σk, if bk+1 ≤ 0.
+
+(12) For intermediate steps where bk+1 > 0, the agent is rewarded proportionally to the normalized reduction in global uncer-tainty. Upon budget exhaustion where bk+1 ≤ 0, the reward switches to the terminal penalty −βΣk, which penalizes resid-ual uncertainty at termination and aligns the learning objective with minimizing the final reconstruction uncertainty. 
+
+C. Neural Policy Architecture and Optimization 
+
+At each decision step k, the policy must fuse a dense global belief with a sparse, permutation invariant set of candidate waypoints. This setting poses two main challenges: (i) jointly processing high dimensional raster inputs and low dimensional proprioception, and (ii) selecting an action from an unordered candidate set of fixed cardinality mk. These challenges are addressed with a hybrid architecture consisting of a dual stream global context encoder, a Fourier enhanced candidate embedding module, and a Transformer based decision head, as illustrated in Fig. 4. The mk candidates are treated as an unordered token set, which enables permutation invariant rea-soning over feasible navigation options while conditioning on the global belief. The actor produces a categorical distribution over candidate indices, and the critic provides value estimates used to compute advantages during PPO updates. Concretely, the policy network proceeds in three stages. First, the global context sglobal  
+
+> k
+
+is encoded by two parallel streams. The dense uncertainty map Uk ∈ RH×W is encoded by a 3-layer convolutional neural network (CNN) with 3 × 3
+
+kernels and channel dimensions {32 , 64 , 64 }, using ReLU activations and max-pooling to produce a compact spatial feature. In parallel, a lightweight multi-layer perceptron (MLP) embeds a low-dimensional proprioceptive vector formed by concatenating the normalized remaining budget bk with the current UAV position pk. The two features are concatenated and projected to a unified context embedding zctx ∈ Rdembed 
+
+that conditions subsequent candidate evaluation. Given this context embedding, each candidate waypoint is represented by explicitly encoding both geometry and local radio attributes. Since standard MLPs can exhibit spectral bias and underfit high-frequency spatial variations, Fourier feature mapping is employed. For a coordinate vector u ∈ R3, the mapping ξ(·) lifts the input to a multi-frequency domain, applied element-wise: 
+
+ξ(u)ℓ =
+
+(
+
+sin  2(ℓ−1) /2πu, ℓ is odd 
+
+cos  2(ℓ−2) /2πu, ℓ is even. (13) where L is the number of frequency bands. The mapping ξ(·)
+
+is applied to both the absolute waypoint coordinate wk,i and the relative displacement wk,i − pk. These geometric embed-dings are concatenated with the local waypoint attributes in xi
+
+defined in Eq. (10) and passed through a fusion MLP, yielding the candidate embedding ei.Finally, to reason jointly over the candidate set and avoid redundant sampling among spatially clustered options, aTransformer-based architecture is employed to model inter-dependencies among candidates while remaining permutation invariant. To condition local candidate features on the current budget and map state, the global context embedding is injected into each candidate token: 
+
+˜ei = ei + Wctx zctx , (14) where Wctx is a learned linear projection. The conditioned tokens {˜ei}mk 
+
+> i=1
+
+are then processed by a standard Transformer encoder with multihead self attention: Attention (Q, K, V) = softmax QK T
+
+pdkey 
+
+!
+
+V. (15) where dkey denotes the key dimensionality. This design is per-mutation invariant and operates over the fixed size candidate JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2015 8
+
+set of cardinality mk. Finally, a shared decision head maps the refined tokens to scalar logits, and a Softmax defines the policy distribution πϑ(ak|sk).To train this actor critic, the policy πϑ and value function 
+
+Vω are jointly optimized using PPO [34], which maximizes a clipped surrogate objective together with a value regression term and an entropy regularizer: 
+
+L(ϑ, ω ) = ˆEk
+
+LCLIP  
+
+> k
+
+(ϑ) − c1LVF  
+
+> k
+
+(ω) + c2S[πϑ]( sk) , (16) where c1 and c2 are coefficients balancing value estimation accuracy and exploration, respectively. The main policy update term is the clipped surrogate objective. Let ρk(ϑ) = πϑ(ak |sk )    
+
+> πϑold (ak|sk)
+
+denote the probability ratio between the current and old policies. The clipped policy loss LCLIP  
+
+> k
+
+encourages probability increases for advantageous actions while bounding the update magnitude: 
+
+LCLIP  
+
+> k
+
+= min 
+
+
+
+ρk(ϑ) ˆAk, clip( ρk(ϑ), 1 − ϵ, 1 + ϵ) ˆAk
+
+
+
+, (17) where ϵ is a hyperparameter controlling the clipping range, e.g., ϵ = 0 .2, and ˆAk is the estimated advantage. The clipping mechanism ensures that ρk(ϑ) does not deviate significantly from unity, thereby maintaining training stability. To compute ˆAk in Eq. (16), generalized advantage estima-tion (GAE) is employed to reduce gradient variance while maintaining manageable bias. The temporal difference (TD) error δk is defined as: 
+
+δk = rk + γV ω (sk+1 ) − Vω (sk), (18) where Vω is the critic. For a rollout of length Troll , the advantage estimate is computed as an exponentially weighted sum of TD errors: 
+
+ˆAk =
+
+> Troll −k−1
+
+X
+
+> l=0
+
+(γλ )lδk+l, (19) where γ is the discount factor and λ is the GAE smoothing pa-rameter. Algorithm 2 summarizes the PPO training procedure for the proposed graph based waypoint planner. 
+
+D. Iterative Perception–Action Loop 
+
+During online execution, 3D-URAM operates as a closed loop perception–action system, summarized in Algorithm 3. At each decision step k, the UAV updates its spatial and electromagnetic awareness based on the cumulative radio measurements Yk and the dynamically expanded occupancy map Mk.Specifically, the Bayesian network maps past observations into a dense belief state ( ¯Pk, U k), which is then projected onto the dynamically constructed valid candidate waypoints 
+
+Wk. By extracting the attributes for each candidate as in Eq. (10), the continuous belief is discretized into a format di-rectly consumable by the Transformer policy. The policy then selects an optimal waypoint pk+1 to maximize the expected information gain. Navigating toward this waypoint yields new measurements Ψk and expands the perceived environment 
+
+Mk+1 , driving the next iteration. This active sensing loop repeats until the UAV exhausts its travel budget B.
+
+Algorithm 2 PPO training for the waypoint selection policy. 
+
+Require: Simulator environment; candidate generator yield-ing Wk = {wk,i }mk
+
+> i=1
+
+; node attributes in Eq. (10); policy 
+
+πϑ; critic Vω ; PPO hyperparameters (γ, λ, ϵ, c 1, c 2); roll-out length Troll ; update epochs Nepoch 
+
+Ensure: Trained planner parameters (ϑ, ω ) 
+
+> 1:
+
+for iteration = 1 , 2, . . . do  
+
+> 2:
+
+Set ϑold ← ϑ and collect a rollout:  
+
+> 3:
+
+for k = 0 , 1, . . . , T roll − 1 do  
+
+> 4:
+
+Observe sk = ( sglobal  
+
+> k
+
+, {xi}mk
+
+> i=1
+
+) and sample ak ∼
+
+πϑold (· | sk) 
+
+> 5:
+
+Execute ak; receive rk and sk+1 ; store 
+
+(sk, a k, r k, log πϑold (ak|sk))  
+
+> 6:
+
+end for  
+
+> 7:
+
+Compute advantages { ˆAk} with GAE and returns ˆRk =ˆAk + Vω (sk); normalize { ˆAk} within the batch  
+
+> 8:
+
+for epoch = 1 , 2, . . . , N epoch do  
+
+> 9:
+
+Update (ϑ, ω ) by optimizing Eq. (16) with Adam using minibatches; apply entropy regularization and gradient clipping  
+
+> 10:
+
+end for  
+
+> 11:
+
+end for Algorithm 3 Online deployment of 3D-URAM. 
+
+Require: Frozen Bayesian UNet fθ⋆ ; learned policy π; initial position p0; initial maps (Y0, M0); travel budget B; MC samples S
+
+Ensure: Trajectory Tπ and measurements YT 
+
+> 1:
+
+Initialize k ← 0 and remaining budget b0 ← B 
+
+> 2:
+
+while bk > 0 do  
+
+> 3:
+
+Belief update: ( ¯Pk, U k) ← fθ⋆ (Yk, Mk) using S
+
+stochastic forward passes  
+
+> 4:
+
+Construct a transient local graph Gk and candidates Wk
+
+from Mk (Sec. IV-A)  
+
+> 5:
+
+Form node attributes {xi}mk 
+
+> i=1
+
+via Eq. (10)  
+
+> 6:
+
+Select ak ∼ π(· | sk) and set pk+1 ← wk,a k 
+
+> 7:
+
+Execute seg( pk, pk+1 ); collect new measurements Ψk 
+
+> 8:
+
+Update Yk+1 ← Y k ∪ Ψk and expand Mk+1 from onboard perception  
+
+> 9:
+
+Update budget bk+1 ← bk − ∥ pk − pk+1 ∥2; set k ←
+
+k + 1  
+
+> 10:
+
+end while 
+
+E. Computational Complexity 
+
+To ensure real time feasibility for onboard deployment, the per step computational complexity of the replanning loop is analyzed. Let H × W denote the raster resolution of the belief maps, S the number of stochastic forward passes for uncertainty estimation, and mk = |W k| the fixed number of candidate waypoints. The Bayesian belief update requires S
+
+forward passes over the spatial grid, scaling as O(SHW ).Concurrently, the Transformer policy performs self attention over the mk tokens, incurring a complexity of O(m2
+
+> k
+
+) per layer. Consequently, the total per step complexity is upper bounded by 
+
+O(SHW + m2
+
+> k
+
+). (20) JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2015 9
+
+Since both S and mk are small constants in practice, the replanning overhead remains bounded and scales only linearly with the environmental map resolution. This bounded complexity presents a substantial advantage over classical probabilistic methods. For instance, dense GP inference incurs an O(N 3 
+
+> k
+
++ NkHW ) complexity, where 
+
+Nk ≜ |Y k| denotes the number of accumulated samples. As 
+
+Nk monotonically increases during exploration, the cubic com-plexity rapidly becomes a bottleneck for onboard replanning. While deterministic deep models, such as Spectrumsurveying, achieve a lower complexity of O(HW ) using a single forward pass, they fail to capture the epistemic uncertainty essential for directing active exploration toward genuinely unexplored regions. By combining aleatoric uncertainty learned via a heteroscedastic NLL loss, a lightweight MC dropout ensemble (S=10 ) for epistemic uncertainty, and a fixed cardinality candidate set via the dynamic PRM, 3D-URAM delivers reliable uncertainty estimates for exploration without suffering the severe scalability issues of GP-based methods. V. E XPERIMENTS 
+
+A. Dataset Generation 
+
+To train and evaluate 3D-URAM, we conduct a large scale radio map dataset using NVIDIA Sionna, a GPU accelerated physics based simulator with deterministic ray tracing that models reflection, diffraction, and scattering. The dataset is generated via the following pipeline: 1) Scene extraction: 150 urban scenes are extracted from OpenStreetMap spanning diverse building layouts and densities. Each scene covers a 200 × 200 m 2 area. 2) Geometry and materials: Buildings are approximated as cuboids, and electromagnetic material models are assigned to the ground, walls, and rooftops, as listed in Table II, to capture LoS blockage and urban canyon propagation effects. 3) Transceiver setup: 25 transmitters are randomly de-ployed per scene, and receiver locations are placed on uniform grids across four altitude layers (h ∈{10 , 20 , 30 , 40 } m). 4) Ray-tracing and slicing: The Sionna [12] is used to compute path loss, yielding 150 × 25 × 4 = 15 ,000 
+
+radio-map slices. 5) Preprocessing: Path loss maps are clipped to [0 , 150] dB to suppress negligible weak signals and mitigate ex-treme near field singularities, then linearly mapped to [0 , 255] and quantized to 8-bit unsigned integers, denoted uint8 , producing grayscale images P ∈{0, . . . , 255 }H×W .Finally, the dataset is partitioned by environment using a 7:3 train/test split, with 105 training scenes and 45 test scenes. This strict separation ensures that evaluation is performed on entirely unseen building layouts, thereby providing a stringent assessment of generalization across diverse urban geometries. 
+
+B. Uncertainty Network 
+
+The radio map prediction network is trained on the ray tracing dataset described in Sec. V-A. During training, a          
+
+> TABLE II: Ray Tracing Simulation Parameters. Parameter Value Carrier Frequency 2.4 GHz Transmit Power 0 dBm Antenna Pattern Isotropic Diffraction Enabled Refraction Disabled Rooftop Material ITU brick Wall Material ITU concrete Ground Material ITU very dry ground
+
+curriculum learning schedule gradually increases the input masking ratio from 0.8 to 0.98 to ensure robust convergence. At inference, MC dropout remains active to estimate epistemic uncertainty. Table IV summarizes the training hyperparame-ters. We compare three planning baselines: covariance matrix adaptation evolution strategy (CMA-ES), Monte Carlo Tree Search (MCTS), and random sampling. Fig. 5 visualizes representative predictions together with decomposed uncertainty estimates across altitudes. The un-certainty maps exhibit clear spatial structure: high uncertainty concentrates near complex geometric boundaries and non-line-of-sight regions where shadowing, diffraction, and strong mul-tipath effects dominate. Such low confidence regions provide a reliability cue for downstream robust UAV path planning. 
+
+> Fig. 5: Prediction and aleatoric/epistemic uncertainty across altitudes.
+
+The proposed Bayesian UNet is benchmarked against three representative baselines: Spectrumsurveying [24], an autoen-coder based method; GP-DKL [35], a deep kernel learning Gaussian Process; and GP-ATT, an attention based Gaussian Process baseline. Two evaluation settings are considered to reflect different deployment phases: 1) Full environmental knowledge: the complete building layout is available as a prior. 2) Partial observability: only a subset of building geome-tries is available, representing incomplete environmental context during online exploration. JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2015 10 
+
+> TABLE III: RMSE for Budgets, Planners, and Reconstructors.
+
+Budget Planning Method GP-DKL Spectrum Surveying Bayesian UNet [Ours] 
+
+Best Avg Worst Best Avg Worst Best Avg Worst 
+
+B = 1 
+
+Proposed 0.5034 0.5187 0.5254 0.1411 0.1522 0.1648 0.0519 0.0536 0.0548 CMA-ES 0.5096 0.5173 0.5325 0.1520 0.1742 0.1898 0.0663 0.0694 0.0721 MCTS 0.5084 0.5113 0.5237 0.1499 0.1635 0.1840 0.0592 0.0623 0.0677 Random 0.4933 0.5538 0.6002 0.1549 0.2194 0.2688 0.0603 0.0714 0.0799 
+
+B = 2 
+
+Proposed 0.4643 0.4791 0.4911 0.1103 0.1218 0.1402 0.0435 0.0452 0.0479 CMA-ES 0.4770 0.4926 0.5067 0.1247 0.1321 0.1521 0.0495 0.0536 0.0588 MCTS 0.4792 0.4866 0.5148 0.1194 0.1333 0.1640 0.0476 0.0524 0.0553 Random 0.4564 0.5687 0.6493 0.1362 0.1782 0.2531 0.0519 0.0651 0.0780 
+
+B = 4 
+
+Proposed 0.3909 0.4217 0.4683 0.0664 0.0813 0.1027 0.0320 0.0355 0.0382 CMA-ES 0.4311 0.4658 0.4926 0.0791 0.0945 0.1162 0.0419 0.0487 0.0545 MCTS 0.4122 0.4442 0.5029 0.0748 0.0910 0.1194 0.0416 0.0506 0.0574 Random 0.4126 0.5388 0.5839 0.0667 0.1325 0.2080 0.0362 0.0581 0.0743                                  
+
+> TABLE IV: Training Hyperparameters. Parameter Value
+> Network Training
+> Input Resolution 50 ×50
+> Optimizer Adam Initial Learning Rate 1×10 −3
+> Learning Rate Decay Cosine Annealing Batch Size 64 Dropout Rate 0.1 Masking Ratio Strategy Linear from 0.8to 0.98
+> RL Policy Training
+> Optimizer Adam Learning Rate 3×10 −4
+> Discount Factor γ0.99 GAE Parameter λ0.97 Clipping Range ϵ0.2 Value Loss Coeff. c10.5 Entropy Coeff. c20.01 Max Gradient Norm 0.5 Mini-Batch Size 128 Update Epochs 4Rollout Horizon, steps 1024
+
+As shown in Fig. 6(a), we compare the four methods with the full building layout. Since GP-ATT cannot fuse building information, it is evaluated without building geometries (w/o building). The proposed Bayesian UNet outperforms all other methods. Spectrumsurveying improves upon GP-DKL but re-mains inferior to the Bayesian UNet. This is because its plain autoencoder architecture lacks skip connections, resulting in the loss of fine-grained spatial details. As shown in Fig. 6(b), which compares the proposed Bayesian UNet under different building priors, it can be seen that the reconstruction performance consistently improves as more building observations become available. This demon-strates that simultaneously collecting environmental priors to assist in radio map generation during pure radio signal sampling is necessary. Furthermore, as shown in Fig. 6(c), we evaluate the inference speed of each method. Spectrumsurvey-ing is computationally the fastest at 24.61 ms due to its single 
+
+> Fig. 6: Proposed Bayesian UNet comparison with Spectrum Surveying, GP-DKL, and GP-ATT.
+
+deterministic forward pass. The proposed Bayesian UNet, despite S = 10 stochastic passes for rigorous uncertainty quantification, achieves a highly competitive inference time of 28.54 ms. Both cases are well within real time limits and significantly faster than the 36.42 ms required by GP-DKL. 
+
+C. RL Path Planning 
+
+Following the supervised learning phase, the reinforcement learning agent is trained for active sensing. A key objective of 3D-URAM is to navigate and reconstruct radio maps in environments that are unseen by the underlying prediction model. To strictly enforce this generalization requirement, the training set for the RL agent is constructed exclusively from the hold out test set of the uncertainty network, as defined in Sec. V-A. Specifically, 10 representative urban environments are selected from the 45 test scenes. Within each JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2015 11 
+
+selected environment, 10 distinct transmitter configurations are utilized, forming a focused dataset for policy optimization. This setup ensures that the RL agent cannot rely on memorized environmental features from the prediction network’s training phase. To comprehensively evaluate the versatility and robustness of the proposed exploration policy, its cooperative perfor-mance when coupled with varying reconstruction back ends is examined. Specifically, the agent trained via the proposed framework is integrated with three representative predictors: the kernel based GP-DKL [35], the deep learning based Spectrumsurveying [24], and the proposed Bayesian UNet. To benchmark the planning efficiency against established methods, the proposed approach is compared with three al-ternative strategies: the evolutionary algorithm CMA-ES [36], the heuristic search based MCTS [37], and random sampling approach. The comparative results are presented in Table III. As detailed in Table III, the proposed Bayesian UNet con-sistently demonstrates superior reconstruction fidelity across varying trajectory length budgets B. In particular, when paired with the proposed RL policy, the Bayesian UNet achieves the lowest RMSE in all tested scenarios, with average RMSE decreasing from 0.0536 at B=1 km to 0.0452 at B=2 km 
+
+and 0.0355 at B=4 km , and with a small best–worst spread, for example 0.0519 –0.0548 at B=1 km , indicating stable re-construction quality. Regarding the baseline predictors, Spec-trum surveying outperforms GP-DKL in the majority of cases, as its neural representation better captures complex non linear spatial dependencies. For example, under the pro-posed RL policy, Spectrumsurveying attains average RMSE of 
+
+0.1522 /0.1218 /0.0813 for B=1 /2/4 km , whereas GP-DKL remains substantially higher at 0.5187 /0.4791 /0.4217 . This gap reflects the difficulty of kernel based GP models in modeling urban complex radio map. Beyond reconstruction back ends, Table III also highlights the effect of exploration planning. The proposed RL policy consistently yields the lowest average and worst case RMSE compared with CMA-ES, MCTS, and random sampling for all three predictors, and the advantage is most pronounced under constrained budgets where measurement selection is critical. For instance, with the Bayesian UNet at B=1 km , the proposed policy reduces average RMSE to 0.0536 compared with 0.0694 for CMA-ES, 0.0623 for MCTS, and 0.0714 for random sampling, while also achieving the lowest worst case RMSE. As the budget increases, all planners benefit from additional measurements; however, the proposed policy main-tains the best accuracy and robustness, demonstrating higher sample efficiency. For qualitative insight, Fig. 7 visualizes the reconstruction evolution produced by the proposed method at multiple decision steps across altitude layers. For clarity, only the proposed pipeline combining planner and reconstructor is plotted in this timeline; the relative advantages of different planners and reconstruction back ends are comprehensively quantified in Table III. 
+
+D. Small-Scale Real-world Field Test 
+
+To further assess practical applicability beyond the ray-tracing benchmark, a supplementary field measurement case  
+
+> Fig. 7: Reconstruction evolution over decision steps across altitudes under
+> B= 4 , final RMSE 0.0363.
+
+study is conducted in a 300m ×200m ×100m campus area us-ing an offline refinement process that samples high uncertainty areas, as illustrated in Fig. 8. Starting from an initial set of measured samples, the Bayesian UNet produces a provisional reconstruction and an uncertainty map, from which several high-uncertainty regions are selected to generate a single refinement trajectory that is executed without intermediate replanning. In the real-world field test, the UAV flies for approximately 10 min and covers a total distance of 385 m .This setup is not directly comparable to the closed-loop benchmark in Table III, but it isolates whether the learned uncertainty remains actionable for real measurements under batch trajectory generation. The final reconstruction achieves an RMSE decrease from 0.175 to 0.082 , corresponding to a 50% reduction relative to a Lawnmower baseline, which suggests that the proposed uncertainty-aware module remains practically useful beyond simulation, while a fully closed-loop field deployment is left for future work.   
+
+> (a) Measurement tool. (b) Real aerial radio map.
+> (c) Uncertainty map. (d) Trajectory visualization.
+> Fig. 8: Real-world field test configurations in HKUST-GZ.
+
+VI. C ONCLUSIONS 
+
+This paper presented the first solution for actively unveiling 3D air ground radio maps in unknown environment. The proposed 3D URAM framework began by training a Bayesian UNet via dual masked inpainting, where sparse measurements and geometric priors were sequentially mapped to a continuous signal field with rigorously calibrated uncertainties. This belief JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2015 12 
+
+state then guided a transformer based policy on a dynamic probabilistic roadmap to maximize long horizon information gain under strict travel budgets. The approach substantially outperformed state of the art baselines in both reconstruction accuracy and sample efficiency. Furthermore, a supplementary field measurement case study suggested that the learned un-certainty also supported offline batch trajectory refinement on real world measurements. Future work includes broader field validation and incorporation of cross frequency prediction. REFERENCES [1] W. Lu, S. Gao, M. Wen, Y. Liang, L. Yang, C.-B. Chae, and H. V. Poor, “Bayesian-Driven Graph Reasoning for Active Radio Map Con-struction,” in 2025 Seventeenth International Conference on Wireless Communications and Signal Processing (WCSP) , Chongqing, China, Oct. 2025. [2] Y. Zeng, J. Chen, J. Xu, D. Wu, X. Xu, S. Jin, X. Gao, D. Gesbert, S. Cui, and R. Zhang, “A Tutorial on Environment-Aware Communications via Channel Knowledge Map for 6G,” IEEE Communications Surveys & Tutorials , vol. 26, no. 3, pp. 1478–1519, Thirdquarter 2024. [3] C. Wu, Z. Yang, and C. Xiao, “Automatic Radio Map Adaptation for Indoor Localization Using Smartphones,” IEEE Transactions on Mobile Computing , vol. 17, no. 3, pp. 517–528, Mar. 2018. [4] K. Majeed, S. Sorour, T. Y. Al-Naffouri, and S. Valaee, “Indoor Localization and Radio Map Estimation Using Unsupervised Manifold Alignment with Geometry Perturbation,” IEEE Transactions on Mobile Computing , vol. 15, no. 11, pp. 2794–2808, Nov. 2016. [5] W. B. Chikha, M. Masson, Z. Altman, and S. B. Jemaa, “Radio Envi-ronment Map Based Inter-Cell Interference Coordination for Massive-MIMO Systems,” IEEE Transactions on Mobile Computing , vol. 23, no. 1, pp. 785–796, Jan. 2024. [6] S. Zhang, Y. Zeng, and R. Zhang, “Cellular-Enabled UAV Communica-tion: A Connectivity-Constrained Trajectory Optimization Perspective,” 
+
+IEEE Transactions on Communications , vol. 67, no. 3, pp. 2580–2604, Mar. 2019. [7] J. Perez-Romero, A. Zalonis, L. Boukhatem, A. Kliks, K. Koutlia, N. Dimitriou, and R. Kurda, “On the Use of Radio Environment Maps for Interference Management in Heterogeneous Networks,” IEEE Communications Magazine , vol. 53, no. 8, pp. 184–191, Aug. 2015. [8] S. Gao, J. Yan, P. Huang, Z. Lu, M. Gong, L. Miao, G. Zhu, J. Liang, and L. Yang, “Integrated Sensing, Communication, and Computation for Low-Altitude Networks Towards Seamless Connectivity and Connected Intelligence,” IEEE Internet of Things Magazine , pp. 1–9, 2026. [9] B. Li and J. Chen, “Large Timescale Optimization for Communications Over Aerial Ad Hoc Networks With Predetermined Trajectories,” IEEE Transactions on Communications , vol. 72, no. 10, pp. 6371–6385, Oct. 2024. [10] D. Romero and S.-J. Kim, “Radio Map Estimation: A Data-driven Approach to Spectrum Cartography,” IEEE Signal Processing Magazine ,vol. 39, no. 6, pp. 53–72, Nov. 2022. [11] T. Hu, Y. Huang, J. Chen, Q. Wu, and Z. Gong, “3D Radio Map Recon-struction Based on Generative Adversarial Networks Under Constrained Aircraft Trajectories,” IEEE Transactions on Vehicular Technology ,vol. 72, no. 6, pp. 8250–8255, Jun. 2023. [12] J. Hoydis, S. Cammerer, F. A. Aoudia, A. Vem, N. Binder, G. Marcus, and A. Keller, “Sionna: An Open-Source Library for Next-Generation Physical Layer Research,” 2023. [Online]. Available: https://arxiv.org/abs/2203.11854 [13] S. Bakirtzis, C ¸ . Yapar, M. Fiore, J. Zhang, and I. Wassell, “Empow-ering Wireless Network Applications with Deep Learning-Based Radio Propagation Models,” IEEE Wireless Communications , vol. 32, no. 4, pp. 124–131, Aug. 2025. [14] K. Sato and T. Fujii, “Kriging-Based Interference Power Constraint: Integrated Design of the Radio Environment Map and Transmission Power,” IEEE Transactions on Cognitive Communications and Network-ing , vol. 3, no. 1, pp. 13–25, Mar. 2017. [15] H. Sun and J. Chen, “Propagation Map Reconstruction via Interpolation Assisted Matrix Completion,” IEEE Transactions on Signal Processing ,vol. 70, pp. 6154–6169, 2022. [16] N. Cressie, Statistics for Spatial Data . Hoboken, NJ, USA: Wiley-Interscience, 1993. [17] Y. Teganya and D. Romero, “Deep Completion Autoencoders for Radio Map Estimation,” IEEE Transactions on Wireless Communications ,vol. 21, no. 3, pp. 1710–1724, Mar. 2022. [18] R. Levie, C ¸ . Yapar, G. Kutyniok, and G. Caire, “RadioUNet: Fast Radio Map Estimation With Convolutional Neural Networks,” IEEE Transactions on Wireless Communications , vol. 20, no. 6, pp. 4001– 4015, Jun. 2021. [19] S. Zhang, A. Wijesinghe, and Z. Ding, “RME-GAN: A Learning Framework for Radio Map Estimation Based on Conditional Generative Adversarial Network,” IEEE Internet of Things Journal , vol. 10, no. 20, pp. 18 016–18 027, Oct. 2023. [20] G. Chen, Y. Liu, T. Zhang, J. Zhang, X. Guo, and J. Yang, “A Graph Neural Network Based Radio Map Construction Method for Urban Environment,” IEEE Communications Letters , vol. 27, no. 5, pp. 1327– 1331, May 2023. [21] C. Zhao, R. Zhang, J. Wang, D. Niyato, G. Sun, H. Du, Z. Li, A. Jamalipour, and D. I. Kim, “Temporal Spectrum Cartography in Low-Altitude Economy Networks: A Generative AI Framework With Multi-Agent Learning,” IEEE Transactions on Mobile Computing , pp. 1–17, 2025. [22] X. Luo, Z. Li, Z. Peng, M. Chen, and Y. Liu, “Denoising Diffusion Probabilistic Model for Radio Map Estimation in Generative Wireless Networks,” IEEE Transactions on Cognitive Communications and Net-working , vol. 11, no. 2, pp. 751–763, Apr. 2025. [23] X. Wang, K. Tao, N. Cheng, Z. Yin, Z. Li, Y. Zhang, and X. Shen, “RadioDiff: An Effective Generative Diffusion Model for Sampling-Free Dynamic Radio Map Construction,” IEEE Transactions on Cognitive Communications and Networking , vol. 11, no. 2, pp. 738–750, Apr. 2025. [24] R. Shrestha, D. Romero, and S. P. Chepuri, “Spectrum Surveying: Active Radio Map Estimation with Autonomous UAVs,” IEEE Transactions on Wireless Communications , vol. 22, no. 1, pp. 627–641, Jan. 2023. [25] K. D. Polyzos, A. Sadeghi, W. Ye, S. Sleder, K. Houssou, J. Calder, Z.-L. Zhang, and G. B. Giannakis, “Bayesian Active Learning for Sample Efficient 5G Radio Map Reconstruction,” IEEE Transactions on Wireless Communications , vol. 23, no. 12, pp. 19 382–19 396, Dec. 2024. [26] Y. Chen, Q. Zhu, J. Wang, Z. Jia, X. Wang, Z. Lin, Y. Huang, Q. Wu, and C. Briso-Rodr´ ıguez, “UAV-Aided Efficient Informative Path Planning for Autonomous 3D Spectrum Mapping,” IEEE Transactions on Cognitive Communications and Networking , vol. 12, pp. 1664–1677, 2026. [27] N. C. Matson and K. Sundaresan, “Online Radio Environment Map Cre-ation via UAV Vision for Aerial Networks,” in 2024 IEEE Conference on Computer Communications (INFOCOM) , Vancouver, BC, Canada, 2024, pp. 81–90. [28] A. Bircher, M. Kamel, K. Alexis, H. Oleynikova, and R. Siegwart, “Receding Horizon ”Next-Best-View” Planner for 3D Exploration,” in 2016 IEEE International Conference on Robotics and Automation (ICRA) , Stockholm, Sweden, 2016. [29] OpenStreetMap contributors, “Planet dump retrieved from https://planet.osm.org ,” https://www.openstreetmap.org, 2017. [30] F. Jaensch, G. Caire, and B. Demir, “Radio Map Prediction From Aerial Images and Application to Coverage Optimization,” IEEE Transactions on Wireless Communications , vol. 25, pp. 308–320, 2026. [31] A. Vashisth, J. R¨ uckin, F. Magistri, C. Stachniss, and M. Popovic, “Deep Reinforcement Learning with Dynamic Graphs for Adaptive Informative Path Planning,” IEEE Robotics and Automation Letters (RA-L) , pp. 1–8, Sep. 2024. [32] W. Lu, Z. Lu, J. Yan, and S. Gao, “SIP2Net: Situational-Aware Indoor Pathloss-Map Prediction Network for Radio Map Generation,” in 2025 IEEE International Conference on Acoustics, Speech and Signal Pro-cessing (ICASSP) , Hyderabad, India, 2025. [33] Y. Gal and Z. Ghahramani, “Dropout as a Bayesian Approximation: Representing Model Uncertainty in Deep Learning,” 2016. [Online]. Available: https://arxiv.org/abs/1506.02142 [34] J. Schulman, F. Wolski, P. Dhariwal, A. Radford, and O. Klimov, “Prox-imal Policy Optimization Algorithms,” CoRR , vol. abs/1707.06347, 2017. [Online]. Available: http://arxiv.org/abs/1707.06347 [35] A. G. Wilson, Z. Hu, R. R. Salakhutdinov, and E. P. Xing, “Stochastic Variational Deep Kernel Learning,” in Proc. Advances in Neural Infor-mation Processing Systems , vol. 29, 2016. [36] N. Hansen, “The CMA Evolution Strategy: A Tutorial,” CoRR , vol. abs/1604.00772, 2016. [Online]. Available: http://arxiv.org/abs/1604. 00772 [37] M. Swiechowski, K. Godlewski, B. Sawicki, and J. Mandziuk, “Monte Carlo Tree Search: A Review of Recent Modifications and Applications,” CoRR , vol. abs/2103.04931, 2021. [Online]. Available: https://arxiv.org/abs/2103.04931
