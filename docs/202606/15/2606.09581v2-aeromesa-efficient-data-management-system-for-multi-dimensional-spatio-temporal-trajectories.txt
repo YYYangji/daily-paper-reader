@@ -1,0 +1,527 @@
+Title: AeroMesa: Efficient Data Management System for Multi-Dimensional Spatio-Temporal Trajectories
+
+URL Source: https://arxiv.org/pdf/2606.09581v2
+
+Published Time: Mon, 15 Jun 2026 00:40:02 GMT
+
+Number of Pages: 13
+
+Markdown Content:
+# AeroMesa: Efficient Data Management System for Multi-Dimensional Spatio-Temporal Trajectories 
+
+Yue Zhang 1, Zizhong Ding 1, Lin Sun 1, Haopeng Chen 1,* , Yan Jiao 2, Yongming Xu 2 
+
+> 1
+
+Shanghai Jiao Tong University, Shanghai, China  
+
+> 2
+
+ShangHai Shapere Information Technology Co.,Ltd., Shanghai, China Email: {zhangyue20040611, enutrof65536, sun lin, chen-hp }@sjtu.edu.cn; {jiao, xu }@shapere.xyz 
+
+Abstract —The proliferation of multi-dimensional trajectory data—fueled by large-scale IoT and the emerging low-altitude economy, particularly UAV operations—drives repositories to jointly support (x, y ), (x, y, t ), (x, y, z ), and (x, y, z, t ) queries within a single storage framework. Yet existing HBase-based systems fall short in three respects: severe row-key interval fragmentation when altitude is jointly encoded with horizontal coordinates, locality-unfriendly spatial encodings with workload-blind shape-code ordering, and coarse-grained temporal indexes that leave intra-slot boundary ambiguity unresolved. We present AeroMesa, an efficient data management system for multi-dimensional spatio-temporal trajectories built on Apache HBase and Redis, that natively supports (x, y ), (x, y, t ), (x, y, z ), and 
+
+(x, y, z, t ) queries within a unified storage framework. AeroMesa addresses the above limitations through three designs: a de-coupled horizontal-altitude architecture with a multi-granularity Height Spatio-Temporal Index (HTSI) that eliminates joint-encoding fragmentation; Hilbert-BFS with Workload-Aware Jac-card (WAJ) reordering that improves spatial locality; and TI +, a dual-offset temporal index that resolves intra-slot false positives. Evaluations on T-Drive and a 87,537-trajectory high-fidelity UAV simulation demonstrate that AeroMesa reduces 3D/4D query latency by up to 30 × over XZ3/TXZ3, lowers 2D latency by up to 17.9% over TMan, and cuts temporal candidates by up to 51.3% over MCTM, with sub-linear scalability confirmed under 
+
+200 × data expansion, confirming AeroMesa’s efficiency for multi-dimensional spatio-temporal trajectory management. 
+
+Index Terms —Trajectory Management, Spatio-Temporal In-dexing 
+
+I. I NTRODUCTION 
+
+Trajectory data management has become a fundamental capability for intelligent transportation, logistics, and urban planning. Large-scale platforms continuously collect location traces from vehicles, couriers, and mobile sensing devices. For example, JD Logistics has reported that more than 60,000 couriers generate over 1 TB of trajectory logs per day [1]. This trend is further intensified by the emerging low-altitude economy, where unmanned aerial vehicles (UAVs) are in-creasingly used for parcel delivery, infrastructure inspection, and emergency response. Compared with conventional ground trajectories, UAV traces introduce altitude as an extra dimen-sion, driving trajectory repositories to jointly support (x, y ),
+
+(x, y, t ), (x, y, z ), and (x, y, z, t ) queries within a single stor-age framework. Distributed key-value stores, particularly Apache HBase, are an attractive substrate for this setting because they offer horizontal scalability, high write throughput, and a mature operational ecosystem. Representative systems such as Tra-jMesa [2], VRE [3], and TMan [4] have shown that HBase can effectively support large-scale planar trajectory manage-ment. However, extending such systems from 2D workloads to unified multi-dimensional workloads is not as simple as lifting an existing 2D spatial encoding to a 3D or 4D one. A straightforward approach is to replace the 2D space-filling curve with a 3D one and jointly encode altitude with horizontal coordinates in a single spatial key space. In practice, this strategy is poorly matched to the anisotropic physical scales of trajectory dimensions: the horizontal domain usually spans large geographic regions, whereas UAV altitude is typically confined to a much narrower range. Once these dimensions are normalized into the same encoded space, practical query windows often become badly misaligned with the induced grid partitioning. In HBase, this misalignment manifests as a large number of disjoint row-key intervals, which increases RPC overhead and diminishes the benefit of sequential scans. Avoiding such row-key interval fragmentation while still sup-porting altitude predicates is therefore a primary challenge in HBase-based multi-dimensional trajectory management. Beyond this architectural issue, the efficiency of existing spatial and temporal access paths is also limited. On the spatial side, TMan proposes a two-level approach: high-level XZ2 encodings for spatial cells and low-level geometric Jaccard reordering on intra-cell shape codes. Unfortunately, high-level XZ2 suffers from structural jumps inherent to Z-ordering which destroy physical locality. At the low level, geometric Jaccard reordering ignores the fact that, in skewed query-pattern workloads, specific shape-code patterns are more commonly co-accessed. On the temporal side, existing coarse-grained time-slot encodings often lose precise intra-slot bound-ary information, causing false positives. Taken together, these observations suggest that a unified HBase-based trajectory management system must solve two problems simultaneously: 
+
+it must avoid row-key interval fragmentation at the archi-tectural level, and it should improve spatial locality and pruning precision at the access-path level. 
+
+To this end, we present AeroMesa , a unified multi-dimensional trajectory management system built on a de-coupled architecture that avoids forcing a highly anisotropic domain into a single joint spatial encoding. AeroMesa utilizes a primary Spatial Index (SI) that encodes only xy (longitude-latitude) information, combined with a server-side ZFilter 
+
+> arXiv:2606.09581v2 [cs.DB] 12 Jun 2026
+
+which pushes down altitude predicates, to continuously pre-serve horizontal locality while enabling efficient altitude prun-ing for 3D queries. For 4D spatio-temporal queries, we in-troduce a secondary index table, called the Height Spatio-Temporal Index (HTSI) , which leverages multi-granularity altitude slots to prune away data except the queried altitude slot. This confines the scan to only the relevant altitude band rather than sweeping across all heights. Within this decoupled architecture, AeroMesa further en-hances the underlying access paths. To improve spatial locality, AeroMesa proposes a Hilbert-BFS encoding coupled with a 
+
+Workload-Aware Jaccard (WAJ) reordering metric. Unlike purely geometric Jaccard, WAJ blends shape-code similarity with query-workload co-access frequency. For temporal preci-sion, AeroMesa introduces TI+ , an enhanced temporal index that tracks fine-grained intra-bucket boundaries. By supporting exact intra-bucket boundary checks at the key-value level, TI+ can reduce false positives in temporal range queries and lower overall query latency. We implement AeroMesa on top of Apache HBase and Redis. Extensive evaluations are conducted using a large-scale trajectory dataset (T-Drive) and a high-fidelity UAV dataset, the latter containing approximately 90,000 simulated flights over a 10 km × 10 km low-altitude airspace in Shanghai. The main contributions of this paper are as follows:  
+
+> •
+
+We design an efficient multi-dimensional spatio-temporal trajectory data management system. The system na-tively supports (x, y ), (x, y, t ), (x, y, z ), and (x, y, z, t )
+
+queries within a unified storage framework. By eliminat-ing row-key interval fragmentation through a decoupled horizontal-altitude architecture, it reduces query latency by 10 ×–30 × over XZ3 and TXZ3 joint encodings for 3D and 4D workloads, with contiguous scan intervals reduced by up to three orders of magnitude. For 4D queries, HTSI further reduces latency by 21%–54% and cuts the candidate segment set by up to 76%.  
+
+> •
+
+We propose a suite of novel indexing techniques. Hilbert-BFS encoding, coupled with Workload-Aware Jaccard reordering, improves planar spatial locality, reducing la-tency by 8.3%–17.9% over TMan and 84.4%–89.3% over GeoMesa on 2D queries. TI + augments time-slot encod-ing with exact intra-bucket boundary checks, reducing candidate segments by up to 51.3% and average temporal query time by up to 21.2% over MCTM [5] for short temporal windows.  
+
+> •
+
+We implement AeroMesa on Apache HBase and Redis, demonstrating robust scalability across both read and write operations. Under a 200 × data-volume expansion, query latency increases by only 11.03 ×, confirming sub-linear read scalability. Meanwhile, amortized write costs scale gracefully, showing only a 4.3 × increase against a 1000 × growth in store size, proving its scalable efficiency in handling large-scale, high-density trajectory data. II. R ELATED WORK 
+
+A. Trajectory Management Systems 
+
+Early single-machine systems such as TrajStore [6] and Torch [7] suffer from inherent scalability limits. Distributed and in-memory systems—including ST-Hadoop [8], Sum-mit [9], UlTraMan [10], DITA [11], TrajSpark [12] and Dragoon [13]—improve throughput and scale but remain uneconomical for large-scale historical trajectory storage or support only a limited query scope. Relational extensions such as MobilityDB [14] and spatial Spark frameworks such as Simba [15] and GeoSpark [16] offer complementary capabili-ties but are either limited in scalability or provide insufficient spatio-temporal support. Modern NoSQL-based systems differ primarily in storage granularity. Point-based systems (e.g., GeoMesa [17]) support precise queries but suffer from severe write amplification. Trajectory-based systems (e.g., TrajMesa, TMan) avoid write amplification but must scan entire trajectories to answer range queries. Segment-based systems (e.g., VRE, MCTM) offer a practical middle ground. On the indexing side, early systems such as TrajMesa and THBase [18] replicate data across multiple primary tables, incurring high storage costs; later systems such as TMan, VRE, and MCTM replace this with a single primary table plus lightweight secondary indexes. However, no existing system provides unified support for 
+
+(x, y ), (x, y, t ), (x, y, z ), and (x, y, z, t ) queries within a single framework—a gap AeroMesa fills for UAV and low-altitude trajectory workloads. 
+
+B. Spatial Index 
+
+R-tree [19] and its variants [20], [21] are widely used for multi-dimensional indexing, but their dynamic rebalancing incurs significant write latency under high-throughput inges-tion, making them unsuitable for large-scale HBase-backed systems [22]. Hilbert R-tree [23] and CSE-tree [24] improve clustering but retain dynamic tree structures with prohibitive maintenance overhead in write-intensive key-value stores. Geohash encodes 2D coordinates via Z-order curves but does not extend to range-bearing objects such as trajectory seg-ments. XZ-Ordering [25] addresses this with double-enlarged elements representing segment MBRs, and has been widely adopted by GeoMesa, TrajMesa, JUST [26], VRE, TraSS [27], MCTM, and TMan. Subsequent work refined the approach: TrajMesa introduced XZ2+ with PosCode, MCTM proposed an Index Cache, and TMan appends Jaccard-ordered shape codes to reduce scan intervals. Hilbert curves offer better locality than Z-order curves [28] and have been studied for point data [29], but no prior work has proposed a Hilbert-based enlarged-element strategy for tra-jectory segments. For 3D indexing, naively extending XZ2 to XZ3 treats altitude as an equivalent spatial dimension, causing severe resolution imbalance for UAV trajectories whose verti-cal range is orders of magnitude smaller than their horizontal extent. AeroMesa instead encodes only horizontal coordinates via Hilbert-BFS and handles altitude filtering independently through HBase-side ZFilters. C. Temporal Index 
+
+Interval trees and segment trees support exact interval matching but are ill-suited for key-value databases under concurrent ingestion. Most trajectory systems therefore adopt a time-binning strategy. ST-Hadoop establishes this paradigm but produces false positives when query windows are narrower than a bin. TrajMesa’s XZT index introduces up to 1/2
+
+temporal dead space per level; VRE indexes by start time bin, causing wide over-scans; TMan records start and end bins at coarse granularity, materializing all boundary-intersecting segments. MCTM improves upon these with a single intra-SegTime offset, but for short segments fully inside one slot, the unknown opposite boundary still introduces false positives. 
+
+D. Spatio-Temporal Index 
+
+TB-tree [30] bundles spatiotemporally adjacent segments for improved locality but scales poorly due to dynamic tree main-tenance. 3D R-tree [31] treats time as a third spatial dimension, but bounding-box overlap grows substantially along the time axis for long-term data. JUST-Traj [32] partitions time into intervals with separate spatial indexes per period, but uneven grid-level distribution fragments queries into many discrete scan intervals. MCTM structures its TSI as BinNum + SI +
+
+SegTimeID , improving I/O efficiency on key-value stores. None of these systems index the altitude dimension, and folding altitude into the spatial encoding via XZ3 introduces severe scale imbalance. III. F RAMEWORK 
+
+Figure 1 illustrates the overall architecture of AeroMesa, which consists of three main modules: Data Ingestion, Index-ing & Storage, and Query Processing. 
+
+Fig. 1: The Framework of AeroMesa 
+
+Data Ingestion. To achieve high-throughput trajectory data ingestion, this module implements a three-stage pipeline consisting of: 1) memory-mapped parsing, which utilizes Memory-Mapped I/O to map large files directly into off-heap memory, avoiding user-space data copying; 2) outlier filtering, which eliminates erroneous data points caused by signal insta-bility; and 3) index-aligned segmentation, which dynamically partitions the continuous trajectory logs into atomic segments based on the pre-defined boundaries. 
+
+Indexing & Storage. To support diverse multi-dimensional queries within a unified system, AeroMesa adopts a primary-secondary table architecture. After segmentation, it organizes all data around a single primary storage table and persists the full system state across Apache HBase and Redis. The primary table (SI table) uses a composite row key of the spatial index key and segment ID (SID). Each row stores the raw point sequence as a binary blob together with the trajectory MBR metadata, which serve as lightweight server-side attributes for pushdown pre-filtering. On top of this foundation, AeroMesa maintains three novel index structures. The secondary index tables are backed by HBase by de-fault, following the design of TMan. AeroMesa additionally provides a Redis-backed variant for both secondary indexes, allowing operators to trade storage cost for lower scan latency. Furthermore, AeroMesa maintains a per-cell shape-code set in Redis as a cache layer, enabling rapid in-memory shape-code pruning and substantially reducing false-positive candidates at negligible latency cost. 
+
+Query Processing. To efficiently support temporal, 2D/3D spatial, and 4D spatio-temporal queries, A ERO MESA coordi-nates a three-stage processing pipeline. Each query is first parsed by a Query Analyser to identify its target dimensions, and then forwarded to a lightweight Query Router, which dispatches the query execution plan to the appropriate indexing layer for accelerated retrieval. For spatial queries , the executor issues range scans directly against the primary SI table. Altitude predicates are pushed down to the HBase region server via a ZFilter, so mismatched segments are directly skipped before data leaves the server. For temporal queries and spatio-temporal queries , the ex-ecutor scans the secondary index for candidate IDs, then fetches payloads from the primary SI table with server-side filters (temporal boundary and ZFilter) applied. Regardless of routing path, all queries conclude with a 
+
+refinement phase that applies exact geometric verification on the retrieved payloads and returns the final results. IV. I NDEXING AND STORING 
+
+This section presents the indexing and storage design of AeroMesa. We begin with the trajectory data model that governs how raw point sequences are partitioned and stored (Section IV-A), then describe our storage schema built atop this model (Section IV-B). With the storage layout estab-lished, we introduce two index structures that accelerate query resolution: a two-level spatial index combining Hilbert-BFS macroscopic encoding with Workload-Aware Jaccard micro-scopic reordering (Section IV-C), and a temporal index TI +
+
+that eliminates false-positive fetches for short intra-interval trajectories (Section IV-D). We then extend this foundation to Fig. 2: Overview of AeroMesa’s three-tier storage schema: primary segment table, secondary index tables, and Index Cache. the anisotropic dimensional characteristics of 3D/4D trajectory data via a server-side ZFilter that prunes altitude-mismatched segments without joint encoding (Section IV-E) and the HTSI Index (Section IV-F). 
+
+A. Trajectory Model 
+
+A trajectory is generated by a moving object reporting its position at regular intervals. Each trajectory point is a tuple 
+
+p = ⟨x, y, z, t ⟩, where x and y denote horizontal coordinates, z
+
+denotes altitude, and t denotes the timestamp. A full trajectory 
+
+Traj is an ordered sequence of points P = {p0, p 1, . . . , p n}
+
+sorted by timestamp. Storing a full trajectory as a single row (trajectory-based model) produces large MBRs that poorly approximate the actual spatial extent, leading to false positives in range queries. Storing each point as an independent row (point-based model) incurs high write amplification and per-point indexing over-head. Following the segment-based paradigm of VRE and MCTM, as represented in Figure 2(a), AeroMesa partitions each trajectory into a sequence of non-overlapping segments. AeroMesa uses fixed-duration time windows to partition trajectories: two consecutive points pi and pi+1 are assigned to different segments when they cross a window boundary, formally defined as ⌊pi.t / dur ⌋̸ = ⌊pi+1 .t / dur ⌋, where dur 
+
+is the fixed window duration. This yields a sequence of non-overlapping segments Segs = {seg 0, seg 1, . . . , seg m}, each stored as a single HBase row. 
+
+B. Storage Schema 
+
+AeroMesa organises all persistent state across three tiers, as shown in Figure 2(b): 
+
+Primary Table: The primary table stores the segment data together with its multidimensional metadata. AeroMesa con-structs the row key by concatenating three fields: 
+
+rowkey = partition_id 
+
+| {z }
+
+> configurable prefix
+
+“-” SI |{z} 
+
+> Spatial Index
+
+“-” sid |{z} 
+
+> segment id
+
+(1) The partition_id prefix controls the trade-off between locality and load balance and can be tuned per deployment, for example via equal-frequency quantiles of the rowkey distribu-tion to ensure balanced region load in distributed settings. The packed spatial index SI (as detailed in Section IV-C) ensures that spatially adjacent segments cluster within each partition. The segment identifier sid uniquely identifies each segment. Each row stores two parts. The metadata column family holds the segment’s four-dimensional MBR, which are evalu-ated by server-side filters before the payload is read, enabling spatial, altitude, and temporal pruning without decoding raw points. The payload column family stores the serialised point list as a compact binary blob ( 32 bytes per point). 
+
+Secondary Tables: To support multiple query types without duplicating raw payloads, AeroMesa maintains lightweight secondary tables that map index keys (e.g., HTSI or TI +
+
+codes) to the corresponding primary row keys. These tables can be backed by either Redis or an HBase table depending on deployment requirements. 
+
+Index Cache: Verifying all shape codes in a spatial cell against the query window on every query incurs unnecessary I/O overhead. AeroMesa addresses this by maintaining a Redis SET per spatial cell that records every distinct shape code ever written into that cell, following the design of TMan and MCTM. At query time, a single set-membership lookup retrieves the populated codes; intersecting this set with the geometrically overlapping shape codes for the query window yields a small candidate list, each entry then resolved via a targeted score-range scan. To bound memory consumption, the cache is capped at a configurable maximum of N entries. When the cap is reached, the least-recently-used entry is evicted. Eviction introduces only a cache miss on the sub-sequent access, which falls back to the downstream scan— preserving correctness. 
+
+C. Spatial Index 
+
+The storage schema above places segments into HBase rows ordered by a 1D key. The central challenge of spatial indexing is to assign 1D keys such that segments close in 2D space remain close on the key axis, minimising the number of disjoint HBase range scans required to answer a spatial query. AeroMesa builds on the two-level spatial encoding paradigm of TMan’s TShape. In this paradigm, a macroscopic Fig. 3: Spatial index encoding pipeline: (a) TMan; (b) AeroMesa. space-filling curve (SFC) maps each segment to a primary grid cell, while a microscopic 4 × 4 bitmask shape code 
+
+s ∈ { 1, . . . , 216 − 1} captures the intra-cell footprint of the segment. TShape uses a Z-order SFC at the macroscopic level and a geometric Jaccard similarity shape-code reordering at the microscopic level (Figure 3(a)). Both choices carry known weaknesses: Z-order scatters spatially adjacent cells across discontinuous key intervals, and treating all sub-cell patterns equally wastes disk locality on rarely queried shapes. AeroMesa renovates both layers with Hilbert-BFS (where BFS denotes a breadth-first traversal of the quad-tree, ensuring that cells at the same resolution level remain contiguous in the encoding) and Workload-Aware Jaccard (WAJ) , yielding the pipeline shown in Figure 3(b). 
+
+1) Macroscopic Encoding: Hilbert-BFS: AeroMesa retains the enlarged-cell construction and per-axis binary bisection of the TShape quad-tree, but replaces Z-order traversal with a 2D Hilbert-curve ordering. The Hilbert index of a segment is: 
+
+Index H-BFS (seg ) = 
+
+> g−1
+
+X
+
+> k=1
+
+4k + H2D (Ci), (2) where g is the quad-tree depth at which the enlarged cell 
+
+E(Ci) first contains MBR (seg ), found by a BFS over the quad-tree, and H2D (·) is the standard 2D Hilbert index of the host cell Ci. The offset Pg−1 
+
+> k=1
+
+4k ensures that cells at different depths map to disjoint key ranges, preserving injectivity across levels. A correct BFS termination requires that every MBR has a well-defined host cell; this is guaranteed by the enlargement strategy: at level l with cell side length δl, the base cell is extended by 2δl in the positive x and y directions, so any MBR whose width and height are both smaller than δl is guaranteed to fall within the enlarged cell. Ties among siblings are broken deterministically by minimum Hilbert index. 
+
+a) Why Hilbert outperforms Z-order?: The benefit of the Hilbert curve is a reduction in the number of disjoint HBase 
+
+Scan calls required to cover a query window. Moon et al. prove the asymptotic expectations for a 2k ×2k query region: 
+
+E#clusters Hilbert 
+
+ ∼ 2k
+
+3 , E#clusters Z
+
+ ∼ 2k
+
+2 , (3) as k → ∞ – a 33% asymptotic reduction in scan fragments. 
+
+Empirical confirmation. On the T-Drive dataset [33], holding shape code bits constant to isolate the macroscopic layer, Hilbert-BFS reduces HBase scan intervals by 40% versus XZ2. 
+
+Fig. 4: WAJ workload analysis: (a) estimated pattern weight 
+
+ˆP (k) (sorted by weight); (b) α ablation (square workload). 
+
+2) Microscopic Reordering: Workload-Aware Jaccard (WAJ): The Hilbert-BFS encoding determines which HBase 
+
+cell a segment falls into; within that cell, the shape code determines which sub-range of the cell is scanned. TMan’s original ordering relies on geometric Jaccard similarity, treating all query patterns as equally likely. In practice, however, query workloads are skewed: a handful of boundary-crossing query patterns dominate query frequency. An ordering blind to this skew fails to cluster frequently co-accessed patterns into contiguous sub-ranges, fragmenting scans across scattered regions. AeroMesa addresses this with Workload-Aware Jaccard, which reorders shape codes according to observed query pattern frequency, in three steps. 
+
+a) Step 1: Bounding the achievable pattern space: Any axis-aligned query window Q intersects a cell in a contiguous rectangular block [r1, r 2] × [c1, c 2] of sub-cells. Since a 4×4
+
+grid has 5 possible split positions per axis, the set K of patterns that can actually be activated by a query satisfies: 
+
+|K| ≤  52
+
+2 = 100 , (4) a 655 × reduction from the na¨ ıve 216 upper bound, so the prior need only be estimated over 100 patterns rather than 216 .b) Step 2: Estimating the query pattern frequency: 
+
+For each achievable query pattern k ∈ K , let P (k) be the probability that a random boundary-intersecting cell exhibits pattern k under the observed workload. We estimate P (k) via offline Monte Carlo sampling over N = 100 ,000 i.i.d. queries: 
+
+ˆP (k) = boundary cells exhibiting pattern k
+
+total boundary cells across all queries . (5) By the law of large numbers, ˆP (k) converges to P (k) at rate 
+
+O(N −1/2), so N = 100 ,000 samples yield stable estimates. The resulting distribution is heavily skewed (Figure 4(a)): fewer than 12 of the 100 achievable patterns carry substan-tial weight, confirming the co-access concentration that a workload-aware ordering can exploit. 
+
+c) Step 3: The WAJ similarity metric: Given ˆP (k), the 
+
+CoHit score measures how often two shape codes A and B
+
+are simultaneously activated by the same query pattern, where 
+
+A & k̸ = 0 indicates that shape code A is activated by query pattern k:
+
+CoHit (A, B ) = X
+
+> k∈K
+
+ˆP (k) · 1[A & k̸ = 0] · 1[B & k̸ = 0] . (6) The final WAJ similarity combines CoHit with the geometric Jaccard from TShape to preserve coarse spatial structure: 
+
+WAJ( A, B ) = α · ^CoHit( A, B ) + (1 − α) · ]Jacc( A, B ), (7) where e· denotes min-max normalisation over all observed pairs. The mixing weight α = 0 .30 is selected by ablation over 
+
+α ∈ { 0.1, 0.2, . . . , 0.9}: the interval count is minimized near 
+
+α ≈ 0.30 and stays flat over α ∈ [0 .2, 0.5] (Figure 4(b)), so the result is insensitive to the exact weight. Shape codes are then linearised by solving a maximum-weight Hamiltonian path on the WAJ similarity graph; following TMan, we approximate this NP-hard problem with a genetic algorithm. The resulting ordering is computed once at write time, remaining transparent to the query path. 
+
+d) Robustness to workload drift: By definition, ˆP (k)
+
+depends strictly on how a window intersects a cell, guaran-teeing invariance to query-center and absolute-size drift by construction. We further stress-test the sole remaining drift axis: aspect ratio. All curves in Figure 5 use a single weight vector ˆP (k) estimated under a square workload, evaluated on progressively more elongated queries (up to 10 : 1 aspect ratio). Notably, across this entire range, the optimal α remains near 0.30 and the interval count stays low and flat. Collectively, these invariance properties imply that a single offline-estimated 
+
+ˆP (k) remains highly robust across the full space of workload shifts and thus requires no runtime re-tuning. 
+
+3) Update: On the update path, we introduce a flat main+delta LSM structure. Incoming segments are appended only to a lightweight delta index, avoiding per-write global WAJ re-encoding of the main index. Once the delta reaches a configurable threshold, a background compaction merges it into the main index in batch while queries continue to access the current version, guaranteeing read/write consistency 
+
+Fig. 5: WAJ cross-distribution robustness throughout. This design decouples the expensive global re-ordering from the synchronous write path, reducing amortized write latency. 
+
+D. Temporal Index: TI +
+
+The spatial index improves locality to minimise disjoint range scans; the temporal index then prunes candidates that fall outside the query range. AeroMesa inherits the base temporal index structure from MCTM, which partitions the timeline into day bins and hourly intervals, assigning each segment a 32-bit packed index encoding day-bin, hourly-interval number, segment type, and a 9-bit intra-interval offset ( ≈ 7 s). MCTM defines three segment types: type 2 (segment starts within this interval), type 1 (segment spans the entire interval), and type 0 (segment terminates within this interval). 
+
+a) TI +: dual-offset type 3: A segment whose start and end both fall within the same hour interval is classified by MCTM as type 2, discarding the end-time information. At query time, the system cannot determine whether such a segment overlaps [ts, t e] without fetching its raw points from HBase, forcing an unnecessary HBase fetch for segments that lie entirely outside [ts, t e].AeroMesa introduces type 3 for this case, as illustrated in Figure 6. When a segment is entirely contained within one hour interval, it is assigned type = 3 and its index entry encodes a second 9-bit end offset alongside the start offset: TI + = BinNum | {z }
+
+> Day Bin: 16bits
+
+∥ SegTimeID 
+
+| {z }
+
+> hour: 5bits
+
+∥ SegType 
+
+| {z }
+
+> type: 2bits
+
+∥ Off 9
+
+| {z } 
+
+> 9bits
+
+| {z }
+
+> original MCTM-TI: 32bits
+
+∥ Off 9
+
+| {z } 
+
+> 9bits
+
+Both offsets use 9-bit binary-partition encoding with ≈ 7 sresolution, bounding the true time from both sides, enabling intra-hour overlap pruning directly from the index key. Fig. 6: TI +: type-3 entry for intra-hour boundary pruning. 
+
+E. 3D Extension: Altitude Filtering via ZFilter 
+
+The spatial and temporal indexes above operate in (x, y, t ).In the UAV domain, altitude is an extra query dimension: flight corridors are vertically separated by only tens of metres, yet span several kilometres horizontally—an extreme anisotropy that renders any naive isotropic 3D space-filling curve (e.g., XZ3 or Z3) ineffective for the low-altitude logistics domain. 
+
+a) The aspect-ratio problem: Standard 3D indexes map the physical domain to the unit cube [0 , 1] 3 via isotropic normalisation, implicitly assuming that all dimensions have comparable extents. In the UAV setting, however, the hori-zontal domain spans global scales ( Lxy ≈ 40 ,000 km) while the navigable vertical airspace is tightly bounded ( Lz ≈ 1 km), yielding a disparity of Lxy /L z ≈ 4 × 10 4.
+
+Fig. 7: Geometric distortion from isotropic indexing under aspect-ratio mismatch. Isotropic normalisation therefore artificially stretches the 
+
+Z-dimension, as shown in Figure 7. A query with physical footprint 5 km × 100 m (aspect ratio 50 : 1 ) becomes a query with normalised extent ratio ∆qz /∆qxy = 800 : 1. This distortion creates a dilemma with no satisfactory resolution within the isotropic framework:  
+
+> •
+
+Narrow z-range normalisation : the Z coordinate aligns with physical reality, but a 100 m altitude query covers only ∼ 10 −1 of the normalised Z axis, forcing the SFC to emit thousands of disjoint range intervals for even a thin horizontal slab ( index-range fragmentation ).  
+
+> •
+
+Wide z-range normalisation : fragmentation is alleviated, but the same 100 m altitude band maps to a negligible fraction of the normalised axis, making the index insen-sitive to vertical predicates and reducing it to a 2D index. This tension is not an artifact of a particular SFC choice; it is an intrinsic consequence of forcing a highly anisotropic domain into any single joint spatial encoding. 
+
+b) Design response: decouple altitude from the SFC: 
+
+Rather than searching for an optimal normalisation, AeroMesa 
+
+removes altitude from the space-filling curve and keeps the primary ordering in (x, y, t ). Horizontal coordinates (x, y ) are handled by Hilbert-BFS (Section IV-C), while altitude is fil-tered by a dedicated ZFilter at the HBase RegionServer: since each segment row already stores [zmin , z max ] in the meta 
+
+column family (Section IV-B), altitude-mismatched segments are pruned before payload transfer, preserving horizontal index compactness and continuity. This design is sufficient for 3D queries because the primary SI already provides spatial selectivity: a spatial range scan yields a compact candidate set, and ZFilter eliminates altitude mismatches within that set entirely server-side, incurring no additional RPC round-trips. However, a dedicated altitude index becomes necessary for 4D historical queries: since the primary key is ordered by spatial index rather than time, segments matching the spatial predicate are scattered across the full temporal extent of the dataset, causing the candidate set to grow proportionally with the queried time range and exceeding ZFilter’s pruning capacity. 
+
+F. 4D Extension: Height Spatio-Temporal Index (HTSI) 
+
+To efficiently resolve 4D queries, AeroMesa introduces the Height Spatio-Temporal Index (HTSI), a secondary structure for altitude-aware candidate generation (Figure 8). HTSI constrains the initial candidate set to altitude-aligned entries via a secondary index scan, while ZFilter eliminates residual false positives before payload transfer. In this secondary access path, end-to-end performance is highly sensitive to candidate precision and scan fan-out. This raises a central design question: should altitude live in the primary SI key, or in a dedicated secondary index? 
+
+a) Why a secondary index rather than primary-key slot-ting?: Embedding height-slot prefixes directly in the primary SI key fragments 2D or full-height scans into ⌈H/ ∆h⌉ = 2 bz
+
+disjoint sub-ranges, where bz = log 2(H/ ∆h) is the altitude bit depth. This O(2 bz ) fragmentation penalty is fundamental to all joint altitude-encoding strategies (e.g., an asymmetric SFC with (a, a, c ) bit allocation similarly yields 2c disjoint altitude cells for a full-height query). Maintaining a separate, non-slotted primary layout to preserve 2D efficiency would require dual writes, unacceptably doubling write amplification. AeroMesa therefore maintains a unified primary SI for 2D/3D management and confines height-aware acceleration to HTSI. As a secondary index mapping to primary row keys, HTSI incurs acceptable write amplification. Crucially, it sidesteps the O(2 bz ) penalty entirely: for altitude-bounded Fig. 8: Multi-granularity HeightSlot: (a) slot activation; (b) query-time selection. queries, the multi-granularity overlapping slot design (Sec-tion IV-F2) guarantees that any qualifying query resolves to a single contiguous HeightSlot scan (fan-out = 1 ). Placing HeightSlot as the leading key component after the day bin isolates altitude-bounded queries to contiguous key ranges, reducing scan fragmentation without the distortion that afflicts joint-encoding strategies. 
+
+1) Row Key Layout: The core idea of HTSI is to exploit HBase’s byte-lexicographic ordering: by inserting a Height-Slot field between the day-level bin and the spatial-temporal score, all index entries sharing the same day and altitude slot become contiguous on disk. An HTSI row key is a composite consisting of three distinct components: 
+
+BinNum | {z } 
+
+> 16 bits
+
+HeightSlot 
+
+| {z } 
+
+> 9bits
+
+LocalScore | {z } 
+
+> 8bytes
+
+(8) where BinNum = ⌊tunix /86400 ⌋ is the same day bin used by the base temporal index, and LocalScore packs the spatial index and fine-grained temporal fields: 
+
+LocalScore =  SI ≪ 5 SegTimeID (9) where ≪ denotes a left bit-shift; SI is the spatial index score (Section IV-C) and SegTimeID ∈ [0 , 23] is the hourly slot encoded in 5 bits. This ordering reflects a coarse-to-fine selectivity cascade: BinNum partitions the key space at day granularity first, concentrating the scan within a bounded temporal window; HeightSlot then sub-partitions within that window by altitude, yielding contiguous, doubly-constrained key ranges with minimal scan fan-out. 
+
+2) Multi-Granularity Height Slot Design: A single fixed altitude bucket size would be either too coarse, merging corri-dors that queries need to distinguish, or too fine, fragmenting the key space and inflating write amplification. Crucially, 3D queries may span a wide range of altitude bands, so a single granularity cannot guarantee single-slot coverage across all query types; multiple levels are therefore necessary to match each query to the finest slot width that fully covers its altitude span. HTSI employs four granularity levels with window widths w = (16 , 32 , 64 , 128) m, where the specific values balance write amplification against selectivity: finer slots improve altitude discrimination but multiply index entries per segment, while coarser slots reduce amplification at the cost of pruning precision. Within each level k, the altitude domain [0 , 1024) m [34] is partitioned into overlapping windows of width wk with a 50% stride: [sk,i , s k,i + wk) i≥0, sk,i = i · wk 
+
+> 2
+
+. (10) This yields 127, 63, 31, and 15 slots for levels 1–4 respectively (236 total, encoded in 9 bits with 29 = 512 > 236 ). The 50% overlap guarantees that any altitude range of span ∆z ≤ wk/2
+
+is fully covered by one level-k window, eliminating cross-slot boundary splits for sub-granularity queries. This stride is the unique maximum preserving the guarantee: a larger stride would introduce uncovered gaps between adjacent windows, while a smaller stride increases write amplification without any improvement in coverage. As shown in Figure 8(a), a segment spanning [Zmin , Z max ]
+
+is indexed into every slot that intersects its altitude range across all four granularity levels. Segments with altitude outside the nominal domain are indexed only in the base TSI (the spatio-temporal index without HeightSlot prefixing), bypassing HTSI entirely. 
+
+a) Query-time granularity selection: Given a query al-titude range [q− 
+
+> z
+
+, q + 
+
+> z
+
+] with span ∆qz = q+ 
+
+> z
+
+− q− 
+
+> z
+
+, the query engine selects the finest level k such that ∆qz ≤ wk/2, ensur-ing the query resolves to a single contiguous HeightSlot scan, as depicted in Figure 8(b). When ∆qz > 64 m—exceeding the half-window of the coarsest level ( w4/2 = 64 m)—no single HTSI level can guarantee single-slot coverage, and the query falls back to the base TSI. Queries with altitude bounds outside 
+
+[0 , 1024) m are treated as anomalous and fall back likewise. Since UAV operations follow altitude-stratified flight corri-dors governed by regulatory frameworks [34]–[36], the multi-granularity HeightSlot layout naturally aligns with physical flight corridors, distributing index entries across altitude levels and reducing hot-spotting within any single granularity tier. 
+
+b) Write Amplification Analysis: HTSI incurs ≈ 16% 
+
+write amplification relative to the primary table (vs. ≈ 1.2% for the base TSI), as measured on our UAV dataset (Section VI-1), which we consider acceptable. V. Q UERY PROCESSING 
+
+AeroMesa supports three query types over the indexes introduced in Section IV: temporal query, spatial query, and spatio-temporal query. Queries translate to a few contiguous scans: temporal query and spatio-temporal query first scan their secondary tables to obtain candidate rowkeys, then get the matching rows from the primary table; spatial query scans the primary table directly. In both paths, independent scan ranges are issued to HBase concurrently using a fixed-size thread pool, hiding per-range round-trip latency. Predicate evaluation is pushed down to the HBase region server via server-side filters (MBR overlap, ZFilter, and temporal bound checks), so non-qualifying rows are discarded before network transfer. 
+
+A. Temporal Range Query 
+
+A temporal range query q = [ tqs , t qe ] is answered by the TI+ index of Section IV-D. Let 
+
+
+
+Bin s = ⌊tqs /B ⌋,
+
+Bin e = ⌊tqe /B ⌋,
+
+Seg s = ⌊(tqs mod B)/SegLen ⌋,
+
+Seg e = ⌊(tqe mod B)/SegLen ⌋
+
+(11) with B = 86 400 s and SegLen = 3 600 s, TS qs and TS qe 
+
+denote the 9-bit intra-segment offsets of tqs and tqe . Following the segment-type discipline of MCTM, type-0 (end) segments in interval qs that finish before tqs and type-2 (begin) segments in interval qe that start after tqe must be excluded. Because the TI+ rowkey orders type 0 < 1 < 2 < 3 within each hour, AeroMesa compiles the query into two contiguous index range scans that maximise sequential I/O while minimising candidate amplification: 
+
+RA = [Bin s ∥ Seg s ∥ type 0 ∥ TS qs ,
+
+Bin e ∥ Seg e ∥ type 2 ∥ TS qe ] , (12) 
+
+RB = [Bin e ∥ Seg e ∥ type 3 ∥ 0,
+
+Bin e ∥ Seg e ∥ type 3 ∥ TS qe ] . (13) 
+
+RA inherits the MCTM lower/upper sentinels and, by con-struction, admits zero type-0/1/2 false positives; RB is a short auxiliary scan that captures the single-slice (type 3) entries which RA would otherwise miss in the tail hour, while still guaranteeing startOffset ≤ TS qe . The middle hours 
+
+Bin s : Seg s + 1 through Bin e : Seg e − 1 are fully contained inside the query window, so all of their entries (including type 3) are admitted by RA without further filtering. Only the type-3 entries in the boundary hour (Bin s, Seg s)
+
+(carried by RA) and, in the single-hour case, by RB may end before tqs ; these are validated by the dual-offset filter, 
+
+τlo (startOffset) ≤ TS qe ∧ τhi (endOffset) ≥ TS qs , (14) where τlo and τhi decode the lower and upper 9-bit intra-segment offsets of the entry directly from the secondary index; this check precedes any HBase payload access, so single-slice false positives never incur a payload read. 
+
+B. Spatial Range Query 
+
+Given a 2D box QR = [ xl, x h] × [yl, y h], the generation of spatial query windows proceeds in three stages: 
+
+a) Host-cell screening: The BFS walker descends TG
+
+and collects cells whose enlarged region overlaps QR. Cells fully covered by QR are explicitly marked and admitted directly without descending further, whereas partially overlap-ping cells are expanded to their children until the maximum depth is reached. 
+
+b) Cache-pruned shape code resolution: Shape code filtering is only applied to partially overlapping cells. For each such cell C with masked address c, we retrieve the set P(c)
+
+of occupied shape codes from the Index Cache (Section IV-B) and compute the valid overlapping subset: 
+
+V(c, Q R) =  p ∈ P (c) p & ShapeCode( QR ∩ C)̸ = 0 ,
+
+(15) where ShapeCode( ·) is the bitmap representation of the β ×β
+
+sub-grid intersection. 
+
+c) Window assembly: Each valid (c, p ) pair from par-tially overlapping cells, as well as the inferred full-cell scan bounds from fully covered cells, produces narrow scan ranges over the Hilbert-BFS–WAJ-linearized local score. Two ranges are considered contiguous and merged if their endpoints differ by at most one (e.g., [1 , 5] and [6 , 9] merge into [1 , 9] ); the resulting ranges are dispatched to HBase as Scan commands. 
+
+d) 3D spatial queries with ZFilter: When an altitude band [qmin  
+
+> z
+
+, q max  
+
+> z
+
+] is specified, the above 2D scan ranges remain unchanged. Instead, AeroMesa augments the scan with a server-side HBase filter on the meta:zmin /zmax cells (Section IV-E), pruning non-qualifying segments at the region server before payload transfer. 
+
+C. Spatio-Temporal Query 
+
+A spatio-temporal query (QR, [tqs , t qe ]) is processed by the HTSI index of Section IV-F. When an altitude band is specified, its span satisfies ∆qz ≤ 64 m, and both bounds lie inside the nominal domain [0 , 1024) m, AeroMesa selects the finest HTSI level k⋆ with ∆qz ≤ wk⋆ /2 and resolves the single fully-covering slot h⋆ (Eq. (10)); otherwise, the query falls back to the height-agnostic base TSI. The resulting rowkey range 
+
+ BinNum ∥ h⋆ ∥ LS min , BinNum ∥ h⋆ ∥ LS max 
+
+ (16) is contiguous on a single HBase region, where LS min and 
+
+LS max are the lower and upper bounds of the concatenated field LS = SI ∥ SegTimeID .VI. E XPERIMENTAL EVALUATION 
+
+This section evaluates AeroMesa across four dimensions: temporal range queries, 2D/3D spatial range queries, 4D spatio-temporal queries, and scalability. 
+
+1) Datasets: We evaluate the efficiency and scalability of Aeromesa using three datasets:  
+
+> •
+
+TDrive : This dataset contains the GPS trajectories of 10,357 taxis in Beijing from February 2 to February 8, 2008. It includes approximately 15 million GPS points, with a total trajectory distance of 9 million kilometers.  
+
+> •
+
+Synthetic-TDrive : For scalability evaluation, we first sample 1,000 trajectories from T-Drive as a 1 × seed set, then generate larger datasets via random spatial transla-tion and temporal shifting. This produces data scales up to 200 × (200,000 trajectories).  
+
+> •
+
+UAV Synthetic Dataset. We generated 87,537 UAV mission trajectories over a 10 ,000 × 10 ,000 m area in Xuhui District, Shanghai, using a physics-fidelity sim-ulation pipeline combining ROS [37], Gazebo [38], and PX4 [39], with the Gazebo world configured to include realistic wind fields and weather variability. Trajecto-ries are planned via a grid-based A* algorithm over an environment map derived from real OpenStreetMap road networks, building footprints, and no-fly zone con-straints, ensuring that generated paths respect realistic urban airspace geometry. The simulated airspace spans 0– 120 m AGL following the FAA low-altitude operational boundary [35], with ten mission types distributed across dedicated altitude bands under the layered airspace strat-ification principle [36]. Each trajectory represents a com-plete end-to-end UAV mission, sequencing three primitive maneuvers—cruise, climb/descent, and hover—to repli-cate realistic flight dynamics. The system boundary is provisioned up to 1024 m to accommodate the statutory low-altitude economy airspace ceiling [34], while the evaluation dataset is bounded within the regulatory 0– 120 m AGL flight zone for lightweight UAVs; all 3D/4D query workloads execute strictly within this dense clus-ter, and altitude slots above 120 m generate no key or metadata footprint under our storage layout. TABLE I: Statistical Profiles of the UAV Dataset                                     
+
+> Metric / Parameter Value / Distribution
+> Total trajectories 87 ,537
+> Total Points 37 ,741 ,478
+> Avg. trajectory duration 435 .43 sAvg. trajectory length 3757 .29 mAvg. spatial span (XY / Altitude) 2851 .57 m / 48 .71 mSampling interval ∆t1.00 sMean velocity ( vxy /|vz|)8.694 /0.218 m/s Mean climb / descent rate 0.242 /0.224 m/s Maneuver ratio (Cruise : Climb : Hover) 85 .53% : 8 .31% : 6 .16%
+> Corridors density (Low : Mid : High) 42 .57% : 35 .14% : 22 .29%
+> Low/Mid/High corridors: [0 ,40) /[40 ,80) /[80 ,120] m.
+
+2) Settings: Each benchmark reports the average over 100 queries with distinct, randomly-shifted spatio-temporal windows. All experiments are repeated over 10 independent trials, and the query bounds are freshly re-generated per run. Crucially, the relative performance gains of AeroMesa and the optimization trends in our ablation studies remain invariant under these varying conditions. All baselines are evaluated with identical concurrency and workflow configurations to ensure fairness. We evaluated Aeromesa on hardware with 16-core CPU, 256GB RAM, and 16TB disk. The software stack includes Hadoop 3.3.4, HBase 2.5.8, and Redis 6.0.16. To align with the design assumptions of TMan and MCTM, AeroMesa’s primary table and secondary index tables are deployed on the same HBase instance, while the in-memory shape-code cache is maintained in Redis. 
+
+3) Baselines: We compare AeroMesa against four represen-tative systems. TMan , the current state of the art for 2D spatial range queries, serves as our primary spatial-index baseline; since its code is not publicly available, we re-implemented it faithfully, and the observed gains are consistent with those reported in the paper. MCTM , which achieves state-of-the-art performance on temporal and spatio-temporal queries, is included using the authors’ official source code. GeoMesa 
+
+is used as a general-purpose open-source baseline. Finally, we include curve-only baselines—XZ2 for 2D queries and XZ3/WXZ3 for 3D and TXZ3/TWXZ3 for 4D queries—to isolate the benefit of higher-level index engineering over raw space-filling curves. Among the curve-only baselines, WXZ3 
+
+warrants particular attention: to stress-test AeroMesa against the stronger achievable joint-encoding strategy, we construct WXZ3 by replacing XZ3’s isotropic 2×2×2 subdivision with an asymmetric 4×4×2 allocation (2/2/1 bits per x/y/z ), partially mitigating the aspect-ratio mismatch; any remaining gap thus reflects an architectural limitation of joint encoding rather than a suboptimal SFC configuration. WXZ3 is therefore included as a constructed strong baseline , not a contribution of this work. All systems employing a two-level spatial encoding paradigm—including TMan, MCTM, and AeroMesa—were configured with equivalent Redis-backed in-memory caching for shape-code set storage. 
+
+A. Temporal Range Query 
+
+Figure 9 compares TI + and TI across query durations from 300 s to 43,200 s on our UAV dataset. 
+
+Fig. 9: TI vs. TI + on temporal range queries: average query time (left) and candidate segments (right). TI + consistently outperforms TI across all durations. For short windows (300–900 s), TI + lowers average query time from 12.07–13.48 ms/query to 9.56–10.62 ms/query (20.8%–21.2% reduction), while candidate segments de-crease by 36.4%–51.3%. At 3600 s, TI + still achieves an 8.0% average-time reduction (16.93 to 15.58 ms/query) and a 20.5% candidate reduction. For long windows (14,400– 43,200 s), the average-time gain remains 5.5%–5.9% (34.38 to 32.34 ms/query and 130.56 to 123.42 ms/query), with 2.3%– 6.5% fewer candidates. This tapering is expected: TI + prunes false positives only at the two boundary slots, so as the window grows, the fixed pruning benefit is amortized over an increasingly larger unfiltered base from fully-contained intermediate slots. 
+
+B. 2D Spatial Range Query 
+
+We next evaluate 2D spatial query latency on both T-Drive and UAV datasets. Query windows are grouped by side length: 
+
+small (300 × 300 m), medium (500 × 500 m), large (1000 ×
+
+1000 m), xlarge (2000 ×2000 m), and xxlarge (5000 ×5000 m). 
+
+Fig. 10: 2D spatial query latency (left: T-Drive, right: UAV). Figure 10 shows AeroMesa achieves the lowest latency on both datasets. On T-Drive it reduces latency by 8.3%– 17.9% over TMan, 68.8%–76.0% over MCTM, 48.2%–70.6% over XZ2, and 84.4%–89.3% over GeoMesa; results on UAV are consistent (10.6%–17.9% over TMan; 72.1%–88.4% over GeoMesa). 
+
+1) Ablation: Independent Gains of Hilbert-BFS and WAJ: We isolate each component by comparing: TMan 
+
+(XZ2+Jaccard), XZ2+WAJ , Hilbert-BFS+Jaccard , and 
+
+AeroMesa (Hilbert-BFS+WAJ). Figure 11 shows both components contribute independently: WAJ alone reduces latency by 2.5%–5.9% (T-Drive) and 5.5%–8.1% (UAV); Hilbert-BFS alone by 2.2%–13.2% and 4.1%–15.5%. Combined, AeroMesa improves 8.3%–17.9% over TMan (T-Drive) and 10.6%–17.9% (UAV), with WAJ adding a further 1.7%–6.3% and 2.8%–11.8% on top of Hilbert-BFS alone. 
+
+C. 3D Spatial Range Query 
+
+We use default XZ3 (altitude ∈ [0 , 1000] m) as the primary curve baseline, with query footprints of 1000 × 1000 m and altitude-range classes {10 , 25 , 50 , 100 , 250 } m. As described in Section VI-3, WXZ3 is the constructed strong-baseline 
+
+Fig. 11: Ablation on 2D spatial queries (left: T-Drive, right: UAV). counterpart of XZ3, replacing the isotropic 2×2×2 subdivision (1/1/1 bits per x/y/z ) with 4 × 4 × 2 (2/2/1 bits) to form a standard 32-ary tree. For example, after 9 levels, its 18-bit horizontal ( ∆xy ≈ 152 m) and 9-bit vertical ( ∆z = 2 m) resolutions tightly map a 1000 ×1000 ×10 m query to a compact 
+
+6 × 6 × 5 cell block, making the index granularity closely fit our segments and query box. 
+
+Fig. 12: 3D spatial query latency (left: main baseline compar-ison; right: ablation of Hilbert-BFS and WAJ). Figure 12 (left) shows AeroMesa remains nearly flat at 132.9–145.7 ms (1.10 ×), while XZ3 escalates 11 .03 × (to 23293.2 ms). WXZ3 stays much flatter (1.06 ×, 1543.9– 1635.9 ms) but is still consistently slower than AeroMesa. AeroMesa reduces latency by 93.7%–99.4% over XZ3, 91.1%–91.4% over WXZ3, and 95.9%–97.5% over GeoMesa. The right panel confirms the ablation trend: WAJ contributes 3.6%–7.8%, Hilbert-BFS 1.6%–3.3%, and combined they yield 8.7%–13.0% improvement over the TMan baseline, with WAJ adding 6.3%–11.0% on top of Hilbert-BFS. 
+
+D. Spatio-Temporal Query (4D) 
+
+We evaluate 4D queries in two complementary settings. In all queries, the query horizontal footprint is fixed to 
+
+1000 × 1000 m. First, we fix the temporal window at 30000 sand vary altitude range over {5, 15 , 30 , 60 , 120 , 240 } m. Sec-ond, we fix height range at 15 m and vary duration over 
+
+{3600 , 7200 , 15000 , 30000 , 60000 , 180000 } s. TXZ3 uses default XZ3 as the spatial index key, while TWXZ3 uses weighted XZ3; base TSI and AeroMesa-HTSI 
+
+correspond to the spatio-temporal index without and with the HeightSlot prefix, respectively (see Section IV-F). 
+
+Fig. 13: 4D spatio-temporal query with fixed time (left: main comparison; right: TWXZ3, base TSI, and HTSI). 
+
+Fig. 14: 4D spatio-temporal query with fixed height (left: main comparison; right: TWXZ3, base TSI, and HTSI). Figure 13 shows that, under a fixed 30000 s window, HTSI grows from 13.07 ms to 26.37 ms as altitude range increases, versus 25.37–26.63 ms for base TSI, yielding 1.0%–50.4% lower latency. Relative to TXZ3, TWXZ3, and GeoMesa, HTSI reduces latency by 98.1%–99.9%, 43.8%–58.9%, and 94.5%–96.7%, respectively. The gain over base TSI comes from HeightSlot pruning: candidate segments drop from 1603.64 to 418.54–1232.65 while the merged scan range count remains unchanged for both variants. The larger gap against TXZ3 is due to joint-encoding fragmentation: average merged ranges rise to 15,736–554,328 for TXZ3, compared with 105.65–491.84 for TWXZ3 and 57.44 for base TSI/HTSI. Figure 14 shows the same pattern when height is fixed at 15 m and duration increases. HTSI rises from 11.67 ms to 28.24 ms, compared with 21.23 ms to 39.31 ms for base TSI, preserving a 28.1%–45.4% latency reduction across all durations. Against TXZ3, TWXZ3, and GeoMesa, HTSI remains 99.2%–99.3%, 35.9%–69.4%, and 95.3%–97.9% faster, respectively. Again, the HTSI–base TSI gap comes from lower candidate counts (386.76–1470.66 vs. 1197.63– 3825.66), while both variants keep the same merged scan ranges (43.9–128.95); in contrast, TXZ3 still incurs much heavier fragmentation, with average merged ranges reaching 35,665–104,875, while TWXZ3 reduces this to 98.56–290.08. 
+
+E. Scalability 
+
+We evaluate scalability on Synthetic-TDrive with data scales from 1 × to 200 ×, using 2D query workload ( 500 × 500 m). 
+
+Fig. 15: Scalability of AeroMesa Figure 15 (left) shows query latency grows from 17.82 ms (1×) to 196.47 ms ( 200 ×)—an 11 .03 × increase for 200 × data growth, confirming sub-linear read scalability for AeroMesa. The middle panel reports the amortized write cost of batch-inserting 4,000 segments into a store of varying size. The per-segment update time stays stable at 3.65–4.32 ms for up to 100,000 existing segments, and rises moderately to 15.53 ms at 1,000,000 segments—a 4.3× increase for a 1000 ×
+
+growth in store size. This sub-linear growth is attributed to the main+delta LSM design (Section IV-C3), which amortizes WAJ re-encoding across background compaction batches. The right panel reports distributed query throughput under the same intensive workload comprising 1,000 simultaneous queries (each with a 500 × 500 meter 2D spatial window) on the T-Drive dataset. As RegionServer instances increase from 3 to 12, throughput rises from 22.7 to 35.0 QPS, a 54.1% improvement. The gain is sub-linear, attributed to resource contention and RPC overhead under high concurrency. VII. C ONCLUSION 
+
+This paper presents AeroMesa, an efficient data manage-ment system for multi-dimensional spatio-temporal trajectories built on Apache HBase and Redis. By decoupling horizontal indexing from altitude-aware secondary indexing, AeroMesa eliminates the row-key interval fragmentation inherent in joint spatial encodings while preserving full support for (x, y ),
+
+(x, y, t ), (x, y, z ), and (x, y, z, t ) queries within a unified storage framework. Extensive evaluations demonstrate that AeroMesa consistently outperforms all baselines: 3D/4D query latency is reduced by up to 30 × over XZ3/TXZ3, 2D spatial latency by up to 17.9% over TMan, and temporal candidates by up to 51.3% over MCTM, with sub-linear scalability confirmed under 200 × data expansion. Interesting future work includes: 1) scaling A ERO MESA to larger distributed deployments by devising workload-aware partitioning strategies to mitigate high-concurrency RPC overhead and balance storage locality; and 2) extending A ERO MESA to support efficient k-nearest-neighbor and trajectory similarity queries. REFERENCES [1] S. Ruan, C. Long, J. Bao, C. Li, Z. Yu, R. Li, and Y. Zheng, “Learning to generate maps from trajectories,” in Proceedings of the AAAI Conference on Artificial Intelligence , vol. 34, no. 1, 2020, pp. 890–897. [2] R. Li, H. He, R. Wang, S. Ruan, T. He, J. Bao, J. Zhang, L. Hong, and Y. Zheng, “Trajmesa: A distributed nosql-based trajectory data management system,” IEEE Transactions on Knowledge and Data Engineering , vol. 35, no. 1, pp. 1013–1027, 2021. [3] H. Lan, J. Xie, Z. Bao, F. Li, W. Tian, F. Wang, S. Wang, and A. Zhang, “Vre: A versatile, robust, and economical trajectory data system.” Proc. VLDB Endow. , vol. 15, no. 12, pp. 3398–3410, 2022. [4] H. He, Z. Xu, R. Li, J. Bao, T. Li, and Y. Zheng, “Tman: a high-performance trajectory data management system based on key-value stores,” in 2024 IEEE 40th International Conference on Data Engi-neering (ICDE) . IEEE, 2024, pp. 4951–4964. [5] Y. Tao, H. Chen, Z. Lin, J. Xu, X. Gao, J. Wang, Y. Jiao, and Y. Xu, “Mctm: Multi-chord distributed system for efficient trajectory data management in mobile edge computing,” in International Conference on Database Systems for Advanced Applications . Springer, 2025, pp. 673–682. [6] P. Cudre-Mauroux, E. Wu, and S. Madden, “Trajstore: An adaptive storage system for very large trajectory data sets,” in 2010 IEEE 26th International Conference on Data Engineering (ICDE 2010) . IEEE, 2010, pp. 109–120. [7] S. Wang, Z. Bao, J. S. Culpepper, Z. Xie, Q. Liu, and X. Qin, “Torch: A search engine for trajectory data,” in The 41st international ACM SIGIR conference on research & development in information retrieval , 2018, pp. 535–544. [8] L. Alarabi, M. F. Mokbel, and M. Musleh, “St-hadoop: A mapreduce framework for spatio-temporal data,” GeoInformatica , vol. 22, no. 4, pp. 785–813, 2018. [9] L. Alarabi, “Summit: a scalable system for massive trajectory data man-agement,” in Proceedings of the 26th ACM SIGSPATIAL International Conference on Advances in Geographic Information Systems , 2018, pp. 612–613. [10] X. Ding, L. Chen, Y. Gao, C. S. Jensen, and H. Bao, “Ultraman: A unified platform for big trajectory data management and analytics,” 
+
+Proceedings of the VLDB Endowment , vol. 11, no. 7, pp. 787–799, 2018. [11] Z. Shang, G. Li, and Z. Bao, “Dita: Distributed in-memory trajectory analytics,” in Proceedings of the 2018 International Conference on Management of Data , 2018, pp. 725–740. [12] Z. Zhang, C. Jin, J. Mao, X. Yang, and A. Zhou, “Trajspark: A scalable and efficient in-memory management system for big trajectory data,” in Asia-Pacific Web (APWeb) and Web-Age Information Management (WAIM) Joint Conference on Web and Big Data . Springer, 2017, pp. 11–26. [13] Z. Fang, L. Chen, Y. Gao, L. Pan, and C. S. Jensen, “Dragoon: a hybrid and efficient big trajectory management system for offline and online analytics.” VLDB Journal International Journal on Very Large Data Bases , vol. 30, no. 2, p. 287, 2021. [14] E. Zim´ anyi, M. Sakr, and A. Lesuisse, “Mobilitydb: A mobility database based on postgresql and postgis,” ACM Transactions on Database Systems (TODS) , vol. 45, no. 4, pp. 1–42, 2020. [15] D. Xie, F. Li, B. Yao, G. Li, L. Zhou, and M. Guo, “Simba: Efficient in-memory spatial analytics,” in Proceedings of the 2016 international conference on management of data , 2016, pp. 1071–1085. [16] J. Yu, J. Wu, and M. Sarwat, “Geospark: A cluster computing frame-work for processing large-scale spatial data,” in Proceedings of the 23rd SIGSPATIAL international conference on advances in geographic information systems , 2015, pp. 1–4. [17] J. N. Hughes, A. Annex, C. N. Eichelberger, A. Fox, A. Hulbert, and M. Ronquest, “Geomesa: a distributed architecture for spatio-temporal fusion,” in Geospatial informatics, fusion, and motion video analytics V, vol. 9473. SPIE, 2015, pp. 128–140. [18] J. Qin, L. Ma, and J. Niu, “Thbase: A coprocessor-based scheme for big trajectory data management,” Future Internet , vol. 11, no. 1, p. 10, 2019. [19] A. Guttman, “R-trees: A dynamic index structure for spatial searching,” in Proceedings of the 1984 ACM SIGMOD international conference on Management of data , 1984, pp. 47–57. [20] N. Beckmann, H.-P. Kriegel, R. Schneider, and B. Seeger, “The r*-tree: An efficient and robust access method for points and rectangles,” in 
+
+Proceedings of the 1990 ACM SIGMOD international conference on Management of data , 1990, pp. 322–331. [21] Y. Tao, D. Papadias, and J. Sun, “The tpr*-tree: An optimized spatio-temporal access method for predictive queries,” in Proceedings 2003 VLDB conference . Elsevier, 2003, pp. 790–801. [22] J. Yu and M. Sarwat, “Two birds, one stone: A fast, yet lightweight, indexing scheme for modern database systems.” Proc. VLDB Endow. ,vol. 10, no. 4, pp. 385–396, 2016. [23] I. Kamel and C. Faloutsos, “Hilbert r-tree: An improved r-tree using fractals,” 1993. [24] L. Wang, Y. Zheng, X. Xie, and W.-Y. Ma, “A flexible spatio-temporal indexing scheme for large-scale gps track retrieval,” in The Ninth International Conference on Mobile Data Management (mdm 2008) .IEEE, 2008, pp. 1–8. [25] C. B ¨ Oxhm, G. Klump, and H.-P. Kriegel, “Xz-ordering: A space-filling curve for objects with spatial extension,” in International Symposium on Spatial Databases . Springer, 1999, pp. 75–90. [26] R. Li, H. He, R. Wang, Y. Huang, J. Liu, S. Ruan, T. He, J. Bao, and Y. Zheng, “Just: Jd urban spatio-temporal data engine,” in 2020 IEEE 36th International Conference on Data Engineering (ICDE) . IEEE, 2020, pp. 1558–1569. [27] H. He, R. Li, S. Ruan, T. He, J. Bao, T. Li, and Y. Zheng, “Trass: Efficient trajectory similarity search based on key-value data stores,” in 
+
+2022 IEEE 38th International conference on data engineering (ICDE) .IEEE, 2022, pp. 2306–2318. [28] B. Moon, H. V. Jagadish, C. Faloutsos, and J. H. Saltz, “Analysis of the clustering properties of the hilbert space-filling curve,” IEEE Transactions on knowledge and data engineering , vol. 13, no. 1, pp. 124–141, 2001. [29] H. Liu, J. Yan, J. Wang, B. Chen, M. Chen, and X. Huang, “Hgst: A hilbert-geosot spatio-temporal meshing and coding method for efficient spatio-temporal range query on massive trajectory data,” ISPRS Inter-national Journal of Geo-Information , vol. 12, no. 3, p. 113, 2023. [30] D. Pfoser, C. S. Jensen, Y. Theodoridis et al. , “Novel approaches to the indexing of moving object trajectories.” in VLDB , vol. 2000, 2000, pp. 395–406. [31] Q. Zhu, J. Gong, and Y. Zhang, “An efficient 3d r-tree spatial index method for virtual geographic environments,” ISPRS Journal of Pho-togrammetry and Remote Sensing , vol. 62, no. 3, pp. 217–224, 2007. [32] H. He, R. Li, J. Bao, T. Li, and Y. Zheng, “Just-traj: A distributed and holistic trajectory data management system,” in Proceedings of the 29th International Conference on Advances in Geographic Information Systems , 2021, pp. 403–406. [33] J. Yuan, Y. Zheng, C. Zhang, W. Xie, X. Xie, G. Sun, and Y. Huang, “T-drive: driving directions based on taxi trajectories,” in Proceedings of the 18th SIGSPATIAL International conference on advances in geographic information systems , 2010, pp. 99–108. [34] C. Luo, “The civil unmanned aerial vehicle (uav) law of china: A comparative study of the mainland, hong kong, and macao,” in The Regulation of Automated and Autonomous Transport . Springer, 2023, pp. 71–103. [35] P. H. Kopardekar, “Unmanned aircraft system (uas) traffic management (utm): Enabling civilian low-altitude airspace and unmanned aerial sys-tem operations,” Unmanned Aircraft System (UAS) Traffic Management (UTM): Enabling Civilian Low-Altitude Airspace and Unmanned Aerial System Operations by Kopardekar , p. 08685, 2016. [36] A. Bauranov and J. Rakas, “Designing airspace for urban air mobility: A review of concepts and approaches,” Progress in Aerospace Sciences ,vol. 125, p. 100726, 2021. [37] M. Quigley, K. Conley, B. Gerkey, J. Faust, T. Foote, J. Leibs, R. Wheeler, A. Y. Ng et al. , “Ros: an open-source robot operating system,” in ICRA workshop on open source software , vol. 3, no. 3.2. Kobe, 2009, p. 5. [38] N. Koenig and A. Howard, “Design and use paradigms for gazebo, an open-source multi-robot simulator,” in 2004 IEEE/RSJ international conference on intelligent robots and systems (IROS)(IEEE Cat. No. 04CH37566) , vol. 3. Ieee, 2004, pp. 2149–2154. [39] L. Meier, D. Honegger, and M. Pollefeys, “Px4: A node-based mul-tithreaded open source robotics framework for deeply embedded plat-forms,” in 2015 IEEE international conference on robotics and automa-tion (ICRA) . IEEE, 2015, pp. 6235–6240.

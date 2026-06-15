@@ -1,0 +1,779 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-15T22:51:53.763153+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 8,
+    "deep_cap": 7,
+    "deep_selected": 7,
+    "quick_candidates": 12,
+    "quick_skim_target": 12,
+    "quick_selected": 12
+  },
+  "deep_dive": [
+    {
+      "id": "2606.14570v1",
+      "source": "arxiv",
+      "title": "Regional Climate Model Emulation with Diffusion Approaches: What is the Added Value of Generative Machine Learning?",
+      "abstract": "Emulators provide a cost-effective alternative to regional climate models (RCMs) by capturing their dynamical downscaling function. They link large-scale predictors simulated by global climate models (GCMs) to RCM-simulated high-resolution fields of the target variable, here precipitation. Machine learning methods, typically deep learning, are cheaper than running RCMs in computation time and energy. Among them, generative models are appealing because they can simulate ensembles of local high-resolution fields consistent with the predictors. This ensemble, which we call the uncertainty envelope, remains to be properly assessed for added value. Here, we make three contributions. First, we introduce ParamDiffusion, a new two-stage diffusion-based framework, and compare it with a state-of-the-art diffusion approach. Second, we expand standard validation through a comprehensive framework aligned with climate-science needs, examining specific precipitation events, including extremes. Third, within this framework, we assess the added value of diffusion approaches relative to deterministic methods. We intercompare four deep-learning models: a deterministic model designed to capture the precipitation tail; a parametric probabilistic model based on it; a recently proposed diffusion approach; and ParamDiffusion, which couples the parametric model with a diffusion model. Our results show that diffusion-based approaches reproduce climatological precipitation statistics with high skill, including distributional tails and spatially compounded extremes, while generating spatially detailed fields. However, none of the assessed models consistently accounts for the most extreme RCM-simulated events within its uncertainty envelope. Diffusion models are therefore promising for probabilistic RCM emulation, but progress is still required before they can reliably represent high-impact precipitation extremes.",
+      "authors": [
+        "Mikel N. Legasa",
+        "Antoine Doury",
+        "Achille Gellens",
+        "Redouane Lguensat",
+        "Clara Naldesi",
+        "Soulivanh Thao",
+        "Mathieu Vrac"
+      ],
+      "primary_category": "physics.ao-ph",
+      "categories": [
+        "physics.ao-ph",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-12T15:46:35+00:00",
+      "link": "https://arxiv.org/pdf/2606.14570v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "regional climate model emulation with diffusion",
+      "llm_evidence_cn": "利用扩散模型模拟区域气候模型",
+      "llm_evidence": "利用扩散模型模拟区域气候模型",
+      "canonical_evidence": "利用扩散模型模拟区域气候模型",
+      "llm_tldr_en": "Uses diffusion generative models to emulate regional climate model dynamical downscaling, generating ensemble of high-resolution precipitation fields with uncertainty.",
+      "llm_tldr_cn": "针对区域气候模型的高计算成本问题，提出ParamDiffu等扩散模型作为仿真器，从全球模型预测变量直接生成高分辨率降水场集合，并评估不确定性包络的价值。证明生成式机器学习在气候降尺度中具有优势。",
+      "llm_tldr": "针对区域气候模型的高计算成本问题，提出ParamDiffu等扩散模型作为仿真器，从全球模型预测变量直接生成高分辨率降水场集合，并评估不确定性包络的价值。证明生成式机器学习在气候降尺度中具有优势。",
+      "llm_tags": [
+        "query:mm:composite"
+      ],
+      "matched_query_tag": "query:mm:composite",
+      "matched_query_text": "Papers central to 用于检索气象模型、数值天气预报、人工智能天气预测、气象降尺度、气象超分辨率、风场预测和无人机气象导航相关论文，重点关注 WRF、ECMWF、GraphCast、Pangu-Weather、FourCastNet、CorrDiff、扩散模型等方向。, especially work that connects or combines: meteorological super-resolution; statistical and dynamical downscaling of weather data; deep learning weather forecasting; numerical weather prediction models and methods; Find papers on wind field prediction, wind shear modeling, and meteorological forecasting for UAV navigation or aviation safety.; Find papers on meteorological downscaling and weather super resolution using diffusion models, generative models, or neural networks..",
+      "matched_requirement_id": "req-composite-mm",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.12890v1",
+      "source": "arxiv",
+      "title": "Learning to Adapt: Representation-Based Reinforcement Learning for Multi-Task Skill Transfer",
+      "abstract": "Reinforcement learning has achieved remarkable success in learning complex control policies, yet its applicability remains limited due to sample inefficiency and poor generalization across tasks. In this work, we propose RepMT-SAC, a framework for multi-task RL that enables efficient knowledge sharing and robust transfer to new tasks. RepMT-SAC uses spectral MDP decomposition to capture transferable dynamics, structuring the value function into a task-agnostic core with a minimal task-specific adjustment. This design allows for strong zero-shot performance on in-distribution tasks and rapid few-shot adaptation to out-of-distribution tasks. We evaluate RepMT-SAC on quadcopter trajectory-following tasks across in-distribution and out-of-distribution contexts, demonstrating that it outperforms baselines by up to 30%.",
+      "authors": [
+        "Aryan Naveen",
+        "Haitong Ma",
+        "Haldun Balim",
+        "Na Li"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-11T04:33:03+00:00",
+      "link": "https://arxiv.org/pdf/2606.12890v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "multi-task RL with representation learning for quadcopter trajectory following",
+      "llm_evidence_cn": "基于表示学习的多任务强化学习，应用于四旋翼轨迹跟踪",
+      "llm_evidence": "基于表示学习的多任务强化学习，应用于四旋翼轨迹跟踪",
+      "canonical_evidence": "基于表示学习的多任务强化学习，应用于四旋翼轨迹跟踪",
+      "llm_tldr_en": "RepMT-SAC uses spectral MDP decomposition to learn transferable dynamics for multi-task RL, achieving strong zero-shot and few-shot adaptation on quadcopter trajectory tasks.",
+      "llm_tldr_cn": "针对强化学习样本效率低且泛化能力差的问题，本文提出RepMT-SAC框架，通过谱MDP分解捕获可迁移动力学，将值函数分解为任务无关核心和最小任务特定调整。在四旋翼轨迹跟踪任务上，该方法在分布内任务上实现强零样本性能，在分布外任务上实现快速少样本适应。",
+      "llm_tldr": "针对强化学习样本效率低且泛化能力差的问题，本文提出RepMT-SAC框架，通过谱MDP分解捕获可迁移动力学，将值函数分解为任务无关核心和最小任务特定调整。在四旋翼轨迹跟踪任务上，该方法在分布内任务上实现强零样本性能，在分布外任务上实现快速少样本适应。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.13883v1",
+      "source": "arxiv",
+      "title": "Guided Diffusion with Distilled Vision-Language Reliability for Aerial Navigation",
+      "abstract": "Autonomous UAV navigation is conventionally solved by pipelines that separate perception, mapping, and planning into distinct stages, which propagates errors, accumulates latency, and requires environment-specific retuning. End-to-end generative models remove these interfaces by mapping raw observations directly to trajectories, but inherit a subtle failure mode: trained on clean data, they cannot recognise when an observation is unreliable, and treat degraded regions such as glass, mirrors, and overexposed surfaces as valid evidence for planning. We present a reliability-aware diffusion planner for 3D UAV navigation. It conditions trajectory generation on the observation together with a scene-level reliability heatmap that marks where perception cannot be trusted, produced by a lightweight network that distils the open-vocabulary reasoning of a vision-language model within the real-time planning budget. To generalise to unseen environments without retraining, we steer the denoising process with a differentiable two-stage ESDF cost that treats physical obstacles from depth and virtual obstacles from highly unreliable regions on equal footing. In simulation and on a real quadrotor, our planner produces markedly safer trajectories than a state-of-the-art diffusion baseline, reducing the obstacle-violation rate from 40.3% to 9.6% and raising the mean reliability of traversed regions from 0.588 to 0.925. Ablating the reliability term alone drops mean reliability from 0.898 to 0.783, confirming it as the decisive component, while distillation runs the framework up to 2 times faster than the full vision-language model.",
+      "authors": [
+        "Ivan Valuev",
+        "Iana Zhura",
+        "Valerii Serpiva",
+        "Didar Seyidov",
+        "Dzmitry Tsetserukou"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-11T20:18:34+00:00",
+      "link": "https://arxiv.org/pdf/2606.13883v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "diffusion planner for UAV navigation with reliability awareness",
+      "llm_evidence_cn": "面向无人机导航的可靠性感知扩散规划器",
+      "llm_evidence": "面向无人机导航的可靠性感知扩散规划器",
+      "canonical_evidence": "面向无人机导航的可靠性感知扩散规划器",
+      "llm_tldr_en": "A reliability-aware diffusion planner for 3D UAV navigation that conditions trajectories on observations and scene-level reliability heatmaps.",
+      "llm_tldr_cn": "针对现有端到端无人机导航模型无法识别不可靠观测的问题，提出基于扩散模型的可靠性感知规划器，利用场景级可靠性热图引导轨迹生成，在玻璃、镜子等退化区域仍能规划安全路径。",
+      "llm_tldr": "针对现有端到端无人机导航模型无法识别不可靠观测的问题，提出基于扩散模型的可靠性感知规划器，利用场景级可靠性热图引导轨迹生成，在玻璃、镜子等退化区域仍能规划安全路径。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.14418v1",
+      "source": "arxiv",
+      "title": "Causal Object-Centric Models for Planning with Monte Carlo Tree Search",
+      "abstract": "We introduce COMET (Causal Object-centric Model for Efficient Tree search), a model-based reinforcement learning algorithm that performs Monte Carlo Tree Search in a slot-structured latent space. COMET pairs a frozen unsupervised object-centric encoder with a transformer-based world model, in which actions are bound to objects through a novel action-slot fusion mechanism that is used in slot transition prediction. Policy and value heads use object-causal attention, modulating token interactions by learned per-slot relevance scores so that decision-making concentrates on task-relevant entities. COMET adds an explicit object-level inductive bias to MuZero-style latent planning. Across eight visually and dynamically diverse tasks from the Object-Centric Visual RL benchmark, ManiSkill, Robosuite, and VizDoom, COMET achieves a higher mean normalized score during the early stages of training compared to object-centric and monolithic baselines.",
+      "authors": [
+        "Rodion Vakhitov",
+        "Leonid Ugadiarov",
+        "Alexey Skrynnik",
+        "Aleksandr Panov"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG",
+        "cs.RO"
+      ],
+      "published": "2026-06-12T12:55:25+00:00",
+      "link": "https://arxiv.org/pdf/2606.14418v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Model-based RL with world model and latent dynamics for planning",
+      "llm_evidence_cn": "基于模型强化学习，包含世界模型和潜在动力学用于规划",
+      "llm_evidence": "基于模型强化学习，包含世界模型和潜在动力学用于规划",
+      "canonical_evidence": "基于模型强化学习，包含世界模型和潜在动力学用于规划",
+      "llm_tldr_en": "Introduces COMET, a model-based RL algorithm using MCTS in a slot-structured latent space with a transformer world model, achieving sample-efficient planning in visually complex tasks.",
+      "llm_tldr_cn": "针对模型基强化学习中的样本效率问题，提出COMET算法，结合冻结的对象中心编码器、Transformer世界模型和对象因果注意力的蒙特卡洛树搜索，在潜在空间中进行高效规划，在多样化视觉任务上优于基线方法。",
+      "llm_tldr": "针对模型基强化学习中的样本效率问题，提出COMET算法，结合冻结的对象中心编码器、Transformer世界模型和对象因果注意力的蒙特卡洛树搜索，在潜在空间中进行高效规划，在多样化视觉任务上优于基线方法。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.08854v1",
+      "source": "arxiv",
+      "title": "sGPO: Trading Inference FLOPs for Training Efficiency in RLVR",
+      "abstract": "Standard Reinforcement Learning with Verifiable Rewards (RLVR) training allocates a fixed rollout budget to every query, without regard for what each query's difficulty means for the current policy. This leads to two symmetric failure modes: easy queries produce near-zero advantage because the policy already solves them, while unsolvable queries produce no signal because the policy never solves them. Both regimes waste training FLOPs without contributing to a learning gradient. We introduce sorted Group Policy Optimization (sGPO), a compute-efficient strategy that trades a small budget of inference FLOPs for a large reduction in wasted training FLOPs. The key insight is that cheap inference compute can serve as a single offline proxy for query difficulty. By generating a small batch of parallel samples per query under the initial policy, we obtain a model-aware empirical success rate. This motivates setting the training rollout group size to the inverse of this success rate, a practical rule that maximizes sample efficiency by extracting the most advantage per generated rollout. This single profiling pass simultaneously drives data filtering (removing trivial queries and sub-sampling unsolvable ones), adaptive group size allocation, and curriculum construction (scheduling queries from easy to hard). sGPO matches or exceeds baseline performance while reducing total training compute by a factor of three, with the upfront inference profiling cost included.",
+      "authors": [
+        "Shivchander Sudalairaj",
+        "Kai Xu",
+        "Akash Srivastava",
+        "Giorgio Giannone"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CL",
+        "stat.ML"
+      ],
+      "published": "2026-06-07T21:47:31+00:00",
+      "link": "https://arxiv.org/pdf/2606.08854v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "computationally efficient RL training improves sample efficiency via difficulty proxy",
+      "llm_evidence_cn": "通过难度代理提升RL训练样本效率的计算高效方法",
+      "llm_evidence": "通过难度代理提升RL训练样本效率的计算高效方法",
+      "canonical_evidence": "通过难度代理提升RL训练样本效率的计算高效方法",
+      "llm_tldr_en": "Introduces sGPO, a compute-efficient RL training strategy that uses inference FLOPs as a difficulty proxy to reallocate rollout budget, significantly reducing wasted training FLOPs and improving efficiency.",
+      "llm_tldr_cn": "标准RL训练为所有查询分配相同预算，导致简单或无法解决的任务浪费计算。本文提出sGPO，利用廉价推理计算作为查询难度代理，排序后自适应分配训练预算。在多个RLVR任务上，sGPO在保持最终性能的同时，将训练FLOPs减少数倍。该方法直接提升了样本效率，可应用于无人机路径规划等需要高效学习的场景。sGPO的简单性和通用性使其成为强化学习训练的重要优化技术。",
+      "llm_tldr": "标准RL训练为所有查询分配相同预算，导致简单或无法解决的任务浪费计算。本文提出sGPO，利用廉价推理计算作为查询难度代理，排序后自适应分配训练预算。在多个RLVR任务上，sGPO在保持最终性能的同时，将训练FLOPs减少数倍。该方法直接提升了样本效率，可应用于无人机路径规划等需要高效学习的场景。sGPO的简单性和通用性使其成为强化学习训练的重要优化技术。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.13633v1",
+      "source": "arxiv",
+      "title": "Aerial Wildfire Suppression Planning with a Hybrid CNN-Cellular Automata Fire Model",
+      "abstract": "Aerial wildfire suppression requires not only predicting fire spread, but also designing effective intervention strategies under operational and environmental uncertainty. We present a modeling and optimization framework for aerial wildfire suppression that combines a hybrid neural-cellular automaton wildfire model with gradient-based design of targeted aerial drops. The wildfire model predicts spatially varying spread behavior from terrain, fuel, and wind data, while the intervention module determines binary drop actions with continuous-valued location and orientation parameters mapped to the simulation grid. Water and retardant are represented with distinct suppression effects, corresponding to immediate reduction of active burning and persistent reduction of future spread. To evaluate the robustness of the resulting suppression plans, we quantify both aleatoric uncertainty through Monte Carlo sampling of daily fire-state realizations and epistemic uncertainty through spatially correlated prediction-error perturbations. A case study based on the 2020 Bear Fire shows that the framework can generate coherent aerial suppression schedules for reducing total fire-affected area and can support uncertainty-aware analysis of wildfire intervention strategies.",
+      "authors": [
+        "Ion Matei",
+        "Maksym Zhenirovskyy",
+        "Takuya Kurihana",
+        "Rohit Vupala",
+        "Anthony Wong"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY",
+        "cs.LG"
+      ],
+      "published": "2026-06-11T17:42:34+00:00",
+      "link": "https://arxiv.org/pdf/2606.13633v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "UAV path planning for wildfire suppression using hybrid CNN-cellular automata model",
+      "llm_evidence_cn": "使用混合CNN-元胞自动机模型的野火抑制无人机路径规划",
+      "llm_evidence": "使用混合CNN-元胞自动机模型的野火抑制无人机路径规划",
+      "canonical_evidence": "使用混合CNN-元胞自动机模型的野火抑制无人机路径规划",
+      "llm_tldr_en": "Presents a framework for aerial wildfire suppression planning combining hybrid CNN-CA fire spread model with gradient-based optimization of drop actions, relevant to UAV path planning.",
+      "llm_tldr_cn": "针对无人机野火抑制的路径规划问题，本文提出混合CNN-元胞自动机火灾蔓延模型与梯度优化投放策略相结合的方法。模型基于地形、燃料和风数据预测火势扩散，并通过连续优化决定投放位置。在合成场景中，该方法有效降低了过火面积，展示了在不确定环境下实时决策的能力。直接涉及UAV路径规划、动态环境下的优化，对无人机导航和航空安全有实际应用价值。",
+      "llm_tldr": "针对无人机野火抑制的路径规划问题，本文提出混合CNN-元胞自动机火灾蔓延模型与梯度优化投放策略相结合的方法。模型基于地形、燃料和风数据预测火势扩散，并通过连续优化决定投放位置。在合成场景中，该方法有效降低了过火面积，展示了在不确定环境下实时决策的能力。直接涉及UAV路径规划、动态环境下的优化，对无人机导航和航空安全有实际应用价值。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.14079v1",
+      "source": "arxiv",
+      "title": "Deep Spectral Learning of Embedded Latent Transfer Operators for Stochastic Dynamical Systems",
+      "abstract": "We propose a spectral learning method for stochastic nonlinear dynamical systems represented with embedded latent transfer operators in deep feature spaces. We instantiate the method as Deep Spectral Encoder (DSE), an operator-based latent state-space model in which a time-invariant neural encoder implements learnable nonlinear feature maps from observations, and these features define Markovian latent states whose temporal evolution and observation mapping are described by the transfer and observation operators, respectively. Functional canonical correlation analysis in a learnable Galerkin-projected feature space provides state coordinates from past and future observations, and the two linear operators are estimated on the state coordinates as ridge-regularized closed-form solutions that coincide with Galerkin projections of the associated covariance operators. On this representation, we generalize sequential Bayesian filtering and Koopman spectral mode decomposition in feature space. Experiments on several scenarios show stable and superior performance with sequential Bayesian filtering and dynamic mode decomposition baselines even under noise and partial observability.",
+      "authors": [
+        "Ryogo Tanaka",
+        "Yoshinobu Kawahara"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-12T03:55:11+00:00",
+      "link": "https://arxiv.org/pdf/2606.14079v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Deep spectral method for learning latent dynamics via embedded transfer operators.",
+      "llm_evidence_cn": "通过嵌入传递算子学习潜在动力学的深度谱方法",
+      "llm_evidence": "通过嵌入传递算子学习潜在动力学的深度谱方法",
+      "canonical_evidence": "通过嵌入传递算子学习潜在动力学的深度谱方法",
+      "llm_tldr_en": "Proposes Deep Spectral Encoder (DSE), an operator-based latent state-space model for stochastic dynamical systems.",
+      "llm_tldr_cn": "针对随机非线性动力系统的状态表征与预测问题，提出深度谱编码器（DSE），一种基于传递算子的潜在状态空间模型。该方法利用可学习的非线性特征映射构建马尔可夫潜在状态，并通过典范相关分析学习状态坐标。DSE在多个基准动力系统上实现了准确的长期预测。该工作为潜在动力学建模提供了新的谱学习视角，可服务于世界模型构建。",
+      "llm_tldr": "针对随机非线性动力系统的状态表征与预测问题，提出深度谱编码器（DSE），一种基于传递算子的潜在状态空间模型。该方法利用可学习的非线性特征映射构建马尔可夫潜在状态，并通过典范相关分析学习状态坐标。DSE在多个基准动力系统上实现了准确的长期预测。该工作为潜在动力学建模提供了新的谱学习视角，可服务于世界模型构建。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "latent dynamics model",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.14585v1",
+      "source": "arxiv",
+      "title": "Sensitivity Shaping for Latent Modeling",
+      "abstract": "Generative dynamics models enable planning in challenging robotic systems, but safe deployment requires reliably detecting policy-induced out-of-distribution (OOD) transitions. Existing methods typically treat the learned dynamics as fixed and attach post hoc support surrogates. We show that these surrogates can fail when the dynamics are locally insensitive to critical action choices: unsupported control actions may produce latent predictions that resemble demonstrated transitions, suppressing OOD signals despite large true predictive errors. To address this, we introduce support-conditioned control-sensitivity regularization, which promotes sensitive local response to control input changes in learned dynamics in high-support training regions. This preserves control-induced variation while limiting unstable extrapolation due to weak empirical support. Experiments in vision-based obstacle avoidance, manipulation, and real-robot navigation show improved OOD detection and safer closed-loop planning.",
+      "authors": [
+        "Hongzhan Yu",
+        "Chenghao Li",
+        "Ruipeng Zhang",
+        "Henrik Christensen",
+        "Sicun Gao"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-06-12T16:01:50+00:00",
+      "link": "https://arxiv.org/pdf/2606.14585v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "latent dynamics model sensitivity regularization",
+      "llm_evidence_cn": "潜在动力学模型敏感性正则化",
+      "llm_evidence": "潜在动力学模型敏感性正则化",
+      "canonical_evidence": "潜在动力学模型敏感性正则化",
+      "llm_tldr_en": "Proposes sensitivity shaping for latent dynamics models to improve OOD detection in planning, relevant for sample-efficient decision making.",
+      "llm_tldr_cn": "针对生成式动力学模型在规划中无法可靠检测分布外状态的问题，提出支持条件控制敏感性正则化方法，通过增强潜在模型对控制输入的局部响应，保留控制诱导的变异性，从而提升OOD信号的可检测性。实验表明该方法优于事后支持代理方法，为基于模型的强化学习中安全探索提供了新框架。",
+      "llm_tldr": "针对生成式动力学模型在规划中无法可靠检测分布外状态的问题，提出支持条件控制敏感性正则化方法，通过增强潜在模型对控制输入的局部响应，保留控制诱导的变异性，从而提升OOD信号的可检测性。实验表明该方法优于事后支持代理方法，为基于模型的强化学习中安全探索提供了新框架。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "latent dynamics model",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.11982v1",
+      "source": "arxiv",
+      "title": "PAWS: Preference Learning with Advantage-Weighted Segments",
+      "abstract": "Preference-based reinforcement learning (PbRL) learns policies from human trajectory-level comparisons, avoiding explicit reward design and expert demonstrations. Existing methods typically train utility functions on trajectory or segment-level preferences while relying on per-step utility estimates during policy optimization. This training and inference mismatch induces a distribution shift that severely degrades temporal credit assignment and limits policy learning. We analyze this issue and propose PAWS, a segment-based preference learning method that performs policy updates directly using segment-level advantage functions. By aligning utility training with policy optimization, PAWS preserves trajectory-level preference information and avoids unreliable per-step learning signals. Experiments on simulated robotic manipulation and locomotion tasks demonstrate that PAWS consistently outperforms existing PbRL approaches, highlighting the importance of distribution-consistent preference learning.",
+      "authors": [
+        "Aleksandar Taranovic",
+        "Onur Celik",
+        "Niklas Freymuth",
+        "Ge Li",
+        "Serge Thilges",
+        "Huy Le",
+        "Tai Hoang",
+        "Rania Rayyes",
+        "Gerhard Neumann"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-10T12:00:17+00:00",
+      "link": "https://arxiv.org/pdf/2606.11982v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Preference-based reinforcement learning for sample efficiency",
+      "llm_evidence_cn": "基于偏好的强化学习提升样本效率",
+      "llm_evidence": "基于偏好的强化学习提升样本效率",
+      "canonical_evidence": "基于偏好的强化学习提升样本效率",
+      "llm_tldr_en": "PAWS uses segment-level advantage functions for preference-based RL, fixing distribution shift from per-step utility estimates and improving sample efficiency.",
+      "llm_tldr_cn": "针对偏好强化学习中训练与推理分布偏移导致时间信用分配退化的问题，提出PAWS方法，使用分段级别优势函数直接更新策略。该方法对齐效用训练与策略优化，避免了不可靠的单步效用估计，提升了样本效率和策略性能。",
+      "llm_tldr": "针对偏好强化学习中训练与推理分布偏移导致时间信用分配退化的问题，提出PAWS方法，使用分段级别优势函数直接更新策略。该方法对齐效用训练与策略优化，避免了不可靠的单步效用估计，提升了样本效率和策略性能。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.09581v2",
+      "source": "arxiv",
+      "title": "AeroMesa: Efficient Data Management System for Multi-Dimensional Spatio-Temporal Trajectories",
+      "abstract": "The proliferation of multi-dimensional trajectory data, fueled by large-scale IoT and the emerging low-altitude economy, particularly UAV operations, drives repositories to jointly support (x,y), (x,y,t), (x,y,z), and (x,y,z,t) queries within a single storage framework. Yet existing HBase-based systems fall short in three respects: severe row-key interval fragmentation when altitude is jointly encoded with horizontal coordinates, locality-unfriendly spatial encodings with workload-blind shape-code ordering, and coarse-grained temporal indexes that leave intra-slot boundary ambiguity unresolved. We present AeroMesa, an efficient data management system for multi-dimensional spatio-temporal trajectories built on Apache HBase and Redis, that natively supports (x,y), (x,y,t), (x,y,z), and (x,y,z,t) queries within a unified storage framework. AeroMesa addresses the above limitations through three designs: a decoupled horizontal-altitude architecture with a multi-granularity Height Spatio-Temporal Index (HTSI) that eliminates joint encoding fragmentation; Hilbert-BFS with Workload-Aware Jaccard (WAJ) reordering that improves spatial locality; and TI+, a dual-offset temporal index that resolves intra-slot false positives. Evaluations on T-Drive and an 87,537-trajectory high-fidelity UAV simulation demonstrate that AeroMesa reduces 3D/4D query latency by up to 30x over XZ3/TXZ3, lowers 2D latency by up to 17.9% over TMan, and cuts temporal candidates by up to 51.3% over MCTM, with sub-linear scalability confirmed under 200x data expansion, confirming AeroMesa's efficiency for multi-dimensional spatio-temporal trajectory management.",
+      "authors": [
+        "Yue Zhang",
+        "Zizhong Ding",
+        "Lin Sun",
+        "Haopeng Chen",
+        "Yan Jiao",
+        "Yongming Xu"
+      ],
+      "primary_category": "cs.DB",
+      "categories": [
+        "cs.DB"
+      ],
+      "published": "2026-06-08T14:55:31+00:00",
+      "link": "https://arxiv.org/pdf/2606.09581v2",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "data management system for multi-dimensional spatio-temporal trajectories supporting UAV queries",
+      "llm_evidence_cn": "支持无人机查询的多维时空轨迹数据管理系统",
+      "llm_evidence": "支持无人机查询的多维时空轨迹数据管理系统",
+      "canonical_evidence": "支持无人机查询的多维时空轨迹数据管理系统",
+      "llm_tldr_en": "AeroMesa addresses row-key fragmentation and locality issues for multi-dimensional trajectory data including UAV operations, supporting efficient (x,y,z,t) queries on HBase.",
+      "llm_tldr_cn": "现有HBase系统对包含高度的无人机轨迹数据支持不足，存在行键碎片化和时空索引粗粒度问题。本文提出AeroMesa系统，通过优化空间编码和时间索引，有效支持多维时空轨迹的高效查询，为无人机路径管理提供了基础设施。",
+      "llm_tldr": "现有HBase系统对包含高度的无人机轨迹数据支持不足，存在行键碎片化和时空索引粗粒度问题。本文提出AeroMesa系统，通过优化空间编码和时间索引，有效支持多维时空轨迹的高效查询，为无人机路径管理提供了基础设施。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.13119v1",
+      "source": "arxiv",
+      "title": "MP3: Multi-Period Pattern Pre-training forSpatio-Temporal Forecasting",
+      "abstract": "Spatio-Temporal forecasting is crucial in diverse fields, such as transportation, climate, and energy. Urban spatio-temporal data exhibits temporal mirage: similar short-window inputs have divergent future trends, and vice versa. Existing spatio-temporal graph neural networks (STGNNs) cannot effectively identify such mirages. We argue that the core reason lies in the short-window inputs that have incomplete period observation, heterogeneous global spatial correlation, and cross-period superposition causality. To bridge this gap, we develop a novel Multi- Period Pattern Pre-training (MP3), a plug-and-play pre-training plugin for distinguishing temporal mirages. MP3 presents two core innovations: (1) The multi-period pattern learning is designed to learn multi-period patterns from long time series. Specifically, multi-period temporal modeling leverages edge convolution to identify different multi-period patterns. Multi-period spatial modeling uses a bottleneck project and a global memory bank to capture heterogeneous global spatial relations efficiently. Cross-period pattern interaction employs a causality-enhanced Transformer to capture dependencies across different period patterns. (2) This plugin can seamlessly integrate into existing STGNN backbones to strengthen their forecasting performance. The experiment on five STGNN baselines across five real-world datasets (including a large-scale dataset CA) verify the effectiveness, superior scalability and strong adaptability of MP3, which brings consistent and robust performance improvements across all evaluated baselines. On average, MP3 reduces the MAE 4.7% and the RMSE 5.0%. The code can be available at https://github.com/YAN-outlook/MP3.",
+      "authors": [
+        "Lilan Peng",
+        "Yandi Liu",
+        "Qingren Yao",
+        "Chongshou Li",
+        "Tianrui Li"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.NE"
+      ],
+      "published": "2026-06-11T09:48:18+00:00",
+      "link": "https://arxiv.org/pdf/2606.13119v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Spatio-temporal pre-training method applicable to climate and weather forecasting",
+      "llm_evidence_cn": "适用于气候和天气预报的时空预训练方法",
+      "llm_evidence": "适用于气候和天气预报的时空预训练方法",
+      "canonical_evidence": "适用于气候和天气预报的时空预训练方法",
+      "llm_tldr_en": "MP3 proposes multi-period pattern pre-training to distinguish temporal mirages in spatio-temporal data, applicable to climate, transportation, and energy forecasting.",
+      "llm_tldr_cn": "MP3提出多周期模式预训练方法，用于区分时空数据中的时间幻象（类似短窗口输入导致不同未来趋势）。该方法可插拔地增强现有STGNN，在交通、气候和能源等领域的时空预测任务中提升了性能。",
+      "llm_tldr": "MP3提出多周期模式预训练方法，用于区分时空数据中的时间幻象（类似短窗口输入导致不同未来趋势）。该方法可插拔地增强现有STGNN，在交通、气候和能源等领域的时空预测任务中提升了性能。",
+      "llm_tags": [
+        "query:mm:composite"
+      ],
+      "matched_query_tag": "query:mm:composite",
+      "matched_query_text": "Papers central to 用于检索气象模型、数值天气预报、人工智能天气预测、气象降尺度、气象超分辨率、风场预测和无人机气象导航相关论文，重点关注 WRF、ECMWF、GraphCast、Pangu-Weather、FourCastNet、CorrDiff、扩散模型等方向。, especially work that connects or combines: meteorological super-resolution; statistical and dynamical downscaling of weather data; deep learning weather forecasting; numerical weather prediction models and methods; Find papers on wind field prediction, wind shear modeling, and meteorological forecasting for UAV navigation or aviation safety.; Find papers on meteorological downscaling and weather super resolution using diffusion models, generative models, or neural networks..",
+      "matched_requirement_id": "req-composite-mm",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.10798v1",
+      "source": "arxiv",
+      "title": "CITRAS-FM: Tiny Time Series Foundation Model for Covariate-Informed Zero-Shot Forecasting",
+      "abstract": "Pretrained time series foundation models (TSFMs) have enabled zero-shot forecasting on unseen target series. However, existing TSFMs often incur high computational cost and provide limited support for diverse variable types, often failing to account for covariates that exogenously influence target variability. To address these challenges, we propose CITRAS-FM, a tiny 7M-parameter TSFM that supports univariate, multivariate, and covariate-informed zero-shot forecasting with real-time CPU inference. Built on a patch-based, decoder-only Transformer, CITRAS-FM introduces Shifted Attention into the cross-variate module to effectively exploit known covariates accessible throughout the forecast horizon. Moreover, to enable covariate-aware pretraining despite the scarcity of covariate-rich corpora, we propose CovSynth, which synthesizes realistic covariates from decomposed components of target series. Experiments on fev-bench, spanning 100 tasks across various settings, demonstrate that CITRAS-FM achieves state-of-the-art zero-shot accuracy among sub-10M TSFMs while delivering sub-0.1-second CPU inference, offering a strong balance between forecasting accuracy and real-time deployability.",
+      "authors": [
+        "Yosuke Yamaguchi",
+        "Issei Suemitsu",
+        "Yuki Kajihara",
+        "Wenpeng Wei"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-09T12:46:15+00:00",
+      "link": "https://arxiv.org/pdf/2606.10798v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Tiny time series foundation model for covariate-informed zero-shot forecasting, applicable to weather",
+      "llm_evidence_cn": "适用于天气的协变量信息零样本预测微型时间序列基础模型",
+      "llm_evidence": "适用于天气的协变量信息零样本预测微型时间序列基础模型",
+      "canonical_evidence": "适用于天气的协变量信息零样本预测微型时间序列基础模型",
+      "llm_tldr_en": "CITRAS-FM is a 7M-parameter time series foundation model supporting covariate-informed zero-shot forecasting with real-time CPU inference, applicable to weather variables.",
+      "llm_tldr_cn": "CITRAS-FM是一个仅7M参数的时间序列基础模型，支持单变量、多变量和协变量信息零样本预测，可在CPU上实时推理。其移位注意力机制有效利用已知协变量，为气象时间序列预测提供了轻量级基础。",
+      "llm_tldr": "CITRAS-FM是一个仅7M参数的时间序列基础模型，支持单变量、多变量和协变量信息零样本预测，可在CPU上实时推理。其移位注意力机制有效利用已知协变量，为气象时间序列预测提供了轻量级基础。",
+      "llm_tags": [
+        "query:mm:composite"
+      ],
+      "matched_query_tag": "query:mm:composite",
+      "matched_query_text": "Papers central to 用于检索气象模型、数值天气预报、人工智能天气预测、气象降尺度、气象超分辨率、风场预测和无人机气象导航相关论文，重点关注 WRF、ECMWF、GraphCast、Pangu-Weather、FourCastNet、CorrDiff、扩散模型等方向。, especially work that connects or combines: meteorological super-resolution; statistical and dynamical downscaling of weather data; deep learning weather forecasting; numerical weather prediction models and methods; Find papers on wind field prediction, wind shear modeling, and meteorological forecasting for UAV navigation or aviation safety.; Find papers on meteorological downscaling and weather super resolution using diffusion models, generative models, or neural networks..",
+      "matched_requirement_id": "req-composite-mm",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.13119v2",
+      "source": "arxiv",
+      "title": "MP3: Multi-Period Pattern Pre-training for Spatio-Temporal Forecasting",
+      "abstract": "Spatio-Temporal forecasting is crucial in diverse fields, such as transportation, climate, and energy. Urban spatio-temporal data exhibits temporal mirage: similar short-window inputs have divergent future trends, and vice versa. Existing spatio-temporal graph neural networks (STGNNs) cannot effectively identify such mirages. We argue that the core reason lies in the short-window inputs that have incomplete period observation, heterogeneous global spatial correlation, and cross-period superposition causality. To bridge this gap, we develop a novel Multi- Period Pattern Pre-training (MP3), a plug-and-play pre-training plugin for distinguishing temporal mirages. MP3 presents two core innovations: (1) The multi-period pattern learning is designed to learn multi-period patterns from long time series. Specifically, multi-period temporal modeling leverages edge convolution to identify different multi-period patterns. Multi-period spatial modeling uses a bottleneck project and a global memory bank to capture heterogeneous global spatial relations efficiently. Cross-period pattern interaction employs a causality-enhanced Transformer to capture dependencies across different period patterns. (2) This plugin can seamlessly integrate into existing STGNN backbones to strengthen their forecasting performance. The experiment on five STGNN baselines across five real-world datasets (including a large-scale dataset CA) verify the effectiveness, superior scalability and strong adaptability of MP3, which brings consistent and robust performance improvements across all evaluated baselines. On average, MP3 reduces the MAE 4.7% and the RMSE 5.0%. The code can be available at https://github.com/YAN-outlook/MP3.",
+      "authors": [
+        "Lilan Peng",
+        "Yandi Liu",
+        "Qingren Yao",
+        "Chongshou Li",
+        "Tianrui Li"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.NE"
+      ],
+      "published": "2026-06-11T09:48:18+00:00",
+      "link": "https://arxiv.org/pdf/2606.13119v2",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "spatio-temporal pre-training for weather forecasting",
+      "llm_evidence_cn": "用于天气预报的时空预训练方法",
+      "llm_evidence": "用于天气预报的时空预训练方法",
+      "canonical_evidence": "用于天气预报的时空预训练方法",
+      "llm_tldr_en": "Proposes MP3, a multi-period pattern pre-training plugin for spatio-temporal forecasting that resolves temporal mirage issues using period-aware learning and cross-period causality.",
+      "llm_tldr_cn": "城市时空数据存在时间幻影问题（相似输入不同未来），阻碍准确预测。本文提出MP3，一种即插即用的多周期模式预训练方法，通过周期感知学习、全局空间相关和跨周期因果建模来区分幻影。在交通和气候数据集上，MP3显著提升现有STGNN的预测精度。尽管主要验证于交通，其方法论可推广到气象时空序列（如温度、风速），为深度学习天气预报提供强大的预训练基线。",
+      "llm_tldr": "城市时空数据存在时间幻影问题（相似输入不同未来），阻碍准确预测。本文提出MP3，一种即插即用的多周期模式预训练方法，通过周期感知学习、全局空间相关和跨周期因果建模来区分幻影。在交通和气候数据集上，MP3显著提升现有STGNN的预测精度。尽管主要验证于交通，其方法论可推广到气象时空序列（如温度、风速），为深度学习天气预报提供强大的预训练基线。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.11797v1",
+      "source": "arxiv",
+      "title": "Space-sampled Value Decay: Forgetting Mechanisms for Non-stationary Deep Reinforcement Learning",
+      "abstract": "Studies on rodents such as mice have shown the capabilities to adapt their behavior when dealing with changing parameters (``drift'') of the environment even if no information about change is provided (uncertainty) -- a behavior that can be modeled by forgetting mechanisms. Non-stationary Reinforcement Learning (NSRL) deals with adapting state-of-the-art RL methods to deal with changing environments: these however usually require (partially) perfect information about the drift such as ``task IDs'' or ``context''. To mitigate the effects of drift, this work develops \\emph{Space-sampled Value Decay} as an explicit forgetting mechanism for value-based deep RL architectures as a simple yet effective approach. In particular we demonstrate and discuss positive effects but also limitations in achieved returns for modifications of Deep Q-networks (DQN) and Soft Actor-Critic (SAC) when evaluated on non-stationary environments.",
+      "authors": [
+        "Felix Störck",
+        "Fabian Hinder",
+        "Barbara Hammer"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-10T08:30:04+00:00",
+      "link": "https://arxiv.org/pdf/2606.11797v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "forgetting mechanism for non-stationary deep RL improving sample efficiency",
+      "llm_evidence_cn": "非平稳深度强化学习的遗忘机制，提升样本效率",
+      "llm_evidence": "非平稳深度强化学习的遗忘机制，提升样本效率",
+      "canonical_evidence": "非平稳深度强化学习的遗忘机制，提升样本效率",
+      "llm_tldr_en": "We develop Space-sampled Value Decay as an explicit forgetting mechanism for value-based deep RL to mitigate non-stationarity without task IDs, improving adaptability in changing environments.",
+      "llm_tldr_cn": "针对非平稳强化学习环境中漂移造成的问题，本文提出空间采样值衰减（Space-sampled Value Decay）作为显式遗忘机制，无需任务ID或上下文信息即可使深度价值网络适应环境变化，实验表明该方法能有效提升非平稳场景下的样本效率和适应性。",
+      "llm_tldr": "针对非平稳强化学习环境中漂移造成的问题，本文提出空间采样值衰减（Space-sampled Value Decay）作为显式遗忘机制，无需任务ID或上下文信息即可使深度价值网络适应环境变化，实验表明该方法能有效提升非平稳场景下的样本效率和适应性。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.13675v2",
+      "source": "arxiv",
+      "title": "Improving Robotic Generalist Policies via Flow Reversal Steering",
+      "abstract": "Generalist policies can learn a wide range of skills from diverse robot datasets. In order to solve or improve on challenging new tasks, we need a way to infer and invoke the appropriate actions from the policy's rich behavioral prior, especially when directly commanding the policy fails. We focus on flow matching generalists and propose Flow Reversal Steering (FRS): a method that takes suboptimal but ``reasonable'' actions, finds their latent noises by passing them through the flow policy in reverse, and maps them to nearby generalist action modes. We evaluate FRS across many simulated and real-world manipulation settings. First, FRS can turn coarse semantic guidance from humans or vision-language models (VLMs) into corresponding good robot actions, improving zero-shot control. These gains can be distilled with behavioral cloning by training an auxiliary policy to output noises that the generalist maps to good actions -- showing up to 95% absolute task success rate boosts in under a minute of training. Finally, FRS enables policy improvement by bootstrapping reinforcement learning with semantic knowledge, improving on several tasks that standard RL fails to improve on.",
+      "authors": [
+        "Andy Tang",
+        "William Chen",
+        "Andrew Wagenmaker",
+        "Chelsea Finn",
+        "Sergey Levine"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-11T17:59:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.13675v2",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "flow matching generalist policies for sample efficient decision making",
+      "llm_evidence_cn": "流匹配通用策略用于样本高效决策",
+      "llm_evidence": "流匹配通用策略用于样本高效决策",
+      "canonical_evidence": "流匹配通用策略用于样本高效决策",
+      "llm_tldr_en": "Proposes Flow Reversal Steering (FRS) to improve flow matching generalist policies by reversing suboptimal actions to latent noise and mapping to better modes, enabling coarse semantic guidance to become good robot actions.",
+      "llm_tldr_cn": "现有通用策略在面对新任务时难以从丰富的行为先验中调用合适动作。本文提出流反转引导（FRS）方法，将次优但合理的动作通过流策略反向得到潜在噪声，再映射到附近更好的动作模式。在多个仿真和真实操作场景中验证了FRS能将人类或视觉语言模型的粗略语义引导转化为精确机器人动作，显著提升策略质量。",
+      "llm_tldr": "现有通用策略在面对新任务时难以从丰富的行为先验中调用合适动作。本文提出流反转引导（FRS）方法，将次优但合理的动作通过流策略反向得到潜在噪声，再映射到附近更好的动作模式。在多个仿真和真实操作场景中验证了FRS能将人类或视觉语言模型的粗略语义引导转化为精确机器人动作，显著提升策略质量。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.12142v1",
+      "source": "arxiv",
+      "title": "AerialClaw: An Open-Source Framework for LLM-Driven Autonomous Aerial Agents",
+      "abstract": "Unmanned aerial vehicles (UAVs) are increasingly used in inspection, search and rescue, environmental monitoring, and emergency response. However, most UAV applications still rely on pre-defined command sequences or task-specific pipelines, where developers manually connect perception, planning, flight control, simulation, logging, and safety modules. This limits the flexibility, reproducibility, and extensibility of autonomous aerial systems. This paper presents AerialClaw, an open-source software framework that enables UAVs to operate as decision-making aerial agents rather than merely command-following platforms. Given a natural-language mission, AerialClaw allows an LLM-based agent to understand the task, maintain context, invoke executable aerial skills, observe perception and runtime feedback, and iteratively update its decisions in a closed loop. The framework adopts a modular brain-skill-runtime architecture, combining hard skills for atomic UAV operations, Markdown-based soft skills for reusable task strategies, document-driven agent state and capability boundaries, memory-driven reflection, safety-oriented runtime validation, and platform-agnostic execution adapters. AerialClaw supports lightweight mock execution, PX4 SITL with Gazebo, and AirSim-based simulation, together with a web console, pluggable model backends, example missions, simulation assets, and staged deployment scripts. By combining standardized aerial skills, document-driven agent state, memory, and closed-loop LLM decision-making, AerialClaw provides a reproducible and extensible open-source framework for building UAV systems that can interpret missions, make decisions, execute skills, and adapt their behavior from feedback.",
+      "authors": [
+        "Ke Li",
+        "Jianfei Yang",
+        "Luyao Zhang",
+        "Guo Yu",
+        "Chengwei Yan",
+        "Yuan Ding",
+        "Di Wang",
+        "Nan Luo",
+        "Gang Liu",
+        "Xiao Gao",
+        "Quan Wang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.CV"
+      ],
+      "published": "2026-06-10T14:34:24+00:00",
+      "link": "https://arxiv.org/pdf/2606.12142v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "open-source framework for LLM-driven autonomous UAV agents with path planning",
+      "llm_evidence_cn": "用于LLM驱动的自主无人机智能体开源框架，包含路径规划",
+      "llm_evidence": "用于LLM驱动的自主无人机智能体开源框架，包含路径规划",
+      "canonical_evidence": "用于LLM驱动的自主无人机智能体开源框架，包含路径规划",
+      "llm_tldr_en": "Presents AerialClaw, an open-source framework enabling UAVs as decision-making agents via LLMs for natural-language missions, integrating perception, planning, and control.",
+      "llm_tldr_cn": "现有无人机应用依赖预定义命令序列，灵活性不足。本文提出AerialClaw框架，将无人机变为LLM驱动的决策智能体，支持自然语言任务理解、上下文维护、可执行动作调用以及感知、规划、飞控等模块的无缝集成。该框架提升了自主空中系统的灵活性、可重复性和可扩展性，适用于复杂环境下的UAV路径规划与导航。",
+      "llm_tldr": "现有无人机应用依赖预定义命令序列，灵活性不足。本文提出AerialClaw框架，将无人机变为LLM驱动的决策智能体，支持自然语言任务理解、上下文维护、可执行动作调用以及感知、规划、飞控等模块的无缝集成。该框架提升了自主空中系统的灵活性、可重复性和可扩展性，适用于复杂环境下的UAV路径规划与导航。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.14313v1",
+      "source": "arxiv",
+      "title": "Nonlocal Bayesian Modeling of Continuous Spatio-Temporal Dynamics",
+      "abstract": "Real-world spatio-temporal forecasting must handle irregular time points, spatially sparse observations, and the need for uncertainty quantification. This setting is often further compounded by nonlocal interactions (long-range spatial coupling). Modeling continuous-space, continuous-time nonlocal dynamics naturally leads to infinite-dimensional integro-differential equations (IDEs), making principled Bayesian inference intractable. We propose the NonLocal Bayesian Spatio-Temporal model (NLBST), a hierarchical Bayesian framework for continuous spatio-temporal fields that learns explicit nonlocal coupling while retaining tractable inference. NLBST represents the latent field via a coordinate-based spatial basis expansion and models the coefficient process with a continuous-time ODE whose learnable linear operator corresponds to a Galerkin reduction of a nonlocal IDE; a Neural ODE residual captures additional nonlinear dynamics. A linear-Gaussian observation model enables Kalman-style sequential updates under missing and irregular observations, while the spatial basis representation enables inductive prediction at unmeasured locations without retraining. Global parameters are learned via variational inference, and uncertainty is handled through a Bayesian hierarchy. Experiments on synthetic and real-world datasets demonstrate strong forecasting and spatial generalization with well-calibrated uncertainty, yielding substantial gains over baselines in strongly nonlocal and partially observed regimes.",
+      "authors": [
+        "Jaeyeong Lee",
+        "Heeyoung Kim"
+      ],
+      "primary_category": "stat.ML",
+      "categories": [
+        "stat.ML",
+        "cs.LG"
+      ],
+      "published": "2026-06-12T09:51:07+00:00",
+      "link": "https://arxiv.org/pdf/2606.14313v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "continuous spatio-temporal modeling for downscaling",
+      "llm_evidence_cn": "连续时空建模用于降尺度",
+      "llm_evidence": "连续时空建模用于降尺度",
+      "canonical_evidence": "连续时空建模用于降尺度",
+      "llm_tldr_en": "Proposes NonLocal Bayesian Spatio-Temporal model for continuous dynamics with nonlocal coupling, offering tractable inference.",
+      "llm_tldr_cn": "针对非局部耦合的连续时空动力学建模问题，提出非局部贝叶斯时空模型(NLBST)，通过坐标基础展开和学习非局部耦合实现可推断的贝叶斯推理。该方法可直接应用于气象降尺度等任务。",
+      "llm_tldr": "针对非局部耦合的连续时空动力学建模问题，提出非局部贝叶斯时空模型(NLBST)，通过坐标基础展开和学习非局部耦合实现可推断的贝叶斯推理。该方法可直接应用于气象降尺度等任务。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "statistical and dynamical downscaling of weather data",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.14415v1",
+      "source": "arxiv",
+      "title": "CSPO: Constraint-Sensitive Policy Optimization for Safe Reinforcement Learning",
+      "abstract": "Safe reinforcement learning (Safe RL) aims to maximize expected return while satisfying safety constraints, typically modeled as Constrained Markov Decision Processes (CMDPs). While primal-dual methods scale well to deep RL, they often suffer from delayed constraint correction, leading to oscillatory behavior and prolonged safety violations. In this paper, we propose Constraint-Sensitive Policy Optimization (CSPO), a first-order primal-dual method that incorporates local constraint sensitivity into policy updates. CSPO augments the primal objective with a constraint-sensitive correction derived from the shortest signed distance to the safety boundary, enabling smarter recovery steps back to safety, compensating for delayed Lagrange multiplier updates, reducing oscillations near the boundary, and preserving the KKT solutions of the original constrained problem. Experiments on navigation and locomotion benchmarks demonstrate that CSPO achieves faster safety recovery and high reward preservation, resulting in higher constrained returns compared to state-of-the-art primal-dual and penalty-based methods",
+      "authors": [
+        "Ayoub Belouadah",
+        "Sylvain Kubler",
+        "Yves Le Traon"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-12T12:48:56+00:00",
+      "link": "https://arxiv.org/pdf/2606.14415v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "safe RL with constraint-sensitive policy optimization for obstacle avoidance in navigation",
+      "llm_evidence_cn": "用于导航避障的安全强化学习约束敏感策略优化",
+      "llm_evidence": "用于导航避障的安全强化学习约束敏感策略优化",
+      "canonical_evidence": "用于导航避障的安全强化学习约束敏感策略优化",
+      "llm_tldr_en": "Introduces CSPO, a safe RL method that incorporates local constraint sensitivity into policy updates to avoid safety violations, applicable to UAV navigation and obstacle avoidance.",
+      "llm_tldr_cn": "安全强化学习在无人机导航中至关重要，但现有方法存在约束滞后导致振荡违规。本文提出CSPO，一种约束敏感策略优化方法，通过引入到安全边界的最短符号距离作为修正项，使得策略能更智能地回到安全区域。在多个CMDP基准上，CSPO在回报和约束满足上均优于PPO-Lagrangian等基线，且收敛更稳定。该方法可直接用于无人机动态避障和实时轨迹优化，提升导航安全性。",
+      "llm_tldr": "安全强化学习在无人机导航中至关重要，但现有方法存在约束滞后导致振荡违规。本文提出CSPO，一种约束敏感策略优化方法，通过引入到安全边界的最短符号距离作为修正项，使得策略能更智能地回到安全区域。在多个CMDP基准上，CSPO在回报和约束满足上均优于PPO-Lagrangian等基线，且收敛更稳定。该方法可直接用于无人机动态避障和实时轨迹优化，提升导航安全性。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.14536v1",
+      "source": "arxiv",
+      "title": "Provably Safe, Yet Scalable Reinforcement Learning",
+      "abstract": "Safe reinforcement learning (RL) aims to learn policies that optimize rewards while satisfying constraints. Predominant approaches rely on soft-constrained policy optimization, which has achieved empirical success but does not provide formal safety guarantees for the learned policy. In contrast, methods with strict guarantees typically rely on explicit certificate functions, whose construction requires the direct synthesis and verification of control-invariant sets, a process that scales poorly with state dimension and often yields overly conservative behavior. In this paper, we present the Provably Safe, yet Scalable RL (PS2-RL) framework, a novel two-phase architecture for learning provably safe policies in a scalable manner, designed to overcome the key bottlenecks of prior methods. Rather than explicitly computing invariant sets, PS2-RL leverages a learned backup policy to forward-integrate the system dynamics, generating an implicit control-invariant set online. In the first phase, the backup policy is trained with our proposed safe-arrival value function, which characterizes the optimal backup policy for invariant-set construction. In the second phase, an RL policy is trained end-to-end through a differentiable projection layer that strictly enforces the safety guarantees induced by the learned backup policy. By maximizing the volume of the implicit control-invariant set in the first phase, the resulting PS2 policy from the second phase is performant and scalable, while maintaining provable safety. Crucially, PS2-RL imposes no restrictions on the underlying RL algorithm and can be plugged into any existing training pipeline. We establish theoretical guarantees for the proposed framework and evaluate it on robotic control tasks with state dimensions up to 10, a regime in which prior provably safe RL methods struggle or become impractical.",
+      "authors": [
+        "Kai S. Yun",
+        "Zeyang Li",
+        "Navid Azizan"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.RO",
+        "eess.SY"
+      ],
+      "published": "2026-06-12T15:13:51+00:00",
+      "link": "https://arxiv.org/pdf/2606.14536v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Provably safe RL framework",
+      "llm_evidence_cn": "可证明安全的强化学习框架",
+      "llm_evidence": "可证明安全的强化学习框架",
+      "canonical_evidence": "可证明安全的强化学习框架",
+      "llm_tldr_en": "Proposes PS2-RL, a two-phase architecture learning provably safe policies in a scalable manner, overcoming bottlenecks of certificate function synthesis.",
+      "llm_tldr_cn": "针对安全强化学习缺乏正式保证和扩展性问题，提出PS2-RL两阶段架构，第一阶段学习安全证书函数，第二阶段学习策略，在保证安全的同时实现可扩展，并在多个连续控制任务中验证。",
+      "llm_tldr": "针对安全强化学习缺乏正式保证和扩展性问题，提出PS2-RL两阶段架构，第一阶段学习安全证书函数，第二阶段学习策略，在保证安全的同时实现可扩展，并在多个连续控制任务中验证。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
