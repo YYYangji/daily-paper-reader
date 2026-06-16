@@ -6,77 +6,79 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-15
-- 运行时间：2026-06-15 23:01:38 UTC
+- 最新运行日期：2026-06-16
+- 运行时间：2026-06-16 22:49:30 UTC
 - 运行状态：成功
 - 本次总论文数：19
 - 精读区：7
 - 速读区：12
 
 ### 今日简报（AI）
-今天精读7篇、速读12篇，重点聚焦气候模型模拟与多任务技能迁移。最值得关注：扩散模型用于区域气候模拟的生成价值，以及表征强化学习实现技能迁移。普通读者可优先阅读这两篇精读论文，把握生成式AI在气候科学和机器人学习中的前沿应用。
-- 详情：[/202606/15/README](/202606/15/README)
+1) 今日19篇论文聚焦世界模型与生成式AI，两篇9.0高分精读文章分别探讨扩散模型在区域气候模拟中的生成价值，以及如何以决策为中心评估世界模型。  
+2) 最值得关注方向：扩散模型用于气候模拟的生成优势，以及世界模型评估的新视角——应紧贴实际决策需求。  
+3) 建议普通读者优先阅读精读中的两篇评估框架文章，并速读《GraphWorld》了解世界模型在端到端自动驾驶中的应用。
+- 详情：[/202606/16/README](/202606/16/README)
 
 ### 精读区论文标签
-1. [Regional Climate Model Emulation with Diffusion Approaches: What is the Added Value of Generative Machine Learning?](/202606/15/2606.14570v1-regional-climate-model-emulation-with-diffusion-approaches-what-is-the-added-value-of-generative-machine-learning)  
-   标签：评分：10.0/10、query:mm
-   evidence：利用扩散模型模拟区域气候模型
-2. [Learning to Adapt: Representation-Based Reinforcement Learning for Multi-Task Skill Transfer](/202606/15/2606.12890v1-learning-to-adapt-representation-based-reinforcement-learning-for-multi-task-skill-transfer)  
+1. [Regional Climate Model Emulation with Diffusion Approaches: What is the Added Value of Generative Machine Learning?](/202606/16/2606.14570v1-regional-climate-model-emulation-with-diffusion-approaches-what-is-the-added-value-of-generative-machine-learning)  
+   标签：评分：9.0/10、query:mm
+   evidence：使用扩散模型进行区域气候模拟的动力降尺度
+2. [How Should World Models Be Evaluated? A Decision-Making-Centric Position](/202606/16/2606.15032v1-how-should-world-models-be-evaluated-a-decision-making-centric-position)  
    标签：评分：9.0/10、query:rpp
-   evidence：基于表示学习的多任务强化学习，应用于四旋翼轨迹跟踪
-3. [Guided Diffusion with Distilled Vision-Language Reliability for Aerial Navigation](/202606/15/2606.13883v1-guided-diffusion-with-distilled-vision-language-reliability-for-aerial-navigation)  
+   evidence：关于世界模型评估的立场论文
+3. [Pixels to Proofs: Probabilistically-Safe Latent World Model Control via Parallel Conformal Robust MPC](/202606/16/2606.15594v1-pixels-to-proofs-probabilistically-safe-latent-world-model-control-via-parallel-conformal-robust-mpc)  
    标签：评分：9.0/10、query:rpp
-   evidence：面向无人机导航的可靠性感知扩散规划器
-4. [Causal Object-Centric Models for Planning with Monte Carlo Tree Search](/202606/15/2606.14418v1-causal-object-centric-models-for-planning-with-monte-carlo-tree-search)  
+   evidence：潜在世界模型与稳健MPC实现概率安全控制
+4. [When the Past Matters: FlashBack Memory for Precipitation Nowcasting](/202606/16/2606.16342v1-when-the-past-matters-flashback-memory-for-precipitation-nowcasting)  
+   标签：评分：9.0/10、query:mm
+   evidence：深度学习降水临近预报，提出FlashBack Memory
+5. [Game-Theoretic Multi-Agent Reinforcement Learning for Swarm Trajectory Planning in Low-Altitude Wireless Networks](/202606/16/2606.16386v1-game-theoretic-multi-agent-reinforcement-learning-for-swarm-trajectory-planning-in-low-altitude-wireless-networks)  
    标签：评分：9.0/10、query:rpp
-   evidence：基于模型强化学习，包含世界模型和潜在动力学用于规划
-5. [sGPO: Trading Inference FLOPs for Training Efficiency in RLVR](/202606/15/2606.08854v1-sgpo-trading-inference-flops-for-training-efficiency-in-rlvr)  
+   evidence：多智能体强化学习用于低空网络中无人机群轨迹规划
+6. [Synthetic-to-Real Pipeline for Safe Landing Zone Detection](/202606/16/2606.14767v1-synthetic-to-real-pipeline-for-safe-landing-zone-detection)  
    标签：评分：8.0/10、query:rpp
-   evidence：通过难度代理提升RL训练样本效率的计算高效方法
-6. [Aerial Wildfire Suppression Planning with a Hybrid CNN-Cellular Automata Fire Model](/202606/15/2606.13633v1-aerial-wildfire-suppression-planning-with-a-hybrid-cnn-cellular-automata-fire-model)  
+   evidence：利用合成数据进行无人机降落区域检测，直接涉及无人机路径规划
+7. [LaWAM: Latent World Action Models for Efficient Dynamics-Aware Robot Policies](/202606/16/2606.15768v1-lawam-latent-world-action-models-for-efficient-dynamics-aware-robot-policies)  
    标签：评分：8.0/10、query:rpp
-   evidence：使用混合CNN-元胞自动机模型的野火抑制无人机路径规划
-7. [Deep Spectral Learning of Embedded Latent Transfer Operators for Stochastic Dynamical Systems](/202606/15/2606.14079v1-deep-spectral-learning-of-embedded-latent-transfer-operators-for-stochastic-dynamical-systems)  
-   标签：评分：8.0/10、query:rpp
-   evidence：通过嵌入传递算子学习潜在动力学的深度谱方法
+   evidence：潜在世界行动模型用于高效动态感知机器人策略
 
 ### 速读区论文标签
-1. [Sensitivity Shaping for Latent Modeling](/202606/15/2606.14585v1-sensitivity-shaping-for-latent-modeling)  
+1. [Proximal Policy Optimization for Amortized Discrete Sampling](/202606/16/2606.15793v1-proximal-policy-optimization-for-amortized-discrete-sampling)  
    标签：评分：8.0/10、query:rpp
-   evidence：潜在动力学模型敏感性正则化
-2. [PAWS: Preference Learning with Advantage-Weighted Segments](/202606/15/2606.11982v1-paws-preference-learning-with-advantage-weighted-segments)  
+   evidence：将PPO应用于GFlowNet，提升数据效率
+2. [Phys-JEPA: Physics-Informed Latent World Models for Multivariate Time-Series Forecasting](/202606/16/2606.16076v1-phys-jepa-physics-informed-latent-world-models-for-multivariate-time-series-forecasting)  
+   标签：评分：8.0/10、query:rpp
+   evidence：Phys-JEPA学习具有物理分解的潜在世界模型用于多变量预测，与潜在动力学建模相关
+3. [GraphWorld: Long-Horizon Planning with World Models for End-to-End Autonomous Driving](/202606/16/2606.16274v1-graphworld-long-horizon-planning-with-world-models-for-end-to-end-autonomous-driving)  
+   标签：评分：8.0/10、query:rpp
+   evidence：世界模型用于长时域规划
+4. [Diffusion Offline Reinforcement Learning for Fair and Energy-Efficient UAV-Assisted Wireless Networks](/202606/16/2606.16331v1-diffusion-offline-reinforcement-learning-for-fair-and-energy-efficient-uav-assisted-wireless-networks)  
+   标签：评分：8.0/10、query:rpp
+   evidence：扩散离线强化学习用于无人机轨迹优化
+5. [Elastic Queries Reinforcement Learning: Self-Aware Policy Execution for VLA Models](/202606/16/2606.14375v1-elastic-queries-reinforcement-learning-self-aware-policy-execution-for-vla-models)  
    标签：评分：7.0/10、query:rpp
-   evidence：基于偏好的强化学习提升样本效率
-3. [MP3: Multi-Period Pattern Pre-training forSpatio-Temporal Forecasting](/202606/15/2606.13119v1-mp3-multi-period-pattern-pre-training-forspatio-temporal-forecasting)  
-   标签：评分：7.0/10、query:mm
-   evidence：适用于气候和天气预报的时空预训练方法
-4. [MP3: Multi-Period Pattern Pre-training for Spatio-Temporal Forecasting](/202606/15/2606.13119v2-mp3-multi-period-pattern-pre-training-for-spatio-temporal-forecasting)  
-   标签：评分：7.0/10、query:mm
-   evidence：用于天气预报的时空预训练方法
-5. [Improving Robotic Generalist Policies via Flow Reversal Steering](/202606/15/2606.13675v2-improving-robotic-generalist-policies-via-flow-reversal-steering)  
+   evidence：弹性查询强化学习提升VLA策略执行的样本效率
+6. [Bayesian Optimization for Learning Nonlinear MPC in Autonomous Agent Navigation](/202606/16/2606.14763v1-bayesian-optimization-for-learning-nonlinear-mpc-in-autonomous-agent-navigation)  
    标签：评分：7.0/10、query:rpp
-   evidence：流匹配通用策略用于样本高效决策
-6. [AeroMesa: Efficient Data Management System for Multi-Dimensional Spatio-Temporal Trajectories](/202606/15/2606.09581v2-aeromesa-efficient-data-management-system-for-multi-dimensional-spatio-temporal-trajectories)  
+   evidence：基于贝叶斯优化的非线性MPC用于动态环境自主导航
+7. [Random-Feature Kalman Filtering for Linear PDE Data Assimilation](/202606/16/2606.16086v1-random-feature-kalman-filtering-for-linear-pde-data-assimilation)  
+   标签：评分：7.0/10、query:mm
+   evidence：随机特征卡尔曼滤波用于线性PDE数据同化，与数值天气预报方法相关
+8. [HOLO-MPPI: Multi-Scenario Motion Planning via Hierarchical Policy Optimization](/202606/16/2606.16480v1-holo-mppi-multi-scenario-motion-planning-via-hierarchical-policy-optimization)  
+   标签：评分：7.0/10、query:rpp
+   evidence：分层强化学习与MPPI结合的运动规划
+9. [Reasoning or Memorization? Direction-Aware Diversity Exploration in LLM Reinforcement Learning](/202606/16/2606.10346v1-reasoning-or-memorization-direction-aware-diversity-exploration-in-llm-reinforcement-learning)  
    标签：评分：6.0/10、query:rpp
-   evidence：支持无人机查询的多维时空轨迹数据管理系统
-7. [CITRAS-FM: Tiny Time Series Foundation Model for Covariate-Informed Zero-Shot Forecasting](/202606/15/2606.10798v1-citras-fm-tiny-time-series-foundation-model-for-covariate-informed-zero-shot-forecasting)  
+   evidence：DiRL提出方向感知探索用于样本高效强化学习，适用于通用RL
+10. [Dirichlet-Guided Group Forecasting for Alleviating Over-smoothing in Time Series Forecasting](/202606/16/2606.10592v1-dirichlet-guided-group-forecasting-for-alleviating-over-smoothing-in-time-series-forecasting)  
    标签：评分：6.0/10、query:mm
-   evidence：适用于天气的协变量信息零样本预测微型时间序列基础模型
-8. [Space-sampled Value Decay: Forgetting Mechanisms for Non-stationary Deep Reinforcement Learning](/202606/15/2606.11797v1-space-sampled-value-decay-forgetting-mechanisms-for-non-stationary-deep-reinforcement-learning)  
-   标签：评分：6.0/10、query:rpp
-   evidence：非平稳深度强化学习的遗忘机制，提升样本效率
-9. [AerialClaw: An Open-Source Framework for LLM-Driven Autonomous Aerial Agents](/202606/15/2606.12142v1-aerialclaw-an-open-source-framework-for-llm-driven-autonomous-aerial-agents)  
-   标签：评分：6.0/10、query:rpp
-   evidence：用于LLM驱动的自主无人机智能体开源框架，包含路径规划
-10. [Nonlocal Bayesian Modeling of Continuous Spatio-Temporal Dynamics](/202606/15/2606.14313v1-nonlocal-bayesian-modeling-of-continuous-spatio-temporal-dynamics)  
+   evidence：时间序列预测保模态方法
+11. [MP3: Multi-Period Pattern Pre-training forSpatio-Temporal Forecasting](/202606/16/2606.13119v1-mp3-multi-period-pattern-pre-training-forspatio-temporal-forecasting)  
    标签：评分：6.0/10、query:mm
-   evidence：连续时空建模用于降尺度
-11. [CSPO: Constraint-Sensitive Policy Optimization for Safe Reinforcement Learning](/202606/15/2606.14415v1-cspo-constraint-sensitive-policy-optimization-for-safe-reinforcement-learning)  
+   evidence：时空预训练方法，可应用于天气预报
+12. [Evolutionary Bilevel Reward Shaping for Generalization in Reinforcement Learning](/202606/16/2606.16236v1-evolutionary-bilevel-reward-shaping-for-generalization-in-reinforcement-learning)  
    标签：评分：6.0/10、query:rpp
-   evidence：用于导航避障的安全强化学习约束敏感策略优化
-12. [Provably Safe, Yet Scalable Reinforcement Learning](/202606/15/2606.14536v1-provably-safe-yet-scalable-reinforcement-learning)  
-   标签：评分：6.0/10、query:rpp
-   evidence：可证明安全的强化学习框架
+   evidence：双层奖励塑形提升强化学习泛化
 
 
 <div class="dpr-home-promo-card">

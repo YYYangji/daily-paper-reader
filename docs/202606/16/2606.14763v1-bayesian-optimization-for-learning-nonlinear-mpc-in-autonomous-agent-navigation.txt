@@ -1,0 +1,443 @@
+Title: Bayesian Optimization for Learning Nonlinear MPC in Autonomous Agent Navigation
+
+URL Source: https://arxiv.org/pdf/2606.14763v1
+
+Published Time: Tue, 16 Jun 2026 00:04:16 GMT
+
+Number of Pages: 7
+
+Markdown Content:
+# Bayesian Optimization for Learning Nonlinear MPC in Autonomous Agent Navigation 
+
+Lorenzo Ortolani, Gabriel Voss, Gabriele Beltrami, Francesco Dorati, Tommaso Felice Banfi 
+
+Talos Robotics AI 
+
+Milan, Italy 
+
+{lorenzo.ortolani, gabriel.voss, gabriele.beltrami, francesco.dorati, tommasofelice.banfi }@talosrobotics.ai 
+
+Abstract —Real-time autonomous navigation in dynamic, un-known environments remains a fundamental challenge for mobile robotics. We propose a map-free framework that tightly inte-grates reactive rolling-horizon planning with nonlinear Model Predictive Control (MPC). At each control cycle, a LiDAR-based Gaussian occupancy representation is constructed and used to generate collision-free trajectories via A* search, which are then tracked by a CasADi/IPOPT MPC formulation incorporating a smooth sigmoid obstacle barrier. To improve robustness to parameter sensitivity, we adopt an offline Bayesian optimization scheme based on Tree-structured Parzen Estimators (TPE), which identifies near-optimal controller parameters with respect to a composite navigation objective. In addition, a Gaussian Process surrogate is used to analyze parameter sensitivity and provide insight into the optimization landscape. The proposed framework is robot-agnostic and is evaluated on the Unitree Go2 quadruped in simulation using Gazebo, followed by deployment on the physical robot. Experimental results show that parameters tuned in simulation transfer effectively to hard-ware, maintaining comparable performance without additional tuning. The full system achieves up to a 90.0% navigation success rate when deployed, along with a 38.9% average improvement in the evaluation metrics across simulated environments. 
+
+Index Terms —Autonomous Agent Navigation, Model Predic-tive Control, Non-Linear Optimization, Bayesian Optimization 
+
+I. I NTRODUCTION 
+
+Autonomous navigation in unknown, cluttered environments is crucial for mobile robots deployed in real-world settings. The challenge is compounded for legged platforms, where complex contact dynamics demand smooth and dynamically consistent motion commands. Classical decoupled architec-tures, where a global planner and low-level controller operate independently, often fail to capture the coupling between plan-ning and dynamic feasibility [1], leading to jerky execution, constraint violations, and poor out-of-sample generalization. Model Predictive Control (MPC) provides a principled framework for simultaneous path following and constraint satisfaction over a receding horizon [2]. However, real-time deployment is historically limited by two requirements: (i) a computationally efficient environment representation for obstacle avoidance, and (ii) well-calibrated cost-function weights that balance tracking accuracy, control effort, and safety. Manual tuning of these weights is time-consuming and 
+
+Corresponding author: T. F. Banfi, tommasofelice.banfi@talosrobotics.ai GitHub repository: https://github.com/talos-robotics-ai/Go2 navigation 
+
+Fig. 1: A customized Unitree Go2 quadruped robot by Talos Robotics AI used for our real-world navigation experiments. environment-specific, with parameters that generalize poorly across different environments and navigation tasks [3]. We address these limitations with a hierarchical, modular navigation stack designed as a general-purpose framework and validated on the Unitree Go2 quadruped. The primary contributions of this work include a map-free, rolling-horizon navigation stack combining Gaussian occupancy mapping, navigation graphs, A* planning, and nonlinear MPC with differentiable obstacle avoidance. To optimize this architec-ture, we introduce a Bayesian Optimization framework that uses TPE to sweep the 11-dimensional MPC parameter space across a training suite of simulation environments, identifying near-optimal weight configurations through a structured multi-metric composite score. Finally, we provide extensive exper-imental validation across three environments and hardware deployment on the Unitree Go2 in Fig. 1 performing several real-world navigation trials, confirming consistent performance gains and negligible sim-to-real degradation. The remainder of this paper is organized as follows. Sec-tion II formulates the problem and reviews related work. Section III details the overall system architecture and the specifics about each module of the framework from the rolling-horizon path planner to the definition of the Bayesian Opti-mization pipeline. Sections IV and V present the experimental setup and results, discussing the performance and limitations. Section VII concludes and outlines future research directions. II. B ACKGROUND 
+
+A. Problem Statement 
+
+Let the robot state at time step k be xk =[px,k , p y,k , ψ k]⊤ ∈ X ⊂ R3, where (px, p y ) ∈ R2 denotes the position in the world frame and ψ ∈ (−π, π ] is the heading angle. The control input is the body-frame velocity command uk = [ vx,k , v y,k , ω k]⊤ ∈ U ⊂ R3, comprising 
+
+> arXiv:2606.14763v1 [cs.RO] 8 Jun 2026
+
+forward velocity, lateral velocity, and yaw rate, respectively. At each time step the agent receives a LiDAR point cloud 
+
+Pk = {pi ∈ R3}Nk 
+
+> i=1
+
+and a goal pose xg ∈ X .The navigation problem is formulated as a receding-horizon optimal control problem. At each planning cycle the agent solves: 
+
+min  
+
+> u0,..., uN−1
+
+J(x0: N , u0: N −1, Pk, θ ) (1) subject to: 
+
+xt+1 = f (xt, ut), t = 0 , . . . , N −1 (2) 
+
+d(xt, Pk) ≥ rmin , t = 0 , . . . , N (3) 
+
+ut ∈ U , t = 0 , . . . , N −1 (4) where J is a composite cost function parametrized by θ ∈ Θ ⊂
+
+Rnθ , f is the discrete-time robot dynamics, d(xt, Pk) is the minimum Euclidean distance from the predicted state xt to any obstacle in the current point cloud, and rmin is the minimum safety clearance. The objective is to drive the robot from its current pose x0 to the goal xg while satisfying (2)–(4) in real time, without any a priori knowledge of the environment. The performance of the MPC (1) depends critically on the parameter vector θ, which encodes cost weights for tracking accuracy, control effort, and obstacle avoidance. The meta-problem of identifying an optimal θ is formulated as the black-box optimization: 
+
+θ∗ = arg max  
+
+> θ∈Θ
+
+J (θ) (5) where J (θ) is a composite performance score obtained by running the full navigation system under parameters θ.
+
+B. Related Work 1) Legged Robot Navigation: Navigation for legged robots has been studied extensively in the context of whole-body planning and terrain-aware locomotion. Recent approaches integrate deep learning-based terrain estimation with classical planning [4] or employ model-free reinforcement learning for end-to-end navigation [5]. These methods either require pre-built maps or suffer from difficult sim-to-real transfer. Our framework abstracts leg dynamics through the CHAMP hierarchical locomotion controller [6], which exposes a body-frame velocity interface and enables the navigation layer to treat the robot as a holonomic mobile agent, simplifying planning and control design. For local navigation, fast sampling-based planners like RRT* [7] and adaptive variants such as APEI-RRT* [8] are highly efficient and widely adopted. While we deploy a grid-based A* planner for its predictable deterministic paths, our framework is fundamentally planner-agnostic; the adaptive MPC pipeline can seamlessly track reference trajectories gen-erated by any sampling-based or heuristic algorithm. 
+
+2) MPC for Mobile Robot Navigation: MPC has been applied to mobile robot navigation across differential-drive platforms, UAVs [9], and quadrupeds. Nonlinear MPC for-mulations handle the full kinematic model but require ef-ficient nonlinear programming (NLP) solvers; CasADi [10] with IPOPT [11] provides a suitable combination for our 5-second horizon at 10 Hz. Obstacle avoidance within MPC is commonly implemented via hard distance constraints or smooth barrier functions [12]; we adopt a differentiable sig-moid penalty evaluated on the nearest LiDAR returns, which preserves NLP sparsity and IPOPT convergence properties. 
+
+3) Bayesian Optimization for Robotics: Bayesian Opti-mization (BO) has become the standard method for black-box hyperparameter tuning in robotics, widely applied to locomotion, control, and planning [13]. The COAt-MPC framework [3] provides performance-guaranteed BO for MPC parameter optimization, while [14] analyzes the theoretical properties of TPE, the acquisition strategy we adopt for its efficiency in high-dimensional mixed spaces. III. M ETHODOLOGY 
+
+A. System Architecture 
+
+The proposed navigation stack is composed of five in-terconnected modules illustrated in Fig. 2: (i) an Odometry Bridge that converts raw EKF odometry into a unified pose representation; (ii) a Mapping Module that maintains both a reactive semi-persistent Gaussian occupancy grid and a topological Navigation Graph inspired by WildOS [15], which encodes high-level connectivity between previously visited locations and enables global planning via Dijkstra search; (iii) a Global-to-Local Planning Layer , where the Navigation Graph provides waypoints to a rolling-horizon A* planner operating on the occupancy grid at 1 Hz; (iv) a Nonlin-ear MPC Tracker formulated with CasADi [10] and solved with IPOPT [11], generating dynamically feasible velocity setpoints and converting MPC lookahead states into body-frame /cmd_vel commands for the locomotion layer; and (v) an offline Bayesian Optimisation Module based on Tree-structured Parzen Estimator (TPE) and Gaussian Processes (GP), which tunes the hyperparameters to improve trajectory efficiency and tracking performance. LiDAR  
+
+> Global Goal Robot Pose
+> Waypoint
+> Navigation Graph Dijkstra
+> Path
+> A* Local Planner Gaussian Occupancy Grid
+> Setpoint
+> MPC Tracker Kinematic Model
+> Velocity Controller --> Go2
+> Tuned Params
+> Bayesian Optimiser TPE + GP · of fl ine
+
+Fig. 2: System architecture of the proposed framework. All modules communicate through ROS 2 topics, enabling full modularity and real-time operation at 10–20 Hz. The MPC parameter vector θ is adapted by the Bayesian Optimization pipeline in Section III-E. 
+
+B. Mapping 
+
+At each replanning cycle, a square local Gaussian Oc-cupancy Grid of side 2hw (default hw = 5 m, resolution 
+
+∆ = 0 .25 m/cell) is centered on the robot and rebuilt from scratch using only the current LiDAR point cloud Pk. Each grid cell c encodes the probability of occupancy derived from the minimum Euclidean distance dmin (c, Pk) from the cell center to any LiDAR return: 
+
+P (c) = 1 − Φ
+
+ dmin (c, Pk)
+
+σ
+
+
+
+(6) where Φ( ·) is the standard normal CDF and σ = 0 .05 m is the Gaussian spread parameter controlling obstacle inflation. Cells with P (c) ≥ Pthresh = 0 .45 are treated as hard obstacles; cells below this threshold incur a soft traversal penalty in A* proportional to their occupancy probability. In addition to the reactive occupancy grid, the system main-tains a persistent topological navigation graph G = ( V, E),where each node v ∈ V corresponds to a semantically mean-ingful region of the environment and each edge (u, v ) ∈ E 
+
+represents a navigable transition weighted by the traversal cost estimated from the current occupancy grid. As the robot explores, new nodes are instantiated when the robot enters a previously unvisited region, and the graph is updated online. 
+
+C. Rolling-Horizon Path Planning 
+
+Since the occupancy grid covers only a local window, a rolling-horizon strategy is employed for distant goals. At each replanning tick the local planning target is: 
+
+xlocal =
+
+(
+
+cell (xg ) if xg ∈ grid ray (x0 → xg ) ∩ ∂grid otherwise (7) The ray is parametrically clipped to the grid boundary, allow-ing the robot to advance one grid-width at a time. If the local target falls in an occupied cell, a breadth-first search (BFS) identifies the nearest free cell as a proxy, guaranteeing A* always receives a valid goal. A* is executed on an 8-connected grid with the following edge traversal cost: 
+
+g(n → n′) = cmove · ∆ · (1 + wobs · P (n′)) (8) where cmove ∈ {1, √2} for cardinal and diagonal moves respectively and wobs is the soft obstacle penalty weight. The admissible Euclidean heuristic is: 
+
+h(n) = ∆ ·
+
+q
+
+(ix − gx)2 + ( iy − gy )2 (9) Cells with P ≥ Pthresh are treated as hard obstacles, while sub-threshold cells incur the soft penalty (8), steering paths away from obstacle proximity. The resulting path is resampled at uniform spacing ∆s = 0 .20 m and smoothed with a moving-average kernel of width 5 to remove grid-induced zigzag artifacts while preserving endpoints. 
+
+D. MPC Formulation 1) State, Control, and Dynamics: The robot is modeled as a holonomic kinematic agent in the plane, with state xk =[px, p y , ψ ]⊤ and control uk = [ vx, v y , ω ]⊤. The discrete-time dynamics under Forward Euler integration with step ∆t =0.1 s are: 
+
+xk+1 = f (xk, uk) = 
+
+
+
+px,k + ( vx,k cos ψk − vy,k sin ψk) ∆ tpy,k + ( vx,k sin ψk + vy,k cos ψk) ∆ tψk + ωk ∆t
+
+
+
+(10) 
+
+2) Objective Function: The MPC solves the following finite-horizon NLP over N = 50 steps (5 s horizon) at 10 Hz: 
+
+J = e⊤ 
+
+> N
+
+QT eN + Jobs (xN ) +  
+
+> N−1
+
+X
+
+> k=0
+
+h
+
+e⊤ 
+
+> k
+
+Qe k
+
++ u⊤ 
+
+> k
+
+Ru k + Rjerk ∥uk − uk−1∥2 + Jobs (xk)
+
+i
+
+(11) where ek = xk − xref ,k is the tracking error with respect to the A*-derived reference, Q = diag (Qxy , Q xy , Q ψ ), QT =
+
+QT · Q, and R = diag (Rv , R v , R ω ). The jerk term Rjerk 
+
+penalizes rapid control changes to enforce smooth commands. The NLP is compiled once at startup using CasADi [10] sym-bolic differentiation; subsequent solves update only numeric parameter values, enabling real-time feasibility. The MPC predicted trajectory is tracked by a proportional controller running at 20 Hz, which generates /cmd_vel commands for the CHAMP locomotion layer. 
+
+3) Sigmoid Obstacle Barrier: Obstacle avoidance is en-forced as a smooth cost penalty through a logistic sigmoid barrier evaluated on the M = 12 nearest LiDAR returns 
+
+{pj }Mj=1 within a search radius of 3 m: 
+
+Jobs (xk) = 
+
+> M
+
+X
+
+> j=1
+
+W
+
+1 + eα
+
+ d(xk ,pj )−r
+
+ (12) where d(xk, pj ) = p(px,k − pj,x )2 + ( py,k − pj,y )2 + ϵ with 
+
+ϵ = 10 −6 ensuring differentiability at zero distance. The numerically stable form W
+
+> 2
+
+ 1 − tanh   α 
+
+> 2
+
+(d − r) is used in implementation to avoid overflow. Points beyond the search radius are replaced with far sentinels, keeping the NLP sparsity pattern constant and enabling warm starting. Here W is the barrier height, α controls steepness, and r is the safety radius. The control inputs are enforced via box constraints corresponding to the robot actuator limits. 
+
+4) Reference Trajectory and Warm Starting: The reference sequence {xref ,k }Nk=0 is generated by advancing along the A* path at cruise speed vref from the arc-length coordinate s0 of the closest waypoint to the robot: 
+
+sk = min( s0 + vref · k · ∆t, L path ) (13) Reference position pref ,k is linearly interpolated along the path segment containing sk; reference yaw is the path tangent 
+
+ψref ,k = atan2 (∆ y, ∆x). The previous IPOPT solution is shifted by one step and used as the warm-start initial guess. E. Bayesian Optimization for MPC Tuning 1) Composite Performance Score: The MPC parameter vector θ ∈ Θ ⊂ R11 comprises: position tracking weights 
+
+(Qx, Q y ), yaw tracking weight Qψ , terminal cost weight 
+
+QT , control effort weights (Rvx , R vy , R ω ), jerk regularization weight Rjerk , obstacle cost weight Wobs , and obstacle shaping parameters (αobs , r obs ). Each parameter is associated with predefined lower and upper bounds, defining the search space as a bounded domain Θ = Q
+
+> i
+
+[θmin  
+
+> i
+
+, θ max  
+
+> i
+
+].Each function evaluation requires launching a full Gazebo simulation, making gradient-free, sample-efficient methods essential. The composite score J (θ) aggregates different nav-igation scenarios s ∈ S with scenario weights ws:
+
+J (θ) = X
+
+> s
+
+ws · J s(θ), X
+
+> s
+
+ws = 1 (14) A scenario includes various types of trajectories imposed on the robot in simulation, enabling it to learn optimal parameters under diverse dynamic configurations. Each per-scenario score Js integrates five metrics. Let p0, pf , and g
+
+denote the robot start, final, and goal positions. Goal progress 
+
+ϕ = max(0 , (d0 − df )/d 0) measures the fraction of initial distance closed, where d0 = ∥p0 − g∥, df = ∥pf − g∥. Path efficiency η = min(1 , d 0/L ) is the ratio of the straight-line distance to the total traversed arc length L. Control smoothness 
+
+s = e−¯j/ 2 uses the exponentiated negative mean second-order finite difference of the command sequence as a jerk proxy: 
+
+¯j = 1
+
+K − 2
+
+> K−2
+
+X
+
+> k=1
+
+|∆2uk|1, ∆2uk = uk+1 − 2uk + uk−1
+
+(15) 
+
+Obstacle avoidance O uses per-scan minimum LiDAR dis-tances {dobs  
+
+> k
+
+} to define danger ( d < 0.3 m) and warning (0.3 ≤ d < 0.6 m) zone fractions: 
+
+O = 0 .5 (1 −fdanger )+0 .3 (1 −fwarning )+0 .2 min 
+
+ ¯d 
+
+> 2
+
+, 1
+
+
+
+(16) where ¯d is the mean clearance capped at 2 m. Time efficiency 
+
+τ = min(1 , T ref /T elapsed ) with Tref = d0/0.5 is only defined when the goal is reached. Two scoring branches are defined: 
+
+Js =
+
+(
+
+0.35 + 0 .2 η + 0 .15 s + 0 .2 O + 0 .1 τ if goal reached 
+
+0.25 ϕ + 0 .1 η + 0 .1 s + 0 .15 O else (17) 
+
+2) Tree-Structured Parzen Estimator: The offline BO em-ploys Tree-Structured Parzen Estimators (TPE) [14], well-suited for high-dimensional mixed parameter spaces. TPE partitions the observed scores at the γ = 0.15 quantile threshold y∗ and models two marginal densities: 
+
+ℓ(θ) = p(θ | J (θ) < y ∗), g(θ) = p(θ | J (θ) ≥ y∗) (18) Each marginal is estimated as a mixture of truncated Gaus-sians, one centred on each past observation. The acquisition is the Expected Improvement ratio: EI (θ) ∝ ℓ(θ)
+
+g(θ) (19) The algorithm first draws Nrand = 20 trials uniformly (cold start), then iterates: refit ℓ and g, sample 20 candidates from 
+
+ℓ(θ), select the one with highest ℓ/g ratio, evaluate J , and add to the dataset. This repeats until Nmax = 120 trials and the best configuration θ∗ 
+
+> offline
+
+= arg max i J (θi) is deployed. 
+
+3) GP Surrogate for Sensitivity Analysis: An ARD Mat´ ern-5/2 Gaussian Process is fitted to all accumulated observations for interpretability. The kernel is: 
+
+k(θ, θ ′) = σ2
+
+> f
+
+
+
+1 + √5 r + 53 r2
+
+e−√5 r + σ2
+
+> n
+
+δ(θ, θ ′) (20) where r = pP 
+
+> i
+
+(θi − θ′
+
+> i
+
+)2/ℓ 2 
+
+> i
+
+and ARD length scales {ℓi}
+
+are learned by maximizing the log marginal likelihood. The normalized inverse length-scale ˜ℓi = (1 /ℓ i)/ P 
+
+> j
+
+(1 /ℓ j ) quan-tifies parameter sensitivity: a short ℓi indicates that the score landscape varies rapidly with θi, marking it as decisive. IV. E XPERIMENTAL SETUP 
+
+All experiments are conducted on the Unitree Go2 quadruped. Locomotion is handled by the CHAMP hierarchi-cal controller [6], which exposes a body-frame /cmd_vel 
+
+velocity interface. A mid-range 3-D LiDAR provides filtered point clouds at 10 Hz. The full navigation stack uses Ros 2 and runs on a Jetson Orin Nano carried onboard, while the simulations are performed in Gazebo Fortress [16] with a planar-move plugin providing ground-truth odometry. Three Gazebo worlds of increasing complexity are em-ployed. Environments E1 and E2 serve as in-distribution training environments for offline Bayesian Optimization; E3 is held out as an out-of-distribution test scenario.  
+
+> •
+
+E1 – Open (tuning): a sparse, low-obstacle environment representing easy navigation conditions.  
+
+> •
+
+E2 – Indoor Office (tuning): a confined indoor envi-ronment with tables, narrow passages, doorways, and multiple rooms, presenting high navigation difficulty.  
+
+> •
+
+E3 – Warehouse (testing): a held-out environment with dense shelves, narrow corridors, and complex passages, designed to assess out-of-distribution generalization.  
+
+> •
+
+E4 – Real Room (testing): a real room of our laboratory arranged for the experiment with obstacles as furniture, boxes and moving people. Each environment contains a representative set of navigation tasks of varying difficulty, including straight-line traversals, zig-zag paths, tight turns, navigation around large obsta-cles, and goal configurations requiring global exploration. An additional test with suddenly appearing dynamic obstacles evaluates robustness to pedestrians or vehicles in unstructured settings. The evaluation is composed of the following phases:  
+
+> •
+
+Phase 0 – Baseline: MPC parameters are hand-tuned through a limited set of simulation trials and held fixed, which serves as the reference for all comparisons.  
+
+> •
+
+Phase 1 – Offline BO: 120 BO trials are executed on E1 and E2 using the TPE method described in Section III-E, yielding the tuned vector θ∗
+
+> BO
+
+. 
+
+> •
+
+Phase 2 – Generalization: Both configurations are eval-uated on the unseen environment E3 to quantify out-of-distribution transfer of BO tuned parameters. • Phase 3 – Sim-to-Real: We performed a limited test in a real environment where the robot had to reach predefined set of navigation tasks in the environment E4. As evaluation metrics for the navigation experiments, we report success rate (SR, %), time to goal (TTG, s), path length (PL, m), and average MPC solve time (TSM, ms). Success rate (SR) is defined as the percentage of episodes in which the robot reaches the goal region within a predefined tolerance, without collision, and within a 5-minute time limit. Time to goal (TTG) measures the total elapsed time from the initial pose to goal attainment. Path length (PL) denotes the cumu-lative distance travelled along the executed trajectory. Finally, average MPC solve time (TSM) quantifies computational cost as the mean solver execution time per MPC iteration. V. R ESULTS 
+
+A. Navigation Performance 
+
+As shown in Table I, the hand-tuned baseline per-forms adequately in the open environment (E1: PL = 9.64 m, TSM = 40.85 ms) but degrades in confined settings (E2: PL = 17.92 m, TSM = 46.78 ms), reflecting the sensitivity of fixed parameters to obstacle density. Offline BO on E1 and E2 consistently improves all metrics across every evaluated scenario. In the indoor office environment (E2), path length is reduced by 32.3% (17.92 m → 12.13 m) and average MPC solve time decreases by 49.2% (46.78 s → 23.77 s), indicating that BO-tuned parameters yield shorter, more computation-ally efficient trajectories. Critically, The BO-tuned configura-tion generalizes to the unseen warehouse environment (E3): path length drops by 44.5% (73.97 m → 41.07 m), despite E3 never being used during tuning, demonstrating strong out-of-distribution transfer. Figure 3 illustrates the MPC objective function (11) comparison, which is consistently lower. MPC objective cost function (log-scale) 0 25 50 75 100 125 150 175  
+
+> replay frame index
+> 10 1
+> 10 0
+> 10 1
+> cost (log scale)
+> Per-frame MPC step cost after optimization
+> baseline cost
+> BO tuned cost
+
+Fig. 3: Comparison of the MPC objective function (11) over the planning horizon between baseline and BO-tuned configu-rations in E3. Lower values indicate tighter path tracking and reduced obstacle cost, so overall better task performance. Aggregated over E1–E3, BO reduces average path length by 38.7%, average MPC solve time by 25.3%, and time to goal by 53.0% (200.37 s → 94.25 s), while improving the overall success rate from 13/20 to 18/20. These gains confirm that optimizing across environments of contrasting difficulty produces robust, generalizing parameter configurations. Figure 4 illustrates a representative trajectory comparison in E3, where the BO-tuned MPC follows a shorter, smoother path relative to the baseline. 
+
+(a) Topological navigation graph con-structed online during the robot’s explo-ration phase, where visited locations are nodes and edges encode regions con-nectivity. The purple circle marks the starting point, the blue stars are the first reached goal and the current target. The robotic agent is maneuvering around ob-stacles toward the second goal. 6 7 8 9 10 
+
+> x [m]
+> 0
+> 1
+> 2
+> 3
+> 4
+> 5
+> 6
+> 7
+> y [m]
+> Frame 113 (baseline=True, opt=True)
+> lidar pts
+> ref path
+> start
+> baseline MPC
+> optimized MPC
+
+(b) Trajectory comparison in E3 showing A* refer-ence (grey dotted), base-line MPC (blue), and BO-optimized MPC (red). Cur-rent robot pose is green; LiDAR points of obstacles are shown in yellow. 
+
+Fig. 4: Navigation graph and MPC path planner comparison in the held out-of-distribution warehouse environment (E3). Hardware deployment in the real laboratory room (E4) validates sim-to-real transfer: success rate improves from 5/10 to 8/10 using θ∗ 
+
+> BO
+
+without any additional on-robot or online tuning, confirming that simulation-tuned parameters transfer effectively to physical hardware and real-world obstacles. 
+
+B. MPC Parameter Sensitivity 
+
+We analyze MPC parameter importance via GP-based sensi-tivity estimation (Section III-E), using baseline and BO-tuned configurations. The BO convergence is shown in Fig. 5. The highest sensitivity is observed for control jerk Rjerk 
+
+and control effort Rv , indicating that dynamic regularization primarily governs solution stability. Obstacle weight W and solver-time effects follow, while tracking terms ( Qxy , Qψ )and failure penalty show low sensitivity. Overall, variability is driven by dynamic and constraint-related parameters, with tracking having limited influence. Compared to the baseline, BO reduces average sensitivity by 42.3%, yielding a smoother landscape that improves robustness and generalization. Bayesian optimization convergence 
+
+Fig. 5: Bayesian optimization (BO) convergence, showing the objective score J (θ) versus trial index over 120 trials. TABLE I: As navigation evaluation metrics, we report success rate (SR, % or success/trials, ↑), time to goal (TTG, s, ↓), path length (PL, m, ↓) and average time to solve MPC (TSM, ms, ↑). Note: ↑ denotes higher is better, ↓ lower is better. 
+
+E1 (Open) E2 (Indoor Office) E3 *(Warehouse) Eavg(1,2,3) (Overall) E4 *(Real Room) Method PL TSM PL TSM PL TSM PL TSM TTG SR SR Baseline parameters θ0 9.64 40.85 17.92 46.78 73.97 60.78 33.84 49.47 200.37 65.0% 5/10 
+
+BO tuned parameters θ∗ 
+
+> BO
+
+9.03 38.68 12.13 23.77 41.07 48.41 20.74 36.95 94.25 90.0% 8/10 Percentage change ∆% -6.3 -5.3 -32.3 -49.2 -44.5 -20.4 -38.7 -25.3 -53.0 +38.5 +60.0  
+
+> *
+
+Indicates held-out out-of-distribution environment. 
+
+VI. D ISCUSSION AND LIMITATIONS 
+
+Limitations. The kinematic model treats the robot as a planar holonomic agent; significant slopes or steps require extension to 3-D dynamics. The BO search is bounded by the predefined space Θ, which may not include all the possible MPC parameters that could be tuned to find the optimal configuration, an a priori selection was necessary to avoid an extremely high dimensional optimization space. 
+
+Future Work. Three primary extensions are planned. First, an online BO loop warm-started from θ∗ 
+
+> BO
+
+will adapt MPC parameters incrementally during deployment via GP poste-rior updates and Expected Improvement acquisition [13], en-abling environment-specific refinement for out-of-distribution settings without offline retraining. Second, a self-supervised Dynamic Graph CNN (DGCNN) encoder will provide scan-level, annotation-free MPC parameter conditioning from Li-DAR embeddings. Third, the stack will be ported to the Unitree G1 bipedal humanoid and interfaced with Visual Language Action (VLA) [17] models for natural-language goal decomposition, with lifelong continual online learning to accumulate knowledge from the real world environment data. VII. C ONCLUSION 
+
+We have presented a map-free autonomous navigation framework combining rolling-horizon A* planning with non-linear MPC tuned via offline Bayesian Optimization. The sys-tem integrates a Gaussian occupancy grid, a CasADi/IPOPT nonlinear MPC with differentiable sigmoid obstacle barriers, and a TPE-based BO pipeline that identifies near-optimal MPC weight configurations from a composite performance score. Offline BO conducted on two training environments of different difficulty yields consistent improvements across all evaluated scenarios. The average length path decreases by 38.7% and the MPC average total solving time decreases by 25.2% relative to the hand-tuned baseline. The BO-tuned con-figuration generalizes to the held-out warehouse environment without additional tuning. The modular architecture is platform-agnostic and de-signed for extension. Our ongoing research work targets online Bayesian Optimization for deployment-time adaptation, DGCNN for map-adaptive MPC parameter conditioning, and integration with Visual Language Action models for language-conditioned navigation across legged and wheeled platforms. ACKNOWLEDGMENT 
+
+This work was conducted by the research team at Talos Robotics AI (https://talosrobotics.ai/). The authors acknowl-edge the primary technical contribution of L. Ortolani to the development of the proposed framework. T. F. Banfi served as the first co-author and corresponding author; he is also affiliated with ETH Zurich and CERN; however, his contribution is not related to these institutions. REFERENCES [1] M. Bjelonic, R. Grandia, O. Harley, C. Galliard, S. Zimmermann, and M. Hutter, “Whole-body mpc and online gait sequence generation for wheeled-legged robots,” in 2021 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) , 2021, pp. 8388–8395. [2] T. P. Nascimento, C. E. T. D´ orea, and L. M. G. Gonc ¸alves, “Nonholo-nomic mobile robots’ trajectory tracking model predictive control: a survey,” Robotica , vol. 36, no. 5, p. 676–696, 2018. [3] A. G. Puigjaner, M. Prajapat, A. Carron, A. Krause, and M. N. Zeilinger, “Performance-driven constrained optimal auto-tuner for mpc,” IEEE Robotics and Automation Letters , vol. 10, pp. 4698–4705, May 2025. [4] P. Fankhauser, M. Bloesch, and M. Hutter, “Probabilistic terrain mapping for mobile robots with uncertain localization,” IEEE Robotics and Automation Letters , vol. 3, no. 4, pp. 3019–3026, 2018. [5] J. Hwangbo, J. Lee, A. Dosovitskiy, D. Bellicoso, V. Tsounis, V. Koltun, and M. Hutter, “Learning agile and dynamic motor skills for legged robots,” Science Robotics , vol. 4, no. 26, p. eaau5872, 2019. [6] L. Technology, “Hierarchical controller for highly dynamic locomotion utilizing pattern modulation and impedance control : implementation on the mit cheetah robot,” MIT Libraries (DSpace@MIT) , 03 2014. [7] S. Karaman and E. Frazzoli, “Sampling-based algorithms for optimal motion planning,” The international journal of robotics research , 2011. [8] T. F. Banfi, F. Dorati, N. Manzoni, and J. Mart´ ınez-G´ omez, “Optimizing initial path finding in informed-rrt* with a novel map-adaptive sampling technique,” in 2024 7th Iberian Robotics Conference (ROBOT) , Nov 2024, pp. 1–6. [9] D.-N. Bui, T. H. Khuat, M. D. Phung, T.-H. Tran, and D. L. Tran, “Model predictive control for optimal motion planning of unmanned aerial vehicles,” in 2024 International Conference on Control, Robotics and Informatics (ICCRI) , July 2024, pp. 1–6. [10] J. Andersson, J. Gillis, G. Horn, J. Rawlings, and M. Diehl, “Casadi—a software framework for nonlinear optimization and optimal control,” 
+
+Mathematical Programming Computation , vol. 11, no. 1, pp. 1–36, 2018. [11] A. W¨ achter and L. T. Biegler, “On the implementation of an interior-point filter line-search algorithm for large-scale nonlinear programming,” 
+
+Mathematical programming , vol. 106, no. 1, pp. 25–57, 2006. [12] A. D. Ames, S. Coogan, M. Egerstedt, G. Notomista, K. Sreenath, and P. Tabuada, “Control barrier functions: Theory and applications,” in 2019 18th European control conference (ECC) . Ieee, 2019, pp. 3420–3431. [13] R. Calandra, A. Seyfarth, J. Peters, and M. P. Deisenroth, “Bayesian optimization for learning gaits under uncertainty: An experimental comparison on a dynamic bipedal walker,” Annals of Mathematics and Artificial Intelligence , vol. 76, no. 1, pp. 5–23, 2016. [14] S. Watanabe, “Tree-structured parzen estimator: Understanding its algo-rithm components and their roles for better empirical performance.” [15] H. Shah, E. Tevere, D. Atha, M. Kaufmann, S. Khattak, M. Patel, M. Hutter, J. Frey, and P. Spieler, “Wildos: Open-vocabulary object search in the wild,” 2026. [16] N. Koenig and A. Howard, “Design and use paradigms for gazebo, an open-source multi-robot simulator,” in 2004 IEEE/RSJ international conference on intelligent robots and systems (IROS)(IEEE Cat. No. 04CH37566) , vol. 3. Ieee, 2004, pp. 2149–2154. [17] B. e. a. Zitkovich, “Rt-2: Vision-language-action models transfer web knowledge to robotic control,” in Proceedings of The 7th Conference on Robot Learning , ser. Proceedings of Machine Learning Research, J. Tan, M. Toussaint, and K. Darvish, Eds. PMLR, 2023, pp. 2165–2183.

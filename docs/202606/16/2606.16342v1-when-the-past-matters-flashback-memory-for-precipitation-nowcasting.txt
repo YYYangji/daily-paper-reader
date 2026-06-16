@@ -1,0 +1,665 @@
+Title: When the Past Matters: FlashBack Memory for Precipitation Nowcasting
+
+URL Source: https://arxiv.org/pdf/2606.16342v1
+
+Published Time: Tue, 16 Jun 2026 01:51:20 GMT
+
+Number of Pages: 12
+
+Markdown Content:
+> JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 1
+
+# When the Past Matters: FlashBack Memory for Precipitation Nowcasting 
+
+Yuhao Du, Boxiao Huang, Chengrong Wu, Jiankai Zhang ∗
+
+Abstract —Accurate precipitation nowcasting is crucial for disaster mitigation and socio-economic planning, yet existing methods often struggle with false alarms, missed events, and long-range dependency modeling at high spatiotemporal resolution. To address these challenges, we propose FlashBack Memory (FB), a module that dynamically retrieves key historical states and integrates them via an adaptive fusion gate, enhancing the spatiotemporal representation capability of recurrent-based models. We incorporate FB into PredRNN, PredRNNpp, MIM, MotionRNN, and PredRNN-V2, and evaluate on CIKM2017, Shanghai2020, and SEVIR datasets. Experimental results demon-strate that FB significantly improves MSE, MAE, SSIM, and CSI metrics, particularly for high-intensity rainfall and long-sequence predictions, while reducing false alarms and missed events and enhancing temporal consistency and spatial localization. The proposed method provides a general and efficient memory enhancement mechanism, improving the overall performance of recurrent-based precipitation nowcasting models. 
+
+Index Terms —Precipitation Nowcasting, Recurrent Neural Networks (RNNs), Dynamic Memory Retrieval, Spatiotemporal Modeling 
+
+I. I NTRODUCTION 
+
+# ACCURATE and timely precipitation nowcasting plays a crucial role in safeguarding lives and property as well as optimizing socioeconomic activities [1]–[4]. It underpins the establishment of severe weather early warning systems, enhances disaster response decision-making, and improves operational efficiency in sectors such as transportation, agri-culture, and energy management [4]–[6]. With the increasing frequency of extreme weather events driven by climate change, the demand for reliable short-term precipitation forecasts with high spatiotemporal resolution has become more urgent than ever [6], [7]. Traditional precipitation nowcasting methods, such as Nu-merical Weather Prediction (NWP) [8], have achieved remark-able progress but still exhibit significant limitations at fine spatiotemporal scales. The inherent complexity of atmospheric processes, sensitivity to initial conditions, and high computa-tional costs make it difficult for NWP to accurately depict                        
+
+> * Corresponding author This research was jointly supported by the National Natural Science Foundation of China (U2442211). The computations in this research was supported by Supercomputing Center of Lanzhou University. The source code will be released at https://github.com/duyhlzu/Flash-Back-Memory. Yuhao Du and Jiankai Zhang are with the College of Atmospheric Sciences, Lanzhou University, Lanzhou 730000, China (e-mail: duyh2024@lzu.edu.cn; wying2024@lzu.edu.cn; jkzhang@lzu.edu.cn). Boxiao Huang is with the Fuqua School of Business, Duke University, North Carolina 27705, USA (e-mail: boxiao.huang@duke.edu). Chengrong Wu is with the Department of Computer Science, University of Manchester, Manchester M139PL, UK (e-mail: chengrong.wu@student.Manchester.ac.uk).
+
+rapidly evolving phenomena such as convective precipitation, thereby constraining its ability to deliver high-quality short-term forecasts in real-time applications. To overcome these shortcomings, data-driven approaches—especially deep learning (DL) methods—have emerged as powerful alternatives. Current mainstream forecasting models can be broadly categorized into two types: deterministic models [9], [10] and deep generative models [11], [12]. The former directly learn the mapping between inputs and outputs to provide deterministic predictions, making them suitable for efficient, real-time short-term forecasting, whereas the latter model conditional probability distributions to generate diverse possible outcomes, offering better representation of uncertainty and complex distributions. This study primarily focuses on improving deterministic precipitation nowcasting models, aiming to enhance their ability to capture long-range spatiotemporal dependencies and complex weather evolutions while maintaining real-time performance and accuracy. In the task of precipitation nowcasting, models are required not only to capture short-term local variations but also to understand the long-term evolution of weather patterns. When analyzing sequences of radar images, human meteorological experts do not make predictions based solely on the most recent frames. Instead, they flexibly recall relevant histori-cal patterns that resemble the current phenomena, allowing them to infer future developments. This cognitive process is selective and context-aware : experts do not review all past information uniformly but instinctively retrieve the most relevant memories. Although recent advances in RNN-based models (such as ConvLSTM [9], PredRNN [10], MotionRNN [13], SwinLSTM [14] and VMRNN [15]) have led to remarkable progress in precipitation forecasting, these models still encounter chal-lenges in long-term spatiotemporal modeling. Specifically, due to intrinsic limitations such as catastrophic forgetting and constrained ability to model long-range dependencies, the performance of RNN-based models tends to plateau when tackling longer forecasting horizons. Moreover, existing mod-els typically adopt fixed schemes for aggregating historical states, lacking a flexible memory retrieval mechanism that dynamically associates past information with the current input. As a result, they often fail to retain critical information in scenarios involving complex weather dynamics. To address these issues and better emulate the retrospective reasoning process employed by human experts, we propose 
+
+FlashBack Memory —a memory module that dynamically retrieves key historical states conditioned on the current input. The design of FlashBack Memory incorporates the following  
+
+> arXiv:2606.16342v1 [cs.CV] 15 Jun 2026 JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 2
+
+three core innovations:  
+
+> •
+
+Dynamic Memory Retrieval : FlashBack Memory adap-tively selects the most relevant past states based on the current input, rather than indiscriminately stacking all historical information.  
+
+> •
+
+Dynamic Routing Aggregation : Inspired by the idea of dynamic routing, we introduce a lightweight itera-tive optimization mechanism that gradually enhances the model’s focus on the most valuable memory fragments.  
+
+> •
+
+Adaptive Fusion Gate : To effectively integrate the re-trieved memories with the current hidden state, we design an adaptive fusion gate, which allows the model to dynamically balance the contributions of both compo-nents, yielding a more refined and context-aware hidden representation. By introducing FlashBack Memory, the model not only acquires enhanced capabilities for capturing long-term de-pendencies but also gains the flexibility to selectively re-trieve information most conducive to the current prediction task. In this study, we integrate FlashBack Memory into the Spatiotemporal-LSTM framework and conduct systematic evaluations on three representative precipitation nowcasting datasets— CIKM2017 , Shanghai2020 , and SEVIR . Experi-mental results demonstrate that our proposed method signifi-cantly improves forecasting accuracy, particularly over longer prediction horizons and under complex weather conditions. II. R ELATED WORK 
+
+Current video- and radar-based precipitation nowcasting models can be broadly grouped into two families: recurrent-based methods and recurrent-free methods. Each family adopts different architectural priors and provides distinct remedies for the core challenge of modeling long-range spatiotemporal dependencies. Recurrent-based spatiotemporal prediction methods are ex-emplified by ConvLSTM, which embeds temporal gating into convolutional units to simultaneously capture spatial and temporal features. Subsequent research has evolved along three main directions: mitigating long-range dependencies, enhanc-ing global context modeling, and improving memory selectiv-ity. In terms of memory mechanisms, some studies introduce interleaved or multi-stream spatiotemporal memory units to facilitate gradient propagation across time and extend effective memory [10], [16]–[20]. For state modeling, a series of methods employ explicit motion decomposition, separation of trend and transient components, dynamic gating, or weighted mechanisms to reduce the interference of short-term noise on long-term states and better capture complex motion evolution [13], [21]. Regarding global context modeling, researchers gradually incorporate multi-scale convolutions, sparse routing, local–global self-attention, or hierarchical retrieval into recur-rent units [4], [7], [14], [15], thereby enhancing the modeling of long-range spatiotemporal dependencies while preserving the computational efficiency of recurrence. In contrast, recurrent-free models discard stepwise state propagation and directly perform end-to-end modeling on spa-tiotemporal tensors. Early works such as SimVP [22] employ deep convolutions and multi-scale stacking to transform pre-cipitation nowcasting into a purely feedforward mapping task, significantly improving parallelization efficiency. Subsequent research has further advanced these models along aspects such as long-range dependency modeling, global context capture, and dynamic information selection. Some approaches intro-duce cross-time convolutions or temporal attention modules to explicitly model long-distance spatiotemporal dependencies [23], alleviating the gradient decay problem in long-sequence prediction characteristic of recurrent methods. Others leverage multi-view decomposition or multi-modal fusion to separate local dynamics from global trends, thereby enhancing the rep-resentation of complex weather evolution [24], [25]. The latest PredFormer [26] series combines spatiotemporal bidirectional attention with dynamic token selection in a Transformer frame-work, further strengthening the capture of critical patterns and long-range dependencies while maintaining high parallel efficiency. Although both recurrent and recurrent-free models have achieved significant progress in spatiotemporal sequence mod-eling, they still face inherent limitations in long-range de-pendency modeling and memory retrieval. Recurrent meth-ods, despite incorporating multi-stream memories, explicit motion decomposition, or local–global attention to extend effective memory, still rely on fixed sequential propagation, making them prone to gradient decay and key state for-getting. Recurrent-free models, on the other hand, achieve parallelization and a global receptive field through cross-time convolutions, attention, and multi-modal decomposition but generally lack explicit dynamic memory modules, resulting in historical information being utilized more as “average aggre-gation” rather than “selective retrieval.” To address this shared limitation, we propose FlashBack Memory, motivated by the retrospective reasoning process employed by meteorological experts. During prediction, it dynamically retrieves historical states most relevant to the current input, and integrates these key memories via dynamic routing and an adaptive fusion gate. This design allows flexible, context-aware long-range dependency modeling while maintaining efficient prediction. Compared with existing methods, FlashBack Memory moves beyond relying solely on sequential hidden state propagation or uniform aggregation, providing a conditionally driven ex-plicit historical selection mechanism that preserves and lever-ages critical temporal memories in complex weather evolution scenarios, thereby significantly improving the modeling of long-range dependencies and non-stationary dynamics. III. M ETHOD 
+
+A. Problem Formulation 
+
+We address the task of precipitation nowcasting, where the objective is to forecast upcoming radar reflectivity maps based on a sequence of historical observations. Let I1: T ∈
+
+RC×T ×H×W denote the observed input sequence of T frames, where C is the number of channels, and H × W is the spatial resolution. The goal is to predict the future sequence 
+
+bIT +1: T +T ′ ∈ RC×T ′×H×W over a forecasting horizon of T ′
+
+steps. JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 3
+
+To this end, we aim to learn a predictive function FΘ :
+
+RC×T ×H×W → RC×T ′×H×W , parameterized by Θ, such that: 
+
+bIT +1: T +T ′ = FΘ(I1: T ), (1) where bI denotes the predicted future radar frames. The model parameters Θ are optimized by minimizing a discrep-ancy between predictions and the corresponding ground truth sequence IT +1: T +T ′ using a task-specific loss function L:
+
+Θ⋆ = arg min  
+
+> Θ
+
+L (FΘ(I1: T ), IT +1: T +T ′ ) . (2) Unlike conventional video prediction tasks, precipitation nowcasting poses unique challenges due to its highly dynamic, multi-scale spatiotemporal dependencies and the necessity for long-term reasoning. Human forecasters often rely on prior experiences and analogical recall, revisiting previously seen patterns that resemble current developments. Inspired by this intuition, we extend the standard formulation by incorporating a recurrent memory mechanism that dynamically retrieves and integrates relevant historical states, beyond the fixed input window I1: T .In this work, we introduce a memory-augmented prediction model that enriches the predictive process with selective flash-back retrieval. This allows the model to maintain a flexible, context-aware temporal scope, enabling it to reference and in-tegrate critical past information as needed, thereby enhancing its long-term forecasting capability. 
+
+B. Dynamic Memory Retrieval 
+
+To address the degradation of long-range dependency mod-eling in recurrent structures, we introduce a content-aware memory retrieval module that allows selective access to his-torical hidden states. Unlike conventional RNNs that compress all temporal information into a single hidden vector, our design explicitly maintains a dynamic external memory M,enabling flexible retrieval and aggregation of relevant past states. This memory mechanism is particularly beneficial in spatiotemporal scenarios such as video prediction, where mul-tiple past observations may share visual similarities but differ significantly in semantic relevance.We present a comparison between the standard recurrent neural network framework and the FlashBack-based network framework in Figure 1. Let h ∈ RB×C×H×W be the current hidden state at the decoding step, where B is the batch size, C is the number of hidden channels, and H × W are the spatial dimensions. During the encoding phase, we maintain a dynamic memory buffer: 
+
+M = {h1, h2, . . . , hK }, hk ∈ RB×C×H×W . (3) where K denotes the number of memory slots (up to a maximum of Kmax = 15 in our implementation). Each stored memory is detached from gradient flow to avoid backpropa-gation through the full history, matching the implementation: 
+
+self.memory.append(h.detach()) .To retrieve relevant memories, we first flatten the current state and memory entries into a vector space for computing Block 
+
+Block 
+
+Block 
+
+> Ht
+> l
+> Xt+1
+> Xt
+> Ht
+> l+1
+
+Block 
+
+Block 
+
+Block  
+
+> ෡Ht
+> l
+> Xt+1
+> Xt
+> FlashBack
+> Memory
+> ෡Ht
+> l
+> Ht
+> l-1
+> ෡Ht
+> l+1
+> Ht
+> l
+> ෡Ht
+> l+1
+> Ht
+> l+1
+> ෡Ht
+> l+2
+> Fig. 1. Structural Comparison Between ConvRNN and ConvRNN+FB.
+
+cosine similarity. We use the following reshape operation for both the current state and each memory tensor: 
+
+hf lat k = Flatten (hk) , (4) where Flatten (h) refers to the operation that reshapes the tensor h ∈ RB×C×H×W into a 2D matrix of size RB×D,with D = C · H · W representing the total number of spatial features. Similarly, we define the flatten memory buffer Mf lat ∈
+
+RB×K×D as: 
+
+Mf lat = {hf lat  
+
+> 1
+
+, hf lat  
+
+> 2
+
+, . . . , hf lat K }, hf lat k ∈ RB×D. (5) Then, the cosine similarity between the current hidden state and each memory slot is computed across the batch dimension. Specifically, for each k ∈ { 1, . . . , K }:
+
+s(b) 
+
+> k
+
+= cos 
+
+
+
+hf lat, (b) 
+
+> K+1
+
+, hf lat, (b)
+
+> k
+
+
+
+, ∀b ∈ { 1, . . . , B }, (6) where, s(b) 
+
+> k
+
+∈ RB×D refers to similarity scores, hK+1 refers to the input hidden state in this moment. We can aggregate these similarities into a matrix: 
+
+S =
+
+h
+
+s(b)
+
+> k
+
+i
+
+, S ∈ RB×K×D. (7) Given two flattened hidden states ha, hb ∈ R1×D ; a, b ∈{1, . . . , K }, their normalized cosine similarity is computed as: 
+
+cos( ha, hb) = ⟨ha, hb⟩∥ha∥2 · ∥ hb∥2
+
+=
+
+ ha
+
+∥ha∥2
+
+, hb
+
+∥hb∥2
+
+
+
+. (8) The similarity scores {s(b) 
+
+> k
+
+}Kk=1 for each sample b are converted into normalized attention weights via softmax: 
+
+α(b) 
+
+> k
+
+=exp 
+
+
+
+s(b)
+
+> k
+
+PKj=1 exp 
+
+
+
+s(b)
+
+> j
+
+ , α(b) ∈ RB×K . (9) JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 4
+
+This operation yields a per-sample, per-slot attention vector 
+
+α(b), guiding how much each memory contributes to the final recall. Finally, the attended memory representation for each batch 
+
+b is computed as the weighted sum over all historical memory slots: 
+
+h(b) 
+
+> mem
+
+=
+
+> K
+
+X
+
+> k=1
+
+Enc (α(b) 
+
+> k
+
+) · h(b) 
+
+> k
+
+, (10) where, Enc (·) refers to expanding a tensor of size RB×K
+
+to RB×K×1×1×1, hmem ∈ RB×C×H×W are refers to the 
+
+FlashBack Memory . This retrieval is differentiable and dy-namically adapts to the current context, enabling the decoder to incorporate long-range dependencies from the most relevant prior observations. 
+
+C. Dynamic Routing Aggregation 
+
+To further enhance the selectivity and robustness of memory retrieval, we augment the basic cosine attention mechanism with an iterative dynamic routing algorithm, inspired by capsule networks [27]. This mechanism enables progressive refinement of attention weights over multiple routing steps, allowing the model to focus more precisely on semantically relevant memory slots. In conventional one-step soft attention, especially for spa-tiotemporal video data, multiple past states may appear visu-ally similar but differ in semantic importance. Such ambiguity makes it difficult to assign accurate relevance weights. Dy-namic routing mitigates this by iteratively adjusting attention based on the agreement between the current query and the retrieved memory summary. Let l ∈ RB×K be the initial similarity scores, initialized by the cosine similarities between the flattened current hidden state and each memory slot: 
+
+l = cos 
+
+
+
+hf lat K+1 , Mf lat 
+
+, l ∈ RB×K (11) For R routing iterations (we use Rmax = 3 ), the attention weights α are updated via softmax and used to compute a weighted sum of memory states: 
+
+α(r) 
+
+> k
+
+= exp( l)
+
+PKj=1 exp( lj ) , ∀r ∈ { 1, . . . , R }, α(r) ∈ RB×K
+
+(12) 
+
+h(r) 
+
+> rout
+
+=
+
+> K
+
+X
+
+> k=1
+
+Enc (α(r) 
+
+> k
+
+) · hk (13) Then, we update the routing logits t ∈ RB×K based on the agreement between the retrieved memory and each memory slot: 
+
+tk ← tk + Dec (h(Rmax ) 
+
+> rout
+
+) · M f lat , (14) where, Dec (·) refers to reshape a tensor from RB×C×H×W
+
+to RB×1×D. This process is repeated for R iterations, grad-ually sharpening the focus on relevant memory slots through accumulated evidence. Similar to Eq.(10), compute the routing Flashback Memory 
+
+hrout  
+
+> mem
+
+∈ RB×C×H×W :
+
+hrout  
+
+> mem
+
+=
+
+> K
+
+X
+
+> k=1
+
+Enc (βk) · hk, (15) where, 
+
+βk = exp ( tk)
+
+PKj=1 exp ( tj ) , β ∈ RB×K . (16) 
+
+D. Adaptive Fusion Gate 
+
+After R iterations, we obtain the routing Flashback Memory 
+
+hrout  
+
+> mem
+
+and proceed to fuse it with the current state using a gated mechanism: 
+
+z = Concat 
+
+
+
+[hrout  
+
+> mem
+
+, hf lat K+1 ]
+
+
+
+, (17) 
+
+G = σ (W1×1 ∗ z) , (18) where, z ∈ RB×2C×H×W , G ∈ RB×C×H×W , ∗ denote the convolution, σ donates the sigmoid function. 
+
+ˆh = G ⊙ hrout  
+
+> mem
+
++ (1 − G ) ⊙ hf lat K+1 . (19) Here, the convolutional gate G controls how much informa-tion to integrate from memory versus the current hidden state. The fused output ˆh is then used as the updated hidden state in the decoder. The entire routing procedure is differentiable and can be trained end-to-end using stochastic gradient descent. Unlike traditional memory networks that rely on hard addressing or fixed attention, our method enables fine-grained, dynamic, and content-aware memory selection. 
+
+E. Overall Architecture 
+
+To clearly illustrate the proposed FlashBack framework, we present its full inference procedure in Algorithm 1 and depict the modular architecture in Figure 2. The method explicitly maintains historical hidden states in an external dynamic memory buffer M during the encoding phase and detaches them from gradient flow to reduce memory overhead. At decoding or prediction time, the current hidden state is first flattened and compared with each memory slot using normalized cosine similarity to obtain an initial retrieval via soft attention. Crucially, the multi-step dynamic routing itera-tions are applied before Equation (10) to progressively refine the attention weights, producing a high-quality aggregated memory feature hrout  
+
+> mem
+
+. This feature is then fused with the current state through a gated mechanism to form the enhanced representation. This design alleviates the limitation of conventional recur-rent networks that compress all temporal information into a single vector and enables selective recall of semantically rele-vant past states, leading to improved performance in spatiotem-poral modeling tasks. Figure 2 illustrates the interaction among modules, while Algorithm 1 details the complete FlashBack process, including memory update, similarity computation, 
+
+dynamic routing , and gated fusion. JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 5hidden state 
+
+Memory Buffer  Similarity Matrix  Memory Buffer  
+
+> dynamic routing hadamard
+> product
+> flash back out
+> flash back out
+
+FlashBack Memory  
+
+> memory concat fusion gate out
+
+Gate Memory 
+
+updated hidden state  
+
+> Fig. 2. Flowchart of the FlashBack Memory Module.
+
+Algorithm 1 FlashBack Memory with Dynamic Routing  
+
+> 1:
+
+Input: Current state hK+1 ∈ RB×C×H×W , memory buffer 
+
+M = {h1, . . . , hK }, routing steps R 
+
+> 2:
+
+Output: Refined state ˆh 
+
+> 3:
+
+Flatten current state: hf lat K+1 ← Flatten (hK+1 ) 
+
+> 4:
+
+Flatten memory: Mf lat ← Flatten (M) 
+
+> 5:
+
+Compute initial logits: lk ← cos( hf lat K+1 , hf lat k ) ∀k 
+
+> 6:
+
+for r = 1 to R do  
+
+> 7:
+
+Compute attention weights: α(r) 
+
+> k
+
+← exp( lk )   
+
+> PKj=1 exp( lj)
+> 8:
+
+Aggregate memory: h(r) 
+
+> rout
+
+← PKk=1 α(r) 
+
+> k
+
+hk 
+
+> 9:
+
+Update logits by agreement: lk ← lk + ⟨Dec (h(r)
+
+> rout
+
+), hf lat k ⟩ 
+
+> 10:
+
+end for  
+
+> 11:
+
+Compute final routing weights: βk ← exp( lk )   
+
+> PKj=1 exp( lj)
+> 12:
+
+Compute routed memory: hrout  
+
+> mem
+
+← PKk=1 βk hk 
+
+> 13:
+
+Fuse with current state:  
+
+> 14:
+
+z ← Concat [hrout  
+
+> mem
+
+, hK+1 ] 
+
+> 15:
+
+G ← σ(W1×1 ∗ z) 
+
+> 16:
+
+ˆh ← G ⊙ hrout  
+
+> mem
+
++ (1 − G ) ⊙ hK+1  
+
+> 17:
+
+Return: ˆh
+
+IV. EXPERIMENTS 
+
+A. Datasets and Metrics 
+
+This paper selects precipitation datasets with different spa-tiotemporal resolutions for experiments, including Shang-hai2020 [28], CIKM2017 [29], and SEVIR [30]. The Shanghai2020 dataset, released by the Shanghai Central Meteorological Observatory (SCMO) in 2020, records histor-ical precipitation events in the Yangtze River Delta region over multiple years. Each sample consists of 20 consecutive radar echo frames spanning 3 hours; the first 10 frames are recorded at 6-minute intervals (as input) and the last 10 frames at 12-minute intervals (as prediction). We performed data preprocessing to remove overly sparse samples, and finally retained 20,133 samples, of which 15,000 are used for training and 5,133 for testing. The CIKM2017 dataset, provided by the Shenzhen Meteoro-logical Bureau as a competition dataset, contains desensitized radar data, including radar images at four altitude levels. Each image has a resolution of 101×101 square kilometers. The data are recorded at 6-minute intervals, covering 15 time steps (1.5 hours). In this study, we select 10,000 precipitation samples at the 0.5 km altitude level. For each sample, the first 5 frames are used as input and the subsequent 10 frames as prediction. All samples are split into training and validation sets with a 9:1 ratio. The Storm EVent ImageRy (SEVIR) dataset is a spatiotem-poral Earth observation dataset composed of image sequences covering an area of 384 km × 384 km over a 4-hour period. We extracted 15,000 rainfall samples for experiments, with 12,000 used for training and 3,000 for testing. Each sample contains 25 radar echo frames recorded at 10-minute intervals (a total of 250 minutes), where the first 10 frames are used as input and the remaining 15 frames as prediction. Detailed information about the datasets is provided in Table I. It is worth noting that, due to computational resource limitations, we use bilinear interpolation to downsample the image resolution of all datasets to 64×64. To comprehensively evaluate the predictive performance of our model, we adopt four widely used quantitative metrics: Mean Squared Error (MSE), Mean Absolute Error (MAE), Structural Similarity Index (SSIM), and Critical Success Index (CSI). MSE and MAE measure the numerical discrepancies between predicted and ground-truth values. SSIM assesses the similarity between predicted and true images in terms of structure and texture; this is particularly important for precipitation radar data, as it reflects the model’s ability to JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 6
+
+> TABLE I TRAINING CONFIGURATIONS FOR DIFFERENT DATASETS .
+
+Datasets Task Epochs Patch/Batch Size Learning Rate Kmax 
+
+Shanghai2020 10 →10 200 4/16 0.0003 10 CIKM2017 5→10 100 4/16 0.0003 10 SEVIR 10 →15 100 4/16 0.0003 15 preserve the spatial continuity, shape, and intensity distribution of rainfall patterns. CSI, commonly used in meteorological event evaluation, quantifies the trade-off between detection and false alarms under a given threshold, thereby indicating the reliability of event predictions. 
+
+B. Quantitative Evaluation 
+
+To verify the performance improvement brought by Flash-Back Memory to ConvRNN models, we selected several classical models as baselines, including PredRNN, PredRN-Npp, MIM, MotionRNN, and PredRNN-V2. In addition, we also compared a variety of recurrent-based and recurrent-free models. Tables II, III, and IV present these quantitative results. Table II reports the quantitative results on the Shanghai2020 dataset. We observe that both recurrent-based and recurrent-free models exhibit distinct performance patterns in terms of MSE, MAE, SSIM, and CSI. In general, conventional recur-rent architectures excel at modeling temporal dependencies, whereas recurrent-free models are more flexible in spatial fea-ture extraction. However, after integrating the proposed Flash-Back (FB) module into the baseline models, all metrics show consistent improvements. For instance, with PredRNN, the MSE decreases from 3.3879 to 3.3246 and MAE from 40.841 to 39.619, while SSIM increases from 0.9471 to 0.9489. On the stronger PredRNNpp backbone, the MSE further drops from 2.8878 to 2.7818, SSIM rises to 0.9562, and the CSI scores at different thresholds also improve noticeably. Similar trends are observed for MIM, MotionRNN, and PredRNN-V2, where FB helps reduce MSE and MAE while enhancing SSIM and CSI metrics. These results clearly demonstrate the generality and effectiveness of the proposed FlashBack module across diverse architectures, especially in mitigating long-term dependency degradation and improving structural consistency (SSIM) as well as critical rainfall detection performance (CSI). On the CIKM2017 dataset, we also evaluated the perfor-mance of various temporal prediction models. As shown in Table III, traditional recurrent models (such as PredRNN, Pre-dRNN++, MIM, MotionRNN, etc.) achieved relatively strong results on the rainfall prediction task but still left room for fur-ther improvement in MSE, MAE, SSIM, and the CSI metrics at different thresholds. After integrating the proposed FlashBack (FB) module into these baseline models, overall performance improved to varying degrees. For example, PredRNN + FB re-duced MSE from 28.81 to 27.15, lowered MAE from 159.40 to 155.79, increased SSIM to 0.7403, and consistently improved the CSI scores; MIM + FB decreased MSE from 27.21 to 26.62 while maintaining a high SSIM (0.7407) and stable CSI; MotionRNN + FB also achieved slight gains in MSE, MAE, and SSIM. Overall, although the CIKM2017 dataset has higher resolution and more complex variability compared to Shanghai2020, the FB module still demonstrated strong generalization capability, delivering consistent improvements across multiple metrics and validating its effectiveness and versatility in different rainfall prediction tasks. On the SEVIR dataset (Table IV), the precipitation echo sequences span longer periods and exhibit more complex weather processes, resulting in overall higher errors for the baseline models compared to the previous two datasets. Tra-ditional recurrent methods such as PredRNN, PredRNN++, MIM, and MotionRNN show notable differences in MSE, MAE, and SSIM, and the CSI30/40/50 scores decrease sig-nificantly as the threshold increases, reflecting the difficulty of predicting heavy rainfall events. After integrating the pro-posed FlashBack (FB) module into these models, performance generally improved. For instance, PredRNN + FB reduced MSE from 53.49 to 49.68, MAE to 198.77, increased SSIM to 0.6999, and improved all CSI metrics; MotionRNN + FB also outperformed its original counterpart across multiple metrics; PredRNNpp + FB achieved lower MSE (52.45 vs. 57.69) and higher SSIM (0.6993 vs. 0.6930). These results indicate that FB can effectively enhance the spatiotemporal feature extrac-tion capability of models in complex precipitation scenarios, improving the capture of heavy rainfall events and overall prediction quality. Across the three precipitation datasets, integrating the Flash-Back (FB) module consistently enhances the performance of baseline models in precipitation nowcasting tasks. On the Shanghai2020 dataset, FB improves MSE, MAE, SSIM, and CSI metrics, demonstrating its effectiveness in capturing short- and medium-term rainfall dynamics. On the CIKM2017 dataset, despite higher spatial resolution and more complex temporal variations, FB achieves consistent improvements across key metrics, highlighting its strong generalization ca-pability. In the more challenging SEVIR dataset, where se-quences are longer and weather processes are more complex, the FB module substantially reduces errors and enhances structural similarity, particularly in the prediction of heavy rainfall events, as reflected in the improved CSI scores. Over-all, the FB module robustly strengthens the spatiotemporal feature modeling ability of the models, improving quantitative prediction accuracy across different rainfall datasets while enhancing the capability to capture extreme weather events. 
+
+C. Qualitative Evaluation 
+
+Figure 3-a shows a precipitation case from the Shang-hai2020 dataset. We compare the absolute prediction errors JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 7
+
+TABLE II QUANTITATIVE RESULTS ON SHANGHAI 2020 DATASETS .
+
+Type Model Params FLOPS MSE ↓ MAE ↓ SSIM ↑ CSI30 ↑ CSI40 ↑ CSI50 ↑
+
+> Recurrent-based
+
+ConvLSTM (NeurIPS’2015) 15.1M 56.79G 4.4513 47.655 0.9319 0.7574 0.7495 0.7135 PredRNN (NeurIPS’2017) 23.83M 0.116T 3.3879 40.841 0.9471 0.7896 0.7836 0.7458 PredRNNpp (ICML’2018) 38.6M 0.172T 2.8878 37.828 0.9553 0.8097 0.8033 0.7656 MIM (CVPR’2019) 38.04M 0.179T 3.1073 37.860 0.9527 0.8031 0.7966 0.7576 PyDNet (CVPR’2020) 3.1M 15.32G 11.279 79.775 0.8415 0.6141 0.5911 0.5447 MotionRNN (CVPR’2021) 26.9M 0.129T 3.3499 43.076 0.9463 0.7899 0.7826 0.7441 MAU (NeurIPS’2021) 4.48M 17.79G 9.6037 74.541 0.8591 0.6384 0.6196 0.5753 PredRNN-V2 (TPAMI’2022) 23.9M 0.117T 3.5079 42.352 0.9444 0.7845 0.7768 0.7384 SwinLSTM (ICCV’2023) 20.19M 69.87G 4.3614 46.550 0.9333 0.7568 0.7505 0.7173 
+
+> Recurrent-free
+
+SimVP-gSTA (CVPR’2022) 46.77M 16.53G 7.5089 58.147 0.9037 0.6978 0.6897 0.6635 SimVP-ViT (NeurIPS’2023) 11.48M 16.99G 10.6166 75.952 0.8540 0.6271 0.6069 0.5667 TAU (CVPR’2023) 44.65M 15.95G 8.8433 62.247 0.8914 0.6744 0.6662 0.6428 MMVP (ICCV’2023) 14.82M 93.55G 9.3767 71.070 0.8688 0.6498 0.6347 0.5973 WaST (AAAI’2024) 28.18M 21.90G 6.0393 54.299 0.9156 0.7205 0.7062 0.6712 Predformer-TSST (Arxiv’2025) 25.30M 16.47G 4.1106 44.899 0.9391 0.7755 0.7697 0.7358 Predformer-STTS (Arxiv’2025) 25.30M 16.47G 7.3239 61.378 0.8987 0.6969 0.6834 0.6476 
+
+> Ours
+
+PredRNN + FB 25.01M 0.121T 3.2626 39.194 0.9496 0.7969 0.7922 0.7553 
+
+PredRNNpp + FB 39.76M 0.177T 2.7818 36.974 0.9562 0.8137 0.8080 0.7705 MIM + FB 38.92M 0.186T 2.9972 37.009 0.9542 0.8076 0.8008 0.7606 
+
+MotionRNN + FB 28.09M 0.134T 3.2128 40.654 0.9504 0.7996 0.7940 0.7549 
+
+PredRNN-V2 + FB 25.03M 0.122T 3.1184 38.480 0.9509 0.8016 0.7974 0.7594 TABLE III QUANTITATIVE RESULTS ON CIKM2017 DATASETS .
+
+Type Model Params FLOPS MSE ↓ MAE ↓ SSIM ↑ CSI30 ↑ CSI40 ↑ CSI50 ↑
+
+> Recurrent-based
+
+ConvLSTM (NeurIPS’2015) 15.1M 41.84G 28.8162 161.242 0.7359 0.7757 0.6590 0.5367 PredRNN (NeurIPS’2017) 23.8M 85.43G 28.8126 159.404 0.7303 0.7803 0.6690 0.5471 PredRNNpp (ICML’2018) 38.6M 0.127T 28.0987 159.258 0.7362 0.7775 0.6684 0.5533 MIM (CVPR’2019) 38.04M 0.131T 27.2072 154.269 0.7388 0.7828 0.6725 0.5587 PyDNet (CVPR’2020) 3.1M 11.29G 28.9757 161.143 0.7393 0.7809 0.6654 0.5489 MotionRNN (CVPR’2021) 26.9M 94.80G 27.2091 155.827 0.7406 0.7867 0.6762 0.5510 MAU (NeurIPS’2021) 4.48M 13.11G 30.9094 167.361 0.7234 0.7731 0.6584 0.5459 PredRNN-V2 (TPAMI’2022) 23.9M 85.91G 28.0085 161.508 0.7374 0.7857 0.6640 0.5362 SwinLSTM (ICCV’2023) 20.19M 51.49G 27.9612 158.899 0.7405 0.7826 0.6652 0.5532 
+
+> Recurrent-free
+
+SimVP-gSTA (CVPR’2022) 4.82M 1.238G 31.3121 166.261 0.7195 0.7731 0.6594 0.5416 SimVP-ViT (NeurIPS’2023) 39.6M 12.87G 27.8803 157.478 0.7358 0.7835 0.6669 0.5483 TAU (CVPR’2023) 38.4M 12.01G 30.5827 161.948 0.7277 0.7779 0.6601 0.5370 MMVP (ICCV’2023) 12.98M 69.45G 30.1724 165.321 0.7285 0.7826 0.6730 0.5602 
+
+WaST (AAAI’2024) 28.18M 14.56G 30.3074 165.804 0.7309 0.7773 0.6534 0.5174 Predformer-TSST (Arxiv’2025) 25.30M 8.23G 26.7383 163.146 0.7316 0.7872 0.6738 0.5522 Predformer-STTS (Arxiv’2025) 25.30M 8.23G 27.3831 168.386 0.7143 0.7807 0.6638 0.5473 
+
+> Ours
+
+PredRNN + FB 25.02M 89.36G 27.1508 155.792 0.7403 0.7857 0.6767 0.5566 
+
+PredRNNpp + FB 39.76M 0.130T 27.8036 157.915 0.7393 0.7825 0.6724 0.5553 
+
+MIM + FB 39.22M 0.135T 26.6192 153.506 0.7407 0.7815 0.6720 0.5534 
+
+MotionRNN + FB 28.09M 98.73G 26.6759 154.056 0.7438 0.7838 0.6745 0.5570 
+
+PredRNN-V2 + FB 25.03M 89.83G 27.2468 158.862 0.7413 0.7873 0.6707 0.5467 JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 8                                                                                                                                                                                            
+
+> TABLE IV QUANTITATIVE RESULTS ON SEVIR DATASETS . *(D UE TO COMPUTATIONAL RESOURCE LIMITATIONS ,WE ONLY TRAINED SWIN LSTM-B HERE .)
+> Type Model Params FLOPS MSE ↓MAE ↓SSIM ↑CSI30 ↑CSI40 ↑CSI50 ↑
+> Recurrent-based
+> ConvLSTM (NeurIPS’2015) 15.08M 71.735G 52.3914 203.373 0.6938 0.4469 0.3842 0.3182 PredRNN (NeurIPS’2017) 23.84M 0.146T 53.4924 208.914 0.6826 0.4188 0.3656 0.3116 PredRNNpp (ICML’2018) 38.58M 0.217T 57.6933 208.626 0.6930 0.4372 0.3823 0.3265 MIM (CVPR’2019) 38.34M 0.229T 61.5472 219.087 0.6753 0.4094 0.3559 0.3003 PyDNet (CVPR’2020) 3.09M 19.361G 57.1866 225.926 0.6365 0.4139 0.3491 0.2806 MotionRNN (CVPR’2021) 26.91M 0.163T 60.6225 214.475 0.6824 0.4293 0.3764 0.3212 MAU (NeurIPS’2021) 4.48M 22.47G 64.6087 222.400 0.6801 0.4152 0.3629 0.3089 PredRNN-V2 (TPAMI’2022) 23.85M 0.147T 56.1049 232.900 0.6255 0.3940 0.3290 0.2592 SwinLSTM* (ICCV’2023) 0.7M 16.119G 55.5566 224.417 0.6481 0.4062 0.3369 0.2773
+> Recurrent-free  SimVP-gSTA (CVPR’2022) 46.77M 16.53G 60.6290 206.135 0.6938 0.4299 0.3742 0.3163 SimVP-ViT (NeurIPS’2023) 11.48M 16.99G 59.9962 225.128 0.6475 0.4112 0.3445 0.2756 TAU (CVPR’2023) 44.65M 15.96G 61.2723 208.601 0.6924 0.4315 0.3748 0.3168 MMVP (ICCV’2023) 16.49M 0.12T 62.9421 256.710 0.5860 0.3483 0.2815 0.2084 WaST (AAAI’2024) 28.18M 21.90G 54.3905 196.556 0.7134 0.4534 0.3884 0.3233 Predformer-TSST (Arxiv’2025) 25.30M 16.478G 55.8347 217.876 0.6615 0.4071 0.3451 0.2839 Predformer-STTS (Arxiv’2025) 25.30M 16.478G 57.9686 224.831 0.6280 0.3681 0.2969 0.2279
+> Ours
+> PredRNN + FB 25.02M 0.153T 49.6812 198.773 0.6999 0.4538 0.3895 0.3251
+> PredRNNpp + FB 39.76M 0.224T 52.4572 201.005 0.6993 0.4499 0.3863 0.3230
+> MIM + FB 38.93M 0.232T 58.1526 215.574 0.6758 0.4185 0.3616 0.3040
+> MotionRNN + FB 28.092M 0.169T 52.5389 199.990 0.6996 0.4521 0.3902 0.3271 PredRNN-V2 + FB 25.03M 0.154T 56.1824 230.289 0.6300 0.3983 0.3318 0.2611
+
+(AE) of WaST, PredRNN, and PredRNN+FB to analyze their forecasting performance. Two main regions with concentrated errors are highlighted (green and red boxes). In the green box, WaST and PredRNN exhibit obvious false alarms of precipitation, whereas PredRNN+FB successfully suppresses such noise and produces results closer to the ground truth. In the red box, where rainfall gradually emerges, WaST suffers from severe missed detections, while PredRNN+FB effectively captures the evolution of this dynamic event. This demonstrates that the FB module can significantly enhance the model’s ability to capture localized heavy-rainfall dynamics. Figure 3-b presents another case from Shanghai2020, where we compare the prediction errors of PredRNN and Mo-tionRNN before and after integrating FB. As shown in the green-boxed regions with concentrated errors, both baseline models achieve markedly reduced prediction bias after adding FB, and their spatial details more closely resemble the true rainfall field. This indicates that FB provides stronger feature extraction and dynamic variation capture capabilities when forecasting rainfall events with complex spatial distributions and evolving patterns. Figure 3-c displays a forecasting case from the CIKM2017 dataset. Compared with Shanghai2020, CIKM2017 is more challenging due to less input information. In the green box, ConvLSTM, WaST, and MotionRNN all substantially underes-timate rainfall intensity; in the red box, WaST and MotionRNN fail to report rainfall in that region. By contrast, Motion-RNN+FB achieves better forecasts of both rainfall intensity and location in these two areas, showing that the FB module can effectively enhance spatiotemporal feature learning and improve the detection accuracy and spatial localization of heavy rainfall events under limited input and more complex forecasting conditions. Figure 3-d shows a forecasting case from the SEVIR dataset. Compared with the previous two datasets, SEVIR features longer temporal spans and more complex weather evolu-tions, placing higher demands on long-sequence precipitation forecasting. We compare the absolute prediction errors of WaST, PredRNN, and PredRNN+FB. The results show that the original PredRNN produces large errors in long-sequence prediction, whereas integrating FB significantly reduces the bias. Particularly in the green-boxed focus area, PredRNN+FB outperforms both the baseline model and WaST. This demon-strates that the FB module can effectively strengthen spa-tiotemporal feature extraction and memory in long-sequence, complex precipitation scenarios, markedly improving the cap-ture accuracy of key rainfall regions and the overall forecast quality. Overall, the case studies in Figure 3 across Shanghai2020, CIKM2017, and SEVIR clearly demonstrate the consistent effectiveness of the proposed FB module. By integrating FB into various baseline models, prediction errors are substantially reduced, false alarms are suppressed, and dynamic rainfall processes are more accurately captured. These improvements hold across datasets of increasing complexity and longer temporal spans, indicating that FB not only enhances short-term and mid-scale rainfall forecasts but also significantly boosts long-sequence prediction capability. This highlights FB as a robust, generalizable enhancement for spatiotemporal modeling in precipitation forecasting tasks. To further verify the improvement brought by the FlashBack module to Recurrent-based models in capturing extreme pre-cipitation events, we compared the changes in CSI metrics of the baseline models (PredRNN, PredRNNpp, MIM, Motion-JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 9+12 min  +36 min  +60 min  +84 min  +108 min 
+
+-6 min -18 min -30 min -42 min -54 min 
+
+> Ground Truth  Input
+> PredRNN  +
+> FB Pred.
+> WaST PredRNN
+> PredRNN  +
+> FB
+
+-6 min -18 min -30 min -42 min -54 min 
+
++12 min  +36 min  +60 min  +84 min  +108 min 
+
+> Ground Truth MotionRNN
+> MotionRNN
+> + FB PredRNN -V2
+> PredRNN -V2
+> + FB  Input
+
+-6 min -12 min -18 min -24 min -30 min 
+
+> Input Ground Truth
+
++6 min  +18 min  +30 min  +42 min  +54 min 
+
+> WaST  Pred.  ConvLSTM
+> Pred.
+> MotionRNN
+> Pred.
+> MotionRNN
+> + FB
+
++20 min  +50 min  +80 min  +110 min  +140 min 
+
+> Ground Truth  Input
+> PredRNN  +
+> FB Pred.
+> WaST PredRNN
+> PredRNN  +
+> FB
+
+-10 min -30  min -50  min -70  min -90  min 
+
+## a b
+
+## c d
+
+Fig. 3. Qualitative Visualization Results on Shanghai2020, CIKM2017, and SEVIR Datasets. In the figure, the labeled model name “pred.” represents the model’s actual prediction results, while the labeled model name with error annotations indicates the absolute error between the model’s prediction and the ground truth. (a) and (b) correspond to the Shanghai2020 dataset, (c) corresponds to the CIKM2017 dataset, and (d) corresponds to the SEVIR dataset. JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 10 a
+
+## b
+
+## c 
+
+> Fig. 4. Changes in CSI metrics of baseline models before and after integrating FB. (a), (b), and (c) correspond to the Shanghai2020, SEVIR and CIKM2017 datasets, respectively.
+
+RNN, PredRNN-V2) before and after adding the FB module on the Shanghai2020, CIKM2017, and SEVIR datasets (Figure 4). It is evident that the CSI of all models improved after inte-grating the FB module, with more pronounced gains observed at higher thresholds (e.g., CSI40, CSI50). This indicates that the FB module effectively enhances the ability of Recurrent-based models to capture intense rainfall events and further validates its generalizability and performance improvement across different precipitation datasets. 
+
+D. Ablation Study 
+
+To further investigate the impact of the length-based hyper-parameter Kmax in the FlashBack (FB) module on prediction performance, we conducted an ablation study on PredRNN using the Shanghai2020 dataset, as shown in the table. It can be observed that as Kmax increases from 1 to 10, the model’s MSE and MAE steadily decrease, while SSIM and CSI at all thresholds improve, indicating that a larger Kmax 
+
+helps the FB module capture longer-term temporal dynamics and thus enhances precipitation prediction accuracy. However, when Kmax increases from 10 to 15, the improvements plateau or slightly decline, suggesting that an excessively large Kmax 
+
+does not provide significant benefits and may introduce slight redundancy due to increased model complexity. Therefore, in this experiment, Kmax = 10 represents a reasonable trade-off between performance and computational cost.                                              
+
+> TABLE V ABLATION STUDY OF KMAX FOR PRED RNN + FB ON THE
+> SHANGHAI 2020 D ATASET
+> Kmax MSE ↓MAE ↓SSIM ↑CSI30 ↑CSI40 ↑CSI50 ↑
+> 13.4141 39.849 0.9475 0.7918 0.7873 0.7506 33.3391 39.636 0.9487 0.7950 0.7901 0.7534 53.2919 39.400 0.9493 0.7962 0.7913 0.7544 10 3.2626 39.194 0.9496 0.7969 0.7922 0.7553 15 3.2840 39.332 0.9495 0.7961 0.7914 0.7545
+
+To further investigate the effect of the FlashBack (FB) mod-ule on the internal feature representations of recurrent models, we analyzed the distributions of the temporal feature ft and the memory-fused feature f ′ 
+
+> t
+
+of PredRNN on the CIKM2017 dataset (Figure 5). The results indicate that the FB module can significantly enhance PredRNN’s capability in modeling sequential rainfall events. By comparing the distributions of 
+
+ft and the historical memory feature f ′ 
+
+> t
+
+in the first hidden layer of PredRNN and PredRNN+FB, we observed that the mean of ft in the original PredRNN is approximately 0.73, and the mean of f ′ 
+
+> t
+
+is about 0.62. After incorporating FB, the mean of ft slightly decreases to 0.69, while the mean of f ′ 
+
+> tJOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 11
+
+# a
+
+# b
+
+Fig. 5. Feature distribution comparison on CIKM2017. (a) ft and f ′ 
+
+> t
+
+in the first layer of PredRNN. (b) ft and f ′ 
+
+> t
+
+in the first layer of PredRNN+FB. 
+
+increases to 0.63. This suggests that the FB module, through dynamic routing and feature fusion, transfers part of the information from the current frame feature ft to the historical memory f ′ 
+
+> t
+
+, achieving a more balanced distribution of current and historical information. Although the mean of ft slightly decreases, this does not indicate a performance drop; rather, it reflects a ”denoising” effect on the current frame features while improving temporal consistency and capturing dynamic rainfall events. Overall, the FB module can effectively enhance the spatiotemporal feature modeling and prediction accuracy of Recurrent-based models for extreme rainfall events without imposing significant additional computational overhead. V. C ONCLUSION 
+
+In this work, we propose FlashBack Memory(FB), amemory-enhanced module designed to improve the spatiotem-poral modeling capability of recurrent-based precipitation pre-diction models. FB leverages dynamic routing and historical feature fusion to selectively retrieve and integrate relevant past information, enabling the model to better capture complex rainfall dynamics and extreme precipitation events. Exten-sive experiments on three benchmark datasets—Shanghai2020, CIKM2017, and SEVIR—demonstrate that integrating FB consistently improves the performance of baseline models such as PredRNN, PredRNNpp, MIM, MotionRNN, and PredRNN-V2 across multiple metrics including MSE, MAE, SSIM, and CSI at different thresholds. Visualization analyses further reveal that FB enhances the temporal consistency of predic-tions, reduces false alarms and missed events, and enables more accurate spatial localization of rainfall patterns. Ablation studies on the memory length hyperparameter confirm the effectiveness of FB in balancing current-frame and historical memory features. Overall, our approach provides a general, lightweight, and effective mechanism to boost the predictive performance of recurrent-based models for both short-term and long-term rainfall forecasting, particularly in challenging high-resolution and complex precipitation scenarios. REFERENCES [1] Liu, Mengjie, et al. ”A Deep Learning-Based Precipitation Nowcast-ing Model Fusing GNSS-PWV and Radar Echo Observations.” IEEE Transactions on Geoscience and Remote Sensing (2025). [2] Pan, Zefeng, et al. ”A short-long term sequence learning network for precipitation nowcasting.” IEEE Transactions on Geoscience and Remote Sensing 62 (2024): 1-14. [3] Wang, Yueting, et al. ”Precipitation Nowcasting Based on Radar Echo Images via Muti-Scale Spatiotemporal LSTM.” IEEE Transactions on Geoscience and Remote Sensing (2025). [4] Ma, Zhifeng, Hao Zhang, and Jie Liu. ”MM-RNN: A multimodal RNN for precipitation nowcasting.” IEEE Transactions on Geoscience and Remote Sensing 61 (2023): 1-14. [5] Song, Dan, et al. ”MMPFormer: A Memory-Aware Multi-Scale Predic-tive Transformer for Precipitation Nowcasting.” IEEE Transactions on Geoscience and Remote Sensing (2025). [6] Zhao, Zewei, et al. ”Advancing realistic precipitation nowcasting with a spatiotemporal transformer-based denoising diffusion model.” IEEE Transactions on Geoscience and Remote Sensing 62 (2024): 1-15. [7] Du, YuHao, et al. ”A Global Spatial-Temporal Attention method based on motion decomposition for precipitation nowcasting.” Applied Soft Computing (2025): 113314. [8] Shukla, Jagadish. ”Predictability in the midst of chaos: A scientific basis for climate forecasting.” science 282.5389 (1998): 728-731. [9] Zhang, Junbo, Yu Zheng, and Dekang Qi. ”Deep spatio-temporal resid-ual networks for citywide crowd flows prediction.” Proceedings of the AAAI conference on artificial intelligence. Vol. 31. No. 1. 2017. [10] Wang, Yunbo, et al. ”Predrnn: Recurrent neural networks for predictive learning using spatiotemporal lstms.” Advances in neural information processing systems 30 (2017). [11] Kingma, Diederik P., and Max Welling. ”Auto-encoding variational bayes.” arXiv preprint arXiv:1312.6114 (2013). [12] Goodfellow, Ian J., et al. ”Generative adversarial nets.” Advances in neural information processing systems 27 (2014). [13] Wu, Haixu, et al. ”MotionRNN: A flexible model for video prediction with spacetime-varying motions.” Proceedings of the IEEE/CVF confer-ence on computer vision and pattern recognition. 2021. [14] Tang, Song, et al. ”Swinlstm: Improving spatiotemporal prediction ac-curacy using swin transformer and lstm.” Proceedings of the IEEE/CVF International Conference on Computer Vision. 2023. [15] Tang, Yujin, et al. ”Vmrnn: Integrating vision mamba and lstm for efficient and accurate spatiotemporal forecasting.” Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. 2024. [16] Wang, Yunbo, et al. ”Predrnn++: Towards a resolution of the deep-in-time dilemma in spatiotemporal predictive learning.” International conference on machine learning. PMLR, 2018. [17] Wang, Yunbo, et al. ”Memory in memory: A predictive neural network for learning higher-order non-stationarity from spatiotemporal dynam-ics.” Proceedings of the IEEE/CVF conference on computer vision and pattern recognition. 2019. [18] Wang, Yunbo, et al. ”Predrnn: A recurrent neural network for spatiotem-poral predictive learning.” IEEE Transactions on Pattern Analysis and Machine Intelligence 45.2 (2022): 2208-2225. [19] Xu, Ziru, et al. ”PredCNN: Predictive Learning with Cascade Convolu-tions.” IJCAI. 2018. [20] Guen, Vincent Le, and Nicolas Thome. ”Disentangling physical dy-namics from unknown factors for unsupervised video prediction.” Pro-ceedings of the IEEE/CVF conference on computer vision and pattern recognition. 2020. JOURNAL OF L ATEX CLASS FILES, VOL. 14, NO. 8, AUGUST 2021 12 
+
+[21] Chang, Zheng, et al. ”Mau: A motion-aware unit for video prediction and beyond.” Advances in Neural Information Processing Systems 34 (2021): 26950-26962. [22] Gao, Zhangyang, et al. ”Simvp: Simpler yet better video prediction.” Proceedings of the IEEE/CVF conference on computer vision and pattern recognition. 2022. [23] Tan, Cheng, et al. ”Temporal attention unit: Towards efficient spatiotem-poral predictive learning.” Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. 2023. [24] Zhong, Yiqi, et al. ”Mmvp: Motion-matrix-based video prediction.” Proceedings of the IEEE/CVF International Conference on Computer Vision. 2023. [25] Nie, Xuesong, et al. ”Wavelet-Driven Spatiotemporal Predictive Learn-ing: Bridging Frequency and Time Variations.” Proceedings of the AAAI Conference on Artificial Intelligence. Vol. 38. No. 5. 2024. [26] Tang, Yujin, et al. ”PredFormer: Transformers Are Effective Spatial-Temporal Predictive Learners.” arXiv preprint arXiv:2410.04733 (2024). [27] Sabour, Sara, Nicholas Frosst, and Geoffrey E. Hinton. ”Dynamic routing between capsules.” Advances in neural information processing systems 30 (2017). [28] Leiming Ma, et al. Shanghai-2020 Dataset. zenodo, October 26, 2022, doi:10.5281/zenodo.7251972. [29] Yao, Yichen, and Zhongjie Li. ”CIKM AnalytiCup 2017: short-term precipitation forecasting based on radar reflectivity images.” Proceedings of the Conference on Information and Knowledge Management, Short-Term Quantitative Precipitation Forecasting Challenge, Singapore. 2017. [30] Veillette, Mark, Siddharth Samsi, and Chris Mattioli. ”Sevir: A storm event imagery dataset for deep learning applications in radar and satellite meteorology.” Advances in Neural Information Processing Systems 33 (2020): 22009-22019.
