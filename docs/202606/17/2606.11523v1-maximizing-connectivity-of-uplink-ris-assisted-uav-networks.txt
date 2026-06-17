@@ -1,0 +1,1092 @@
+Title: Maximizing Connectivity of Uplink RIS-Assisted UAV Networks
+
+URL Source: https://arxiv.org/pdf/2606.11523v1
+
+Published Time: Thu, 11 Jun 2026 00:20:51 GMT
+
+Number of Pages: 6
+
+Markdown Content:
+# Maximizing Connectivity of Uplink RIS-Assisted UAV Networks 
+
+Mohammed Saif 1 and Shahrokh Valaee 2
+
+> 1
+
+Electrical, Computer, and Biomedical Engineering, Toronto Metropolitan University, Toronto, ON, Canada 
+
+> 2
+
+Electrical and Computer Engineering, University of Toronto, Toronto, ON, Canada Email: mohammed.saif@torontomu.ca, valaee@ece.utoronto.ca 
+
+Abstract —In this paper, we present a new approach for unmanned aerial vehicle (UAV) positioning and reconfigurable intelligent surface (RIS) partitioning to enhance connectivity of uplink RIS-assisted UAV networks. To achieve this, our approach optimizes RIS-aided link selection, RIS partitioning, and UAV positions to maximize network connectivity characterized by its Fiedler value. Meanwhile, it maintains a specific signal-to-interference plus noise ratio (SINR) constraint for user equipment (UE), which is influenced by RIS partitioning and UAV reliability. The network connectivity optimization problem is formulated using the Fiedler value subject to RIS elements allocation and SINR constraints. This problem is a computationally expensive combinatorial optimization, necessitating an efficient iterative approach. In particular, we propose a perturbation method for RIS-aided link selection, and derive a closed-form solution for RIS partitioning, with each partition tailored to optimize SINR for individual UAV. For the given RIS-aided links and RIS partitioning, we then show that the problem of UAV positioning can be formulated as a low complexity semi-definite programming (SDP) optimization problem, which can be solved using off-the-shelf CVX solvers. Our simulations show the potential gain of UAV positioning and RIS partitioning compared to the benchmark schemes from the literature. 
+
+Index Terms —Network connectivity, RIS-assisted UAV commu-nications, RIS partitioning, SDP optimization. 
+
+I. I NTRODUCTION 
+
+Optimizing the locations of unmanned aerial vehicles (UAVs) is essential for a wide range of applications, in-cluding extending network coverage, enhancing connectivity and resiliency, and improving localization and tracking [1], [2]. Additionally, the flexible deployment of UAVs allows the establishment of line-of-sight (LoS) communications to geographically distant user equipments (UEs), enabling a large number of UEs to connect to the network and reducing the probability of unconnected UEs. Since UAVs are prone to failure due to limited energy, deploying additional UAVs is not always preferable. Reconfigurable intelligent surfaces (RISs) have emerged as a low-cost solution for controlling the wireless environment, with significant potential for improving network connectivity and extending service coverage. By manipulating the prop-agation environment, RISs can significantly enhance energy efficiency [3], coverage [4], and network connectivity [5]. From a connectivity perspective, RISs can introduce additional links to networks and significantly enhance connectivity. RISs can also mitigate UAV failures—measured by the removal of UAV nodes from the network—by redirecting UE signals to reliable UAVs, thereby maintaining network integrity. Most studies on maximizing network connectivity have primarily focused on utilizing UAVs [2], relays [6], or sensors [7] in different systems. The authors of [2] maximize network connectivity, modeled by the Fiedler value (i.e., the second smallest eigenvalue of the Laplacian graph network [8]), by optimizing UAV positioning in small-cell systems. The works [6], [7] consider optimizing the placement of relays and sensors for connectivity maximization and network repair maintenance. On the other hand, the work [5] improves network connectivity and resiliency of cell-free networks using RIS deployment. The convergence of RIS and UAV technologies has been leveraged for enhancing key performance metrics, including physical layer security [9] and connectivity [10]. Integrating RIS technology with UAVs introduces numerous optimization challenges, such as UAV positioning, UE-RIS-UAV link selec-tion, and RIS phase design [4]. The work [10] improves connectivity of RIS-assisted UAV networks using RIS deployment, with the optimization of UE-RIS-UAV link selection and RIS phase design only. Specifi-cally, [10] proposes to generate one UE-RIS-UAV link from each RIS, ignoring the efficient use of RIS that could be uti-lized to generate multiple links in the network. In addition, they do not consider optimizing UAV location to further improve network connectivity and coverage. Recent advancements in RIS optimization have introduced a technique known as RIS virtual partitioning, which significantly enhances communica-tion performance [11]. RIS virtual partitioning divides a single RIS into multiple virtual sections, each configured with distinct phase shifts optimized for specific directions. This innovative approach enables the RIS to reflect an incoming signal into multiple cascaded signals, each directed toward different tar-gets, thereby enhancing spatial efficiency and signal coverage [11]. Unlike [9], which investigates RIS virtual partitioning and UAV communications for physical-layer security, this paper focuses on leveraging these techniques to enhance network connectivity. In particular, the RIS is utilized to establish multiple communication links—each originating from a virtual section—thereby improving connectivity. The main findings of this paper can be summarized as follows.  
+
+> •
+
+The network connectivity optimization problem is formu-lated using the Fiedler value subject to RIS elements allo-
+
+> arXiv:2606.11523v1 [cs.IT] 10 Jun 2026
+
+cation and signal-to-interference plus noise ratio (SINR) constraints.  
+
+> •
+
+To tackle this problem, we develop an iterative optimiza-tion framework. For given UAV positions and RIS parti-tioning, we first propose a connectivity-aware perturbation method to optimize the RIS-assisted link selection. We derive a closed-form solution for RIS partitioning. Then, for the resulting link selection and RIS partitioning, we reformulate the UAV positioning subproblem as a low-complexity semidefinite programming (SDP) problem, which can be efficiently solved using standard CVX solvers. The proposed procedure iteratively updates these variables until convergence.  
+
+> •
+
+Our simulations show the potential gain of the proposed iterative solution compared to the benchmark schemes from the literature. II. S YSTEM MODEL 
+
+Consider an uplink-RIS-assisted UAV model, where a set of single-antenna UEs, denoted by M = {1, 2, . . . , M }, transmit signals to the base station (BS) via a set of single-antenna UAVs, denoted by K = {1, 2, . . . , K }, with the aid of RIS comprising of N passive elements. Through UAV positioning optimization and RIS deployment, service coverage area can be extended to cover the M UEs, which are in deep fade situation. The RIS can reflect the signal of the transmitted UE to multi-ple UAVs through virtual partitioning representation; however, the RIS cannot be assigned to more than one UE at the same time [9]. The set of multiple UAVs that exploit the RIS is denoted as KRIS , which also represents the number of partitions in the RIS, i.e., KRIS = {UAV 1, . . . , UAV KRIS }.We represent the RIS elements’ allocation portions α =[α1, . . . , α KRIS ] to denote the RIS portions that are allocated to UAV k, k ∈ { 1, . . . , K RIS }, respectively. The number of RIS elements designated for UAV k is Nk, which can be presented as Nk = ⌈αkN ⌉. UAV 1 obtains a coherently aligned link from the designated RIS portion α1 and a non-coherently aligned links from the remaining RIS portions {α2, . . . , α KRIS }.All channels of UE-UAV, UE-RIS, and RIS-UAV are con-sidered to be quasi-static with flat-fading and follow the Nakagami-f fading model [9]. Let (gMR  
+
+> m
+
+, β MR  
+
+> m
+
+) and (gRK  
+
+> k
+
+, β RK  
+
+> k
+
+)
+
+represent the small-scale fading coefficients and path-losses for the UE m → RIS and RIS → UAV k channels, respectively. Here, gMR  
+
+> m
+
+= [ gMR 
+
+> 1,m
+
+, . . . , g MR 
+
+> N,m
+
+] and gRK  
+
+> k
+
+= [ gRK 
+
+> 1,k
+
+, . . . , g RK 
+
+> N,k
+
+].Therefore, we consider the channel from UE m to UAV k
+
+over the n-th RIS element as gMRK  
+
+> m,n,k
+
+= gMR 
+
+> n,m
+
+gRK 
+
+> n,k
+
+, where 
+
+gMR  
+
+> n,m
+
+= |gMR 
+
+> n,m
+
+|e−jϕ n,m denotes the channel coefficient between UE m and the n-th RIS element, while gRK  
+
+> n,k
+
+= |gRK 
+
+> n,k
+
+|e−jψ n,k 
+
+is the channel coefficient between the n-th RIS element and UAV k; |gMR 
+
+> n,m
+
+| and |gRK 
+
+> n,k
+
+| are the channel amplitudes, while 
+
+ϕn,m and ψn,k are the channel phases. Moreover, for the direct links between the UEs and the UAVs, let gMK  
+
+> m,k
+
+and βMK 
+
+> m,k
+
+denote the small-scale fading coefficient and path-loss for the UE m → UAV k channel, respectively. The SINR at UAV k can be expressed as in (1) given at the top of the next page, where N0 is the additive white Gaussian noise (AWGN) power density, θn is the phase shift of element n, p is the transmit power of an UE, (a)
+
+= comes from (i) PNk
+
+> n=1
+
+(.) = P⌈αk N ⌉ 
+
+> n=1
+
+(.) = αk
+
+PNn=1 (.) and (ii) 
+
+gMRK  
+
+> n,k
+
+ejθ n = |gMR  
+
+> n
+
+|| gRK 
+
+> n,k
+
+|ej(θn−ϕn−ψn,k ) = |gMR  
+
+> n
+
+|| gRK 
+
+> n,k
+
+|; i.e., for the n-th RIS element, given ϕn and ψn,k , the RIS’s controller can perfectly align θn with ϕn and ψn,j to nullify their effect, and (b)
+
+= comes from Q = PNn=1 |gMR  
+
+> n
+
+|| gRK 
+
+> n,k
+
+| which is the N -element double-Nakagami −f that is independent and identically distributed (i.i.d.) random variable (RV) with parameters f1, f2, Ω1, and Ω2; the distribution of the product of two RVs following the Nakagami −f distribution with the probability density function (PDF) is given in [9]. To ease the analysis of the RIS partitioning optimization, the non-aligned phase term is ignored in (1). Nonetheless, our numerical results show that the impact of this term is minimal. III. P ROBLEM MODELING 
+
+A. Graph Construction and Node Reliability 
+
+We model the uplink RIS-assisted UAV network using an undirected, weighted, simple finite graph G(V, E), where V =
+
+{v1, . . . , v V } is the set of vertices (UE and UAV nodes) and 
+
+E = {e1, . . . , e E } is the set of E edges connecting the nodes, i.e., links connecting the UE to UAVs and links among the UAVs. For any edge l between two vertices vi and vj ∈ V , the edge vector al ∈ RV is a vector of zeros except for its i-th and j-th elements, where al,i = 1 and al,j = −1, respectively. The graph’s incidence matrix of A ∈ RV ×E is constructed as A = [ al, . . . , aE ]. The Laplacian matrix of the graph, L ∈
+
+RV ×V , is then given as follows [2] 
+
+L = A diag (w) AT =
+
+> E
+
+X
+
+> l=1
+
+wlalaTl , (2) where w ∈ [R+]E denotes the E × 1 weighting vector coeffi-cients for the E edges and is given by w = [ w1, w 2, . . . , w E ].The weights of the edges are based on their corresponding SNRs that are modeled as in [2], while the connections of the edges are based on SNR thresholds, i.e., γUE  
+
+> 0
+
+and γUAV 
+
+> 0
+
+for UE → UAV k and UAV k → UAV k′ , respectively. The Laplacian matrix L is a positive semi-definite matrix, i.e., 
+
+L ≥ 1. Its second smallest eigenvalue, denoted by λ2(L), is known as the Fiedler value. A higher Fiedler value indicates stronger overall network connectivity, while λ2(L) = 0 implies that the graph is disconnected [8]. The deployment of UAV positioning and RIS partitioning can create more links, thereby a new graph G′(V, E′) is built with the same number of V nodes and a larger set of edges denoted by E′ with E′ = E ∪E new , where Enew is the new edges for the UE → UAV k∈K RIS links. In particular, such deployment has an impact on relaying information from UEs to UAVs and extends the coverage, creating additional E′ − E edges to the original network. By comparing the network graphs before and after the deployment, the connectivity improvement can be quantified by evaluating the change in the Fiedler value. Specifically, the gain is observed when λ2(L′) ≥ λ2(L),2SINR k(α) = 
+
+p
+
+q
+
+βUK 
+
+> m,k
+
+gMK 
+
+> m,k
+
+| {z }
+
+> direct link
+
++
+
+q
+
+βMR  
+
+> m
+
+βRK 
+
+> kNk
+
+X
+
+> n=1
+
+gMRK 
+
+> m,n,k
+
+ejθ n
+
+| {z }
+
+> aligned phase
+
++
+
+> K
+
+X 
+
+> k′=1 ,k ′̸=k
+
+q
+
+βMR  
+
+> m
+
+βRK 
+
+> m,k ′
+> Nk′
+
+X
+
+> n′=1
+
+gMRK  
+
+> m,n,k ′
+
+ejθ n′
+
+| {z }
+
+> non-aligned phase
+> 2
+> M
+
+X 
+
+> m′=1 ,m ′̸=m
+
+q
+
+βMK 
+
+> m′,k
+
+gMK 
+
+> m′,k
+
+| {z }
+
+> direct links of other UEs
+
++N0
+
+(1) 
+
+> (a)
+
+=
+
+p
+
+q
+
+βMK 
+
+> m,k
+
+gMK  
+
+> m,k
+
++
+
+q
+
+βMR  
+
+> m
+
+βRK  
+
+> k
+
+αk
+
+PNn=1 |gMR  
+
+> n
+
+|| gRK 
+
+> n,k
+
+|
+
+> 2
+
+PMm′=1 ,m ′̸ =m
+
+q
+
+βMK 
+
+> m′,k
+
+gMK  
+
+> m′,k
+
++ N0(b)
+
+=
+
+p
+
+q
+
+βMK 
+
+> m,k
+
+gMK  
+
+> m,k
+
++
+
+q
+
+βMR  
+
+> m
+
+βRK  
+
+> k
+
+αkQ
+
+> 2
+
+PMm′=1 ,m ′̸ =m
+
+q
+
+βMK 
+
+> m′,k
+
+gMK  
+
+> m′,k
+
++ N0
+
+.
+
+where L′ represents the Laplacian matrix of the updated graph 
+
+G′(V, E′).Each UAV has a different impact on network connectivity when it is removed from the graph along with its connected edges to other nodes. Similar to [10], we measure the reliability of UAV k∈K based on their impact on network connectivity, defined as Rk = λ2(G−k), where G−k is the subgraph resulting from removing UAV k and all its adjacent edges to other nodes in G.
+
+B. Problem Formulation 
+
+Let X be the binary UE-RIS assignment matrix with entries 
+
+xm, where xm is 1 if UE m is connected to the RIS, and 
+
+xu = 0 otherwise. Likewise, let Z be the RIS-UAV assignment matrix and comprise binary elements zk defined as 1 if UAV k
+
+is connected to the RIS, and 0 otherwise. Let γth be the SINR threshold. Mathematically, the problem can be written as follows 
+
+max  
+
+> 0⪯α⪯1,u,X,Z
+
+λ2(L′(α, u, X, Z)) s. t.
+
+> M
+
+X
+
+> m=1
+
+xm ≤ 1, (3) 
+
+1 ≤
+
+> K
+
+X
+
+> k=1
+
+zk ≤ KRIS ,
+
+SINR k ≥ R kγth , ∀k ∈ { 1, . . . , K RIS },
+
+> KRIS
+
+X
+
+> k=1
+
+αk ≤ 1,xm, z k ∈ { 0, 1},
+
+where u = [ u1, . . . , uKRIS ], where u1 is the 3 × 1 position vector in a Cartesian 3D coordinate system of UAV 1, and ⪯ is the pairwise inequality. The first constraint ensures a single UE is connected to the RIS, while the second constraint implies that at most one reflected link should be created for UAV k via the RIS. The third constraint defines the SINR requirement for UAV k, while the second constraint ensures that the allocated portions do not exceed one, so that the total number of assigned RIS elements does not surpass the available RIS elements. The problem in (3) is a computationally expensive combinatorial optimization. IV. P ROPOSED SOLUTION 
+
+This section tackles (3) by decomposing it into three sub-problems and solving them iteratively. 
+
+A. UE-RIS-UAV Link Selection 
+
+We propose a low-complexity yet effective heuristic algo-rithm for jointly optimizing X and Z based on the Fiedler vec-tor of the original network graph. The key idea is to iteratively establish the KRIS RIS-assisted links that provide the largest improvement in network connectivity. Instead of repeatedly recomputing the algebraic connectivity, the proposed method exploits the entries of the Fiedler vector and evaluates the weighted differences between connected node pairs derived from the graph Laplacian L. This significantly reduces the computational complexity while effectively identifying the most beneficial RIS-assisted links. In the following proposition, we show the upper bound for λ2(L′), and describe the proposed perturbation heuristic. 
+
+Proposition 1. λ2(L′) is upper bounded by λ2(L) + Rk(vm −
+
+vk)2, where vm and vk are the corresponding values of UE m
+
+and UAV k indices of the Fiedler vector v of λ2(L).
+
+Let Wmk = ( vm − vk)2. Based on Proposition 1, the pro-posed perturbation heuristic aims to maximize the increase in the algebraic connectivity by selecting RIS-assisted links with the largest weighted Fiedler distance. Starting from the original graph G with Laplacian matrix L, the proposed algorithm proceeds as follows:  
+
+> •
+
+Compute the Fiedler vector v, i.e., the unit eigenvector associated with the second-smallest eigenvalue λ2(L). For each feasible UE-RIS-UAV schedule, evaluate the gain metric RkWmk . 
+
+> •
+
+Among all remaining feasible schedules, select the UE-RIS-UAV link that yields the largest value of RkWmk ,and add the corresponding edge to the graph.  
+
+> •
+
+Update the graph topology and repeat the above procedure until KRIS RIS-assisted links have been established for the selected UE or no additional feasible links remain. 
+
+B. RIS Partitioning Optimization 
+
+For given u, X, Z, we optimize α to maximize the sum SINR of the newly established UE RIS 
+
+−−→ UAV k∈K RIS links, considering the SINR constraint based on UAV reliability 3and RIS elements. Thus, the subproblem for updating RIS partitioning is given by 
+
+max  
+
+> 0≤α≤1
+
+λ2(L′(α)) (4) 
+
+s. t. SINR k(α) ≥ R kγth , ∀k ∈ { 1, . . . , K RIS },
+
+> KRIS
+
+X
+
+> k=1
+
+αk ≤ 1.
+
+The proceeding proposition provides the closed-form solu-tion α∗ of (4). 
+
+Proposition 2. The RIS partitioning that provides the maxi-mized network connectivity via maximizing the sum SINR of the new UE RIS 
+
+−−→ UAV k∈K RIS links is given by 
+
+α∗ 
+
+> k
+
+=
+
+(q Rk γth (˜ γ+N0)−pβ MK    
+
+> pβ MR βRK
+> kN2z
+
+, if k̸ = k∗,
+
+1 − PKRIS −1 
+
+> k=1
+
+α∗
+
+> k
+
+, if k = k∗. (5) 
+
+Proof. Due to the complexity of obtaining α directly from (1) and the first constraint of (4), which involves expansion and derivative, we first approximate the SINR expression in (1) by utilizing the expected values of 
+
+q
+
+βMK 
+
+> m,k
+
+|gMK 
+
+> m,k
+
+|,
+
+q
+
+βMK 
+
+> m′,k
+
+|gMK 
+
+> m′,k
+
+|,and αkQ. Specifically, the expectations can be evaluated as E
+
+ q
+
+βMK 
+
+> m,k
+
+|gMK 
+
+> m,k
+
+|
+
+> 2
+
+
+
+= βMK 
+
+> m,k
+
+, since 
+
+gMK  
+
+> m,k
+
+∼ CN (0 , 1) , E |gMK 
+
+> m,k
+
+|2 = 1 ; E 
+
+ q 
+
+βMR  
+
+> m
+
+βRK  
+
+> k
+
+αkQ
+
+> 2
+
+
+
+=
+
+βMR  
+
+> m
+
+βRK  
+
+> k
+
+E
+
+
+
+αk
+
+PNn=1 |gMR 
+
+> n,m
+
+|| gRK 
+
+> m,n,k
+
+|
+
+> 2
+
+
+
+=
+
+βMR  
+
+> m
+
+βRK  
+
+> k
+
+α2
+
+> k
+
+N 2 1˜f ˆf     
+
+> Γ( ˜f+0 .5) 2
+> Γ( ˜f)2
+> Γ( ˆf+0 .5) 2
+> Γ( ˆf)2
+
+= βMR  
+
+> m
+
+βRK  
+
+> k
+
+α2
+
+> k
+
+N 2z,where z = 1˜f ˆf     
+
+> Γ( ˜f+0 .5) 2
+> Γ( ˜f)2
+> Γ( ˆf+0 .5) 2
+> Γ( ˆf)2
+
+, where Γ( .) denotes the Gamma function. By substituting these values in (1), we have SINR k(α) = p[βMK  
+
+> m,k
+
++ βMR  
+
+> m
+
+βRK  
+
+> k
+
+α2
+
+> k
+
+N 2z]
+
+PMm′=1 ,m ′̸ =m pβ MK  
+
+> m′,k
+
++ N0
+
+. (6) To maximize the sum SINR of UE RIS 
+
+−−→ UAV k∈K RIS links while ensuring the constraints of (4), we assign portions of the RIS elements to the selected UAVs except for the UAV with the most reliability. Let k∗ be the most reliable UAV, i.e., k∗ =arg max k∈K RIS {R k}. Thus, the SINRs of these UAV k∈K RIS \k∗
+
+are just equal to their minimum required SINR. Lastly, the remaining elements of the RIS can be assigned to the UAV k∗ ,providing a higher SINR for that UAV. Therefore, if we rewrite the first constraint in (4) using (6), for all the UAVs except UAV k∗ , as SINR k(α) = p[βMK        
+
+> m,k +βMR
+> mβRK
+> kα2
+> kN2z]
+> PMm′=1 ,m ′̸ =mpβ MK
+> m′,k +N0
+
+= Rkγth , we get (5) with ˜γ = PMm′=1 ,m ′̸ =m pβ MK 
+
+> m′,k
+
+. In addition, for UAV k∗ ,
+
+α∗ 
+
+> k∗
+
+= 1 − PKRIS −1 
+
+> k=1
+
+α∗
+
+> k
+
+, which completes the proof. ■
+
+C. UAV Positioning Optimization 
+
+For the given X, Z, α∗, the UAV positioning optimization is given by 
+
+max  
+
+> u
+
+λ2(L′(u)) (7) 
+
+s. t. SINR k ≥ R kγth , ∀k ∈ { 1, . . . , K RIS }.
+
+As explained in Section II, the Laplacian matrix λ2(L′(u)) de-pends on UAV placement which determines the new links. This makes (7) a non-convex optimization problem, i.e., λ2(L′(u)) 
+
+is not a concave function. To address the non-concavity of 
+
+λ2(L′(u)) , we leverage the graph Laplacian matrix. Let v ∈ RV be the eigenvector corresponding to λ2(L),which has a unit norm ∥v∥2 = 1 and is orthogonal to the all-ones vector 1, i.e., 1T v = 0 , where 1 is V ×1. Since Lv = λ2v
+
+[8], vT Lv = λ2vT v = λ2. Hence, λ2(L) can be expressed as the smallest eigenvalue that satisfies these conditions [2], [6], i.e., 
+
+λ2(L) = Inf v
+
+vT Lv, ∥v∥2 = 1 , 1T v = 0 , (8) where Inf is the infimum of a set. (8) can be expressed as a convex problem as 
+
+λ2(L) = min 
+
+> v∈RV
+
+vT Lv (9) 
+
+s. t. ∥v∥2 = 1 , 1T v = 0 .
+
+Additionally, there is indirect dependence between L′(u)
+
+and u. To address this, we consider that UAVs are distributed within a h×h×h volume. Additionally, the search space along the axes is uniformly quantized with a step size δ, generating 
+
+J candidate search grids for each UAV. This simplifies L′(u)
+
+to be represented by 
+
+L′ = L +
+
+> KRIS
+
+X
+
+> k=1
+> J
+
+X
+
+> j=1
+
+x(k) 
+
+> j
+
+A(k) 
+
+> j
+
+diag (w(k) 
+
+> j
+
+)A(k) 
+
+> j
+
+, (10) where x(k) 
+
+> j
+
+is equal to one if UAV k is located at the j-th grid point, otherwise x(k) 
+
+> j
+
+= 0 . Moreover, w(k) 
+
+> j
+
+and A(k) 
+
+> j
+
+are the weighting coefficient vectors and the incidence matrix when UAV k is deployed at the j-th grid point, respectively. Collecting x(k) 
+
+> j
+
+, for k ∈ { 1, . . . , K RIS } and j ∈ { 1, . . . , J },in the JK RIS × 1 vector x, (10) can be written as follows 
+
+L′ = L +
+
+> JK RIS
+
+X
+
+> i=1
+
+xiAidiag (wi)Ai
+
+= L + ( x ⊗ 1V )∆ , (11) where ∆ = (A1diag (w1)A1)T , (A2diag (w2)A2)T ,. . . , (AJK RIS diag (wJK RIS )AJK RIS )T T . Note that since J is much larger than KRIS , considering the vector J × 1 instead of 
+
+JK RIS ×1 is convenient to provide superior performance. Thus, the problem can be viewed as selecting the optimal KRIS UAVs from a set of J candidate UAVs (i.e., J candidate grid points, with each UAV located at the center of its grid). Furthermore, by stacking the SINR levels between the transmitting UE, via the RIS, and UAV k, which is placed at candidate positions in the search grid, into a J × 1 vector denoted by yk, such that SINR k = xT yk, the optimization problem in (7) can be written in terms of x rather than u. Hence, the optimization problem in (7) can be written as follows 
+
+max  
+
+> x
+
+λ2(L′(x)) (12) 
+
+s. t. xT yk ≥ R kγth , ∀k ∈ { 1, . . . , K RIS },
+
+1T x = KRIS , x ∈ { 0, 1}J .
+
+The combinatorial optimization problem in (12) is intractable due to its high computational complexity. If the constraint x ∈{0, 1}J is relaxed to x ∈ [0 , 1] J , we can obtain a more tractable 4and convex optimization problem as follows 
+
+max  
+
+> x
+
+λ2(L′(x)) (13) 
+
+s. t. xT yk ≥ R kγth , ∀k ∈ { 1, . . . , K RIS },
+
+1T x = KRIS , 0 ≤ x ≤ 1.
+
+Proposition 3. (13) is a convex optimization problem and can be reformulated as an equivalent semi-definite programming (SDP) optimization problem. Proof. Using (8), the Fiedler value of λ2(L′(x)) can be ex-pressed as λ2(L′(x)) = Inf v
+
+vT L′(x)) v, ∥v∥2 = 1 , 1T v =0 , which is the point-wise infimum of a family of linear functions of x [6]. Hence, λ2(L′(x)) is a concave function in 
+
+x. Additionally, the constraints of (13) are linear in x. There-fore, the optimization problem in (13) is a convex optimization problem, and it is equivalent to the following SDP optimization problem [12] 
+
+max  
+
+> x,s
+
+s (14) 
+
+s. t. s(I − 1
+
+|x| 11 T ) ⪯ L′(x),
+
+xT yk ≥ R kγth , ∀k ∈ { 1, . . . , K RIS },
+
+1T x = KRIS , 0 ≤ x ≤ 1,
+
+where I ∈ RV ×V is the identity matrix and F ⪯ L indicates that L−F is a positive semi-definite matrix and s is an auxiliary variable. ■
+
+The optimization problem in (14) can be efficiently solved using standard SDP solvers. We first generate all possible mappings between UAVs and their grid points. Second, we use the standard CVX software solver (14) to solve SDP optimization (14) and obtain x. After solving, since the entries of output vector x are continuous, we select the KRIS largest values to be 1, and the remaining entries are set to 0.V. S IMULATION RESULTS 
+
+We consider a 3D scenario where the locations of UAVs are optimized, while the RIS and UE have fixed locations. However, the positions of the RIS and UE are updated in each simulation iteration. In these simulations, we employ the 3GPP Urban Micro (UMi) model at a carrier frequency of 3 GHz to calculate all large-scale path loss values, consistent with the related works [13]. Additionally, we assume a Nakagami −f
+
+shape parameter of f1 = f2 = 5 for the cascaded UE-RIS-UAV link and f = 1 for the direct UE-UAV links, with a spread parameter of unity for all the links. Similar to [10], we use 
+
+q β0  
+
+> (dMR
+> m)2
+
+and 
+
+q β0  
+
+> (dRK
+> k)2
+
+for UE m → RIS and RIS → UAV k
+
+links, respectively, where β0 denotes the path loss at the reference distance dref = 1 m and d is the corresponding distance. The RIS is located at an altitude of 120 m and 
+
+N = 100 elements. Other simulation parameters are given as follows: KRIS = 2 , P = 30 dBm, p = 23 dBm, β0 = 10 −2,the channel bandwidth is 250 KHz, J = 40 , γth = 60 dB, and 
+
+N0 = −120 dBm. The performance of the proposed scheme is compared with (i) the scheme proposed in [10] that utilizes the whole RIS to 
+
+0.1 0.3 0.5 0.7 0.9
+
+4
+
+6
+
+8 UAV 1 - Approx    
+
+> UAV 1- Exact
+> UAV 2- Approx
+> UAV 2- Exact
+
+(a) RIS portion for UAV 1 (α1)
+
+> Rate (Mbps)
+
+100 150 200 250 300 
+
+50 
+
+60 
+
+70 
+
+80 
+
+> Proposed
+> Random UAV Location
+> Single-link Setup [10]
+> Original [2]
+
+(b) Number of RIS elements (N)                
+
+> λ2(L′)
+> Fig. 1. (a) Rate versus α1and (b) network connectivity versus Nfor a network with 12 UAVs, γth = 60 dB, γUAV
+> 0= 75 dB, and γUE
+> 0= 70 dB.
+
+4 5 6 7 8 9 10 11 12 
+
+20 
+
+30 
+
+40 
+
+60 60 
+
+(a) Number of UAVs (K) 
+
+> λ2(L′)
+
+4 5 6 7 8 9 10 11 12 
+
+0
+
+2
+
+4
+
+6
+
+8
+
+10 
+
+12 Proposed 
+
+> Random UAV Location
+> Single-link Setup [10]
+> Original [2]
+
+(b) Number of UAVs (K)              
+
+> λ2(L′)
+> Fig. 2. Network connectivity versus Kfor (a) well-connected network with
+> γUAV
+> 0= 75 dB and γUE
+> 0= 70 dB and (b) sparse network with γUAV
+> 0=γUE
+> 0=83 dB.
+
+create one link only; (ii)) the original scheme without the RIS, inspired by [2]; and (iii) the proposed scheme with random UAV locations. We present some numerical results to assess the approxi-mation of removing the non-aligned term in (1). We plot the exact rate in (1), while including the non-aligned term, and the approximated rate using (6). For the purpose of this part, the fixed 3D coordinates in meters for the UE are (118 , 220 , 0) ,while UAV 1, UAV 2, and the RIS are located at (160 , 140 , 200) ,
+
+(170 , 14 , 200) , and (0 , 0, 120) , respectively. In Fig. 1(a), the presented results are averaged over 10 5 simulations. For UAV 1
+
+and UAV 2, the RIS partitions, respectively, are α1 and α2 =1 − α1. We adopt the phase shift quantization levels similar to [9] with 4 bits. From the figure, we notice that approximated rates for the UAVs tightly match the exact rates for most values of α1. Overall, these results justify our assumption to (i) ignore the impact of non-aligned channels from the other portions of the RIS and (ii) approximate (1) by (6). The figure shows that as α1 increases, more RIS elements are allocated to support the link to UAV 1. As a result, the exact and the approximated rates of UE RIS 
+
+−−→ UAV 1 link increase, while both rates of UE RIS 
+
+−−→ UAV 2 link decrease. Fig. 1(b) shows the network connectivity versus the number of elements N for K = 12 . We can see that the increase in the number of RIS elements improves connectivity, since RISs with more elements can boost up the quality of the newly established UE → UAV k links. As a result, the network connectivity is 5increased. Original scheme is fixed. Fig. 2 shows the network connectivity versus the number of UAVs K for two scenarios: (a) well-connected network and (b) sparse network, with 40 grid points for the UAVs KRIS . In the well-connected scenario, we assume high connectivity among the UAVs and between the UE and the UAVs, meaning direct links between the UE and the UAV(s) are always present. In this case, the original network forms one connected graph. As shown, the proposed scheme consistently outperforms other schemes due to the joint optimization, which enables (i) the RIS to establish two potential links and (ii) optimal UAV positioning that improves the quality of these links. In contrast, the single-link setup shows noticeable degradation compared to the proposed scheme with random UAV placement. For the sparse network, we set γUAV  
+
+> 0
+
+= γUE  
+
+> 0
+
+= 83 dB. In this case, the original network is not always fully connected, occasionally resulting in zero connectivity. Therefore, the per-formance of the original scheme fluctuates between zero and positive values, but the presented results are averaged over a large number of Monte Carlo simulations. Since the network is sparse due to the high SINR thresholds for the UE → UAV and UAV k → UAV k′ links, adding more UAVs does not lead to increased connectivity as observed in Fig. 2(b). This is because deploying more UAVs, while many of their connections fail to meet the high SINR thresholds, results in a sparser network graph (i.e., more nodes but fewer edges). Consequently, the network connectivity of the RIS-assisted schemes decreases, in contrast to Fig. 2(a), where the network graph is highly connected. Fig. 3 illustrates the impact of imperfect CSI coefficients 
+
+σ2 
+
+> e
+
+on network connectivity for K = 10 . We consider the imperfect CSI model in [9]. We assume σ2 
+
+> e, MK
+
+= σ2 
+
+> e, MRK
+
+= σ2 
+
+> e
+
+,and present the network connectivity for both perfect CSI (σ2 
+
+> e
+
+= 0 ) and imperfect CSI as a function of σ2 
+
+> e
+
+. As shown in the figure, imperfect CSI causes a gradual performance degradation compared to the perfect CSI case. However, the impact remains relatively limited until σ2 
+
+> e
+
+> 10 0, beyond which a more noticeable degradation is observed. This is because CSI errors primarily affect the SINRs of the RIS-assisted links, while the overall network connectivity also depends on the underlying graph topology, making it relatively robust to moderate CSI imperfections. VI. CONCLUSION 
+
+This work formulates and solves the network connectivity maximization problem, characterized by the Fiedler value, through a joint optimization of RIS-aided link selection, RIS partitioning, and UAV positioning. With the assistance of RIS deployment and UAV positioning, we aim to enhance the network connectivity of uplink RIS-assisted UAV networks. An iterative solution is developed and benchmarked against several schemes, including the original method, random UAV placements, and a single-link setup. Concerning future work, the employment of scheduling multiple transmitting UEs to a single RIS, rather than assigning one transmitting UE per RIS, may be taken into account. 
+
+10 −4 10 −3 10 −2 10 −1 10 0
+
+37 
+
+38 
+
+39 
+
+40 
+
+> Proposed - Perfect CSI
+> Proposed - Imperfect CSI
+
+σ2
+
+> e
+> λ2(L′)
+
+Fig. 3. Network connectivity versus σ2 
+
+> e
+
+for K = 10 , γUAV  
+
+> 0
+
+= γUE  
+
+> 0
+
+= 83 dB. 
+
+REFERENCES [1] M. Z. Hassan, G. Kaddoum, and O. Akhrif, “Interference management in cellular-connected internet of drones networks with drone-pairing and uplink rate-splitting multiple access,” IEEE Internet of Things Journal ,vol. 9, no. 17, pp. 16 060–16 079, 2022. [2] M. A. Abdel-Malek, A. S. Ibrahim, and M. Mokhtar, “Optimum UAV positioning for better coverage-connectivity tradeoff,” in 2017 IEEE 28th Annual International Symposium on Personal, Indoor, and Mobile Radio Communications (PIMRC) , 2017, pp. 1–5. [3] M. Javad-Kalbasi, M. S. Al-Abiad, and S. Valaee, “Energy efficient com-munications in RIS-assisted UAV networks based on genetic algorithm,” in GLOBECOM 2023 - 2023 IEEE Global Communications Conference ,2023, pp. 5901–5906. [4] M. Obeed and A. Chaaban, “Joint beamforming design for multiuser MISO downlink aided by a reconfigurable intelligent surface and a relay,” 
+
+IEEE Transactions on Wireless Communications , vol. 21, no. 10, pp. 8216–8229, 2022. [5] K. Weinberger, R.-J. Reifert, A. Sezgin, and E. Basar, “RIS-enhanced resilience in cell-free MIMO,” in WSA & SCC 2023; 26th International ITG Workshop on Smart Antennas and 13th Conference on Systems, Communications, and Coding , 2023, pp. 1–6. [6] A. S. Ibrahim, K. G. Seddik, and K. R. Liu, “Connectivity-aware network maintenance and repair via relays deployment,” IEEE Transactions on Wireless Communications , vol. 8, no. 1, pp. 356–366, 2009. [7] C. Pandana and K. R. Liu, “Robust connectivity-aware energy-efficient routing for wireless sensor networks,” IEEE Transactions on Wireless Communications , vol. 7, no. 10, pp. 3904–3916, 2008. [8] M. Fiedler, “Algebraic connectivity of graphs,” in Czechoslovak Mathe-matical J. , vol. 23, 1973, pp. 298–305. [9] S. Arzykulov, A. Celik, G. Nauryzbayev, and A. M. Eltawil, “Aerial RIS-aided physical layer security: Optimal deployment and partitioning,” 
+
+IEEE Transactions on Cognitive Communications and Networking , pp. 1–1, 2024. [10] M. Saif, M. Javad-Kalbasi, and S. Valaee, “Effectiveness of reconfig-urable intelligent surfaces to enhance connectivity in UAV networks,” 
+
+IEEE Transactions on Wireless Communications , vol. 23, no. 12, pp. 18 757–18 773, 2024. [11] M. H. Naim Shaikh, A. Celik, A. M. Eltawil, and G. Nauryzbayev, “Grant-free NOMA through optimal partitioning and cluster assignment in star-ris networks,” IEEE Transactions on Wireless Communications ,vol. 23, no. 8, pp. 10 166–10 181, 2024. [12] S. Boyd, “Convex optimization of graph laplacian eigenvalues,” in Proc. International Congress of Mathematicians, , vol. 3, 2006, pp. 1311–1319. [13] J. Lyu and R. Zhang, “Spatial throughput characterization for intelligent reflecting surface aided multiuser system,” IEEE Wireless Communica-tions Letters , vol. 9, no. 6, pp. 834–838, 2020. 
+
+6

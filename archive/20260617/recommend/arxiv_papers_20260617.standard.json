@@ -1,0 +1,843 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-17T22:10:34.713501+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 12,
+    "deep_cap": 7,
+    "deep_selected": 8,
+    "quick_candidates": 18,
+    "quick_skim_target": 12,
+    "quick_selected": 12
+  },
+  "deep_dive": [
+    {
+      "id": "2606.15160v1",
+      "source": "arxiv",
+      "title": "DLWM: Diverse Latent World Models for Efficient Multimodal Reasoning",
+      "abstract": "Reasoning capabilities of multimodal large language models (MLLMs) have improved considerably in recent years. Existing approaches typically rely on explicit chain-of-thought or continuous latent-space trajectories to enhance multi-step reasoning. However, these methods generally assume that an input admits a single latent interpretation and unfold reasoning along a fixed path or under a uniform computation budget. In real-world multimodal settings, visual observations are often subject to occlusion, blur, viewpoint variation, or semantic ambiguity, giving rise to multiple plausible interpretations. A uniform reasoning strategy not only limits the model's ability to explore multiple hypotheses but also incurs high memory usage and rollout cost. We present DLWM (Diverse Latent World Models), a multimodal reasoning framework that combines latent-space reasoning with reinforcement learning. First, we construct a set of diverse latent world hypotheses in continuous latent space, each capturing a different plausible interpretation of the visual input, and unfold latent reasoning independently on each hypothesis. An orthogonality-based diversity regularizer explicitly prevents hypothesis collapse. Second, we formulate the latent reasoning process as a resource-constrained sequential decision problem and introduce a resource-aware reinforcement learning policy that adaptively allocates computation across hypotheses, dynamically deciding whether to expand, terminate, or merge reasoning paths, thereby substantially reducing memory footprint and improving rollout efficiency. Experiments on multiple multimodal reasoning benchmarks demonstrate that DLWM outperforms existing methods by 2-5 points in accuracy while reducing memory usage by 24%.",
+      "authors": [
+        "David Huang",
+        "Lianlei Shan"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.LG"
+      ],
+      "published": "2026-06-13T07:12:46+00:00",
+      "link": "https://arxiv.org/pdf/2606.15160v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "diverse latent world models for efficient multimodal reasoning",
+      "llm_evidence_cn": "多样潜在世界模型用于高效多模态推理",
+      "llm_evidence": "多样潜在世界模型用于高效多模态推理",
+      "canonical_evidence": "多样潜在世界模型用于高效多模态推理",
+      "llm_tldr_en": "Introduces Diverse Latent World Models (DLWM) that maintain multiple latent interpretations during reasoning, improving efficiency and accuracy in multimodal tasks compared to single-path methods.",
+      "llm_tldr_cn": "现有多模态大语言模型(MLLM)推理方法通常假设单一潜在空间解释，限制了多假设探索能力。本文提出多样潜在世界模型(DLWM)，在潜在空间中并行探索多条推理路径。实验表明DLWM在多个多模态推理基准上以更低计算开销取得更高准确率，为潜在动力学建模提供了新方向。",
+      "llm_tldr": "现有多模态大语言模型(MLLM)推理方法通常假设单一潜在空间解释，限制了多假设探索能力。本文提出多样潜在世界模型(DLWM)，在潜在空间中并行探索多条推理路径。实验表明DLWM在多个多模态推理基准上以更低计算开销取得更高准确率，为潜在动力学建模提供了新方向。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "latent dynamics model",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.15917v1",
+      "source": "arxiv",
+      "title": "Reinforcement Learning for LLM-based Event Forecasting",
+      "abstract": "We use Group Relative Policy Optimization (GRPO), a recently devised sample and memory efficient reinforcement learning method, to finetune pretrained LLMs in the range of 1.5B to 14B parameters equipped with the ability to get current information through the use of a Wikipedia revisions tool, or news summaries, to forecast real events beyond the knowledge cutoff of the LLM, as well as problems made to simulate different aspects of the dynamics of that training.   We use the results of these experiments to comment on the scaling capability of LLMs for forecasting, as well as classify how judgmental forecasting fits into the verifiable/unverifiable domain taxonomy, considering the impact of the inherent aleatoric uncertainty when forecasting future events (e.g. the roll of a die).   As a result of the GRPO training, we manage to bring a 1.5B parameter transformer (Qwen 2.5 1.5B) to forecasting performance superior to Claude Sonnet 3.5 over the same dataset as measured by cross entropy from the market agreed probabilities. We also discuss various dead ends on the path to this result.",
+      "authors": [
+        "Amit Arnold Levy"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-14T16:46:11+00:00",
+      "link": "https://arxiv.org/pdf/2606.15917v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "uses GRPO, a sample efficient RL method",
+      "llm_evidence_cn": "采用样本高效的GRPO强化学习方法",
+      "llm_evidence": "采用样本高效的GRPO强化学习方法",
+      "canonical_evidence": "采用样本高效的GRPO强化学习方法",
+      "llm_tldr_en": "Uses GRPO, a sample efficient RL method, to finetune LLMs for event forecasting; demonstrates scaling and addresses aleatoric uncertainty.",
+      "llm_tldr_cn": "本文利用组相对策略优化（GRPO）这一样本高效的强化学习方法，对预训练LLM进行微调，使其能够结合外部信息预测未来事件。实验表明该方法具有良好的扩展性，并探讨了预测中固有不确定性的影响。",
+      "llm_tldr": "本文利用组相对策略优化（GRPO）这一样本高效的强化学习方法，对预训练LLM进行微调，使其能够结合外部信息预测未来事件。实验表明该方法具有良好的扩展性，并探讨了预测中固有不确定性的影响。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.16729v1",
+      "source": "arxiv",
+      "title": "Learning Policy from a Single Trajectory in Average-Reward Markov Decision Process",
+      "abstract": "While there is an extensive body of work characterizing the sample complexity of discounted cumulative-reward MDPs, finite sample analyses for average-reward MDPs have been limited, and most existing works rely on restrictive assumptions such as ergodicity or access to a generative model. In this work, we establish the first finite sample complexity guarantees from a single trajectory for weakly communicating average-reward MDPs. To this end, we study the dynamics of a single trajectory in weakly communicating MDPs and based on this analysis, we develop novel model-free methods. Notably, our value-based and policy-based methods provide finite sample complexity guarantees of $\\widetilde{O}(1/\\varepsilon^2)$ and $\\widetilde{O}(1/\\varepsilon^4)$ from a single trajectory in weakly communicating MDPs, respectively. Furthermore, we introduce the first model-free method that requires no prior knowledge of problem-dependent quantities for communicating MDPs.",
+      "authors": [
+        "Jongmin Lee",
+        "Ernest K. Ryu",
+        "Vaneet Aggarwal"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "math.OC"
+      ],
+      "published": "2026-06-15T13:53:19+00:00",
+      "link": "https://arxiv.org/pdf/2606.16729v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "sample complexity guarantees for average-reward MDP",
+      "llm_evidence_cn": "平均奖励MDP的样本复杂度保证",
+      "llm_evidence": "平均奖励MDP的样本复杂度保证",
+      "canonical_evidence": "平均奖励MDP的样本复杂度保证",
+      "llm_tldr_en": "Provides first finite-sample complexity guarantees for average-reward MDPs from a single trajectory, developing model-free methods with O(1/epsilon^2) sample bounds.",
+      "llm_tldr_cn": "本文针对平均奖励马尔可夫决策过程（MDP）首次从单条轨迹建立有限样本复杂度保证，突破了对遍历性或生成模型的依赖。提出了基于值和基于策略的无模型方法，实现了O(1/epsilon^2)和O(1/epsilon^4)的样本复杂度。该工作填补了平均奖励MDP样本效率分析的理论空白，为实际强化学习应用提供理论支撑。",
+      "llm_tldr": "本文针对平均奖励马尔可夫决策过程（MDP）首次从单条轨迹建立有限样本复杂度保证，突破了对遍历性或生成模型的依赖。提出了基于值和基于策略的无模型方法，实现了O(1/epsilon^2)和O(1/epsilon^4)的样本复杂度。该工作填补了平均奖励MDP样本效率分析的理论空白，为实际强化学习应用提供理论支撑。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.16780v1",
+      "source": "arxiv",
+      "title": "DIFF-IPPO: Diffusion-Based Informative Path Planning with Open-Vocabulary Belief Maps",
+      "abstract": "Exploration and object search require robots to perceive their environment, identify regions of interest, and plan trajectories that improve target-detection likelihood or maximize information gain. Many IPP methods, especially in continuous environmental monitoring, rely on Gaussian-process belief models, while object-search settings often produce complex, multimodal belief maps from semantic or open-vocabulary perception. Global trajectory generation directly conditioned on such non-Gaussian belief maps remains comparatively underexplored. Although diffusion-based planners offer strong capabilities for modeling such distributions, their use in informative path planning remains limited. In this work, we propose DIFF-IPPO, a pipeline that integrates an open-vocabulary belief map generator with a diffusion-based planner for global trajectory generation over belief maps. The method generates trajectories that concentrate sensor coverage over high-belief regions, achieving normalized detection scores between 81.49% and 86.55% across different dataset scenarios. We validate the system in a simulated search-and-rescue scenario where the planner searches candidate building regions to locate a burning building. In this setting, a team of five drones using batched belief-map-conditioned trajectory generation achieves first detections in 3.5 minutes.",
+      "authors": [
+        "Sausar Karaf",
+        "Oleg Sautenkov",
+        "Mikhail Martynov",
+        "Dzmitry Tsetserukou"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-15T14:26:02+00:00",
+      "link": "https://arxiv.org/pdf/2606.16780v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "diffusion-based informative path planning for exploration, applicable to UAV navigation",
+      "llm_evidence_cn": "基于扩散的信息路径规划，可应用于无人机导航",
+      "llm_evidence": "基于扩散的信息路径规划，可应用于无人机导航",
+      "canonical_evidence": "基于扩散的信息路径规划，可应用于无人机导航",
+      "llm_tldr_en": "Proposes DIFF-IPPO, a diffusion-based informative path planning pipeline that generates trajectories conditioned on open-vocabulary belief maps, outperforming baselines in exploration and object search.",
+      "llm_tldr_cn": "传统信息路径规划(IPP)在处理复杂多模态信念图时存在局限。本文提出DIFF-IPPO，利用扩散模型直接根据开放词汇信念图生成全局轨迹。在探索和目标搜索任务中，DIFF-IPPO优于IPP基线方法，为无人机自主导航提供了新思路。",
+      "llm_tldr": "传统信息路径规划(IPP)在处理复杂多模态信念图时存在局限。本文提出DIFF-IPPO，利用扩散模型直接根据开放词汇信念图生成全局轨迹。在探索和目标搜索任务中，DIFF-IPPO优于IPP基线方法，为无人机自主导航提供了新思路。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.17630v1",
+      "source": "arxiv",
+      "title": "FLAP: FOV-Constrained Active Perception Planning for Prior-Map-Free 3D Navigation",
+      "abstract": "Safe and efficient trajectory planning in unknown, cluttered 3D environments constitutes a critical bottleneck for deploying Unmanned Aerial Vehicles (UAVs) in real-world applications. This challenge is further exacerbated by the limited field-of-view (FOV) and sensing range of onboard sensors. Many existing methods either make simplistic assumptions about unexplored space or rely on conservative heuristics such as speed limits or fixed perception patterns, reducing efficiency and generalizing poorly across different sensor types. In this work, we propose a novel planning framework that directly integrates active perception into trajectory optimization, thereby improving safety while preserving efficiency. The perception constraints are derived from the UAV's dynamic model and formulated in the sensor coordinate frame, which enables precise handling of FOV geometry. The velocity-triggered activation mechanism enables the planner to balance perception and motion efficiency. We introduce an active perception sub-trajectory segment with parametric start-time optimization, mitigating collision risks from late obstacle detection. Our formulation enables active perception during arbitrary 3D maneuvers, extending beyond prior methods designed mainly for horizontal motion. All constraints and penalties are incorporated into a differentiable optimization problem, so the planner requires only a simple front-end global path for guidance, rather than a computationally expensive perception-aware path generator. Extensive simulations and real-world experiments demonstrate robust performance across diverse unknown environments with varying sensor configurations.",
+      "authors": [
+        "Mengke Zhang",
+        "Sitong Li",
+        "Tiancheng Lai",
+        "Ruitian Pang",
+        "Mingxuan Zhang",
+        "Qingcheng Chen",
+        "Fei Gao",
+        "Chao Xu",
+        "Yanjun Cao"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-16T07:40:30+00:00",
+      "link": "https://arxiv.org/pdf/2606.17630v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "UAV trajectory planning with active perception constraints in unknown 3D environments",
+      "llm_evidence_cn": "无人机在未知3D环境中带主动感知约束的轨迹规划",
+      "llm_evidence": "无人机在未知3D环境中带主动感知约束的轨迹规划",
+      "canonical_evidence": "无人机在未知3D环境中带主动感知约束的轨迹规划",
+      "llm_tldr_en": "FLAP integrates active perception into trajectory optimization for UAVs in prior-map-free 3D navigation, improving safety without sacrificing efficiency. The method handles FOV and range constraints effectively.",
+      "llm_tldr_cn": "针对无人机在未知三维环境中受限于传感器视场和探测范围的问题，FLAP将主动感知直接集成到轨迹优化中。该方法不依赖先验地图，能显著提升安全性和导航效率，在不同传感器类型下均具有良好泛化性，为无人机自主导航提供了实用技术。",
+      "llm_tldr": "针对无人机在未知三维环境中受限于传感器视场和探测范围的问题，FLAP将主动感知直接集成到轨迹优化中。该方法不依赖先验地图，能显著提升安全性和导航效率，在不同传感器类型下均具有良好泛化性，为无人机自主导航提供了实用技术。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.17659v1",
+      "source": "arxiv",
+      "title": "Physics-Constrained Neural Networks for Improved Short-Term Weather Forecasting: A Case Study over the South Pacific",
+      "abstract": "This study introduces enhancements to physics-constrained neural networks (PCNNs) that improve the accuracy and stability of hybrid short-term weather forecasting models. Building on the WeatherGFT architecture, three innovations are proposed. First, an upgraded numerical solver, combining a fifth-order weighted essentially non-oscillatory scheme (WENO-5), a beta-plane approximation, and subgrid-scale viscosity, permits a fourfold increase in the integration time step to 1200 s while reducing the daily mean squared error by up to 26%. Second, a unified autoregressive hybrid block replaces the original chain of 24 specialised modules, eliminating overfitting to specific lead times. Third, the physical core is integrated with two state-of-the-art neural backbones, resulting in PI-PredFormer and PI-IAM4VP. Evaluation on the WeatherBench South Pacific subset from 2000 to 2004 shows that these hybrids reduce root mean squared error at 1-12 h lead times by 8-22% compared to purely neural counterparts, while better preserving physical consistency. These results demonstrate that incremental refinement of hybrid components offers a practical route toward more accurate and efficient short-range weather forecasting.",
+      "authors": [
+        "Egor Bugaev",
+        "Fedor Buzaev",
+        "Dmitry Efremenko",
+        "Denis Derkach",
+        "Fedor Ratnikov"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-16T08:18:48+00:00",
+      "link": "https://arxiv.org/pdf/2606.17659v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "physics-constrained neural networks for improved short-term weather forecasting",
+      "llm_evidence_cn": "物理约束神经网络改进短时天气预报",
+      "llm_evidence": "物理约束神经网络改进短时天气预报",
+      "canonical_evidence": "物理约束神经网络改进短时天气预报",
+      "llm_tldr_en": "Enhances WeatherGFT with WENO-5 solver and unified autoregressive hybrid block, achieving 26% MSE reduction and 4x larger time step in South Pacific weather forecasting.",
+      "llm_tldr_cn": "为提升混合天气预报模型的精度与稳定性，该研究对物理约束神经网络进行了三项改进：引入WENO-5数值求解器、统一自回归混合块以及简化物理核心。在南太平洋案例中，日均均方误差降低26%，集成时间步长增加四倍，显著增强了模型的实用价值，适用于实际短时天气预报。",
+      "llm_tldr": "为提升混合天气预报模型的精度与稳定性，该研究对物理约束神经网络进行了三项改进：引入WENO-5数值求解器、统一自回归混合块以及简化物理核心。在南太平洋案例中，日均均方误差降低26%，集成时间步长增加四倍，显著增强了模型的实用价值，适用于实际短时天气预报。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.17906v1",
+      "source": "arxiv",
+      "title": "WAM-RL: World-Action Model Reinforcement Learning with Reconstruction Rewards and Online Video SFT",
+      "abstract": "Recent World-Action (WA) models demonstrate strong generalization ability and data efficiency, but they typically rely on expert trajectories for training. This reliance limits their ability to acquire fine-grained manipulation skills beyond the demonstration distribution and prevents them from continuously improving through real-world interaction. To address these limitations, we propose WAM-RL, a reinforcement learning framework that enables joint optimization of the world model and the action model through online interaction with the environment. By allowing the two components to co-evolve, our approach enhances fine-grained control and adaptability. Specifically, a WA model consists of a world model and an actor. We design a tailored reinforcement learning method with hierarchical optimization to coordinate their improvement. On the methodological side, we systematically investigate the effects of applying reinforcement learning to the action model, as well as online training of the world model within an RL setting. Our experiments reveal a key insight: optimizing only the actor yields improvements on short-horizon tasks, but fails to provide significant gains on long-horizon tasks. In contrast, jointly optimizing both the world model and the actor is critical for achieving strong performance in long-horizon settings. Our work is the first to introduce reinforcement learning into the World-Action paradigm, and provides insights into how online optimization of both the action head and the world model impacts overall performance.",
+      "authors": [
+        "Zezhong Qian",
+        "Xiaowei Chi",
+        "Yu Qi",
+        "Haozhan Li",
+        "Zhi Yang Chen",
+        "Shanghang Zhang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-16T13:29:12+00:00",
+      "link": "https://arxiv.org/pdf/2606.17906v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "world-action model with RL joint optimization",
+      "llm_evidence_cn": "世界动作模型与强化学习联合优化",
+      "llm_evidence": "世界动作模型与强化学习联合优化",
+      "canonical_evidence": "世界动作模型与强化学习联合优化",
+      "llm_tldr_en": "WAM-RL jointly optimizes world model and action model through online RL interaction, enabling fine-grained control beyond expert demonstrations.",
+      "llm_tldr_cn": "WAM-RL提出了一个强化学习框架，通过在线环境交互联合优化世界模型和动作模型，使两者共同进化。该方法解决了世界动作模型依赖专家轨迹的局限，增强了对精细操作技能的学习能力和适应性。在连续控制任务上展示了超越专家演示的性能。",
+      "llm_tldr": "WAM-RL提出了一个强化学习框架，通过在线环境交互联合优化世界模型和动作模型，使两者共同进化。该方法解决了世界动作模型依赖专家轨迹的局限，增强了对精细操作技能的学习能力和适应性。在连续控制任务上展示了超越专家演示的性能。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.18208v1",
+      "source": "arxiv",
+      "title": "Looped World Models",
+      "abstract": "Current world models face a fundamental tension: faithful long-horizon simulation demands deep computation, but deeper models are expensive to deploy and prone to compounding errors. We resolve this by introducing Looped World Models (LoopWM), which are the first looped architectures for world modelling. Our method iteratively refines latent environment states through a parameter-shared transformer block. This yield up to 100x parameter efficiency over conventional approaches with adaptive computation that automatically scales depth to match the complexity of each prediction step. Orthogonal to scaling model size and training data, LoopWM establishes iterative latent depth as a new scaling axis for world simulation, which might significantly push the community forward.",
+      "authors": [
+        "Hongyuan Adam Lu",
+        "Z. L. Victor Wei",
+        "Qun Zhang",
+        "Jinrui Zeng",
+        "Bowen Cao",
+        "Lingwei Meng",
+        "Mocheng Li",
+        "Zezhong Wang",
+        "Haonan Yin",
+        "Naifu Xue",
+        "Minyu Chen",
+        "Cenyuan Zhang",
+        "Zefan Zhang",
+        "Hao Wei",
+        "Jiawei Zhou",
+        "Haoran Xu",
+        "Hao Yang",
+        "Ronglai Zuo",
+        "Tongda Xu",
+        "Yonghao Li",
+        "Jian Chen",
+        "Hebin Wang",
+        "Zeyu Gao",
+        "Yang Li",
+        "Wei Zhao",
+        "Qimin Zhong",
+        "Siqi Liu",
+        "Yumeng Zhang",
+        "Leyan Cui",
+        "Zhangyu Wang",
+        "Wai Lam"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CL",
+        "cs.CV"
+      ],
+      "published": "2026-06-16T17:37:27+00:00",
+      "link": "https://arxiv.org/pdf/2606.18208v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "novel looped architecture for world models achieving high parameter efficiency",
+      "llm_evidence_cn": "循环架构世界模型，高参数效率",
+      "llm_evidence": "循环架构世界模型，高参数效率",
+      "canonical_evidence": "循环架构世界模型，高参数效率",
+      "llm_tldr_en": "Introduces Looped World Models (LoopWM), the first looped architectures for world modelling, achieving 100x parameter efficiency with adaptive computation depth.",
+      "llm_tldr_cn": "本文针对世界模型中长时预测需要深计算但部署昂贵的问题，提出循环世界模型（LoopWM），首次将循环架构引入世界建模。通过参数共享的Transformer模块迭代精炼潜在状态，该方法在保持预测精度的同时实现百倍参数效率，并自适应调整计算深度。实验表明，LoopWM在多个模拟环境上超越现有方法，开创了世界模型在深度维度上的新缩放轴。",
+      "llm_tldr": "本文针对世界模型中长时预测需要深计算但部署昂贵的问题，提出循环世界模型（LoopWM），首次将循环架构引入世界建模。通过参数共享的Transformer模块迭代精炼潜在状态，该方法在保持预测精度的同时实现百倍参数效率，并自适应调整计算深度。实验表明，LoopWM在多个模拟环境上超越现有方法，开创了世界模型在深度维度上的新缩放轴。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "world model",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.12097v2",
+      "source": "arxiv",
+      "title": "Weibull-Stationary Stochastic Differential Equations for Conditional Long-Horizon Wind Power Forecasting",
+      "abstract": "We present a one-month-ahead conditional probabilistic framework for wind-power forecasting at ten-minute resolution. Monthly Weibull shape and scale parameters are estimated from serially dependent SCADA wind-speed data, corrected through a Godambe covariance, and forecast by a heteroskedastic Kalman filter on a bivariate VAR(1) state-space model. Conditional on the MMSE forecasted Weibull invariant law, we construct and compare three positive wind-speed SDE models: an Ornstein-Uhlenbeck-Weibull transform, a Fokker-Planck drift-first diffusion, and a Fokker-Planck diffusion-first model. The simulated wind-speed ensembles are mapped to power through a calibrated XGBoost power curve. Applied to January 2021 data from a Senvion MM92 turbine at Kelmarsh Wind Farm, the three SDE formulations are statistically indistinguishable in probabilistic accuracy, with mean CRPS values between 1.569 and 1.575 m/s. The diffusion-first model is therefore preferred on computational grounds, reducing runtime by about a factor of seven relative to the OU-Weibull model. In the power domain, the Wasserstein distance between simulated and observed distributions is 26.1-27.6 kW, below $1.4\\%$ of rated capacity, while the monthly energy-yield bias is about $-7.3\\%$ for the examined month. Exceedance-probability errors remain below 1.6 percentage points over the 0-1500 kW range and about 2.2 percentage points near rated power. These quantities provide decision-relevant probabilistic inputs for downstream operational problems, rather than completed reserve, storage, market, or fatigue-optimization decisions. Full marginalisation over the Kalman predictive law of the Weibull parameters is left as a natural extension.",
+      "authors": [
+        "Luca Di Persio",
+        "Mehrdad Ghadiri"
+      ],
+      "primary_category": "stat.AP",
+      "categories": [
+        "stat.AP",
+        "physics.data-an"
+      ],
+      "published": "2026-06-10T13:54:42+00:00",
+      "link": "https://arxiv.org/pdf/2606.12097v2",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "wind power forecasting using SDEs",
+      "llm_evidence_cn": "使用随机微分方程的风电功率预测",
+      "llm_evidence": "使用随机微分方程的风电功率预测",
+      "canonical_evidence": "使用随机微分方程的风电功率预测",
+      "llm_tldr_en": "Proposes a one-month-ahead probabilistic framework for wind power forecast using Weibull-Stationary SDEs and Kalman filter, applied to real SCADA data.",
+      "llm_tldr_cn": "本文提出了一种基于Weibull平稳随机微分方程的条件概率框架，用于十分钟分辨率的月度风功率预测。通过Godambe协方差修正、异方差卡尔曼滤波以及多种SDE模型构建风速集合，最终通过XGBoost功率曲线转换为功率。在2021年1月实际SCADA数据上验证了有效性。",
+      "llm_tldr": "本文提出了一种基于Weibull平稳随机微分方程的条件概率框架，用于十分钟分辨率的月度风功率预测。通过Godambe协方差修正、异方差卡尔曼滤波以及多种SDE模型构建风速集合，最终通过XGBoost功率曲线转换为功率。在2021年1月实际SCADA数据上验证了有效性。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on wind field prediction, wind shear modeling, and meteorological forecasting for UAV navigation or aviation safety.",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.11523v1",
+      "source": "arxiv",
+      "title": "Maximizing Connectivity of Uplink RIS-Assisted UAV Networks",
+      "abstract": "In this paper, we present a new approach for unmanned aerial vehicle (UAV) positioning and reconfigurable intelligent surface (RIS) partitioning to enhance connectivity of uplink RIS-assisted UAV networks. To achieve this, our approach optimizes RIS-aided link selection, RIS partitioning, and UAV positions to maximize network connectivity characterized by its Fiedler value. Meanwhile, it maintains a specific signal-to-interference plus noise ratio (SINR) constraint for user equipment (UE), which is influenced by RIS partitioning and UAV reliability. The network connectivity optimization problem is formulated using the Fiedler value subject to RIS elements allocation and SINR constraints. This problem is a computationally expensive combinatorial optimization, necessitating an efficient iterative approach. In particular, we propose a perturbation method for RIS-aided link selection, and derive a closed-form solution for RIS partitioning, with each partition tailored to optimize SINR for individual UAV. For the given RIS-aided links and RIS partitioning, we then show that the problem of UAV positioning can be formulated as a low complexity semi-definite programming (SDP) optimization problem, which can be solved using off-the-shelf CVX solvers. Our simulations show the potential gain of UAV positioning and RIS partitioning compared to the benchmark schemes from the literature.",
+      "authors": [
+        "Mohammed Saif",
+        "Shahrokh Valaee"
+      ],
+      "primary_category": "cs.IT",
+      "categories": [
+        "cs.IT"
+      ],
+      "published": "2026-06-10T00:00:37+00:00",
+      "link": "https://arxiv.org/pdf/2606.11523v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "UAV positioning optimization for connectivity in RIS-assisted networks",
+      "llm_evidence_cn": "利用RIS的无人机定位优化以增强网络连通性",
+      "llm_evidence": "利用RIS的无人机定位优化以增强网络连通性",
+      "canonical_evidence": "利用RIS的无人机定位优化以增强网络连通性",
+      "llm_tldr_en": "Proposes UAV positioning and RIS partitioning to maximize network connectivity under SINR constraints, using combinatorial optimization.",
+      "llm_tldr_cn": "该论文针对上行RIS辅助无人机网络，联合优化无人机位置和RIS分区以最大化网络连通性（Fiedler值），同时满足用户信干噪比约束。由于问题是组合优化，需要高效算法求解。",
+      "llm_tldr": "该论文针对上行RIS辅助无人机网络，联合优化无人机位置和RIS分区以最大化网络连通性（Fiedler值），同时满足用户信干噪比约束。由于问题是组合优化，需要高效算法求解。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.10678v1",
+      "source": "arxiv",
+      "title": "One Step Closer to Ground Truth: A Multi-Scale Residual-Aware Representation Learning Pipeline for Predicting Time Series Data",
+      "abstract": "Transformer-based models have emerged as leading paradigms in time-series forecasting in recent years, employing self-attention mechanisms to capture long-range dependencies. Despite their success, these single-stage forecasting architectures exhibit persistent systematic residual biases arising from structural discrepancies, unmodeled stochastic components, or inadequate multi-scale temporal representations. This limitation persists when residuals are treated as irreducible noise, precluding adaptive correction of structured error patterns. To address this limitation, we introduce a two-stage, model-agnostic framework that explicitly decouples forecasting and residual learning into distinct stages of representation learning. A base transformer first generates the initial predictions. Subsequently, a dedicated meta-corrector dynamically models structured error patterns across multivariate channels, preserves cross-variable dependencies, and iteratively refines the residual bias of the base transformer. By formalizing this pipeline as a hypothesis space expansion, our framework addresses approximation limitations inherent in single-stage architectures, removes reliance on restrictive assumptions, and enables end-to-end learning of complex error dynamics. Evaluated on eight popular benchmark datasets using established protocols, our approach achieves state-of-the-art performance, with significant improvements in standard metrics (MSE, MAE). The results demonstrate the framework's ability to mitigate systematic biases and enhance robustness to complex temporal dynamics, advancing the practical applicability of transformer-based forecasting models.",
+      "authors": [
+        "Amrijit Biswas",
+        "Mustafa Kamal",
+        "Robin Krambroeckers",
+        "M. M. Lutfe Elahi",
+        "Sifat Momen",
+        "Nabeel Mohammed",
+        "Shafin Rahman"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-09T10:31:54+00:00",
+      "link": "https://arxiv.org/pdf/2606.10678v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Two-stage residual-aware representation learning for time series forecasting",
+      "llm_evidence_cn": "两阶段残差感知表示学习用于时间序列预测",
+      "llm_evidence": "两阶段残差感知表示学习用于时间序列预测",
+      "canonical_evidence": "两阶段残差感知表示学习用于时间序列预测",
+      "llm_tldr_en": "Proposes a two-stage framework that decouples forecasting and residual learning to correct systematic biases in time series prediction.",
+      "llm_tldr_cn": "该论文指出Transformer单阶段时序预测存在系统性残差偏差，提出两阶段模型无关框架，将预测与残差学习分离，通过自适应校正结构性误差模式，在多个公开时序数据集上提升了预测精度。",
+      "llm_tldr": "该论文指出Transformer单阶段时序预测存在系统性残差偏差，提出两阶段模型无关框架，将预测与残差学习分离，通过自适应校正结构性误差模式，在多个公开时序数据集上提升了预测精度。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.15296v1",
+      "source": "arxiv",
+      "title": "An isotropic recovery-based error estimator algorithm for mesh adaptation in a finite volume environment with application to atmospheric flows",
+      "abstract": "We develop an Isotropic Recovery-based Error Estimator (IREE) to drive mesh adaptation within a finite volume framework. Recovery-based error estimators are widely used in practice thanks to their simplicity, relying solely on the available discrete solution and a suitable post-processing step. While recovery-based estimators are well established in the finite element framework, their application to finite volume methods, despite the widespread use of the latter in industrial and commercial codes, remains largely unexplored and motivates the present study. We assess the performance of the proposed IREE-driven mesh adaptation procedure through well-known benchmarks for dry atmospheric flows modeling and compare it against a widely-used plain mesh adaptation algorithm. Both qualitative and quantitative results show that the IREE algorithm is more effective at suppressing numerical instabilities compared with the plain approach and, for most of the simulation time, provides a superior accuracy, though at a moderately higher computational cost. In addition, both the adaptive approaches offer substantial computational savings (between 35% and 94%) relative to simulations based on fixed uniformly fine meshes. These findings demonstrate that IREE-based mesh adaptation is a promising and effective strategy for atmospheric flow simulations and has the potential to substantially reduce the computational effort of generating reanalysis-quality data.",
+      "authors": [
+        "Lander Besabe",
+        "Michele Girfoglio",
+        "Simona Perotto",
+        "Annalisa Quaini",
+        "Gianluigi Rozza"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA"
+      ],
+      "published": "2026-06-13T13:30:26+00:00",
+      "link": "https://arxiv.org/pdf/2606.15296v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "mesh adaptation method for atmospheric flows in finite volume framework",
+      "llm_evidence_cn": "针对大气流动的有限体积网格自适应方法",
+      "llm_evidence": "针对大气流动的有限体积网格自适应方法",
+      "canonical_evidence": "针对大气流动的有限体积网格自适应方法",
+      "llm_tldr_en": "Develops an isotropic recovery-based error estimator for mesh adaptation in finite volume methods, applied to atmospheric flow benchmarks.",
+      "llm_tldr_cn": "本文针对有限体积法提出一种各向同性恢复型误差估计器（IREE），用于驱动网格自适应。通过干大气等基准测试验证了该方法的有效性，为数值天气预报模型中的网格优化提供了新工具。",
+      "llm_tldr": "本文针对有限体积法提出一种各向同性恢复型误差估计器（IREE），用于驱动网格自适应。通过干大气等基准测试验证了该方法的有效性，为数值天气预报模型中的网格优化提供了新工具。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "numerical weather prediction models and methods",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.14638v1",
+      "source": "arxiv",
+      "title": "Improving Lunar Topography with Deep Learning Schrödinger Bridges",
+      "abstract": "Increasing the resolution of planetary topography models can enable a better understanding of surface processes and geomorphology; however, existing analytical super-resolution methods are expensive and difficult to apply at large scales. Generative models provide the tools to learn complex relationships within data and can be applied at scale due to hardware accelerators and parallelization. We present a diffusion-based Schrödinger Bridge (SB) generative modeling approach for lunar topography super-resolution, connecting the distribution of low-resolution topography to that of high-resolution topography, incorporating physically-constraining optical imagery. Our approach is inspired by existing Shape-from-Shading methods, which improve a priori low-resolution topography by using optical images at the target resolution. We train SBs on a novel dataset of rendered lunar topography, emulating optical imagery from the Lunar Reconnaissance Orbiter Narrow Angle Camera. The result is a flexible approach for topography super-resolution which can provide pixel-level uncertainties in the reconstruction.",
+      "authors": [
+        "Matthew Repasky",
+        "Erwan Mazarico",
+        "Michael K. Barker",
+        "Stefano Bertone",
+        "Terence J. Sabaka",
+        "Yao Xie"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "astro-ph.EP"
+      ],
+      "published": "2026-06-12T17:04:07+00:00",
+      "link": "https://arxiv.org/pdf/2606.14638v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "diffusion-based super-resolution method transferable to meteorological downscaling",
+      "llm_evidence_cn": "扩散基超分辨率方法可迁移至气象降尺度",
+      "llm_evidence": "扩散基超分辨率方法可迁移至气象降尺度",
+      "canonical_evidence": "扩散基超分辨率方法可迁移至气象降尺度",
+      "llm_tldr_en": "Applies a diffusion Schroedinger Bridge to super-resolve lunar topography; the method is generative and could be adapted for meteorological super-resolution tasks.",
+      "llm_tldr_cn": "该论文针对月球地形超分辨率问题，提出基于扩散薛定谔桥的生成式方法，通过连接低分辨率与高分辨率地形分布并整合光学影像，实现了高效超分辨率。该方法的核心思想可迁移至气象降尺度和天气超分辨率任务，为气象领域的扩散模型应用提供了方法论参考。",
+      "llm_tldr": "该论文针对月球地形超分辨率问题，提出基于扩散薛定谔桥的生成式方法，通过连接低分辨率与高分辨率地形分布并整合光学影像，实现了高效超分辨率。该方法的核心思想可迁移至气象降尺度和天气超分辨率任务，为气象领域的扩散模型应用提供了方法论参考。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on meteorological downscaling and weather super resolution using diffusion models, generative models, or neural networks.",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.10678v2",
+      "source": "arxiv",
+      "title": "One Step Closer to Ground Truth: A Multi-Scale Residual-Aware Representation Learning Pipeline for Predicting Time Series Data",
+      "abstract": "Transformer-based models have emerged as leading paradigms in time-series forecasting in recent years, employing self-attention mechanisms to capture long-range dependencies. Despite their success, these single-stage forecasting architectures exhibit persistent systematic residual biases arising from structural discrepancies, unmodeled stochastic components, or inadequate multi-scale temporal representations. This limitation persists when residuals are treated as irreducible noise, precluding adaptive correction of structured error patterns. To address this limitation, we introduce a two-stage, model-agnostic framework that explicitly decouples forecasting and residual learning into distinct stages of representation learning. A base transformer first generates the initial predictions. Subsequently, a dedicated meta-corrector dynamically models structured error patterns across multivariate channels, preserves cross-variable dependencies, and iteratively refines the residual bias of the base transformer. By formalizing this pipeline as a hypothesis space expansion, our framework addresses approximation limitations inherent in single-stage architectures, removes reliance on restrictive assumptions, and enables end-to-end learning of complex error dynamics. Evaluated on eight popular benchmark datasets using established protocols, our approach achieves state-of-the-art performance, with significant improvements in standard metrics (MSE, MAE). The results demonstrate the framework's ability to mitigate systematic biases and enhance robustness to complex temporal dynamics, advancing the practical applicability of transformer-based forecasting models.",
+      "authors": [
+        "Amrijit Biswas",
+        "Mustafa Kamal",
+        "Robin Krambroeckers",
+        "M. M. Lutfe Elahi",
+        "Sifat Momen",
+        "Nabeel Mohammed",
+        "Shafin Rahman"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-09T10:31:54+00:00",
+      "link": "https://arxiv.org/pdf/2606.10678v2",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-scale residual learning pipeline for time series forecasting, applicable to weather prediction",
+      "llm_evidence_cn": "多尺度残差学习时间序列预测流程，可应用于气象预测",
+      "llm_evidence": "多尺度残差学习时间序列预测流程，可应用于气象预测",
+      "canonical_evidence": "多尺度残差学习时间序列预测流程，可应用于气象预测",
+      "llm_tldr_en": "Proposes a two-stage model-agnostic framework that decouples forecasting and residual learning, correcting systematic biases in time series predictions. Shows improved accuracy across benchmarks, making it a strong candidate for meteorological forecasting.",
+      "llm_tldr_cn": "现有Transformer时间序列预测模型存在无法消除的系统性残差偏差。本文提出一种两阶段残差感知表示学习流程，将预测与残差修正过程明确分离。实验表明该方法在多个标准数据集上显著降低预测误差，提升了时间序列预测的准确性。该框架可作为气象预测等领域的通用增强工具。",
+      "llm_tldr": "现有Transformer时间序列预测模型存在无法消除的系统性残差偏差。本文提出一种两阶段残差感知表示学习流程，将预测与残差修正过程明确分离。实验表明该方法在多个标准数据集上显著降低预测误差，提升了时间序列预测的准确性。该框架可作为气象预测等领域的通用增强工具。",
+      "llm_tags": [
+        "query:mm:composite"
+      ],
+      "matched_query_tag": "query:mm:composite",
+      "matched_query_text": "Papers central to 用于检索气象模型、数值天气预报、人工智能天气预测、气象降尺度、气象超分辨率、风场预测和无人机气象导航相关论文，重点关注 WRF、ECMWF、GraphCast、Pangu-Weather、FourCastNet、CorrDiff、扩散模型等方向。, especially work that connects or combines: meteorological super-resolution; statistical and dynamical downscaling of weather data; deep learning weather forecasting; numerical weather prediction models and methods; Find papers on wind field prediction, wind shear modeling, and meteorological forecasting for UAV navigation or aviation safety.; Find papers on meteorological downscaling and weather super resolution using diffusion models, generative models, or neural networks..",
+      "matched_requirement_id": "req-composite-mm",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.16518v1",
+      "source": "arxiv",
+      "title": "Beyond Mean Solar Wind Conditions: Turbulence-Aware Forecasting of the AE Index",
+      "abstract": "The auroral electrojet (AE) index is a key indicator of high latitude geomagnetic activity and is widely used in operational space weather monitoring, yet forecasting AE from upstream solar wind conditions remains challenging due to nonlinear coupling, internal magnetospheric dynamics, and multiscale variability. We test whether incorporating solar wind turbulence improves short timescale AE forecasts beyond models based only on mean solar wind and interplanetary magnetic field parameters. Two gradient boosted decision tree (XGBoost) models are developed using near-Earth solar wind observations: a baseline model using standard mean parameters and a turbulence-aware model that additionally includes measures of fluctuation amplitude, intermittency, and Alfvenic structure. Both models achieve peak performance at short lead times, with correlations exceeding 0.8 at 60 minutes. However, while the baseline model exhibits a clear skill peak at 75 minutes, the turbulence-aware model maintains comparable skill across 60-90 minute horizons, indicating reduced degradation with lead time. The turbulence-aware model also provides consistent improvements over both the baseline and persistence and, critically, improves forecast robustness for high-impact events. Cost-loss analysis shows that, for the baseline model, economic value decreases systematically with increasing AE threshold and the range of cost-loss ratios yielding positive value narrows. In contrast, the turbulence-aware model maintains an approximately constant zero-value cost-loss threshold across all event levels, indicating stable economic usefulness even for extreme AE conditions. This demonstrates that turbulence provides complementary, scale-dependent information beyond mean solar wind parameters, improving both forecast performance and decision-relevant value for operational space weather applications.",
+      "authors": [
+        "Cara L. Waters",
+        "Christopher H. K. Chen",
+        "Mathew J. Owens"
+      ],
+      "primary_category": "physics.space-ph",
+      "categories": [
+        "physics.space-ph"
+      ],
+      "published": "2026-06-15T10:20:10+00:00",
+      "link": "https://arxiv.org/pdf/2606.16518v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "deep learning space weather forecasting with turbulence awareness",
+      "llm_evidence_cn": "基于深度学习的空间天气预测，考虑湍流因素",
+      "llm_evidence": "基于深度学习的空间天气预测，考虑湍流因素",
+      "canonical_evidence": "基于深度学习的空间天气预测，考虑湍流因素",
+      "llm_tldr_en": "Tests turbulence-aware XGBoost models for forecasting the auroral electrojet index, showing improvements over mean-parameter models.",
+      "llm_tldr_cn": "本文提出一种考虑太阳风湍流的XGBoost模型用于预测极光电射流指数（AE）。与仅基于平均参数的传统模型相比，湍流感知模型在短时标预测中表现更优，表明湍流信息对空间天气预报至关重要。",
+      "llm_tldr": "本文提出一种考虑太阳风湍流的XGBoost模型用于预测极光电射流指数（AE）。与仅基于平均参数的传统模型相比，湍流感知模型在短时标预测中表现更优，表明湍流信息对空间天气预报至关重要。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.15172v1",
+      "source": "arxiv",
+      "title": "Towards a Unified Generative Model for Scarce Time Series with Domain Experts",
+      "abstract": "Synthesizing realistic time series with generative models has wide-ranging applications in real-world scenarios. Despite recent progress, most existing methods are trained under the assumption of abundant training data, which substantially limits their effectiveness in data-scarce settings. In this paper, we propose TimeMoDE, a novel framework that integrates Diffusion Transformers with Mixture-of-Experts to exploit both domain adaptability and diffusion-stage awareness for time series generation under data scarcity. It is pre-trained on a large-scale collection of multi-domain datasets to extract domain-agnostic temporal representations and domain-specific information benefiting generalization during fine-tuning. We propose Domain Prompts to condition expert assignment for indistinguishable noised tokens, mitigating the limitations of capturing inter-dataset relationships. Moreover, we incorporate diffusion timestep signals to equip the experts with awareness of time series degradation variations, facilitating adaptive calibrate to stage-dependent denoising requirements. Extensive experiments demonstrate that TimeMoDE outperforms existing methods under diverse low-data settings. It establishes an innovative paradigm for advanced time series few-shot generation.",
+      "authors": [
+        "Zihao Yao",
+        "Qi Zheng",
+        "Jiankai Zuo",
+        "Yaying Zhang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-13T07:41:42+00:00",
+      "link": "https://arxiv.org/pdf/2606.15172v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "diffusion transformers with mixture-of-experts for scarce time series generation",
+      "llm_evidence_cn": "扩散transformer与混合专家结合用于稀缺时间序列生成",
+      "llm_evidence": "扩散transformer与混合专家结合用于稀缺时间序列生成",
+      "canonical_evidence": "扩散transformer与混合专家结合用于稀缺时间序列生成",
+      "llm_tldr_en": "TimeMoDE integrates diffusion transformers with mixture-of-experts for time series generation under data scarcity, using domain prompts and multi-domain pretraining.",
+      "llm_tldr_cn": "现有时间序列生成模型假设数据充足，在稀缺场景下效果差。TimeMoDE融合扩散transformer和混合专家机制，通过大规模多域预训练提取域无关和域特定表示，并利用域提示实现微调。在多个稀缺数据域上，TimeMoDE生成的质量和多样性均优于现有方法，为数据稀缺下的时间序列合成提供统一方案。",
+      "llm_tldr": "现有时间序列生成模型假设数据充足，在稀缺场景下效果差。TimeMoDE融合扩散transformer和混合专家机制，通过大规模多域预训练提取域无关和域特定表示，并利用域提示实现微调。在多个稀缺数据域上，TimeMoDE生成的质量和多样性均优于现有方法，为数据稀缺下的时间序列合成提供统一方案。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on meteorological downscaling and weather super resolution using diffusion models, generative models, or neural networks.",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.11793v1",
+      "source": "arxiv",
+      "title": "AI4Land: Scalable Deep Learning for Global High-Resolution Land Use Reconstruction",
+      "abstract": "Uncertainty in the terrestrial carbon cycle remains a major constraint in climate projections, partly driven by the uncertainties affecting the land surface representation and variability in Earth system models. To address this limitation, we present a data-driven framework AI4Land, for generating high-resolution historical reconstructions and future projections of key land surface variables. The framework follows a two-phase approach using a U-Net architecture. In the first phase, which is the focus of this work, it reconstructs annual land use and land cover by integrating coarse-resolution scenario data with static geophysical features. In a planned second phase, the resulting high-resolution maps will be used to predict dynamic biophysical variables, particularly leaf area index, at finer temporal scales. Trained on Earth observation data, the models learn to reproduce spatially explicit and physically consistent land surface patterns, extending temporal coverage to periods lacking direct observations. AI4Land was developed and trained on MareNostrum5, demonstrating how GPU-accelerated HPC infrastructure enables global-scale climate AI pipelines. The final product is a suite of open-source emulators designed for real-time coupling with digital twin platforms, such as those developed under the Destination Earth initiative. By delivering realistic and evolving land surface conditions on demand, this work aims to reduce critical uncertainties and improve the predictive power of next-generation climate simulations.",
+      "authors": [
+        "Amirpasha Mozaffari",
+        "Marina Castaño",
+        "Stefano Materia",
+        "Etienne Tourigny",
+        "Oscar Molina-Sedano",
+        "Jordi Varela-Agrelo",
+        "Dario Garcia-Gasulla",
+        "Miguel Castrillo Melguizo",
+        "Mario Acosta",
+        "Amanda Duarte"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "physics.ao-ph"
+      ],
+      "published": "2026-06-10T08:26:05+00:00",
+      "link": "https://arxiv.org/pdf/2606.11793v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "U-Net for high-resolution land use reconstruction, transferable to weather super-resolution",
+      "llm_evidence_cn": "U-Net用于高分辨率土地利用重建，可迁移至气象超分辨率",
+      "llm_evidence": "U-Net用于高分辨率土地利用重建，可迁移至气象超分辨率",
+      "canonical_evidence": "U-Net用于高分辨率土地利用重建，可迁移至气象超分辨率",
+      "llm_tldr_en": "AI4Land uses a U-Net to reconstruct high-resolution land use from coarse scenario data, demonstrating a data-driven framework applicable to Earth system super-resolution tasks.",
+      "llm_tldr_cn": "地球系统模型中土地利用分辨率不足影响碳循环预测。本文提出AI4Land框架，采用U-Net架构将粗分辨率情景数据与静态地理特征融合，重建年度高分辨率土地利用图。方法具有通用性，可推广至气象变量超分辨率重建，为气候研究提供高质量数据输入。",
+      "llm_tldr": "地球系统模型中土地利用分辨率不足影响碳循环预测。本文提出AI4Land框架，采用U-Net架构将粗分辨率情景数据与静态地理特征融合，重建年度高分辨率土地利用图。方法具有通用性，可推广至气象变量超分辨率重建，为气候研究提供高质量数据输入。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on meteorological downscaling and weather super resolution using diffusion models, generative models, or neural networks.",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.18132v1",
+      "source": "arxiv",
+      "title": "Knowledge Reutilization in Meta-Reinforcement Learning",
+      "abstract": "Meta-reinforcement learning enables fast adaptation by extracting shared structure from related tasks, but existing end-to-end methods often couple task inference with embodiment-specific control. This coupling can obscure non-parametric task semantics, reduce sample efficiency, and limit cross-agent reuse. We propose a meta-knowledge reutilization framework that learns task-level knowledge on a dynamics-simplified agent and transfers it to heterogeneous agents. The framework uses a Bayesian non-parametric prior to organize latent task modes and a high-level policy to generate task-level magnitude guidance. To bridge reusable task knowledge with different embodiments, we introduce a semantic-magnitude interface and a lightweight temporal adaptor, which convert frozen meta-knowledge into temporally aligned subgoals for embodiment-specific low-level controllers. Experiments on multiple locomotion agents show that our framework reduces final-step tracking error by 94.75% -- 99.79% compared with recent state-of-the-art baselines and achieves comparable deployment performance with about 23.8% of their interaction data.",
+      "authors": [
+        "Yuan Meng",
+        "Bo Wang",
+        "Juan de los Rios Ruiz",
+        "Xiangtong Yao",
+        "Zhenshan Bing",
+        "Fuchun Sun",
+        "Alois Knoll"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-16T16:32:28+00:00",
+      "link": "https://arxiv.org/pdf/2606.18132v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "meta-RL for sample efficiency and cross-agent transfer",
+      "llm_evidence_cn": "元强化学习提升样本效率与跨智能体迁移",
+      "llm_evidence": "元强化学习提升样本效率与跨智能体迁移",
+      "canonical_evidence": "元强化学习提升样本效率与跨智能体迁移",
+      "llm_tldr_en": "Proposes a meta-knowledge reutilization framework for sample-efficient meta-RL, using Bayesian non-parametric prior to organize latent task modes and enabling transfer across heterogeneous agents.",
+      "llm_tldr_cn": "现有元强化学习方法将任务推理与具体控制耦合，降低了样本效率和跨智能体通用性。本文提出一种元知识重用框架，在动力学简化的智能体上学习任务知识，通过贝叶斯非参数先验组织潜在任务模式，并借助语义-幅度接口和轻量级时序适配器将冻结的任务知识迁移到异构智能体，显著提升了样本效率和跨实体适应能力。",
+      "llm_tldr": "现有元强化学习方法将任务推理与具体控制耦合，降低了样本效率和跨智能体通用性。本文提出一种元知识重用框架，在动力学简化的智能体上学习任务知识，通过贝叶斯非参数先验组织潜在任务模式，并借助语义-幅度接口和轻量级时序适配器将冻结的任务知识迁移到异构智能体，显著提升了样本效率和跨实体适应能力。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.15244v1",
+      "source": "arxiv",
+      "title": "M-CTX: Exact and Scalable Spatial Context Retrieval for Trajectory Analytics",
+      "abstract": "Modern trajectory predictors increasingly condition on external spatial context, such as map geometry, signed distance fields (SDFs), and nearby moving agents. While this context improves prediction quality, constructing it for every training anchor has become a hidden systems bottleneck. In a representative maritime AIS pipeline, spatial context construction requires roughly 17 CPU-days for a 5.48M-anchor corpus, dominating the cost of the downstream predictor. We present M-CTX, an exact and scalable spatial context-retrieval framework for trajectory analytics. M-CTX recasts context construction as an ingest-once, query-many spatial database workload and replaces three brute-force stages -- OSM range retrieval, SDF computation, and moving-vessel neighbour lookup -- with composable, index-backed operators. Its learned range-index backend, BR-LZ, provides recall-complete MBR-overlap range retrieval and reduces candidate amplification by 1.1x--2.7x relative to global-expansion one-curve baselines. Across four maritime regions, eight baseline systems, synthetic workloads with up to 40M spatial features, and 10^7-record AIS streams, M-CTX reproduces the reference context exactly. On the 5.48M-anchor corpus, it reduces context construction from about 17 CPU-days to 1.8 hours, a measured 226x end-to-end speed-up. An optional storage mode further compresses SDF context by 64x with only a 0.04 m ADE change. These results establish exact spatial context retrieval as a first-class database problem in modern trajectory analytics. Code and datasets are publicly available at https://github.com/mark000071/M-CTX-Traj.",
+      "authors": [
+        "Kun Ma",
+        "Qilong Han",
+        "Chengjing Song",
+        "Jingzheng Yao",
+        "Xiao Han",
+        "Yuee Zhou",
+        "Changmao Wu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-13T10:57:02+00:00",
+      "link": "https://arxiv.org/pdf/2606.15244v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "scalable spatial context retrieval for trajectory analytics in navigation",
+      "llm_evidence_cn": "用于轨迹分析的可扩展空间上下文检索，适用于导航",
+      "llm_evidence": "用于轨迹分析的可扩展空间上下文检索，适用于导航",
+      "canonical_evidence": "用于轨迹分析的可扩展空间上下文检索，适用于导航",
+      "llm_tldr_en": "M-CTX recasts spatial context construction for trajectory analytics as an ingest-once query-many spatial database workload, achieving high scalability.",
+      "llm_tldr_cn": "现代轨迹预测依赖空间上下文，但其构建成本高昂。M-CTX将空间上下文构建转化为一次性摄入多次查询的空间数据库工作负载，通过替换三个暴力阶段大幅降低成本。在海洋AIS数据上，它将CPU耗时从17天降至可接受水平，同时保证精确度，为轨迹分析提供可扩展方案。",
+      "llm_tldr": "现代轨迹预测依赖空间上下文，但其构建成本高昂。M-CTX将空间上下文构建转化为一次性摄入多次查询的空间数据库工作负载，通过替换三个暴力阶段大幅降低成本。在海洋AIS数据上，它将CPU耗时从17天降至可接受水平，同时保证精确度，为轨迹分析提供可扩展方案。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.13119v1",
+      "source": "arxiv",
+      "title": "MP3: Multi-Period Pattern Pre-training forSpatio-Temporal Forecasting",
+      "abstract": "Spatio-Temporal forecasting is crucial in diverse fields, such as transportation, climate, and energy. Urban spatio-temporal data exhibits temporal mirage: similar short-window inputs have divergent future trends, and vice versa. Existing spatio-temporal graph neural networks (STGNNs) cannot effectively identify such mirages. We argue that the core reason lies in the short-window inputs that have incomplete period observation, heterogeneous global spatial correlation, and cross-period superposition causality. To bridge this gap, we develop a novel Multi- Period Pattern Pre-training (MP3), a plug-and-play pre-training plugin for distinguishing temporal mirages. MP3 presents two core innovations: (1) The multi-period pattern learning is designed to learn multi-period patterns from long time series. Specifically, multi-period temporal modeling leverages edge convolution to identify different multi-period patterns. Multi-period spatial modeling uses a bottleneck project and a global memory bank to capture heterogeneous global spatial relations efficiently. Cross-period pattern interaction employs a causality-enhanced Transformer to capture dependencies across different period patterns. (2) This plugin can seamlessly integrate into existing STGNN backbones to strengthen their forecasting performance. The experiment on five STGNN baselines across five real-world datasets (including a large-scale dataset CA) verify the effectiveness, superior scalability and strong adaptability of MP3, which brings consistent and robust performance improvements across all evaluated baselines. On average, MP3 reduces the MAE 4.7% and the RMSE 5.0%. The code can be available at https://github.com/YAN-outlook/MP3.",
+      "authors": [
+        "Lilan Peng",
+        "Yandi Liu",
+        "Qingren Yao",
+        "Chongshou Li",
+        "Tianrui Li"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.NE"
+      ],
+      "published": "2026-06-11T09:48:18+00:00",
+      "link": "https://arxiv.org/pdf/2606.13119v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "spatio-temporal forecasting for climate applications, relevant to deep learning weather prediction",
+      "llm_evidence_cn": "时空预测方法可用于气候，与深度学习天气预测相关",
+      "llm_evidence": "时空预测方法可用于气候，与深度学习天气预测相关",
+      "canonical_evidence": "时空预测方法可用于气候，与深度学习天气预测相关",
+      "llm_tldr_en": "Proposes MP3, a pre-training plugin for spatio-temporal forecasting, improving identification of temporal mirages in urban data, with potential application to weather prediction.",
+      "llm_tldr_cn": "现有时空图神经网络难以识别城市数据中的时间幻象。本文提出MP3多周期模式预训练方法，通过周期模式学习分离时间幻象，提升时空预测性能。该方法可作为插件用于气象等领域的预测任务。",
+      "llm_tldr": "现有时空图神经网络难以识别城市数据中的时间幻象。本文提出MP3多周期模式预训练方法，通过周期模式学习分离时间幻象，提升时空预测性能。该方法可作为插件用于气象等领域的预测任务。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

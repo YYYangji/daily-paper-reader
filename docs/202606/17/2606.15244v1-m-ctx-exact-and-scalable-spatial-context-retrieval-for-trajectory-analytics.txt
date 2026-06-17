@@ -1,0 +1,1009 @@
+Title: M-CTX: Exact and Scalable Spatial Context Retrieval for Trajectory Analytics
+
+URL Source: https://arxiv.org/pdf/2606.15244v1
+
+Published Time: Tue, 16 Jun 2026 00:36:50 GMT
+
+Number of Pages: 14
+
+Markdown Content:
+# M-CTX: Exact and Scalable Spatial Context Retrieval for Trajectory Analytics 
+
+Kun Ma ∗† , Qilong Han ∗, Chengjing Song ∗, Jingzheng Yao ∗, Xiao Han ∗, Yuee Zhou ‡† , Changmao Wu §∗ Harbin Engineering University, Harbin, China 
+
+† Politecnico di Torino, Turin, Italy 
+
+‡ Northeastern University, Shenyang, China 
+
+§ Chinese Academy of Sciences, Beijing, China 
+
+Abstract —Modern trajectory predictors increasingly condition on external spatial context, such as map geometry, signed distance fields (SDFs), and nearby moving agents. While this context improves prediction quality, constructing it for every training anchor has become a hidden systems bottleneck. In a representa-tive maritime AIS pipeline, spatial context construction requires roughly 17 CPU-days for a 5.48 M-anchor corpus, dominating the cost of the downstream predictor. We present M-CTX, an exact and scalable spatial context-retrieval framework for trajectory analytics. M-CTX recasts context construction as an ingest-once, query-many spatial database workload and replaces three brute-force stages—OSM range retrieval, SDF computa-tion, and moving-vessel neighbour lookup—with composable, index-backed operators. Its learned range-index backend, BR-LZ, provides recall-complete MBR-overlap range retrieval and reduces candidate amplification by 1.1×–2.7× relative to global-expansion one-curve baselines. Across four maritime regions, eight baseline systems, synthetic workloads with up to 40 Mspatial features, and 10 7-record AIS streams, M-CTX reproduces the reference context exactly. On the 5.48 M-anchor corpus, it reduces context construction from about 17 CPU-days to 
+
+1.8 hours, a measured 226 × end-to-end speed-up. An optional storage mode further compresses SDF context by 64 × with only a 0.04 m ADE change. These results establish exact spatial context retrieval as a first-class database problem in modern trajectory analytics. Code and datasets are publicly available at https://github.com/mark000071/M-CTX-Traj. 
+
+Index Terms —spatial context retrieval, spatial indexing, learned index, moving-object index, signed distance field, AIS, trajectory analytics 
+
+I. I NTRODUCTION 
+
+Trajectory prediction is increasingly context-aware. In au-tonomous driving, urban mobility, and maritime navigation, plausible future motion depends not only on an agent’s recent trajectory, but also on surrounding map geometry, physical constraints, and nearby agents. We study this shift in maritime traffic, where public Automatic Identification System (AIS) feeds provide one of the largest open sources of moving-object data. Recent maritime predictors increasingly condition on coastlines, channels, signed distance fields (SDFs), and neigh-bouring vessels. These signals improve prediction quality, but they also introduce a new requirement: spatial context must be retrieved and materialised for every training sample. This context construction is often treated as routine prepro-cessing, but in practice it dominates the pipeline. For each AIS anchor, the reference pipeline performs three operations: 1 Context-aware 
+
+> trajectory prediction
+
+2 Hidden bottleneck: 
+
+context construction 
+
+> Anchor
+> point
+> OSM range query
+> SDF compute
+> Neighbor
+> search
+
+⟳ 
+
+> Repeated
+> millions
+> of times
+> Dominates preprocessing time
+> 3
+
+M-CTX motivation   
+
+> Indexed
+> OSM
+> retrieval
+> Linear-
+> time
+> SDF
+> Streaming
+> neighbor
+> index
+> ✓Recast context construction
+> as a spatial database workload
+> Schema-identical
+> context output
+> Same
+> downstream model
+> Hours/days → minutes/hours
+
+Fig. 1. M-CTX recasts per-anchor spatial context construction as an exact, index-backed database workload. 
+
+(i) it retrieves OpenStreetMap (OSM) features overlapping a 
+
+5 km window; (ii) it rasterises the local map patch onto a 
+
+128 × 128 grid and computes two SDFs; and (iii) it scans a vessel snapshot to find neighbours within 3 km. Profiling on a 
+
+1,000 -anchor subset (Section III) shows that SDF construction alone accounts for about half of the wall-clock time, mostly due to a quadratic distance transform. Brute-force neighbour scanning adds another quarter. Extrapolated to the full 5.48 M-anchor corpus, context construction requires roughly 17 CPU-days before model training begins. The predictor is not the bottleneck; the context pipeline is. Figure 1 summarises this motivation and the database reformulation behind M-CTX. Our key observation is that this bottleneck is a spatial-database workload implemented without spatial data manage-ment. OSM retrieval is a static range-query problem over map features, the canonical workload of spatial indexes such as R-trees [1]. Neighbour retrieval is a streaming moving-object query, matching the setting of indexes such as the TPR-tree and B x-tree [2], [3]. SDF construction repeatedly com-putes exact distance transforms over local rasters, for which separable linear-time algorithms are known [4]. Although these operations appear in a learning pipeline, their common structure is database-centric: millions of anchors repeatedly request exact spatial context from largely reusable static and streaming data. We present M-CTX , an exact and scalable spatial context-retrieval framework for trajectory analytics. M-CTX replaces the three brute-force stages with composable, index-backed 
+
+> arXiv:2606.15244v1 [cs.LG] 13 Jun 2026
+
+operators: an exact OSM range retriever, a linear-time SDF engine, and an incremental moving-object neighbour index. The framework preserves the schema and semantics of the reference context, allowing downstream models to consume the generated tensors without code changes or retraining. Its learned range-index backend, BR-LZ, uses bounded residuals and a segment-local extent to provide recall-complete MBR-overlap range retrieval while reducing candidate amplification relative to global expansion strategies. This paper makes the following contributions.  
+
+> •
+
+A spatial context-retrieval workload. We formalise context construction for trajectory learning as an ingest-once, query-many spatial database workload and show through profiling that it dominates a representative AIS learning pipeline.  
+
+> •
+
+BR-LZ, a recall-complete learned range index. We introduce a bounded-residual learned Z-order index for MBR-overlap range queries. BR-LZ provides an explicit recall-completeness guarantee and reduces candidate am-plification by 1.1×–2.7× over a global expansion strategy at the same recall.  
+
+> •
+
+Exact SDF acceleration and storage co-design. We replace the quadratic SDF kernel with a linear-time exact distance transform, accelerating the SDF stage by 163 ×.We further show that SDF context can be compressed by 
+
+64 × with only a 0.04 m ADE change.  
+
+> •
+
+An end-to-end exact context framework. Across four maritime regions, eight baseline systems, synthetic scal-ing to 40 M map features, and 10 7 streaming AIS records, M-CTX preserves the reference context semantics. On the 5.48 M-anchor corpus, it reduces context construction from about 17 CPU-days to 1.8 hours, a measured 
+
+226 × end-to-end speed-up, while preserving downstream predictions for the deterministic LSTM+Env-SDF core. M-CTX shows that the retrieval workloads hidden in-side modern spatiotemporal learning pipelines are first-class database problems. By combining exact spatial indexing, linear-time context materialisation, and drop-in compatibility with downstream predictors, it removes the dominant data bottleneck without changing the learning model itself. II. R ELATED WORK 
+
+Spatial indexing and geospatial data systems: Spatial indexing is a core topic in database systems. The R-tree [1] and its variants, including the R +-tree [5], Hilbert R-tree [6], and R∗-tree [7], remain standard access methods for rectangle and region queries. Main-memory structures such as kd-trees [8] and quadtrees [9] provide complementary design points, while GiST [10] abstracts many spatial access methods behind a common interface. For static, read-mostly workloads, bulk loading is often decisive: the Sort-Tile-Recursive algorithm [11] produces compact R-tree layouts and is widely used in practice. More recent work has revisited spatial indexing under dynamic and workload-aware settings, such as Waffle [12], which adapts disk-based spatial indexing to query/update trade-offs. Large-scale geospatial systems, including Spatial-Hadoop [13], GeoSpark/Sedona [14], and RDPro [15], target distributed vector or raster analytics. M-CTX is complemen-tary: it targets a lighter but repeated training-loop workload, where the same static map and streaming AIS state are queried millions of times to materialise exact tensors for downstream models. 
+
+Learned and workload-aware indexes: Learned indexes replace parts of a comparison-based access method with a model of the key distribution [16]. One-dimensional learned indexes, including FITing-Tree [17], PGM-index [18], RadixS-pline [19], ALEX [20], and SALI [21], have shown that distribution-aware models can reduce lookup cost or memory footprint under suitable workloads. Recent evaluations and surveys further show that learned indexes are not universally superior; their effectiveness depends on workload, update pattern, model error, and implementation cost [22]–[24]. Multi-dimensional learned indexes extend this idea by either projecting objects onto a space-filling curve [25], partitioning space with local models as in LISA [26], learning recursive partitions as in RSMI [27], or jointly optimising layout and partitioning as in Flood [28], Tsunami [29], Qd-tree [30], and LMSFC [31]. M-CTX differs from this line of work in its correctness requirement. Context construction requires recall-complete MBR-overlap retrieval: a feature whose MBR overlaps the query window must be returned even if its centroid lies outside the window. Centroid-based one-curve learned indexes can miss such features unless the query is expanded. Aglobal maximum extent restores recall but produces loose candidate sets. BR-LZ addresses this gap directly by combin-ing bounded residuals with segment-local extents, providing recall-complete MBR-overlap retrieval while reducing candi-date amplification relative to global expansion. 
+
+Moving-object indexing and streaming neighbour re-trieval: The neighbour-retrieval stage is related to moving-object indexing. The TPR-tree [2] indexes time-parameterised MBRs and supports predictive queries over moving objects. The B x-tree [3] maps time-partitioned positions onto a space-filling curve and indexes them with a B +-tree, avoiding full snapshot rebuilds under frequent updates. This property is well matched to AIS streams, where positions arrive at a regular cadence and neighbour queries are issued against rolling snapshots. M-CTX adopts a B x-tree-style backend with an exact radius filter after key-range enumeration. The key difference from snapshot KD-tree baselines is update granularity: M-CTX supports interleaved inserts and queries, which is required for live context construction. 
+
+Distance transforms and spatial context materialisation: 
+
+Signed distance fields are widely used to encode geometric constraints such as map boundaries, navigable areas, and object surfaces. Exact Euclidean distance transforms can be computed in linear time by the Felzenszwalb–Huttenlocher algorithm [4]; classical alternatives such as the Maurer trans-form [32] share the same Θ( HW ) bound. Neural signed-distance fields such as DeepSDF [33] learn implicit shape representations, while geospatial systems such as RDPro [15] focus on scalable raster analytics. M-CTX does not learn the SDF and does not target general raster analytics. Instead, it replaces the quadratic per-anchor SDF kernel in a trajectory-learning pipeline with an exact linear-time transform, then co-designs the stored representation with downstream accuracy. 
+
+Context-aware trajectory prediction: Recent trajectory predictors increasingly condition on static scene context and dynamic agent interactions. In autonomous driving, transformer-based models such as MTR [34], Wayformer [35], QCNet [36], and Forecast-MAE [37] explicitly encode road topology, map elements, neighbouring agents, or masked lane/trajectory context. Earlier general-purpose predictors such as Trajectron++ [38] and AgentFormer [39] similarly estab-lished the importance of social and environmental context. Maritime prediction has followed the same trend: AIS-based models include recurrent and transformer predictors [40]– [42], graph models for vessel interaction and traffic flow [43], [44], and broader surveys of maritime trajectory analytics [45], [46]. M-CTX is orthogonal to these predictors: it does not propose a new forecasting model, but accelerates the exact context-retrieval pipeline on which such models increasingly depend. 
+
+Positioning: The main distinction of M-CTX is not simply learned versus classical indexing. Classical spatial indexes provide exact retrieval but may be heavier to build, store, or embed inside lightweight training pipelines. Learned spatial indexes improve footprint or build time, but for MBR-overlap context retrieval they typically rely on empirical recall or global expansion. M-CTX asks whether a learned spatial index can retain the deployment advantages of learned indexing while restoring the exactness required by model-facing retrieval. BR-LZ answers this question for static OSM range retrieval, and M-CTX combines it with exact SDF materialisation and streaming neighbour indexing to form an end-to-end, schema-preserving context retrieval system for trajectory analytics. III. P ROBLEM FORMULATION AND WORKLOAD 
+
+CHARACTERIZATION 
+
+A. Context retrieval as a workload 
+
+Context-aware trajectory prediction augments each AIS 
+
+anchor a = (lat , lon , t ) with local spatial context before it is fed to a predictor. Let F = {f1, . . . , f N } be a static collection of OSM features, where each feature has a two-dimensional MBR and a semantic tag, and let S be a stream of timestamped vessel positions. For each anchor a, the context pipeline computes 
+
+C(a) =  RF (a, r 1)
+
+| {z }
+
+> OSM range
+
+, D (a)
+
+| {z } 
+
+> SDF
+
+, K S (a, r 2, k )
+
+| {z }
+
+> kNN
+
+, (1) where RF (a, r 1) = {f ∈ F : f. MBR ∩ B(a, r 1)̸ = ∅} 
+
+returns OSM features intersecting the r1 = 5 km query window, D(a) ∈ RH×W ×2 is a pair of 128 × 128 signed distance fields over the local patch, and KS (a, r 2, k ) returns 8 9 10 11 12      
+
+> Longitude ( E)
+> 54
+> 55
+> 56
+> 57
+> 58
+> Latitude (  N)
+> AIS traffic density: Danish waters
+> (59,960 ship positions)
+> 10
+> 20
+> 30
+> 40
+> 50
+> ship positions / cell
+> Fig. 2. AIS traffic density over Danish waters. The lane structure makes per-anchor neighbour retrieval dense and highly skewed. TABLE I PER -STAGE COST OF THE REFERENCE CONTEXT PIPELINE ON A
+> 1,000 -ANCHOR SUBSET USING A SINGLE CPU THREAD .
+
+Stage wall-clock per-anchor dominant cost OSM load + parse 85 .2 s 85 .2 ms cold file I/O SDF compute 176 .4 s 176 .4 ms quadratic EDT Neighbour scan 88 .2 s 88 .2 ms full-snapshot scan 
+
+the k nearest vessels within r2 = 3 km in the corresponding snapshot. Since a training corpus evaluates C over millions of anchors, the workload is ingest-once, query-many : static map data and historical AIS streams are prepared once and queried repeatedly. Figure 2 illustrates the spatial skew of AIS traffic. Vessel positions concentrate along narrow shipping lanes, making neighbour retrieval both dense and non-uniform—a poor fit for repeated full-snapshot scans and a natural fit for incremental moving-object indexing. 
+
+B. Profiling the reference pipeline 
+
+Table I profiles the reference context pipeline on a 1,000 -anchor subset. The retrieval stages dominate the prepro-cessing budget. SDF construction is the largest component, taking 176 .4 ms per anchor, with most of its time spent in a quadratic distance-transform kernel. Brute-force neighbour scanning adds another 88 .2 ms per anchor. Extrapolated to the full 5.48 M-anchor corpus, context construction requires approximately 17 CPU-days before model training begins. In this pipeline, the predictor is not the bottleneck; context materialisation is. 
+
+C. Why brute force is the wrong abstraction 
+
+The reference implementation treats each context compo-nent as an independent preprocessing kernel, but all three ex-pose reusable spatial structure. OSM retrieval is a static range query over map features, yet the reference path reloads and parses tiles per anchor. SDF construction runs an O(HW ·M )
+
+nearest-pixel loop even though the exact distance field can be computed in O(HW ). Neighbour retrieval scans the current snapshot for every anchor instead of indexing moving points. The common failure mode is therefore not a slow model, but the absence of spatial data management in a workload that repeatedly asks for exact local context. This observation leads to the central question of the paper: how can we replace brute-force context construction with indexed and asymptotically better operators while preserving the exact tensors consumed by the downstream model? M-CTX answers this question by recasting context construction as a spatial database workload embedded inside a learning pipeline. 
+
+D. Design goals and metric 
+
+An indexed context backend must satisfy three require-ments. 
+
+Correctness. Each operator must reproduce the brute-force result. For OSM range retrieval, this means provable recall for MBR-overlap queries rather than empirical high recall. 
+
+Amortised efficiency. The relevant cost is not query latency alone, but the end-to-end ingest-once, query-many cost over the full corpus, including build time, query time, and index footprint. 
+
+Drop-in equivalence. The emitted context must preserve the reference schema and numerical semantics, so downstream predictors can run without code changes or retraining. For the OSM range stage, we additionally measure candi-date amplification: 
+
+α(q) = |{ features scanned by the exact filter for q}| |RF (q)| , (2) defined for queries with |RF (q)| > 0. It measures how many exact MBR tests are performed per true hit after the index has generated its candidate set. Any recall-complete index has α(q) ≥ 1; reducing α at recall 1.0 is therefore the main efficiency lever for learned range retrieval. Section V-D shows how BR-LZ reduces this amplification using segment-local extents. IV. T HE M-CTX F RAMEWORK 
+
+M-CTX implements the workload C as a composition of three specialised context operators behind a single interface. The OSM-Index answers RF using interchangeable exact backends, including a pure-NumPy STR-tree, a production R∗-tree, and the BR-LZ learned index. The SDF engine 
+
+computes D with a linear-time exact distance transform. The 
+
+Neighbour-Index answers KS using an incremental B x-tree over streaming AIS positions. Since the OSM range query depends only on location, the SDF depends on the local map patch, and neighbour retrieval depends on spatiotemporal state, the three operators can be executed independently across anchors. Figure 3 shows the end-to-end M-CTX architecture and how the three operators are assembled into a schema-identical context output. M-CTX is invoked through one entry point: 
+
+mctx.build_context( anchors, osm_index, sdf_engine, neighbor_index) 
+
+It returns a context dictionary whose schema matches the reference output. This drop-in property is a core design requirement: each brute-force stage can be replaced by an indexed operator while preserving the tensors passed to the downstream predictor. As a result, the system improves con-text construction without changing the learning model or its training code. The framework is also naturally parallel. The implementa-tion vectorises operator calls over anchor batches and parti-tions anchors across workers with a mapPartitions -style driver. Each worker uses a broadcast-loaded copy of the static indexes, avoiding repeated rebuilds when scaling to more processes or machines. This execution model preserves the same operator composition from single-core experiments to multi-worker corpus construction. V. S TATIC SPATIAL RANGE RETRIEVAL WITH BR-LZ The OSM stage answers RF (a, 5 km ) over a static collec-tion of vector map features, including coastlines, breakwaters, piers, and locks. This is a read-mostly MBR-overlap range-retrieval workload: the map is ingested once, while millions of anchor-centred windows repeatedly query the same fea-ture collection. M-CTX exposes three interchangeable exact backends behind one interface. A pure-NumPy STR-tree [11] provides a dependency-free baseline; a libspatialindex R ∗-tree [47] provides a tuned classical reference; and BR-LZ provides a compact learned backend with a formal recall-completeness guarantee for MBR-overlap queries. All back-ends apply an exact MBR filter before returning results, so they preserve the reference range semantics. This section focuses on BR-LZ. 
+
+A. The recall gap in one-curve learned indexes 
+
+One-curve learned spatial indexes are attractive for OSM retrieval because they map two-dimensional objects to a one-dimensional key order and learn a small model over that order. They are simple to serialise, cheap to build, and lightweight enough to broadcast across workers. However, centroid-based one-curve indexes have a correctness gap for range retrieval: a feature can overlap the query window even when its centroid lies outside the window. If the index only searches centroids inside the query range, such a feature is silently missed. A standard fix is to expand every query by the global maximum feature extent before mapping it to the curve. This restores recall but can produce a loose candidate set, especially when a few long features force all queries to pay the global worst case. BR-LZ closes the same recall gap with bounded rank residuals and a segment-local extent. The result is a learned range index that is recall-complete by OSM map tiles 
+
+> coastline s, pier s,
+> breakwater s, lock s
+
+AIS stream /
+
+snapshots  
+
+> dynamic vessel
+> positions
+
+Anchor point 
+
+batch   
+
+> Target (lat ,lon , t )
+
+Unified Context 
+
+Tensor 
+
+(Drop-in Schema) 
+
+Schema-identical 
+
+to EnvShip context, 
+
+drop-in replacement, 
+
+no downstream 
+
+code change 
+
+Downstream ML Models 
+
+(Unchanged Training Pipelines)   
+
+> LSTM+Env-SDF Trajectron ++ Transformer-NAR
+
+## Data lngest Layer Context Tensor 
+
+## Assembly (Joint Context Index) 
+
+Shared Morton-cell 
+
+localization 
+
+OSM Context 
+
+> OSM way IDs
+> static features
+
+SDF Tensor 
+
+> 128 ×128 ×2,
+> shore + navigable
+
+Neighbor Context   
+
+> kNN neighbours ,
+> seg,Δx ,Δy ,
+> CPA/TCPA
+
+Context 
+
+Components 
+
+## M-CTX Retrieval Engine 
+
+(Exact, Scalable, and Efficient Retrieval) 
+
+A. OSM Range Index 
+
+> Exact range retrieval of OSM ways
+
+B. Linear-time SDF Engine 
+
+> Convert OSM patch to signed distance fields
+
+C. Streaming Neighbor Index  
+
+> kNN retrieval of neighboring vessels
+
+Backends   
+
+> STR-tree / R *-tree /
+> Shapely STRtree / Flood
+
+BR-LZ (Ours) 
+
+> Recall-complete learned
+> index with segment-
+> local extent
+
+OSM 
+
+patch 
+
+(vector) 
+
+FH-EDT 
+
+O(HW) 
+
+SDF Tensor   
+
+> 128 ×128 ×2
+> (shore / navigable)
+
+AIS 
+
+stream / 
+
+> snapshot
+
+Bx-tree 
+
+> incremental
+> updates
+
+kNN within 
+
+> r = 3 km
+> (list of MMSIs,
+> features)
+
+- OSM payload 
+
+- SDF tile sketch 
+
+- AlS dynamic records 
+
+## Optional JCX Fig. 3. M-CTX architecture. An anchor batch is dispatched to three composable operators: exact OSM range retrieval, linear-time SDF materialisation, and streaming neighbour lookup. The output follows the reference context schema, so downstream models run unchanged. 
+
+construction while reducing candidate amplification relative to global expansion. 
+
+B. Index construction and query 
+
+Let F = {f1, . . . , f N } be the OSM feature set. Each feature 
+
+fi is represented by an axis-aligned MBR, longitude and latitude extents wlon  
+
+> i
+
+and wlat  
+
+> i
+
+, and centroid ci. BR-LZ first maps each centroid to a B-bit Morton key zi = Morton B (ci)
+
+and sorts features by this key. The sorted order induces a permutation π, where zπ(j) is monotone in rank j. The sorted array is then partitioned into S equi-count segments. For each segment k with rank interval Ik = [ pk, p k+1 ), BR-LZ fits an endpoint-interpolating linear model ˆπk(z) = akz + bk and stores its maximum rank residual 
+
+ρk = max 
+
+> j∈Ik
+
+ˆπk(zπ(j)) − j . (3) BR-LZ also stores a maximum half-extent for each segment: 
+
+hlon  
+
+> k
+
+= max 
+
+> j∈Ik
+
+wlon 
+
+> π(j)
+
+/2, hlat  
+
+> k
+
+= max 
+
+> j∈Ik
+
+wlat 
+
+> π(j)
+
+/2. (4) These local extents are no larger than the global maximum extents and are used to reduce over-expansion during query processing. Given a query MBR q, BR-LZ enumerates the Morton-key segments that may contain overlapping features. For each segment k, it expands q by the segment-local extent 
+
+(hlon  
+
+> k
+
+, h lat  
+
+> k
+
+), obtains the corresponding key interval, and uses the residual bound ρk to convert that key interval into a rank window. Every candidate in the rank window is then checked by the exact MBR predicate. The learned model is therefore 
+
+Algorithm 1. BR-LZ build and range query 
+
+Build (F, B, S ):1: for each fi ∈ F : zi ← Morton B (ci)
+
+2: π ← argsort( z); relabel F in z-order 3: split the sorted array into S equi-count segments 4: for each segment k:fit ˆπk (z) = ak z + bk
+
+ρk ← max j∈Ik |ˆπk (zπ(j)) − j|
+
+store local extents hlon  
+
+> k
+
+, h lat 
+
+> k
+
+Query (q):1: A ← ∅ 
+
+2: for each segment k whose key range overlaps q:
+
+qk ← expand q by (hlon  
+
+> k
+
+, h lat  
+
+> k
+
+)[zmin , z max ] ← Morton-key interval of qk
+
+ℓ ← ˆπk (zmin ) − ρk ; u ← ˆπk (zmax ) + ρk
+
+for j ∈ [ℓ, u ): if fj .MBR ∩ q̸ = ∅ then A += fj
+
+3: return A
+
+Fig. 4. BR-LZ build and query. The bounded residual ρk converts a predicted key interval into a safe rank window, while the final MBR filter preserves exact range semantics. 
+
+used only to generate a safe candidate window; correctness is enforced by the residual bound and the final exact filter. Figure 4 gives the complete BR-LZ build and query procedure. 
+
+C. Recall completeness 
+
+Theorem 1 (BR-LZ recall completeness) . For any query MBR 
+
+q and any feature fi ∈ F , if fi.MBR ∩ q̸ = ∅, then BR-LZ returns fi.Proof. Let fi belong to segment k. If fi.MBR overlaps q, then the centroid ci lies inside q expanded by the half-extent of fi.0.0 0.2 0.4 0.6 0.8 1.0        
+
+> normalised lon
+> 0.0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+> normalised lat
+> (a) OSM MBRs in Morton ( Z-order)
+> 0.0 0.2 0.4 0.6 0.8 1.0
+> normalised lon
+> 0.0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+> normalised lat
+> (b) Segments + expanded query window
+> S0
+> S1
+> S2
+> S3
+> S4
+> S5
+> S6
+> S7
+> query bbox
+> +hmax expansion Fig. 5. BR-LZ linearises feature centroids by Morton order and partitions the sorted array into equi-count segments. Segment-local extents expand the query only where needed, and bounded residuals provide a safe rank window.
+
+Since hlon  
+
+> k
+
+and hlat  
+
+> k
+
+upper-bound the half-extents of all features in segment k, ci lies inside the segment-expanded query qk.Therefore its Morton key zi is covered by the key interval enumerated for segment k. By construction of the bounded residual, |ˆπk(zi) − π−1(i)| ≤ ρk, so the true rank π−1(i) lies in the scanned rank window. The final exact MBR filter then accepts fi because fi.MBR ∩ q̸ = ∅.The theorem turns recall from an empirical tuning target into a structural property. It holds for any segment count S
+
+and Morton resolution B. This distinction matters in a learning pipeline: a missed map feature does not merely reduce query recall, but changes the context tensor on which the downstream model is trained. 
+
+D. Segment-local extent and candidate amplification 
+
+Recall completeness can also be achieved by expanding every query with a single global maximum feature extent. BR-LZ instead stores the maximum extent per segment. Since the segment-local extent is bounded above by the global extent, the segment-expanded query is never larger than the globally expanded query for that segment, and it can be substantially smaller in spatially localised regions, as shown in Figure 5. We quantify this effect using candidate amplification, i.e., the number of candidates tested by the exact MBR filter per true answer. Table II compares three expansion strategies on the DMA corpus: a single global extent, the BR-LZ segment-local extent, and a 95 th-percentile segment extent       
+
+> TABLE II CANDIDATE AMPLIFICATION ON DMA ( N=40 ,604 ,n=10 TRIALS ). A LL VARIANTS PRESERVE RECALL 1.000 ;SEGMENT -LOCAL EXPANSION YIELDS THE SMALLEST CANDIDATE SET .
+
+r (m) global segment quantile segment/global 
+
+1,000 240 .1 87 .9 134 .0 0.37 ×
+
+3,000 1,119 616 1,615 0.55 ×
+
+5,000 804 416 1,086 0.52 ×
+
+10 ,000 273 250 884 0.92 ×
+
+> TABLE III ASYMPTOTIC COMPARISON OF ONE -CURVE LEARNED RANGE INDEXES .
+
+Index Build Query Footprint ZM-Index O(N log N ) O(log S + ρmax ) O(N + S)
+
+LISA O(N log N ) O(|Gq | ¯ρcell ) O(N + G2)
+
+BR-LZ O(N log N ) O(log N + √N ) O(N )
+
+with an overflow list. All strategies preserve recall 1.000 ; the difference is the size of the candidate set. Segment-local expansion reduces amplification by 1.1×–
+
+2.7× relative to global expansion at the same recall. The quan-tile variant is less stable because the overflow list dominates at larger radii. We therefore use segment-local expansion as the default BR-LZ configuration. 
+
+E. Complexity and empirical position 
+
+BR-LZ builds with one sort and one pass over the sorted array, giving O(N log N ) build time and Θ( N + S) = Θ( N )
+
+space. A query first locates the relevant segment/key ranges and then scans residual-expanded rank windows. With equi-count segments, setting S = Θ( √N ) balances the number of segments and the per-segment residual window, yielding an O(log N + √N ) query bound. Table III summarises the asymptotic comparison with representative one-curve learned indexes. Table IV compares BR-LZ with classical and learned base-lines on DMA under the same query harness. BR-LZ has the fastest build time and the smallest learned-index footprint, while its query latency is within the range of the exact classical baselines. Unlike the other learned indexes in the table, its recall guarantee follows from Theorem 1 rather than from empirical tuning. These properties make BR-LZ the preferred learned backend for M-CTX’s static range stage. Its compact state consists only of the Morton-sorted feature array, segment coefficients, residual bounds, and segment-local extents. The index seri-alises to a small memory-mappable blob and can be broadcast to workers without native runtime dependencies, which is important for the multi-worker context-construction setting evaluated in Section VIII-F. VI. L INEAR -T IME SDF AND STORAGE CO-D ESIGN 
+
+The SDF stage is the largest component of the reference context pipeline (Table I). For each anchor, it materialises TABLE IV OSM INDEX COMPARISON ON DMA ( N =40 ,604 , r=5 KM , n=10 
+
+> TRIALS ). A LL SYSTEMS ARE TIMED THROUGH ONE UNIFIED HARNESS .
+
+Index build (ms) size (KB) p50 (μs) guarantee STR-tree (ref) 30 .4 1183 65 .4 exact LibSpatial R ∗ 81 .7 3172 70 .9 exact LISA 16 .1 1160 66 .7 no ZM-Index 16 .1 1220 85 .3 no RSMI 32 .7 1240 68 .8 no Flood [28] 20 .8 1155 69 .2 no LMSFC [31] 16 .9 1272 89 .6 no 
+
+BR-LZ 15 .9 1145 63 .5 provable 0.04 0.00 0.04        
+
+> lon ( )
+> 0.04
+> 0.00
+> 0.04
+> lat (  )
+> (a) shore SDF
+> 0.04 0.00 0.04
+> lon ( )
+> (b) navigable SDF
+> 2000
+> 1000
+> 0
+> 1000
+> 2000
+> distance (m)
+> Anchor-centred SDF context ( 128 × 128 , f16)
+> Fig. 6. Anchor-centred SDF context tile. M-CTX emits signed distance to shore and navigable water over the local 5km patch.
+
+two 128 × 128 signed distance fields: distance to shore and distance to navigable water. M-CTX improves this stage in two steps. First, it replaces the quadratic distance kernel with an exact linear-time transform. Second, it reduces the storage footprint of the generated SDF tensors without changing the downstream model. Figure 6 shows the emitted SDF context tile for an anchor-centred patch. 
+
+A. Exact linear-time SDF construction 
+
+The reference _udist kernel computes an unsigned dis-tance field by materialising pairwise distances from every grid cell to every mask pixel and taking a minimum. For an H × W grid with M occupied mask pixels, this costs 
+
+Θ( HW · M ) per SDF. M-CTX replaces this kernel with the exact Felzenszwalb–Huttenlocher Euclidean distance trans-form [4], which computes the same distance field in Θ( HW )
+
+time using two separable lower-envelope passes. We use the compiled CPU implementation [48] and provide an optional batched GPU variant for large corpus rebuilds. Table V shows that the speed-up follows the expected asymptotic behaviour. Dense scenes benefit most because the quadratic baseline scales with the number of mask pixels, whereas M-CTX is nearly constant across occupancy. At the full-stage level, SDF latency drops from 176 .4 ms to 1.08 ms per anchor, a 163 × reduction. At higher resolutions, the gap widens further: at g = 512 , the quadratic kernel exceeds 5 sper sample, while M-CTX remains below 23 ms. For very large batches, the optional GPU path stacks patches along the batch dimension and amortises kernel-      
+
+> TABLE V PER -SCENE SDF LATENCY FOR 80 PATCHES PER SCENE AT GRID SIZE
+> g= 128 . T HE LINEAR -TIME ENGINE IS OCCUPANCY -INVARIANT ,WHILE THE QUADRATIC BASELINE SLOWS DOWN AS MASK DENSITY INCREASES .
+
+Scene Occ. (px) Naive (ms) M-CTX (ms) Speed-up Harbor 2066 .5 2340 .4 1.20 1 955 ×
+
+Nearshore 780 .2 1443 .5 1.03 1 402 ×
+
+Constrained 474 .0 2135 .8 1.01 2 109 ×
+
+Open water 5.5 0.16 0.15 1.1×    
+
+> TABLE VI SDF STORAGE –ACCURACY FRONTIER WITHOUT CLIPPING . C OMPRESSION IS MEASURED AGAINST THE 128 2F16 BASELINE .
+
+Representation B/anchor Compression ∆ADE (m) f16 × 128 2 baseline 65 536 1× 0.000 
+
+f16 × 64 2 16 384 4× −0.031 
+
+uint8 × 64 2 8 192 8× −0.023 
+
+f16 × 32 2 4 096 16 × +0 .031 
+
+uint8 × 32 2 2 048 64 × +0.038 
+
+launch overhead. On our hardware, it reduces batch-64 latency from 0.84 ms with the CPU path to 0.37 ms. Since the CPU implementation already removes SDF construction from the critical path, the GPU path is used only for large-scale re-materialisation. 
+
+B. Storage–accuracy co-design 
+
+Exact SDF construction removes the computational bot-tleneck, but storing two dense SDF rasters per anchor can still dominate the corpus footprint. We therefore sweep dtype, resolution, and clipping thresholds, and evaluate each rep-resentation using the pretrained lstm_env_sdf model on 
+
+n = 2,000 test anchors. Table VI reports the no-clipping frontier, measured against the 128 2 f16 baseline. Figure 7 plots the corresponding storage–accuracy Pareto frontier. The best operating point is uint8 quantisation at 32 × 32 
+
+resolution : it stores each anchor in 2,048 bytes, achieving 64 ×
+
+compression with only a +0 .038 m ADE change. At corpus scale, this reduces the SDF working set from roughly 720 GB to about 11 GB, turning a multi-machine materialisation prob-lem into a single-machine one. The sweep also reveals a clear failure mode. Downsampling and uniform quantisation have negligible impact, whereas narrow-band clipping is harmful: clipping the SDF magnitude to ±500 m or ±1 km increases ADE by tens of metres. This suggests that the downstream model tolerates low-resolution and low-precision SDF storage, but still relies on the long-range distance magnitude. The design rule is therefore simple: 
+
+compress by dtype and resolution, but do not saturate the distance range .
+
+C. Precision sensitivity 
+
+The storage frontier in Table VI hides an important dis-tinction: reducing dtype or resolution is safe, but saturat-ing the SDF magnitude is not. Table VII reports a seven-10 4       
+
+> 10 5
+> bytes / anchor (log, more compression)
+> 10 3
+> 10 2
+> 10 1
+> 10 0
+> | ADE | vs baseline (m, log)  0.5 m downstream tolerance
+> f16 128 2
+> baseline (1 ×)
+> uint8 32 2
+> 2048 B, 64 ×
+> intermediate configs
+
+Fig. 7. SDF storage–accuracy Pareto front. Quantisation and downsampling provide large footprint reductions with negligible ADE change. TABLE VII SDF PRECISION SENSITIVITY . ∆ADE IS MEASURED AGAINST THE F 32  
+
+> REFERENCE REPRESENTATION ON
+
+n = 2 ,000 TEST ANCHORS .
+
+Level Representation SDF MAE (m) ∆ADE (m) L0 f32 reference 0.0 0.000 
+
+L1 f16 storage 0.0 0.000 
+
+L4 64 2 resolution 0.6 +0 .008 
+
+L5 32 2 resolution 1.4 +0 .020 
+
+L6 8-bit quantisation 52 .5 −0.003 
+
+L3 clip ±500 m 4,175 +66 .5
+
+L2 clip ±1 km 3,697 +103 .7
+
+level precision sweep using the pretrained lstm_env_sdf 
+
+checkpoint on n = 2 ,000 test anchors. Downsampling to 32 2
+
+and 8-bit quantisation leave ADE essentially unchanged, even when tensor-level SDF error grows. In contrast, narrow-band clipping increases ADE by tens of metres. This shows that the model is tolerant to coarse and low-precision SDF storage, but still uses the long-range distance magnitude. The resulting rule is therefore: compress by dtype and resolution, but do not clip the distance range. VII. T HE STREAMING NEIGHBOUR INDEX 
+
+The neighbour stage answers KS (a, 3 km , k ) for each an-chor. The reference pipeline scans the full vessel snapshot, costing 88 .2 ms per anchor. M-CTX replaces this scan with an incremental B x-tree [3], reducing the neighbour query to 
+
+14 .2 μs and yielding a 6,212 × stage-level speed-up. 
+
+A. Incremental moving-object lookup 
+
+Each vessel record is encoded as a phase-aware spatial key 
+
+k(t, x, y ) = phase( t) ∥ Morton B (x, y ), phase( t) = ⌊t/T ⌋,
+
+where T is the phase length and Morton B maps the local projected coordinates to a B-bit space-filling-curve key. A query first maps the anchor-centred search window to key intervals in the relevant phase, scans the corresponding slice, and then applies an exact geographic radius filter before returning the top-k neighbours. The key-range scan is therefore used only to generate candidates; recall is enforced by the final exact filter. 
+
+TABLE VIII Bx -TREE STREAMING INGEST . S YNTHETIC STREAMS CONTAIN 10 7
+
+> RECORDS UNDER FOUR ARRIVAL PATTERNS
+
+; REAL STREAMS ARE EVALUATED PER REGION AND AFTER MERGING ALL FOUR REGIONS .RECALL IS 1.000 THROUGHOUT .
+
+Stream Rate (rec/s) Insert ( μs) qp50 (ms) Synthetic, batch 131 283 9.91 0.09 
+
+Synthetic, per-record 127 583 10 .62 0.11 
+
+Synthetic, bursty 117 862 11 .57 0.13 
+
+Synthetic, out-of-order 117 395 12 .10 0.13 
+
+Real DMA 214 274 – 0.02 
+
+Real NOAA 272 502 – 0.02 
+
+Real Norway 238 424 – 0.02 
+
+Real Piraeus 243 295 – 0.02 
+
+Real merged-4 253 574 – 0.03 batch per-record bursty out-of-       
+
+> order
+> arrival pattern ( 10 7records)
+> 0
+> 20
+> 40
+> 60
+> 80
+> 100
+> 120
+> 140
+> 160
+> ingest rate (K records/s)  131K 128K
+> 118K 117K
+> recall = 1.000 on every sampled query
+> 0.00
+> 0.05
+> 0.10
+> 0.15
+> 0.20
+> 0.25
+> 0.30
+> query  p50  (ms)
+> ingest rate query p50
+
+Fig. 8. Sustained ingest rate and query latency over 10 7 records. The B x-tree remains stable across batch, per-record, bursty, and out-of-order arrivals. 
+
+This design matches AIS streams for two reasons. First, inserts are O(log N ) and do not require rebuilding a snapshot index. A new time phase simply occupies a later key range, while expired phases are evicted from the rolling window. Second, queries and inserts can interleave at sub-snapshot granularity, which is the operating mode of live AIS feeds. In contrast, a snapshot KD-tree can be efficient after rebuilding, but it cannot answer queries between two rebuilds without exposing stale state. 
+
+B. Streaming performance 
+
+Table VIII stresses one B x-tree with 10 7 synthetic records under four arrival patterns and with real AIS streams from four regions. Across all settings, recall remains 1.000 . Synthetic ingest sustains 117 –131 K records/s with qp50 ≤ 0.13 ms, and real AIS streams sustain 214 –273 K records/s with qp50 ≤
+
+0.03 ms. The index is insensitive to arrival order because out-of-order records are inserted into their corresponding phase rather than triggering a global rebuild. Figure 8 visualises the sustained ingest rate and query latency across the four arrival patterns. TABLE IX FAIR STREAMING -REPLAY COMPARISON (50 000 RECORDS , 686 
+
+> SNAPSHOTS
+
+, n = 3 TRIALS ). B OTH METHODS USE PER -QUERY 
+
+HAVERSINE FILTERING ; THE DISTINCTION IS UPDATE GRANULARITY .
+
+Metric FairKDTree (rebuild) Bx-tree (incremental) Recall vs. oracle 0.980 ± 0.000 1.000 ± 0.000 
+
+Insert ( μs/rec) 0.48 ± 0.02 4.68 ± 0.16 
+
+Sub-snapshot query no yes 10 3 10 4       
+
+> # anchors queried
+> 15
+> 16
+> 17
+> 18
+> 19
+> 20
+> 21
+> 22
+> 23
+> 24
+> p50  query latency (  s)
+> both stay 18 --22 s
+> (a) query latency: flat in N
+> KD-tree (rebuild)
+> Bx-tree (incremental)
+> 10 310 4
+> # anchors queried
+> 200
+> 500
+> 1000
+> 2000
+> insert throughput (records/ms)
+> (b) update granularity is the discriminator
+> KD-tree: bulk per snapshot
+> Bx-tree: O(log N)per record
+
+Fig. 9. Neighbour index scaling. Query latency remains flat across anchor count, while B x-tree supports per-record incremental updates required by live AIS streams. 
+
+C. Comparison with snapshot rebuilding 
+
+We compare B x-tree against a fair KD-tree baseline that rebuilds once per timestamped snapshot and projects each query into its own local ENU frame. This removes projection bias and isolates the real design trade-off: snapshot rebuilding versus incremental updates. As shown in Table IX, the KD-tree has lower amortised insert cost because many records share one rebuild, but it does not support sub-snapshot queries. Bx-tree instead supports interleaved inserts and queries while preserving exact recall. Figure 9 further shows that query latency remains nearly flat across anchor count for both KD-tree and B x-tree. Thus, the advantage of B x-tree is not a per-query micro-optimisation; it is the ability to maintain an exact neighbour index under streaming updates. The phase length is also stable in practice: varying T from 10 to 60 s changes build time by less than 
+
+10% and query latency by less than 4% . We therefore use 
+
+T = 20 s, matching the AIS cadence, and a 16 -bit Morton grid by default. VIII. E XPERIMENTAL EVALUATION 
+
+A. Setup 
+
+We evaluate M-CTX on the EnvShip-Bench Standard Track (120 K/ 15 K/ 15 K train/val/test anchors) and on OSM caches from four real maritime regions: Denmark (DMA), NOAA East Coast, Norway, and Piraeus. The four-region OSM caches and AIS corpora are built with the publicly released EnvShip-Bench pipeline, 1 and all experiments in this paper can be reproduced from the M-CTX repository, 2 where each table 
+
+> 1
+
+https://github.com/mark000071/EnvShip-Bench Large Dataset Pipeline and datasets 
+
+> 2
+
+https://github.com/mark000071/M-CTX-Traj TABLE X REAL MARITIME REGIONS USED FOR CROSS -REGION EVALUATION .
+
+Region Coastline type # features Recall DMA (Denmark) North Sea / Baltic 40 604 1.000 
+
+NOAA (E. USA) Atlantic seaboard 89 757 1.000 
+
+Norway fjord / narrow 14 557 1.000 
+
+Piraeus (Greece) Aegean port 992 1.000 
+
+maps to a one-line command. Table X summarises the static map workloads. Unless otherwise stated, all systems are timed on a single Intel Xeon + NVIDIA L40S (48 GB) node through the same per-query harness. We report mean values over 
+
+n = 10 trials and score recall against a warm linear-scan oracle on queries with at least one true hit. We compare against eight baselines: a warm in-memory lin-ear scan, libspatialindex R ∗-tree, H3, DuckDB-spatial, LISA, RSMI, Flood [28], and LMSFC [31]. M-CTX’s STR-tree and BR-LZ are evaluated under the same harness. The experiments answer four questions: (i) how much each context stage accelerates; (ii) how BR-LZ compares with classical and learned range indexes; (iii) whether the system generalises across regions and scales to large feature sets; and (iv) how the component gains compose end-to-end. 
+
+Measurement protocol and reproducibility: To reduce measurement artefacts, all indexed range-query systems are evaluated through the same Python-level harness and the same final exact MBR filter. We separate cold-start costs from steady-state query costs: index construction and data loading are reported explicitly, while per-query latency is measured after the index has been materialised in memory. Each table is generated from a JSON result file, and an audit script recomputes all reported speed-ups from the corresponding source latencies before producing the paper tables. The re-leased artifact contains the scripts, configuration files, and one-command runners for every reported experiment, including the OSM index benchmarks, SDF precision sweep, streaming replay, and end-to-end context build. 
+
+B. Headline acceleration 
+
+Figure 10 reports per-stage speed-ups against a fair baseline for each stage: warm linear scan for OSM range retrieval, the reference quadratic distance transform for SDF, and brute-force snapshot scan for neighbours. M-CTX reduces OSM range latency from 1 446 μs to 63 .5 μs ( 23 ×), SDF latency from 176 .4 ms to 1.08 ms ( 163 ×), and neighbour lookup from 
+
+88 .2 ms to 14 .2 μs ( 6,212 ×). These stage-level gains compose into a large end-to-end improvement. Table XI shows that M-CTX reduces the 150 K-anchor Standard Track context build from about 11 hours to 
+
+169 seconds. On the full 5.48 M-anchor corpus, the measured full-pipeline runtime drops from about 17 CPU-days to 1.8
+
+hours, yielding the headline 226 × speed-up. OSM range                 
+
+> (5 km)
+> SDF
+> compute
+> AIS kNN
+> (3 km)
+> 10 2
+> 10 1
+> 10 0
+> 10 1
+> 10 2
+> 10 3
+> 10 4
+> per-sample latency (ms, log)
+> 23 ×
+> 163 ×6,212 ×
+> honest baseline
+> M-CTX (ours) Fig. 10. Per-stage latency reduction. M-CTX accelerates OSM range retrieval, SDF construction, and neighbour lookup by 23 ×,163 ×,and 6,212 ×,respectively. TABLE XI END -TO -END CONTEXT -BUILD TIME . T HE 5.48 M-ANCHOR ROW IS A MEASURED FULL -PIPELINE RUN ;THE 150 KROW COMPOSES THE MEASURED PER -STAGE COSTS .
+
+Workload Reference M-CTX Speed-up 150K anchors 39 690 s ( ≈11 h) 169 s 235 ×
+
+5.48M anchors 1.45 M s ( ≈17 d) 6 420 s ( ≈1.8 h) 226 ×
+
+C. OSM range-retrieval comparison 
+
+Table XII compares BR-LZ with classical, external, and learned range indexes on DMA at r = 5 km. All exact systems are evaluated through the same wrapper and final MBR filter. Every indexed backend is substantially faster than the warm linear scan. BR-LZ achieves the lowest p50 latency, the fastest build time among the compared indexes, and recall 1.000 with a formal recall-completeness guarantee. The result is important for the M-CTX setting because build time and footprint are part of the amortised cost. BR-LZ does not merely match classical indexes in query latency; it also provides the fastest cold construction and the smallest learned-index footprint reported in Section V-E. 
+
+D. Cross-region robustness 
+
+To test distribution shift, we repeat the OSM benchmark on structurally different coastlines. Table XIII reports Norway, a narrow-fjord region with footprint-corrected queries. All indexes retain recall 1.000 , and BR-LZ gives the fastest build and lowest latency at both query radii. The full four-region results show the same pattern: recall remains exact without per-region tuning, despite a 90 × spread in feature count and substantial differences in coastline geometry. 
+
+E. Scaling to large static maps 
+
+Table XIV scales the static OSM workload to 40 M synthetic features. Build time grows approximately linearly after sorting dominates, and all indexes remain below 10 ms median query           
+
+> TABLE XII CROSS -SYSTEM OSM RANGE -QUERY BENCHMARK ON DMA (N= 40 604 ,r= 5 KM ,n= 10 TRIALS ). R ECALL IS MEASURED AGAINST THE LINEAR -SCAN ORACLE .
+
+System Build (ms) p50 (μs) QPS Recall Linear scan (warm) – 1 446 0.7 k 1.000 
+
+M-CTX STR-tree 30 .4 65 .4 15 k 1.000 
+
+libspatialindex 81 .7 70 .9 14 k 1.000 
+
+H3 (res 7, k = 4 ) 50 73 .4 14 k 0.997 
+
+DuckDB spatial 30 508 1.9 k 1.000 
+
+LISA 16 .1 66 .7 15 k 1.000 
+
+RSMI 32 .7 68 .8 14 k 1.000 
+
+Flood [28] 20 .8 69 .2 14 k 1.000 
+
+LMSFC [31] 16 .9 89 .6 9.9 k 1.000 
+
+BR-LZ 15 .9 63 .5 16 k 1.000       
+
+> TABLE XIII CROSS -REGION OSM INDEX RANKING ON NORWAY (N= 14 557 ,
+> RECALL 1.000 ).
+
+Index Build (ms) p50 @2km ( μs) p50 @5km ( μs) STR-tree 7.9 136 345 
+
+LISA 6.5 159 286 
+
+RSMI 7.6 234 404 
+
+LibSpatial 30 .3 142 211 
+
+BR-LZ 6.2 112 139 
+
+latency at 40 M features. BR-LZ preserves its build advantage across two orders of magnitude and remains among the fastest query backends at every scale. Figure 11 shows the corre-sponding median-latency trend as the feature count increases. 
+
+F. Concurrent throughput and cold start 
+
+M-CTX parallelises context retrieval by partitioning anchor batches across workers while sharing broadcast-loaded in-dexes. Table XV evaluates STR-tree throughput on the merged four-region corpus ( N = 145 910 ). Throughput increases from 14 ,623 qps with one worker to 174 ,900 qps with 16 
+
+workers, an 11 .96 × speed-up. A space-tiled shard partition keeps the mean number of shards touched per query below 
+
+1.08 , indicating that M-CTX can be partitioned cleanly for multi-node execution. Cold-start overhead is small after data loading. On the Stan-dard Track, tile loading and JSON deserialisation take 355 .8 s, while MBR extraction takes 1.0 s and STR-tree construction only 90 .5 ms. Amortised over 150 K anchors, the one-time startup cost is about 2.4 ms per anchor and is paid once rather than per query. 
+
+G. Partitioning and Deployment Robustness 
+
+The single-node implementation broadcasts one index copy to multiple workers. To study whether the same design can be sharded for distributed execution, we simulate a space-tiled deployment on the merged four-region corpus. Figure 12 compares two layouts. Morton-rank stripes balance feature count, but their spatial footprints overlap heavily, causing TABLE XIV SYNTHETIC OSM SCALE -UP TO N = 40 M FEATURES . E ACH CELL REPORTS BUILD TIME (S) / p50 QUERY LATENCY (MS ), WITH r = 5 KM .
+
+N STR LISA ZM RSMI BR-LZ 1M 0.8/0.34 0.6/0.14 0.5/0.15 0.6/0.17 0.5/0.16 4M 3.4/0.72 2.5/0.34 2.4/0.36 2.7/0.52 2.4/0.35 16M 14.4/2.55 13.1/1.04 11.1/1.36 14.3/2.48 13.1/1.09 40M 37.3/5.93 31.0/2.50 28.3/3.21 31.1/10.16 28.5/2.57 10 5 10 6 10 7
+
+# OSM features (log)  
+
+> 30
+> 40
+> 50
+> 60
+> 70
+> 80
+> 90
+> p50  query (  s)
+> STR-tree
+> LISA
+> ZM-Index
+> RSMI
+> BR-LZ (ours)
+> Fig. 11. Synthetic OSM scale-up. Median query latency remains stable as feature count grows by two orders of magnitude.
+
+broad query fan-out. A kd-tree median split [8] instead produces spatially disjoint cells, so a query is routed only to the cells it intersects. In our simulator, this partition keeps the mean number of shards touched per query below 1.08 
+
+up to 16 shards. Figure 13 quantifies this query fan-out under space-tiled sharding. Thus, M-CTX can be partitioned without turning each context request into a broadcast query; measuring inter-node latency and replication cost is left to a full distributed deployment. 
+
+H. Component ablation 
+
+Table XVI decomposes the end-to-end gain by replacing one or more reference stages with the corresponding M-CTX component. SDF acceleration is the largest single contributor, reducing the Standard-Track build from 11 .6 hours to 4.3
+
+hours. Neighbour indexing alone gives a 1.5× gain, while OSM-only acceleration is small because tile loading is amor-tised in this setting. Combining SDF and neighbour indexing already reaches 19 .6×; the full system reduces the build to 
+
+169 seconds. All headline gaps are statistically significant under a paired Wilcoxon signed-rank test at the trial level ( n = 10 ), with matched query sets across systems. We additionally verify every displayed speed-up against its two source measurements using an automated audit script.         
+
+> TABLE XV CONCURRENT STR-TREE THROUGHPUT ON THE MERGED FOUR -REGION CORPUS (N= 145 910 ,30 000 QUERIES ,n= 3 TRIALS ).
+
+Workers QPS Speed-up Efficiency 
+
+1 14 623 1.00 × 1.00 2 25 375 1.73 × 0.87 4 49 853 3.41 × 0.85 8 116 079 7.94 × 0.99 16 174 900 11 .96 × 0.75 0.00 0.25 0.50 0.75 1.00 
+
+normalised lon     
+
+> 0.0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+> normalised lat
+> (a) Morton stripe:
+> overlapping shards
+> 0.00 0.25 0.50 0.75 1.00
+
+normalised lon 
+
+> 0.0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+> (b) kd-tree split:
+> disjoint cells
+> Fig. 12. Shard partitioning. Morton-rank stripes balance key ranges but create overlapping spatial footprints; kd-tree median splits produce disjoint cells and lower query fan-out.
+
+IX. D OWNSTREAM EQUIVALENCE 
+
+M-CTX is useful only if acceleration does not change the context consumed by the predictor. We therefore verify equivalence at two levels: the emitted context tensors and the downstream predictions. 
+
+Context-level equivalence: For SDF construction, the reference _udist kernel and the M-CTX linear-time EDT produce identical float32 distance fields, with mean absolute element-wise difference 0.000 m over the 128 × 128 × 2
+
+tensor. When compared against the stored float16 raster, the residual is 0.089 m; after both outputs are cast to the stored float16 representation, the difference becomes 0.000 m. Thus, the remaining discrepancy is due to storage quantisation, not algorithmic divergence. For OSM range retrieval and neighbour lookup, M-CTX returns the same feature and vessel identifier sets as the oracle at recall 1.000 . Under the reference storage schema, M-CTX therefore emits byte-identical context tensors. 
+
+Model-level equivalence: On the full 15 ,000 -sample test set, replacing the reference context backend with M-CTX reproduces the published ADE/FDE (85 .8271 /211 .1504 m) with per-step prediction MAE exactly 0. Table XVII further evaluates five pretrained checkpoints on n = 2,000 test samples. In all cases, M-CTX yields the same ADE and zero prediction MAE under the reported precision. Thus, the accel-eration introduces no measurable downstream accuracy cost, 1 2 4 8 16           
+
+> shards
+> 10
+> 15
+> 20
+> 25
+> kqps
+> kd-tree shard throughput
+> 124816
+> shards
+> 1.00
+> 1.02
+> 1.04
+> 1.06
+> 1.08
+> avg shards touched/query  query fan-out Fig. 13. Space-tiled shard simulator. Mean query fan-out remains below 1.08
+> up to 16 shards, supporting clean partitioning for distributed context retrieval. TABLE XVI END -TO -END COMPONENT ABLATION ON THE 150 K-ANCHOR STANDARD
+> TRACK . E ACH ROW REPLACES ONE OR MORE REFERENCE STAGES WITH
+> M-CTX COMPONENTS .
+
+Variant OSM SDF kNN Total Speed-up Reference ref ref ref 11 .6 h 1.0×
+
+OSM-only M-CTX ref ref 11 .0 h 1.05 ×
+
+SDF-only ref M-CTX ref 4.3 h 2.7×
+
+kNN-only ref ref M-CTX 7.9 h 1.5×
+
+OSM+SDF M-CTX M-CTX ref 3.7 h 3.1×
+
+OSM+ kNN M-CTX ref M-CTX 7.4 h 1.6×
+
+SDF+ kNN ref M-CTX M-CTX 35 .5 min 19 .6×
+
+Full M-CTX M M M 169 s 235 ×
+
+satisfying the drop-in-equivalence requirement of a production context backend. X. D ISCUSSION AND LIMITATIONS 
+
+Deployment choices: M-CTX exposes a small set of backends rather than a single fixed index, because different deployments prioritise different costs. For static OSM retrieval, BR-LZ is the recommended learned backend: it combines the fastest build time, the smallest learned-index footprint, competitive query latency, and a recall-completeness guarantee for MBR-overlap queries. The STR-tree remains a strong exact alternative when a deployment prefers a dependency-free clas-sical index. For SDF materialisation, the best operating point is stable: uint8 at 32 × 32 resolution, without magnitude clipping, gives 64 × compression with only a 0.04 m ADE change. For neighbour retrieval, the B x-tree is the appropri-ate backend for live streams because it supports interleaved inserts and queries; snapshot KD-trees are competitive only for fully static batches. These choices let M-CTX trade build time, query latency, memory footprint, and formal guarantees explicitly. 
+
+Limitations: M-CTX is designed for read-mostly spatial context. The OSM stage assumes that map features are in-gested once and queried many times; workloads with frequent feature insertions or deletions would require an update-friendly range index, which we leave to future work. The B x-tree assumes a regular snapshot cadence; sub-second streams may require finer phase management to avoid excessive key churn. Our experiments are single-node and in-memory. We evaluate shard routing with a space-tiled simulator, but a full distributed deployment would need to measure inter-node latency, replica-tion, and failure recovery. Finally, the 40 M-feature stress test    
+
+> TABLE XVII DOWNSTREAM IMPACT ACROSS FIVE PRETRAINED CHECKPOINTS
+> (n= 2 ,000 TEST SAMPLES ). M-CTX PRESERVES THE PREDICTIONS OF ALL TESTED MODELS UNDER THE REPORTED PRECISION .
+
+Model ADE (m) ∆ADE (m) Pred. MAE (m) LSTM+SDF 76 .7165 0 0
+
+LSTM+spatial-attn 78 .2553 0 0
+
+LSTM+binary-attn 94 .5108 0 0
+
+LSTM+social 77 .0156 0 0
+
+Transformer+SDF 76 .9342 0 0
+
+uses deterministic spatial replication of real OSM features. A planet-scale, memory-mapped OSM deployment would further validate the scaling curve under realistic storage pressure. These limitations do not affect the main claim of the paper: for the dominant read-mostly context-construction workload in trajectory learning, M-CTX preserves the reference context exactly while reducing preprocessing cost by orders of mag-nitude. XI. C ONCLUSION 
+
+This paper identified spatial context retrieval as a dominant but largely hidden cost in context-aware trajectory learning. M-CTX recasts this cost as an ingest-once, query-many spatial database workload and replaces brute-force preprocessing with exact, index-backed context operators. The result is a drop-in framework that preserves the reference context schema and semantics while reducing full-corpus context construction from about 17 CPU-days to 1.8 hours, a measured 226 × end-to-end speed-up. The core lesson is that model-facing context retrieval requires both systems efficiency and retrieval correctness. BR-LZ provides recall-complete MBR-overlap range retrieval with a tighter segment-local candidate expansion than global-expansion one-curve baselines. The linear-time SDF engine removes the largest computational bottleneck, and the storage co-design compresses SDF tensors by 64 × with negligible downstream impact. Across real maritime regions, learned and classical baselines, synthetic scale-up to 40 M features, and 10 7-record AIS streams, M-CTX preserves downstream predictions while making context construction practical at corpus scale. More broadly, M-CTX shows that the retrieval layers hidden inside modern spatiotemporal learning pipelines are first-class database problems. As trajectory models increasingly depend on maps, distance fields, and neighbouring agents, exact and scalable context retrieval will become as important as the predictor itself. We release M-CTX as an open drop-in backend for reproducible, large-scale trajectory analytics. REFERENCES [1] A. Guttman, “R-trees: A dynamic index structure for spatial searching,” in Proceedings of the ACM SIGMOD International Conference on Management of Data , 1984, pp. 47–57. [2] S. ˇ Saltenis, C. S. Jensen, S. T. Leutenegger, and M. A. L´ opez, “Indexing the positions of continuously moving objects,” in Proceedings of the ACM SIGMOD International Conference on Management of Data , 2000, pp. 331–342. [3] C. S. Jensen, D. Lin, and B. C. Ooi, “Query and update efficient Bx-tree based indexing of moving objects,” in Proceedings of the International Conference on Very Large Data Bases , 2004, pp. 768–779. [4] P. F. Felzenszwalb and D. P. Huttenlocher, “Distance transforms of sampled functions,” Theory of Computing , vol. 8, no. 1, pp. 415–428, 2012. [5] T. K. Sellis, N. Roussopoulos, and C. Faloutsos, “The R +-tree: A dynamic index for multi-dimensional objects,” in Proceedings of the International Conference on Very Large Data Bases , 1987, pp. 507– 518. [6] I. Kamel and C. Faloutsos, “Hilbert R-tree: An improved R-tree using fractals,” in Proceedings of the International Conference on Very Large Data Bases , 1994, pp. 500–509. [7] N. Beckmann, H.-P. Kriegel, R. Schneider, and B. Seeger, “The R ∗-tree: An efficient and robust access method for points and rectangles,” in Proceedings of the ACM SIGMOD International Conference on Management of Data , 1990, pp. 322–331. [8] J. L. Bentley, “Multidimensional binary search trees used for associative searching,” Communications of the ACM , vol. 18, no. 9, pp. 509–517, 1975. [9] R. A. Finkel and J. L. Bentley, “Quad trees: A data structure for retrieval on composite keys,” Acta Informatica , vol. 4, no. 1, pp. 1–9, 1974. [10] J. M. Hellerstein, J. F. Naughton, and A. Pfeffer, “Generalized search trees for database systems,” in Proceedings of the International Confer-ence on Very Large Data Bases , 1995, pp. 562–573. [11] S. T. Leutenegger, M. A. L´ opez, and J. Edgington, “STR: A simple and efficient algorithm for R-tree packing,” in Proceedings of the IEEE International Conference on Data Engineering , 1997, pp. 497–506. [12] M. H. Moti, P. Simatis, and D. Papadias, “Waffle: A workload-aware and query-sensitive framework for disk-based spatial indexing,” Proceedings of the VLDB Endowment , vol. 16, no. 4, pp. 670–683, 2022. [13] A. Eldawy and M. F. Mokbel, “SpatialHadoop: A MapReduce frame-work for spatial data,” in Proceedings of the IEEE International Con-ference on Data Engineering , 2015, pp. 1352–1363. [14] J. Yu, J. Wu, and M. Sarwat, “GeoSpark: A cluster computing framework for processing large-scale spatial data,” in Proceedings of the ACM SIGSPATIAL International Conference on Advances in Geographic Information Systems , 2015. [15] Z. Shang, S. Singla, A. Eldawy, and E. Scudiero, “RDPro: Distributed processing of big raster data,” Proceedings of the VLDB Endowment ,vol. 18, no. 1, pp. 613–622, 2024. [16] T. Kraska, A. Beutel, E. H. Chi, J. Dean, and N. Polyzotis, “The case for learned index structures,” in Proceedings of the ACM SIGMOD International Conference on Management of Data , 2018, pp. 489–504. [17] A. Galakatos, M. Markovitch, C. Binnig, R. Fonseca, and T. Kraska, “FITing-tree: A data-aware index structure,” in Proceedings of the ACM SIGMOD International Conference on Management of Data , 2019, pp. 1189–1206. [18] P. Ferragina and G. Vinciguerra, “The PGM-index: A fully-dynamic compressed learned index with provable worst-case bounds,” Proceed-ings of the VLDB Endowment , vol. 13, no. 8, pp. 1162–1175, 2020. [19] A. Kipf, R. Marcus, A. van Renen, M. Stoian, A. Kemper, T. Kraska, and T. Neumann, “RadixSpline: A single-pass learned index,” in Proceedings of the aiDM Workshop at ACM SIGMOD , 2020. [20] J. Ding, U. F. Minhas, J. Yu, C. Wang, J. Do, Y. Li, H. Zhang, B. Chandramouli, J. Gehrke, D. Kossmann, D. Lomet, and T. Kraska, “ALEX: An updatable adaptive learned index,” in Proceedings of the ACM SIGMOD International Conference on Management of Data , 2020, pp. 969–984. [21] J. Ge, H. Zhang, B. Shi, Y. Luo, Y. Guo, Y. Chai, Y. Chen, and A. Pan, “SALI: A scalable adaptive learned index framework based on probability models,” Proceedings of the ACM on Management of Data ,vol. 1, no. 4, 2023. [22] Z. Sun, X. Zhou, and G. Li, “Learned index: A comprehensive experi-mental evaluation,” Proceedings of the VLDB Endowment , vol. 16, no. 8, pp. 1992–2004, 2023. [23] Q. Liu, M. Li, Y. Zeng, Y. Shen, and L. Chen, “How good are multi-dimensional learned indexes? an experimental survey,” The VLDB Journal , vol. 34, no. 2, pp. 1–29, 2025. [24] A. Al-Mamun, H. Wu, Q. He, J. Wang, and W. G. Aref, “A survey of learned indexes for the multi-dimensional space,” ACM Computing Surveys , 2025. [25] H. Wang, X. Fu, J. Xu, and H. Lu, “Learned index for spatial queries,” in Proceedings of the IEEE International Conference on Mobile Data Management , 2019. [26] P. Li, H. Lu, Q. Zheng, L. Yang, and G. Pan, “LISA: A learned index structure for spatial data,” in Proceedings of the ACM SIGMOD International Conference on Management of Data , 2020. [27] J. Qi, G. Liu, C. S. Jensen, and L. Kulik, “Effectively learning spatial indices,” Proceedings of the VLDB Endowment , 2020. [28] V. Nathan, J. Ding, M. Alizadeh, and T. Kraska, “Learning multi-dimensional indexes,” in Proceedings of the ACM SIGMOD Interna-tional Conference on Management of Data , 2020, pp. 985–1000. [29] J. Ding, V. Nathan, M. Alizadeh, and T. Kraska, “Tsunami: A learned multi-dimensional index for correlated data and skewed workloads,” 
+
+Proceedings of the VLDB Endowment , vol. 14, no. 2, pp. 74–86, 2020. [30] Z. Yang, B. Chandramouli, C. Wang, J. Gehrke, Y. Li, U. F. Minhas, P.- ˚ A. Larson, D. Kossmann, and R. Acharya, “Qd-tree: Learning data layouts for big data analytics,” in Proceedings of the ACM SIGMOD International Conference on Management of Data , 2020, pp. 193–208. [31] J. Gao, X. Cao, X. Yao, G. Zhang, and W. Wang, “LMSFC: Anovel multidimensional index based on learned monotonic space filling curves,” Proceedings of the VLDB Endowment , vol. 16, no. 10, pp. 2605– 2617, 2023. [32] C. R. Maurer, R. Qi, and V. Raghavan, “A linear time algorithm for computing exact Euclidean distance transforms of binary images in arbitrary dimensions,” IEEE Transactions on Pattern Analysis and Machine Intelligence , vol. 25, no. 2, pp. 265–270, 2003. [33] J. J. Park, P. Florence, J. Straub, R. Newcombe, and S. Lovegrove, “DeepSDF: Learning continuous signed distance functions for shape representation,” in Proceedings of the IEEE/CVF Conference on Com-puter Vision and Pattern Recognition , 2019, pp. 165–174. [34] S. Shi, L. Jiang, D. Dai, and B. Schiele, “Motion transformer with global intention localization and local movement refinement,” in Advances in Neural Information Processing Systems , vol. 35, 2022, pp. 6531–6543. [35] N. Nayakanti, R. Al-Rfou, A. Zhou, K. Goel, K. S. Refaat, and B. Sapp, “Wayformer: Motion forecasting via simple and efficient attention networks,” in Proceedings of the IEEE International Conference on Robotics and Automation , 2023, pp. 2980–2987. [36] Z. Zhou, J. Wang, Y. Li, and Y. Huang, “Query-centric trajectory prediction,” in Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition , 2023. [37] J. Cheng, X. Mei, and M. Liu, “Forecast-MAE: Self-supervised pre-training for motion forecasting with masked autoencoders,” in Proceed-ings of the IEEE/CVF International Conference on Computer Vision ,2023. [38] T. Salzmann, B. Ivanovic, P. Chakravarty, and M. Pavone, “Trajectron++: Dynamically-feasible trajectory forecasting with heterogeneous data,” in 
+
+Proceedings of the European Conference on Computer Vision , 2020. [39] Y. Yuan, X. Weng, Y. Ou, and K. M. Kitani, “AgentFormer: Agent-aware transformers for socio-temporal multi-agent forecasting,” in Proceedings of the IEEE/CVF International Conference on Computer Vision , 2021, pp. 9813–9823. [40] D. Nguyen and R. Fablet, “TrAISformer: A transformer network with sparse augmented data representation and cross entropy loss for AIS-based vessel trajectory prediction,” 2021. [41] Y. Zhao and J.-Y. Shi, “Bidirectional LSTM networks for vessel trajec-tory prediction using AIS data,” in Proceedings of OCEANS , 2021. [42] H. Qiang, Z. Guo, S. Xie, and X. Peng, “MSTFormer: Motion-inspired spatial-temporal transformer for long-term vessel trajectory prediction,” 2023. [43] B. Murray and L. P. Perera, “An AIS-based deep learning framework for regional ship behavior prediction,” Reliability Engineering & System Safety , vol. 215, p. 107819, 2021. [44] M. Liang, R. W. Liu, Y. Zhan, H. Li, F. Zhu, and F.-Y. Wang, “Fine-grained vessel traffic flow prediction with a spatio-temporal multigraph convolutional network,” IEEE Transactions on Intelligent Transportation Systems , vol. 23, no. 12, pp. 23 694–23 707, 2022. [45] E. Tu, G. Zhang, L. Rachmawati, E. Rajabally, and G.-B. Huang, “Ex-ploiting AIS data for intelligent maritime navigation: A comprehensive survey from data to methodology,” IEEE Transactions on Intelligent Transportation Systems , vol. 19, no. 5, pp. 1559–1582, 2018. [46] X. Zhang, X. Fu, Z. Xiao, H. Xu, and Z. Qin, “Vessel trajectory prediction in maritime transportation: Current approaches and beyond,” 
+
+IEEE Transactions on Intelligent Transportation Systems , vol. 23, no. 11, pp. 19 980–19 998, 2022. [47] M. Hadjieleftheriou et al. , “libspatialindex: An open-source C++ spatial indexing library,” https://libspatialindex.org/, 2024, accessed: 2026-06-12. [48] P. Virtanen et al. , “SciPy 1.0: Fundamental algorithms for scientific computing in Python,” Nature Methods , vol. 17, pp. 261–272, 2020.
