@@ -1,0 +1,2933 @@
+Title: Joint 3D Trajectory Design and Resource Allocation for Secure Dual-UAV-aided Underlay Systems
+
+URL Source: https://arxiv.org/pdf/2606.15042v1
+
+Published Time: Tue, 16 Jun 2026 00:21:09 GMT
+
+Number of Pages: 15
+
+Markdown Content:
+> 1
+
+# Joint 3D Trajectory Design and Resource Allocation for Secure Dual-UAV-aided Underlay Systems 
+
+Hongjiang Lei, Senior Member, IEEE, Xiaqiu Wu, Ki-Hong Park, Senior Member, IEEE, 
+
+Gaojie Chen, Senior Member, IEEE and Gaofeng Pan, Senior Member, IEEE 
+
+Abstract —Uncrewed aerial vehicles (UAVs) are increasingly being employed for data collection tasks, thanks to their high mobility and easy deployment, acting as aerial platforms to collect data from ground devices (GDs). This study considers a secure underlay data collection system assisted by dual UAVs and focuses on the joint design of the UAVs’ three-dimensional (3D) flight paths, the power of the jamming UAV, the power of GDs, and the scheduling of the underlay GDs in the context of an aerial eavesdropper. The highly coupled objective function and non-convex constraints make the formulated problem more complicated to solve. We first utilize an approximate lower bound on the expected spectral efficiency to streamline the solution process. The average secrecy spectral efficiency (ASSE) is maximized by jointly designing the 3D trajectory of the UAVs, the transmit power of GDs, and the user scheduling. The optimization problem is decomposed into four subproblems using block coordinate descent, with each of them into manageable convex optimization tasks by incorporating slack variables and employing successive convex approximation methods. The numer-ical results validate the effectiveness of our proposed approach, demonstrating that the design of UAV 3D trajectories remarkably improves the ASSE of the considered system. 
+
+Index Terms —3D trajectory design, physical layer security, aerial eavesdropping, cognitive radio networks, power control, data collection. 
+
+I. I NTRODUCTION 
+
+A. Background and Related Works 
+
+Uncrewed aerial vehicles (UAVs) have undergone remark-able development, evolving from traditional military roles to become essential assets in a variety of civilian and commercial applications. Today, UAVs play a pivotal role in various scenarios, including modern agriculture, disaster management, surveillance, and aerial imaging [1]. The swift advancements, particularly in domains such as autonomy, payload capacity, 
+
+This work was supported by the National Key Research and Development Program of China under Grant 2024YFC3306801, National Natural Science Foundation of China under Grant 62571045, and Natural Science Founda-tion of Chongqing under Grant (cstc2024ycjh-bgzxm003, CSTB2025NSCQ-LZX0053). (Corresponding author: Hongjiang Lei .) Hongjiang Lei and Xiaqiu Wu are with the School of Communica-tions and Information Engineering, Chongqing University of Posts and Telecommunications, Chongqing 400065, China (e-mail: leihj@cqupt.edu.cn, cquptwxq@163.com). Ki-Hong Park is with the CEMSE Division, King Abdullah University of Science and Technology (KAUST), Thuwal 23955-6900, Saudi Arabia (e-mail: kihong.park@kaust.edu.sa). Gaojie Chen is with the School of Flexible Electronics (SoFE), Sun Yat-sen University, Shenzhen, Guangdong 518107, China (e-mail: gao-jie.chen@ieee.org). Gaofeng Pan is with the School of Cyberspace Science and Technol-ogy, Beijing Institute of Technology, Beijing 100081, China (e-mail: gf-pan@bit.edu.cn). 
+
+and flight duration, have significantly expanded their func-tionality and applicability across various industries [2], [3]. However, the rapid development also presents a host of new opportunities and challenges, highlighting the necessity for on-going research in critical areas such as regulatory frameworks, security schemes, and the integration of UAVs with existing infrastructure. A fundamental advantage of UAV-aided systems is the high-probability line-of-sight (LoS) link between the UAV and ground devices (GDs). Consequently, designing the optimal trajectory of UAVs is essential for enhancing the efficiency of UAV communication networks and has emerged as a significant challenge in the evolution of UAV-assisted systems [4]. As the deployment of UAVs continues to increase, addressing these trajectory planning issues will be crucial for unlocking their full potential and ensuring their seamless integration into various applications. Physical layer security (PLS) utilizes the distinctive char-acteristics of wireless channels to establish robust defenses against the risks of eavesdropping. For instance, in the sce-narios with terrestrial eavesdroppers , the authors in Ref. [5] focused on optimizing both the trajectory of the UAV and its transmit power to maximize the worst-case average secrecy rate (ASR) of UAV-aided communication systems with multiple location-uncertain eavesdroppers. Ref. [6] explored a multifaceted optimization problem that encompassed the UAV’s flight path, transmit power, and user associations, and an iterative algorithm was proposed to maximize the secrecy rate while simultaneously ensuring fairness among the GDs in-volved. Moreover, the authors in Ref. [7] examined the secrecy performance of cooperative aerial Internet of Things (IoT) systems. They proposed a novel algorithm to maximize the minimum ASR by jointly optimizing the UAV’s trajectory and resource allocation. Refs. [8] and [9] employ deep reinforce-ment learning to improve the security and energy efficiency of UAV systems. In particular, the utility function consisted of secrecy rate and energy utilization efficiency and was jointly maximized by optimizing the UAV’s trajectory, power allocation, and harvesting energy. Furthermore, the use of UAVs as airborne jammers has proven effective in enhancing the security of wireless communication systems, largely due to their ability to adjust their trajectories flexibly [10]–[15]. These studies confirm that deploying aerial jammers can significantly improve communication secrecy performance, even when the eavesdropper’s location is imperfectly known. However, the strategies proposed in the aforementioned works are specifi-cally designed for fixed ground-based eavesdroppers and are not directly applicable to scenarios involving mobile aerial 
+
+> arXiv:2606.15042v1 [cs.IT] 13 Jun 2026 2
+
+eavesdroppers. 
+
+Compared to traditional terrestrial fixed eavesdroppers, aerial platforms present far greater security risks due to their mobility, adaptability, and ability to access direct signal paths—a threat that has been emphasized in many works [16], [17], [18]. For instance, the authors in [19] considered a UAV-assisted mobile edge computing (MEC) system with an aerial eavesdropper, and the non-orthogonal multiple access (NOMA) technology was utilized to deal with the interference among the GDs. The ergodic computation capacity was max-imized by optimizing various critical parameters, including user scheduling, transmit power, UAV flight paths, and the allocation of computational resources. Ref. [20] proposed a collaborative strategy for an aerial communication and computation MEC system with an aerial eavesdropper and focused on minimizing energy consumption by optimizing UAV trajectory, transmit power of GDs, time, and offloading computation allocation. Additionally, Ref. [21] explored the secrecy performance of aerial communication networks aug-mented by intelligent reflecting surfaces (IRS) and focused on optimizing transmit power, beamforming techniques, and the flight trajectories of UAVs to mitigate the risks associated with aerial eavesdropping effectively. Moreover, the authors of [22] proposed a security-aware computation offloading framework designed explicitly for UAV-enabled IoT networks, which face threats from both terrestrial and aerial eavesdroppers. The secrecy outage probability was analyzed, and the minimum secure computation efficiency was maximized by jointly de-signing power and task allocation, time slot scheduling, and phase shifts. In a related vein, Ref. [23] focused on reducing the time-averaged computational costs in NOMA-based aerial MEC systems by jointly optimizing UAV trajectories, transmit power from GDs, and computational frequency. Ref. [24] and [25] sought to maximize the fair secrecy goodput in UAV-aided communication systems consisting of multiple aerial base stations, GDs, and a flying eavesdropper. Their approach involved coordinated designs for both UAVs’ 2D/3D trajecto-ries and transmit power, aiming to achieve enhanced security of the considered system and fairness among GDs. Ref. [26] considered an integrated sensing and communication (ISAC) system with multiple aerial eavesdroppers with unknown loca-tions, and a maximum likelihood-based scheme was proposed to estimate the eavesdroppers’ channels by utilizing a long short-term memory deep neural network. Ref. [27] investigated the secrecy performance of a space-air-ground (SAG) network with an airship eavesdropper. Considering both with and without a no-fly zone, the trajectory and transmit power of the aerial relay were jointly optimized to maximize the secrecy energy efficiency of the SAG system. Ref. [28] investigated the secrecy performance of a terrestrial communication system with a ground jammer (GJ) and multiple aerial eavesdroppers. The secrecy capacity of the considered system was maximized through jointly designing the trajectory and transmit power of the GJ. Cognitive radio networks (CRNs) is recognized as a pi-oneering solution to the spectrum scarcity issues in UAV-assisted communication systems, leveraging dynamic spectrum access methodologies [29]. In the underlay mode, cognitive users (CUs) can utilize their frequency bands when the inter-ference from CUs to primary users (PUs) is limited to a given threshold, known as the interference temperature (IT). Ref. [30] investigated the cognitive UAV communication systems in both stationary and mobile scenarios. Their goal was to en-hance the CU’s achievable data rate by integrating the UAV’s 3D position and trajectory, as well as the transmit power of the ground transmitter, subject to constraints imposed by altitude, power limitations, and IT thresholds. In Ref. [31], a UAV worked as a relay and forwarded a signal from the cognitive transmitter (CT) to the cognitive receiver (CR). The throughput of the cognitive system was maximized by jointly optimizing the transmit power at CT and the UAV’s 3D trajectory. For instance, to investigate the secrecy performance of UAV-aided CRNs, Ref. [32] addressed challenges associated with jamming in aerial CRNs and formulated an optimization problem to enhance throughput in sensitive areas by strategically de-signing the UAV’s trajectory and transmit power to counter hostile jamming attacks effectively. Additionally, Ref. [33] concentrated on the joint design of the UAV’s flight path and transmit power, explicitly targeting the optimization of ASR against colluding terrestrial eavesdroppers in aerial CRNs. It is noteworthy that the works mentioned above model the air-ground link as an LoS link. The optimal 3D position/trajectory mainly depends on both IT constraints and the performance of the CR result. In practical scenarios, the probability of an air-to-ground link being LoS is a function of the elevation angle, the relative position between the UAV and GDs, as well as the distribution of building density and height [34]. The results in [35]-[37] verified that there is a trade-off between the distance and the elevation angle in the probabilistic LoS (PLoS) model. The PLoS channel model introduces the randomness of channel states, resulting in the system rate appearing as a random function, which significantly increases the complexity of joint optimization of UAV trajectories and resources. Ref. [38] investigated maximizing the secrecy rate of a UAV-enhanced CRN, taking into account not only the UAV’s spatial trajectory but also its velocity and acceleration. Their formulated optimization problem respected constraints related to UAV positioning requirements, speed limits, and the IT constraint across all PUs. Ref. [39] introduced the use of a UAV as an adversarial jammer, generating artificial noise to suppress terrestrial eavesdropping. Considering the conditions of both perfect and imperfect eavesdropper locations, the CUs’ ASR was optimized through adjustments of transmit power and the UAV’s 3D trajectory. 
+
+Summarization and Discussions: Table I summarizes the differences among the discussed work on UAV communication systems from various perspectives. The motivations for each column are specifically described as follows: (1) Number of UAVs: Existing studies are categorized based on whether they involve a single UAV or multiple UAVs. (2) Role of UAVs: A UAV may serve as a transmitter, a jammer, a relay, a receiver, or an eavesdropping node. (3) Channel Model: A LoS channel implies that the communication rate depends solely on dis-tance, while a PLOS channel reflects real-world scenarios with building obstacles by offering a trade-off between elevation angle and distance. (4) PLS: Incorporating PLS entails greater 3
+
+TABLE I: Comparison with the state-of-the-art on UAV systems.                                                                                                                                            
+
+> Reference Number of UAVs Role of UAVs Channel Model PLS 3D Trajectory
+> Aerial Eavesdropper
+> User Scheduling CRN
+> [5] Single Transmitter LoS X
+> [6] Single Transmitter LoS XX
+> [7] Single Relay LoS XX
+> [10] Single Jammer LoS X
+> [11] Single Jammer PLoS XX
+> [12] Single Jammer LoS X
+> [13] Single Jammer LoS X
+> [14] Double Transmitter and Jammer LoS XX
+> [15] Double Receiver and Jammer LoS XX
+> [20] Single Transmitter LoS XXX
+> [21] Single Receiver LoS, NLoS XXX
+> [22] Single Transmitter LoS XX
+> [23] Single Receiver PLoS XXXX
+> [24] Double Transmitter and Jammer LoS, PLoS XXX
+> [25] Double Transmitter and Jammer LoS, PLoS XXXX
+> [26] Eavesdroppers LoS XX
+> [27] Single Jammer LoS XX
+> [28] Eavesdroppers PLoS XXX
+> [30] Single Transmitter LoS XX
+> [31] Single Relay LoS X
+> [32] Single Receiver LoS XXX
+> [33] Single Transmitter LoS XX
+> [38] Single Transmitter PLoS XXXX
+> [39] Single Jammer LoS XXX
+> Our work Double Receiver and Jammer LoS, PLoS XXXXX
+
+complexity due to the presence of eavesdroppers, making UAV trajectory optimization more challenging, yet it provides practical guidance for secure communication. (5) 3D Trajec-tory: Compared to 2D trajectories, 3D trajectories can better leverage the advantages of UAVs, though they introduce higher complexity and pose greater research challenges. (6) Aerial Eavesdroppers: Mobile aerial eavesdroppers present more sig-nificant security challenges compared to fixed ground-based eavesdroppers. (7) User Scheduling: Effective user scheduling helps avoid inter-user interference and maximizes the benefits of UAV mobility in terms of spectral efficiency (SE), fairness, security, etc. (8) CRN: The integration of CRN can enhance SE, albeit at the cost of increased system complexity. According to Table I, extensive research has been conducted on the secrecy performance of UAVs. However, the existing studies still present the following limitations. 1) In research involving a single UAV, the air-to-ground channels are gener-ally modeled as LoS links. Most studies focus on ground-based stationary eavesdroppers. Only Refs. [20] and [22] considered aerial eavesdropping scenarios, but only in a 2D and non-CRN framework. Although studies such as [21] and [23] incorpo-rated 3D scenarios, they remain limited to non-CRN systems. 2) In studies utilizing multiple UAVs, deploying a friendly jammer UAV is widely recognized as an effective method to enhance system security performance. However, these works were all based on non-CRN systems. Moreover, only [25] considered the PLoS channel model, while Refs. [14], [15], and [24] were confined to 2D and LoS links and Refs. [14] and [15] assumed with terrestrial eavesdroppers. Compared to single-UAV systems, dual-UAV systems require simultaneous optimization of 3D trajectories for both UAVs, leading to a significant increase in the number of optimization variables. Moreover, these variables are interdependent, exacerbating the non-convexity of the problem. 
+
+B. Motivation and Contributions 
+
+The works discussed above demonstrate that aerial eaves-dropping poses a significant threat to wireless communica-tion security, while the use of a cooperative aerial jammer shows promising potential to enhance anti-eavesdropping per-formance. However, to the best of our knowledge, no prior work has addressed aerial eavesdropping in dual-UAV-assisted underlay CRN. To bridge this gap, we propose a novel frame-work that incorporates an aerial eavesdropper with imperfect location information and a ground-to-air (G2A) PLoS channel model. We jointly optimize the 3D trajectories of both UAVs, user scheduling, and the transmit power of ground devices (GDs) in a data-collection scenario to maximize the average secrecy SE (ASSE) of the system. The main contributions of this work are summarized as follows. 1) We consider a data collection system where multiple GDs transmit confidential information to an aerial base station (BS) assisted by a jammer UAV, in the presence of a mobile eavesdropper attempting to intercept the communications. Our goal is to maximize the ASSE through the joint optimization of the two UAVs’ 3D trajectories and transmit power, as well as the scheduling of the GDs. This work considers more practical and comprehensive factors, including the practical PLoS channel, which leads to coupling among variables in the optimization, since the UAV trajectories involve both elevation angle and distance. Moreover, the interference experienced by primary users includes that from both GDs and the jammer UAV, across both fading and PLoS channels, making the problem highly complex to handle. Furthermore, we incorporate energy consumption for the 3D movement of UAVs while ensuring secure communi-cation, taking into account an aerial mobile eavesdropper with imperfect channel state information (CSI) and CRN principles. 2) To tackle this non-convex problem, we utilize a lower bound approximation for the ASSE and decompose the original problem into four subproblems using block co-ordinate descent (BCD). By applying successive convex approximation (SCA), each subproblem is transformed into a tractable convex form. Simulation results demon-strate that the proposed method outperforms benchmark schemes, confirming that optimizing 3D trajectories sig-4
+
+TABLE II: Notation and Symbols.                                                    
+
+> Notation Description
+> qI
+> U,qI
+> J,qI
+> EInitial location of U,J, and E
+> qF
+> U,qF
+> J,qF
+> EFinal location of U,J, and E
+> Hmax /Hmin Maximum/minimum flight altitude
+> Vxy /VzMaximum horizontal/vertical speed of Uand J
+> Pmax
+> k/Pmax
+> JMaximum transmit power of Dk/J
+> Pave
+> k/Pave
+> JAverage transmit power of Dk/J
+> Phor
+> U, ave /Pver
+> U, ave Average horizontal/vertical propulsion power of U
+> Phor
+> J, ave /Pver
+> J, ave Average horizontal/vertical propulsion power of J
+> σ2Noise power
+> αL, α NPath loss exponents for LoS and NLoS links
+> μAdditional signal attenuation factor
+> a, b Environmental coefficients
+> δtTime slot length
+> εAlgorithm convergence precision
+
+# ...  
+
+> U
+> E
+> J
+> 1DkD
+> P
+> Legitimate link Legitimate link
+> Eavesdropping link Eavesdropping link
+> Interference link Interference link
+> Flight trajectory
+
+Fig. 1: UAV-assisted secure data collection system consists of an aerial cognitive receiver ( U ), a jamming UAV ( J), a potential eavesdropper ( E), a PU ( P ), and multiple fixed GDs (Dk). 
+
+nificantly improves the ASSE of the system. 
+
+C. Organization 
+
+The rest of this work is organized as follows. The system model and problem formulation are provided in Section II and III, respectively. A two-step alternating algorithm is proposed in Section IV to solve the problem. Simulation results are demonstrated in Section V. Finally, Section VI concludes this work. TABLE II lists the notations and symbols utilized in this work. Notations : It should be noted that boldface lowercase letters, boldface uppercase letters, and regular letters denote vectors, matrices, and scalars, respectively. II. S YSTEM MODEL 
+
+As depicted in Fig. 1, we investigate a dual UAV-assisted secure data collection system wherein a legitimate aerial cognitive receiver UAV (designated as U ) collects confidential information from K fixed GDs (represented as Dk for k =1, 2, . . . , K ). An additional UAV (referred to as E) operates as a potential eavesdropper, flying from an initial position 
+
+qI 
+
+> E
+
+to a final position qF 
+
+> E
+
+during its flight [20] 1. To bolster  
+
+> 1
+
+In this work, we consider the scenarios with a potential aerial eaves-dropper (E), which is a common assumption in many works, like Refs. [ 14 ], [24 ]. Specifically, E performs some information-gathering tasks along a fixed trajectory and is “curious” about the transmitted messages intended for GDs. Moreover, in some special scenarios, some malicious eavesdropping UAVs may also be disguised as UAVs flying along a fixed trajectory to complete an open mission to collect some secret information. 
+
+communication security, a friendly jamming UAV, labeled J,generates artificial noise (AN) to suppress E, like [10]-[13]. It is assumed that the AN signals produced by J take the form of Gaussian pseudo-random sequences or deterministic waveforms that mimic the structure of the desired signals [40], [41], which allows U to cancel the jamming signals perfectly. Similarly, to conserve spectrum resources, it is assumed that the considered system operates in underlay mode [31]-[39]. Explicitly, the interference at a terrestrial primary user (PU), 
+
+P , should be limited to a given threshold to guarantee reliable communication of P . All devices are assumed to be equipped with a single antenna. For simplicity, we discretize the flight duration T into N slots, such that the time index is represented as n ∈ N , {1, 2, . . . , N } and each slot has a duration of 
+
+δt = T 
+
+> N
+
+. We assume N is sufficiently large so that the UAV’s position can be approximated as constant within each slot [14]. Without loss of generality, a Cartesian coordinate system is employed to denote the positions of all nodes. In the n-th slot, the horizontal coordinates of U , E, and J are represented as qU [n] = [ xU [n] , y U [n]] T , qE [n] = [ xE [n] , y E [n]] T ,and qJ [n] = [xJ [n] , y J [n]] T , respectively. Their vertical positions are denoted by zU [n], zE [n], and zJ [n], respec-tively. The horizontal coordinates of Dk and P are given by 
+
+wk = [ xk , y k]T and wP = [ xP , y P ]T , respectively. The air-to-air (A2A) communication link between UAVs is modeled as an LoS channel and the channel coefficient between J and E in the n-th slot is expressed as [14], [15] 
+
+hJE [n] = ρ0
+
+‖qJ [n] − qE [n]‖2 + |zJ [n] − zE [n] |2 , (1) where ρ0 represents the channel gain at a unit reference distance in an LoS environment. Like [14] and [37], to enable all the GDs to be served fairly during flight time, a binary variable ak [n] is defined to denote the user scheduling such that ak [n] = 1 indicates that Dk is active and communicating with U during the n-th slot. Otherwise, ak [n] = 0 . It is assumed that only one GD can transmit data to U in each slot 2. Therefore, we have 
+
+> K
+
+∑
+
+> k=1
+
+ak [n] ≤ 1,∀n, (2a) 
+
+ak [n] ∈ { 0, 1},∀k, n. (2b) It is assumed that the G2A link adheres to a PLoS channel model and the probability of an LoS connection during the 
+
+n-th slot is expressed as [34] 
+
+P L 
+
+> kX
+
+[n] = 1
+
+1 + ae −b(θkX [n]−a) , X ∈ { U, E } , (3) where θkX [n] = 180  
+
+> π
+
+arctan 
+
+( zX [n]  
+
+> ‖qX[n]−wk‖
+
+)
+
+is the elevation angle between Dk and X, a > 0 and b > 0 are constants specified by the actual environment. Correspondingly, the non-line-of-sight (NLoS) probability is obtained as P N 
+
+> kX
+
+[n] =
+
+> 2
+
+In this work, we consider a scenario where GDs are geographically dispersed. The assumption of serving one GD per time slot not only simplifies system design but also ensures fair access among users. Furthermore, our framework can be extended to closely located GDs through orthogonal access schemes (e.g., TDMA), while the proposed power optimization also provides valuable insights for NOMA-aided scenarios. 5
+
+1 − P L 
+
+> kX
+
+[n]. Based on the LoS or NLoS state, the channel coefficient between Dk and X in the n-th slot is expressed as hL 
+
+> kX
+
+[n] = ρ0d−αL 
+
+> kX
+
+[n] or hN 
+
+> kX
+
+[n] = μρ 0d−αN 
+
+> kX
+
+[n], respec-tively, where μ denotes the extra signal attenuation factor encountered in an NLoS environment. The path loss exponents for both LoS and NLoS situations are represented by αL and 
+
+αN, respectively. It is generally accepted that the relationship 
+
+αL ≤ αN holds true [42]. Consequently, the expected SE from 
+
+Dk to U at the n-th slot is obtained as [42] 
+
+¯RkU [n] = P L 
+
+> kU
+
+[n] RL 
+
+> kU
+
+[n] + P N 
+
+> kU
+
+[n] RN 
+
+> kU
+
+[n] , (4) where RL 
+
+> kU
+
+[n] = log 2
+
+(
+
+1 + Pk [n]hL 
+
+> kU [n]
+> σ2
+
+)
+
+, RN 
+
+> kU
+
+[n] =log 2
+
+(
+
+1 + Pk [n]hN 
+
+> kU [n]
+> σ2
+
+)
+
+, Pk [n] refers to the transmit power of Dk, and σ2 indicates the variance of the additive white Gaussian noise (AWGN). Similarly, the expected SE at E in the n-th slot is expressed as [8], [9] 
+
+¯RkE [n] = P L 
+
+> kE
+
+[n] RL 
+
+> kE
+
+[n] + P N 
+
+> kE
+
+[n] RN 
+
+> kE
+
+[n] , (5) where RL 
+
+> kE
+
+[n] = log 2
+
+(
+
+1 + Pk [n]hL   
+
+> kE [n]
+> PJ[n]hJE [n]+ σ2
+
+)
+
+, RN 
+
+> kE
+
+[n] =log 2
+
+(
+
+1 + Pk [n]hN   
+
+> kE [n]
+> PJ[n]hJE [n]+ σ2
+
+)
+
+, and PJ [n] denotes the transmit power of J.In this work, we consider more practical scenario where the location of E is imperfect for GDs and J, which results in hkE and hJE are inaccurate. The bounded error model is utilized [41] 3. In particular, ˆqE ∈ R2×1 and rE are utilized to indicate the circle center and radius of the area wherein E
+
+is located, respectively. It is assumed that rE is smaller than the distance between GDs and E, i.e. ‖ˆqE [n] − wk‖ ≥ rE
+
+[14], [15]. According to the triangle inequality, the distance between Dk and E is expressed by the lower bound as 
+
+‖qE [n] − wk‖ > ‖ˆqE [n] − wk‖ − ‖ ˆqE [n] − qE [n]‖
+
+> ‖ˆqE [n] − wk‖ − rE . (6) Similarly, the distance between J and E is expressed by the upper bound as 
+
+‖qE [n] − qJ [n]‖ 6 ‖ˆqE [n] − qJ [n]‖ + ‖ˆqE [n] − qE [n]‖
+
+6 ‖ˆqE [n] − qJ [n]‖ + rE . (7) Then, the bounds of hkE and hJE are obtained as 
+
+hL,ub  
+
+> kE
+
+[n] = ρ0
+
+(
+
+(‖ˆqE [n] − wk‖ − rE )2 + z2 
+
+> E
+
+[n]
+
+)αL /2 , (8) 
+
+hN,ub  
+
+> kE
+
+[n] = μρ 0
+
+(
+
+(‖ˆqE [n] − wk‖ − rE )2 + z2 
+
+> E
+
+[n]
+
+)αN /2 , (9) and 
+
+hlb  
+
+> JE
+
+[n] = ρ0
+
+(‖qJ [n] − ˆqE [n]‖ + rE )2 + |zJ [n] − zE [n] |2 .
+
+(10)                      
+
+> 3The results of this work can be easily extended to the scenarios wherein Gaussian CSI error model is utilized. Specifically, the position of Eis expressed as QE=̂QE+ ∆ q, where ̂QEdenotes the estimated position of
+> Eand ∆qdenotes the error vector. For the Gaussian error model, there is
+> ∆qis a bi-variate Gaussian. The general method is to approximate di, E[n]
+> as its expectation E[di, E[n]][43 ].
+
+Furthermore, θub  
+
+> kE
+
+[n] = 180  
+
+> π
+
+arctan 
+
+( zE [n]   
+
+> (‖ˆqE[n]−wk‖− rE)
+
+)
+
+is the upper bound of elevation angle between Dk and E. Therefore, the upper bound probability of LoS link between Dk and E
+
+is obtained as P L,ub  
+
+> kE
+
+[n] = 1
+
+> 1+ ae −b
+
+(θub kE [n]−a) . So, the upper bound of expected SE at E in the n-th slot is determined as 
+
+¯Rub  
+
+> kE
+
+[n] = P L,ub  
+
+> kE
+
+[n] RL,ub  
+
+> kE
+
+[n] + 
+
+(
+
+1 − P L,ub  
+
+> kE
+
+[n]
+
+)
+
+RN,ub  
+
+> kE
+
+[n] ,
+
+(11) where RL,ub  
+
+> kE
+
+[n] = log 2
+
+(
+
+1 + Pk [n]hL,ub    
+
+> kE [n]
+> PJ[n]hlb
+> JE [n]+ σ2
+
+)
+
+and 
+
+RN,ub  
+
+> kE
+
+[n] = log 2
+
+(
+
+1 + Pk [n]hN,ub    
+
+> kE [n]
+> PJ[n]hlb JE [n]+ σ2
+
+)
+
+. The lower bound of the secrecy SE (SSE) at Dk is expressed as 
+
+¯Rk 
+
+> sec
+
+[n] = [ ¯RkU [n] − ¯Rub  
+
+> kE
+
+[n]]+ , (12) where [x]+ , max( x, 0) .The propulsion power consumption of UAV i in the hori-zontal and vertical directions are expressed as [44] 
+
+P hor  
+
+> i
+
+[n] = P0
+
+(
+
+1 + 3 ‖vxy,i [n]‖2
+
+U 2tip 
+
+)
+
++ 1
+
+2 d0ρsA ‖vxy,i [n]‖3
+
++ P1
+
+√
+
+1 + ‖vxy,i [n]‖4
+
+4v40
+
+− ‖vxy,i [n]‖2
+
+2v20
+
+
+
+> 1/2
+
+, ∀n (13) and 
+
+P ver  
+
+> i
+
+[n] = Wivz,i [n] , ∀vz,i [n] > 0, ∀n, (14) where i ∈ { U, J }, vxy,i [n] = 1 
+
+> δt
+
+(qi [n + 1] − qi[n]) repre-sents the flying speed of UAV i during the hovering state [45], [46], P0 and P1 represent the inherent power of the blade surface and the power induced by the rotor, respectively, 
+
+Utip signifies the tip speed of the rotor blade, d0 and ρ
+
+indicate the body resistance ratio and air density, respectively, 
+
+v0 denotes the average induced velocity of the rotor, s and 
+
+A correspond to the stiffness of rotor and area of the rotor disc, respectively, Wi represents the weight of UAV i, and 
+
+vz,i [n] = 1 
+
+> δt
+
+(zi [n + 1] − zi [n]) represents the vertical flight speed of UAV i. It should be noted that UAVs consume no power during vertical descent [47]. Therefore, when vz,i [n] <
+
+0, we have P ver  
+
+> i
+
+[n] = 0 .In underlay mode, the interference caused by J and Dk must be constrained within the IT threshold of P , the following constraint is imposed 
+
+P L 
+
+> JP
+
+[n] PJ [n] ρ0
+
+dαL 
+
+> JP
+
+[n] + P N 
+
+> JP
+
+[n] PJ [n] ρ0μ
+
+dαN 
+
+> JP
+
+[n]+
+
+> K
+
+∑
+
+> k=1
+
+ak [n] Pk [n] E
+
+[ˆhkP 
+
+]
+
+≤ Γ, ∀n, (15) where P L 
+
+> JP
+
+[n] = 1  
+
+> 1+ ae −b(θJP [n]−a)
+
+, θJP [n] = 
+
+> 180
+> π
+
+arctan 
+
+( zJ [n]  
+
+> ‖qJ[n]−wP‖
+
+)
+
+, P N 
+
+> JP
+
+[n] = 1 − P L 
+
+> JP
+
+[n],
+
+hL 
+
+> JP
+
+[n] = ρ0d−αL 
+
+> JP
+
+[n] and hN 
+
+> JP
+
+[n] = μρ 0d−αN 
+
+> JP
+
+[n],
+
+dJP [n] =
+
+√
+
+zJ [n]2 + ‖qJ [n] − wP ‖2, ˆhkP = ρ0
+
+> dαPkP
+
+ξkP 
+
+signifies the channel power gains between Dk and P , dkP 
+
+denotes the distance between Dk and P , αP is the path loss exponent, ξkP is a random variable following an exponential distribution with unit mean, and Γ is the IT threshold at P .6
+
+III. P ROBLEM FORMULATION 
+
+In this study, the objective is to maximize the ASSE by optimizing the 3D trajectory of the UAVs, the transmit power, and the user scheduling. Let A = {ak [n] , ∀k, n },
+
+P = {Pk [n] , P J [n] , ∀k, n }, Q = {qU [n] , qJ [n] , ∀n}, H =
+
+{zU [n] , z J [n] , ∀n}, and Θ = {θkU [n] , θ JP [n] , ∀n, k }, the following optimization problem is formulated 
+
+P1 : max 
+
+> A,P,Θ,Q,H
+
+1
+
+N
+
+> N
+
+∑
+
+> n=1
+> K
+
+∑
+
+> k=1
+
+ak [n] ¯Rk 
+
+> sec
+
+[n] (16a) 
+
+s.t. 1
+
+N
+
+> N
+
+∑
+
+> n=1
+> K
+
+∑
+
+> k=1
+
+ak [n] Pk [n] ≤ P ave  
+
+> K
+
+, (16b) 
+
+0 ≤ Pk [n] ≤ P max  
+
+> K
+
+, ∀k, (16c) 
+
+1
+
+N
+
+> N
+
+∑
+
+> n=1
+
+P hor  
+
+> i
+
+[n] ≤ P hor 
+
+> i, ave
+
+, ∀i, (16d) 
+
+1
+
+N
+
+> N
+
+∑
+
+> n=1
+
+P ver  
+
+> i
+
+[n] ≤ P ver 
+
+> i, ave
+
+, ∀n, i, (16e) 
+
+0 ≤ 1
+
+N
+
+> N
+
+∑
+
+> n=1
+
+PJ [n] ≤ P ave  
+
+> J
+
+, (16f) 
+
+0 ≤ PJ [n] ≤ P max  
+
+> J
+
+, ∀n, (16g) 
+
+θkU [n] = 180 
+
+π arctan 
+
+( zU [n]
+
+‖qU [n] − wk‖
+
+)
+
+, ∀n, k, (16h) 
+
+θJP [n] = 180 
+
+π arctan 
+
+( zJ [n]
+
+‖qJ [n] − wP ‖
+
+)
+
+, ∀n, (16i) 
+
+|qi [n + 1] − qi [n]| = δtvxy,i [n] , ∀n, (16j) 
+
+‖vxy,i [n]‖ ≤ Vxy , ∀n, (16k) 
+
+|zi [n + 1] − zi [n]| = δtvz,i [n] , ∀n, (16l) 
+
+|vz,i [n]| ≤ Vz , ∀n, (16m) 
+
+qi [1] = qI
+
+> i
+
+, qi [N ] = qF 
+
+> i
+
+, (16n) 
+
+zi [1] = zI 
+
+> i
+
+, zi [N ] = zF 
+
+> i
+
+, (16o) 
+
+Hmin ≤ zi [n] ≤ Hmax , ∀n, (16p) 
+
+√
+
+‖qi1 [n] − qj1 [n]‖2 + |zi1 [n] − zj1 [n]|2 ≥ Dmin ,
+
+∀n, ∀i1, j 1 ∈ { U, J, E }, i 1 6 = j1, (16q) 
+
+1
+
+N
+
+> N
+
+∑
+
+> n=1
+
+ak [n] ¯Rk 
+
+> sec
+
+[n] ≥ Rmin , ∀k, (16r) 
+
+(2 a), (2 b), (15) ,
+
+where P ave  
+
+> K
+
+and P max  
+
+> K
+
+denote the average and maximum trans-mit power of GDs, respectively, P hor  
+
+> i, ave
+
+and P ver  
+
+> i, ave
+
+represent the average transmit powers of i, respectively, P ave  
+
+> J
+
+and P max 
+
+> J
+
+represent the average and maximum jamming power for J,respectively, Vxy and Vz represent the maximum horizontal and vertical velocities, respectively, qI 
+
+> i
+
+and qF 
+
+> i
+
+represent the initial and the final horizontal positions of UAVs, zI 
+
+> i
+
+and zF
+
+> i
+
+denote the initial and the final vertical positions of UAVs, 
+
+Hmin and Hmax denote the minimum and maximum vertical heights of U and J, respectively, and Dmin represents the minimum safe distance between UAVs. In particular, ( 16 b) and (16 c) refer to the average and maximum transmit power of Dk,respectively, ( 16 d) and ( 16 e) establish the limits on propulsion energy consumption for U and J, ( 16 f) and ( 16 g) outline the limits on the average and peak jamming power for each slot, (16 h) specifies the required elevation angle between Dk and 
+
+U , ( 16 i) specifies the required elevation angle between J and 
+
+P , ( 16 j)-( 16 m) are the velocity constraints, ( 16 n) and ( 16 o)are the initial and final positions constraints, respectively, ( 16 p)denotes the flight altitude constraint for UAVs, ( 16 q) sets the safety distance among UAVs ( U , J, E), and ( 16 r) describes the minimum SSE constraint for Dk.Several factors complicate the resolution of the optimiza-tion problem P1. Firstly, the operator [·]+ introduces non-smoothness into the objective function when it approaches zero. Secondly, the achievable secrecy rate, as outlined in (12), is affected by both the 3D trajectory of the UAV and the probability of LoS versus NLoS communication. Moreover, the user scheduling constraint depicted in (2b) introduces a binary integer constraint that is inherently non-convex. Additionally, the elevation constraints specified in (16h) and (16 i), which arise from the PLoS model, are also nonlinear. As a consequence, P1 is classified as a nonlinear mixed-integer non-convex optimization problem, which generally poses considerable difficulties in finding a solution. IV. P ROPOSED ALGORITHM FOR PROBLEM P1
+
+To reduce the complexity, the approximate method in [36] is utilized in this work. Specifically, we only consider the receiving SE in the LoS scenario, which can significantly reduce the complexity of the formulated problem. Since the SE in NLoS scenarios is much lower than that in LoS scenarios, the lower bound for (4) is approximated as [36], [37], [42] 
+
+¯Rlb  
+
+> kU
+
+[n] = P L 
+
+> kU
+
+[n] log 2
+
+(
+
+1 + Pk [n] hL 
+
+> kU
+
+[n]
+
+σ2
+
+)
+
+. (17) Then, the achievable SSE of Dk over the n-th slot is approxi-mated by ¯Rk 
+
+> sec
+
+[n] = [ ¯Rlb  
+
+> kU
+
+[n] − ¯Rub  
+
+> kE
+
+[n]]+. Then, we address the non-smoothness of the objective function. When the term 
+
+¯Rlb  
+
+> kU
+
+[n] − ¯Rub  
+
+> kE
+
+[n] from (12) becomes negative during the n-th slot, we set the transmit power Pk [n] to zero, which leads to ¯Rk 
+
+> sec
+
+[n] = 0 . This adjustment ensures that the objective function remains non-negative, allowing us to remove the operator [·]+ without affecting the optimal solution of the original problem. Next, to solve the optimization problem P1, we utilize the BCD technique 4, enabling us to decompose the original prob-lem into several manageable subproblems. In this approach, we  
+
+> 4It is worth noting that to address high-dimensional, non-convex joint optimization problems, the academic has begun to explore data-driven deep reinforcement learning approaches [ 8], [ 9], [ 24 ]. However, such methods still face challenges in ensuring theoretical convergence, strictly satisfying complex security constraints, and training costs. In contrast, this work aims to construct a rigorous and analytically processable model-driven optimization framework. Our proposed solution, based on BCD and SCA, aims to provide a performance benchmark and theoretical reference with clear convergence guarantees for this scenario, laying the foundation for subsequent research on fusion learning and optimization paradigms. Moreover, it should be noted that the offline optimization in this work is the first step towards these complex real-time systems, and the motivation lies in proving that under such complex coupling constraints (security, CRN, 3D trajectory, energy consumption), the optimization problem is moldable and solvable, and provides a key benchmark for system performance. 7
+
+optimize the variables A, P, H, Q, and Θ in each subproblem while keeping the other variables fixed. Additionally, we apply the SCA method to transform the non-convex constraints into convex ones, thereby simplifying the optimization process. This combined strategy significantly enhances our capability to systematically and efficiently identify sub-optimal solutions. 
+
+A. Subproblem 1: Optimizing Scheduling Variable 
+
+In this subsection, we focus on optimizing the user schedul-ing variable A while keeping P, H, Q, and Θ fixed. We relax the binary constraint ak [n] ∈ { 0, 1} to a linear variable, allowing 0 ≤ ak [n] ≤ 1. Consequently, P1 is reformulated as 
+
+P2.1 : max 
+
+> A,η k
+> K
+
+∑
+
+> k=1
+
+ηk (18a) 
+
+s.t. 1
+
+N
+
+> N
+
+∑
+
+> n=1
+
+ak [n] ¯Rk 
+
+> sec
+
+[n] ≥ ηk, ∀k, (18b) 
+
+ηk ≥ Rmin , ∀k, (18c) 
+
+0 ≤ ak [n] ≤ 1, ∀n, k, (18d) 
+
+(2 a), (15) , (16 b).
+
+where ηk is a slack variable. P2.1 is a strictly linear optimiza-tion problem, which can be efficiently addressed using the CVX toolbox, as described in [48]. 
+
+B. Subproblem 2: Optimizing Transmit Power of Dk and J
+
+In this subsection, P is optimized for given A, Q, H, and 
+
+Θ. P1 is reformulated as 
+
+P2.2a : max 
+
+> P,η k
+> K
+
+∑
+
+> k=1
+
+ηk (19a) 
+
+s.t. 1
+
+N
+
+> N
+
+∑
+
+> n=1
+
+ak [n] ¯Rk 
+
+> sec
+
+[n] ≥ ηk, ∀k, (19b) 
+
+ηk ≥ Rmin , ∀k, (19c) 
+
+(15) , (16 b), (16 c), (16 f), (16 g).
+
+To discuss the convex of ¯Rk 
+
+> sec
+
+[n], we rewrite it as 
+
+¯Rk 
+
+> sec
+
+[n] = P L 
+
+> kU
+
+[n] log 2
+
+(
+
+1 + Pk [n] hL 
+
+> kU
+
+[n]
+
+σ2
+
+)
+
+− P L 
+
+> kE
+
+[n] log 2
+
+(Pk [n] hL 
+
+> kE
+
+[n] + PJ [n] hJE [n] + σ2)
+
++ P L 
+
+> kE
+
+[n] log 2
+
+(PJ [n] hJE [n] + σ2)
+
+− P N 
+
+> kE
+
+[n] log 2
+
+(Pk [n] hN 
+
+> kE
+
+[n] + PJ [n] hJE [n] + σ2)
+
++ P N 
+
+> kE
+
+[n] log 2
+
+(PJ [n] hJE [n] + σ2) . (20) It is easy to note that the second and fourth terms in (20) are convex functions with respect to P, which make (19b) a non-convex constraint. To tackle this non-convex constraint, we utilize a first-order Taylor expansion to approximate ¯Rk 
+
+> sec
+
+[n] as 
+
+¯Rk, lb sec ,1 [n], which is found as (21), shown at the top of the next page, where {P (m) 
+
+> k
+
+[n] , P (m) 
+
+> J
+
+[n] , ∀n} denotes a feasible point chosen during the m-th iteration. By substituting ¯Rk 
+
+> sec
+
+[n] with 
+
+¯Rk, lb sec ,1 [n], P2.2a is reformulated into a convex optimization problem, which is expressed as 
+
+P2.2b : max 
+
+> P,η k
+> K
+
+∑
+
+> k=1
+
+ηk (22a) 
+
+s.t. 1
+
+N
+
+> N
+
+∑
+
+> n=1
+
+ak [n] ¯Rk, lb sec ,1 [n] ≥ ηk, ∀k, (22b) 
+
+ηk ≥ Rmin , ∀k, (22c) 
+
+(15) , (16 b), (16 c), (16 f), (16 g).
+
+By employing CVX, we can effectively address this op-timization problem. This method not only streamlines the solving process but also enhances the chances of identifying the optimal solution. 
+
+C. Subproblem 3: Optimizing Horizontal Trajectory of U and 
+
+J
+
+In this subsection, we optimize the horizontal trajectory of 
+
+U and J with given {A, P, H}. P1 is reformulated as 
+
+P2.3a : max 
+
+> Q,Θ,η k
+> K
+
+∑
+
+> k=1
+
+ηk (23a) 
+
+s.t. 1
+
+N
+
+> N
+
+∑
+
+> n=1
+
+ak [n] ¯Rk 
+
+> sec
+
+[n] ≥ ηk, ∀k, (23b) 
+
+ηk ≥ Rmin , ∀k, (23c) 
+
+(15) , (16 d), (16 h) − (16 k), (16 n), (16 q).
+
+It should be noted that ¯Rk 
+
+> sec
+
+[n] in constraint (23b) is affected not only by the variable Q but also by P L 
+
+> kU
+
+[n]. Moreover, 
+
+P2.3a is non-convex due to the inclusion of constraints (15), (16d), (16h), (16i), and (16q). In conclusion, the non-convex nature stems from both the specific constraints that fail to meet convexity requirements and the complex interactions among the variables involved. 1) First, since the left-hand side (LHS) of ¯Rk 
+
+> sec
+
+[n] in (23b) is non-concave, the optimization problem becomes non-convex, presenting significant challenges for resolu-tion. To simplify the derivation, we introduce auxiliary variables Y [n] = ρ0 
+
+> σ2
+
+((‖qJ [n]−ˆqE [n]‖+rE )2+|zJ [n]−zE [n]|2) ,
+
+tkU [n] = 
+
+(
+
+‖qU [n] − wk‖2 + zU [n]2) αL
+
+> 2
+
+, and xk [n] = 1 + 
+
+ae −b(θkU [n]−a). Then, ¯Rk 
+
+> sec
+
+[n] in (23b) is expressed as 
+
+¯Rk 
+
+> sec ,2
+
+[n] = 1
+
+xk [n] log 2
+
+(
+
+1 + Pk [n] γ
+
+tkU [n]
+
+)
+
+− P L 
+
+> kE
+
+[n] log 2
+
+(
+
+1 + bkL [n]
+
+PJ [n] Y [n] + 1 
+
+)
+
+− P N 
+
+> kE
+
+[n] log 2
+
+(
+
+1 + bkN [n]
+
+PJ [n] Y [n] + 1 
+
+)
+
+, (24) where γ = ρ0 
+
+> σ2
+
+, bkL [n] = Pk [n]hL,ub kE [n] 
+
+> σ2
+
+, and bkN [n] =   
+
+> Pk[n]hN,ub kE [n]
+> σ2
+
+. For Y [n], the additional constraint in (27), shown at the top of the next page, must be satisfied. Then 8
+
+¯Rk, lb sec ,1 [n] = P L 
+
+> kU
+
+[n] log 2
+
+(
+
+1 + Pk [n] hL 
+
+> kU
+
+[n]
+
+σ2
+
+)
+
++ log 2
+
+(PJ [n] hJE [n] + σ2)
+
+− P L 
+
+> kE
+
+[n] log 2
+
+(
+
+P (m) 
+
+> k
+
+[n] hL 
+
+> kE
+
+[n] + P (m) 
+
+> J
+
+[n] hJE [n] + σ2)
+
+− P N 
+
+> kE
+
+[n] log 2
+
+(
+
+P (m) 
+
+> k
+
+[n] hN 
+
+> kE
+
+[n] + P (m) 
+
+> J
+
+[n] hJE [n] + σ2)
+
+− P L 
+
+> kE
+
+[n] hL 
+
+> kE
+
+[n] ( Pk [n] − P (m) 
+
+> k
+
+[n]) + hJE [n] ( PJ [n] − P (m) 
+
+> J
+
+[n]) 
+
+ln(2) 
+
+(
+
+P (m) 
+
+> k
+
+[n] hL 
+
+> kE
+
+[n] + P (m) 
+
+> J
+
+[n] hJE [n] + σ2
+
+)
+
+− P N 
+
+> kE
+
+[n] hN 
+
+> kE
+
+[n] ( Pk [n] − P (m) 
+
+> k
+
+[n]) + hJE [n] ( PJ [n] − P (m) 
+
+> J
+
+[n]) 
+
+ln(2) 
+
+(
+
+P (m) 
+
+> k
+
+[n] hN 
+
+> kE
+
+[n] + P (m) 
+
+> J
+
+[n] hJE [n] + σ2
+
+) (21) 
+
+1
+
+Y [n] ≥
+
+σ2
+
+(
+
+(‖qJ [n] − ˆqE [n]‖ + rE )2 + |zJ [n] − zE [n] |2
+
+)
+
+ρ0
+
+, ∀n (27) 
+
+after performing SCA convex transformation on the LHS of (27), we obtain 
+
+2Y (m) [n] − Y [n]
+
+(Y (m) [n]) 2 ≥ (‖qJ [n] − ˆqE [n]‖ + rE )2
+
++ |zJ [n] − zE [n]|2 , (28) where Y (m) [n] denotes Y [n] at the m-th iteration and 
+
+Y (m) [n] = ρ0     
+
+> σ2
+> ((∥ ∥∥q(m)
+> J[n]−ˆqE[n]
+> ∥∥∥+rE
+> )2
+> +
+> ∣∣∣z(m)
+> J[n]−zE[n]
+> ∣∣∣2)
+
+. Fi-nally, according to Appendix A in [37], for A ≥ 0, the function f (x, y ) = 1 
+
+> x
+
+log 2
+
+(
+
+1 + A
+
+> y
+
+)
+
+is jointly convex with respect to x > 0 and y > 0. Consequently, ¯Rk 
+
+> sec ,2
+
+[n] in (24) is approximated by the following lower bound 
+
+¯Rk, lb sec ,2 [n] = 1
+
+x(m) 
+
+> k
+
+[n] log 2
+
+(
+
+1 + Pk [n] γ
+
+t(m) 
+
+> kU
+
+[n]
+
+)
+
+− Pk [n] γ(tkU [n] − t(m) 
+
+> kU
+
+[n]) 
+
+ln(2)( x(m) 
+
+> k
+
+[n])( t(m) 
+
+> kU
+
+[n]) 2
+
+(
+
+1 + Pk [n]γ 
+
+> t(m)
+> kU [n]
+
+)
+
+−
+
+log 2
+
+(
+
+1 + Pk [n]γ 
+
+> tkU [n]
+
+)
+
+(xk [n] − x(m) 
+
+> k
+
+[n]) 
+
+ln(2)( x(m) 
+
+> k
+
+[n]) 2
+
+− P L 
+
+> kE
+
+[n] log 2
+
+(
+
+1 + bkL [n]
+
+pJ [n] Y [n] + 1 
+
+)
+
+− P N 
+
+> kE
+
+[n] log 2
+
+(
+
+1 + bkN [n]
+
+pJ [n] Y [n] + 1 
+
+)
+
+, (29) where x(m) 
+
+> k
+
+[n] and t(m) 
+
+> kU
+
+[n] signify xk [n] and tkU [n]
+
+at the m-th iteration, x(m) 
+
+> k
+
+[n] = 1 + ae −b 
+
+> (
+> θ(m)
+> kU [n]−a
+> )
+
+,
+
+θ(m) 
+
+> kU
+
+[n] = 180  
+
+> π
+
+arctan 
+
+( zU [n]∥∥∥q(m) 
+
+> U[n]−wk
+> ∥∥∥
+
+)
+
+, and t(m) 
+
+> kU
+
+[n] =
+
+(
+
+‖q(m) 
+
+> U
+
+[n] − wk‖2 + zU [n]2) αL
+
+> 2
+
+.2) For (15) and (16i), similar to [37], by introducing slack variables ph = {ph [n] , ∀n} and tP,h = {tP,h [n] , ∀n}, where 
+
+h ∈ { L, N}, (15) is reformulated as 
+
+PJ [n] ρ0
+
+pL [n] tP, L [n] + PJ [n] ρ0μ
+
+pN [n] tP, N [n] +
+
+> K
+
+∑
+
+> k=1
+
+ak [n] Pk [n] ρ0
+
+dαP
+
+> kP
+
+≤ Γ,
+
+(30) with 
+
+pL [n] ≤ 1 + ae ab e−bθ JP [n] (31a) 
+
+θJP [n] ≥ 180 
+
+π arctan 
+
+( zJ [n]
+
+‖qJ [n] − wP ‖
+
+)
+
+(31b) 
+
+pN [n] ≤ 1 + 1
+
+a e−ab ebφ JP [n] (31c) 
+
+φJP [n] ≤ 180 
+
+π arctan 
+
+( zJ [n]
+
+‖qJ [n] − wP ‖
+
+)
+
+(31d) 
+
+tP,h [n] ≤
+
+(
+
+‖qJ [n] − wP ‖2 + z2 
+
+> J
+
+[n]
+
+)αh /2
+
+. (31e) By utilizing SCA, non-convex constraints, (31a), (31c), (31d), and (31e) are transformed as 
+
+pL [n] ≤ 1 + ae ab κ(m)1 [n] , (32a) 
+
+pN [n] ≤ 1 + 1
+
+a e−ab κ(m)2 [n] , (32b) 
+
+φJP [n] ≤ 180 
+
+π κ(m)3 [n] , (32c) 
+
+tP,h [n] ≤ κ(m)4,h [n] , (32d) where θ(m) 
+
+> JP
+
+[n], φ(m) 
+
+> JP
+
+[n], d(m) 
+
+> JP
+
+[n], and q(m) 
+
+> J
+
+[n]
+
+respectively represent the values of θJP [n], φJP [n],
+
+dJP [n], and qJ [n] at the m-th iteration, κ(m)1 [n] =
+
+e−bθ (m)  
+
+> JP [n]
+
+− be −bθ (m) 
+
+> JP [n]
+
+(
+
+θJP [n] − θ(m) 
+
+> JP
+
+[n]
+
+)
+
+, κ(m)2 [n] =
+
+ebφ (m)  
+
+> JP [n]
+
++ be bφ (m) 
+
+> JP [n]
+
+(
+
+φJP [n] − φ(m) 
+
+> JP
+
+[n]
+
+)
+
+, κ(m)3 [n] =arctan 
+
+( zJ [n]∥∥∥q(m) 
+
+> J[n]−wP
+> ∥∥∥
+
+)
+
+− zJ [n]      
+
+> (
+> ‖qJ[n]−wP‖−
+> ∥∥∥q(m)
+> J[n]−wP
+> ∥∥∥)
+> ∥∥∥q(m)
+> J[n]−wP
+> ∥∥∥2
+> +z2
+> J[n]
+
+,and κ(m)4,h [n] =
+
+(
+
+d(m) 
+
+> JP
+
+[n]
+
+)αh
+
++ αh
+
+(
+
+d(m) 
+
+> JP
+
+[n]
+
+)αh −2
+
++
+
+(
+
+q(m) 
+
+> J
+
+[n] − wP
+
+)T (
+
+qJ [n] − q(m) 
+
+> J
+
+[n]
+
+)
+
+.9
+
+1
+
+N
+
+> N
+
+∑
+
+> n=1
+
+[
+
+P0
+
+(
+
+1 + 3‖vxy,i [n]‖2
+
+U 2tip 
+
+)
+
++ 1
+
+2 d0ρsA ‖vxy,i [n]‖3 + P1λi [n]
+
+]
+
+≤ P hor 
+
+> i, ave
+
+, ∀n, i ∈ { U, J } (33a) 
+
+1
+
+λi [n]2 ≤ λi [n]2 + ‖vxy,i [n]‖2
+
+v20
+
+, ∀n, i ∈ { U, J } (33b) 
+
+3) To tackle (16d), we introduce a relaxation variable 
+
+{λi [n] ≥ 0, i ∈ { U, J }} , which allows us to reformulate (16d) into (33a) and (33b), as shown at the top of this page. It is crucial to emphasize that the right-hand side (RHS) of (33b) is a convex function with respect to both λi [n] and 
+
+‖vxy,i [n] ‖, meaning it does not constitute a convex constraint. By employing the SCA method and replacing the RHS with its convex lower bound, we express (33b) as 
+
+1
+
+λi [n]2 ≤ λ(m) 
+
+> i
+
+[n]2 + 2 λ(m) 
+
+> i
+
+[n]
+
+(
+
+λi [n] − λ(m) 
+
+> i
+
+[n]
+
+)
+
++ 2
+
+v20
+
+(
+
+v(m) 
+
+> xy,i
+
+[n]
+
+)T (
+
+vxy,i [n] − v(m) 
+
+> xy,i
+
+[n]
+
+)
+
++
+
+∥∥∥v(m) 
+
+> xy,i
+
+[n]
+
+∥∥∥2
+
+v20
+
+, (34) where v(m) 
+
+> xy,i
+
+[n] represents the horizontal velocity obtained in the m-th iteration. 4) Then, we address nonlinear constraint (16h). Similar to [36], we relax it into 
+
+θkU [n] ≤ 180 
+
+π arctan 
+
+( zU [n]
+
+‖qU [n] − wk‖
+
+)
+
+, ∀n, k. (35a) It is noteworthy that the function arctan(1 /x ) is convex. As a result, the right-hand side (RHS) of (35a) demonstrate con-vexity concerning the expression ‖qU [n] − wk‖. By utilizing the SCA technique, we rewrite (35a) as 
+
+θkU [n] ≤ 180 
+
+π κ(m)5 [n] , (36) where κ(m)5 [n] = arctan 
+
+( zU [n]∥∥∥q(m) 
+
+> U[n]−wk
+> ∥∥∥
+
+)
+
+−       
+
+> zU[n]
+> (
+> ‖qU[n]−wk‖−
+> ∥∥∥q(m)
+> U[n]−wk
+> ∥∥∥)
+> ∥∥∥q(m)
+> U[n]−wk
+> ∥∥∥2
+> +z2
+> U[n]
+
+and q(m) 
+
+> U
+
+[n] denotes 
+
+qU [n] at the m-th iteration. 5) Next, to handle (16q), we firstly rewrite it as 
+
+‖qi1 [n] − qj1 [n]‖2 + |zi1 [n] − zj1 [n]|2 ≥ D2min ,
+
+∀n, ∀i1, j 1 ∈ { U, J, E },i 1 6 = j1. (37) The SCA method is utilized to obtain the lower bound of the norm-squared function in (37) as (38a)-(38c), shown at the top of the next page, where q(m) 
+
+> J
+
+[n] and z(m) 
+
+> J
+
+[n] represent qJ [n]
+
+and zJ [n] at the m-th iteration. Finally, P2.3a is transformed into 
+
+P2.3b : max 
+
+> Q,Θ,Y,λ,ΦJP
+> tP,h ,ph,η k
+> K
+
+∑
+
+> k=1
+
+ηk (39a) 
+
+s.t. 1
+
+N
+
+> N
+
+∑
+
+> n=1
+
+ak [n] ¯Rk, lb sec ,2 [n] ≥ ηk, ∀k, (39b) 
+
+ηk ≥ Rmin , ∀k, (39c) 
+
+(16 j), (16 k), (16 n), (28) , (30) , (31 b),
+
+(32 a) − (32 d), (33 a), (34) , (36) , (38 a) − (38 c),
+
+where Y = {Y [n] , ∀n}, λ = {λU [n] , λ J [n] , ∀n},
+
+ΦJP = {φJP [n] , ∀n}, tP,h = {tP,h [n] , ∀n}, and ph =
+
+{pL [n] , p N [n] , ∀n}. P2.3b is a convex optimization issue that can be effectively solved using well-known tools such as CVX. 
+
+D. Subproblem 4: Optimizing Vertical Trajectory of U and J
+
+In this subsection, we optimize the vertical trajectory of UAVs with given {A, P, Q}. P1 is reformulated as 
+
+P2.4a : max 
+
+> H,Θ,η k
+> K
+
+∑
+
+> k=1
+
+ηk (40a) 
+
+s.t. 1
+
+N
+
+> N
+
+∑
+
+> n=1
+
+ak [n] ¯Rk 
+
+> sec
+
+[n] ≥ ηk , ∀k, (40b) 
+
+ηk ≥ Rmin , ∀k, (40c) 
+
+(15) , (16 e), (16 h), (16 i), (16 l), (16 m),
+
+(16 o) − (16 q).
+
+P2.4a is non-convex because of the constraints (15), (16h), (16i) and (16q). Furthermore, ¯Rk 
+
+> sec
+
+[n] in (40b) is affected by both H and P L 
+
+> kU
+
+[n].First, similar to the method in solving the previous subprob-lem, (15) is reformulated as (30) with additional constraints (31a)-(31e). With respect to H, (31b) and (31e) are non-convex. By using SCA, (31b) and (31e) are approximated as 
+
+tP,h [n] ≤ κ(m)6,h [n] , (41a) 
+
+θJP [n] ≥ 180 
+
+π κ(m)7 [n] , (41b) where z(m) 
+
+> J
+
+[n] and d(m) 
+
+> JP
+
+[n] represent the val-ues of zJ [n] and dJP [n] at the m-th itera-tion, respectively, κ(m)6,h [n] =
+
+(
+
+d(m) 
+
+> JP
+
+[n]
+
+)αh
+
++
+
+αh
+
+(
+
+d(m) 
+
+> JP
+
+[n]
+
+)αh −2(
+
+z(m) 
+
+> J
+
+[n]
+
+)T (
+
+zJ [n] − z(m) 
+
+> J
+
+[n]
+
+)
+
+,10 
+
+‖q(m) 
+
+> J
+
+[n] − qE [n] ‖2 + 2 
+
+(
+
+q(m) 
+
+> J
+
+[n] − qE [n]
+
+)T (
+
+qJ [n] − q(m) 
+
+> J
+
+[n]
+
+)
+
++ |zJ [n] − zE [n] |2 ≥ D2min (38a) 
+
+‖q(m) 
+
+> J
+
+[n] − q(m) 
+
+> U
+
+[n] ‖2 + 2 
+
+(
+
+q(m) 
+
+> J
+
+[n] − qU [n]
+
+)T (
+
+qJ [n] − q(m) 
+
+> J
+
+[n]
+
+)
+
+−2
+
+(
+
+qJ [n] − q(m) 
+
+> U
+
+[n]
+
+)T (
+
+qU [n] − q(m) 
+
+> U
+
+[n]
+
+)
+
++ |zJ [n] − zU [n] |2 ≥ D2min (38b) 
+
+‖q(m) 
+
+> U
+
+[n] − qE [n] ‖2 + 2 
+
+(
+
+q(m) 
+
+> U
+
+[n] − qE [n]
+
+)T (
+
+qU [n] − q(m) 
+
+> U
+
+[n]
+
+)
+
++ |zU [n] − zE [n] |2 ≥ D2min (38c) 
+
+and κ(m)7 [n] = arctan 
+
+( z(m)   
+
+> J[n]
+> ‖qJ[n]−wP‖
+
+)
+
++        
+
+> ‖qJ[n]−wP‖
+> (
+> zJ[n]−z(m)
+> J[n]
+> )
+> ‖qJ[n]−wP‖2+z(m)
+> J[n]2
+
+.Then, we address nonlinear constraint (16h) by relaxing it into the following forms 
+
+θkU [n] ≤ 180 
+
+π arctan 
+
+( zU [n]
+
+‖qU [n] − wk‖
+
+)
+
+, ∀n, k, (42) It is important to note that arctan( x) is a concave function. However, CVX does not include arctan( x), so we utilize SCA to convert (16h) as 
+
+θkU [n] ≤ 180 
+
+π κ(m)8 [n] , (43) where κ(m)8 [n] = arctan 
+
+( z(m)   
+
+> U[n]
+> ‖qU[n]−wk‖
+
+)
+
+−        
+
+> (‖qU[n]−wk‖)
+> (
+> zU[n]−z(m)
+> U[n]
+> )
+> ‖qU[n]−wk‖2+
+> (
+> z(m)
+> U[n]
+> )2
+
+, and z(m) 
+
+> U
+
+[n] denotes zU [n]
+
+at the m-th iteration. Next, we rewrite (16q) as 
+
+‖qJ [n] − qE [n] ‖2 + |z(m) 
+
+> J
+
+[n] − zE [n] |2
+
++ 2 
+
+(
+
+z(m) 
+
+> J
+
+[n] − zE [n]
+
+)T (
+
+zJ [n] − z(m) 
+
+> J
+
+[n]
+
+)
+
+≥ D2min 
+
+(44a) 
+
+‖qJ [n] − qU [n] ‖2 + |z(m) 
+
+> J
+
+[n] − z(m) 
+
+> U
+
+[n] |2
+
++ 2 
+
+(
+
+z(m) 
+
+> J
+
+[n] − zU [n]
+
+)T (
+
+zJ [n] − z(m) 
+
+> J
+
+[n]
+
+)
+
+− 2
+
+(
+
+zJ [n] − z(m) 
+
+> U
+
+[n]
+
+)T (
+
+zU [n] − z(m) 
+
+> U
+
+[n]
+
+)
+
+≥ D2min 
+
+(44b) 
+
+‖qU [n] − qE [n] ‖2 + |z(m) 
+
+> U
+
+[n] − zE [n] |2
+
++ 2 
+
+(
+
+z(m) 
+
+> U
+
+[n] − zE [n]
+
+)T (
+
+zU [n] − z(m) 
+
+> U
+
+[n]
+
+)
+
+≥ D2min .
+
+(44c) Finally, by replacing ¯Rk 
+
+> sec
+
+[n] in (40b) with ¯Rk, lb sec ,2 [n] in (29), 
+
+Algorithm 1: Iterative Procedure of Problem P1
+
+Input: Initialization of feasible points.  
+
+> 1
+
+while R(A(m), P(m), Θ(m), H(m), Q(m)) -
+
+R(A(m−1) , P(m−1) , Θ(m−1) , H(m−1) , Q(m−1) ) ≻ ε
+
+do  
+
+> 2
+
+Solve (P2.1) for given {P(m), H(m), Q(m), Θ(m)}
+
+and obtain A(m+1) ; 
+
+> 3
+
+Solve (P2.2b ) for given {A(m+1) , H(m), Q(m), Θ(m)} and obtain 
+
+P(m+1) ; 
+
+> 4
+
+Solve (P2.3b ) for given {A(m+1) , H(m), P(m+1) }
+
+and obtain Q(m+1) ; 
+
+> 5
+
+Solve (P2.4b ) for given {A(m+1) , Q(m+1) , P(m+1) } and obtain H(m+1) ; 
+
+> 6
+
+m = m + 1 ; 
+
+> 7
+
+Compute R(A(m), P(m), Θ(m), H(m), Q(m)). 
+
+> 8
+
+end Output: R(A(m), P(m), Θ(m), H(m), Q(m)) with 
+
+A∗ = A(m),
+
+P∗ = P(m),Θ∗ = Θ(m), H∗ = H(m),Q∗ = Q(m).
+
+P2.4a is transformed into 
+
+P2.4b : max 
+
+> H,Θ,Y,ΦJP
+> tP,h ,ph ,η k
+> K
+
+∑
+
+> k=1
+
+ηk (45a) 
+
+s.t. 1
+
+N
+
+> N
+
+∑
+
+> n=1
+> K
+
+∑
+
+> k=1
+
+ak [n] ¯Rk, lb sec ,2 [n] ≥ ηk, ∀k, (45b) 
+
+ηk ≥ Rmin , ∀k, (45c) 
+
+(16 e), (16 l), (16 m), (16 o), (16 p),
+
+(28) , (30) , (31 a), (31 c), (31 d),
+
+(41 a), (41 b), (43) , (44 a) − (44 c).
+
+P2.4b is convex and can be solved using existing optimization software such as CVX. 
+
+Algorithm 1 summarizes the BCD-based algorithm, which is developed to solve problem P1 sub-optimally, where ε
+
+represents the accuracy of convergence. 
+
+E. Convergence Analysis of Algorithm 1 
+
+In Algorithm 1, step 1 addresses the user scheduling problem P2.1 by optimizing for given feasible variables P(m),11 
+
+H(m), Q(m), and Θ(m). This results in 
+
+R
+
+(
+
+A(m), P(m), Θ(m), H(m), Q(m))
+
+≤ R
+
+(
+
+A(m+1) , P(m), Θ(m), H(m), Q(m))
+
+. (46) In step 2, we solve the power optimization problem P2.2b 
+
+with fixed variables A(m+1) , H(m), Q(m), and Θ(m). Since this problem is convex, we obtain 
+
+R
+
+(
+
+A(m+1) , P(m), Θ(m), H(m), Q(m))
+
+≤ R
+
+(
+
+A(m+1) , P(m+1) , Θ(m), H(m), Q(m))
+
+. (47) Step 3 involves solving the approximate horizontal trajec-tory optimization problem P2.3b by fixing A(m+1) , P(m+1) ,
+
+Θ(m), and H(m), leading to 
+
+R
+
+(
+
+A(m+1) , P(m+1) , Θ(m), H(m), Q(m))
+
+> (a)
+
+= Rlb (
+
+A(m+1) , P(m+1) , Θ(m), H(m), Q(m))
+
+> (b)
+
+≤ Rlb (
+
+A(m+1) , P(m+1) , Θ(m+1) , H(m), Q(m+1) )
+
+> (c)
+
+≤ R
+
+(
+
+A(m+1) , P(m+1) , Θ(m+1) , H(m), Q(m+1) )
+
+. (48) Here, (a) holds as P2.3b yield the same objective for Q(m), (b) is true since Q(m+1) maximizes the lower bound Rlb while keeping A(m+1) , H(m), and P(m+1) fixed, (c) follows as the target value of P2.3b serves as a lower bound for the original problem at Q(m+1) . Thus, the objective value of P2.3b does not decrease with iterations, even with an approximate UAV trajectory. In step 4, we fix A(m+1) , Q(m+1) , and P(m+1) to achieve 
+
+R
+
+(
+
+A(m+1) , P(m+1) , Θ(m+1) , H(m), Q(m+1) )
+
+> (a)
+
+= Rlb (
+
+A(m+1) , P(m+1) , Θ(m+1) , H(m), Q(m+1) )
+
+> (b)
+
+≤ Rlb (
+
+A(m+1) , P(m+1) , Θ(m+1) , H(m+1) , Q(m+1) )
+
+> (c)
+
+≤ R
+
+(
+
+A(m+1) , P(m+1) , Θ(m+1) , H(m+1) , Q(m+1) )
+
+. (49) This is similar to the representation in (48), and from (46) to (49), we obtain 
+
+R
+
+(
+
+A(m), P(m), Θ(m), H(m), Q(m))
+
+≤ R
+
+(
+
+A(m+1) , P(m+1) , Θ(m+1) , H(m+1) , Q(m+1) )
+
+. (50) The analysis shows that the objective value of P1 does not decrease with each iteration of Algorithm 1 , ensuring convergence due to its finite upper bound. Simulation results demonstrate that the BCD-based method converges quickly under the given conditions. Each iteration involves solving convex optimization prob-lems with polynomial complexity, allowing efficient con-vergence even in wireless networks with a moderate num-ber of GDs. By iteratively solving the subproblems P2.1,
+
+P2.2b , P2.3b , and P2.4b until achieving the desired ac-curacy ε > 0, assuming that the number of iterations 
+
+TABLE III: Simulation Parameters.                                                                             
+
+> Parameter Value Parameter Value
+> [qI
+> U, z I
+> U
+> ][−200 ,0,30] T[qF
+> U, z F
+> U
+> ][200 ,0,30] T
+> [qI
+> J, z I
+> J
+> ][−200 ,0,50] T[qF
+> J, z F
+> J
+> ][200 ,0,50] T
+> [qI
+> E, z I
+> E
+> ][−250 ,150 ,85] T[qF
+> E, z F
+> E
+> ][250 ,−150 ,85] T
+> wk
+> [−150 ,−90 ,60 ,160 50 ,−60 ,60 ,−50
+> ]
+> Hmin , H max 30 m, 150 m
+> σ2−100 dBm Pave K,Pmax
+> K0.05 W, 0.2 W
+> Pave J,Pmax
+> J0.025 W, 0.1 W Phor
+> U, ave 175 W
+> Pver
+> U, ave 65 W Phor
+> J, ave 130 W
+> Pver
+> J, ave 30 W αL,αN2.2, 3.4
+> a, b 11.95, 0.14 Vxy , V z25 m/s, 10 m/s
+> ρ0,μ−60 dB, −20 dB Rmin 0.3 bits/Hz
+> Dmin ,rE15 m, 10m T40 s
+> δt1 s Γ−105 dB
+
+for the inner and outer loops of Algorithm 1 are de-noted by M2 and M1, respectively. We obtain a subop-timal solution for P1 with a computational complexity of 
+
+O
+
+(
+
+M1
+
+(√N (K + 1) log 1 
+
+> ε
+
++ M2(( K + 1) N )3 log 1
+
+> ε
+
+)) 
+
+[49]. V. N UMERICAL RESULTS 
+
+In this section, we present numerical results to demonstrate the effectiveness of the proposed algorithm. Without loss of generality, four GDs are distributed within a square area of 400 m × 400 m . All parameters for the system under consideration are detailed in Table III [12], [13], [14], [35], [36]. Additionally, the parameters in (13) are configured based on the example provided in [15]. To highlight the benefits of the proposed scheme, we compare it against the following three benchmarks. 1) Benchmark I (denoted by ‘FUOJ’): Similar to [39], the power and trajectory of J, the transmit power of GDs, and user scheduling are jointly optimized, with the fixed trajectory of U . It aims to quantify the additional performance gain achieved by introducing optimization of 3D trajectory for U .2) Benchmark II (denoted by ‘UJNP’): In this scheme, the 3D trajectory of U and J, and user scheduling are jointly optimized, with the fixed power of GDs and J,the fixed power levels are their average values P ave K and 
+
+P ave J . It aims to quantify the additional performance gain achieved by introducing power optimization for GDs and 
+
+J.3) Benchmark III (denoted by ‘UJ2D’): Similar to [24], all UAVs operate at the minimum altitude, the 2D trajectories of U and J, the jamming power from J, the transmit power of GDs, and user scheduling are jointly designed. It aims to quantify the additional performance gain achieved by introducing optimization of vertical trajectory for U and J.Fig. 2(a) plots the convergence of all the schemes, and the curves demonstrate that the proposed scheme exhibits superior convergence performance and achieves the highest secrecy rate compared to benchmarks, which underscores the effectiveness and benefits of the proposed algorithm. Compared with the benchmark schemes, the proposed scheme demonstrates per-formance advantages by jointly optimizing the 3D trajectories of dual UAVs: the FUOJ scheme cannot flexibly approach GDs due to the lack of optimized communication UAV trajectory; 12          
+
+> 12345678910
+> 01234567
+> ASSE (bps/Hz)
+
+(a) ASSE with different schemes.          
+
+> 12345678910
+> 33.5 44.5 55.5 66.5
+> ASSE (bps/Hz)
+
+(b) ASSE of the proposed scheme with varying power budget.          
+
+> 12345678910
+> 33.5 44.5 55.5 66.5 7
+> ASSE (bps/Hz)
+
+(c) ASSE of the proposed scheme with varying Γ.         
+
+> 12345678910
+> 33.5 44.5 55.5 66.5 7
+> ASSE (bps/Hz)
+
+(d) ASSE of the proposed scheme with varying T .
+
+Fig. 2: ASSE versus the number of iterations.         
+
+> -200 -150 -100 -50 050 100 150 200
+> -200 -150 -100 -50 050 100 150 200 250
+
+(a) 2D trajectories of UAVs with the proposed scheme.         
+
+> -200 -150 -100 -50 050 100 150 200
+> -200 -150 -100 -50 050 100 150 200 250
+
+(b) 2D trajectories of UAVs with FUOJ scheme.         
+
+> -200 -150 -100 -50 050 100 150 200
+> -200 -150 -100 -50 050 100 150 200 250
+
+(c) 2D trajectories of UAVs with UJNP scheme.         
+
+> -200 -150 -100 -50 050 100 150 200
+> -200 -150 -100 -50 050 100 150 200 250
+
+(d) 2D trajectories of UAVs with UJ2D scheme. 
+
+(e) 3D trajectories of UAVs with the proposed scheme. 
+
+(f) 3D trajectories of UAVs with FUOJ scheme. 
+
+(g) 3D trajectories of UAVs with UJNP scheme. 
+
+(h) 3D trajectories of UAVs with UJ2D scheme. 
+
+Fig. 3: Trajectories of UAVs with different schemes. 
+
+The UJ2D scheme, due to its fixed height, limits the ability of communication UAVs to obtain better elevation angles and interfere with the ability of UAVs to approach eavesdropper. This collectively reflects the crucial role of 3D trajectory design in improving the overall performance of the system. Compared with the two benchmark schemes mentioned above, the importance of trajectory design is demonstrated. At the same time, we compared the UJNP scheme with fixed power optimized trajectory, and its performance is still lower than the proposed scheme. Fixed power will reduce performance, especially in scenarios such as CRN that require power control. Figs. 2(b)-2(d) show the convergence behavior of the proposed scheme with varying the propulsion power budgets of U
+
+(P hor 
+
+U, ave and P ver 
+
+U, ave ), the IT threshold ( Γ), and the flight duration ( T ). It can be observed that increasing P hor 
+
+U, ave and 
+
+P ver 
+
+U, ave can enhance the secrecy performance since more power budget can obtain better channel quality. As shown in Fig. 2(b), when P hor 
+
+U, ave = 175 W and P ver 
+
+U, ave = 65 W, the system’s ASSE is 6.252 bps/Hz, while in the case of P ver 
+
+U, ave = 25 W, the ASSE is 6.161 bps/Hz, with a gain of 1.48%. When P hor 
+
+U, ave 
+
+= 145 W, the ASSE in this case is 5.762 bps/Hz, and the gain compared to this case is 8.5%, indicating the importance of horizontal energy consumption. In situations where energy consumption is limited, horizontal energy consumption should be considered first. The results in Fig. 2(c) prove that the ASSE with larger Γ outperforms that with lower Γ since a small Γ denotes a tighter constraint for the primary users. It can be observed that the proposed scheme has a system ASSE of 5.923 bps/Hz at Γ = -115 dB. As Γ increases, the corresponding ASSE are 6.247 bps/Hz and 6.348 bps/Hz, respectively, resulting in system gains of 5.37% and 7.18%, respectively. This indicates that increasing Γ can bring better performance to the system. Finally, Fig. 2(d) demonstrates that the higher T , the better secrecy performance since more data can be collected. Fig. 3 presents the 2D and 3D trajectories for different schemes. When the power is fixed, in order to reduce in-terference with P , the degree of freedom of J’s trajectory will decrease. Comparing Figs. 3(e) and 3(g), under the UJNP scheme, J will fly higher in the trajectory near P to control interference, which leads to performance loss. The optimal 2D trajectory for U involves sequentially visiting each GD in 13        
+
+> 510 15 20 25 30 35 40
+> 00.01 0.02 0.03 0.04 0.05 0.06 0.07 0.08 0.09 0.1
+> Transmit Power (W)
+
+(a) Transmit power with the proposed scheme.        
+
+> 510 15 20 25 30 35 40
+> 00.01 0.02 0.03 0.04 0.05 0.06 0.07 0.08 0.09 0.1
+> Transmit Power (W)
+
+(b) Transmit power with the FUOJ scheme.        
+
+> 510 15 20 25 30 35 40
+> 00.01 0.02 0.03 0.04 0.05 0.06 0.07 0.08 0.09 0.1
+> Transmit Power (W)
+
+(c) Transmit power with the UJ2D scheme        
+
+> 510 15 20 25 30 35 40
+> 012345678910
+> SSE (bps/Hz)
+
+(d) SSE with different schemes. 
+
+Fig. 4: Transmit power of different schemes during the flight time. 
+
+(a) 2D trajectory of U . (b) 3D trajectory of U .       
+
+> 510 15 20 25 30 35 40
+> 0510 15 20 25
+
+(c) Horizontal velocity of U .       
+
+> 510 15 20 25 30 35 40
+> -15 -10 -5 0510
+
+(d) Vertical velocity of U .
+
+Fig. 5: Trajectory and velocity of U .
+
+(a) 2D trajectory of J. (b) 3D trajectory of J.       
+
+> 510 15 20 25 30 35 40
+> 00.01 0.02 0.03 0.04 0.05 0.06 0.07 0.08 0.09 0.1
+> Transmit Power (W)
+
+(c) Transmit power of J.       
+
+> 510 15 20 25 30 35 40
+> 0123456789
+> SSE (bps/Hz)
+
+(d) SSE versus varying Γ.
+
+Fig. 6: Trajectory and transmit power of J and SSE versus varying Γ.
+
+order, following straight-line paths between GDs to conserve energy, as demonstrated in Figs. 3(a) and 3(d). For J, the optimal 2D trajectory involves rapidly approaching E and then maintaining close pursuit until reaching the end position, shown in Figs. 3(a) - 3(d). Moreover, to achieve a favorable elevation angle, U must first climb to the maximum altitude along the z-axis before descending toward GDs, which can be found in Fig. 3(e). To effectively suppress the eavesdropper, 
+
+J needs to stay as close as possible to E in the vertical dimension while maintaining a safe horizontal distance, given in Figs. 3(e) - 3(g). Since J operates at the minimum altitude, 
+
+J in UJ2D must be closer to E than in the other schemes, by comparing Figs. 3(a) - 3(d). Figs. 4(a)-4(c) plot the optimized transmit power of GDs and J and Fig. 4(d) presents the SSE of the considered systems for each time slot. One can observe that there are four high-power regions because when U is near a GD, the GD uses larger transmit power to maximize the secrecy rate, corresponding to the four high-SE regions in Fig. 4(d). When 
+
+U flies between GDs, where channel conditions are relatively poor, the GD uses lower power. Compared to Fig. 4(b), the variation in transmit power of the GDs in Figs. 4(a) and 4(c) is smaller. This is because, in both the proposed strategy and UJ2D, the trajectory of U is optimized as needed. In contrast, in FUOJ, U operates with a fixed trajectory, resulting in larger variations in the distance between U and the scheduled GD and the worst SSE, as shown in Fig. 4(d). As shown in the results, the SSE under the UJNP scheme is consistently lower than that under the proposed scheme in each time slot, underscoring the critical importance of trajectory design and highlighting that power control remains a key factor for performance enhancement. Moreover, in UJ2D, U can only adjust its horizontal trajectory but not its vertical trajectory, so the GDs require relatively higher transmit power. Additionally, since D1 is close to P , it should utilize a relatively lower transmit power compared to the other GDs. Further, in the initial stage, J is far from E and thus uses high power to transmit AN. As it approaches E, lower power is sufficient 14     
+
+> 36 38 40 42 44
+> 1234567
+> ASSE (bits/Hz)
+
+(a) The ASSE versus T .    
+
+> 135 145 155 165 175
+> 1234567
+> ASSE (bits/Hz)
+
+(b) The ASSE versus P hor 
+
+> U, ave
+
+.    
+
+> 10 11 12 13 14
+> 123456
+> ASSE (bits/Hz)
+
+(c) The ASSE versus rE .    
+
+> -107 -105 -103 -101 -99
+> 1234567
+> ASSE (bits/Hz)
+
+(d) The ASSE versus Γ.
+
+Fig. 7: ASSE with different schemes. 
+
+to suppress eavesdropping. After reaching above D4, since J
+
+must return to the endpoint and the distance to E increases, it needs to use higher transmit power again. Based on Figs. 4(a)-4(c), one also can observe that all the GDs obtain service in turn. Fig. 5 illustrate the (2D and 3D) trajectories and the (hori-zontal and vertical) velocities of U with the proposed scheme with varying P hor  
+
+> U, ave
+
+and P ver 
+
+> U, ave
+
+, respectively. As we know, the power budget determines whether the UAV can fly horizontally to the positions above GDs or to the altitude in the vertical direction. As shown in Figs. 5(a) and 5(c), when P hor  
+
+> U, ave
+
+= 145 ,
+
+U cannot approach users D1 and D4 horizontally, which forces it to fly higher vertically to compensate in Figs. 5(b) and 5(d) when P ver  
+
+> U, ave
+
+= 65 . In contrast, when P hor  
+
+> U, ave
+
+= 175 and 
+
+P ver  
+
+> U, ave
+
+= 65 , U can get closer to all the GDs horizontally and hover directly above them, eliminating the need to ascend to the maximum height, which is demonstrated in Figs. 5(b) and 5(d). Fig. 6 shows the trajectory of J and the achievable secrecy rate of the proposed scheme with varying Γ. It can be seen from Figs. 6(a) and 6(b) that when Γ = −115 dB, J can not approach D1 in horizontal and vertical directions to ensure IT restrictions on P . Moreover, J must use the lower power to transmit AN, shown in Fig. 6(c). These reasons result in a lower SSE, shown in Fig. 6(d). Fig. 7 illustrates the ASSE of different schemes with varying 
+
+T , P hor 
+
+> U, ave
+
+, rE , and Γ. The curves in Fig. 7(a) demonstrate that an increase in T enhances the performance of all schemes since a larger T permits U to remain for a longer time over the GD. Fig. 7(b) testifies that a rise in P hor  
+
+> U, ave
+
+results in better secrecy performance since the better channel quality between 
+
+U and the scheduled GD is obtained, which consequently improved the ASSE. In Fig. 7(c), the effect of rE on the secrecy performance is demonstrated. We can observe that the increasing rE leads to a decreasing ASSE for all schemes since a larger rE denotes a larger estimation error of the eavesdropping channel. Fig. 7(d) shows the influence of Γ on the secrecy performance of the considered system. It can be observed that, as Γ increases, the ASSE improves. However, in the larger-Γ region, the ASSE becomes independent of Γ
+
+since the system enters the non-cognitive mode. VI. C ONCLUSION 
+
+In this study, we examined the secrecy performance of a dual-UAV-assisted system in a data collection scenario with an aerial eavesdropper. The methodology involved improving secrecy performance by jointly considering the 3D trajectories of the dual UAVs, the transmit power and scheduling of GDs, and the jamming signal power. By jointly optimizing these variables, the ASSE was maximized. The BCD and SCA techniques were used, and the formulated problem was decomposed into several manageable convex subproblems, which were solved efficiently using the iterative algorithm we proposed. Numerical results confirm the convergence and effectiveness of the proposed algorithm and provide valu-able insights into how parameters (such as average transmit power budgets and flight duration) affect the ASSE. Extending the single-antenna to a multi-antenna system and integrating beamforming with ISAC technology to collaboratively esti-mate the locations of aerial eavesdroppers will be part of our future research. REFERENCES [1] Q. Wu, J. Xu, Y. Zeng, D. W. K. Ng, N. Al-Dhahir, R. Schober, and A. L. Swindlehurst, “A comprehensive overview on 5G-and-beyond networks with UAVs: From communications to sensing and intelligence,” IEEE J. Sel. Areas Commun. , vol. 39, no. 10, pp. 2912-2945, Oct. 2021. [2] B. Li, Z. Fei, and Y. Zhang, “UAV communications for 5G and beyond: Recent advances and future trends,” IEEE Internet Things J. , vol. 6, no. 2, pp. 2241-2263, Apr. 2019. [3] Y. Zeng, Q. Wu, and R. Zhang, “Accessing from the sky: A tutorial on UAV communications for 5G and beyond,” Proc. IEEE , vol. 107, no. 12, pp. 2327-2375, Dec. 2019. [4] Q. Wu, L. Liu, and R. Zhang, “Fundamental trade-offs in communication and trajectory design for UAV-enabled wireless network,” IEEE Wireless Commun. , vol. 26, no. 1, pp. 36-44, Feb. 2019. [5] M. Cui, G. Zhang, Q. Wu, and D. W. K. Ng, “Robust trajectory and transmit power design for secure UAV communications,” IEEE Trans. Veh. Technol. , vol. 67, no. 9, pp. 9042-9046, Sep. 2018. [6] Z. Li, M. Chen, C. Pan, N. Huang, Z. Yang, and A. Nallanathan, “Joint trajectory and communication design for secure UAV networks,” IEEE Commun. Lett. , vol. 23, no. 4, pp. 636-639, Apr. 2019. [7] Z. Na, C. Ji, B. Lin, and N. Zhang, “Joint optimization of trajectory and resource allocation in secure UAV relaying communications for internet of things,” IEEE Internet Things J. , vol. 9, no. 17, pp. 16284-16296, Sep. 2022. [8] N. Aboueleneen, A. Alwarafy, and M. Abdallah, “Secure and energy-efficient communication for internet of drones networks: A deep re-inforcement learning approach,” in Proc. 2023 International Wireless Communications and Mobile Computing (IWCMC) , Marrakesh, Morocco, Jun. 2023, pp. 818-823. [9] A. Alwarafy, S. B. Melhem, R. Abou Chahine, B. Said, M. Alharethi, L. Almazrouei, and S. Alblooshi, “Deep reinforcement learning-based joint trajectory design and resource allocation for secure and energy-efficient UAV networks,” IEEE Open J. Commun. Soc. , vol. 6, pp. 6491-6505, Aug. 2025. 15 
+
+[10] M. Kim, S. Kim, and J. Lee, “Securing communications with friendly unmanned aerial vehicle jammers,” IEEE Trans. Veh. Technol. , vol. 70, no. 2, pp. 1972-1977, Feb. 2021. [11] Y. Zhou, P. L. Yeoh, H. Chen, Y. Li, R. Schober, L. Zhuo, and B. Vucetic, “Improving physical layer security via a UAV friendly jammer for unknown eavesdropper location,” IEEE Trans. Veh. Technol. , vol. 67, no. 11, pp. 11280-11284, Nov. 2018. [12] A. Li, Q. Wu, and R. Zhang, “UAV-enabled cooperative jamming for improving secrecy of ground wiretap channel,” IEEE Wireless Commun. Lett. , vol. 8, no. 1, pp. 181-184, Feb. 2019. [13] Z. Liu, B. Zhu, Y. Xie, K. Ma, and X. Guan, “UAV-aided secure communication with imperfect eavesdropper location: Robust design for jamming power and trajectory,” IEEE Trans. Veh. Technol. , vol. 73, no. 5, pp. 7276-7286, May. 2024. [14] H. Lei, H. Yang, K.-H. Park, I. S. Ansari, J. Jiang, and M.-S. Alouini, “Joint trajectory design and user scheduling for secure aerial underlay IoT systems,” IEEE Internet Things J. , vol. 10, no. 15, pp. 13637-13648, Aug. 2023. [15] R. Zhang, X. Pang, W. Lu, N. Zhao, Y. Chen, and D. Niyato, “Dual-UAV enabled secure data collection with propulsion limitation,” IEEE Trans. Wireless Commun. , vol. 20, no. 11, pp. 7445-7459, Nov. 2021. [16] B. Li, Z. Fei, Y. Zhang, and M. Guizani, “Secure UAV communication networks over 5G,” IEEE Wireless Commun. , vol. 26, no. 5, pp. 114-120, Oct. 2019. [17] H.-M. Wang, X. Zhang, and J.-C. Jiang, “UAV-involved wireless physical-layer secure communications: Overview and research direc-tions,” IEEE Wireless Commun. , vol. 26, no. 5, pp. 32-39, Oct. 2019. [18] Q. Wu, W. Mei, and R. Zhang, “Safeguarding wireless network with UAVs: A physical layer security perspective,” IEEE Wireless Commun. ,vol. 26, no. 5, pp. 12-18, Oct. 2019. [19] W. Lu, Y. Ding, Y. Gao, Y. Chen, N. Zhao, Z. Ding, and A. Nallanathan, “Secure NOMA-based UAV-MEC network towards a flying eavesdrop-per,” IEEE Trans. Commun. , vol. 70, no. 5, pp. 3364-3376, May 2022. [20] Y. Ding, Q. Zhang, W. Lu, N. Zhao, A. Nallanathan, X. Wang, and X. Yang, “Collaborative communication and computation for secure UAV-enabled MEC against active aerial eavesdropping,” IEEE Trans. Wireless Commun. , vol. 23, no. 11, pp. 15915-15929, Nov 2024. [21] T. Cheng, B. Wang, K. Cao, R. Dong, and D. Diao, “IRS-enabled secure G2A communications for UAV system with aerial eavesdropping,” IEEE Syst. J. , vol. 17, no. 3, pp. 3670-3681, Sep. 2023. [22] E. T. Michailidis, M.-G. Volakaki, N. I. Miridakis, and D. Vouyioukas, “Optimization of secure computation efficiency in UAV-enabled RIS-assisted MEC-IoT networks with aerial and ground eavesdroppers,” IEEE Trans. Commun. , vol. 72, no. 7, pp. 3994-4009, Jul. 2024. [23] H. Lei, M. Yang, K.-H. Park, and G. Pan, “Secure offloading in NOMA-aided aerial MEC systems based on deep reinforcement learning,” IEEE J. Miniat. Air Space Syst. , vol. 6, no. 2, pp. 113-124, Jun. 2025. [24] H. Lei, D. Meng, H. Ran, K.-H. Park, G. Pan, and M.-S. Alouini, “Multi-UAV trajectory design for fair and secure communication,” IEEE Trans. Cogn. Commun. Netw. , vol. 11, no. 3, pp. 1966-1980, Jun. 2025. [25] H. Lei, D. Meng, K.-H. Park, N. Saeed, and G. Pan, “DRL-based resource allocation for aerial IoT systems with no-fly-zones,” IEEE Trans. Aerosp. Electron. Syst. , 2025. [26] A. A. Al-habob, O. A. Dobre, and Y. Jing, “Predictive beamforming approach for secure integrated sensing and communication with multiple aerial eavesdroppers,“ IEEE Trans. Commun. , vol. 73, no. 9, pp. 7887-7898, Sep. 2025. [27] X. Gao, Y. Mei, Y. Wang, M. Shi, J. Kang, and K. Yang, “Secrecy energy efficiency maximization in space-air-ground networks with an aerial eavesdropper,“ IEEE Trans. Veh. Technol. , vol. 74, no. 11, pp. 17972-17984, Jun. 2025. [28] Q. Wang, S. Tang, W. Sun, Y. Zhang, G. Sun, H.-N. Dai, and M. Guizani, “Smart shield: Prevent aerial eavesdropping via cooperative intelligent jamming based on multi-agent reinforcement learning,“ IEEE Trans. Mobile Comput. , vol. 24, no. 4, pp. 2995-3011, Apr. 2025. [29] Y. Saleem, M. H. Rehmani, and S. Zeadally, “Integration of cognitive radio technology with unmanned aerial vehicles: Issues, opportunities, and future research challenges,” J. Netw. Comput. Appl. , vol. 50, pp. 15-31, Apr. 2015. [30] Y. Huang, W. Mei, J. Xu, L. Qiu, and R. Zhang, “Cognitive UAV communication via joint maneuver and power control,” IEEE Trans. Commun. , vol. 67, no. 11, pp. 7872-7888, Nov. 2019. [31] Z. Wang, F. Zhou, Y. Wang, and Q. Wu, “Joint 3D trajectory and resource optimization for a UAV relay-assisted cognitive radio network,” 
+
+China Commun. , vol. 18, no. 6, pp. 184-200, Jun. 2021. [32] Y. Gao, Y. Wu, Z. Cui, W. Yang, and N. Li, “Anti-jamming trajectory and power design for cognitive UAV communications,” in Proc. 2021 In-ternational Wireless Communications and Mobile Computing (IWCMC) ,Aug. 2021, pp. 1370-1375. [33] H. Lei, J. Jiang, H. Yang, K.-H. Park, I. S. Ansari, G. Pan, and M.-S. Alouini, “Trajectory and power design for aerial CRNs with colluding eavesdroppers,” IEEE Trans. Veh. Technol. , vol. 73, no. 12, pp. 18824-18833, Dec. 2024. [34] A. Al-Hourani, S. Kandeepan, and S. Lardner, “Optimal LAP altitude for maximum coverage,” IEEE Wireless Commun. Lett. , vol. 3, no. 6, pp. 569-572, Dec. 2014. [35] B. Duo, Q. Wu, X. Yuan, and R. Zhang, “Anti-jamming 3D trajectory design for UAV-enabled wireless sensor networks under probabilistic LoS channel,” IEEE Trans. Veh. Technol. , vol. 69, no. 12, pp. 16288-16293, Dec. 2020. [36] C. You and R. Zhang, “Hybrid offline-online design for UAV-enabled data harvesting in probabilistic LoS channels,” IEEE Trans. Wireless Commun. , vol. 19, no. 6, pp. 3753-3768, Jun. 2020. [37] H. Lei, X. Wu, K.-H. Park, and G. Pan, “3D trajectory design for energy-constrained aerial CRNs under probabilistic LoS channel,” IEEE Trans. Cogn. Commun. Netw. , vol. 11, no. 3, pp. 1522-1534, Jun. 2025. [38] Y. Jiang and J. Zhu, “Three-dimensional trajectory optimization for secure UAV-enabled cognitive communications,” China Commun. , vol. 18, no. 12, pp. 285-296, Dec. 2021. [39] P. X. Nguyen, V.-D. Nguyen, H. V. Nguyen, and O.-S. Shin, “UAV-assisted secure communications in terrestrial cognitive radio networks: Joint power control and 3D trajectory optimization,” IEEE Trans. Veh. Technol. , vol. 70, no. 4, pp. 3298-3313, Apr. 2021. [40] H. Xing, L. Liu, and R. Zhang, “Secrecy wireless information and power transfer in fading wiretap channel,” IEEE Trans. Veh. Technol. , vol. 65, no. 1, pp. 180-190, Jan. 2016. [41] L. Lv, F. Zhou, J. Chen, and N. Al-Dhahir, “Secure cooperative com-munications with an untrusted relay: A NOMA-inspired jamming and relaying approach,” IEEE Trans. Inf. Forensics Security , vol. 14, no. 12, pp. 3191-3205, Dec. 2019. [42] A. Meng, X. Gao, Y. Zhao, and Z. Yang, “Three-dimensional trajectory optimization for energy-constrained UAV-enabled IoT system in proba-bilistic LoS channel,” IEEE Internet Things J. , vol. 9, no. 2, pp. 1109-1121, Jan. 2022. [43] Q. Dan, H. Lei, K.-H. Park, and G. Pan, “Beamforming for secure RSMA-aided ISAC systems,” IEEE Trans. Cogn. Commun. Netw. , vol. 11, no. 5, pp. 2970-2983, Oct. 2025. [44] Y. Zeng, J. Xu, and R. Zhang, “Energy minimization for wireless communication with rotary-wing UAV,” IEEE Trans. Wireless Commun. ,vol. 18, no. 4, pp. 2329-2345, Apr. 2019. [45] C. Zhan and H. Lai, “Energy minimization in internet-of-things system based on rotary-wing UAV,” IEEE Wireless Commun. Lett. , vol. 8, no. 5, pp. 1341-1344, Oct. 2019. [46] B. Duo, Q. Wu, X. Yuan, and R. Zhang, “Energy efficiency maximization for full-duplex UAV secrecy communication,” IEEE Trans. Veh. Technol. ,vol. 69, no. 4, pp. 4590-4595, Apr. 2020. [47] A. Filippone, Flight Performance of Fixed and Rotary Wing Aircraft. 
+
+Amsterdam, The Netherlands: Elsevier, 2006. [48] S. Boyd and L. Vandenberghe, Convex Optimization : Cambridge Univ Press, 2004. [49] M. Li, X. Tao, N. Li, H. Wu, and J. Xu, “Secrecy energy efficiency maximization in UAV-enabled wireless sensor networks without eaves-dropper’s CSI,” IEEE Internet Things J. , vol. 9, no. 5, pp. 3346-3358, Mar. 2022.
