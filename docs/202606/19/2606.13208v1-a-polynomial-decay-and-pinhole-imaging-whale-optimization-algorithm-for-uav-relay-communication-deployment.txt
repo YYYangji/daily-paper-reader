@@ -1,0 +1,342 @@
+Title: A Polynomial-Decay and Pinhole-Imaging Whale Optimization Algorithm for UAV Relay Communication Deployment
+
+URL Source: https://arxiv.org/pdf/2606.13208v1
+
+Published Time: Fri, 12 Jun 2026 00:49:27 GMT
+
+Number of Pages: 4
+
+Markdown Content:
+# A Polynomial-Decay and Pinhole-Imaging Whale Optimization Algorithm for UAV Relay Communication Deployment 
+
+Zhenhong Peng 
+
+College of Animal Science and Technology Zhongkai University of Agriculture and Engineering 
+
+Guangzhou, China 
+
+Junhao Wei ∗
+
+Faculty of Applied Sciences Macao Polytechnic University 
+
+Macao SAR, China 
+
+Baili Lu 
+
+Faculty of Applied Sciences Macao Polytechnic University 
+
+Macao SAR, China 
+
+Yanxiao Li 
+
+Faculty of Applied Sciences Macao Polytechnic University 
+
+Macao SAR, China 
+
+Yifu Zhao 
+
+Faculty of Applied Sciences Macao Polytechnic University 
+
+Macao SAR, China 
+
+Haochen Li 
+
+Faculty of Applied Sciences Macao Polytechnic University 
+
+Macao SAR, China 
+
+Dexing Yao 
+
+Faculty of Applied Sciences Macao Polytechnic University 
+
+Macao SAR, China 
+
+Xu Yang 
+
+Faculty of Applied Sciences Macao Polytechnic University 
+
+Macao SAR, China 
+
+Yapeng Wang ∗
+
+Faculty of Applied Sciences Macao Polytechnic University 
+
+Macao SAR, China 
+
+Abstract —Unmanned aerial vehicle (UAV) relays deliver flexi-ble, on-demand wireless coverage, but jointly tuning the position, altitude, transmit power and bandwidth of the relay is a non-convex, heavily constrained optimization task that easily traps swarm-based optimizers in poor local optima. We propose PWOA, a Polynomial-decay and Pinhole-imaging Whale Opti-mization Algorithm with three complementary improvements: (i) a Good Nodes Set (GNS) initialization that spreads the initial population uniformly across the search space; (ii) a polynomial nonlinear schedule for the convergence factor that prolongs early exploration and sharpens late exploitation; and (iii) astagnation-triggered pinhole-imaging opposition-based learning (POBL) operator paired with an elite Gaussian local search, which together escape local optima while refining the leader. On a five-dimensional UAV relay deployment problem with five inequality constraints ( N =30 , T =500 , 30 independent runs), PWOA simultaneously attains the lowest Best, Worst, Mean and standard deviation among PWOA, WOA, SCA and IPSO, cutting the mean by 1.4–18 .5% and the standard deviation by 
+
+15 –87% over the three baselines, and exhibits the fastest average convergence. 
+
+Index Terms —Whale Optimization Algorithm, UAV Relay De-ployment, Good Nodes Set, Pinhole-Imaging Opposition Learn-ing, Swarm Intelligence. 
+
+I. I NTRODUCTION 
+
+UAV-mounted aerial relays provide rapid infrastructure-less coverage for disaster recovery, hot-spot offloading and tactical communication. Their deployment jointly determines the 3D position, transmit power and bandwidth under line-of-sight, 
+
+> ∗
+
+Corresponding authors: Junhao Wei (p2312195@mpu.edu.mo) and Yapeng Wang (yapengwang@mpu.edu.mo). 
+
+capacity and energy constraints, yielding a non-convex black-box problem suited to meta-heuristics [1], [2]. The Whale Optimization Algorithm (WOA) [3] is attractive because of its simple structure and few control parameters, but random initialization and the linear decay of the con-vergence factor a can cause uneven coverage and premature exploitation. Variants such as RWOA [4], LSEWOA [5], TSWOA [6], LSWOA [7], geometric WOA [8], CICDWOA [9], and related hybrids or applications [10]–[12] show that initialization, perturbation and adaptive scheduling are decisive design choices. PWOA is therefore designed as a role-coupled optimizer rather than a loose accumulation of WOA variants: GNS improves initial coverage, polynomial decay controls the exploration-to-exploitation transition, and stagnation-triggered POBL with elite search recovers the leader after stagnation. This operator–failure-mode mapping is consistent with UAV optimization studies such as landscape-aware bandit hyper-heuristics [14] and GeoSSA [15], which show that operator design should match the search landscape. Learning-based and model-driven paradigms are comple-mentary. Dense-reward deep reinforcement learning has been used for UAV path planning [16] and is attractive with repeated online decisions and sufficient training scenarios, while model-driven methods can offer structure under tractable assump-tions. PWOA instead targets one-shot or limited-data relay deployment where the objective and constraints are directly evaluable but hard to convexify or differentiate. The contributions are threefold: (i) a five-dimensional con-strained UAV relay deployment formulation with five inequal-
+
+> arXiv:2606.13208v1 [cs.CE] 11 Jun 2026
+
+ity constraints and a quadratic penalty function; (ii) PWOA, which combines GNS initialization, polynomial nonlinear de-cay and stagnation-triggered POBL with elite Gaussian local search; and (iii) a 30-run comparison against WOA, SCA and IPSO, where PWOA achieves the best Mean, Std and convergence speed. II. P ROBLEM FORMULATION 
+
+We consider a UAV that hovers above a service area to relay communication between two ground nodes located at 
+
+p1 = (1 .5, 2.0) km and p2 = (8 .0, 7.0) km. The decision vector 
+
+x = [ x, y, h, p tx , B ]⊤ (1) encodes the horizontal position (x, y ) in km, altitude h in metres, transmit power ptx in watts and bandwidth B in MHz, with bounds 
+
+lb = [0 , 0, 80 , 1, 1] , ub = [10 , 10 , 400 , 8, 20] . (2) 
+
+a) Link model: The horizontal and full distances to the two ground nodes are 
+
+dh,i = ∥ (x, y ) − pi ∥2, i ∈ { 1, 2}, (3) 
+
+di =
+
+q
+
+d2 
+
+> h,i
+
++ ( h/ 1000) 2. (4) With a simplified path-loss-plus-noise model, the receive SNR and the bottleneck Shannon capacity are 
+
+SNR i = ptx 
+
+0.15 + d2
+
+> i
+
+, (5) 
+
+C(x) = B · log 2(1 + min(SNR 1, SNR 2)) Mbps . (6) The service cost 
+
+S(x) = 10 ptx + 0 .06 h + 0 .8 B (7) captures the operating expense of higher transmit power, higher altitude (energy and ATC clearance) and wider band-width. 
+
+b) Constraints: The deployment must satisfy 
+
+g1 : 25 − C(x) ≤ 0, (8) 
+
+g2 : (60 + 18 dmax  
+
+> h
+
+) − h ≤ 0, (9) 
+
+g3 : ptx · B − 90 ≤ 0, (10) 
+
+g4 : dh, 1 − 9 ≤ 0, g5 : dh, 2 − 9 ≤ 0, (11) with dmax  
+
+> h
+
+= max( dh, 1, d h, 2) corresponding to minimum capacity, line-of-sight clearance, power-bandwidth budget, and horizontal range, respectively. Following [11], [12], we adopt a quadratic penalty function with factor ρ = 10 4:
+
+y(x) = −C(x) + S(x)10 + ρ
+
+> 5
+
+X
+
+> k=1
+
+max( gk, 0) 2. (12) The optimizer minimizes (12) so that lower scores correspond to higher capacity, lower service cost and smaller constraint violations.       
+
+> Fig. 1. 2D comparison of pseudo-random initialization (left, blue stars) and Good Nodes Set initialization (right, red circles) for N= 150 on [0 ,1] 2.
+
+III. T HE PROPOSED PWOA 
+
+A. Standard WOA recap 
+
+The WOA [3] models bubble-net hunting by humpback whales through three operators: encircling, spiral updating and random search. Let X(t) 
+
+> i
+
+be the position of whale i at iteration 
+
+t and X∗,(t) the best agent so far. With a linearly decreasing from 2 to 0, A = 2 ar 1 − a, C = 2 r2, r1, r 2 ∼ U (0 , 1) ,
+
+p ∼ U (0 , 1) , the update rule is 
+
+X(t+1)  
+
+> i
+
+=
+
+
+
+X∗ −A·| CX∗ −Xi|, p < 0.5, |A| < 1
+
+Xr −A·| CXr −Xi|, p < 0.5, |A| ≥ 1
+
+|X∗ −Xi| elcos(2 πl )+ X∗, p ≥ 0.5
+
+(13) where l ∼ U (−1, 1) . The linear decay of a together with ran-dom initialization is the main source of premature convergence on highly multi-modal, constrained problems such as the UAV deployment in Section II. 
+
+B. Improvement 1: Good Nodes Set initialization 
+
+Random initialization frequently leaves large regions of the search space empty, especially in the low-dimensional constrained setting where the feasible region is narrow. We adopt a deterministic Good Nodes Set initialization with a small jitter that preserves diversity across runs: 
+
+X(0)  
+
+> ij
+
+= lb j + ub j − lb j
+
+N − 1 ·(i−1)+ ε (ub j −lb j ) ( ξij −0.5) (14) for i = 1 , . . . , N , j = 1 , . . . , D , with ξij ∼ U (0 , 1) and 
+
+ε = 0.01 . This guarantees uniform coverage along every dimension and reduces the variance of the early-stage best fitness across independent runs. Fig. 1 contrasts 150 samples drawn by pseudo-random and Good Nodes Set initialization on the unit square; the latter exhibits visibly better space-filling and avoids the clumping and empty regions characteristic of random sampling. 
+
+C. Improvement 2: Polynomial nonlinear decay of a
+
+The original linear schedule pushes the algorithm into ex-ploitation as soon as half of the iterations are spent. Inspired by the parameter scheduling analysis of [6], [8], PWOA replaces the linear schedule with a polynomial nonlinear decay 
+
+a(t) = amax − (amax − amin ) ·
+
+ tT − 1
+
+μ
+
+, (15) Fig. 2. Pinhole-imaging POBL geometry. The leader X∗ is reflected through the search-space centre M to produce a candidate ˆX∗ whose magnification is 1/k (t): a small k (early iterations) yields a long jump (black) and a large  
+
+> k(late iterations) yields a short jump (grey).
+
+where amax = 2 , amin = 0 , and μ = 2 . With μ > 1 the factor 
+
+a decreases slowly during the first half of the run, retaining the random-search branch ( |A| ≥ 1) longer and improving exploration; in the second half a falls quickly so that the spiral and encircling branches dominate, yielding fast exploitation. 
+
+D. Improvement 3: Stagnation-triggered POBL with elite local search 
+
+The third innovation tackles local-optima trapping. PWOA monitors a stagnation counter σ of the global-best score. (a) At every iteration we first perform an elite Gaussian local search 
+
+around the leader, 
+
+˜X∗ = X∗ + η ⊙ (ub − lb ), η ∼ N (0 , β (t)I), (16) with shrinking step β(t) = β0(1 − t/ (T − 1)) and β0 = 0 .05 .The candidate replaces the leader only when it is strictly better. (b) Once σ exceeds the threshold σmax = 15 , we apply a pinhole-imaging opposition-based learning (POBL) transform with progress-adaptive imaging factor k(t):
+
+ˆX∗ 
+
+> j
+
+= lb j + ub j
+
+2 + ub j − lb j
+
+2k(t) − X∗
+
+> j
+
+k(t) , (17) where k(t) = 1 .5 + (4 .0 − 1.5) · t/ (T − 1) . A small k at the beginning generates an aggressive long-range jump to escape early local minima; a large k at the end maps the candidate close to the centroid of the search space, enabling controlled diversification near termination. The candidate is always injected into the worst individual, breaking population stagnation, and replaces the leader if it is strictly better. The counter σ is then reset. Fig. 2 illustrates the pinhole-imaging geometry: the leader X∗ is the object, M = ( lb + ub )/2 acts as the pinhole, and the candidate ˆX∗ is the inverted image whose distance from M shrinks as k grows. 
+
+E. PWOA pseudocode and complexity 
+
+The complete procedure is summarized in Algorithm 1. Per iteration PWOA performs O(N · D) position updates plus a constant number of leader evaluations, so the overall time complexity is O(N · D · T ), identical to standard WOA. 
+
+Algorithm 1 PWOA  
+
+> 1:
+
+Initialize X(0) via GNS (14); evaluate fitness; X∗ ←
+
+arg min ; σ ← 0. 
+
+> 2:
+
+for t = 0 , 1, . . . , T − 1 do  
+
+> 3:
+
+Compute a(t) via (15).  
+
+> 4:
+
+for i = 1 , . . . , N do  
+
+> 5:
+
+Update X(t+1)  
+
+> i
+
+via (13); clip and evaluate.  
+
+> 6:
+
+If improved, update X∗. 
+
+> 7:
+
+end for  
+
+> 8:
+
+Generate ˜X∗ via (16); if better, accept.  
+
+> 9:
+
+Update σ. 
+
+> 10:
+
+if σ ≥ σmax then  
+
+> 11:
+
+Generate ˆX∗ via (17); if better, accept.  
+
+> 12:
+
+Inject ˆX∗ into worst individual; σ ← 0. 
+
+> 13:
+
+end if  
+
+> 14:
+
+end for  
+
+> 15:
+
+return X∗, fitness curve.                                                                
+
+> TABLE I RESULTS OVER 30 INDEPENDENT RUNS (N= 30 ,T= 500 ). L OWER IS BETTER FOR ALL METRICS ;THE BEST VALUE IN EACH COLUMN IS BOLDED .Algorithm Best ↓Worst ↓Mean ↓Std ↓
+> PWOA 3.317 ×10 63.512 ×10 63.412 ×10 65.37 ×10 4
+> WOA 3.335 ×10 63.934 ×10 63.515 ×10 61.44 ×10 5
+> SCA 3.324 ×10 63.605 ×10 63.459 ×10 66.30 ×10 4
+> IPSO 3.477 ×10 64.821 ×10 64.185 ×10 64.09 ×10 5
+
+IV. E XPERIMENTS 
+
+A. Setup 
+
+We compare PWOA with the original WOA [3], SCA [13] and an improved PSO (IPSO) variant [1] that uses a Tent-map initialization, Levy-flight perturbation and a self-adaptive Student-t distribution operator. All algorithms are run on the deployment problem of Section II with population size 
+
+N = 30 , maximum iterations T = 500 and 30 independent runs (seeds 0–29). Each run uses a different random seed but the seed sequence is shared across algorithms to ensure fairness. PWOA-specific hyper-parameters are set to μ = 2 ,
+
+σmax = 15 , kmin = 1 .5, kmax = 4 , β0 = 0 .05 . Experiments were performed on a Linux workstation in Python 3.13 / NumPy 2.x. 
+
+B. Statistical results 
+
+Table I reports the Best, Worst, Mean and standard deviation (Std) of the final fitness over 30 runs. Lower is better. PWOA attains the lowest Best, lowest Worst, lowest Mean and lowest Std simultaneously, indicating that it is both more accurate and more reliable than all three baselines. In particular, PWOA reduces the Mean by 2.9% over WOA, 1.4% over SCA and 
+
+18 .5% over IPSO, while reducing the Std by 63% over WOA and 87% over IPSO. 
+
+C. Convergence behaviour 
+
+Fig. 3 shows the average best-so-far fitness over the 30 runs (logarithmic y-axis). PWOA falls below the WOA curve within Fig. 3. Average convergence curves of the four algorithms on the UAV relay deployment problem (30 runs, log-scale y-axis). 
+
+the first 30 iterations and stays the lowest for the remaining 470 iterations, confirming that the GNS initialization and the polynomial schedule jointly accelerate the early descent. SCA initially stagnates and only catches up close to iteration 500, while IPSO is the slowest because the Student-t operator pushes the swarm too far from the feasible region in early iterations. 
+
+D. Discussion 
+
+The three improvements form a coverage–transition– recovery chain. GNS reduces sampling discrepancy and sup-plies a more balanced population for WOA’s encircling and spiral operators. The polynomial schedule retains larger |A|
+
+values early and accelerates exploitation only after sufficient exploration. Elite local search and POBL are conditional recovery mechanisms tied to leader stagnation rather than always-on perturbations. Thus, the modules are necessary for different failure modes: missing feasible regions, exploiting too early, and remaining trapped after population contraction. This coupling explains the tighter final distribution in Table I, where PWOA reaches a Std of 5.37 × 10 4.V. C ONCLUSION 
+
+We have presented PWOA, a Polynomial-decay and Pinhole-imaging Whale Optimization Algorithm tailored to the UAV relay communication deployment problem. PWOA augments standard WOA with a Good Nodes Set initial-ization, a polynomial nonlinear convergence-factor schedule and a stagnation-triggered POBL operator combined with elite Gaussian local search. Across 30 independent runs of a five-dimensional, five-constraint deployment task, PWOA outperforms WOA, SCA and an improved PSO baseline on all four reported metrics (Best, Worst, Mean and Std) and exhibits the fastest average convergence. Future work will extend PWOA to multi-UAV cooperative deployment with mobile users and energy budgets, and to closed-loop scenarios where channel statistics are estimated online. VI. A CKNOWLEDGMENT 
+
+This work was supported by the Macao Science and Tech-nology Development Fund (FDCT-MOST: 0018/2025/AMJ) and Macao Polytechnic University (MPU grant: RP/FCA-01/2025). REFERENCES [1] J. Wei, Y. Gu, K. L. E. Law, et al. Adaptive position updating particle swarm optimization for UAV path planning[C]//2024 22nd International Symposium on Modeling and Optimization in Mobile, Ad Hoc, and Wireless Networks (WiOpt). IEEE, 2024: 124–131. [2] J. Wei, Y. Li, D. Yao, et al. SAGA: A Robust Self-Attention and Goal-Aware Anchor-based Planner for Safe UAV Autonomous Navigation[J]. arXiv preprint arXiv:2605.02301, 2026. [3] S. Mirjalili, A. Lewis. The whale optimization algorithm[J]. Advances in Engineering Software, 2016, 95: 51–67. [4] J. Wei, Y. Gu, B. Lu, et al. RWOA: A novel enhanced whale opti-mization algorithm with multi-strategy for numerical optimization and engineering design problems[J]. PLoS One, 2025, 20(4): e0320913. [5] J. Wei, Y. Gu, Y. Yan, et al. LSEWOA: An Enhanced Whale Opti-mization Algorithm with Multi-Strategy for Numerical and Engineering Design Optimization Problems[J]. Sensors, 2025, 25(7): 2054. [6] J. Wei, Y. Gu, Y. Yan, et al. TSWOA: An Enhanced WOA with Triangular Walk and Spiral Flight for Engineering Design Optimiza-tion[C]//2025 8th International Conference on Advanced Algorithms and Control Engineering (ICAACE). IEEE, 2025: 186–194. [7] J. Wei, Y. Gu, Z. Xie, Y. Yan, B. Lu, Z. Li, N. Cheong, et al. (2025) LSWOA: An enhanced whale optimization algorithm with Levy flight and Spiral flight for numerical and engineering design optimization problems. PLoS One, 20(9): e0322058. [8] J. Wei, R. Zhang, Y. Gu, et al. A Geometric Whale Optimization Algorithm with Triangular Flight for Numerical Optimization and En-gineering Design[J]. Scientific Reports, 2026. [9] J. Wei, Y. Li, S. Mirjalili, et al. CICDWOA: A Collective Cognitive Sharing Whale Optimization Algorithm with Cauchy Inverse Cumu-lative Distribution for 2D/3D Path Planning and Engineering Design Problems[J]. arXiv preprint arXiv:2603.20501, 2026. [10] B. Lu, Z. Xie, J. Wei, et al. MRBMO: An Enhanced Red-Billed Blue Magpie Optimization Algorithm for Solving Numerical Optimization Challenges[J]. Symmetry, 2025, 17(8): 1295. [11] J. Wei, Y. Gu, R. Zhang, et al. Nawoa-xgboost: A novel model for early prediction of academic potential in computer science students[C]//2026 6th Asia Conference on Information Engineering (ACIE). Nanyang Technological University, Singapore, 2026: 62–70. [12] Z. Li, W. Zhu, R. Zhang, et al. ASKSSA-CNN-BiLSTM: A Novel Time Series Forecasting Model for Stock Price Prediction Based on An Enhanced Sparrow Search Algorithm[C]//2026 6th Asia Conference on Information Engineering (ACIE). Nanyang Technological University, Singapore, 2026: 20–26. [13] S. Mirjalili. SCA: A sine cosine algorithm for solving optimization problems[J]. Knowledge-Based Systems, 2016, 96: 120–133. [14] J. Wei, Y. Li, Y. Zhao, et al. Landscape-Aware Bandit Hyper-Heuristics for Online Operator Selection in UAV Inspection Routing[J]. arXiv preprint arXiv:2605.14620, 2026. [15] J. Wei, W. Zhu, Q. Xu, et al. GeoSSA: Geometric Sparrow Search Algo-rithm for UAV Path Planning and Engineering Design Optimization[J]. arXiv preprint arXiv:2601.19346, 2026. [16] J. Zhou, Y. Wang, Q. Xie, et al. A UAV Path Planning Method Based on Deep Reinforcement Learning With Dense Rewards[J]. IEEE Open Journal of Vehicular Technology, 2025, 7: 260–272.

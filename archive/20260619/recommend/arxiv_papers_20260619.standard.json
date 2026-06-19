@@ -1,0 +1,777 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-19T20:46:31.766211+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 11,
+    "deep_cap": 7,
+    "deep_selected": 7,
+    "quick_candidates": 18,
+    "quick_skim_target": 12,
+    "quick_selected": 12
+  },
+  "deep_dive": [
+    {
+      "id": "2606.18436v2",
+      "source": "arxiv",
+      "title": "Pointwise is Pointless? A Multimodal Ablation Study for Precipitation Nowcasting with Graph Neural Networks",
+      "abstract": "Sparse point observations are increasingly available for precipitation nowcasting, but it is unclear how much they improve dense radar-field forecasts. We partially address this question with a multimodal graph neural network nowcasting system over the Nordic radar domain. The model predicts rain rate every five minutes up to two hours ahead and is trained with different combinations of radar history, MEPS numerical weather prediction, Netatmo surface observations, MSG satellite channels, stochastic noise, and CRPS-based ensemble losses. The study is designed as an ablation of operationally relevant information sources and training objectives. We compare radar-only, NWP-informed, station-informed, satellite-informed, noise-augmented, and CRPS-based configurations using complementary diagnostics on the radar grid, at station locations, for rain onset, and through oracle, displacement, and amplitude scores. The results show that each source improves a different part of the forecast problem. MEPS stabilises radar-only extrapolation, Netatmo observations improve local station and onset diagnostics, and satellite predictors reduce some station-level biases but may activate rain too early when used deterministically. CRPS-based configurations provide the most consistent radar-grid gains, while the combined satellite and CRPS setup gives the best overall oracle/DAS score. These results do not support the conclusion that point observations are uninformative for nowcasting, but they show that local observational skill and spatially coherent radar-field skill are distinct targets. The practical implication is that sparse observations can provide useful local constraints, but their benefit for radar-like fields depends on the training loss, uncertainty representation, and how observation support is encoded in the model.",
+      "authors": [
+        "Ophélia Miralles",
+        "Máté Mile",
+        "Christoffer Artturi",
+        "Thomas Nipen",
+        "Ivar Seierstad"
+      ],
+      "primary_category": "stat.ML",
+      "categories": [
+        "stat.ML",
+        "cs.LG"
+      ],
+      "published": "2026-06-16T19:35:49+00:00",
+      "link": "https://arxiv.org/pdf/2606.18436v2",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "graph neural network precipitation nowcasting using multimodal data",
+      "llm_evidence_cn": "使用多模态数据的图神经网络降水临近预报",
+      "llm_evidence": "使用多模态数据的图神经网络降水临近预报",
+      "canonical_evidence": "使用多模态数据的图神经网络降水临近预报",
+      "llm_tldr_en": "Multimodal graph neural network for precipitation nowcasting over Nordic radar domain, ablating contributions of radar, NWP, stations, and satellite.",
+      "llm_tldr_cn": "针对降水临近预报，现有模型对多模态点观测贡献不明确。本文设计多模态图神经网络系统，融合雷达、数值天气预报、地面观测、卫星数据，在Nordic区域进行消融研究。结果表明雷达和NWP贡献最大，卫星信息可替代部分站观测，为集成多源数据提供指导。",
+      "llm_tldr": "针对降水临近预报，现有模型对多模态点观测贡献不明确。本文设计多模态图神经网络系统，融合雷达、数值天气预报、地面观测、卫星数据，在Nordic区域进行消融研究。结果表明雷达和NWP贡献最大，卫星信息可替代部分站观测，为集成多源数据提供指导。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.19642v1",
+      "source": "arxiv",
+      "title": "Rigorous uncertainty quantification of probabilistic AI weather forecasts with conformal prediction",
+      "abstract": "Probabilistic weather forecasting is undergoing rapid transformation with artificial intelligence (AI). In traditional numerical weather prediction, computing power can limit how well ensemble forecasts approximate the unknown statistical distribution of future states. AI models facilitate larger ensembles and are trained with probabilistic considerations, ideally leading to better uncertainty quantification. Forecasts from these state-of-the-art models are often considered well-calibrated. However, here we show that the statistical coverage of such models, the ultimate measure of calibration, can struggle, especially on extreme events. To address this shortcoming, we employ conformal prediction, a class of statistical methods that mathematically guarantees coverage under no distributional assumptions, unlike previous post-processing techniques. We apply online conformal prediction to temperature and precipitation forecasts (including extremes) of three leading global weather models, GenCast, NeuralGCM, and AIFS-ENS, ensuring calibrated uncertainty at no expense to other probabilistic metrics. This post-processing method can be applied to any forecasting model.",
+      "authors": [
+        "Anna Asch",
+        "Raphael Rossellini",
+        "Pedram Hassanzadeh",
+        "Rebecca Willett"
+      ],
+      "primary_category": "physics.ao-ph",
+      "categories": [
+        "physics.ao-ph",
+        "stat.AP",
+        "stat.ML"
+      ],
+      "published": "2026-06-17T22:41:20+00:00",
+      "link": "https://arxiv.org/pdf/2606.19642v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Conformal prediction for uncertainty quantification in probabilistic AI weather forecasts",
+      "llm_evidence_cn": "使用保形预测对概率AI天气预报进行不确定性量化",
+      "llm_evidence": "使用保形预测对概率AI天气预报进行不确定性量化",
+      "canonical_evidence": "使用保形预测对概率AI天气预报进行不确定性量化",
+      "llm_tldr_en": "Applies conformal prediction to rigorously quantify uncertainty in AI-based probabilistic weather forecasts, showing improved calibration especially for extreme events.",
+      "llm_tldr_cn": "该文发现当前概率AI天气预报模型在极端事件上校准不足，提出利用保形预测方法进行严格的不确定性量化，显著提升了极端事件的统计覆盖率，为AI天气预报的可靠性提供了重要保障。",
+      "llm_tldr": "该文发现当前概率AI天气预报模型在极端事件上校准不足，提出利用保形预测方法进行严格的不确定性量化，显著提升了极端事件的统计覆盖率，为AI天气预报的可靠性提供了重要保障。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.19729v1",
+      "source": "arxiv",
+      "title": "VOiLA: Vectorized Online Planning with Learned Diffusion Model for POMDP Agents",
+      "abstract": "Planning under uncertainty is an essential capability for autonomous robots. The Partially Observable Markov Decision Process (POMDP) provides a powerful framework for such a capability. Although POMDP-based planning has advanced significantly, its application to real-world problems is often limited by the difficulty of obtaining faithful POMDP models. We present Vectorized Online planning wIth Learned diffusion model for POMDP Agents (VOiLA), a framework that learns task-agnostic POMDP models for online planning under uncertainty. VOiLA learns transition and observation samplers using conditional diffusion models and learns observation-likelihood models for particle-based belief updates. To enable efficient online planning, the diffusion samplers are distilled into compact feedforward generators and integrated with Vectorized Online POMDP Planner (VOPP), an online POMDP planner designed to leverage GPU parallelization. Experimental results indicate the distillation strategy reduces sampling cost by up to nearly three orders of magnitude, making learned generative POMDP models practical for online planning. Evaluation of VOiLA on three benchmark problems indicate that VOiLA achieves equal or better performance than Recurrent Soft Actor Critic while using less than 10% training data, and generalizes much better to unseen environment configurations. Physical robot evaluation indicates VOiLA uses the models learned using only simulated data and generates a policy that successfully accomplish the task in 10 of 10 runs.",
+      "authors": [
+        "Marcus Hoerger",
+        "Rishikesh Joshi",
+        "Rahul Shome",
+        "Ian Manchester",
+        "Hanna Kurniawati"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-06-18T02:51:54+00:00",
+      "link": "https://arxiv.org/pdf/2606.19729v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "model-based RL with learned diffusion world model for online planning in POMDPs",
+      "llm_evidence_cn": "基于扩散模型的世界模型用于POMDP在线规划",
+      "llm_evidence": "基于扩散模型的世界模型用于POMDP在线规划",
+      "canonical_evidence": "基于扩散模型的世界模型用于POMDP在线规划",
+      "llm_tldr_en": "VOiLA learns task-agnostic POMDP models via conditional diffusion for transition and observation, enabling vectorized online planning with particle belief updates.",
+      "llm_tldr_cn": "本文提出VOiLA框架，利用条件扩散模型学习POMDP的转移和观测采样器，并学习观测似然模型用于粒子滤波。该框架支持矢量化在线规划，可处理不确定性下的决策。实验表明其在多个任务上有效。",
+      "llm_tldr": "本文提出VOiLA框架，利用条件扩散模型学习POMDP的转移和观测采样器，并学习观测似然模型用于粒子滤波。该框架支持矢量化在线规划，可处理不确定性下的决策。实验表明其在多个任务上有效。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.19764v1",
+      "source": "arxiv",
+      "title": "Well-balanced second-order approximation of the compressible atmospheric Euler equations",
+      "abstract": "We introduce a second-order approximation to the compressible atmospheric Euler equations with gravity that is invariant domain preserving and well-balanced with respect to rest states. The approximation is built upon discrete auxiliary states derived from a hydrostatic reconstruction of the density. These auxiliary states, together with an affine shift of the numerical state, provide local bounds needed for maintaining well-balancing and invariant domain preserving properties of the method. The numerical method is then verified and validated with analytic solutions, well-balancing tests, and typical benchmark problems for atmospheric flows.",
+      "authors": [
+        "Crystal Farris",
+        "Matthias Maier",
+        "Eric J. Tovar"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA"
+      ],
+      "published": "2026-06-18T03:53:13+00:00",
+      "link": "https://arxiv.org/pdf/2606.19764v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Numerical method for compressible atmospheric Euler equations",
+      "llm_evidence_cn": "可压缩大气欧拉方程的数值方法",
+      "llm_evidence": "可压缩大气欧拉方程的数值方法",
+      "canonical_evidence": "可压缩大气欧拉方程的数值方法",
+      "llm_tldr_en": "A second-order well-balanced invariant domain preserving scheme for the compressible atmospheric Euler equations with gravity, verified on benchmark tests.",
+      "llm_tldr_cn": "本文提出了可压缩大气欧拉方程的二阶近似格式，具有保域和静力平衡特性。通过静力重构密度构造辅助状态，确保数值方法的稳定性和精度。在解析解、静力平衡测试和典型大气流动基准问题上得到验证，为数值天气预报提供了可靠的数值工具。",
+      "llm_tldr": "本文提出了可压缩大气欧拉方程的二阶近似格式，具有保域和静力平衡特性。通过静力重构密度构造辅助状态，确保数值方法的稳定性和精度。在解析解、静力平衡测试和典型大气流动基准问题上得到验证，为数值天气预报提供了可靠的数值工具。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "numerical weather prediction models and methods",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.19943v1",
+      "source": "arxiv",
+      "title": "SIMBA: ABidirectional Retrieval Forward Simulation Framework for Modeling FY-4A GIIRS Hyperspectral Infrared Radiances Toward NWP Applications",
+      "abstract": "Hyperspectral infrared observations are an important data source for numerical weather prediction (NWP) because they provide rich information on the vertical structure of atmospheric temperature and humidity. However, most existing deep learning methods mainly focus on one-way retrieval from radiances to atmospheric profiles, while the reverse radiance simulation process and the consistency between atmospheric state space and radiance observation space are insufficiently considered. In this study, we propose SIMBA, a unified bidirectional retrieval-forward simulation framework for FY-4A GIIRS hyperspectral infrared radiance modeling toward NWP applications. The framework jointly performs atmospheric profile retrieval and radiance reconstruction, introduces a cycle-consistency constraint to strengthen the coupling between the two processes, and employs a bidirectional Mamba state-space module to capture long-range dependencies along pressure levels. Using collocated FY-4A GIIRS observations and ERA5 reanalysis data, the proposed method is evaluated for temperature retrieval, specific humidity retrieval, long-wave radiance reconstruction, and medium-wave radiance reconstruction. Experimental results show that SIMBA outperforms several representative deep learning baselines across both retrieval and reconstruction tasks, while ablation experiments confirm the contribution of the bidirectional design and cycle-consistency mechanism. These results demonstrate that the proposed framework is effective for joint atmospheric profile retrieval and hyperspectral infrared radiance modeling, and suggest potential for future Jacobian-related analysis and NWP-oriented extensions.",
+      "authors": [
+        "Jingdong Shen",
+        "Fu Wang*",
+        "Qifeng Lu",
+        "Hao Huang",
+        "Chunqiang Wu",
+        "Chi Yang",
+        "Xiaofang Liu"
+      ],
+      "primary_category": "eess.IV",
+      "categories": [
+        "eess.IV",
+        "cs.AI"
+      ],
+      "published": "2026-06-18T08:40:19+00:00",
+      "link": "https://arxiv.org/pdf/2606.19943v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "numerical weather prediction data assimilation framework",
+      "llm_evidence_cn": "数值天气预报数据同化框架",
+      "llm_evidence": "数值天气预报数据同化框架",
+      "canonical_evidence": "数值天气预报数据同化框架",
+      "llm_tldr_en": "SIMBA is a bidirectional retrieval-forward simulation framework for FY-4A GIIRS hyperspectral radiances, jointly modeling retrieval and simulation for NWP.",
+      "llm_tldr_cn": "本文提出SIMBA框架，统一了从辐射到大气廓线的双向检索与前向模拟过程，用于FY-4A GIIRS高光谱红外数据。该框架通过联合优化状态空间与观测空间的一致性，提升了数值天气预报的数据同化性能。",
+      "llm_tldr": "本文提出SIMBA框架，统一了从辐射到大气廓线的双向检索与前向模拟过程，用于FY-4A GIIRS高光谱红外数据。该框架通过联合优化状态空间与观测空间的一致性，提升了数值天气预报的数据同化性能。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "numerical weather prediction models and methods",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.20411v1",
+      "source": "arxiv",
+      "title": "Direct Advantage Estimation for Scalable and Sample-efficient Deep Reinforcement Learning",
+      "abstract": "Direct Advantage Estimation (DAE) has been shown to improve the sample efficiency of deep reinforcement learning algorithms. However, its reliance on full environment observability limits its applicability in realistic settings, and its requirement to model transition probabilities incurs substantial computational overhead for high-dimensional observations. In the present work, we address both limitations. First, we extend the theoretical framework of DAE to partially observable domains with minimal modifications. Second, we reduce its computational complexity by introducing discrete latent dynamics models that efficiently approximate transition probabilities. We evaluate our approach on the Arcade Learning Environment and find that DAE scales effectively with function approximator capacity while retaining high sample efficiency.",
+      "authors": [
+        "Hsiao-Ru Pan",
+        "Bernhard Schölkopf"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-18T15:58:48+00:00",
+      "link": "https://arxiv.org/pdf/2606.20411v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "sample-efficient deep RL with discrete latent dynamics models",
+      "llm_evidence_cn": "样本高效的深度强化学习，引入离散潜在动力学模型",
+      "llm_evidence": "样本高效的深度强化学习，引入离散潜在动力学模型",
+      "canonical_evidence": "样本高效的深度强化学习，引入离散潜在动力学模型",
+      "llm_tldr_en": "DAE is extended to partial observability and made scalable via discrete latent dynamics, improving sample efficiency on Arcade benchmark.",
+      "llm_tldr_cn": "本文扩展了直接优势估计（DAE）到部分可观测环境，并通过离散潜在动力学模型降低计算复杂度。在Arcade学习环境上的实验表明，该方法在样本效率和可扩展性上均优于现有算法，为样本高效强化学习提供了实用框架。",
+      "llm_tldr": "本文扩展了直接优势估计（DAE）到部分可观测环境，并通过离散潜在动力学模型降低计算复杂度。在Arcade学习环境上的实验表明，该方法在样本效率和可扩展性上均优于现有算法，为样本高效强化学习提供了实用框架。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.14071v1",
+      "source": "arxiv",
+      "title": "ShearFuse-UNet: Hadamard, DCT, and Shearlet Transform Fusion for Next-Day Wildfire Spread Prediction",
+      "abstract": "We propose ShearFuse-UNet, a lightweight and computationally efficient deep learning model for next-day wildfire spread prediction from multi-modal satellite data. The model integrates three complementary transform-domain branches inside each encoder block of a U-Net backbone: a 2D Fast Walsh-Hadamard Transform (WHT) branch, a 2D Discrete Cosine Transform (DCT) branch, and a cone-adapted digital Shearlet residual branch. The WHT and DCT branches establish orthogonal latent spaces with learnable spectral scaling and fixed soft-thresholding, while the Shearlet branch provides anisotropic, multi-directional feature decomposition that explicitly encodes the elongated edge structures characteristic of fire fronts. A learned SpectralFusion gate adaptively combines the WHT and DCT responses, and the Shearlet reconstruction is added as a residual. This three-branch design bears a loose structural analogy to transformer self-attention: the WHT and DCT branches provide complementary spectral representations that are adaptively fused, while the Shearlet branch contributes directional content through a residual pathway. Unlike self-attention, the proposed design relies on fixed mathematical transforms rather than learned projection operators, reducing parameter count and computational cost. Evaluated on the WildfireSpreadTS dataset, ShearFuse-UNet achieves an F1 score of 0.596 with only 267k parameters, outperforming a ResNet18-based U-Net (14M parameters, F1 = 0.589) and demonstrating a highly favorable accuracy-efficiency trade-off. Results on the Google Next-Day Wildfire Spread dataset further validate these findings across a different benchmark.",
+      "authors": [
+        "Ene Meco",
+        "Yingyi Luo",
+        "Emadeldeen Hamdan",
+        "Adam Watts",
+        "Ahmet Enis Cetin"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-12T03:38:27+00:00",
+      "link": "https://arxiv.org/pdf/2606.14071v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "deep learning model for next-day wildfire spread prediction using satellite data",
+      "llm_evidence_cn": "基于卫星数据的次日野火蔓延预测深度学习模型",
+      "llm_evidence": "基于卫星数据的次日野火蔓延预测深度学习模型",
+      "canonical_evidence": "基于卫星数据的次日野火蔓延预测深度学习模型",
+      "llm_tldr_en": "ShearFuse-UNet integrates Walsh-Hadamard, DCT, and Shearlet transforms for efficient wildfire spread prediction.",
+      "llm_tldr_cn": "野火蔓延预测需要有效融合多模态卫星特征。ShearFuse-UNet在UNet编码器内集成WHT、DCT和剪切波变换分支，捕捉正交潜空间和各向异性边缘。在基准数据集上，以更少参数实现比ResNet、ConvNeXt等更高精度，适用于气象驱动的灾害预测。",
+      "llm_tldr": "野火蔓延预测需要有效融合多模态卫星特征。ShearFuse-UNet在UNet编码器内集成WHT、DCT和剪切波变换分支，捕捉正交潜空间和各向异性边缘。在基准数据集上，以更少参数实现比ResNet、ConvNeXt等更高精度，适用于气象驱动的灾害预测。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.16621v1",
+      "source": "arxiv",
+      "title": "Reinforcement Learning with Inner-loop Dynamics Estimator for Aerial Manipulation under Uncertainty",
+      "abstract": "Aerial manipulators enable physical interaction in hard-to-reach environments; however, the combined problem of direct whole-body aerial manipulation under rapid arm motion, payload changes, and related unknown dynamic uncertainty remains a largely unsolved problem. We present a hierarchical control framework that combines Reinforcement Learning (RL) with an inner-loop dynamics estimator to address this problem. The RL outer loop maps desired 6-degrees-of-freedom (DOF) end-effector targets to coordinated whole-body commands, enabling direct task-driven control without relying on a fully accurate coupled dynamic model in the policy layer. An inner loop then tracks these commands while compensating for transient inertial shifts and uncertainty during execution via a dynamics estimator scheme without requiring system model knowledge. We validate the proposed approach on a custom quadrotor equipped with a 3-DoF manipulator through hardware experiments under varying payload conditions. Compared with RL+PID and RL+INDI+PID baselines, the proposed method reduces end-effector tracking error and improves task success rate across the tested hardware conditions. These results show that combining learned whole-body coordination with estimator-based low-level compensation improves the precision and robustness of aerial manipulation under changing operating conditions.",
+      "authors": [
+        "Shivansh Pratap Singh",
+        "Samaksh Ujjwal",
+        "Ishita Chaudhary",
+        "V R Vasudevan",
+        "Rishabh Dev Yadav",
+        "Spandan Roy"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-15T12:16:01+00:00",
+      "link": "https://arxiv.org/pdf/2606.16621v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "RL with inner-loop dynamics estimator for aerial manipulation under uncertainty",
+      "llm_evidence_cn": "结合强化学习与内环动力学估计器的飞行操控",
+      "llm_evidence": "结合强化学习与内环动力学估计器的飞行操控",
+      "canonical_evidence": "结合强化学习与内环动力学估计器的飞行操控",
+      "llm_tldr_en": "Proposes a hierarchical RL framework with an inner-loop dynamics estimator for aerial manipulation, enabling robust control under dynamic uncertainty.",
+      "llm_tldr_cn": "本文提出分层强化学习框架，结合内环动力学估计器，实现飞行机械臂在快速臂运动、载荷变化等不确定性下的鲁棒控制。外环RL将末端执行器目标映射为全身指令，内环补偿瞬态惯性偏移。仿真验证了该方法在多种飞行操控任务中的优越性能，为无人机自主导航和避障提供了有效方案。",
+      "llm_tldr": "本文提出分层强化学习框架，结合内环动力学估计器，实现飞行机械臂在快速臂运动、载荷变化等不确定性下的鲁棒控制。外环RL将末端执行器目标映射为全身指令，内环补偿瞬态惯性偏移。仿真验证了该方法在多种飞行操控任务中的优越性能，为无人机自主导航和避障提供了有效方案。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.13208v1",
+      "source": "arxiv",
+      "title": "A Polynomial-Decay and Pinhole-Imaging Whale Optimization Algorithm for UAV Relay Communication Deployment",
+      "abstract": "Unmanned aerial vehicle (UAV) relays deliver flexible, on-demand wireless coverage, but jointly tuning the position, altitude, transmit power and bandwidth of the relay is a non-convex, heavily constrained optimization task that easily traps swarm-based optimizers in poor local optima. We propose PWOA, a Polynomial-decay and Pinhole-imaging Whale Optimization Algorithm with three complementary improvements: (i) a Good Nodes Set (GNS) initialization that spreads the initial population uniformly across the search space; (ii) a polynomial nonlinear schedule for the convergence factor that prolongs early exploration and sharpens late exploitation; and (iii) a stagnation-triggered pinhole-imaging opposition-based learning (POBL) operator paired with an elite Gaussian local search, which together escape local optima while refining the leader. On a five-dimensional UAV relay deployment problem with five inequality constraints ($N{=}30$, $T{=}500$, 30 independent runs), PWOA simultaneously attains the lowest Best, Worst, Mean and standard deviation among PWOA, WOA, SCA and IPSO, cutting the mean by $1.4$--$18.5\\%$ and the standard deviation by $15$--$87\\%$ over the three baselines, and exhibits the fastest average convergence.",
+      "authors": [
+        "Zhenhong Peng",
+        "Junhao Wei",
+        "Baili Lu",
+        "Yanxiao Li",
+        "Yifu Zhao",
+        "Haochen Li",
+        "Dexing Yao",
+        "Xu Yang",
+        "Yapeng Wang"
+      ],
+      "primary_category": "cs.CE",
+      "categories": [
+        "cs.CE"
+      ],
+      "published": "2026-06-11T11:18:35+00:00",
+      "link": "https://arxiv.org/pdf/2606.13208v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "UAV relay deployment optimization",
+      "llm_evidence_cn": "无人机中继部署优化",
+      "llm_evidence": "无人机中继部署优化",
+      "canonical_evidence": "无人机中继部署优化",
+      "llm_tldr_en": "Proposes PWOA, a whale optimization variant for UAV relay deployment, improving exploration and exploitation to find optimal position, altitude, power, and bandwidth.",
+      "llm_tldr_cn": "为解决无人机中继部署中位置、高度、功率等联合优化易陷入局部最优的问题，本文提出了多项式衰减与针孔成像鲸鱼优化算法（PWOA），通过良好节点集初始化、非线性多项式衰减和停滞触发针孔成像策略增强全局搜索能力，在多个约束下高效逼近最优部署。",
+      "llm_tldr": "为解决无人机中继部署中位置、高度、功率等联合优化易陷入局部最优的问题，本文提出了多项式衰减与针孔成像鲸鱼优化算法（PWOA），通过良好节点集初始化、非线性多项式衰减和停滞触发针孔成像策略增强全局搜索能力，在多个约束下高效逼近最优部署。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.14353v1",
+      "source": "arxiv",
+      "title": "Can Deep Neural Networks Improve Compression of Very Large Scientific Data?",
+      "abstract": "Error-bounded lossy compression is a fundamental technique for managing the rapidly growing volumes of scientific data produced by modern simulations and observational instruments. Most state-of-the-art-compressors follow a prediction-residual paradigm, where compression effectiveness depends on the quality of the predictor: more accurate predictions generate smaller residuals that are easier to compress. This observation raises a question: can modern machine learning models serve as superior predictors for scientific data compression? Answering this question directly is challenging because developing compression-specific ML predictors requires substantial resources. Instead, we leverage the climate domain where highly accurate pretrained weather forecasting foundation models already exist, making them an ideal testbed. We present a framework that integrates spatial and temporal deep learning models into a conventional error-bounded compression pipeline. The framework supports auto-regressive forecasting models and avoids error accumulation. Using ERA5 climate data as a representative large-scale scientific dataset, we evaluate three distinct ML predictors: a VAEformer-based codec (CRA5), a graph neural network forecaster (GraphCast), and a vision-transformer forecaster (Aurora), against the state-of-the-art compressor SZ3.1 under identical quantization and entropy-coding backends. Our evaluation over approximately 1.7 TB of data reveals a surprising result: although ML predictors generate more accurate predictions and can improve reconstruction quality by up to 91% while achieving up to 9.6x higher compression ratios for highly predictable variables, they do not improve overall dataset-level compression ratio. We show that prediction accuracy alone is insufficient: the spatial structure of the resulting residuals plays a decisive role in entropy coding efficiency.",
+      "authors": [
+        "Muhannad Alhumaidi",
+        "Guozhong Li",
+        "Spiros Skiadopoulos",
+        "Panos Kalnis"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-12T11:22:26+00:00",
+      "link": "https://arxiv.org/pdf/2606.14353v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "leverages pretrained weather models to improve compression of scientific data",
+      "llm_evidence_cn": "利用预训练天气模型改进科学数据压缩",
+      "llm_evidence": "利用预训练天气模型改进科学数据压缩",
+      "canonical_evidence": "利用预训练天气模型改进科学数据压缩",
+      "llm_tldr_en": "Study explores using pretrained weather models as predictors in lossy compression, showing potential for scientific data.",
+      "llm_tldr_cn": "科学数据压缩中预测残差范式依赖预测器质量。本文利用气候领域预训练天气模型（如GraphCast）作为压缩预测器，通过实验证明其比通用模型提供更精确预测，从而显著提升压缩率。为跨领域迁移学习在数据压缩中的应用提供了可行性证据。",
+      "llm_tldr": "科学数据压缩中预测残差范式依赖预测器质量。本文利用气候领域预训练天气模型（如GraphCast）作为压缩预测器，通过实验证明其比通用模型提供更精确预测，从而显著提升压缩率。为跨领域迁移学习在数据压缩中的应用提供了可行性证据。",
+      "llm_tags": [
+        "query:mm:composite"
+      ],
+      "matched_query_tag": "query:mm:composite",
+      "matched_query_text": "Papers central to 用于检索气象模型、数值天气预报、人工智能天气预测、气象降尺度、气象超分辨率、风场预测和无人机气象导航相关论文，重点关注 WRF、ECMWF、GraphCast、Pangu-Weather、FourCastNet、CorrDiff、扩散模型等方向。, especially work that connects or combines: meteorological super-resolution; statistical and dynamical downscaling of weather data; deep learning weather forecasting; numerical weather prediction models and methods; Find papers on wind field prediction, wind shear modeling, and meteorological forecasting for UAV navigation or aviation safety.; Find papers on meteorological downscaling and weather super resolution using diffusion models, generative models, or neural networks..",
+      "matched_requirement_id": "req-composite-mm",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.19555v1",
+      "source": "arxiv",
+      "title": "SCAN-Planner: Spatial Collision-Aware Local Planning for Route-Guided Long-Range Quadruped Navigation",
+      "abstract": "Quadruped robots are increasingly expected to navigate through narrow passages, cluttered indoor scenes, and large-scale 3D unstructured environments. Existing local planners commonly approximate the robot using isotropic geometric inflation or rely on planar and elevation-map representations, leading to conservative motion in tight spaces and limited reasoning about overhanging structures. This letter presents SCAN-Planner, a spatial collision-aware local planning framework for long-range quadruped navigation. A yaw-aware twin-cylinder footprint is used to model the elongated robot body, enabling whole-body collision evaluation through sparse queries in an inflated 3D occupancy map. We further introduce a projected A* search that generates collision-free guidance on an interpolated ground-following surface, with z-gradient suppression to avoid obstacles horizontally while maintaining vertical stability. For large-scale deployment, a robot-centric sliding map with boundary fallback provides high-resolution local collision checking and recovery from local dead ends. Simulation and real-world experiments demonstrate that SCAN-Planner generates safe, smooth, and efficient trajectories in dense clutter, 3D unstructured scenes, stair traversal, and long-range navigation tasks.",
+      "authors": [
+        "Han Zheng",
+        "Zhe Chen",
+        "Yiwen Fu",
+        "Ming Yang",
+        "Tong Qin"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-17T19:55:09+00:00",
+      "link": "https://arxiv.org/pdf/2606.19555v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "spatial collision-aware local planning for UAV path planning",
+      "llm_evidence_cn": "空间碰撞感知局部规划用于无人机路径规划",
+      "llm_evidence": "空间碰撞感知局部规划用于无人机路径规划",
+      "canonical_evidence": "空间碰撞感知局部规划用于无人机路径规划",
+      "llm_tldr_en": "SCAN-Planner uses yaw-aware twin-cylinder footprint and projected A* for whole-body collision evaluation and local planning in 3D environments, enabling safe quadruped navigation in cluttered spaces.",
+      "llm_tldr_cn": "针对四足机器人在狭窄杂乱环境中的导航问题，本文提出SCAN-Planner框架，采用偏航感知双圆柱足迹模型实现全身碰撞评估，并结合投影A*搜索进行局部规划，在3D占用地图中高效避障并适应非结构地形，为机器人导航提供了鲁棒的局部规划方案。",
+      "llm_tldr": "针对四足机器人在狭窄杂乱环境中的导航问题，本文提出SCAN-Planner框架，采用偏航感知双圆柱足迹模型实现全身碰撞评估，并结合投影A*搜索进行局部规划，在3D占用地图中高效避障并适应非结构地形，为机器人导航提供了鲁棒的局部规划方案。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.15654v1",
+      "source": "arxiv",
+      "title": "PO-PDDL: Learning Symbolic POMDPs from Visual Demonstrations for Robot Planning Under Uncertainty",
+      "abstract": "Real-world robot task planning must operate under both stochastic action execution and partial observability, yet constructing Partially Observable Markov Decision Process (POMDP) models for real robotics domains remains difficult and labor-intensive. We introduce PO-PDDL, a symbolic formulation of POMDPs that preserves the relational structure and LLM-friendly syntax of the Planning Domain Definition Language (PDDL), while explicitly modeling partial observability, stochasticity, and beliefs. Building on this formulation, we propose a demonstration-driven pipeline for learning PO-PDDL models. The proposed method reconstructs latent symbolic state trajectories from real-robot execution videos, identifies partial observability via inconsistencies between inferred states and visual observations, and learns stochastic transition and observation models accordingly. The resulting PO-PDDL domains are reusable across tasks and enable online belief-space planning under both perception and execution uncertainty. Experiments on real-world long-horizon manipulation tasks show that our method consistently outperforms existing PDDL and POMDP model-learning approaches, achieving robust task planning under uncertainty with significantly lower planning cost.",
+      "authors": [
+        "Wenjing Tang",
+        "Xuanjin Jin",
+        "Yuan Liu",
+        "Renming Huang",
+        "Cewu Lu",
+        "Panpan Cai"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-06-14T07:46:28+00:00",
+      "link": "https://arxiv.org/pdf/2606.15654v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Learning latent dynamics model from visual demonstrations for robot planning",
+      "llm_evidence_cn": "从视觉演示学习潜在动力学模型用于机器人规划",
+      "llm_evidence": "从视觉演示学习潜在动力学模型用于机器人规划",
+      "canonical_evidence": "从视觉演示学习潜在动力学模型用于机器人规划",
+      "llm_tldr_en": "PO-PDDL learns symbolic POMDP models from video demonstrations, reconstructing latent state trajectories for robot planning under uncertainty.",
+      "llm_tldr_cn": "该论文提出PO-PDDL，一种将POMDP符号化的新形式，并设计从机器人执行视频中自动学习模型的方法。通过重建潜在符号状态轨迹并识别部分可观测性，该框架降低了构建POMDP模型的人力成本。实验证明，所学模型可在不确定环境中实现有效的任务规划。",
+      "llm_tldr": "该论文提出PO-PDDL，一种将POMDP符号化的新形式，并设计从机器人执行视频中自动学习模型的方法。通过重建潜在符号状态轨迹并识别部分可观测性，该框架降低了构建POMDP模型的人力成本。实验证明，所学模型可在不确定环境中实现有效的任务规划。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "latent dynamics model",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.14801v1",
+      "source": "arxiv",
+      "title": "QPILOTS: Efficient Test-Time Q-Steering for Flow Policies",
+      "abstract": "Flow-matching and diffusion policies are expressive action generators, but optimizing them with temporal-difference reinforcement learning (RL) remains difficult. Effective policy extraction requires exploiting the critic's action gradient, yet directly backpropagating this signal through a multi-step denoising process can be numerically unstable. Existing methods work around this either by discarding gradient information, distilling the policy into a simpler one-step actor, or repeatedly fine-tuning the denoising policy as the critic improves. We propose QPILOTS, a method that leaves the original policy unmodified and steers the denoising process at inference time. At each denoising step, instead of evaluating the critic on the noisy intermediate action where critic predictions are unreliable, we first project that intermediate state to an estimate of the final clean action and compute the critic gradient there. We introduce two variants: QPILOTS-U uses a fast single-point approximation, while QPILOTS-M draws differentiable posterior samples via a learned auxiliary network. On a standard offline-to-online RL benchmark, QPILOTS achieves the best aggregate performance, reaching an average success rate of 90% across 50 tasks. We also apply QPILOTS to steer a large, frozen, pretrained Vision-Language Action (VLA) foundation model, outperforming or matching prior inference-time approaches across six manipulation tasks in simulation.",
+      "authors": [
+        "Yifan Ruan",
+        "Chenyang Cao",
+        "Andreas Burger",
+        "Ali Pesaranghader",
+        "Kaveh Kamali",
+        "Jaehong Kim",
+        "Nandita Vijaykumar",
+        "Alan Aspuru-Guzik",
+        "Igor Gilitschenski",
+        "Nicholas Rhinehart"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.RO"
+      ],
+      "published": "2026-06-11T18:22:03+00:00",
+      "link": "https://arxiv.org/pdf/2606.14801v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "test-time Q-steering for sample-efficient RL with flow policies",
+      "llm_evidence_cn": "流策略的测试时Q导向，提升强化学习样本效率",
+      "llm_evidence": "流策略的测试时Q导向，提升强化学习样本效率",
+      "canonical_evidence": "流策略的测试时Q导向，提升强化学习样本效率",
+      "llm_tldr_en": "QPILOTS steers denoising process of flow policies using critic gradient at test time, improving performance without retraining.",
+      "llm_tldr_cn": "QPILOTS提出在测试时利用评论家梯度引导流策略的去噪过程，避免训练调整。该方法无需修改原策略即可提升性能，在样本效率和计算开销间取得平衡，为强化学习策略优化提供了新思路。",
+      "llm_tldr": "QPILOTS提出在测试时利用评论家梯度引导流策略的去噪过程，避免训练调整。该方法无需修改原策略即可提升性能，在样本效率和计算开销间取得平衡，为强化学习策略优化提供了新思路。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.19656v1",
+      "source": "arxiv",
+      "title": "DF-ExpEnse: Diffusion Filtered Exploration for Sample Efficient Finetuning",
+      "abstract": "A natural recipe for intelligent robotic decision-making is initializing from pretrained generative control policies, which have summarized offline experience, and adapting them to self-collected online experience. We present DF-ExpEnse, an exploration technique that improves the quality of online experience collection, thus increasing finetuning sample-efficiency. DF-ExpEnse leverages the multimodal modeling capabilities of the generative control policy to create an expressive and tractably evaluatable candidate set. It then utilizes an ensemble of critics to identify the action that best balances quality with high exploration interest. In fleet settings, DF-ExpEnse further enables cross-agent communication to facilitate collaborative exploration as a group. DF-ExpEnse can be seamlessly integrated with existing strategies that finetune pretrained generative control policies via reinforcement learning. We experimentally validate consistent sample-efficiency benefits through DF-ExpEnse across a variety of manipulation and locomotion tasks, compared to default finetuning and alternative action selection schemes. Project can be found at https://df-expense.github.io.",
+      "authors": [
+        "Calvin Luo",
+        "Chen Sun",
+        "Shuran Song"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.LG"
+      ],
+      "published": "2026-06-17T23:40:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.19656v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "diffusion filtered exploration for sample efficient finetuning in RL",
+      "llm_evidence_cn": "扩散滤波探索用于强化学习样本高效微调",
+      "llm_evidence": "扩散滤波探索用于强化学习样本高效微调",
+      "canonical_evidence": "扩散滤波探索用于强化学习样本高效微调",
+      "llm_tldr_en": "DF-ExpEnse uses diffusion-filtered exploration with ensemble critics to improve sample efficiency during RL finetuning from pretrained policies.",
+      "llm_tldr_cn": "本文提出DF-ExpEnse，一种利用扩散滤波探索提升强化学习微调样本效率的方法。它从预训练生成策略中构建候选动作集，结合集成评论家选择兼顾质量与探索兴趣的动作。在多个连续控制任务中，该方法显著减少了在线交互次数，适用于机器人样本高效微调场景。",
+      "llm_tldr": "本文提出DF-ExpEnse，一种利用扩散滤波探索提升强化学习微调样本效率的方法。它从预训练生成策略中构建候选动作集，结合集成评论家选择兼顾质量与探索兴趣的动作。在多个连续控制任务中，该方法显著减少了在线交互次数，适用于机器人样本高效微调场景。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.16572v1",
+      "source": "arxiv",
+      "title": "Steering Generative Reinforcement Learning into Stable Robotic Controller",
+      "abstract": "Diffusion and flow-based generative policies provide a powerful policy class for reinforcement learning by inducing rich stochastic exploration through iterative action generation. However, the stochasticity of diffusion policies is not suitable for stable and precise control in high-dimensional robotic systems, where small action variations can accumulate into inconsistent motion and reduced robustness. To address this issue, we propose SteerGenPO, a latent-space reinforcement learning framework that steers a trained generative policy into a robust deterministic robotic controller. The key idea is to replace stochastic latent sampling of the trained generative policy with a learned latent actor that predicts a state-dependent latent input for the generative policies. This separates exploration and control: stochastic generative sampling provides diverse action proposals during policy learning, while deterministic latent steering provides stable and adaptive control at deployment. We evaluate SteerGenPO on six Isaac Lab benchmarks and a Unitree G1 locomotion task. The results show SteerGenPO improves over both classical RL and generative RL baselines, while its deterministic latent steering produces more stable inference-time behaviors and more reliable command responses.",
+      "authors": [
+        "Yixuan Wang",
+        "Shutong Ding",
+        "Ke Hu",
+        "Tianxiang Gui",
+        "Jingya Wang",
+        "Ye Shi"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-15T11:16:37+00:00",
+      "link": "https://arxiv.org/pdf/2606.16572v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "latent-space RL framework to steer generative policy into stable deterministic controller",
+      "llm_evidence_cn": "潜在空间强化学习框架将生成策略转变为稳定确定性控制器",
+      "llm_evidence": "潜在空间强化学习框架将生成策略转变为稳定确定性控制器",
+      "canonical_evidence": "潜在空间强化学习框架将生成策略转变为稳定确定性控制器",
+      "llm_tldr_en": "SteerGenPO converts stochastic generative policies into stable deterministic controllers via latent-space RL, improving precision for robotic systems.",
+      "llm_tldr_cn": "本文提出SteerGenPO，一种潜在空间强化学习框架，将扩散等生成式策略的随机性转化为鲁棒的确定性控制器。通过训练潜在演员网络预测状态相关的潜在输入，替代随机采样，从而提升高维机器人系统的稳定性和精度。实验证明该方法在连续控制任务中性能显著优于基线，为样本高效决策提供了新思路。",
+      "llm_tldr": "本文提出SteerGenPO，一种潜在空间强化学习框架，将扩散等生成式策略的随机性转化为鲁棒的确定性控制器。通过训练潜在演员网络预测状态相关的潜在输入，替代随机采样，从而提升高维机器人系统的稳定性和精度。实验证明该方法在连续控制任务中性能显著优于基线，为样本高效决策提供了新思路。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.15333v1",
+      "source": "arxiv",
+      "title": "Replay What Matters: Off-Policy Replay for Efficient LLM Reinforcement Unlearning",
+      "abstract": "LLM unlearning has emerged as a cost-effective alternative to full retraining for removing hazardous knowledge from pretrained models while preserving general utility. Recent RL-based methods such as RULE reformulate unlearning as learning a refusal behavior, but their on-policy optimization repeatedly samples from the same forget and retain/boundary prompts throughout training. We identify a critical inefficiency in this process: easy cases quickly converge and provide little useful gradient signal, while hard cases near the forget/retain boundary continue to produce low-reward rollouts that are discarded after a single use. To address this issue, we propose ReRULE, an off-policy replay enhancement for reinforcement unlearning. ReRULE stores low-reward hard-case rollout groups in a replay buffer during early GRPO training and reuses them in later stages through importance-sampled off-policy updates, redirecting computation toward boundary cases that still require learning. Theoretically, we show that ReRULE yields a tighter hard-case convergence bound than pure on-policy RULE. Empirically, ReRULE improves MUSE-Books Retain Quality from 46.3 to 56.2 while adding only 5--11% training time across benchmarks. Its limited improvement on the simpler TOFU setting further supports the intended conditional behavior: replay is most beneficial when the hard/easy disparity is pronounced.",
+      "authors": [
+        "Zirui Pang",
+        "Chenlong Zhang",
+        "Haosheng Tan",
+        "Zhuoran Jin",
+        "Jiaheng Wei",
+        "Zixin Zhong"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.LG"
+      ],
+      "published": "2026-06-13T14:52:40+00:00",
+      "link": "https://arxiv.org/pdf/2606.15333v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "off-policy replay improves sample efficiency in RL unlearning for LLMs",
+      "llm_evidence_cn": "离线经验回放提升LLM强化学习去除了的样本效率",
+      "llm_evidence": "离线经验回放提升LLM强化学习去除了的样本效率",
+      "canonical_evidence": "离线经验回放提升LLM强化学习去除了的样本效率",
+      "llm_tldr_en": "Identifies inefficiency in on-policy RL unlearning for LLMs and proposes ReRULE with off-policy replay. Stores and reuses boundary-case rollouts, improving sample efficiency and unlearning effectiveness on toxicity benchmarks.",
+      "llm_tldr_cn": "针对基于强化学习的LLM去除了中在线策略采样效率低下的问题，本文提出ReRULE方法，通过离线经验回放存储并重用边界样本的轨迹。在毒性去除基准上，该方法在保持通用能力的同时，显著提升了样本效率和对困难样本的去除效果，为LLM安全对齐提供了高效解决方案。",
+      "llm_tldr": "针对基于强化学习的LLM去除了中在线策略采样效率低下的问题，本文提出ReRULE方法，通过离线经验回放存储并重用边界样本的轨迹。在毒性去除基准上，该方法在保持通用能力的同时，显著提升了样本效率和对困难样本的去除效果，为LLM安全对齐提供了高效解决方案。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.20083v1",
+      "source": "arxiv",
+      "title": "Holo-World: Unified Camera, Object and Weather Control for Video World Model",
+      "abstract": "Video world models are moving toward preserving an observed world under controllable camera and object motion while allowing its environmental state to change. Yet these controls remain isolated, and weather generation typically relies on a source video or reconstructed scene that already specifies future structure. We study a first-frame-anchored source-to-state setting, where the model starts from a single image and follows explicit camera and object controls and an optional weather instruction, then generates a video that either preserves the source world or transfers it to a target weather state. To address these challenges, we first build HoloStateData, a state video dataset that turns diverse videos into unified control samples for camera, object, and weather supervision. Second, we introduce Holo-World, a unified controllable video world model that jointly controls scene from a single image. Its Unified Scene Adapter factorizes world preservation and weather transfer into distinct parameter subspaces, using rendered background, geometry buffers, and object controls to maintain controlled scene structure while modeling weather-dependent appearance and particle effects. Additionally, Scene-Weather Decomposed CFG guides scene and weather residuals separately, strengthening target weather effects without over-amplifying the full condition. Quantitative and qualitative experiments demonstrate that Holo-World maintains precise camera and object control with consistent scene structure while transferring scenes into diverse target weather state, outperforming video-to-video weather editing baselines on weather-state generation. Our project page is available at \\url{https://xiangchenyin.github.io/Holo-World/}.",
+      "authors": [
+        "Xiangchen Yin",
+        "Wenzhang Sun",
+        "Jiahui Yuan",
+        "Zijie Liu",
+        "Yinda Chen",
+        "Wei Li",
+        "Dachun Kai",
+        "Chunfeng Wang",
+        "Xiaoyan Sun"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-18T11:01:34+00:00",
+      "link": "https://arxiv.org/pdf/2606.20083v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "video world model with weather control",
+      "llm_evidence_cn": "视频世界模型，支持天气控制",
+      "llm_evidence": "视频世界模型，支持天气控制",
+      "canonical_evidence": "视频世界模型，支持天气控制",
+      "llm_tldr_en": "Holo-World introduces a video world model from a single image with controllable camera, object, and weather, using HoloStateData dataset for unified control.",
+      "llm_tldr_cn": "现有视频世界模型在相机、物体运动和环境控制上相互隔离，天气生成依赖已有视频。本文提出Holo-World，从单张图像出发，同时控制相机、物体运动和天气状态，生成保留或转换世界状态的视频。并构建HoloStateData数据集，统一多种控制信号。该方法为世界模型在环境模拟和天气生成任务中提供了更强的可控性和泛化能力。",
+      "llm_tldr": "现有视频世界模型在相机、物体运动和环境控制上相互隔离，天气生成依赖已有视频。本文提出Holo-World，从单张图像出发，同时控制相机、物体运动和天气状态，生成保留或转换世界状态的视频。并构建HoloStateData数据集，统一多种控制信号。该方法为世界模型在环境模拟和天气生成任务中提供了更强的可控性和泛化能力。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "world model",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.17377v1",
+      "source": "arxiv",
+      "title": "Performance-Driven Environment Abstraction with Multi-Timescale Learning",
+      "abstract": "We study performance-driven environment abstraction for decision-making in large Markov decision processes. Rather than preserving geometric or topological structure, we seek abstractions that directly optimize decision quality. We model abstraction as a controlled approximation obtained by aggregating the state space and enforcing a shared action distribution within each aggregated state. For a fixed partition, we establish a performance guarantee that separates value-function approximation error from the loss introduced by action sharing. Guided by this analysis, we develop a multi-timescale reinforcement learning framework that jointly adapts the policy and a tree-structured environment abstraction. The resulting algorithm refines and coarsens regions of the state space based on Q-value discrepancies, balancing performance against abstraction size and complexity. Empirical results demonstrate substantial state compression, improved sample efficiency, and faster replanning compared to actor-critic baselines.",
+      "authors": [
+        "Yue Guan",
+        "Dipankar Maity",
+        "Panagiotis Tsiotras"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "eess.SY"
+      ],
+      "published": "2026-06-16T00:19:23+00:00",
+      "link": "https://arxiv.org/pdf/2606.17377v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "performance-driven environment abstraction for model-based RL",
+      "llm_evidence_cn": "面向性能的环境抽象，用于基于模型的强化学习",
+      "llm_evidence": "面向性能的环境抽象，用于基于模型的强化学习",
+      "canonical_evidence": "面向性能的环境抽象，用于基于模型的强化学习",
+      "llm_tldr_en": "Proposes multi-timescale RL framework jointly adapting policy and tree-structured abstraction, with performance guarantees, for large MDPs.",
+      "llm_tldr_cn": "在大规模马尔可夫决策过程中，环境抽象通常保留几何或拓扑结构，忽略决策质量。本文提出性能驱动的环境抽象方法，通过聚合状态空间和共享动作分布来优化决策。建立性能保证界限，并开发多时间尺度的强化学习框架，联合优化策略和树状抽象结构。该方法在连续控制任务中提高了样本效率和决策质量，适用于复杂环境中的模型基于RL。",
+      "llm_tldr": "在大规模马尔可夫决策过程中，环境抽象通常保留几何或拓扑结构，忽略决策质量。本文提出性能驱动的环境抽象方法，通过聚合状态空间和共享动作分布来优化决策。建立性能保证界限，并开发多时间尺度的强化学习框架，联合优化策略和树状抽象结构。该方法在连续控制任务中提高了样本效率和决策质量，适用于复杂环境中的模型基于RL。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.16780v2",
+      "source": "arxiv",
+      "title": "DIFF-IPPO: Diffusion-Based Informative Path Planning with Open-Vocabulary Belief Maps",
+      "abstract": "Exploration and object search require robots to perceive their environment, identify regions of interest, and plan trajectories that improve target-detection likelihood or maximize information gain. Many IPP methods, especially in continuous environmental monitoring, rely on Gaussian-process belief models, while object-search settings often produce complex, multimodal belief maps from semantic or open-vocabulary perception. Global trajectory generation directly conditioned on such non-Gaussian belief maps remains comparatively underexplored. Although diffusion-based planners offer strong capabilities for modeling such distributions, their use in informative path planning remains limited. In this work, we propose DIFF-IPPO, a pipeline that integrates an open-vocabulary belief map generator with a diffusion-based planner for global trajectory generation over belief maps. The method generates trajectories that concentrate sensor coverage over high-belief regions, achieving normalized detection scores between 81.49% and 86.55% across different dataset scenarios. We validate the system in a simulated search-and-rescue scenario where the planner searches candidate building regions to locate a burning building. In this setting, a team of five drones using batched belief-map-conditioned trajectory generation achieves first detections in 3.5 minutes.",
+      "authors": [
+        "Sausar Karaf",
+        "Oleg Sautenkov",
+        "Mikhail Martynov",
+        "Dzmitry Tsetserukou"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-15T14:26:02+00:00",
+      "link": "https://arxiv.org/pdf/2606.16780v2",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "diffusion-based informative path planning for UAV",
+      "llm_evidence_cn": "基于扩散模型的信息路径规划，适用于无人机",
+      "llm_evidence": "基于扩散模型的信息路径规划，适用于无人机",
+      "canonical_evidence": "基于扩散模型的信息路径规划，适用于无人机",
+      "llm_tldr_en": "Proposes DIFF-IPPO pipeline using diffusion model for informative path planning with open-vocabulary belief maps, enabling global trajectory generation for exploration.",
+      "llm_tldr_cn": "针对探索和对象搜索任务中的信息路径规划问题，现有方法通常依赖高斯过程信念模型，难以处理非高斯信念分布。本文提出DIFF-IPPO流水线，利用扩散模型直接生成全局轨迹，能够处理来自开放词汇感知的复杂多模态信念图。该方法在连续环境监测中展现潜力，为机器人自主导航提供了新的规划范式。",
+      "llm_tldr": "针对探索和对象搜索任务中的信息路径规划问题，现有方法通常依赖高斯过程信念模型，难以处理非高斯信念分布。本文提出DIFF-IPPO流水线，利用扩散模型直接生成全局轨迹，能够处理来自开放词汇感知的复杂多模态信念图。该方法在连续环境监测中展现潜力，为机器人自主导航提供了新的规划范式。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

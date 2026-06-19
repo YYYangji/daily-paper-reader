@@ -1,0 +1,2177 @@
+Title: Well-balanced second-order approximation of the compressible atmospheric Euler equations
+
+URL Source: https://arxiv.org/pdf/2606.19764v1
+
+Published Time: Fri, 19 Jun 2026 00:29:22 GMT
+
+Number of Pages: 28
+
+Markdown Content:
+WELL-BALANCED SECOND-ORDER APPROXIMATION OF THE COMPRESSIBLE ATMOSPHERIC EULER EQUATIONS ∗
+
+CRYSTAL FARRIS † , MATTHIAS MAIER † , AND ERIC J. TOVAR ‡
+
+Abstract. We introduce a second-order approximation to the compressible atmospheric Euler equations with gravity that is invariant domain preserving and well-balanced with respect to rest states. The approximation is built upon discrete auxiliary states derived from a hydrostatic recon-struction of the density. These auxiliary states, together with an affine shift of the numerical state, provide local bounds needed for maintaining well-balancing and invariant domain preserving prop-erties of the method. The numerical method is then verified and validated with analytic solutions, well-balancing tests, and typical benchmark problems for atmospheric flows. 
+
+Key words. Atmospheric flows, Euler equations, invariant-domain preserving, structure pre-serving, well-balanced, high-order accuracy. 
+
+AMS subject classifications. 35L65, 65M12, 65M60, 76M10 
+
+1. Introduction. In this work, we consider the atmospheric Euler equations in the potential temperature formulation with a gravitational source term. This formu-lation allows a direct comparison of the temperature at different altitudes since the potential temperature is invariant under adiabatic changes in pressure [12]. This sys-tem provides a framework for simulating complex fluid flow in the atmosphere under the influence of gravity [3, 8]. The mathematical model is a foundation for numerical weather prediction and climate models, where accurately representing fluid dynamics across a wide range of spatial scales is essential [18]. Although large-scale atmospheric phenomena are largely hydrostatic in nature, gravity waves and other important mesoscale processes are fundamentally time de-pendent and, thus, non-hydrostatic [35]. Accurately capturing these effects therefore requires moving beyond hydrostatic models towards full time-dependent formulations based on the Navier Stokes or Euler equations [16, 38]. Importantly, even within such fully non-hydrostatic frameworks, it remains essential to preserve the hydrostatic equilibrium as a steady state at rest . This property is crucial for accurately capturing atmospheric dynamics, as the balance between the pressure gradient and gravita-tional forces fundamentally determines how motion in the atmosphere develops and evolves. The difficulty of maintaining such a well-balancing property is compounded by the need to maintain important physical invariants of the fluid throughout the computation, such as positivity of density and temperature [44]. Consequently, the development of robust, efficient, and physically consistent numerical schemes remains an active area of research [3, 8, 40]. The objective of this paper is to introduce a discretization of the atmospheric Euler equations in potential temperature formulation that is invariant domain pre-
+
+> ∗
+
+Draft version, June 19, 2026 
+
+Funding: The work of CF was supported by the Laboratory Directed Research and Devel-opment (LDRD) program at Los Alamos National Laboratory under project number 20251079ER. Research conducted at Los Alamos National Laboratory is done under the auspices of the Na-tional Nuclear Security Administration of the U.S. Department of Energy under Contract No. 89233218CNA000001. MM was partially supported by the National Science Foundation under grant DMS-2045636 and by the Air Force Office of Scientific Research, USAF, under grant/contract number FA9550-23-1-0007. The Los Alamos unlimited release number is LA-UR-26-24992. 
+
+> †
+
+Department of Mathematics, Texas A&M University 
+
+> ‡
+
+Xcimer Energy Corporation 1
+
+> arXiv:2606.19764v1 [math.NA] 18 Jun 2026
+
+2 C. FARRIS, M. MAIER, E. J. TOVAR 
+
+serving (IDP) and well-balanced with respect to rest states . In other words, we aim to produce a scheme that ensures quantities like density and potential temperature re-main in their physically relevant ranges, and that steady state solutions are preserved. The discretization is based on continuous finite elements and is formulated for gen-eral unstructured meshes. To accomplish this, we develop an algebraic framework for constructing discrete auxiliary states that simultaneously preserve the hydrostatic equilibria and stay within the admissible set of the PDE. We show that using a hydro-static reconstruction of the numerical density and numerical state (Def. 3.1) combined with an appropriate affine shift (Eqn. 3.13) allows us to construct a low-order approx-imation that is invariant domain preserving and well-balanced. This approximation is shown to be a consistent approximation of the underlying PDE (Prop. 3.4) to O(h)accuracy, where h is the spatial mesh size. We show that the first-order scheme can be algebraically re-written as a convex combination of the numerical state and the novel auxiliary states with the affine shift (Lemma 3.5). Through this convex com-bination, we extract local bounds (Sec. 3.4) which are used as a safeguard for our higher-order approximation without affecting the well-balancing property. The final methodology is shown to be O(h2) accurate, invariant domain preserving and well-balanced with respect to rest states (Theorem 3.9). We verify the methodology with convergence tests, well-balancing problems and validate with standard benchmarks for atmospheric flows. 
+
+1.1. Related works. Recent numerical methods proposed for approximating Euler equations with a gravitational source in the atmosphere include discontinuous Galerkin and spectral element methods [3, 16, 17]. Various finite difference and fi-nite volume discretizations, as well as WENO and TENO reconstructions [7, 38–40] have been proposed. Importantly, some of these works additionally incorporate well-balancing in their numerical method, see [8, 33, 39]. A high-order DG method for the atmospheric Euler equations in the energy formulation was discussed in [44] which is positivity-preserving and well-balanced for a general equilibrium. Somewhat related developments for the shallow water equations provide further insight into structure-preserving discretizations with an additional emphasis on maintaining an invariant domain preserving property [5, 28]. To the best of the authors’ knowledge, a rig-orous enforcement of both invariant domain preservation and well-balancing for the atmospheric Euler equations in the potential temperature formulation has not been previously discussed. 
+
+1.2. Outline of the paper. The paper is organized as follows. We introduce the model problem, i.e., the atmospheric Euler equations in Section 2, as well as important thermodynamic and mathematical properties. In Section 3 we give brief details for the finite element setting considered in this work. Then, in Section 3.2, we define what it means to be well-balanced in the discrete setting and define the hydrostatic reconstruction. Then, in Section 3.3, we introduce the low-order method and show that it can be written as a convex combination of the auxiliary states based on the hydrostatic states and a novel affine shift in the style of [28]. The well-balancing and IDP properties follow naturally from the definition of the shifted auxiliary states and hydrostatic reconstruction. This convex combination allows us to extract local bounds used to correct our higher-order approximation in Section 3.5 to ensure it maintains the IDP properties. Finally, we present numerical illustrations in Section 4 where we verify and validate the numerical method. For the sake of completeness, we also include the full solution to the Riemann problem for this set of equations in Appendix A and B. WELL-BALANCED IDP SCHEME FOR ATMOSPHERIC EULER 3
+
+2. Preliminaries. Let D ⊂ Rd be a polygonal domain where d ≥ 1 is the spatial dimension. Let ρ denote the fluid density, m the momentum, and E the total energy of the system. Under the assumption of an adiabatic atmosphere (i.e., no heat exchange in the atmosphere), the Euler equations supplemented with a linear gravity source term can be written as follows: (2.1) 
+
+
+
+∂tρ + ∇· (m) = 0 ,∂tm + ∇·  ρ−1m ⊗ m + pId
+
+ = −ρg ˆed,∂tE + ∇· (v(E + p)) = −ρg (v·ˆed),
+
+where Id is the d × d dimensional identity matrix and ˆed is the unit-normal in the direction of xd. Here, xd is the d-th component of the cartesian coordinate x := (x1, . . . , x d); it holds true that ∇xd = ˆed. Here, g is the gravitational acceleration. Let 
+
+e := 1 /ρ  E − 12 ρ∥v∥2 be the specific internal energy. We assume that the pressure is given by the ideal gas equation of state: p = ( γ − 1) ρe . With this assumption, the temperature of the system is given by T = ecv . Here, γ := cp 
+
+> cv
+
+is the ratio of specific heat capacities. For atmospheric flow applications, it is common to recast the compressible Euler equations above in the potential temperature formulation. This formulation is a result of the adiabatic assumption and the first law of thermodynamics [12]. The implication is that the energy equation can be swapped out for the evolution of the specific entropy, or equivalently, the potential temperature [34]. Using the ideal gas equation of state and the first law of thermodynamics, the potential temperature can be defined as follows [15]: (2.2) θ := T
+
+ P0
+
+p
+
+ Rcp 
+
+,
+
+where P0 is a given reference pressure value and R is the specific gas constant for dry air which can be expressed as: R = cv (γ − 1). Now, let u(x, t ) := ( ρ, m, ρθ )T denote the state vector of conserved quantities. Then, given some initial data u0(x) :=  ρ0, m0, (ρθ )0
+
+(x) at initial time t0, we seek solutions that solve the following system in a weak sense: (2.3) 
+
+
+
+∂tρ + ∇· (m) = 0 ,∂tm + ∇·  ρ−1m ⊗ m + p(u)Id
+
+ = −ρg ˆed,∂t(ρθ ) + ∇· (vρθ ) = 0 .
+
+In this formulation, the pressure is given by: (2.4) p(u) := Ceos 
+
+ ρθ γ , with Ceos := P0
+
+ RP0
+
+γ
+
+,
+
+For notation purposes, we define the short-hand notation for the hyperbolic flux as: 
+
+f (u) :=  m, ρ −1m ⊗ m + p(u)Id, vρθ T. We also introduce the pressureless gas flux: 
+
+g(u) :=  m, ρ −1m ⊗ m, vρθ T which will be used in the finite element discretization in §3.1. 
+
+2.1. Structural properties. We briefly summarize relevant structural proper-ties of the atmospheric Euler equations in potential temperature formulation (2.3) that will be used in the numerical approach for constructing a robust approximation technique. 4 C. FARRIS, M. MAIER, E. J. TOVAR 
+
+Definition 2.1 (Admissible set and invariant domain). The admissible set of the atmospheric Euler equations (2.3) reads 
+
+(2.5) A := {u = ( ρ, m, ρθ )T ∈ Rd+2 : ρ > 0, θ > 0}.
+
+Furthermore, we call any convex subset B ⊂ A an invariant domain , provided there holds that the Riemann average ¯u(t) of the solution to the Riemann problem with (projected) left and right states uL, uR ∈ B lies in B again, viz., ¯u(t) ∈ B [22]. 
+
+An invariant domain B is described by a collection of quasi-concave functions [22], say Ψ l(u), l = 1 , . . . , k and setting (2.6) B := {u ∈ Rm : Ψ l(u) > 0, l = 1 , . . . , k }.
+
+The concrete local bounds used in the numerical approach are discussed in Section 3.4. The introduction of a gravitational source term in (2.3) requires a careful numerical construction to preserve so-called rest states. To this end we introduce the following definition. 
+
+Definition 2.2 (Problem at Isentropic Equilibrium). Let u(x, t ) be a solution to (2.3) . Then, we say u(x, t ) at time t is at isentropic equilibrium if the following condition holds true: 
+
+(2.7) 
+
+
+
+u(x, t ) does not depend on x1, . . . , x d−1,
+
+v · ˆed = 0 ,θ = const ., 
+
+∇p(u) = −ρg ˆed.
+
+Note that under appropriate boundary conditions—such as periodic boundary condi-tions in x1, . . . , x d−1 directions—this implies ∂tu(x, t ) = 0.
+
+We make the following observation. 
+
+Lemma 2.3 (Isentropic equilibrium condition). Let u(x, t ) be at isentropic equi-librium at time t. Then, using the equation of state (2.4) , the last condition in (2.7) 
+
+can be recast as a matching condition on the density and potential temperature: 
+
+(2.8) θ = const ., ργ−1 + g
+
+˜cθ γ xd = const ., ˜c := Ceos γγ − 1 .
+
+A common example of a state at isentropic equilibrium is [15, 20] (2.9) 
+
+
+
+v · ˆed = 0 , v · ˆe1, ..., v · ˆed−1 = const. θ = 300 ,T = θ − gx d
+
+γc v
+
+, p = P0
+
+ Tθ
+
+γ/ (γ−1) 
+
+, ρ = pRT .
+
+Remark 2.4 (Isentropic versus adiabatic equilibrium). The rest state with θ =const . is commonly referred to as “adiabatic equilibrium” in the literature [33, 39]. Though, it is true that an isentropic equilibrium also assumes an adiabatic atmos-phere, it does not need to hold true that an adiabatic atmosphere is also isentropic. For this reason, we prefer to refer to conditions (2.8) and (2.9) as isentropic condi-tions. □WELL-BALANCED IDP SCHEME FOR ATMOSPHERIC EULER 5
+
+Remark 2.5 (Isothermal equilibrium). For practical applications of atmospheric flows, a second hydrostatic equilibrium condition besides the isentropic equilibrium is sometimes considered, where the temperature T is taken to be constant in the whole domain; see, e. g., [33, 39]. Such an equilibrium condition is called isothermal equilib-rium . For recovering exact well-balancing with respect to isothermal equilibrium, a total energy formulation with a modified hydrostatic reconstruction is more suitable. Since this requires a different discretization approach, we will not focus on preserv-ing the isothermal equilibrium exactly. However, we show in Section 4.1.3 that the scheme proposed here does satisfy the isothermal equilibrium up to O(h2). □
+
+3. Well-balanced, invariant-domain preserving approximation. We now introduce a fully discrete approximation technique for (2.3) based on continuous finite elements. We introduce the concept of discrete well-balancing in Section 3.2, i.e., the approximation maintains the problem-at-rest property (Definition 2.2) on the discrete level. To this end, we construct discrete auxiliary states which encode the hydrostatic equilibrium. These states, combined with an affine shift, allow us to derive a first-order method in Section 3.3 which is a convex combination of said states. The methodology is proved to be consistent, well-balanced and invariant-domain preserving. This convex combination further allows us to extract bounds used as a safeguard for our higher-order method in Section 3.5. The final algorithm is formally second-order accurate in space. 
+
+3.1. Continuous finite element setting. The spatial approximation adopted in this paper is based upon the invariant domain preserving methodology [22]. The low order method generalizes the algorithm presented in [31, p. 163], as it is discretiza-tion independent. Full details of this method for continuous and discontinuous finite elements, and finite volume approximations are given in [26]. The approaches for the compressible Euler equations are proposed in [9–11, 24]. For the sake of com-pleteness, we briefly summarize the finite element setting that will be used for our approximation. Let D ⊂ Rd be a domain with polygonal boundary, discretized with a shape and form regular mesh Th consisting of quadrilateral (for d = 2) or hexahedral (for d = 3) cells K, covering the domain D. Let {φi}i∈V denote the nodal Lagrange basis of the continuous finite element space constructed with bi- (tri-) linear elements on the mesh 
+
+Th. Here V is an index enumerating the spatial degrees of freedom. Let xi denote the collocation point associated with the ith degree of freedom, and introduce a short notation for the dth component, zi := ( xi)d.At time tn a discrete approximation uh(tn, x) to the solution of (2.3) is con-structed by setting uh(x) := P 
+
+> i∈V
+
+Uni φi(x), where the collocated state vector is 
+
+Uni := ( ϱni , Mni , Θni )T. Furthermore, we introduce discrete primitive quantities as follows: Vni := Mni /ϱ ni and ϑni := Θ ni /ϱ ni . We introduce a lumped mass matrix 
+
+ML = ( mi)i and a consistent mass matrix MH = ( mij )ij with entries 
+
+mi := 
+
+Z
+
+> D
+
+φi(x) d x, mij := 
+
+Z
+
+> D
+
+φi(x)φj (x) d x.
+
+Furthermore, a vector valued matrix 
+
+cij := 
+
+Z
+
+> D
+
+φi(x)∇φj (x) d x ∈ Rd
+
+is introduced for approximating the divergence operator. Let I(i) ⊂ V denote the stencil of degree of freedom i, i.e., the set of all degrees of freedom j coupling with i:6 C. FARRIS, M. MAIER, E. J. TOVAR 
+
+I(i) := j ∈ V : mij ̸ = 0 . As a final requisite we assume that the basis {φi}i∈V 
+
+forms a partition of unity, i.e., P 
+
+> i∈V
+
+φi(x) ≡ 1. Crucially this implies 
+
+mi = X
+
+> j∈I (i)
+
+mij , X
+
+> j∈I (i)
+
+cij = 0, and X
+
+> i∈I (j)
+
+cij = nj ,(3.1) which is required for the discrete scheme to be conservative. Here, 
+
+nj := 
+
+Z
+
+> ∂Ω
+
+φj (x)n(x) d ox,(3.2) is a weighted normal associated with the jth degree of freedom. The quantity n(x)denotes the outward facing unit normal of ∂Ω. 
+
+3.2. Discrete well-balancing and hydrostatic reconstruction. We now in-troduce an algebraic approach for maintaining the problem-at-rest property (Defini-tion 2.2) at the discrete level. To this end, we adopt an idea from the shallow water literature for well-balancing that uses a so-called hydrostatic reconstruction of the density (which is analogous to the water depth) to enforce well-balancing on the dis-crete level [4, 5, 28]. Following the general philosophy outlined in [4], we introduce a discrete hydrostatic reconstruction of the density and corresponding hydrostatic star state as follows. 
+
+Definition 3.1 (Hydrostatic star state). Let i ∈ V and let Ui = ( ϱi, Mi, Θi)T be a given state. Then, we define the hydrostatic reconstruction U∗,j i of Ui with respect to j ∈ I (i) by setting 
+
+U∗,j i := 
+
+
+
+ϱ∗,j i
+
+Viϱ∗,j i
+
+ϑiϱ∗,j i
+
+ , with (3.3) 
+
+ϱ∗,j i := 
+
+
+
+ϱγ−1 
+
+> i
+
++ g
+
+˜c ¯ϑij ϑγ−1
+
+> i
+
+max  0, z i − zj
+
+1/(γ−1) 
+
+,(3.4) 
+
+where ¯ϑij := 12 (ϑi + ϑj ). Recall that zi denotes the dth component of the collocation point xi, and ˜c = Ceos γ/ (γ − 1) . Note that we suppress the time index n when it is clear from context. 
+
+Definition 3.2 (Discrete problem at equilibrium and well-balancing). 
+
+(i) We say that a discrete state uh is at equilibrium if for all i ∈ V we have 
+
+
+
+Vi·ˆed = 0 ,ϑi = ϑj for all j ∈ I (i),ϱ∗,j i = ϱ∗,i j for all j ∈ I (i).
+
+(3.5) 
+
+(ii) A mapping S : P (Th) → P (Th) is said to be a well-balanced scheme if 
+
+S(uh) = uh holds for all discrete states uh at equilibrium. 
+
+Lemma 3.3 (Hydrostatic reconstruction). Let u(x, t ) be a solution at isentropic equilibrium satisfying Def. 2.2. Let uh(x) = Ihu(x, t n) be the Lagrange interpolant of u(x, t ) at time tn. Then, uh is already a discrete state at equilibrium satisfying Def. 3.2. WELL-BALANCED IDP SCHEME FOR ATMOSPHERIC EULER 7
+
+Proof. Owing to Lemma 2.3 the continuous solution u(x, t ) satisfies (2.8) and the identity holds true in particular for all Lagrange points implying: (3.6) ϱγ−1 
+
+> i
+
++ g
+
+˜cϑ γi
+
+zi = ϱγ−1 
+
+> j
+
++ g
+
+˜cϑ γj
+
+zj , for all i, j ∈ V .
+
+Assume first that zj < z i. Then, (ϱ∗,i j )γ−1 − (ϱ∗,j i )γ−1 = ϱγ−1 
+
+> j
+
+− ϱγ−1 
+
+> i
+
+− g
+
+˜c ¯ϑij ϑγ−1
+
+> i
+
+ zi − zj
+
+ = 0 ,
+
+by (3.6) and since ϑi = ϑj . Hence, ϱ∗,i j = ϱ∗,j i . If zj ≥ zi, then (ϱ∗,i j )γ−1 − (ϱ∗,j i )γ−1 = ϱγ−1 
+
+> j
+
++ g
+
+˜c ¯ϑij ϑγ−1
+
+> j
+
+ zj − zi
+
+ − ϱγ−1 
+
+> i
+
+= 0 ,
+
+again by virtue of (3.6). Hence, ϱ∗,i j = ϱ∗,j i in either case. As in [5, 28], we would like to utilize these hydrostatic star states in our numerical flux for ensuring well-balancing. This leads us to the following lemma which shows that this is indeed feasible. 
+
+Proposition 3.4 (Consistency). Let u(x, t ) be a smooth solution to the atmo-spheric Euler equations and let uh = Ihu(x, t n) be the Lagrange interpolant of u(x, t ).Then: (i) The pressure and gravity term admit a first-order approximation as follows: 
+
+Z
+
+> D
+
+(∇p + ρg ˆed)φi dx = ˜ cϱ iϑi
+
+X
+
+> j∈I (i)
+
+ (ϱ∗,i j ϑj )γ−1 − (ϱ∗,j i ϑi)γ−1cij + O(h).(3.7) 
+
+(ii) For γ > 1 and under a mild mesh regularity assumption (3.9) , the pressureless flux g(u) can be approximated as follows: 
+
+Z
+
+> D
+
+g(u)φi dx = X
+
+> j∈I (i)
+
+ g(Un, ∗,j i ) + g(Un, ∗,i j )cij + O(h),(3.8) 
+
+where i ∈ V is an arbitrary interior degree of freedom. Proof. (i) Fix i ∈ V . Assume the solution is smooth and assume that Uni ∈ A .Observe that for both, zj < z i or zj > z i, we have that ˜c (ϱ∗,i j ϑj )γ−1 − (ϱ∗,j i ϑi)γ−1 = ˜ c (ϱj ϑj )γ−1 − (ϱiϑi)γ−1 + g
+
+¯ϑij 
+
+ zj − zi
+
+.
+
+Thus, ˜cϱ iϑi
+
+X
+
+> j∈I (i)
+
+ (ϱ∗,i j ϑj )γ−1 − (ϱ∗,j i ϑi)γ−1cij 
+
+= ˜ c ϱ iϑi
+
+X
+
+> j∈I (i)
+
+ (ϱj ϑj )γ−1 − (ϱiϑi)γ−1cij + ϱig X
+
+> j∈I (i)
+
+ϑi
+
+¯ϑij 
+
+ zj − zi
+
+cij .
+
+By virtue of [5, Lem. 2.1] we have that ˜ cϱ iϑi
+
+P
+
+> j∈I (i)
+
+ (ϱj ϑj )γ−1 − (ϱiϑi)γ−1cij is a second order approximation to R 
+
+> D
+
+˜c(ρθ )∇(ρθ )γ−1φi dx = R 
+
+> D
+
+∇pφ i dx. For the second 8 C. FARRIS, M. MAIER, E. J. TOVAR 
+
+term we use the fact that ϑj = ϑi + O(h), 2ϑi 
+
+> ϑi+ϑj
+
+= 1 + O(h), and |zj − zi| ≤ h, and estimate as follows: 
+
+ρig X
+
+> j∈I (i)
+
+2ϑi
+
+ϑi + ϑj
+
+ zj − zi
+
+cij = ϱig X
+
+> j∈I (i)
+
+ zj − zi
+
+cij 
+
+| {z }
+
+> =: (i)
+
++ X
+
+> j∈I (i)
+
+cij O(h2)
+
+| {z }
+
+> =: (ii)
+
+.
+
+=
+
+Z
+
+> D
+
+(ρg ˆed)φi dx + O(h2)
+
+| {z }
+
+> = (i)
+
++ O(h)
+
+| {z } 
+
+> = (ii)
+
+.
+
+The estimate for (ii) stems from the fact that O(h2) ∥cij ∥ℓ2 = miO(h). (ii) We have 
+
+g(Un, ∗,j i ) = g(Ui) ϱ∗,j i
+
+ϱi
+
+= g(Ui)
+
+
+
+1 + g γ − 1
+
+γρiϑi
+
+¯ϑij p(Ui) max(0 , z i − zj )
+
+1/(γ−1) 
+
+.
+
+Now, introducing the short notation hij := max(0 , z i − zj )w, and using again 2ϑi 
+
+> ϑi+ϑj
+
+=1 + O(h), this implies 
+
+g(Un, ∗,j i ) − g(Ui) = g(Ui)
+
+ 
+
+1 + g γ − 1
+
+γρi
+
+p(Ui) hij + O(hij h)
+
+1/(γ−1) 
+
+− 1
+
+
+
+= g(Ui)   gγρi
+
+p(Ui) hij + O(hij h).
+
+Here, we have used the fact that (1 + h)α = 1 + α h + O(h2) for any α > 0. This implies for any interior degree of freedom i:
+
+X
+
+> j∈I (i)
+
+ g(Un, ∗,j i ) + g(Un, ∗,i j )cij − X
+
+> j∈I (i)
+
+ g(Ui) + g(Uj )cij 
+
+= X
+
+> j∈I (i)
+
+ g(Uj ) gγρj
+
+p(Uj ) hji + g(Ui) gγρi
+
+p(Ui) hij 
+
+ cij + O (hij + hji )h cij = (iii) We now introduce the following technical assumption on the mesh: 
+
+
+
+#j ∈ I (i) : hji > 0 = # k ∈ I (i) : hik > 0 ,
+
+and both index sets can be matched up pairwise such that  1 + O(h) hji cij = −hik cik for every such pair ( i, k ).
+
+(3.9) We then conclude: (iii) = X
+
+> j∈I (i)
+> hji >0
+
+  g(Uj ) gγρj
+
+p(Uj ) − g(Ui) gγρi
+
+p(Ui)
+
+| {z } 
+
+> =O(h)
+
+ h cij 
+
++ X
+
+> j∈I (i)
+
+O(h2) cij = mi O(h).
+
+The statement now follows from the fact that P
+
+> j∈I (i)
+
+ g(Ui) + g(Uj )cij is a second-order approximation of the pressureless flux. WELL-BALANCED IDP SCHEME FOR ATMOSPHERIC EULER 9
+
+3.3. Low order method. We now introduce the low-order method. The goal is to utilize the hydrostatic reconstruction states above in combination with local dis-crete auxiliary states to ensure both well-balancing and invariant-domain preserving properties. We recall that an essential quantity for constructing a robust numerical method is the so called bar state , or auxiliary state; see [22, 29, 30, 41]: (3.10) Unij := 12
+
+
+
+Un, ∗,j i + Un, ∗,i j
+
+
+
+− 12dL,n ij 
+
+
+
+f (Un, ∗,i j ) − f (Un, ∗,j i )
+
+
+
+cij ,
+
+where, following [22], we introduce a graph-viscosity as follows: 
+
+dL,n ij := max {ˆλmax (Un, ∗,j i , Un, ∗,i j ) ∥cij ∥ , ˆλmax (Un, ∗,i j , Un, ∗,j i ) ∥cji ∥} .(3.11) Here, ˆλmax is an upper bound on the maximum wave speed of a local Riemann problem defined by the left state Un, ∗,j i and right state Un, ∗,i j . We provide details for computing the maximum wave speed in Appendix B. The key property that ensures the invariant domain preservation is the fact that the bar state Unij is the Riemann average over the space [ − 12 , 12 ] at an appropriate time t∗ depending on dL,n ij ; see [22, Thm. 4.1]. We are now in a position to construct a low-order scheme which is a convex combination of the state Uni and discrete auxiliary states both with an affine shift. We define pn, ∗,j i := p(Un, ∗,j i ). For all i ∈ V and j ∈ I (i), we set (3.12) UL,n +1  
+
+> i
+
+:= (1 + 2τ d L,n ii 
+
+mi
+
+)( Uni + τmi
+
+SL,n i ) + X
+
+> j∈I (i)\{ i}
+
+2τ d L,n ij 
+
+mi
+
+(Unij + τmi
+
+SL,n i ),
+
+where the affine shift is defined by: 
+
+SL,n i := X
+
+> j∈I (i)
+
+SL,n ij ,(3.13) 
+
+SL,n ij := −2( dL,n ij + Vni ·cij )( U∗,j i − Uni )+
+
+
+
+0 pn, ∗,i j − pn, ∗,j i
+
+cij − ˜c ϱ ni ϑni
+
+ (ϱn, ∗,i j ϑnj )γ−1 − (ϱn, ∗,j i ϑni )γ−1cij 
+
+0
+
+ .
+
+A straightforward calculation establishes the following lemma. 
+
+Lemma 3.5. The low-order update (3.12) is algebraically equivalent to: 
+
+mi
+
+UL,n +1  
+
+> i
+
+− Uni
+
+τ = X
+
+> j∈I (i)
+
+FL,n ij ,(3.14) 
+
+FL,n ij := − (g(Un, ∗,i j ) + g(Un, ∗,j i )) cij + dL,n ij (Un, ∗,i j − Un, ∗,j i )
+
+−
+
+
+
+0˜c ϱ ni ϑni
+
+ (ϱn, ∗,i j ϑnj )γ−1 − (ϱn, ∗,j i ϑni )γ−1cij 
+
+0
+
+ .
+
+The main result of the section is the following proposition summarizing the structure preserving properties of the low-order update (3.12). 10 C. FARRIS, M. MAIER, E. J. TOVAR 
+
+Proposition 3.6. For the low-order update Un 7 → UL,n +1 given by (3.12) the following properties hold true provided that a CFL condition holds true, 
+
+τn ≤ min 
+
+> i∈ν
+
+mi
+
+2|dL,n ii | :(3.15) 
+
+(i) It is first-order consistent for smooth flows. (ii) It is well-balanced. (iii) Up to boundary fluxes, it conserves density ρ and potential temperature Θ = 
+
+ϱϑ . The momentum m, on the other hand, is only conserved if g = 0 .(iv) It maintains admissibility, UL,n +1  
+
+> i
+
+∈ A .(v) It is invariant-domain preserving in the sense that 
+
+UL,n +1  
+
+> i
+
+∈ conv 
+
+> j∈I (i)
+
+ Unij 
+
+ + τmi
+
+SL,n i .
+
+Proof. Since (3.12) and (3.14) are equivalent by virtue of Lemma 3.5, we prove all the results for the latter formulation. (i) The consistency is a direct consequence of (3.14) and Proposition 3.4. (ii) Suppose unh is a rest state. Then ϑni = ϑnj and ϱ∗,j,n i = ϱ∗,i,n j for all i ∈ V and all j ∈ I (i). It follows that FL,n ij = 0 for each i ∈ V , j ∈ I (i). Hence UL,n +1  
+
+> i
+
+= Uni for all i ∈ V , and so the scheme is well-balanced. (iii) In order to show conservation, we need to prove that the right hand side of (3.14) vanishes when summed up over index i ∈ V : We have that cij = −cji for all 
+
+i ∈ V , j ∈ I (i), provided that either i, or j is an interior degree of freedom, i.e., xi or 
+
+xj are not collocated on the boundary ∂Ω. Furthermore, g(Un, ∗,i j )+ g(Un, ∗,j i ) and dL,n ij 
+
+are symmetric, and Un, ∗,i j − Un, ∗,j i is skew-symmetric. The remaining contribution acts on the momentum and is given by ˜ c(ϱiϑi)[( ϑj ϱ∗ 
+
+> j
+
+)γ−1 − (ϑiϱ∗ 
+
+> i
+
+)γ−1]. In case of vanishing gravity, g = 0, it is symmetric and the total momentum is conserved as well. (iv) Admissibility is a direct consequence of (3.12), the fact that Unij ∈ A are admissible by construction (3.11) of dL,n ij under a CFL condition, and the observation that 
+
+ϱ(SL,n i ) = X
+
+> j∈I (i)
+
+−2( dL,n ij + Vni · cij )( ϱ∗,j i − ϱi) > 0 and 
+
+ϱϑ (SL,n i ) = X
+
+> j∈I (i)
+
+−2( dL,n ij + Vni · cij )( ϱ∗,j i − ϱi)ϑi > 0.
+
+Thus, UL,n +1  
+
+> i
+
+∈ A for all i ∈ V by (3.12). (v) The convex combination follows directly from (3.12). 
+
+Remark 3.7 (Spatial accuracy). When using linear elements, the scheme (3.14) is observed to be first-order accurate in space with respect to the mesh size. We remind the reader that the importance of the low-order scheme is to use it as a safeguard for the high-order method. □
+
+3.4. Local bounds. A crucial ingredient for ensuring fidelity and robustness of the high-order method is the construction of suitable local bounds. Motivated by the observation (see: Prop. 3.6) that the low order update satisfies 
+
+UL,n +1  
+
+> i
+
+∈ conv 
+
+> j∈I (i)
+
+ Wnij 
+
+, Wnij := Unij + τmi
+
+SL,n i ,WELL-BALANCED IDP SCHEME FOR ATMOSPHERIC EULER 11 we construct a local invariant domain Bni as follows: (3.16) Bni := 
+
+n
+
+u ∈ Rm : ϱn, min  
+
+> i
+
+≤ ρ ≤ ϱn, max  
+
+> i
+
+and ϑn, min  
+
+> i
+
+≤ θ ≤ ϑn, max 
+
+> i
+
+o
+
+,
+
+where 
+
+ϱn, min  
+
+> i
+
+:= min  
+
+> j∈I (i)
+
+ρ(Wnij ), ϱn, max  
+
+> i
+
+:= max  
+
+> j∈I (i)
+
+ρ(Wnij ),ϑn, min  
+
+> i
+
+:= min  
+
+> j∈I (i)
+
+θ(Wnij ), ϑn, max  
+
+> i
+
+:= max  
+
+> j∈I (i)
+
+θ(Wnij ).
+
+Lemma 3.8. It holds true that 
+
+Bni ⊃ conv 
+
+> j∈I (i)
+
+ Wnij 
+
+ ∋ UL,n +1  
+
+> i
+
+.
+
+Proof. We can describe Bni equivalently with (2.6) and the following functions: Ψ1(u) := ρ(u) − ρn, min  
+
+> i
+
+, Ψ2(u) := ρn, max  
+
+> i
+
+− ρ(u),
+
+Ψ3(u) := ( ρθ )( u) − ρ(u)ϑn, min  
+
+> i
+
+, Ψ4(u) := ρ(u)ϑn, max  
+
+> i
+
+− (ρθ )( u).
+
+The property now follows from the observation that all Ψ l(u) are quasi-concave when viewed as a function of the conserved quantities; see, e. g., [25, Lem 7.4]. We highlight that the property above regarding the local bounds is stronger than the notion of positivity preservation (i.e., local vs global bounds). In the next section we construct a high-order update Un+1  
+
+> i
+
+that ensures Un+1  
+
+> i
+
+∈ B ni .
+
+3.5. High-order method. Robust high-order accuracy in space can be achieved by combining a high-order spatial discretization based on entropy viscosity [23] with a suitable limiter technique [24] that ensures robustness. This is then combined with a robust high-order time-stepping strategy [28]. For the sake of completeness, we outline briefly our concrete choice of constructing a high-order update with convex limiting. We first introduce a high-order flux (3.17) FH,n ij := − g(Unj ) + g(Uni )cij + dH,n ij (Un, ∗,i j − Un, ∗,j i )
+
+−
+
+
+
+0˜c ϱ ni ϑni
+
+ (ϱnj ϑnj )γ−1 − (ϱni ϑni )γ−1cij + ϱni g  (xd)j − (xd)i
+
+cij 
+
+0
+
+ .
+
+Here, dH,n ij is a high-order graph viscosity coefficient that is constructed with an entropy-viscosity commutator [23]: 
+
+dH,n ij = dL,n ij 
+
+αni + αnj
+
+2where αni ∈ [0 , 1] is the entropy production indicator [24, 25] defined by 
+
+αni := |Ni|
+
+Dni + ϵD max 
+
+, N ni := X
+
+> j∈I (i)
+
+ q(Unj ) − (∇uη(Uni )) T ∇ · f (Unj )cij ,Dni := | X
+
+> j∈I (i)
+
+q(Unj )cij | + | X
+
+> j∈I (i)
+
+(∇Uη(Uni )) T ∇ · f (Unj )cij |,12 C. FARRIS, M. MAIER, E. J. TOVAR 
+
+and where we used the entropy pair: 
+
+η(u) := 12 ρ ∥v∥2 + 1
+
+γ − 1 p + ρgx d, and q(u) := v(η(u) + p).
+
+Now, we introduce a high-order update as follows [24, 25]: 
+
+Un+1  
+
+> i
+
+:= X
+
+> j∈I (i)\{ i}
+
+λi(UL,n +1  
+
+> i
+
++ ℓnij Pnij ), where (3.18) 
+
+Pnij := τmiλi
+
+n
+
+FH,n ij − FL,n ij + bij FH,n j − bji FH,n i
+
+o
+
+, λi := 1card( I(i)) − 1 ,
+
+and where the limiter coefficients ℓij ∈ [0 , 1] are chosen such that Ψk(UL,n +1  
+
+> i
+
++ ℓi,k j Pnij ) ≥ 0 for each k = 1 , . . . , 4.
+
+We have the following result. 
+
+Theorem 3.9. The scheme Un 7 → Un+1 given by (3.18) supplemented with the limiter coefficients ℓnij such that Ψk(UL,n +1  
+
+> i
+
++ ℓnij Pnij ) ≥ 0 for all k = 1 , . . . , 4, is conservative (up to source contributions), well-balanced with respect to equilibrium states, and invariant-domain preserving under the CFL condition, i. e., 
+
+Un+1  
+
+> i
+
+∈ B ni .
+
+Proof. (i) Suppose that the gravitational acceleration is zero. Since ℓnij is sym-metric and miPnij is skew-symmetric, it follows that 
+
+X
+
+> j∈I (i)
+
+miUn+1  
+
+> i
+
+= X
+
+> j∈I (i)
+
+miUni
+
+and thus the scheme is conservative without source terms. (ii) In order to establish well-balancing, we show that the limited update reduces to the low order update UL,n +1  
+
+> i
+
+in equilibrium. Suppose the discrete state Uni is at equilibrium for i ∈ V . By Proposition (3.6), the low order-flux is zero. Furthermore, the high order flux FH,n ij = 0 since ˜ cϑ ni (ϱnj ϑnj )γ−1 + g z j = ˜ cϑ ni (ϱni ϑni )γ−1 + g z i at equilibrium. Since FH,n i = P
+
+> j∈I (i)
+
+FH,n ij and FH,n ij = −FH,n ji , we have that Pnij = 0. Therefore, the scheme is well-balanced. (iii) To show invariant domain preservation suppose the time step satisfies the CFL condition (3.15). Then, UL,n +1  
+
+> i
+
+is a convex combination and the local bounds in (3.16) hold. Then, using the construction of the limiter we have that: Ψk(Un+1  
+
+> i
+
+) = Ψ k
+
+ X
+
+> j∈I (i)
+
+λi
+
+ UL,n +1  
+
+> i
+
++ ℓnij Pnij 
+
+
+
+≥ 0,
+
+because Ψ k
+
+
+
+UL,n +1  
+
+> i
+
++ ℓnij Pn+1 
+
+> ij
+
+
+
+≥ 0 for all j ∈ I (i) and Ψ k is a quasi-concave func-tion. 
+
+4. Numerical Illustrations. This section illustrates the method in the follow-ing ways: (i) verification using convergence tests, (ii) well-balancing results, and (iii) the validity of the method through various benchmark problems found in the lit-erature. The numerical tests are performed using ryujin [27, 36], which is a high WELL-BALANCED IDP SCHEME FOR ATMOSPHERIC EULER 13 performance code built upon the deal.II finite element library [2]. All tests use con-tinuous, linear finite elements for the spatial approximation and a third order explicit Runge-Kutta method technique presented in time [28, Tab. 1(b)]. The time step size at each stage is computed with 
+
+τn := CFL max 
+
+> i∈ν
+
+mi
+
+2|dL,n ii |
+
+where CFL is a user-defined parameter. For all 1D verification tests, we set CFL= 0 .5, and for larger benchmarks we set CFL = 1 .0. 
+
+4.1. Verification. To determine convergence properties of the method, we use the following consolidated error indicator for the tests: (4.1) δq (t) = 
+
+> m
+
+X
+
+> k=1
+
+∥uk,h (t) − uk(t)∥q
+
+∥uk(t)∥q
+
+,
+
+where uk(t) is the exact solution and uk,h (t) is the spatial approximation for each component k of the system. 
+
+4.1.1. Smooth Wave Solution. We first test the numerical method with a 1D smooth solution for the model (2.3) without sources, i.e., g = 0. We do so by adapting the smooth traveling wave introduced in [24, Sec. 5.2]. Since the application of this benchmark is new to the atmospheric model, we provide the details for the solution in [24]. Let v(x, t ) = v0, p(x, t ) = pc and the density profile is given by: 
+
+ρ(x, t ) = 
+
+(
+
+ρ0 + 2 6(x1 − x0)−6(x − v0t − x0)3(x1 − x + v0t)3 if x0 ≤ x − v0t ≤ x1
+
+ρ0 otherwise ,
+
+where x0 = 0 .1, x1 = 0 .3, cv = 719, and γ = 75 . This gives us the following relation for potential temperature: 
+
+θ(x, t ) = ( pc
+
+p0
+
+) 1 
+
+> γ
+
+p0
+
+cv (γ − 1) ρ(x, t ) .
+
+The computational domain is set to be D = [0 , 1 m] with Dirichlet boundary condi-tions, and v0 = pc = 1. The reference pressure p0 = 1 Pa. The final time is set to 
+
+tf = 0 .1 s. The consolidated errors and convergence rates for the high order method are listed in Table 4.1. We observe superconvergence with rates close to third-order in each norm for this test problem consistent with the literature, cf. [21]. 
+
+4.1.2. Exact Solution with Gravitational Source. We now verify the con-vergence of the method when considering the gravitational source. We derive the exact solution as follows. Let ρ(x, t ) = ρ0, v(x, t ) = v0, and pressure be defined by the equation of state p(x, t ) = Ceos (ρθ )γ . Our set of conservation equations reduce to 
+
+∂xp = −ρg ∂tθ + v0∂xθ = 0 .
+
+Then, potential temperature equation is found to be 
+
+θ(x, t ) = 
+
+"
+
+− gCeos ργ−10
+
+(x − v0t)
+
+# 1
+
+> γ
+
+.14 C. FARRIS, M. MAIER, E. J. TOVAR 
+
+I δ1(T ) δ2(T ) δ∞(T )
+
+101 0.00139335 0.00302482 0.00986561 201 0.000172228 3.02 0.000416578 2.86 0.00157084 2.65 401 1.46985e-05 3.55 4.53502e-05 3.2 0.000224718 2.81 801 1.51174e-06 3.28 6.51501e-06 2.8 3.86661e-05 2.54 1601 1.68806e-07 3.16 9.51502e-07 2.78 7.64304e-06 2.34 3201 1.85924e-08 3.18 1.38329e-07 2.78 1.38204e-06 2.47 Table 4.1: δ1(T ), δ2(T ), and δ∞(T ) errors and convergence rates for the one-dimensional smooth wave problem at the final time tf = 0 .1 s with g = 0 and CFL 0.5.                       
+
+> Iδ1(T)δ∞(T)
+> 121 0.00789868 0.0255655 441 0.00412061 0.94 0.0135637 0.91 1681 0.00221506 0.90 0.00826712 0.71 6561 0.00116531 0.93 0.00483754 0.77 25921 0.000597845 0.96 0.00274854 0.82
+
+(a) Uniform mesh                       
+
+> Iδ1(T)δ∞(T)
+> 121 0.00824557 0.066454 441 0.00468741 0.81 0.0398796 0.74 1681 0.00236926 0.98 0.0266168 0.58 6561 0.0012675 0.9 0.0147337 0.85 25921 0.000653405 0.96 0.00759621 0.96
+
+(b) 10% mesh distortion 
+
+Table 4.2: δ1(T ) and δ∞(T ) errors and convergence rates for the low-order method in 2D for the exact solution with nonzero gravity. We observe first-order convergence for both the (a) uniform mesh and (b) 10% distorted mesh at a final time of tf = 1 s and CFL=0.5. The computational domain is set to be D = [0 , 5 m] with Dirichlet boundary condi-tions, and v0 = ρ0 = 1. In 2D we set v = (0 , v 0)T and 
+
+θ(x, t ) = 
+
+"
+
+− gCeos ργ−10
+
+(y − v0t)
+
+# 1
+
+> γ
+
+.
+
+Let g = 1, and the final time tf = 5 s. We compare the consolidated errors and rates for first-order in two-dimensions in Table 4.2. Note that we still observe first-order convergence for a non-uniform mesh distorted by 10%: a weaker assumption on the mesh than in Proposition 3.4, which assumes some regularity on the mesh in the direction of gravity. The consolidated errors and convergence rates for the high order method in 1D are listed in Table 4.3. We observe optimal convergence. 
+
+4.1.3. Pressure Perturbation over 1D Isothermal Steady State. We now address the Remark 2.5 and test our method with a benchmark that has isothermal equilibrium background state. We follow the set up discussed in [33, 39] which is composed of isothermal background state and small perturbation to the pressure. We recall that a typical isothermal problem set up is given by: 
+
+v · ˆed = 0 , v · ˆe1, ..., v · ˆed−1 = const., T = const. ρ = ρ0 exp 
+
+
+
+− xd
+
+RT 0
+
+
+
+, p = ρRT 0 = p0 exp 
+
+
+
+− xd
+
+RT 0
+
+
+
+, g = 1 .
+
+(4.2) WELL-BALANCED IDP SCHEME FOR ATMOSPHERIC EULER 15 
+
+I δ1(T ) δ2(T ) δ∞(T )
+
+101 0.00070729 0.000773312 0.00164977 201 0.000178313 1.99 0.000194809 1.99 0.000421821 1.97 401 4.47494e-05 1.99 4.88736e-05 1.99 0.00010785 1.97 801 1.12072e-05 2.0 1.2238e-05 2.0 2.80153e-05 1.94 1601 2.80363e-06 2.0 3.06126e-06 2.0 7.50952e-06 1.9 3201 7.00966e-07 2.0 7.65386e-07 2.0 1.86901e-06 2.01 Table 4.3: δ1(T ), δ2(T ), and δ∞(T ) errors and convergence rates for the 1D exact solution with a nonzero gravitational source at a final time of tf = 5 s and CFL 0.5. 
+
+I δ1(T ) δ2(T ) δ∞(T )
+
+101 1.75044e-05 2.82713e-05 0.00011372 201 3.80232e-06 2.2 5.54011e-06 2.35 2.76685e-05 2.04 401 8.81143e-07 2.11 1.15692e-06 2.26 6.77312e-06 2.03 801 2.11935e-07 2.06 2.57626e-07 2.17 1.67573e-06 2.02 1601 5.19541e-08 2.03 6.01839e-08 2.1 4.16689e-07 2.01 3201 1.28755e-08 2.01 1.45107e-08 2.05 1.03902e-07 2.0 Table 4.4: Convergence rates for the well-balancing test with the isothermal back-ground state. Let ˆ x = x − 2. The initial condition is given by: 
+
+ρ(x, 0) = ρe(ˆ x)(4.3a) 
+
+p(x, 0) = pe(ˆ x) + η exp ( −100(ˆ x − 0.5) 2)(4.3b) 
+
+v(x, 0) = 0 ,(4.3c) with constants 
+
+ρ0 = 1 , p 0 = 1 , T 0 = 1 , R = 1 , c v = 2 .5, γ = 1 .4, g = 1 .(4.4) Since we use the potential temperature formulation, we solve for the variable θ in this work. The initial potential temperature is given by: (4.5) θ(x, 0) = p0
+
+Rρ e(ˆ x) ·
+
+ pe(ˆ x) + η exp ( −100(ˆ x − 0.5) 2)
+
+p0
+
+ 1
+
+> γ
+
+.
+
+Let the computational domain be D = [0 , 5]. We compare the solution for η = 0 .01 at a final time of t = 0 .8 with CFL 0 .05 in Figure 4.1 at different refinement levels. It is compared against a reference solution computed with 1280 cells. Our scheme is able to accurately capture the propagation of the waves produced due to the initial perturbation of the pressure. Our results also agree well with the literature [15, 33, 39]. As stated in Remark 2.5, our scheme preserves isothermal equilibrium states to 
+
+O(h2) accuracy. We illustrate this fact in Table 4.4. 16 C. FARRIS, M. MAIER, E. J. TOVAR 
+
+1 1.5 2 2.5 3 3.5 4
+
+0
+
+2
+
+4
+
+6
+
+8
+
+·10 −3
+
+x (m) 
+
+> ∆p
+
+reference 
+
+N = 200 
+
+N = 400 
+
+N = 800   
+
+> 1.51.52 1.54 1.56 1.58 1.6
+> 6.5
+> 7
+> 7.5
+> ·10 −3
+
+Fig. 4.1: Pressure perturbation at t = 0 .8 with η = 0 .01 for different refinement levels and a reference solution of 3200 cells. The scheme accurately captures the propagating waves due to the initial perturbation of the pressure. A zoom in of the left peak is provided for a better view of convergence. 
+
+4.1.4. Sod Shock Problem. This problem is similar to the Riemann problem, but it includes the source term. We will use this to test how well our method accurately captures shocks and contact discontinuities. The domain is D = [0 , 1]. Let wZ =(ρZ , v Z , θ Z )T be the primitive data for our problem. We use the following set of Riemann data for the problem set up: (4.6) (ρ, v, θ ) = 
+
+(
+
+(1 , 0, 1) x < 0.5(0 .125 , 0, 1.54) x ≥ 0.5.
+
+The solution is presented in Figure 4.2. The solution is evaluated at time tf = 0 .2with 200 cells, and a reference solution is computed with a fine mesh of 3200 cells. We can see that the high-order scheme accurately captures the contact and shock waves that arise from the discontinuous initial data. 
+
+4.2. Benchmarks. We now illustrate the validity of our method using bench-mark problems in the atmospheric flow literature. The CFL is set to 1.0 for all of these problems. 
+
+4.2.1. 2D Rising Thermal Bubble. We consider the rising thermal bubble in 2D proposed by [42]. This test is a standard benchmark problem in the numerical weather prediction community, see [1, 13]. The problem introduces a warm bubble by perturbing the potential temperature. This produces vertical momentum causing the bubble to rise and later deform into a mushroom-like shape. The given computational domain is D = [0 , 5000] × [0 , 10000] m2 and free-slip boundary conditions are imposed on all sides of the domain. Let R = 2000 m. We set v(x, t ) = 0, and let ρ(x, t ) solve WELL-BALANCED IDP SCHEME FOR ATMOSPHERIC EULER 17 0 0.2 0.4 0.6 0.8 100.51x (m) Density reference density  
+
+> (a) Density at time tf
+
+0 0.2 0.4 0.6 0.8 1
+
+−0.5
+
+0
+
+0.5
+
+1
+
+1.5
+
+x (m) 
+
+Velocity 
+
+reference 
+
+velocity  
+
+> (b) Velocity at time tf
+
+0 0.2 0.4 0.6 0.8 1
+
+0
+
+0.5
+
+1
+
+x (m) 
+
+Pressure 
+
+reference 
+
+pressure  
+
+> (c) Pressure at time tf
+
+Fig. 4.2: Density, velocity, and pressure for the sod shock problem at tf = 0 .2 for 
+
+N = 200 cells. The data is plotted against a reference solution from a fine mesh of 
+
+N = 3200 cells. 
+
+Fig. 4.3: 2D rising thermal bubble with a mesh size of h = 50 m. A plot of the potential temperature perturbation (left) and the corresponding schlieren plot (right) are given at the final time tf = 1020 s. the hydrostatic balance equation (2.3). Set the potential temperature to be (4.7) θ(x, t ) = 
+
+(
+
+300 + 2[1 − r0 
+
+> 2000
+
+] if ( x − 5000) 2 + ( y − 2000) 2 ≤ R2
+
+300 if ( x − 5000) 2 + ( y − 2000) 2 > R 2,
+
+with r0 = p(x − 5000) 2 + ( y − 2000) 2 and thermodynamic constants 
+
+p0 = 100000 , c v = 715 , γ = 1 .4, g = 9 .8.
+
+We ran to a final time of tf = 1020 s.18 C. FARRIS, M. MAIER, E. J. TOVAR 
+
+4.2.2. 2D Density Current. We next test our method by modeling the 2-dimensional density current proposed by [6]. This problem is another common bench-mark in the numerical weather prediction community, and it models a cold air bubble descending and then propagating across the bottom boundary. This is done similarly to that in Section 4.2.1 by slightly perturbing the potential temperature inside the bubble and making it colder. We set the computational domain up as in [37], with 
+
+D = [0 , 25000] × [0 , 6000]. Let the radius be r = 1 m. We set v(x, t ) = 0, and let 
+
+ρ(x, t ) solve the hydrostatic balance equation (2.3). Set the potential temperature to be 
+
+θ(x, t ) = 
+
+(
+
+300 − 15 2 [1 + cos πr 0] if ( x 
+
+> 4000
+
+)2 + ( y−3000 2000 )2 ≤ r2
+
+300 if ( x 
+
+> 4000
+
+)2 + ( y−3000 2000 )2 > r 2,
+
+with r0 =
+
+q
+
+( x 
+
+> 4000
+
+)2 + ( y−3000 2000 )2 and thermodynamic constants 
+
+p0 = 100000 , c v = 717 .5, γ = 1 .4, g = 9 .806 .
+
+The result at time tf = 900 s is seen in Figure 4.4 (a) for a mesh size of h = 50 in both the x and y directions. The front location of the current agrees with that of [1, 18, 37], as well at the location of the rotors. The density current for various mesh refinements is provided in Figure 4.4 over time from t0 = 0 s through tf = 900 s. 
+
+4.2.3. Blast Over a Mountain. Our final test models a 2-dimensional ideal blast over a mountain with gravity. Instead of a small perturbation of potential temperature, the inner radius temperature is now much larger causing the blast. The computational domain in km is D = [ −20 , 20] ×[0 , 20] with a simple sinusoidal function representing the mountain. The mesh was constructed using the GMSH software [14] and is composed of triangular elements highlighting the robustness of the method on unstructured grids. Let the radius be r = 0 .75 km. We set v(x, t ) = 0, and let 
+
+ρ(x, t ) solve the hydrostatic balance in adiabatic equilibrium (2.9). Set the potential temperature to be 
+
+θ(x, t ) = 
+
+(
+
+3000 if x2 + ( y − 4) 2 ≤ r2
+
+300 if x2 + ( y − 4) 2 > r 2,
+
+with thermodynamic constants 
+
+p0 = 0 .1, c v = 717 × 10 −4, γ = 1 .4, g = 0 .00981 .
+
+The result for density at time tf = 10 s is seen in Figure 4.5. 
+
+5. Conclusion. This work presents a second-order invariant domain preserving and well-balanced scheme for the compressible atmospheric Euler equations. The method preserves positivity of density, potential temperature, and therefore pressure. The method also preserves equilibrium states given by the hydrostatic balance. We constructed a robust first order approximation using auxiliary states to maintain the well-balancing property. The well-balanced method was then extended to second order using convex limiting to preserve the invariant domain. The numerical illustrations ensure the validity of the method, as well as verifies convergence of our method. 
+
+Appendix A. Elementary Wave Structure. We will now give an overview of the elementary wave structure for this problem. One can show the Jacobian matrix WELL-BALANCED IDP SCHEME FOR ATMOSPHERIC EULER 19 
+
+(a) h = 50 m 
+
+(b) h = 25 m 
+
+(c) h = 12 .5 m 
+
+(d) h = 6 .25 m 
+
+Fig. 4.4: 2D density current over time from t0 = 0 to tf = 900 s for different mesh sizes: (a) h = 50 m, (b) h = 25 m, (c) h = 12 .5 m, and (d) h = 6 .25 m. As the mesh is refined, the current travels slightly faster, causing an increase in the front location. 20 C. FARRIS, M. MAIER, E. J. TOVAR 
+
+Fig. 4.5: 2D blast over a mountain of the one-dimensional system is: (A.1) A(u) = 
+
+
+
+0 1 0
+
+−v2 2v γp (ρθ )−1
+
+−vθ θ v
+
+ .
+
+The eigenvalues of this matrix are given by: 
+
+λ1(u) = v −
+
+r γp ρ , λ 2(u) = v, λ 3(u) = v +
+
+r γp ρ ,
+
+and the corresponding eigenvectors are given by: 
+
+r1 =
+
+
+
+> 1
+> θρv −√γρp ρθ
+
+1
+
+ , r2 =
+
+
+
+> 1
+> v
+
+10
+
+ , r3 =
+
+
+
+> 1
+> θρv +√γρp ρθ
+
+1
+
+ .
+
+Lemma A.1 (Wave structure). The 1-wave and 3-wave are genuinely nonlinear, and the 2-wave is linearly degenerate. Proof. The gradient of λ1 and λ3 with respect to u are 
+
+Duλ1(u) = 
+
+
+
+− vρ + 12ρ2
+
+√γρp 
+
+> 1
+> ρ
+
+− γ
+
+> 2ρ2θ
+
+√γρp 
+
+ and Duλ3(u) = 
+
+
+
+− vρ − 12ρ2
+
+√γρp 
+
+> 1
+> ργ
+> 2ρ2θ
+
+√γρp 
+
+ .
+
+Hence, Duλ1(u) · r1 = − (γ+1) √γρp  
+
+> 2ρ2θ
+
+< 0, and similarly Duλ3(u) · r3 = (γ+1) √γρp  
+
+> 2ρ2θ
+
+> 0. The gradient of λ2 with respect to u is Duλ2(u) = 
+
+
+
+− vρ
+
+> 1
+> ρ
+
+0
+
+, and so Duλ2(u) · r2 =
+
+− 1 
+
+> ρ
+
++ 1 
+
+> ρ
+
+= 0. WELL-BALANCED IDP SCHEME FOR ATMOSPHERIC EULER 21 
+
+Lemma A.2 (Potential temperature across shocks/expansions). θ remains con-stant across shock waves and expansion waves. Proof. Suppose first that the 1-wave is a shock wave. We have the following Rankine-Hugoniot condition: 
+
+f (uL) · n − f (uL∗ ) · n = SL(uL − uL∗ ).
+
+Thus, ρL∗ θL∗ (SL − vL∗ ) = ρLθL(SL − vL). If we let ˆ vL∗ = SL − vL∗ and ˆ vL = SL − vL,by conservation of mass we have that ρL∗ ˆvL∗ = ρL ˆvL. Plugging this back in to our Rankine-Hugoniot condition for potential temperature we obtain that θL∗ = θL.Suppose now the 1-wave is an expansion wave. Expanding the potential temper-ature conservation equation and applying conservation of mass we have: 
+
+ρ∂ tθ + ( ρv ) · ∇ θ = 0 .
+
+Thus, Dθ Dt := ∂tθ + v · ∇ θ = 0, and so θ remains constant across the expansion wave. Similarly, it can be shown that if the 3-wave is an expansion or shock, θ remains constant across the wave. 
+
+Appendix B. Solution to the Riemann problem. 
+
+The methodology used for constructing the result in this section is given in Toro [43], as well Lax[32] and Godlewski [19]. 
+
+Proposition B.1. The solution to the Riemann problem for pressure in the star region p∗ is given by the root of the algebraic equation 
+
+(B.1) ϕ(p) = fL + fR + uR − uL
+
+where fZ , Z ∈ { L, R } is 
+
+(B.2) fZ =
+
+
+
+(p − pZ )
+
+s  
+
+> 1
+> ρZ(p−pZ)
+
+
+
+1 −
+
+ pZ
+
+> p
+
+ 1
+
+> γ
+
+
+
+if p > p Z (shock) 
+
+> 2aZ
+> γ−1
+
+ ppZ
+
+ γ−12γ
+
+− 1
+
+
+
+if p ≤ pZ (expansion) .
+
+Proof. Suppose first that fL is a shock. Let ˆ vL = vL − SL and ˆ v∗ = v∗ − SL. We have the following Rankine-Hugoniot conditions: 
+
+ρL ˆvL = ρ∗L ˆv∗(B.3) 
+
+ρL ˆv2 
+
+> L
+
++ pL = ρ∗L ˆv2 
+
+> ∗
+
++ p∗(B.4) 
+
+ρLθL ˆvL = ρ∗Lθ∗L ˆv∗(B.5) We introduce the mass flux (B.6) QL ≡ ρL ˆvL = ρ∗L ˆv∗,
+
+and plugging QL into (B.4) we get 
+
+QL = − p∗ − pL
+
+ˆv∗ − ˆvL
+
+= − p∗ − pL
+
+v∗ − vL
+
+,22 C. FARRIS, M. MAIER, E. J. TOVAR 
+
+where we used that ˆ v∗ − ˆvL = v∗ − SL − vL + SL = v∗ − vL. This in turn gives us the formula for the star-state velocity: (B.7) v∗ = vL − p∗ − pL
+
+QL
+
+.
+
+Also, by (B.6) (B.8) ˆvL = QL
+
+ρL
+
+and ˆ v∗ = QL
+
+ρ∗L
+
+Thus, 
+
+Q2 
+
+> L
+
+= − p∗ − pL 
+
+> 1
+> ρ∗L
+
+− 1
+
+> ρL
+
+.
+
+Note by lemma 2 above (equivalently by (B.5)), θ∗L = θL. Relating ρ∗L to the density behind the shock p∗ gives us 
+
+ρ∗L = 1
+
+C 1
+
+> γ
+> eos
+
+θL
+
+p 1 
+
+> γ
+> ∗
+
+,
+
+Thus, 
+
+Q2 
+
+> L
+
+= − p∗ − pLC
+
+> 1
+> γeos θL
+> p
+> 1
+> γ
+> ∗
+
+− 1
+
+> ρL
+
+= − p∗ − pLC 
+
+> 1
+> γeos θLρL−p
+> 1
+> γ
+> ∗
+> p
+> 1
+> γ
+> ∗ρL
+
+.
+
+Simplifying gives us (B.9) QL =
+
+ (p∗ − pL)p 1 
+
+> γ
+> ∗
+
+ρL
+
+p 1 
+
+> γ
+> ∗
+
+− C 1
+
+> γ
+> eos
+
+θLρL
+
+ 12
+
+Plugging into (B.7) we obtain our desired relation. We can similarly show the relation for fR in the case of a shock. Suppose now fL is an expansion wave. From the equation of state we have (B.10) pL = Ceos θγLργL and p∗ = Ceos θγ
+
+> ∗L
+
+ργ
+
+> ∗L
+
+.
+
+Since θ is constant across expansion waves, i.e., θ∗L = θL, we obtain the relation (B.11) ρ∗L = ρL
+
+ p∗
+
+pL
+
+ 1
+
+> γ
+
+In the previous section we showed that the Riemann invariant for the left state is is constant. Evaluating the constant gives us (B.12) vL + 2aL
+
+γ − 1 = v∗ + 2a∗L
+
+γ − 1Rewriting sound speed in terms of (B.11) gives us (B.13) a∗L =
+
+ γp ∗
+
+ρ∗L
+
+ 12
+
+= aL
+
+ p∗
+
+pL
+
+ γ−12γWELL-BALANCED IDP SCHEME FOR ATMOSPHERIC EULER 23 Solving for u∗ we obtain 
+
+v∗ = vL − 2aL
+
+γ − 1
+
+ p∗
+
+pL
+
+ γ−12γ
+
+− 1
+
+
+
+.(B.14) Hence, (B.15) fL = 2aL
+
+γ − 1
+
+ p∗
+
+pL
+
+ γ−12γ
+
+− 1
+
+
+
+.
+
+Again, we can similarly obtain the relation for fR in the case of an expansion. 
+
+Remark B.2 (Pressure Function Behavior). Let Z ∈ { L, R }. A straightforward computation of f ′ 
+
+> Z
+
+(p) shows that f ′ 
+
+> Z
+
+(p) > 0 and hence ϕ′(p) > 0. So, the function is monotone increasing. Similarly, we can see that f ′′  
+
+> Z
+
+(p) < 0, and so ϕ(p) < 0. Thus, our pressure function is strictly concave. □
+
+B.1. Entropy Solution. Let ξ := xt be a self-similar parameter, and let c(x, t )be the solution to the Riemann problem in primitive variables. The entropy solution to the Riemann problem is 
+
+c(x, t ) = 
+
+
+
+cL ξ < λ − 
+
+> L
+
+(p∗)
+
+cLL λ− 
+
+> L
+
+(p∗) < ξ < λ + 
+
+> L
+
+(p∗)
+
+c∗ 
+
+> L
+
+λ+ 
+
+> L
+
+(p∗) < ξ < v ∗
+
+c∗ 
+
+> R
+
+v∗ < ξ < λ − 
+
+> R
+
+(p∗)
+
+cRR λ− 
+
+> R
+
+(p∗) < ξ < λ +
+
+> R
+
+(p∗)
+
+cR ξ > λ +
+
+> R
+
+(p∗)where (B.16a) cLL (ξ) = 
+
+
+
+ρL( 2
+
+γ + 1 + (γ − 1)( vL − ξ)(γ + 1) aL
+
+) 2 
+
+> γ−1
+
+, v L − fL, p L(ξ)
+
+T
+
+(B.16b) c∗ 
+
+> L
+
+=
+
+(
+
+cLL p∗ < p L
+
+(ρ∗L, v ∗, p ∗)T p∗ ≥ pL
+
+(B.16c) c∗ 
+
+> R
+
+=
+
+(
+
+cRR p∗ < p R
+
+(ρ∗R, v ∗, p ∗)T p∗ ≥ pR
+
+(B.16d) cRR (ξ) = 
+
+
+
+ρR( 2
+
+γ + 1 + (γ − 1)( vR − ξ)(γ + 1) aR
+
+) 2 
+
+> γ−1
+
+, v R + fR, p R(ξ)
+
+T
+
+.
+
+proof of cLL and cRR . We first find velocity vL(ξ). We have the following set of equations: 
+
+ξ = v(ξ) − a(ξ)(B.17) 
+
+vL + 2aL
+
+γ − 1 = vL(ξ) + 2aL(ξ)
+
+γ − 1 .(B.18) 24 C. FARRIS, M. MAIER, E. J. TOVAR 
+
+Solving for a in (B.17) and substituting into (B.18) we get (B.19) vL(ξ) + 2( vL(ξ) − ξ)
+
+γ − 1 = vL + 2aL
+
+γ − 1 .
+
+Rearranging to solve for v gives us (B.20) vL(ξ) = 2
+
+γ + 1 
+
+ γ − 12 vL + aL + ξ
+
+
+
+.
+
+Now, the sound speed in the fan is given by (B.21) aL(ξ) = 
+
+ γp L(ξ)
+
+ρL(ξ)
+
+ 12
+
+using the definition of sound speed for aL and the relation for ρL(ξ) in (89), we can rewrite the fan sound speed as (B.22) aL(ξ) = aL
+
+ pL(ξ)
+
+pL
+
+ γ−12γ
+
+.
+
+Using (B.17) and rearranging we obtain (B.23) pL(ξ) = pL
+
+ 2
+
+γ + 1 + γ − 1(γ + 1) aL
+
+(vL − ξ)
+
+ 2γγ−1
+
+.
+
+The fan density follows from plugging in the above pressure to (B.17): (B.24) ρL(ξ) = ρL
+
+ 2
+
+γ + 1 + γ − 1(γ + 1) aL
+
+(vL − ξ)
+
+ 2
+
+> γ−1
+
+.
+
+B.2. Wave-Speeds. The waves speeds are given by: (B.25) λ− 
+
+> L
+
+(p∗) = vL − aL
+
+vuuut1 + 1
+
+γ max 
+
+ (p∗ − (1 + γ)pL)p 1 
+
+> γ
+> ∗
+
++ γp Lp 1
+
+> γ
+> L
+
+pL(p 1 
+
+> γ
+> ∗
+
+− p 1 
+
+> γ
+> L
+
+)
+
+, 0
+
+
+
+(B.26) λ+ 
+
+> L
+
+(p∗) = 
+
+(
+
+vL − fL(p∗) − aL( p∗ 
+
+> pL
+
+) γ−12γ if p∗ < p L
+
+λ− 
+
+> L
+
+(p∗) if p∗ ≥ pL
+
+(B.27) λ− 
+
+> R
+
+(p∗) = 
+
+(
+
+vR + fR(p∗) + aR( p∗ 
+
+> pR
+
+) γ−12γ if p∗ < p R
+
+λ+
+
+> R
+
+(p∗) if p∗ ≥ pR
+
+(B.28) λ+
+
+> R
+
+(p∗) = vR + aR
+
+vuuut1 + 1
+
+γ max 
+
+ (p∗ − (1 + γ)pR)p 1 
+
+> γ
+> ∗
+
++ γp Rp 1
+
+> γ
+> R
+
+pR(p 1 
+
+> γ
+> ∗
+
+− p 1 
+
+> γ
+> R
+
+)
+
+, 0
+
+WELL-BALANCED IDP SCHEME FOR ATMOSPHERIC EULER 25 
+
+Proof. We have (B.29) (vL − SL) = QL
+
+ρL
+
+Solving for SL we obtain: 
+
+SL = vL − QL
+
+ρL
+
+= vL − aL
+
+1 + (p∗ − pL)p 1
+
+> γ
+> ∗
+
+γp L(p 1 
+
+> γ
+> ∗
+
+− p 1 
+
+> γ
+> L
+
+)
+
+− γp L(p 1 
+
+> γ
+> ∗
+
+− p 1 
+
+> γ
+> L
+
+)
+
+γp L(p 1 
+
+> γ
+> ∗
+
+− p 1 
+
+> γ
+> L
+
+)
+
+
+
+> 12
+
+.
+
+Combining fractions and simplifying gives the result (B.30) SL = vL − aL
+
+vuuut1 + 1
+
+γ
+
+
+
+p 
+
+> γ+1
+> γ
+> ∗
+
+− (1 + γ)pLp 1 
+
+> γ
+> ∗
+
++ γp 
+
+> γ+1
+> γ
+> L
+
+
+
+(p 1 
+
+> γ
+> ∗
+
+− p 1 
+
+> γ
+> L
+
+)
+
+pL
+
+.
+
+References. 
+
+[1] N. Ahmad and J. Lindeman. Euler solutions using flux-based wave decomposi-tion. International Journal for Numerical Methods in Fluids , 54(1):47–72, 2007. [2] D. Arndt, W. Bangerth, M. Bergbauer, M. Feder, M. Fehling, J. Heinz, T. Heis-ter, L. Heltai, M. Kronbichler, M. Maier, P. Munch, J.-P. Pelteret, B. Turcksin, D. Wells, and S. Zampini. The deal.II library, version 9.5. Journal of Numerical Mathematics , 31(3):231–246, 2023. [3] M. Artiano, O. Knoth, P. Spichtinger, and H. Ranocha. Structure-preserving high-order methods for the compressible euler equations in potential temperature formulation for atmospheric flows, 2025. [4] E. Audusse, F. Bouchut, M.-O. Bristeau, R. Klein, and B. Perthame. A fast and stable well-balanced scheme with hydrostatic reconstruction for shallow water flows. SIAM J. Sci. Comput. , 25(6):2050–2065, 2004. [5] P. Azerad, J.-L. Guermond, and B. Popov. Well-balanced second-order approx-imation of the shallow water equation with continuous finite elements. SIAM Journal on Numerical Analysis , 55(6):3203–3224, 2017. [6] R. L. Carpenter, K. K. Droegemeier, P. R. Woodward, and C. E. Hane. Ap-plication of the piecewise parabolic method (ppm) to meteorological modeling. 
+
+Monthly Weather Review , 118(3):586 – 612, 1990. [7] P. Chandrashekar and C. Klingenberg. A second order well-balanced finite volume scheme for euler equations with gravity. SIAM Journal on Scientific Computing ,37:B382–B402, 05 2015. [8] A. Chertock, A. Kurganov, T. Wu, and J. Yan. Well-balanced numerical method for atmospheric flow equations with gravity. Applied Mathematics and Compu-tation , 439:127587, 2023. [9] B. Clayton and E. J. Tovar. Approximation technique for preserving the mini-mum principle on the entropy for the compressible Euler equations. arXiv pre-print arXiv:2503.10612 , 2025. [10] B. Clayton, J.-L. Guermond, and B. Popov. Invariant domain-preserving approx-imations for the Euler equations with tabulated equation of state. SIAM Journal on Scientific Computing , 44(1):A444–A470, 2022. 26 C. FARRIS, M. MAIER, E. J. TOVAR 
+
+[11] B. Clayton, J.-L. Guermond, M. Maier, B. Popov, and E. J. Tovar. Robust second-order approximation of the compressible Euler equations with an arbitrary equation of state. Journal of Computational Physics , 478:111926, 2023. [12] J. Curry. Thermodynamics — saturated adiabatic processes. In G. R. North, J. Pyle, and F. Zhang, editors, Encyclopedia of Atmospheric Sciences (Second Edition) , pages 398–401. Academic Press, Oxford, second edition edition, 2015. ISBN 978-0-12-382225-3. [13] M. Duarte, A. S. Almgren, K. Balakrishnan, J. B. Bell, and D. M. Romps. Anumerical study of methods for moist atmospheric flows: Compressible equations. 
+
+Monthly Weather Review , 142(11):4269 – 4283, 2014. [14] C. Geuzaine and J.-F. Remacle. Gmsh: A 3-d finite element mesh generator with built-in pre-and post-processing facilities. International journal for numerical methods in engineering , 79(11):1309–1331, 2009. [15] D. Ghosh and E. M. Constantinescu. Well-balanced, conservative finite difference algorithm for atmospheric flows. AIAA Journal , 54(4):1370–1385, 2016. [16] F. Giraldo and M. Restelli. A study of spectral element and discontinuous galerkin methods for the navier–stokes equations in nonhydrostatic mesoscale atmospheric modeling: Equation sets and test cases. Journal of Computational Physics , 227(8):3849–3877, 2008. [17] F. X. Giraldo and T. E. Rosmond. A scalable spectral element eulerian atmo-spheric model (see-am) for nwp: Dynamical core tests. Monthly Weather Review ,132(1):133 – 153, 2004. [18] M. Girfoglio, A. Quaini, and G. Rozza. A comparative computational study of different formulations of the compressible euler equations for mesoscale atmo-spheric flows in a finite volume framework. Computers & Fluids , 288:106510, 2025. [19] E. Godlewski and P.-A. Raviart. Numerical approximation of hyperbolic systems of conservation laws , volume 118. Springer Science & Business Media, 2021. [20] L. Grosheintz-Laval and R. K¨ appeli. High-order well-balanced finite volume schemes for the euler equations with gravitation. Journal of Computational Physics , 378:324–343, 2019. ISSN 0021-9991. [21] J.-L. Guermond and R. Pasquetti. A correction technique for the dispersive effects of mass lumping for transport problems. Computer Methods in Applied Mechanics and Engineering , 253:186–198, 2013. [22] J.-L. Guermond and B. Popov. Invariant domains and first-order continuous finite element approximation for hyperbolic systems. SIAM J. Numer. Anal. , 54 (4):2466–2489, 2016. [23] J.-L. Guermond, R. Pasquetti, and B. Popov. Entropy viscosity method for nonlinear conservation laws. Journal of Computational Physics , 230(11):4248– 4267, 2011. [24] J.-L. Guermond, M. Nazarov, B. Popov, and I. Tomas. Second-order invariant domain preserving approximation of the Euler equations using convex limiting. 
+
+SIAM Journal on Scientific Computing , 40(5):A3211–A3239, 2018. [25] J.-L. Guermond, B. Popov, and I. Tomas. Invariant domain preserving discretization-independent schemes and convex limiting for hyperbolic systems. 
+
+Computer Methods in Applied Mechanics and Engineering , 347:143–175, 2019. [26] J.-L. Guermond, B. Popov, and I. Tomas. Invariant domain preserving discretization-independent schemes and convex limiting for hyperbolic systems. 
+
+Computer Methods in Applied Mechanics and Engineering , 347:143–175, 2019. [27] J.-L. Guermond, M. Kronbichler, M. Maier, B. Popov, and I. Tomas. On the im-WELL-BALANCED IDP SCHEME FOR ATMOSPHERIC EULER 27 plementation of a robust and efficient finite element-based parallel solver for the compressible Navier-Stokes equations. Computer Methods in Applied Mechanics and Engineering , 389:114250, 2022. [28] J.-L. Guermond, M. Maier, and E. J. Tovar. A high-order explicit runge-kutta approximation technique for the shallow water equations. Computers & Fluids ,288:106493, 2025. [29] A. Harten, P. D. Lax, and B. van Leer. On upstream differencing and Godunov-type schemes for hyperbolic conservation laws. SIAM Rev. , 25(1):35–61, 1983. ISSN 0036-1445. [30] D. Hoff. A finite difference scheme for a system of two conservation laws with artificial viscosity. Mathematics of Computation , 33(148):1171–1193, 1979. [31] P. D. Lax. Weak solutions of nonlinear hyperbolic equations and their numerical computation. Communications on Pure and Applied Mathematics , 7(1):159–193, 1954. [32] P. D. Lax. Hyperbolic systems of conservation laws II. Communications on pure and applied mathematics , 10(4):537–566, 1957. ISSN 0010-3640. [33] P. Li and Z. Gao. Simple high order well-balanced finite difference weno schemes for the euler equations under gravitational fields. Journal of Computational Physics , 437:110341, 2021. [34] D. K. LILLY. On the numerical simulation of buoyant convection. Tellus , 14(2): 148–172, 1962. [35] X. Lou, Z. Hu, and L. You. Test of Non-Hydrostatic Model by Using Mesoscale Non-Homogeneous Initial Fields and Simulation of Front Case. Acta Meteorolog-ica Sinica , 56(1):55–67, Jan. 1998. [36] M. Maier and M. Kronbichler. Efficient parallel 3D computation of the compress-ible Euler equations with an invariant-domain preserving second-order finite-element scheme. ACM Transactions on Parallel Computing , 8(3):16:1–30, 2021. [37] S. Marras, M. Nazarov, and F. X. Giraldo. Stabilized high-order galerkin methods based on a parameter-free dynamic sgs model for les. Journal of Computational Physics , 301:77–101, 2015. [38] S. Marras, J. F. Kelly, M. Moragues, A. M¨ uller, M. A. Kopera, M. V´ azquez, F. X. Giraldo, G. Houzeaux, and O. Jorba. A review of element-based galerkin methods for numerical weather prediction: Finite elements, spectral elements, and discontinuous galerkin. Archives of Computational Methods in Engineering ,23(4):673–722, 2016. [39] A. Navas-Montilla and I. Echeverribar. A family of well-balanced weno and teno schemes for atmospheric flows. Journal of Computational Physics , 489:112273, 2023. [40] A. Navas-Montilla, J. Guallart, P. Sol´ an-Fustero, and P. Garc´ ıa-Navarro. Ex-ploring the potential of teno and weno schemes for simulating under-resolved turbulent flows in the atmosphere using euler equations. Computers & Fluids ,280:106349, 2024. [41] H. Nessyahu and E. Tadmor. Nonoscillatory central differencing for hyperbolic conservation laws. J. Comput. Phys. , 87(2):408–463, 1990. ISSN 0021-9991. [42] A. Robert. Bubble convection experiments with a semi-implicit formulation of the euler equations. Journal of Atmospheric Sciences , 50(13):1865 – 1873, 1993. [43] E. F. Toro. Riemann solvers and numerical methods for fluid dynamics: a prac-tical introduction . Springer Science & Business Media, 2013. [44] W. Zhang, Y. Xing, Y. Xu, et al. High-order positivity-preserving well-balanced discontinuous galerkin methods for euler equations with gravitation on unstruc-28 C. FARRIS, M. MAIER, E. J. TOVAR 
+
+tured meshes. Communications in Computational Physics , 31(3), 2021.
