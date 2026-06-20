@@ -1,0 +1,346 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-20T21:29:00.131832+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 4,
+    "deep_cap": 7,
+    "deep_selected": 4,
+    "quick_candidates": 4,
+    "quick_skim_target": 12,
+    "quick_selected": 4
+  },
+  "deep_dive": [
+    {
+      "id": "2606.15869v1",
+      "source": "arxiv",
+      "title": "Metis: A Generalizable and Efficient World-Action Model for Autonomous Driving and Urban Navigation",
+      "abstract": "World action models~(WAMs) have shown great promise for autonomous driving and urban navigation. Built upon Vision-Language-Action models or video generation models, existing approaches suffer key limitations: (1) High inference latency due to future observation prediction at test time, and (2) tightly coupled video and action modeling leading to representational mismatch and degraded generalization. To address both issues, we propose Metis, an end-to-end WAM framework that decouples video generation and action prediction. Specifically, Metis employs a Mixture-of-Transformers architecture with dedicated experts for video generation and action prediction, preserving the intrinsic distributional properties of each task. To enhance efficiency, we introduce an asymmetric attention mask that enables joint training of both experts while allowing the action model to bypass explicit video generation during inference. This design ensures training-inference consistency and significantly reduces computational costs without compromising planning performance. Extensive experiments demonstrate state-of-the-art performance on the NAVSIM navhard and navtest benchmarks and the CityWalker navigation benchmark, validating both the generalizability and efficiency across diverse tasks. Real-robot deployments further confirm the practical feasibility of our approach.",
+      "authors": [
+        "Jingyu Li",
+        "Zhe Liu",
+        "Dongnan Hu",
+        "Junjie Wu",
+        "Zipei Ma",
+        "Wenxiao Wu",
+        "Chao Han",
+        "Zhihui Hao",
+        "Zhikang Liu",
+        "Kun Zhan",
+        "Jiankang Deng",
+        "Xiatian Zhu",
+        "Li Zhang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-14T15:40:49+00:00",
+      "link": "https://arxiv.org/pdf/2606.15869v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "world-action model for autonomous driving with decoupled video and action",
+      "llm_evidence_cn": "面向自动驾驶的世界动作模型，解耦视频和动作",
+      "llm_evidence": "面向自动驾驶的世界动作模型，解耦视频和动作",
+      "canonical_evidence": "面向自动驾驶的世界动作模型，解耦视频和动作",
+      "llm_tldr_en": "Proposes Metis, an end-to-end WAM with Mixture-of-Transformers that decouples video generation and action prediction for efficient and generalizable autonomous navigation.",
+      "llm_tldr_cn": "该论文提出Metis，一种端到端世界动作模型框架，通过混合Transformer架构解耦视频生成和动作预测，解决了推理延迟和表示不匹配问题。该方法在自动驾驶中展示了高效和泛化能力，其世界模型思想可迁移到无人机导航。",
+      "llm_tldr": "该论文提出Metis，一种端到端世界动作模型框架，通过混合Transformer架构解耦视频生成和动作预测，解决了推理延迟和表示不匹配问题。该方法在自动驾驶中展示了高效和泛化能力，其世界模型思想可迁移到无人机导航。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "world model",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.16400v1",
+      "source": "arxiv",
+      "title": "SemGeoNav:A Safety-Guided Visual Navigation Approach with Semantic Reasoning and Geometric Planning",
+      "abstract": "Learning-based visual navigation has enhanced semantic goal-reaching capabilities. However, due to their black-box nature, purely end-to-end models often lack explicit geometric constraints, leading to unpredictable and unreliable obstacle avoidance in open environments. Conversely, traditional geometric planners ensure safety but struggle with high-dimensional visual targets. To address these limitations, we propose SemGeoNav, a novel hierarchical visual navigation framework.It tightly integrates the high-level semantic reasoning of end-to-end models with the reliable local planning ability of geometry-based methods, achieving robust image-based navigation while significantly improving obstacle avoidance. Furthermore, we introduce a temporal trajectory smoothing mechanism to ensure continuous and stable robot motion. We evaluated SemGeoNav on a Unitree Go2 quadruped robot in real-world environments. The results demonstrate that SemGeoNav outperforms existing representative methods, including ViNT and NoMaD, achieving higher success rates and shorter navigation times.",
+      "authors": [
+        "Yu Liu",
+        "Zongyang Chen",
+        "Yan Guo",
+        "Chao Liu",
+        "Xianfei Pan"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-15T08:38:46+00:00",
+      "link": "https://arxiv.org/pdf/2606.16400v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Hierarchical visual navigation with semantic reasoning and geometric planning",
+      "llm_evidence_cn": "结合语义推理与几何规划的分层视觉导航方法",
+      "llm_evidence": "结合语义推理与几何规划的分层视觉导航方法",
+      "canonical_evidence": "结合语义推理与几何规划的分层视觉导航方法",
+      "llm_tldr_en": "Proposes SemGeoNav, a hierarchical visual navigation framework integrating semantic reasoning and geometric planning for robust obstacle avoidance.",
+      "llm_tldr_cn": "端到端视觉导航缺乏几何约束导致避障不可靠，而几何规划器难以处理高维视觉目标。本文提出SemGeoNav分层框架，将高层语义推理与局部几何规划紧密结合，在提高避障能力的同时实现鲁棒的图像驱动导航。该方法在开放环境中表现出更可预测和可靠的行为。",
+      "llm_tldr": "端到端视觉导航缺乏几何约束导致避障不可靠，而几何规划器难以处理高维视觉目标。本文提出SemGeoNav分层框架，将高层语义推理与局部几何规划紧密结合，在提高避障能力的同时实现鲁棒的图像驱动导航。该方法在开放环境中表现出更可预测和可靠的行为。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.18531v1",
+      "source": "arxiv",
+      "title": "When Does Trajectory-Level Supervision Permit Efficient Offline Reinforcement Learning?",
+      "abstract": "Offline reinforcement learning is typically analyzed under process-level reward supervision, yet many sequential decision datasets   record only trajectory-level outcomes. We develop a statistical theory for offline policy optimization from such outcome-level   supervision. We first study the canonical setting where the target remains the expected cumulative reward, but each offline trajectory   provides only a scalar label whose conditional mean is the cumulative return. We propose OPAC, a pessimistic actor-critic algorithm   that learns a latent reward model and optimizes a policy from trajectory-level labels. We prove a high-probability guarantee of order   $\\widetilde O(H^2\\sqrt{C_{sa}(π^\\star)/n})$ and a matching lower bound, characterizing the sharp statistical cost of replacing   process-level rewards with one trajectory-level label. We then extend the principle to preference-based feedback, preserving the   leading horizon and concentrability dependence up to preference-model constants. Finally, we study generalized outcome-based offline   RL, where both the supervision and the objective are trajectory-level quantities induced by a nonlinear aggregation of latent per-step   rewards. This problem is not learnable in general: for all-success objectives, any offline learner may require $Ω(2^H)$   trajectories even with deterministic transitions and constant concentrability. We then identify a tractable regime through two   structural coefficients, $κ_μ(σ)$ and $χ_μ(σ)$, capturing information loss in outcome aggregation and   generalized Bellman updates, under which generalized OPAC achieves polynomial sample complexity. Together, our results delineate when   outcome-level supervision enables sample-efficient offline control and when missing process-level rewards create fundamental   statistical barriers.",
+      "authors": [
+        "Xuanfei Ren",
+        "Tengyang Xie"
+      ],
+      "primary_category": "stat.ML",
+      "categories": [
+        "stat.ML",
+        "cs.LG"
+      ],
+      "published": "2026-06-16T22:55:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.18531v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "offline RL with trajectory-level supervision, sample complexity guarantees",
+      "llm_evidence_cn": "离线强化学习中的轨迹级监督，样本复杂度保证",
+      "llm_evidence": "离线强化学习中的轨迹级监督，样本复杂度保证",
+      "canonical_evidence": "离线强化学习中的轨迹级监督，样本复杂度保证",
+      "llm_tldr_en": "Offline RL from trajectory-level labels: proposes OPAC algorithm with latent reward model, provably efficient.",
+      "llm_tldr_cn": "针对实际中仅能获得轨迹级标签的离线强化学习问题，本文提出OPAC算法，通过学习潜在奖励模型并采用悲观策略优化，从轨迹标签中有效学习策略。理论证明其样本复杂度为O(H^2 sqrt(C/n))，并给出匹配下界，为轨迹级监督下的高效离线RL提供了理论基础。",
+      "llm_tldr": "针对实际中仅能获得轨迹级标签的离线强化学习问题，本文提出OPAC算法，通过学习潜在奖励模型并采用悲观策略优化，从轨迹标签中有效学习策略。理论证明其样本复杂度为O(H^2 sqrt(C/n))，并给出匹配下界，为轨迹级监督下的高效离线RL提供了理论基础。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.20045v1",
+      "source": "arxiv",
+      "title": "See-and-Reach: Precise Vision-Language Navigation for UAVs within the Field of View",
+      "abstract": "UAV Vision-Language Navigation (UAV-VLN) is typically formulated as a holistic search-and-reach problem, where long-range target discovery and final target approach are optimized and evaluated jointly. This formulation makes it difficult to assess a critical capability of aerial embodied agents, namely whether a UAV can accurately ground a visible target and translate vision-language evidence into precise 3D motion once the target enters its field of view. To address this limitation, we introduce UAV-VLN-FOV, a target-visible navigation task that isolates the see-and-reach stage and enables a more diagnostic evaluation of terminal reaching ability. We further propose 3DG-VLN, a vision-language waypoint prediction framework guided by dynamic 3D direction cues to enhance fine-grained visual grounding and spatial direction alignment for precise target reaching. Specifically, 3DG-VLN adaptively processes high-resolution front-view and downward-view observations to preserve fine-grained visual and geometric details for target grounding. It also updates the target-relative direction online during closed-loop navigation, allowing the agent to maintain spatial alignment with the target and reduce accumulated direction drift. To support this task, we construct a dedicated high-resolution benchmark which contains 2,717 trajectories with target-oriented high-level instructions, high-resolution front-view and downward-view egocentric observations, and continuous 3D waypoint annotations. Experiments show that 3DG-VLN outperforms competitive UAV-VLN baselines, achieving a 13.82\\% improvement in success rate. Real-world trials further demonstrate the potential of 3DG-VLN for practical see-and-reach navigation. The source code and benchmark are available at https://github.com/xuefanfu/3DG-VLN.",
+      "authors": [
+        "Fanfu Xue",
+        "En Yu",
+        "Yantian Shen",
+        "Zhikun Hu",
+        "Hongjun Wang",
+        "Yang Yang",
+        "Xindi Wang",
+        "Jiande Sun"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-06-18T10:21:42+00:00",
+      "link": "https://arxiv.org/pdf/2606.20045v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "UAV vision-language navigation for precise target reaching",
+      "llm_evidence_cn": "面向精确到达的无人机视觉语言导航",
+      "llm_evidence": "面向精确到达的无人机视觉语言导航",
+      "canonical_evidence": "面向精确到达的无人机视觉语言导航",
+      "llm_tldr_en": "Introduces UAV-VLN-FOV task and 3DG-VLN framework for precise see-and-reach navigation within field of view.",
+      "llm_tldr_cn": "该论文针对无人机视觉语言导航中目标到达精度不足的问题，提出了UAV-VLN-FOV任务，将长距离搜索和最终到达分离评估。同时提出3DG-VLN框架，利用动态视觉语言引导的航路点预测，实现视野内目标的精确到达。该方法提升了终端到达能力评估的可诊断性。",
+      "llm_tldr": "该论文针对无人机视觉语言导航中目标到达精度不足的问题，提出了UAV-VLN-FOV任务，将长距离搜索和最终到达分离评估。同时提出3DG-VLN框架，利用动态视觉语言引导的航路点预测，实现视野内目标的精确到达。该方法提升了终端到达能力评估的可诊断性。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.16925v1",
+      "source": "arxiv",
+      "title": "RAID: Semantic Graph Diffusion for True Cold-Start and Cross-Lingual Forecasting",
+      "abstract": "Time-series foundation models show strong transfer performance when given a non-empty history window. However, true cold-start scenarios, where a new item has no prior observations, violate this assumption. We propose RAID (Retrieval-Augmented Iterative Diffusion) a framework, which replaces history-based correlation learning with metadata-driven semantic retrieval and graph-conditioned diffusion. RAID maps textual metadata into a shared semantic space using a frozen multilingual embedding model and constructs an inductive retrieval graph that extends naturally to unseen items. It first forms a base forecast by aggregating information from semantically related neighbors, then refines this forecast with a gated diffusion module to model residual uncertainty. Under a strict true cold-start protocol, RAID outperforms strong foundation models and competitive baselines on both forecasting accuracy and prediction interval coverage, while reducing inference latency by an order of magnitude through non-autoregressive decoding. The shared semantic space also enables zero-shot cross-lingual transfer, allowing a model trained on English descriptions to generalize to items described in other languages without direct supervision.",
+      "authors": [
+        "Arunkumar V",
+        "Manoranjan Gandhudi",
+        "Gangadharan G. R.",
+        "Arun Prakash",
+        "S. Senthilkumar"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-15T16:27:14+00:00",
+      "link": "https://arxiv.org/pdf/2606.16925v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "diffusion model for time-series forecasting with retrieval augmentation",
+      "llm_evidence_cn": "基于扩散模型和检索增强的时间序列预测",
+      "llm_evidence": "基于扩散模型和检索增强的时间序列预测",
+      "canonical_evidence": "基于扩散模型和检索增强的时间序列预测",
+      "llm_tldr_en": "Proposes RAID, a retrieval-augmented iterative diffusion framework for true cold-start time-series forecasting, using semantic graph diffusion to generate forecasts without history.",
+      "llm_tldr_cn": "该论文提出RAID框架，结合语义检索和图条件扩散模型，解决冷启动时间序列预测问题。将文本元数据映射到语义空间构建检索图，先聚合邻居信息再通过门控扩散模块细化预测。该方法可迁移到气象超分辨率等任务。",
+      "llm_tldr": "该论文提出RAID框架，结合语义检索和图条件扩散模型，解决冷启动时间序列预测问题。将文本元数据映射到语义空间构建检索图，先聚合邻居信息再通过门控扩散模块细化预测。该方法可迁移到气象超分辨率等任务。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on meteorological downscaling and weather super resolution using diffusion models, generative models, or neural networks.",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.15306v1",
+      "source": "arxiv",
+      "title": "LatentGym: A Testbed For Cross-Task Experiential Learning With Controllable Latent Structure",
+      "abstract": "We envision continually learning agentic systems that become more useful over time: as they encounter sequences of related tasks, they should infer the hidden structure shared across those tasks and use it to improve future decisions. This cross-task experiential learning capability is pivotal in domains such as personalization and interactive assistance, but existing training/evaluation frameworks do not provide shared, controllable latent structures and cannot measure whether or why agents improve. We introduce LatentGym: a controllable suite in which each environment is organized around a ground-truth latent variable governing the structure across tasks. Our construction yields metrics that separate exploration (whether the agent's actions gather information about the latent) from exploitation (whether the agent uses what it has gathered). We demonstrate our suite on empirical studies addressing three questions: how and why frontier models fail to adapt across related tasks; whether post-training on related task sequences improves general cross-task adaptation, and where those gains come from; and how design choices such as inter-task feedback shape training dynamics and generalization. Together, these results establish a controlled foundation for studying how LLM agents learn from experience across tasks, and for designing agents that adapt more reliably in sequential, personalized, and interactive settings.",
+      "authors": [
+        "Daksh Mittal",
+        "Tommaso Castellani",
+        "Thomson Yen",
+        "Naimeng Ye",
+        "Fangyu Wu",
+        "Minghui Chen",
+        "Tiffany Cai",
+        "Emmanouil Koukoumidis",
+        "William Zeng",
+        "Hongseok Namkoong"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-13T13:51:22+00:00",
+      "link": "https://arxiv.org/pdf/2606.15306v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Testbed for cross-task learning with controllable latent dynamics",
+      "llm_evidence_cn": "具有可控潜动力学的跨任务学习测试平台",
+      "llm_evidence": "具有可控潜动力学的跨任务学习测试平台",
+      "canonical_evidence": "具有可控潜动力学的跨任务学习测试平台",
+      "llm_tldr_en": "Introduces LatentGym, a testbed with controllable latent structure to evaluate cross-task experiential learning and exploration in RL.",
+      "llm_tldr_cn": "现有框架无法衡量智能体是否从跨任务经验中推断隐藏结构。本文提出LatentGym，一个可控测试套件，每个环境围绕一个真实潜变量组织，提供分离探索和结构利用的指标。该平台有助于评估智能体在序列任务中的潜在动力学建模能力。",
+      "llm_tldr": "现有框架无法衡量智能体是否从跨任务经验中推断隐藏结构。本文提出LatentGym，一个可控测试套件，每个环境围绕一个真实潜变量组织，提供分离探索和结构利用的指标。该平台有助于评估智能体在序列任务中的潜在动力学建模能力。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "latent dynamics model",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.17680v1",
+      "source": "arxiv",
+      "title": "EnvRL: Learn from Environment Dynamics in Agentic Reinforcement Learning",
+      "abstract": "Reinforcement learning (RL) has emerged as a powerful paradigm for training Large Language Models (LLMs) as agents. However, conventional RL methods for long-horizon agentic tasks often struggle with sparse outcome rewards. Intuitively, this overlooks the rich environment dynamics information contained in rollout interaction trajectories. We argue that the interaction experience inherently serves as an implicit supervision signal, reveals the underlying transition mechanisms of the environment, and enables the agent to construct a more accurate internal model of the environment.. Therefore, in this work, we investigate how to leverage this additional signal to improve policy learning. Specifically, we propose EnvRL, a framework that incorporates environment dynamics learning into agentic RL via two auxiliary objectives: state prediction and inverse dynamics. By jointly optimizing with the primary RL objective, we encourage the agent to internalize environment dynamics from its own interaction experience. Extensive experiments on two long-horizon agentic benchmarks demonstrate that EnvRL achieves significant improvements on success-rates over RL-only baselines, e.g., when trained with GRPO, lifting Qwen-2.5-1.5B-Instruct from 72.8% to 77.4% on ALFWorld, and from 56.8% to 67.0% on WebShop.",
+      "authors": [
+        "Zhitong Wang",
+        "Songze Li",
+        "Hao Peng",
+        "Shuzheng Si",
+        "Yi Wang",
+        "Maosong Sun",
+        "Juanzi Li"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.CL"
+      ],
+      "published": "2026-06-16T08:48:09+00:00",
+      "link": "https://arxiv.org/pdf/2606.17680v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "environment dynamics learning for agentic RL, constructing internal world model",
+      "llm_evidence_cn": "学习环境动态构建内部模型，用于智能体强化学习",
+      "llm_evidence": "学习环境动态构建内部模型，用于智能体强化学习",
+      "canonical_evidence": "学习环境动态构建内部模型，用于智能体强化学习",
+      "llm_tldr_en": "Proposes EnvRL framework that leverages environment dynamics from rollout trajectories to construct an internal world model for improved policy learning in LLM agents.",
+      "llm_tldr_cn": "该研究针对长时域智能体任务中奖励稀疏的问题，提出EnvRL框架。它从交互轨迹中提取环境动态信息作为隐式监督信号，帮助智能体构建更精确的环境内部模型。该方法将环境动态学习融入策略优化，在多种LLM智能体任务上提升了样本效率和任务成功率。虽然聚焦于LLM，其环境动力学建模思想与模型基强化学习的world model概念一致。",
+      "llm_tldr": "该研究针对长时域智能体任务中奖励稀疏的问题，提出EnvRL框架。它从交互轨迹中提取环境动态信息作为隐式监督信号，帮助智能体构建更精确的环境内部模型。该方法将环境动态学习融入策略优化，在多种LLM智能体任务上提升了样本效率和任务成功率。虽然聚焦于LLM，其环境动力学建模思想与模型基强化学习的world model概念一致。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.20165v1",
+      "source": "arxiv",
+      "title": "PRecover 1.0: Process Rate Recovery with Machine Learning",
+      "abstract": "Comprehensive information on cloud microphysical process rates from numerical simulations allows for better understanding of precipitation formation pathways and aerosol-cloud interactions. However, resource limitations often make it impractical to include all microphysical process rates in the model output, limiting in-depth analyses. To address this shortcoming, we introduce PRecover, a data-driven post-processing approach to recover microphysical process rates that are not stored during runtime from standard output of a numerical weather prediction model. In particular, we train random forests, gradient boosting models, and feed-forward neural networks to recover microphysical process rates from a two-moment bulk microphysics scheme in the ICOsahedral Nonhydrostatic (ICON) model. We use cloud variables as input, obtained from high-resolution simulations in a limited-area setup over Europe. Warm-rain and ice microphysical process rates are recovered with a two-step classification-regression approach for both instantaneous and accumulated process rates. As a physics-based baseline, we assess whether process rates can be directly recalculated from stored ICON output variables. Accurate recalculation is possible for process rates such as accretion and self-collection but not for the autoconversion, rain melting or heterogeneous ice nucleation rate. Using PRecover, we successfully recover most of the process rates that are accumulated over output time steps of 10 minutes or less, but the values are increasingly difficult to recover for rates accumulated over longer accumulation intervals. To quantify predictive uncertainty, we provide calibrated prediction intervals through conformalized quantile regression. We demonstrate spatial transferability of the models with two case studies over different regional domains and simulation settings unseen during training.",
+      "authors": [
+        "Miriam Simm",
+        "Tom Beucler",
+        "Corinna Hoose"
+      ],
+      "primary_category": "physics.ao-ph",
+      "categories": [
+        "physics.ao-ph"
+      ],
+      "published": "2026-06-18T12:32:01+00:00",
+      "link": "https://arxiv.org/pdf/2606.20165v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "machine learning recovery of microphysical rates from NWP output",
+      "llm_evidence_cn": "机器学习恢复NWP输出中的微物理过程速率",
+      "llm_evidence": "机器学习恢复NWP输出中的微物理过程速率",
+      "canonical_evidence": "机器学习恢复NWP输出中的微物理过程速率",
+      "llm_tldr_en": "PRecover uses machine learning (random forests, gradient boosting, neural networks) to recover microphysical process rates not stored in NWP model output.",
+      "llm_tldr_cn": "数值天气预报模型输出中常常不包含完整的微物理过程速率，限制了深入分析。本文提出PRecover，一种数据驱动的后处理方法，利用随机森林、梯度提升和神经网络从标准NWP输出中恢复微物理过程速率。在ICON模式的双矩体积微物理方案上验证了其有效性。",
+      "llm_tldr": "数值天气预报模型输出中常常不包含完整的微物理过程速率，限制了深入分析。本文提出PRecover，一种数据驱动的后处理方法，利用随机森林、梯度提升和神经网络从标准NWP输出中恢复微物理过程速率。在ICON模式的双矩体积微物理方案上验证了其有效性。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "numerical weather prediction models and methods",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
