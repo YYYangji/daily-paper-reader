@@ -1,0 +1,615 @@
+Title: Optimizing Agricultural Drone Operations: From Launch and Recovery Siting to Tiered Routing Strategies
+
+URL Source: https://arxiv.org/pdf/2606.20239v1
+
+Published Time: Fri, 19 Jun 2026 01:10:31 GMT
+
+Number of Pages: 33
+
+Markdown Content:
+# Optimizing Agricultural Drone Operations: From Launch and Recovery Siting to Tiered Routing Strategies 
+
+## Ethan Kolby ∗1, Josh Noble †2, and Max Z. Li ‡11University of Michigan 
+
+> 2
+
+## Mosaic ATM June 19, 2026 
+
+Abstract 
+
+Drones are increasingly used in agriculture, where tight margins demand efficient planning. Current optimization tools suffer from exponential runtimes as problem sizes grow, necessitating practical heuristics for daily operations. This paper presents an operational framework and benchmarking analysis for drone spraying operations. We evaluate the trade-offs between facility siting methods and tiered routing parameters. For facility siting, comparing a Mixed-Integer Program (MIP) baseline against a p-Median heuristic shows that the heuristic reduces runtime by three orders of magnitude, from over 97 seconds to under 1.2 seconds, with only a 4% reduction in serviced field area. For route planning, a tiered problem decomposition approach partitioning the target area into 6 to 8 spatial clusters reduces computation time by an order of magnitude with minimal degradation in serviced area. This framework achieves minute-scale planning on commodity hardware, demonstrating operational relevance. Future research 
+
+> ∗
+
+PhD Student, Department of Aerospace Engineering, University of Michigan, Ann Arbor, Michigan 48109. 
+
+> †
+
+Principal Data Scientist, Mosaic ATM. 
+
+> ‡
+
+Assistant Professor, Department of Aerospace Engineering, Department of Civil and Environmental Engineering, Department of Industrial and Operations Engineering, University of Michigan, Ann Arbor, Michigan 48109, AIAA Member. 
+
+1
+
+> arXiv:2606.20239v1 [math.OC] 18 Jun 2026 will incorporate weather modeling, integrated optimization of facility location and routing, and validation across diverse field geometries.
+
+# 1 Introduction 
+
+Precision agriculture is increasingly relying on Uncrewed Aerial Systems (UAS) to optimize crop management and chemical application. For operations like spot-spraying, drones offer unparalleled agility compared to traditional heavy machinery. However, this sector operates on exceptionally tight margins. Drone deployments are bounded by typical endurance limits of 15 to 30 minutes and limited payload weight. To make these systems economically viable, operators require highly efficient, minute-scale mission planning that maximizes the area sprayed per battery charge while minimizing non-productive transit time. This operational challenge naturally frames crop spraying as a Coverage Vehicle Routing Prob-lem (CoVRP). Unlike the classical Vehicle Routing Problem (VRP) that serves discrete point locations, the CoVRP requires a vehicle to satisfy continuous regional targets via a specific foot-print, such as a spray radius. Feasibility and optimality depend on how flight paths sweep through regions, managing boundary constraints and overlapping passes. Unfortunately, existing optimal decision-making tools and exact mathematical formulations for the CoVRP suffer from exponen-tially increasing runtimes as field sizes and geometric complexity grow. This computational bot-tleneck renders exact solvers impractical for a farmer or operator standing at the edge of a field waiting to launch a fleet. To bridge this gap between complex coverage requirements and strict operational time con-straints, this paper introduces an applied operational framework that relies on hierarchical decom-position. The pipeline begins with facility selection, where we adapt a greedy p-Median heuristic to act as a rapid spatial partitioner. To evaluate this approach, we compare the heuristic against a load-balancing optimization method to explicitly examine the trade-off between initial computa-tional speed and downstream routing performance. Once facilities are sited, the framework further decomposes the assigned areas by grouping the routing nodes using k-means clustering. A high-level Traveling Salesman Problem (TSP) is then solved to establish the optimal sequence of these sub-groups. Finally, a discrete CoVRP is solved within each individual subgroup before the segments 2are stitched together into a complete, battery-constrained flight route. By sequentially breaking the problem down, this end-to-end architecture generates near-optimal field coverage in minutes rather than hours. While precision agriculture serves as the primary testbed for this benchmarking analysis, the structural elements of this framework are highly adaptable. Sectors with tight time and energy budgets face similar operational hurdles: last-mile delivery, infrastructure inspection, and emer-gency response all share aspects of the core CoVRP architecture. Whether a drone is dropping parcels on campuses, using photogrammetry to create 3D models of bridges [1], or deploying sen-sors for real-time situational awareness during wildfires and search-and-rescue missions [2], [3], the underlying need to rapidly pair facility siting with capacity-constrained spatial coverage remains a universal challenge. 
+
+## 1.1 Background and Motivation 
+
+The classical VRP serves discrete customers at points, with feasibility defined by visiting each node once under vehicle and depot constraints. The CoVRP replaces point service with regional service: a target is satisfied when the vehicle’s footprint (extent of spray coverage, sensor field of view, or communication radius) intersects its associated region [4]. This change couples geometry and routing. Feasibility depends on how paths pass through regions, not just on node visitation, and performance must account for coverage quality near boundaries and in overlaps. As a result, optimality involves more than distance minimization; it also involves covered and uncovered area, as well as redundant passes. Operations across delivery, inspection, emergency response, and agriculture share the same structural elements. The area of interest is discretized into coverage nodes, where each node has a coverage neighborhood that is served when the node is visited. Edges between nodes represent travel costs, quantified here as distance. A subset of candidate facilities is activated as UAS launch and recovery sites, using a facility location planning algorithm. Vehicles have finite range, payload, and kinematic limits, and the resulting routes must satisfy both coverage and distance constraints. Poor siting can lead to coverage gaps if there are no selected facilities within the maximum distance. Furthermore, siting determines the workload distribution across vehicles, potentially increasing the overall makespan if one facility is overloaded. These considerations motivate a direct comparison 3between a load-balancing siting optimizer and a greedy location siting heuristic for a fixed facility budget. We have identified siting strategies, tiered routing architectures, and adaptable coverage models as the primary operational levers for this problem. To set up the subsequent head-to-head experi-ments, Section 1.2 situates our work within the literature on spatial coverage, “close-enough” VRP formulations [5], UAS facility location, and hierarchical solution pipelines. 
+
+## 1.2 Literature Review 
+
+1.2.1 Coverage and Location-Routing 
+
+Spatial-coverage formulations generalize point-service VRPs by satisfying targets when a vehicle’s footprint intersects a tolerance region. A structured classification of spatial coverage models is crucial, as it clarifies core architectural decisions and reveals established solution trends, such as decomposition and large-neighborhood search. [4]. However, the literature has historically lacked a systematic investigation of these decomposition strategies, a gap addressed by Santini et al., who find that route-based decompositions are generally superior to path-based methods [6]. Two foundational streams underlie modern CoVRP work. First, the idea of surrogate visitation originates with the Covering Salesman Problem (CSP) [7] and the Covering Tour Problem (CTP) [8], which combine TSP style routing with coverage constraints. These seminal papers formalize Integer Linear Programming (ILP) models and introduce heuristics that remain the basis for many modern relaxations [8]. Second, the “close-enough” family of problems (e.g., CETSP) sharpens the geometry of these tolerance regions and provides exact and approximate solvers [9], [10]. These foundational results establish that covering constraints are natural surrogates for footprint-based tasks like sensing or spraying and that scalable solutions typically rely on hierarchical decomposi-tions. For example, Cao et al. demonstrate a hierarchical planner for complex 3D environments that first subdivides the space and then solves local TSPs, resulting in a tenfold speedup over non-decomposed methods [11]. When facility location siting and vehicle routing are co-decided, the location–routing viewpoint becomes essential. The classic CTP already illustrates how the selection of visited nodes trades off against tour length, motivating two-stage pipelines that first pick sites or depots and then routes 4vehicles [8]. This trade-off is central to the Maximum Coverage Capacitated Facility Location Problem with Drones (MCFLPD), where Chauhan et al. explicitly quantify the downstream cov-erage loss at nearly 20% when substituting a fast greedy siting heuristic for an optimal MIP-based approach [12]. This hierarchical structure appears vividly in hybrid ground–air systems. Mur-ray and Chu’s Flying-Sidekick TSP, for example, formalizes synchronized drone launches from a truck, proving the value of co-optimizing the truck route and aerial sorties [13]. More recent work reinforces this structure by co-optimizing depot selection, synchronization, and last-mile tours in collaborative truck-drone delivery, yielding substantial mission-time savings [14], [15], [16], [17]. Within these hierarchies, classic local-search operators like 2-opt and Lin–Kernighan are mainstays for fast route refinement [18], [19]. 
+
+1.2.2 Operational Constraints in Agricultural Spraying 
+
+The specific constraints and objectives of real-world applications guide the design of CoVRP al-gorithms and metrics. Unlike the standard VRP which minimizes distance to visit a set of dis-crete nodes, CoVRP variants must maximize a continuous or discretized coverage metric—such as sprayed area, gathered sensor data, or probability of detection—under strict resource constraints. Endurance limitations are a common thread, as contemporary multirotors typically sustain only 20–30 minutes of flight, compared to hour-class flights for fixed-wing platforms. This necessitates a shift from simple “lawnmower” patterns to sophisticated, tiered routing choices where depot placement and area selection are coupled [20], [21], [22]. Recent surveys document the rapid uptake of this tiered approach for agricultural UAS tasks like spot-spraying, where optimization frameworks must balance the granular “value” of covering a specific node against the battery cost of reaching it [23], [24]. For example, deep learning models now generate “weed pressure maps,” converting the field into a weighted grid; the CoVRP algo-rithm must then determine which high-weight cells can be visited within a strict energy budget [25]. Crucially, agricultural environments introduce geometric complexities that standard routing ignores. Wang et al. apply a logic-based optimization algorithm to determine optimal spray head-ings in irregular fields, aiming to minimize the “non-productive” flight time spent turning at the field boundaries [26]. Their work highlights that in CoVRP, the quality of coverage is as important as the quantity. However, existing agricultural literature often assumes a static depot location 5at the field edge. This motivates our investigation into optimal facility placement; by optimizing the launch point relative to the high-value infestation clusters, we can significantly increase the reachable coverage area per battery cycle. 
+
+1.2.3 Sensor-Based Coverage 
+
+While precision agriculture focuses on the physical application of agrichemicals, the broader CoVRP framework is highly adaptable to other domains where “coverage” is achieved passively via onboard sensors and cameras. In these applications, the structural imperative remains the same: maximizing a continuous coverage metric under vehicle constraints. For instance, in infrastructure inspection, UAS equipped with photogrammetry or LiDAR must satisfy specific visual constraints, such as incidence angles, pixel resolution, and image overlap, to create high-fidelity 3D digital twins [1], [27], [28]. Similarly, in Search-and-Rescue (SAR) operations, the objective shifts to maximizing the “Probability of Detection”. This transforms the routing problem into a submodular maximization task where the marginal gain of sensor coverage diminishes as an area is repeatedly scanned [3], [29], [30], [31]. Finally, wildland fire management utilizes sensor-based coverage for real-time monitoring under extreme temporal constraints. These missions demand rapid, heuristic-driven routing that can account for intense convective winds and shifting burn windows [2], [32], [33]. Although the specific definition of coverage (e.g., visual viewpoints, detection probability, or fire monitoring) differs from crop spraying, these domains all share the fundamental need for scalable, tiered routing architectures that closely couple facility placement with the routing of irregular coverage zones. 
+
+## 1.3 Technical Gaps 
+
+Despite strong baselines for routing problems and growing interest in spatial coverage, several gaps constrain the deployment of practical coverage routing solutions for applications like crop spraying. First, while head-to-head comparisons of facility siting methods (e.g., optimal Mixed-Integer Program (MIP)s versus greedy heuristics) do exist, the literature has not sufficiently explored how these upstream choices propagate through multi-stage planning pipelines to affect downstream performance. Prior studies often evaluate siting strategies in isolation. They do not quantify how 6substituting an optimal but slow facility selection method for a fast heuristic one alters final tour metrics like total coverage, makespan, and load balance after subsequent routing and optimization stages are completed. This leaves a gap in understanding the full, end-to-end trade-offs between optimality and speed in a tiered system. Second, while hierarchical or “cluster-first, route-second” approaches are known to be effec-tive for large-scale VRPs, the literature seldom maps their joint performance–runtime frontiers for coverage objectives. These tiered pipelines expose highly interdependent parameters—such as the number of clusters, the method for sequencing clusters, and the time limits allocated to sub-problems—yet most reports fix these knobs and emphasize algorithmic novelty. As recent surveys have noted, the literature lacks a systematic investigation of how different decomposition strategies impact state-of-the-art heuristics [6]. This leaves a practical gap in guidance for tuning a tiered CoVRP system to a specific fleet, field geometry, and compute budget. Finally, while wall-clock performance is often reported, achieving minute-scale or faster runtimes on large, complex, and diverse geometries remains a critical challenge. Many studies emphasize solution quality on modest or standardized instance sizes. However, for operational deployment where plans must be recomputed quickly as conditions or assets change, the ability to generate high-quality solutions within a tight time budget is paramount. The performance of many existing methods on intricate, real-world field shapes under strict time constraints is still understudied. 
+
+## 1.4 Contributions 
+
+The primary novelty of this work lies in the synthesis and evaluation of an end-to-end operational framework for agricultural crop spraying. While individual components such as p-Median siting, 
+
+k-means clustering, and TSPformulations are established in the literature, there remains a gap in understanding how these upstream decisions cascade through a multi-stage planning pipeline to impact downstream performance. By transitioning these theoretical models into an applied bench-marking framework, we systematically quantify the trade-offs between computational efficiency and operational coverage. The specific contributions of this paper are split into four categories. First, we introduce a novel application of the CoVRP framework tailored specifically for preci-sion crop spraying, departing from the rigid, traditional “lawnmower” path planning often found in agricultural optimization. This formulation provides a highly adaptable definition of coverage. 7While the baseline evaluation in this work utilizes a fixed-radius circular footprint for computa-tional benchmarking, the underlying MIP formulation is natively designed to accommodate com-plex, asymmetric coverage geometries allowing the optimization to inherently account for dynamic environmental factors without altering the core routing architecture. Second, this paper delivers a controlled, large-scale comparison of facility siting strategies and their cascading impact on the full routing pipeline. We implement a load-balancing MIP optimizer and a heuristic-driven, greedy p-Median method. By feeding the output of each into the same downstream routing algorithm, we provide a clean, head-to-head evaluation of how the initial facility placement choice affects later solution quality and planning latency. We demonstrate that using the p-Median heuristic reduces the runtime of facility siting by three orders of magnitude while only reducing total coverage by 4%. Third, we introduce and systematically evaluate a tiered decomposition method for solving large-scale CoVRPs. The approach first partitions the operational area into smaller sub-regions, solves a high-level TSP through the cluster centers to establish a macro-level tour, and finally computes detailed coverage routes within each sub-region before stitching them into a complete plan. By conducting an extensive parameter sweep, varying the number of clusters and distance between routing nodes, we map the performance-runtime frontiers. We identify that utilizing 6 to 8 clusters for each route leads to a significant reduction in runtime with minimal impact on coverage metrics. Fourth, we establish the practical relevance and scalability of the integrated framework by testing it on a broad set of real and synthetic field geometries that vary in boundary complexity and target density. Recognizing the temporal constraints of real-world deployments, wall-clock runtime is reported as a primary metric alongside solution quality, demonstrating that this pipeline successfully achieves minute-scale planning on commodity hardware. 
+
+# 2 Materials and Methods 
+
+This section details the proposed operational framework for agricultural coverage routing. We first formalize the problem setting by defining the geometric environment, vehicle constraints, and the concept of spatial coverage. Following this mathematical foundation, we outline the end-to-end 8tiered solution architecture, detailing both the initial facility selection strategies and the subsequent multi-stage routing algorithm designed to generate feasible, coverage-maximizing flight paths under computational time limits. 
+
+## 2.1 Problem Setting 
+
+This section introduces the routing and siting problem in operational terms, along with mathemat-ical notation to be used in the remainder of the paper. 
+
+2.1.1 Field, Nodes, and Facilities 
+
+A field is the geographic region to be sprayed. To model this continuous area for optimization, we discretize it using two distinct sets of points: passive nodes and active nodes. 
+
+Active nodes , denoted by the set A, represent a set of discrete, potential waypoints where a drone can execute a spraying operation. A drone’s flight path, or route , is constructed as a sequence of selected active nodes. Visiting an active node is the action that provides coverage to all passive nodes within its coverage area. 
+
+Passive nodes , denoted by the set P , form a fine-grained grid that represents the total area requiring treatment. These nodes function as evaluation points to measure the quality of spray coverage. A passive node is considered “covered” if it falls within the effective coverage area of a drone visiting a nearby active node. To aid in evaluation later, we also define Double Covered Passive Nodes , denoted by the set Q ⊆ P , which are the passive nodes within the coverage neigh-borhood of multiple visited active nodes. The primary objective of the coverage routing algorithm is to maximize the number of unique passive nodes covered. Launch and recovery points for operators are called facilities , an example of which is shown in Figure 1. They are places where aircraft would take off, land, and swap batteries. We distinguish 
+
+candidate facilities F cand from chosen facilities F ⊆ F cand . Candidates are the acceptable locations surveyed before planning (e.g., field edges, roadsides, staging pads). The optimization selects a subset F subject to a facility budget Nopen . Chosen facilities are the only depots from which routes start and end. 9Figure 1: An example of a launch and recovery “facility,” which we approach from a facility siting optimization perspective. 
+
+2.1.2 Vehicles and Distances 
+
+We plan for a homogeneous fleet of K identical multirotor drones. The travel cost between any two locations i and j (which can be active nodes or facilities) is given by the distance Dij . Each drone’s operational range is limited by its battery capacity, which is simplified and modeled as a maximum flight distance, Dmax . This parameter imposes a hard constraint on route construction: any single sortie, which must originate from and terminate at a facility, cannot have a total path length exceeding Dmax .The primary function of the vehicle is to provide coverage. When a drone visits an active node, it is assumed to cover any passive nodes that fall within its coverage footprint. In the nominal case, this footprint is modeled as a simple circle with a fixed spray radius, centered at the active node. This idealization provides a computationally tractable representation of spray dispersal. However, the framework is designed to accommodate more sophisticated models where the geometry of this footprint can be generalized. For example, the base circular area could be transformed by a function that accounts for external factors like wind, resulting in an elliptical or otherwise irregular coverage shape. Regardless of the specific model employed, a passive node is considered “covered” if it is located within the boundary of the coverage footprint generated by a visited active node. 
+
+2.1.3 Tiered solution overview 
+
+Vehicle routing problems and their extensions are known to be NP-hard. As a consequence, the computation time to solve them grows rapidly as the problem size increases. To meet minute-scale planning, we solve the CoVRP in tiers: (1) A siting stage selects F ; (2) A high-level routing stage 10 orders clusters and assigns nodes to facilities; (3) Subproblems then solve coverage tours per cluster, then each subproblem is combined together into a complete route. This structure reduces instance size, enables warm starts, and exposes controllable parameters (cluster counts, arc sparsity, and time limits) whose effects we measure experimentally. 
+
+## 2.2 Methodology 
+
+The core of our methodology is a tiered optimization pipeline that first selects a set of launch and recovery sites (facilities) and then plans detailed coverage routes from each selected site. This section details the two alternative approaches for the initial facility selection stage: a baseline mixed-integer program designed for solution quality and a fast heuristic approach designed for scalability without sacrificing too much solution quality. 
+
+2.2.1 Facility Selection 
+
+Effective facility selection serves as a critical bridge between processing a raw operational field polygon and generating actionable coverage routes. By partitioning the total coverage area into smaller, facility-specific subproblems, the downstream routing becomes computationally tractable. To explore this stage, we implement two distinct siting methods: a load-balancing MIP that co-optimizes facility workload and travel distance, and a fast p-Median heuristic that strictly minimizes assignment distance. While these two approaches optimize different mathematical objectives, the goal of this stage is not a direct algorithmic comparison. Instead, we contrast these methods to explicitly analyze how differing upstream siting objectives cascade through the tiered pipeline to affect downstream routing performance and final coverage quality (analyzed in Section 3.2). 
+
+Load-Balancing Optimization 
+
+To establish a performance baseline, we first formulate the facility selection task as a MIP. The primary objective of this model is to select a predetermined number of candidate facilities, Nopen ,and assign the set of active routing nodes, I, to them. The objective function minimizes a sum of two operational goals: minimizing the total travel distance from active nodes to those facilities, and reducing the load deviation between the activated drone facilities. 11 Table 1: Nomenclature of sets, parameters, and decision variables. 
+
+Symbol Description 
+
+Sets and Indices 
+
+A Set of active nodes (potential drone waypoints) 
+
+P Set of passive nodes (evaluation points for field coverage) 
+
+Q Set of double-covered passive nodes ( Q ⊆ P )
+
+F cand Set of candidate launch and recovery facilities 
+
+F Set of chosen/activated facilities ( F ⊆ F cand )
+
+I Set of active routing nodes used in facility selection 
+
+I′ Scaled-down, representative subset of active routing nodes ( I′ ⊂ I)
+
+J Set of candidate facility locations in the optimization model 
+
+S Set of selected facilities during the p-Median heuristic 
+
+Parameters 
+
+K Number of homogeneous multirotor drones in the fleet 
+
+Dij Distance (e.g., Euclidean) between node i and node jDmax Maximum flight distance per drone per battery cycle 
+
+Nopen Number of candidate facilities to select 
+
+Lideal Ideal balanced node load per facility ( |I|/N open )
+
+λ Weighting coefficient balancing distance and load/coverage objectives 
+
+M A large positive constant (Big-M) 
+
+α Seed fraction for p-Median dispersion initialization 
+
+r Number of 1-swap refinement rounds in the p-Median heuristic 
+
+wm Reward weight for covering passive node m (+1 inside field, −1 outside) 
+
+Am Pre-computed set of active vertices whose footprints cover passive node mn Total number of nodes in a given CoVRP subproblem tour 
+
+Decision Variables 
+
+xj Binary variable: 1 if facility j is selected, 0 otherwise 
+
+yij Binary variable: 1 if active node i is assigned to facility j, 0 otherwise 
+
+zj Continuous variable: absolute load deviation for facility j from Lideal 
+
+xij Binary variable: 1 if a drone travels directly from node i to node jyi Binary variable: 1 if active node i is visited on the tour, 0 otherwise 
+
+cm Binary variable: 1 if passive node m is covered, 0 otherwise 
+
+ui Auxiliary continuous variable used for subtour elimination 12 In this context, the “load” physically represents the total geographic area assigned to each launch and recovery site. By ensuring that this area is distributed evenly, the framework strategically limits the subsequent strain on drone battery capacity within any single sub-region. Because this initial stage of the tiered pipeline is focused on field partitioning and depot assignment, vehicle battery endurance is not included as a constraint here. Instead, endurance and flight distance bounds are strictly enforced during the route-generation phase detailed in Section 2.2.2. To maintain computational tractability, the optimization is performed on a scaled-down, rep-resentative subset of the active nodes, I′ ⊂ I. Once the optimal facility locations are determined using this subset, all active nodes in the full set I are assigned to their nearest selected facility in a deterministic post-processing step. The formal optimization problem is defined as follows: Let J be the set of candidate facility locations. We define binary decision variables xj for each 
+
+j ∈ J, where xj = 1 if facility j is selected and 0 otherwise. Binary variables yij for i ∈ I′, j ∈ J
+
+indicate if scaled-down active node i is assigned to facility j. Finally, the continuous variables zj ≥ 0mathematically represent the absolute deviation between the actual number of nodes assigned to facility j and the ideal, perfectly balanced load, defined as Lideal = |I|/N open . The model is then: min 
+
+> x, y, z
+
+X
+
+> j
+
+zj + λ X
+
+> i,j
+
+Dij yij (1) s.t. X
+
+> j
+
+xj = Nopen , (2) 
+
+X
+
+> j
+
+yij = 1 , ∀ i, (3) 
+
+yij ≤ xj , ∀ i, j, (4) 
+
+xk + yij ≤ 1, ∀ i, j, k : dki < d ji , (5) 
+
+zj ≥ X
+
+> i
+
+yij − Lideal , ∀ j, (6) 
+
+zj ≥ Lideal − X
+
+> i
+
+yij , ∀ j, (7) 
+
+zj ≤ M x j , ∀ j, (8) 13 xj ∈ { 0, 1}, yij ∈ { 0, 1}, zj ≥ 0. (9) where Dij is the Euclidean distance between node i and facility j, and λ is a weighting coefficient that balances the load deviation and distance costs. Constraint (2) ensures exactly N open facilities are chosen. Constraint (3) enforces that each scaled-down node is assigned to exactly one facility, while (4) links assignments to open facilities. Constraint (5) defines the load deviation. While this MIP formulation produces well-balanced and spatially compact assignments, its computational ex-pense grows rapidly with the number of candidate facilities and active nodes, making it a bottleneck for large-scale problem instances. 
+
+Hybrid p-Median Facility Selection 
+
+The p-Median heuristic provides a computationally efficient method for facility selection by strictly minimizing the total assignment distance between active demand nodes and their nearest open facility. Given a set of candidate facilities F , active demand nodes A, and a distance matrix 
+
+D = {Di,j } representing the distance from candidate facility j ∈ F to demand node i ∈ A, the objective is defined as: min 
+
+> S⊆F
+> |S|=Nopen
+
+X
+
+> i∈A
+
+min  
+
+> j∈S
+
+Di,j .
+
+To solve this, the heuristic operates in three sequential stages, as detailed in Algorithm 2. The process begins with dispersion seeding, where a farthest-first initialization selects a fraction of the 
+
+p target facilities to ensure spatial distribution across the field and prevent initial clustering. Next, during the greedy completion stage, the algorithm iteratively evaluates unselected candidates and adds the facility that provides the largest reduction in total assignment distance; if no candidate yields an improvement, the remaining slots are filled via dispersion to avoid stalling. This is followed by an optional refinement phase, which utilizes a local search to evaluate 1-swap moves that exchange one selected facility for an unselected candidate, accepting the swap only if it strictly reduces the total assignment distance. Finally, upon completion of these stages, each demand node is deterministically assigned to its nearest open facility. By maintaining a vector of the current minimum distances mi = min j∈S Dj,i for each de-mand node, the algorithm avoids recomputing full assignment costs during each step. This allows 14 Algorithm 1 Greedy p-Median with Dispersion Seeding and Optional 1-Swap  
+
+> 1:
+
+Input: F candidates, A demands, distances Dj,i ; 
+
+> 2:
+
+target Nopen , seed fraction α, swap rounds r 
+
+> 3:
+
+Output: Set of selected facilities S 
+
+> 4:
+
+S ← FarthestFirst( F, ⌈αN open ⌉) ▷ Stage 1: Dispersion Seeding  
+
+> 5:
+
+mi ← min j∈S Dj,i for all i ∈ A ▷ Track min distance for each demand point i 
+
+> 6:
+
+while |S| < N open do ▷ Stage 2: Greedy Completion  
+
+> 7:
+
+j⋆ ← arg max j∈F \S
+
+P
+
+> i∈A
+
+ mi − min {mi, D j,i } ▷ Find facility with max total distance reduction  
+
+> 8:
+
+∆ ← P
+
+> i∈A
+
+ mi − min {mi, D j⋆,i } 
+
+> 9:
+
+if ∆ ≤ 0 then break  
+
+> 10:
+
+end if  
+
+> 11:
+
+S ← S ∪ { j⋆}; 
+
+> 12:
+
+mi ← min {mi, D j⋆,i } for all i 
+
+> 13:
+
+end while  
+
+> 14:
+
+if |S| < N open then ▷ If greedy search stopped early...  
+
+> 15:
+
+S ← FarthestFirst( F, N open ; init = S) ▷ ...fill remaining p slots with dispersed points  
+
+> 16:
+
+end if  
+
+> 17:
+
+for t = 1 to r do ▷ Stage 3: Refinement Phase  
+
+> 18:
+
+(a, b ) ← arg max a∈S, b ∈F \S
+
+P
+
+> i∈A
+
+
+
+mi − min {min j∈S\{ a} Dj,i , D b,i }
+
+
+
+▷ Find best swap (a ∈ S, b / ∈ S) 
+
+> 19:
+
+mi, new ← min {min j∈S\{ a} Dj,i , D b,i } for all i 
+
+> 20:
+
+if P mi, new < P mi then  
+
+> 21:
+
+S ← (S \ { a}) ∪ { b}; mi ← mi, new for all i ▷ Perform the swap  
+
+> 22:
+
+elsebreak ▷ Stop if no improving swap is found  
+
+> 23:
+
+end if  
+
+> 24:
+
+end for  
+
+> 25:
+
+return S
+
+15 the marginal gain of each candidate to be evaluated in O(|A|) time. Consequently, the greedy completion stage requires O(( Nopen − | S|) |F | | A|) operations, and a single 1-swap pass requires 
+
+O(|S| (|F | − | S|) |A|) operations. Edge cases where Nopen ≤ 0 or Nopen ≥ | F | immediately return none or all facilities, respectively.  
+
+> (a) Imbalanced Assignment (b) Balanced Assignment
+
+Figure 2: A geometric illustration of facility siting and active node assignments across an example field. (a) An unrefined assignment can result in imbalanced operational loads, where certain launch points (e.g., Facility 0 in dark blue) are assigned a disproportionate number of nodes. (b) A balanced assignment ensures a more equal distribution of nodes across all active facilities. This illustrates the motivation for incorporating balancing mechanisms, whether through MIP constraints or heuristic refinement swaps, to prevent vehicle endurance violations during the downstream routing phase. 
+
+2.2.2 Tiered Coverage VRP 
+
+We begin with a field boundary polygon defined in GPS coordinates. To enable efficient spatial computation, these geographic coordinates are projected into a local planar coordinate system using the haversine function. The centroid of the field is translated to the origin (0 , 0), and all other vertices are converted to meters relative to this point. Active routing nodes A are generated via a hexagonal grid tiling clipped to the interior of the projected field polygon P. Passive coverage nodes are laid on a finer square grid within a band surrounding the field’s convex hull B. Each passive node pm is assigned a reward 
+
+wm =
+
+
+
++1 , pm ∈ P ,
+
+−1, pm ∈ B \ P .
+
+16 Figure 3: Example field illustrating how passive nodes are assigned coverage rewards. Nodes in the green region are assigned a reward of +1, while nodes in the red are assigned -1. This encourages solutions that remain inside the field and limit overspray outside of the field boundary (Figure 3). Once facilities are selected, route planning proceeds in two tiers. For each open facility, we perform k-means clustering on its assigned active nodes to identify high-level routing nodes, where high-level node 0 is the facility itself. The high-level tour is then computed by solving a standard Traveling Salesman Problem (TSP) utilizing the Miller-Tucker-Zemlin (MTZ) formulation for sub-tour elimination [34]. Each active node is reassigned to its nearest high-level node, forming groups. For each group, a CoVRP (Eq. (18)) is solved independently, where endpoints are chosen based on TSP ordering to facilitate smooth concatenation. We formulate the CoVRP as the following mixed-integer program: max 
+
+> x,y,c,u M
+
+X
+
+> m=1
+
+wm cm − λX
+
+> i̸=j
+
+Dij xij (10) s.t. X
+
+> i̸=j
+
+Dij xij ≤ Dmax , (11) 
+
+> n−1
+
+X
+
+> j=1
+
+x0j = 1 ,
+
+> n−2
+
+X
+
+> i=0
+
+xi,n −1 = 1 , (12) 
+
+X 
+
+> j̸=i
+
+xij = yi = X 
+
+> j̸=i
+
+xji , (1 ≤ i ≤ n − 2) , (13) 
+
+y0 = yn−1 = 1 , (14) 
+
+ui − uj + ( n − 1) xij ≤ n − 2, (1 ≤ i̸ = j ≤ n − 2) , (15) 
+
+cm ≤ X
+
+> k∈Am
+
+yk, ∀m, (16) 17 cm ≥ yk (k ∈ Am), ∀m, (17) 
+
+xij ∈ { 0, 1}, y i ∈ { 0, 1}, c m ∈ { 0, 1}, u i ∈ [1 , n − 1] . (18) Here, binary variables xij define the drone path, yi indicates whether a node is visited, cm denotes if passive node m is covered, and ui supports subtour elimination. Each passive node pm has a pre-computed set Am of active vertices that can cover it. The objective balances coverage against distance, weighted by a user-defined penalty λ. Coverage can be defined in many different ways. In the simplest case, the spray can be modeled as a circular disk. In this case, any passive nodes within a defined radius of a visited active node are assumed to be covered. This can be adjusted to model other aspects, for instance, impacts on the spray due to wind. After stitching the smaller sub-routes into a single overall route, this route is refined with the classical intra-route 2-opt heuristic [18], [35]. The method selects two non-adjacent edges ( i, i + 1) and ( j, j + 1), removes them, reverses the sub-path between vertices i + 1 and j, and reconnects the loose ends with the edges ( i, j ) and ( i + 1 , j + 1). Whenever the original pair of edges intersect, the replacement pair is strictly shorter by the triangle inequality, so repeated application systematically uncrosses every self-intersection introduced during subtour stitching. Because no vertices are added or removed, full coverage is preserved while the total route length is reduced without violating the global distance budget. The progression from the macro-level tour to the complete, fully refined route is illustrated in Figure 4. 
+
+# 3 Results and Analysis 
+
+This section presents the evaluation of the proposed agricultural coverage routing framework. To contextualize the performance outcomes, we first detail the experimental design, including the dataset properties, mission parameters, and the computational environment used for all simula-tions. Following this setup, we benchmark the facility selection methods—contrasting the opti-mization baseline against the p-Median heuristic—and subsequently analyze the impact of varying grid spacing and subgroup parameters within the tiered routing pipeline on both runtime and solution quality. 18 (a) High-level TSP tour (b) Complete coverage route 
+
+Figure 4: An example of the tiered routing generation. (a) The macro-level tour established by solving a Traveling Salesman Problem through the cluster centers to sequence the sub-regions. (b) The final complete route after solving the CoVRP for each cluster and applying 2-opt refinement, optimized to maximize coverage while adhering to distance constraints. 
+
+## 3.1 Experimental Design 
+
+3.1.1 Data set 
+
+The agricultural field geometries used in this study were generated from binary raster maps repre-senting predicted crop presence in Huron and Gratiot counties, Michigan, USA. The conversion of these raster images into the vector polygons required for route planning was accomplished using a computer vision pipeline detailed by Ni et al. [36]. In brief, the process utilizes contour detection to identify contiguous pixel clusters, followed by polygon simplification via the Douglas-Peucker algorithm to reduce vertex count while preserving the essential field shape. A final area thresh-olding step discarding polygons under 20 pixels is applied to remove noise and small artifacts. This pipeline yields a refined set of vector polygons that serve as the foundational data set for our experimental validation. For a comprehensive explanation of the algorithm’s implementation and exact parameters, readers are directed to the work by Ni et al. The overall dataset contains around 1,500 individual fields, with many too large to be feasi-ble for drone spraying. Contemporary agricultural multirotors are constrained by limited battery 19 endurance and finite payload capacities. Consequently, covering large fields would require an im-practical number of return-to-launch cycles and excessive battery swapping, falling outside the in-tended operational scope of continuous coverage routing. To ensure the robustness of the reported results across varying operational conditions, the experimental dataset comprised 20 distinct field instances. These fields ranged in size from 10 to 12 acres and were selected to encompass a diverse set of geometric boundaries, including long and narrow, roughly square, and non-convex polygons. 
+
+3.1.2 Experimental Setup 
+
+All simulations, models, and optimization algorithms were implemented in Python. The gurobipy 
+
+library was utilized to interface the Python environment with the Gurobi solver for the MIP formu-lations. All computational experiments were executed on a system equipped with an AMD Ryzen 5 5600X 6-core processor operating at a 4 GHz clock speed. In all experiments, the nominal spray radius of the drone was fixed at 3 m. Each individual route was constrained by a distance budget of 2 km. This budget is derived from a total flight time of 15 minutes (900 seconds) at a constant speed of approximately 2.25 m/s ( ≈ 5 mph), then rounding down to provide a small safety margin. To systematically estimate the required number of launch and recovery facilities for a given field, an upper bound for the total coverage area per drone sortie was calculated by multiplying the flight distance endurance by the drone’s effective spray diameter. A 0.9 scaling factor was applied to this theoretical maximum to provide a margin of error for route inefficiencies and overlapping flight paths. The total field area was then divided by this scaled capacity to estimate the minimum number of discrete routes required for full coverage. Passive nodes, representing the area to be covered, were generated on a square grid with a uniform spacing of 2 m. Active nodes, representing potential routing waypoints, were generated on an evenly spaced hexagonal grid; this structure was chosen for the more computationally intensive active nodes as it is the most efficient way to tile a plane. A set of 72 candidate facility locations was generated by spacing them evenly on the field boundary, positioned radially from the centroid of the field. 20 3.1.3 Facility Selection Comparison 
+
+The performance of the two distinct facility selection methods outlined in Section 2.2 was evaluated. To investigate methods for reducing computational load, a scale-down strategy was tested for the load-balancing optimization, where the active node set was reduced by a factor of n by including only every nth active node. For the p-Median heuristic, two core parameters were adjusted: the seed fraction (which dictates the initial number of facilities selected by dispersion) and the use of a final refinement swap round to improve the solution. During this phase of testing, all routing optimization parameters were held constant (5.7 m active node spacing, 6 subgroups per route) to isolate the impact of the facility selection method. 
+
+3.1.4 Routing Optimization Comparison 
+
+Based on the results of the facility selection comparison, the p-Median heuristic was chosen for all subsequent routing tests. It was initialized with 2 seed facilities using the dispersion method, followed by 1 round of refinement swaps. To evaluate the tiered coverage vehicle routing algorithm, two key parameters were varied: the spacing in meters of the active nodes, and the number of subgroups used for each route. 
+
+3.1.5 Evaluation Metrics 
+
+The primary goal of this work is to decrease computational time to make the framework feasible for operational planning. Consequently, the run-time for both the facility selection and routing optimization phases was recorded as a key performance metric. Solution quality was assessed using two coverage metrics. The passive coverage percentage, defined as the fraction of all passive nodes located within the coverage radius of a visited active node, served as a proxy for the total area sprayed. To measure redundant application, coverage efficiency was calculated as 1 − | Q|/|P |. This metric quantifies the degree of overlapping coverage, where a higher value indicates less “wasted” spray effort. The total distance of all combined routes was also tracked. 21 3.2 Comparison Against Baselines 
+
+To evaluate the potential advantages and limitations of the proposed framework, our results are benchmarked against two standard baseline methodologies prevalent in the coverage routing liter-ature: an exact mathematical formulation and a non-decomposed routing approach. First, following the comparative methodologies seen in facility location literature [12], we utilize the load-balancing MIP formulation as the exact baseline. While MIPs guarantee optimal solutions, they represent the computational bottleneck typical of exact solvers. By benchmarking against this baseline, we explicitly quantify the trade-off of our proposed p-Median heuristic: a computational speedup of three orders of magnitude at the cost of a nominal 4% degradation in passive coverage. Second, to validate the tiered routing architecture, we benchmark against the non-decomposed routing baseline, mirroring the evaluation strategy used by Cao et al. for complex environments [11]. In our framework, the non-decomposed baseline is represented by the test cases where the number of subgroups is 1 (i.e., attempting to solve the CoVRP over the entire assigned area). By comparing our tiered approach with an increasing number of subgroups against this single-group baseline, we demonstrate a runtime reduction from approximately 700 seconds to under 90 seconds, confirming an order-of-magnitude improvement over non-decomposed methods. 
+
+## 3.3 Facility Siting: Runtime and Quality 
+
+The performance of the optimized load-balancing and p-Median heuristic facility siting methods were evaluated, with key statistics presented in Tables 2 and 3. A significant difference in computational cost is immediately apparent. The p-Median heuristic is substantially faster, with facility selection times consistently under 1.2 seconds. In contrast, the optimized load-balancing method requires a much greater runtime, ranging from approximately 97 to 227 seconds (Figure 5). This speed, however, comes with a trade-off in solution quality. The optimized method consistently achieves the highest passive coverage at around 93%, while the p-Median heuristic shows a degradation in this metric, with coverage typically ranging from 86% to 92% (Figure 6). Interestingly, the routes generated from the facilities selected by the p-Median heuristic are, on average, shorter than those from the optimized method, which consistently exceed 9100 m. 22 Figure 5: Left : Facility selection runtime vs. facility selection methods. Right : Routing opti-mization runtime vs. facility selection method. 
+
+Figure 6: Passive node coverage percentage vs. facility selection method. 23 Table 2: Optimized Method: Performance statistics vs. active node reduction. Pas. Cov. and 
+
+Cov. Eff. are the passive coverage and coverage efficiency percentages respectively. 
+
+Node Reduc. Select Time (s) Pas. Cov (%) Cov. Eff. (%) Route Len. (m) 
+
+Mean ± Std Dev Mean ± Std Dev Mean ± Std Dev Mean ± Std Dev 1.0 209 .28 ± 127 .67 92 .8 ± 2.2 96 .1 ± 0.5 9113 .3 ± 1103 .65.0 189 .80 ± 153 .32 93 .6 ± 1.6 96 .0 ± 0.4 9203 .0 ± 1028 .710.0 211 .10 ± 130 .26 93 .0 ± 2.1 96 .0 ± 0.5 9144 .8 ± 1161 .620.0 226 .78 ± 136 .57 93 .2 ± 2.6 96 .0 ± 0.5 9178 .2 ± 1250 .440.0 97 .38 ± 136 .24 93 .5 ± 1.6 95 .9 ± 0.4 9182 .3 ± 984 .2Table 3: p-Median Method: Performance Statistics by Seed Fraction and Refine Swaps. Pas. Cov. 
+
+and Cov. Eff. are the passive coverage and coverage efficiency percentages respectively. 
+
+Seed Swaps Select Time (s) Pas. Cov (%) Cov. Eff. (%) Route Len. (m) 
+
+Mean ± Std Dev Mean ± Std Dev Mean ± Std Dev Mean ± Std Dev 0.2 0 0.10 ± 0.01 89 .4 ± 1.9 96 .7 ± 0.3 8646 .1 ± 956 .51 0.11 ± 0.01 92 .6 ± 1.7 96 .2 ± 0.3 9057 .2 ± 973 .50.4 0 0.10 ± 0.01 86 .5 ± 4.1 97 .1 ± 0.5 8359 .9 ± 1049 .01 0.11 ± 0.01 90 .3 ± 2.6 96 .6 ± 0.4 8792 .3 ± 1100 .20.6 0 0.10 ± 0.02 88 .0 ± 3.7 97 .0 ± 0.6 8507 .1 ± 1041 .51 0.13 ± 0.05 90 .3 ± 3.2 96 .6 ± 0.5 8760 .3 ± 989 .7
+
+## 3.4 Tiered Routing: Parameter Study 
+
+The tiered routing method’s performance was analyzed by varying the effective grid spacing and the number of subgroups used for routing optimization. The results, summarized in Table 4 and visualized in Figures 7-10, reveal distinct trends. As shown in Figure 9, the routing optimization runtime is strongly influenced by the number of subgroups. For all grid spacings, runtime decreases significantly as the number of subgroups increases from 1 to 16. This is expected, as dividing the problem into more sub-problems reduces the complexity of each optimization. However, beyond 16 subgroups, the runtime begins to level off or even slightly increase, suggesting that the overhead of managing a large number of sub-problems begins to outweigh the benefits of parallelization. Coverage metrics also respond to parameter changes. Increasing the effective grid spacing generally leads to higher passive coverage and coverage efficiency, as seen in Figures 7 and 8. This indicates that a coarser grid allows for more effective initial facility placement. Conversely, increasing the number of subgroups tends to cause a slight but consistent decrease in both passive 24 coverage and efficiency, indicating a trade-off between runtime and solution quality. 
+
+Figure 7: Passive coverage vs. active node spacing and number of subgroups. 
+
+Figure 8: Coverage efficiency vs. active node spacing and number of subgroups. 
+
+## 3.5 Discussion 
+
+This study provides guidance for practitioners by evaluating trade-offs between different facility siting methods, routing parameters, and environmental factors. When selecting a facility siting method, the p-Median heuristic appears to offer the most practical trade-off. It balances a significant reduction in facility selection runtime compared to the full optimization method while maintaining higher passive coverage than the Greedy MCLP approach. This suggests that for many applications where computational resources are a constraint, p-Median provides a robust compromise between 25 Figure 9: Routing runtime vs. active node spacing and number of subgroups. 
+
+Figure 10: Routing runtime vs. active node spacing for a fixed number of 4 subgroups. speed and solution quality. For tiered routing, the parameter study offers clear recommendations. The number of sub-groups is a primary driver of runtime; a small number of subgroups provides a rapid decrease in computation time, but these gains diminish and eventually reverse as the number of subgroups becomes too large. Isolating for a fixed number of subgroups ( n = 4), we observe that runtime trends downward as active node spacing increases. However, practitioners must be cautious, as increasing this spacing risks reducing passive coverage if nodes become too sparse for the spray radius to cover the intervening area. The relative independence of final solution quality (passive coverage and efficiency) from the number of subgroups is a key finding. It indicates that our method 26 of decomposing the problem to accelerate computation does not inherently degrade the quality of the solution, which can instead be optimized through other parameters like grid spacing. 
+
+## 3.6 Limitations of Work 
+
+While our proposed framework demonstrates strong performance, it is important to acknowledge its limitations, which present avenues for future work. The fidelity of the input data presents a challenge, as the data set was constructed from natural image data, and the automated processing introduced artifacts in some of the field polygons. These geometric inaccuracies can influence the coverage paths generated, potentially leading to suboptimal routing or incomplete coverage in real-world applications. Methodologically, the overall optimization problem was decomposed into sequential stages: fa-cility selection, subgroup partitioning, and the coverage VRP. Although this decoupling makes the problem tractable, these stages are inherently coupled, meaning decisions made in an early stage have cascading effects on the efficiency of the final routes. A monolithic or more integrated ap-proach could theoretically yield globally optimal solutions, but at a much higher computational cost. Furthermore, the generated routes often contain sharp, non-kinematic turns that are not ideal for the dynamics of heavy quadrotor drones. This necessitates either reliance on the drone’s on-board flight controller to approximate the path or a separate post-processing step to smooth the routes. While route smoothing could be incorporated directly into the optimization, this would introduce significant computational challenges and further constrain the path planning solution space. Furthermore, the scope of our validation may limit generalizability. The algorithms were tested on fields ranging from 9 to 12 acres, which are relatively small compared to the 35-acre median field size in the full data set. The assumed drone parameters, such as a 5 mph speed and 15-minute flight time, push the limits of current commercial technology and necessitate numerous sorties even for these smaller fields, highlighting a potential bottleneck for larger-scale operations. Finally, the framework’s performance is highly sensitive to several hyperparameters that require careful tuning, a process that can be complex and may require significant domain expertise when applying the model to new environments. 27 4 Conclusions 
+
+This study provides a comprehensive framework and practical guidance for optimizing agricultural drone operations by systematically evaluating the trade-offs inherent in different facility siting methods and routing parameters. Our analysis confirms that navigating these choices is critical for deploying efficient and effective autonomous systems in precision agriculture. The results show that the p-Median heuristic offers the most effective compromise for practitioners tasked with facility placement. It strikes a crucial balance, achieving a significant reduction in runtime compared to a full, computationally prohibitive optimization approach. This finding positions p-Median as a robust and practical tool for real-world planning scenarios. Furthermore, the parameter study on tiered routing reveals that the number of subgroups is a primary and predictable driver of runtime. This allows for substantial computational savings through problem decomposition without inherently degrading the final solution quality. This key insight validates our sequential approach, demonstrating that operators can confidently accelerate planning by adjusting this parameter, while fine-tuning solution quality through other variables like grid spacing. These findings also illuminate clear and promising avenues for future research that build directly upon the limitations of this work. A primary focus should be exploring more integrated optimization approaches that solve the facility location and vehicle routing problems in a coupled fashion. While our sequential method is computationally efficient, it risks settling in local optima because early-stage decisions are made without full knowledge of their downstream consequences. A monolithic or tightly integrated model, though more complex, could yield globally superior solutions. Lastly, validating this framework on a broader range of larger and more complex field geometries is crucial for confirming its scalability and robustness. Testing against non-convex fields, terrain with varying elevation, and environments with obstacles will be essential for transitioning this methodology from a theoretical model to a universally applicable operational tool. 
+
+# Acknowledgments 
+
+This project was supported by NASA under Award No. 80NSSC24PB252. We thank Jack R. Liddle, Benjamin L. Magocs, Jim Gardner, and Husni Idris for their support. 28 Hardware 
+
+Tests were conducted on a custom personal computing system using a Ryzen 5 5600X 6-Core processor with a clock speed of 4 GHz. 
+
+# References 
+
+[1] S. S. C. Congress, J. Escamilla III, H. Chimauriya, and A. J. Puppala, “Eye in the sky: 360 °
+
+inspection of bridge infrastructure using uncrewed aerial vehicles,” Transportation Research Record , 2024. doi : 10.1177/03611981231185138 
+
+[2] P. Ragbir et al., “Uav-based wildland fire air toxics data collection and analysis,” Sensors ,vol. 23, no. 7, p. 3561, 2023. doi : 10.3390/s23073561 
+
+[3] Z. Lyu et al., “Unmanned aerial vehicles for search and rescue: A survey,” Remote Sensing ,vol. 15, no. 13, p. 3266, 2023. doi : 10.3390/rs15133266 
+
+[4] K. Glock and A. Meyer, “Spatial coverage in routing and path planning problems,” European Journal of Operational Research , vol. 305, no. 1, pp. 1–20, 2023. doi : 10.1016/j.ejor.2022. 02.031 
+
+[5] W. K. Mennell, Heuristics for solving three routing problems: Close-enough traveling sales-man problem, close-enough vehicle routing problem, and sequence-dependent team orienteer-ing problem . University of Maryland, College Park, 2009. [Online]. Available: http://hdl. handle.net/1903/9822 
+
+[6] A. Santini, M. Schneider, T. Vidal, and D. Vigo, “Decomposition strategies for vehicle routing heuristics,” INFORMS Journal on Computing , vol. 35, no. 3, pp. 543–559, 2023. doi : 10. 1287/ijoc.2023.1288 
+
+[7] J. R. Current and D. A. Schilling, “The covering salesman problem,” Transportation Science ,vol. 23, no. 3, pp. 208–213, 1989. doi : 10.1287/trsc.23.3.208 
+
+[8] M. Gendreau, G. Laporte, and F. Semet, “The covering tour problem,” Operations Research ,vol. 45, no. 4, pp. 568–576, 1997. doi : 10.1287/opre.45.4.568 
+
+29 [9] B. Behdani and J. C. Smith, “An integer-programming-based approach to the close-enough traveling salesman problem,” INFORMS Journal on Computing , vol. 26, no. 3, pp. 415–432, 2014. doi : 10.1287/ijoc.2013.0574 
+
+[10] W. P. Coutinho, R. Martinelli, and R. S. de Camargo, “A branch-and-bound algorithm for the close-enough traveling salesman problem,” INFORMS Journal on Computing , vol. 28, no. 4, pp. 772–787, 2016. doi : 10.1287/ijoc.2016.0711 
+
+[11] C. Cao, J. Zhang, M. Travers, and H. Choset, “Hierarchical coverage path planning in com-plex 3d environments,” in 2020 IEEE International Conference on Robotics and Automation (ICRA) , IEEE, 2020, pp. 8437–8443. doi : 10.1109/ICRA40945.2020.9196575 
+
+[12] D. Chauhan, A. Unnikrishnan, and M. Figliozzi, “Maximum coverage capacitated facility location problem with range constrained drones,” Transportation Research Part C: Emerging Technologies , vol. 99, pp. 1–18, 2019. doi : 10.1016/j.trc.2018.12.001 
+
+[13] C. C. Murray and A. G. Chu, “The flying sidekick traveling salesman problem: Optimization of drone-assisted parcel delivery,” Transportation Research Part C: Emerging Technologies ,vol. 54, pp. 86–109, 2015. doi : 10.1016/j.trc.2015.03.005 
+
+[14] A. Morim, G. Campuzano, P. Amorim, M. Mes, and E. Lalla-Ruiz, “The drone-assisted vehicle routing problem with robot stations,” Expert Systems with Applications , vol. 238, p. 121 741, 2024. doi : 10.1016/j.eswa.2023.121741 
+
+[15] S. Zieher et al., “Drones for automated parcel delivery: Use case exploration and analysis,” 
+
+Case Studies on Transport Policy , vol. 12, p. 101 253, 2024. doi : 10.1016/j.trip.2024. 101253 
+
+[16] T. Fu, S. Li, and Z. Li, “Research on collaborative delivery path planning for trucks and drones in parcel delivery,” Sensors , vol. 25, no. 10, p. 3087, 2025. doi : 10.3390/s25103087 
+
+[17] L. Zhen, J. Gao, S. Wang, L. Gilbert, and X. Yue, “Optimizing an on-demand delivery mode based on trucks and drones,” Transportation Science , 2025. doi : 10.1287/trsc.2024.0693 
+
+[18] G. A. Croes, “A method for solving traveling-salesman problems,” Operations Research , vol. 6, no. 6, pp. 791–812, 1958. doi : 10.1287/opre.6.6.791 
+
+30 [19] S. Lin and B. W. Kernighan, “An effective heuristic algorithm for the traveling-salesman problem,” Operations Research , vol. 21, no. 2, pp. 498–516, 1973. doi : 10.1287/opre.21.2. 498 
+
+[20] J. Peksa and D. Mamchur, “A review on the state of the art in copter drones and flight control systems,” Sensors , vol. 24, no. 11, p. 3349, 2024. doi : 10.3390/s24113349 
+
+[21] J. Silberstein, R. Sasse, M. K. Harjam¨ aki, et al., “Deployment of a fixed-wing small uncrewed aircraft system for urban traffic–related air pollution assessment,” Journal of Atmospheric and Oceanic Technology , 2025. doi : 10.1175/JTECH-D-24-0042.1 
+
+[22] E. Mitridis et al., “An evaluation of fixed-wing unmanned aerial vehicle trends and corre-lations with respect to nato classification, region, eis date and operational specifications,” 
+
+Aerospace , vol. 10, no. 1, p. 53, 2023. doi : 10.3390/aerospace10040382 
+
+[23] D. C. Tsouros, S. Bibi, and P. G. Sarigiannidis, “A review on uav-based applications for precision agriculture,” Information , vol. 10, no. 11, p. 349, 2019. doi : 10.3390/info10110349 
+
+[24] F. A. Lara-Molina et al., “Optimization of coverage path planning for agricultural drones in weed-infested fields using semantic segmentation,” Agriculture , vol. 15, no. 12, p. 1262, 2025. 
+
+doi : 10.3390/agriculture15121262 
+
+[25] T. B. Shahi, S. Dahal, C. Sitaula, A. Neupane, and W. Guo, “Deep learning-based weed detection using uav images: A comparative study,” Drones , vol. 7, no. 10, p. 624, 2023. doi :
+
+10.3390/drones7100624 
+
+[26] P. Wang et al., “A novel path planning approach for plant protection uav based on ddpg and ila optimization algorithm,” Computers and Electronics in Agriculture , vol. 239, p. 111 006, 2025. doi : https://doi.org/10.1016/j.compag.2025.111006 
+
+[27] F. Gaspari, F. Ioli, F. Barbieri, E. Belcore, and L. Pinto, “Integration of uav-LiDAR and uav-photogrammetry for infrastructure monitoring and bridge assessment,” in The Interna-tional Archives of the Photogrammetry, Remote Sensing and Spatial Information Sciences ,vol. XLIII-B2-2022, 2022, pp. 995–1002. doi : 10.5194/isprs-archives-XLIII-B2-2022-995-2022 
+
+31 [28] S. Zollini, M. Alicandro, D. Dominici, R. Quaresima, and M. Giallonardo, “Uav photogramme-try for concrete bridge inspection using object-based image analysis (obia),” Remote Sensing ,vol. 12, no. 19, p. 3180, 2020. doi : 10.3390/rs12193180 
+
+[29] S. Waharte and N. Trigoni, “Supporting search and rescue operations with uavs,” in 2010 IEEE International Conference on Emerging Security Technologies (EST) , 2010, pp. 142–147. 
+
+doi : 10.1109/EST.2010.31 
+
+[30] X. Zhang et al., “Aerial person detection for search and rescue: A survey,” Journal of Remote Sensing , vol. 9, p. 0474, 2025. doi : 10.34133/remotesensing.0474 
+
+[31] S. Shaheen, W. Saad, et al., “Robust air-to-air channel model for swarms of drones in sar missions,” IEEE Access , vol. 11, pp. 68 890–68 896, 2023. doi : 10 . 1109 / ACCESS . 2023 . 3292517 
+
+[32] A. Bouguettaya, H. Zarzour, A. M. Taberkit, and A. Kechida, “A review on early wildfire de-tection from unmanned aerial vehicles using deep learning-based computer vision algorithms,” 
+
+Signal Processing , vol. 190, p. 108 309, 2022. doi : 10.1016/j.sigpro.2021.108309 
+
+[33] A. LoPresti, M. T. Hayden, K. Siegel, B. Poulter, E. N. Stavros, and L. E. Dee, “Remote sens-ing applications for prescribed burn research: A review,” International Journal of Wildland Fire , vol. 33, WF23130, 2024. doi : 10.1071/WF23130 
+
+[34] C. E. Miller, A. W. Tucker, and R. A. Zemlin, “Integer programming formulation of traveling salesman problems,” Journal of the ACM (JACM) , vol. 7, no. 4, pp. 326–329, 1960. doi :
+
+10.1145/321043.321046 
+
+[35] S. Lin, “Computer solutions of the traveling salesman problem,” Bell System Technical Jour-nal , vol. 44, no. 10, pp. 2245–2269, 1965. doi : 10.1002/j.1538-7305.1965.tb04146.x 
+
+[36] X. Ni et al., “Machine learning and optimization pipeline for agricultural drone aerial imaging operations,” Jul. 2024. doi : 10.2514/6.2024-3657 
+
+32 Table 4: Performance Metrics (Mean ± Std. Dev.) vs. Grid Spacing and Number of Subgroups. 
+
+Subgroups Runtime (s) Coverage (%) Efficiency (%) Active Node Spacing: 4.68 m 
+
+1 706 .95 ± 93 .79 89 .03 ± 7.66 0.68 ± 0.04 2 351 .02 ± 56 .70 93 .71 ± 1.69 0.68 ± 0.03 4 257 .54 ± 88 .69 93 .40 ± 1.67 0.68 ± 0.03 8 161 .90 ±119 .89 93 .43 ± 1.71 0.68 ± 0.03 16 83 .85 ± 28 .91 92 .97 ± 1.83 0.67 ± 0.03 24 77 .59 ± 21 .94 92 .65 ± 1.88 0.67 ± 0.03 32 93 .06 ± 31 .18 92 .32 ± 1.97 0.66 ± 0.03 
+
+Active Node Spacing: 4.94 m 
+
+1 699 .50 ± 95 .94 91 .25 ± 6.20 0.75 ± 0.03 2 311 .78 ± 66 .71 94 .25 ± 2.18 0.75 ± 0.03 4 213 .98 ± 53 .84 93 .87 ± 2.24 0.75 ± 0.02 8 90 .89 ± 35 .94 93 .95 ± 2.21 0.75 ± 0.02 16 62 .59 ± 25 .32 93 .66 ± 2.31 0.74 ± 0.02 24 70 .10 ± 20 .59 93 .43 ± 2.38 0.74 ± 0.02 32 88 .32 ± 28 .00 93 .09 ± 2.39 0.73 ± 0.02 
+
+Active Node Spacing: 5.20 m 
+
+1 678 .22 ± 90 .02 94 .07 ± 3.03 0.85 ± 0.01 2 237 .13 ± 52 .22 94 .65 ± 2.07 0.85 ± 0.01 4 134 .66 ± 68 .48 94 .33 ± 2.06 0.86 ± 0.01 8 74 .27 ± 33 .59 94 .43 ± 2.04 0.85 ± 0.01 16 53 .04 ± 12 .78 94 .41 ± 2.08 0.85 ± 0.01 24 65 .68 ± 16 .83 94 .29 ± 2.14 0.84 ± 0.01 32 90 .47 ± 31 .88 94 .04 ± 2.25 0.84 ± 0.01 
+
+Active Node Spacing: 5.46 m 
+
+1 683 .08 ± 94 .02 94 .80 ± 1.62 0.91 ± 0.01 2 229 .01 ± 59 .35 94 .76 ± 1.62 0.91 ± 0.01 4 141 .02 ± 46 .15 94 .48 ± 1.66 0.91 ± 0.01 8 48 .84 ± 11 .57 94 .67 ± 1.62 0.91 ± 0.01 16 48 .82 ± 12 .01 94 .62 ± 1.62 0.90 ± 0.01 24 62 .95 ± 15 .75 94 .52 ± 1.72 0.90 ± 0.01 32 84 .60 ± 27 .94 94 .30 ± 1.75 0.89 ± 0.01 
+
+Active Node Spacing: 5.72 m 
+
+1 657 .39 ± 99 .60 92 .84 ± 1.64 0.96 ± 0.01 2 200 .71 ± 50 .35 92 .82 ± 1.65 0.96 ± 0.01 4 85 .67 ± 33 .47 92 .52 ± 1.67 0.96 ± 0.01 8 48 .99 ± 22 .55 92 .64 ± 1.65 0.96 ± 0.01 16 46 .63 ± 11 .23 92 .57 ± 1.63 0.95 ± 0.01 24 63 .35 ± 17 .61 92 .50 ± 1.71 0.95 ± 0.01 32 81 .88 ± 26 .48 92 .25 ± 1.69 0.94 ± 0.01 33
