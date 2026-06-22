@@ -1,0 +1,410 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-22T22:34:23.496571+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 4,
+    "deep_cap": 7,
+    "deep_selected": 4,
+    "quick_candidates": 6,
+    "quick_skim_target": 12,
+    "quick_selected": 6
+  },
+  "deep_dive": [
+    {
+      "id": "2606.16489v1",
+      "source": "arxiv",
+      "title": "BRICKS-WM: Building Reusability via Interface Composition Kinetics for Structured World Models",
+      "abstract": "Model-based Reinforcement Learning (MBRL) has achieved remarkable success in continuous control by leveraging latent world models. However, prevailing approaches typically rely on monolithic latent dynamics, entangling environment dynamics into a coupled process. This coupling severely limits reusability: altering the agent necessitates retraining the entire world from scratch, even if the environment remains constant. To address this, we introduce BRICKS-WM (Building Reusability via Interface Composition Kinetics for Structured World Models), a framework for the modular assembly of structured world models. Driven by the insight that the physical world is composed of independent entities, we posit that global dynamics can be modeled as a composition of distinct dynamical modules interacting via latent interfaces. As a minimal instantiation, we factorize the latent state space into an actuated Agent module and an external Background module, bridged by a learned latent interface. Unlike prior object-centric methods that prioritize visual segmentation, BRICKS-WM enforces a functional separation in transition dynamics, ensuring that background dynamics remains agnostic to the agent's dynamics. Empirically, BRICKS-WM achieves control performance comparable to strong monolithic baselines when trained from scratch, and enables the reuse of frozen background dynamics across agents.",
+      "authors": [
+        "Shaowei Zhang",
+        "Jiahan Cao",
+        "Xunlan Zhou",
+        "Shenghua Wan",
+        "De-Chuan Zhan"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-15T09:55:33+00:00",
+      "link": "https://arxiv.org/pdf/2606.16489v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "structured world models for MBRL with reusability",
+      "llm_evidence_cn": "面向可重用性的结构化世界模型",
+      "llm_evidence": "面向可重用性的结构化世界模型",
+      "canonical_evidence": "面向可重用性的结构化世界模型",
+      "llm_tldr_en": "BRICKS-WM introduces modular world models for MBRL, enabling reusability by separating entity dynamics, reducing retraining.",
+      "llm_tldr_cn": "针对现有MBRL世界模型耦合紧密、重用性差的问题，提出BRICKS-WM框架，将环境分解为独立实体并模块化组装。通过接口组合动力学，改变智能体行为无需重新训练完整世界模型。在连续控制任务中验证了可重用性和样本效率。",
+      "llm_tldr": "针对现有MBRL世界模型耦合紧密、重用性差的问题，提出BRICKS-WM框架，将环境分解为独立实体并模块化组装。通过接口组合动力学，改变智能体行为无需重新训练完整世界模型。在连续控制任务中验证了可重用性和样本效率。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.20104v1",
+      "source": "arxiv",
+      "title": "Sensorimotor World Models: Perception for Action via Inverse Dynamics",
+      "abstract": "Perception for action suggests that representations of the world should be shaped not by visual fidelity alone, but by their relevance for actions. At the same time, latent JEPA-style world models advocate learning compact predictive states from high-dimensional observations to facilitate the prediction of future states, but end-to-end training of these models is nontrivial because representations may collapse if our only goal is to construct a latent state that is easy to predict. We introduce a sensorimotor world model (SMWM): a latent world model trained end-to-end with inverse dynamics regularization. This single regularizer addresses both issues: it prevents representation collapse and induces action-aligned representations. By forcing latent states to preserve information about the action underlying a transition, it biases the model toward the controllable degrees of freedom of the environment while discarding uncontrollable distractors. This yields stable latent world models trained from offline, reward-free trajectories, without frozen encoders, exponential moving averages, or complex latent regularizers. Empirically, SMWM learns compact, interpretable latent spaces and enables competitive planning performance across simple 2D and 3D control tasks.",
+      "authors": [
+        "Petr Ivashkov",
+        "Randall Balestriero",
+        "Bernhard Schölkopf"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-18T11:25:16+00:00",
+      "link": "https://arxiv.org/pdf/2606.20104v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "sensorimotor world model with inverse dynamics for action-aligned representations",
+      "llm_evidence_cn": "使用逆动力学的感知运动世界模型，学习面向行动的表示",
+      "llm_evidence": "使用逆动力学的感知运动世界模型，学习面向行动的表示",
+      "canonical_evidence": "使用逆动力学的感知运动世界模型，学习面向行动的表示",
+      "llm_tldr_en": "Sensorimotor World Model (SMWM) trains a latent world model with inverse dynamics regularization, preventing collapse and learning action-aligned representations.",
+      "llm_tldr_cn": "现有的潜在世界模型容易表示坍塌，且缺乏与行动的关联。提出传感器运动世界模型（SMWM），通过逆动力学正则化端到端训练潜在世界模型，既能防止表征集坍塌，又能诱导出与行动对齐的表示。实验表明，SMWM学会了紧凑且对行动有用的状态表示，为世界模型在强化学习中的应用提供了更好的表征学习框架。",
+      "llm_tldr": "现有的潜在世界模型容易表示坍塌，且缺乏与行动的关联。提出传感器运动世界模型（SMWM），通过逆动力学正则化端到端训练潜在世界模型，既能防止表征集坍塌，又能诱导出与行动对齐的表示。实验表明，SMWM学会了紧凑且对行动有用的状态表示，为世界模型在强化学习中的应用提供了更好的表征学习框架。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "world model",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.17722v1",
+      "source": "arxiv",
+      "title": "GSPan: A Continuous Gaussian Primitive Representation for Arbitrary-Scale Pansharpening",
+      "abstract": "Pansharpening aims to generate high-resolution multispectral (HRMS) images by fusing low-resolution multispectral (LRMS) and panchromatic (PAN) observations. Most existing deep learning methods treat pansharpening as fixed-grid prediction, which limits scale adaptation. To address this, we propose GSPan, a framework that introduces 2D Gaussian Splatting (GS) into pansharpening. Instead of directly predicting pixels, GSPan represents band-wise residual details as continuous and learnable 2D Gaussian primitives. We design a Dual-Stream Hierarchical Interaction (DSHI) architecture with a Spatial-Spectral Interactive Attention (SSIA) module to estimate these primitives from complementary PAN and MS observations. The predicted primitives are rendered as a residual detail field and injected into the upsampled MS image. This continuous representation allows GSPan to render fused images on arbitrary target sampling grids without scale-specific retraining. It further enables a Scale-Decoupled Asymmetric Inference (SDAI) strategy, which estimates primitives at a reduced resolution and renders the fused image at the target resolution for efficient large-scene pansharpening. Experiments on QuickBird, GaoFen-2, WorldView-3, and WorldView-3-4K datasets show that GSPan delivers state-of-the-art fusion performance. Moreover, SDAI markedly accelerates inference, achieving a favorable trade-off between computational efficiency and fusion quality. Our results demonstrate the potential of continuous Gaussian residual representations as a flexible and scale-decoupled alternative to fixed-grid prediction.",
+      "authors": [
+        "Fangyi Li",
+        "Xiaoyuan Yang",
+        "Yixiao Li",
+        "Zongyang Sui",
+        "Kangqing Shen",
+        "Gemine Vivone"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-16T09:36:36+00:00",
+      "link": "https://arxiv.org/pdf/2606.17722v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "arbitrary-scale pansharpening as super-resolution for remote sensing",
+      "llm_evidence_cn": "任意尺度泛锐化作为遥感超分辨率方法",
+      "llm_evidence": "任意尺度泛锐化作为遥感超分辨率方法",
+      "canonical_evidence": "任意尺度泛锐化作为遥感超分辨率方法",
+      "llm_tldr_en": "Proposes GSPan using 2D Gaussian Splatting for arbitrary-scale pansharpening, representing continuous details as learnable primitives.",
+      "llm_tldr_cn": "针对传统泛锐化方法局限于固定网格预测、难以适应不同尺度的问题，本文提出GSPan框架，引入2D高斯泼溅表示连续可学习的2D高斯基元，并设计双流层次交互架构和空间-光谱交互注意力模块来估计这些基元，实现了任意尺度的泛锐化。该方法将超分辨率思想从像素级提升到连续表示层面。",
+      "llm_tldr": "针对传统泛锐化方法局限于固定网格预测、难以适应不同尺度的问题，本文提出GSPan框架，引入2D高斯泼溅表示连续可学习的2D高斯基元，并设计双流层次交互架构和空间-光谱交互注意力模块来估计这些基元，实现了任意尺度的泛锐化。该方法将超分辨率思想从像素级提升到连续表示层面。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "meteorological super-resolution",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.20034v1",
+      "source": "arxiv",
+      "title": "Exploring the potential of AlphaEarth and TESSERA embeddings for Fine-scale Local Climate Zone Mapping: A case study across five cities in Switzerland",
+      "abstract": "Understanding urban spatial morphology is critical for climate modeling, risk assessment, and sustainable urban design, and Local Climate Zone (LCZ) mapping provides the basic framework for this. However, many cities still use coarse ~100-m resolution LCZ records, which are unsuitable for fine-scale urban research. In this study, precomputed embeddings from TESSERA (Feng et al., 2025) and AlphaEarth (Brown et al., 2025) are compared to traditional Sentinel-1/2 (S1S2) composites in five Swiss cities to see if they can upscale coarse LCZ maps to 10-m resolution using an attention-based U-Net. Three experiments assess multi-city transferability, the impact of higher-resolution reference data, and temporal robustness to year-to-year phenology changes. We find that all datasets achieve strong performance with test data Intersection-over-Union (IoU) ranging from 0.59-0.69 and 0.77-0.82 in the first two experiments. TESSERA consistently outperforms both S1S2 and AlphaEarth across both settings As expected, we find that the transfer of embedding-based models from one year to another remains an open challenge. Overall, however, our results demonstrate the promising potential of embeddings derived from EO foundation models to reduce time consuming preprocessing, respectively, manual feature engineering tasks and to guide a universal deep learning-based LCZ mapping workflow. When combined with a simple location-aware attention U-Net architecture, the embeddings enhance regional transferability and scalability, supporting the development of comprehensive and reproducible fine-scale LCZ maps for global urban climate applications Improving reference data quality remains the strongest lever for further accuracy gains.",
+      "authors": [
+        "Htet Yamin Ko Ko",
+        "Clement Atzberger"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-18T10:06:42+00:00",
+      "link": "https://arxiv.org/pdf/2606.20034v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "upsamples coarse LCZ maps to 10m using attention U-Net, similar to meteorological super-resolution",
+      "llm_evidence_cn": "使用注意力U-Net将粗分辨率局部气候区地图上采样至10米，类似于气象超分辨率",
+      "llm_evidence": "使用注意力U-Net将粗分辨率局部气候区地图上采样至10米，类似于气象超分辨率",
+      "canonical_evidence": "使用注意力U-Net将粗分辨率局部气候区地图上采样至10米，类似于气象超分辨率",
+      "llm_tldr_en": "This paper uses precomputed embeddings and an attention U-Net to upscale coarse Local Climate Zone maps from 100m to 10m resolution, demonstrating super-resolution for climate data.",
+      "llm_tldr_cn": "该论文针对城市局部气候区（LCZ）地图分辨率不足（~100米）的问题，利用TESSERA和AlphaEarth预训练嵌入结合注意力U-Net模型，将粗图精细化为10米分辨率。在瑞士五个城市的实验中验证了多城市迁移能力，表明该方法可有效提升气候空间数据的精细度，对气象降尺度和超分辨率研究具有借鉴价值。",
+      "llm_tldr": "该论文针对城市局部气候区（LCZ）地图分辨率不足（~100米）的问题，利用TESSERA和AlphaEarth预训练嵌入结合注意力U-Net模型，将粗图精细化为10米分辨率。在瑞士五个城市的实验中验证了多城市迁移能力，表明该方法可有效提升气候空间数据的精细度，对气象降尺度和超分辨率研究具有借鉴价值。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on meteorological downscaling and weather super resolution using diffusion models, generative models, or neural networks.",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.16972v1",
+      "source": "arxiv",
+      "title": "When Should a Robot Replan? Regret-Guided Update Scheduling in Time-Varying MDPs",
+      "abstract": "Robots operating in non-stationary environments must continually adapt their policies as the dynamics drift, but onboard energy and compute budgets cap how often a full state estimation and re-planning step can be performed. This raises a question: \\emph{when}, along a horizon, should a robot spend its limited budget? We formulate this problem in time-varying Markov decision processes (TVMDPs) with a known bound on the rate of transition drift. We model execution as a \\emph{skip-update} scheme in which, at chosen update times, the agent estimates the transition kernel by maximum likelihood and computes a finite-horizon policy, and between updates reuses this policy under a propagated state estimate. We analyze the dynamic regret of this scheme and show how it grows during skip intervals in terms of the properties of the TVMDP and the skip lengths; the resulting bound answers the opening question via an online, regret-guided update rule that allocates the budget adaptively. We evaluate the rule in a simulated Mars-rover navigation task with time-varying slip dynamics and on a Crazyflie quadrotor in indoor obstacle fields. Adaptive allocation outperforms other budgeted baselines.",
+      "authors": [
+        "Negin Musavi",
+        "Gokul Puthumanaillam",
+        "Ruben Hernandez",
+        "William Schafer",
+        "Melkior Ornik"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "eess.SY"
+      ],
+      "published": "2026-06-15T17:09:07+00:00",
+      "link": "https://arxiv.org/pdf/2606.16972v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "regret-guided replanning in time-varying MDPs",
+      "llm_evidence_cn": "时变MDP中遗憾引导的重新规划调度",
+      "llm_evidence": "时变MDP中遗憾引导的重新规划调度",
+      "canonical_evidence": "时变MDP中遗憾引导的重新规划调度",
+      "llm_tldr_en": "This paper studies when to replan under limited budgets in non-stationary environments, proposing a skip-update scheme and analyzing dynamic regret.",
+      "llm_tldr_cn": "机器人在非平稳环境中需不断调整策略，但计算预算有限。本文将问题建模为时变MDP，提出一种跳跃更新机制，在选定时间点估计转移核并计算有限时域策略，其余时间复用策略。分析了该方案的动态遗憾界，为资源受限下的路径规划和决策提供了理论指导，直接支持连续控制和轨迹优化需求。",
+      "llm_tldr": "机器人在非平稳环境中需不断调整策略，但计算预算有限。本文将问题建模为时变MDP，提出一种跳跃更新机制，在选定时间点估计转移核并计算有限时域策略，其余时间复用策略。分析了该方案的动态遗憾界，为资源受限下的路径规划和决策提供了理论指导，直接支持连续控制和轨迹优化需求。",
+      "llm_tags": [
+        "query:rpp:composite"
+      ],
+      "matched_query_tag": "query:rpp:composite",
+      "matched_query_text": "Papers central to 用于检索强化学习路径规划、基于模型的强化学习、世界模型、DreamerV3、MPC、无人机自主导航、动态避障、连续控制和实时轨迹优化相关论文，重点关注样本效率、复杂环境决策、潜在动力学建模和智能路径规划方法。, especially work that connects or combines: sample efficient reinforcement learning; UAV path planning; latent dynamics model; world model; reinforcement learning path planning; Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.; Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control..",
+      "matched_requirement_id": "req-composite-rpp",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.18820v1",
+      "source": "arxiv",
+      "title": "Maturing Markov Decision Processes: Decision Making under Increasing Information and Shrinking Action Sets",
+      "abstract": "Sequential decision problems often exhibit an asymmetric evolution of information and decision flexibility: as a decision cycle unfolds, the agent receives richer information while feasible actions expire due to operational cutoffs, commitments, or resource constraints. Standard MDP formulations typically flatten this structure into stage-dependent state descriptions and action masks, thereby obscuring the nested information--action asymmetry that determines which decisions are urgent and which can be deferred. We introduce Maturing Markov Decision Processes (MMDPs), a formulation built around this information--action asymmetry. We characterize one of its key consequences through an expiring-action priority principle, which identifies the actions that must be resolved before the next stage. Motivated by this structure, we develop a structure-aware reinforcement learning framework with stage-aware policy design, expiring-action abstraction, and search-augmented learning with distillation. Experiments on a controlled multi-supplier replenishment problem, simplified cash-management environments of increasing complexity, and a production-scale simulator show that explicitly modeling this asymmetry improves learning efficiency and becomes increasingly valuable as decision problems scale.",
+      "authors": [
+        "Jiaxi Liu",
+        "Aiping Yang",
+        "Yuhang Yang",
+        "Shuqi Zhang",
+        "Zewei Dong",
+        "Jiangming Yang",
+        "Xuebin Chen"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-17T08:41:55+00:00",
+      "link": "https://arxiv.org/pdf/2606.18820v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "new MDP formulation with information-action asymmetry, relevant to RL decision making",
+      "llm_evidence_cn": "新的MDP形式化描述考虑信息-动作不对称性，与强化学习决策相关",
+      "llm_evidence": "新的MDP形式化描述考虑信息-动作不对称性，与强化学习决策相关",
+      "canonical_evidence": "新的MDP形式化描述考虑信息-动作不对称性，与强化学习决策相关",
+      "llm_tldr_en": "This paper introduces Maturing Markov Decision Processes (MMDPs) that capture the asymmetry where information increases while action sets shrink, with an expiring-action priority principle.",
+      "llm_tldr_cn": "针对序列决策中信息增长与动作集收缩的不对称性，该论文提出马图林马尔可夫决策过程（MMDP）形式化框架。该模型揭示了过期动作优先原则，并通过理论分析刻画了最优策略的结构。MMDP为理解复杂决策环境下的行动优先级提供了新视角，可启发强化学习中的动作掩码设计。",
+      "llm_tldr": "针对序列决策中信息增长与动作集收缩的不对称性，该论文提出马图林马尔可夫决策过程（MMDP）形式化框架。该模型揭示了过期动作优先原则，并通过理论分析刻画了最优策略的结构。MMDP为理解复杂决策环境下的行动优先级提供了新视角，可启发强化学习中的动作掩码设计。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "reinforcement learning path planning",
+      "matched_requirement_id": "req-11",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.18221v1",
+      "source": "arxiv",
+      "title": "LGNO: A Local-Global Neural Operator for Hyperbolic Conservation Laws",
+      "abstract": "Solutions of hyperbolic conservation laws exhibit both smooth structures across large scales and sharp localized features such as shocks and contact discontinuities, making them difficult to approximate accurately with existing neural operators. The Fourier Neural Operator (FNO) captures long-range interactions well but tends to smear localized structures through excessive numerical dissipation. To address this, we propose a Local-Global Neural Operator (LGNO) that learns a one-step discrete flow map by combining a global FNO branch for representing smooth dynamics at large scales with a local multiresolution branch for enhancing localized discontinuities and nonsmooth features. The model is trained with a one-step loss that combines a physical space prediction term and a spectral penalty on high frequencies to suppress spurious oscillations near steep fronts. On a large collection of benchmarks in one and two dimensions, LGNO consistently outperforms FNO baselines with matched parameter counts, reducing one-step errors by factors of 2-5 and remaining significantly more accurate over long autoregressive rollouts. Most strikingly, although it is trained only on short-time data from a high-order WENO-Z scheme, the long-time rollout of LGNO on a coarse $256^2$ grid exhibits lower numerical dissipation than the same WENO-Z scheme run on a finer $512^2$ grid, while being orders of magnitude cheaper to evaluate. These results suggest that, with an appropriate architecture and training objective, learned operators can effectively learn discrete flow maps. They further suggest that such learned operators have the potential to control long-time numerical dissipation better than the conventional shock-capturing schemes that generate the training data.",
+      "authors": [
+        "Hao Wang",
+        "Chi-Wang Shu",
+        "Qi Tang"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA"
+      ],
+      "published": "2026-06-16T17:49:09+00:00",
+      "link": "https://arxiv.org/pdf/2606.18221v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "neural operator for hyperbolic conservation laws, applicable to weather modeling",
+      "llm_evidence_cn": "用于双曲守恒律的神经算子，可应用于气象建模",
+      "llm_evidence": "用于双曲守恒律的神经算子，可应用于气象建模",
+      "canonical_evidence": "用于双曲守恒律的神经算子，可应用于气象建模",
+      "llm_tldr_en": "LGNO combines global FNO with local multiresolution branch to accurately solve hyperbolic PDEs, preserving sharp features.",
+      "llm_tldr_cn": "针对现有神经算子在求解双曲守恒律时无法同时捕捉大尺度平滑和小尺度间断的问题，提出局部-全局神经算子LGNO，融合全局傅里叶算子与局部多分辨率分支。在激波等非连续结构保持上优于FNO。可推广至气象等含激波的PDE问题。",
+      "llm_tldr": "针对现有神经算子在求解双曲守恒律时无法同时捕捉大尺度平滑和小尺度间断的问题，提出局部-全局神经算子LGNO，融合全局傅里叶算子与局部多分辨率分支。在激波等非连续结构保持上优于FNO。可推广至气象等含激波的PDE问题。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.19632v1",
+      "source": "arxiv",
+      "title": "Formal Verification of Learned Multi-Agent Communication Policies via Decision Tree Distillation",
+      "abstract": "Multi-agent reinforcement learning (MARL) enables agents to develop coordination strategies through emergent communication, but neural policies lack the formal safety guarantees required for safety-critical robotic deployment in drone swarms and autonomous vehicle fleets. We present the first end-to-end framework for safety verification of learned multi-agent communication policies through policy abstraction: neural policies are distilled into interpretable decision trees, then formally verified, with empirical validation confirming that verified safety properties transfer to original networks. Our four-stage pipeline consists of domain-specific feature extraction from agent observations, decision tree distillation achieving 97.9% +/- 1.2% fidelity to neural policies, automated translation to PRISM probabilistic model checker specifications with complete feature-to-state-variable correspondence, and compositional verification of Probabilistic Computation Tree Logic (PCTL) properties via pairwise decomposition with union-bound aggregation and empirical neighbor modeling. Evaluating Vector-Quantized Variational Information Bottleneck (VQ-VIB) policies for multi-drone coordination with 5-7 agents, we verify 18 temporal logic properties across safety, liveness, and cooperation, achieving 88.9% property satisfaction with all five safety thresholds satisfied (0.3% collision probability vs. 1% threshold). Monte Carlo validation of original neural policies confirms that verified safety properties transfer with <=0.6 percentage-point deviation (95% CI). Discrete VQ-VIB messages provide +11.6 to +13.6 percentage-point fidelity advantages over continuous methods, enabling 3-4x faster verification. Our framework provides empirically validated safety verification for distilled policy abstractions, serving as a practical bridge between deep MARL and formal safety workflows for multi-robot deployment.",
+      "authors": [
+        "Ahmad Farooq",
+        "Kamran Iqbal"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "cs.LG",
+        "cs.LO",
+        "cs.MA"
+      ],
+      "published": "2026-06-17T22:22:28+00:00",
+      "link": "https://arxiv.org/pdf/2606.19632v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "formal verification of multi-agent communication policies for drone swarms",
+      "llm_evidence_cn": "无人机群多智能体通信策略的形式化验证",
+      "llm_evidence": "无人机群多智能体通信策略的形式化验证",
+      "canonical_evidence": "无人机群多智能体通信策略的形式化验证",
+      "llm_tldr_en": "First end-to-end framework for safety verification of learned multi-agent communication policies via decision tree distillation, verified on drone swarm scenarios.",
+      "llm_tldr_cn": "针对多智能体强化学习策略缺乏形式化安全保证的问题，提出首个端到端安全验证框架，通过决策树蒸馏将神经策略转换为可解释树并进行形式化验证。在无人机群和自动驾驶车队场景中验证，证明蒸馏后安全属性可迁移回原始网络。该方法为无人机导航等安全关键应用中的强化学习部署提供了可信保障。",
+      "llm_tldr": "针对多智能体强化学习策略缺乏形式化安全保证的问题，提出首个端到端安全验证框架，通过决策树蒸馏将神经策略转换为可解释树并进行形式化验证。在无人机群和自动驾驶车队场景中验证，证明蒸馏后安全属性可迁移回原始网络。该方法为无人机导航等安全关键应用中的强化学习部署提供了可信保障。",
+      "llm_tags": [
+        "query:rpp:composite"
+      ],
+      "matched_query_tag": "query:rpp:composite",
+      "matched_query_text": "Papers central to 用于检索强化学习路径规划、基于模型的强化学习、世界模型、DreamerV3、MPC、无人机自主导航、动态避障、连续控制和实时轨迹优化相关论文，重点关注样本效率、复杂环境决策、潜在动力学建模和智能路径规划方法。, especially work that connects or combines: sample efficient reinforcement learning; UAV path planning; latent dynamics model; world model; reinforcement learning path planning; Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.; Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control..",
+      "matched_requirement_id": "req-composite-rpp",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.18305v1",
+      "source": "arxiv",
+      "title": "Starter-Iterator Neural Operator: A Unified Architecture for High-Fidelity Forward and Inverse PDE Problems",
+      "abstract": "Operator learning is an emerging interdisciplinary field that integrates machine learning with scientific computing. By mapping infinite-dimensional function spaces, this approach provides an efficient surrogate modeling framework for high-dimensional partial differential equations (PDEs). Compared to traditional numerical solvers, it achieves a superior trade-off between computational complexity and approximation accuracy, demonstrating significant advantages in many-query tasks such as real-time prediction and parameter sweeps. Given the stringent accuracy requirements of both forward simulation and inverse inference, as well as the precision bottlenecks of existing operator learning methods in handling complex boundaries or long-term evolution, we propose the Starter-Iterator Neural Operator (SINO). Our framework reinterprets the initialization strategies and iterative formats of traditional iterative methods through neural networks, establishing an efficient approach for spectral-spatiotemporal collaborative modeling. Specifically, the frequency-domain initialization module captures globally stable low-frequency features, while the time-domain learning module focuses on optimizing local solution residuals, thereby effectively overcoming the inherent limitations of conventional single-domain modeling approaches. Extensive experiments on typical dynamical systems such as the Navier-Stokes equations and acoustic wave equations, as well as practical applications including super-resolution imaging and weather forecasting, demonstrate that SINO achieves outstanding performance in numerical accuracy, generalization capability, and robustness.",
+      "authors": [
+        "Kuilin Qin",
+        "Lianfang Wang",
+        "Xu Sun",
+        "Jiwei Jia",
+        "Yu Wang",
+        "Yong Wang",
+        "Yuping Duan"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA",
+        "cs.LG"
+      ],
+      "published": "2026-06-16T06:54:39+00:00",
+      "link": "https://arxiv.org/pdf/2606.18305v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "neural operator for PDEs, applicable to weather prediction",
+      "llm_evidence_cn": "神经算子用于PDE，可应用于天气预报",
+      "llm_evidence": "神经算子用于PDE，可应用于天气预报",
+      "canonical_evidence": "神经算子用于PDE，可应用于天气预报",
+      "llm_tldr_en": "Starter-Iterator Neural Operator achieves high-fidelity forward and inverse PDE solutions, outperforming existing operator learning methods.",
+      "llm_tldr_cn": "为解决现有算子学习方法在复杂边界条件下的精度瓶颈，提出起始-迭代神经算子统一架构，通过交替学习快速高效地求解正反向PDE问题。在多个基准问题上取得更优精度，适用于需要高保真代理模型的气象等场景。",
+      "llm_tldr": "为解决现有算子学习方法在复杂边界条件下的精度瓶颈，提出起始-迭代神经算子统一架构，通过交替学习快速高效地求解正反向PDE问题。在多个基准问题上取得更优精度，适用于需要高保真代理模型的气象等场景。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.20031v1",
+      "source": "arxiv",
+      "title": "A Neuromorphic Reinforcement Learning Framework for Efficient Pathfinding in Robotic Mobile Fulfillment Systems",
+      "abstract": "Dynamic environmental changes, confined workspaces, and stringent real-time constraints make pathfinding in Robotic Mobile Fulfillment Systems (RMFS) a challenging problem for conventional search- and rule-based methods, which typically suffer from high computational complexity and long decision latency. While reinforcement learning (RL) has emerged as a powerful alternative, deploying learned policies with extreme energy efficiency on resource-constrained hardware remains an open challenge. We present SDQN-RMFS, an end-to-end framework that achieves high-fidelity deployment of an RL-trained policy from a full-precision artificial neural network (ANN) through to a neuromorphic chip. By computing only when triggered by sparse events, this framework unlocks ultra-low-power RMFS pathfinding. Our full-stack pipeline operates as follows: an ANN policy is first efficiently trained via a collision-allowing strategy to densify informative trajectories, and then converted into a spiking neural network (SNN) via a hard-label knowledge distillation approach. This effectively addresses the output distribution mismatch, preserving policy capability across the ANN-to-SNN pipeline while substantially reducing inference latency. Hardware experiments demonstrate up to 11,281$\\times$ energy savings and a nearly two-fold reduction in latency compared to a high-performance GPU baseline, while maintaining decision quality on par with the original trained policy. These results establish physical neuromorphic inference as a practical and energy-sustainable pathway for large-scale RMFS operations.",
+      "authors": [
+        "Junzhe Xu",
+        "Zecui Zeng",
+        "Lusong Li",
+        "Yuetong Fang",
+        "Renjing Xu"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-06-18T10:04:28+00:00",
+      "link": "https://arxiv.org/pdf/2606.20031v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "neuromorphic RL for efficient pathfinding",
+      "llm_evidence_cn": "神经形态强化学习用于高效路径规划",
+      "llm_evidence": "神经形态强化学习用于高效路径规划",
+      "canonical_evidence": "神经形态强化学习用于高效路径规划",
+      "llm_tldr_en": "SDQN-RMFS deploys RL policy from ANN to neuromorphic chip for energy-efficient pathfinding in warehouse robots.",
+      "llm_tldr_cn": "针对仓储机器人路径规划中计算复杂和延迟问题，提出端到端框架SDQN-RMFS，将全精度训练好的RL策略部署到神经形态芯片，仅触发时计算。在动态环境下实现高能效路径规划，保持性能。",
+      "llm_tldr": "针对仓储机器人路径规划中计算复杂和延迟问题，提出端到端框架SDQN-RMFS，将全精度训练好的RL策略部署到神经形态芯片，仅触发时计算。在动态环境下实现高能效路径规划，保持性能。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
