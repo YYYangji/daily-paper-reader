@@ -6,52 +6,79 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-22
-- 运行时间：2026-06-22 22:43:01 UTC
+- 最新运行日期：2026-06-23
+- 运行时间：2026-06-23 22:23:13 UTC
 - 运行状态：成功
-- 本次总论文数：10
-- 精读区：4
-- 速读区：6
+- 本次总论文数：19
+- 精读区：7
+- 速读区：12
 
 ### 今日简报（AI）
-今日聚焦世界模型与神经算子，精读两篇高分论文探讨结构化与感知-行动模型的构建。  
-最推荐精读《BRICKS-WM》的接口复用机制和《Sensorimotor World Models》的逆动力学感知框架。  
-普通读者可从精读入手，理解世界模型如何提升机器人适应性与可迁移性。
-- 详情：[/202606/22/README](/202606/22/README)
+今天日报共收录19篇论文，精读7篇，其中两篇高分聚焦无人机网络抗风轨迹优化（TD3）与偏好强化学习中的不确定性平衡策略（UBP2）。  
+最值得关注的方向：强化学习在无人机基站连续服务中的抗风部署，以及通过不确定性引导采样提升偏好学习效率。  
+建议普通读者优先精读这两篇高分论文，速读部分可快速了解鲁棒强化学习对抗观测与免奖励预训练的新思路。
+- 详情：[/202606/23/README](/202606/23/README)
 
 ### 精读区论文标签
-1. [BRICKS-WM: Building Reusability via Interface Composition Kinetics for Structured World Models](/202606/22/2606.16489v1-bricks-wm-building-reusability-via-interface-composition-kinetics-for-structured-world-models)  
+1. [Wind-Resilient Trajectory Optimization for UAV-BS Networks: TD3 for Continuous Service Availability](/202606/23/2606.18556v2-wind-resilient-trajectory-optimization-for-uav-bs-networks-td3-for-continuous-service-availability)  
    标签：评分：9.0/10、query:rpp
-   evidence：面向可重用性的结构化世界模型
-2. [Sensorimotor World Models: Perception for Action via Inverse Dynamics](/202606/22/2606.20104v1-sensorimotor-world-models-perception-for-action-via-inverse-dynamics)  
+   evidence：基于TD3的风扰下无人机轨迹优化
+2. [UBP2: Uncertainty-Balanced Preference Planning for Efficient Preference-based Reinforcement Learning](/202606/23/2606.19328v2-ubp2-uncertainty-balanced-preference-planning-for-efficient-preference-based-reinforcement-learning)  
    标签：评分：9.0/10、query:rpp
-   evidence：使用逆动力学的感知运动世界模型，学习面向行动的表示
-3. [GSPan: A Continuous Gaussian Primitive Representation for Arbitrary-Scale Pansharpening](/202606/22/2606.17722v1-gspan-a-continuous-gaussian-primitive-representation-for-arbitrary-scale-pansharpening)  
-   标签：评分：8.0/10、query:mm
-   evidence：任意尺度泛锐化作为遥感超分辨率方法
-4. [Exploring the potential of AlphaEarth and TESSERA embeddings for Fine-scale Local Climate Zone Mapping: A case study across five cities in Switzerland](/202606/22/2606.20034v1-exploring-the-potential-of-alphaearth-and-tessera-embeddings-for-fine-scale-local-climate-zone-mapping-a-case-study-across-five-cities-in-switzerland)  
-   标签：评分：8.0/10、query:mm
-   evidence：使用注意力U-Net将粗分辨率局部气候区地图上采样至10米，类似于气象超分辨率
+   evidence：基于模型的偏好强化学习，通过不确定性平衡提升样本效率
+3. [Towards Fair Comparisons of AI- and Physics-Based Weather Models for Extreme Events via the Weighted Potential CRPS](/202606/23/2606.21170v1-towards-fair-comparisons-of-ai--and-physics-based-weather-models-for-extreme-events-via-the-weighted-potential-crps)  
+   标签：评分：9.0/10、query:mm
+   evidence：公平比较AI和数值天气预报模型在极端事件上的表现
+4. [Inverting the Bellman Equation: From $Q$-Values to World Models](/202606/23/2606.21173v1-inverting-the-bellman-equation-from-q-values-to-world-models)  
+   标签：评分：9.0/10、query:rpp
+   evidence：将贝尔曼方程逆置，从Q值中提取世界模型
+5. [Beyond the Next Step: Variable-Length Latent World Models for Long-Horizon Planning](/202606/23/2606.21775v1-beyond-the-next-step-variable-length-latent-world-models-for-long-horizon-planning)  
+   标签：评分：9.0/10、query:rpp
+   evidence：用于长期规划的变长潜在世界模型
+6. [Semantic-Aware Autonomous Exploration for UAVs in Unknown Indoor Environments](/202606/23/2606.22670v1-semantic-aware-autonomous-exploration-for-uavs-in-unknown-indoor-environments)  
+   标签：评分：9.0/10、query:rpp
+   evidence：语义感知的无人机自主探索
+7. [SkyJEPA: Learning Long-Horizon World Models for Zero-Shot Sim-to-Real Control of Quadrotors](/202606/23/2606.23444v1-skyjepa-learning-long-horizon-world-models-for-zero-shot-sim-to-real-control-of-quadrotors)  
+   标签：评分：9.0/10、query:rpp
+   evidence：用于四旋翼控制的长时域世界模型，实现样本高效的仿真到现实迁移
 
 ### 速读区论文标签
-1. [When Should a Robot Replan? Regret-Guided Update Scheduling in Time-Varying MDPs](/202606/22/2606.16972v1-when-should-a-robot-replan-regret-guided-update-scheduling-in-time-varying-mdps)  
+1. [Adversarial observations in probabilistic State-Space Models for robust Reinforcement Learning](/202606/23/2606.20880v1-adversarial-observations-in-probabilistic-state-space-models-for-robust-reinforcement-learning)  
+   标签：评分：8.0/10、query:rpp
+   evidence：针对鲁棒强化学习的概率状态空间模型对抗分析
+2. [Reward-free Pretraining for Reinforcement Learning via Occupancy Coverage Maximization](/202606/23/2606.21271v1-reward-free-pretraining-for-reinforcement-learning-via-occupancy-coverage-maximization)  
+   标签：评分：8.0/10、query:rpp
+   evidence：基于占据覆盖最大化的无奖励预训练强化学习
+3. [Backpropagating Through Simulation: Analytic Policy Gradients for Sample and Learning Efficient Differentiable Continuous Control](/202606/23/2606.21525v1-backpropagating-through-simulation-analytic-policy-gradients-for-sample-and-learning-efficient-differentiable-continuous-control)  
+   标签：评分：8.0/10、query:rpp
+   evidence：通过可微动力学的解析策略梯度实现样本高效的连续控制
+4. [Imagine to Ensure Safety in Hierarchical Reinforcement Learning](/202606/23/2606.22509v1-imagine-to-ensure-safety-in-hierarchical-reinforcement-learning)  
+   标签：评分：8.0/10、query:rpp
+   evidence：世界模型用于安全分层强化学习
+5. [Decentralized Autonomous Traffic Management through Corridor Networks](/202606/23/2606.23585v1-decentralized-autonomous-traffic-management-through-corridor-networks)  
+   标签：评分：8.0/10、query:rpp
+   evidence：多智能体强化学习用于空中走廊分散式交通管理
+6. [$Ω$: Operator-based Mixture Ensemble for Generative Assimilation](/202606/23/2606.20920v1--operator-based-mixture-ensemble-for-generative-assimilation)  
+   标签：评分：7.0/10、query:mm
+   evidence：用于数值天气预报的生成式数据同化
+7. [Horizon Adaptive Offline Policy Learning via Value Stitching](/202606/23/2606.21136v1-horizon-adaptive-offline-policy-learning-via-value-stitching)  
    标签：评分：7.0/10、query:rpp
-   evidence：时变MDP中遗憾引导的重新规划调度
-2. [LGNO: A Local-Global Neural Operator for Hyperbolic Conservation Laws](/202606/22/2606.18221v1-lgno-a-local-global-neural-operator-for-hyperbolic-conservation-laws)  
-   标签：评分：7.0/10、query:mm
-   evidence：用于双曲守恒律的神经算子，可应用于气象建模
-3. [Starter-Iterator Neural Operator: A Unified Architecture for High-Fidelity Forward and Inverse PDE Problems](/202606/22/2606.18305v1-starter-iterator-neural-operator-a-unified-architecture-for-high-fidelity-forward-and-inverse-pde-problems)  
-   标签：评分：7.0/10、query:mm
-   evidence：神经算子用于PDE，可应用于天气预报
-4. [Maturing Markov Decision Processes: Decision Making under Increasing Information and Shrinking Action Sets](/202606/22/2606.18820v1-maturing-markov-decision-processes-decision-making-under-increasing-information-and-shrinking-action-sets)  
+   evidence：离线强化学习动态时域提升样本效率
+8. [NASDAQ: Normalized Observation Space Dynamics-Augmented Q-Learning](/202606/23/2606.21297v1-nasdaq-normalized-observation-space-dynamics-augmented-q-learning)  
+   标签：评分：7.0/10、query:rpp
+   evidence：通过观测动态预测提升样本效率
+9. [Select-to-Act: Hierarchical Reinforcement Learning via Adaptive Language Guidance](/202606/23/2606.22350v1-select-to-act-hierarchical-reinforcement-learning-via-adaptive-language-guidance)  
+   标签：评分：7.0/10、query:rpp
+   evidence：分层强化学习结合语言指导提升样本效率
+10. [Sim2O: Efficient Offline-to-Online MARL via Joint Action Composition](/202606/23/2606.21085v1-sim2o-efficient-offline-to-online-marl-via-joint-action-composition)  
    标签：评分：6.0/10、query:rpp
-   evidence：新的MDP形式化描述考虑信息-动作不对称性，与强化学习决策相关
-5. [Formal Verification of Learned Multi-Agent Communication Policies via Decision Tree Distillation](/202606/22/2606.19632v1-formal-verification-of-learned-multi-agent-communication-policies-via-decision-tree-distillation)  
-   标签：评分：6.0/10、query:rpp
-   evidence：无人机群多智能体通信策略的形式化验证
-6. [A Neuromorphic Reinforcement Learning Framework for Efficient Pathfinding in Robotic Mobile Fulfillment Systems](/202606/22/2606.20031v1-a-neuromorphic-reinforcement-learning-framework-for-efficient-pathfinding-in-robotic-mobile-fulfillment-systems)  
-   标签：评分：6.0/10、query:rpp
-   evidence：神经形态强化学习用于高效路径规划
+   evidence：面向样本高效适应的离线到在线多智能体强化学习
+11. [Using Distributional Regression Networks to Retrieve Cloud Properties from Solar Satellite Channels for Data Assimilation](/202606/23/2606.21294v1-using-distributional-regression-networks-to-retrieve-cloud-properties-from-solar-satellite-channels-for-data-assimilation)  
+   标签：评分：6.0/10、query:mm
+   evidence：从卫星数据反演云属性用于数值天气预报的数据同化
+12. [Physics-Preserving Latent Compression for Zero-Shot Resolution Transfer in 3D Turbulence](/202606/23/2606.21781v1-physics-preserving-latent-compression-for-zero-shot-resolution-transfer-in-3d-turbulence)  
+   标签：评分：6.0/10、query:mm
+   evidence：零样本分辨率迁移的物理保持潜在压缩方法
 
 
 <div class="dpr-home-promo-card">

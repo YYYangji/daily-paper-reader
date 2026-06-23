@@ -1,17 +1,59 @@
 {
-  "generated_at": "2026-06-22T22:34:23.497547+00:00",
-  "updated_date": "20260622",
+  "generated_at": "2026-06-23T22:08:48.147165+00:00",
+  "updated_date": "20260623",
   "carryover_days": 9,
   "tag_states": {
     "mm": {
-      "updated_date": "20260622",
+      "updated_date": "20260623",
       "carryover_days": 9,
       "items": []
     },
     "rpp": {
-      "updated_date": "20260622",
+      "updated_date": "20260623",
       "carryover_days": 9,
-      "items": []
+      "items": [
+        {
+          "id": "2606.23640v1",
+          "source": "arxiv",
+          "title": "Learning Process Rewards via Success Visitation Matching for Efficient RL",
+          "abstract": "In many modern applications of reinforcement learning (RL), the natural reward for a task of interest is inherently sparse: a reward of 0 is given everywhere except when the task is completed, when a reward of +1 is given. Training a policy to maximize such a sparse reward requires solving a challenging credit assignment problem, leading to slow or ineffective RL improvement. We propose a simple approach to transform a sparse outcome reward into a dense process reward. Our approach relies on training a discriminator to distinguish between previous successful and unsuccessful episodes, and using this discriminator to incentivize the RL-learned policy to match the state-action visitations of successful episodes, while avoiding those of unsuccessful episodes. By incentivizing the policy to match the visitations over all states, not just those that correspond to task success, this reward provides dense feedback on whether progress is being made towards task completion, and, we show, provably achieves this without changing the optimal policy. Focusing on finetuning of robotic control policies, we demonstrate that our approach leads to significantly faster RL finetuning performance on both simulated and real-world manipulation tasks, as compared to simply maximizing the sparse outcome reward.",
+          "authors": [
+            "Raymond Tsao",
+            "Andrew Wagenmaker",
+            "Sergey Levine"
+          ],
+          "primary_category": "cs.LG",
+          "categories": [
+            "cs.LG",
+            "cs.AI",
+            "cs.RO",
+            "stat.ML"
+          ],
+          "published": "2026-06-22T17:30:24+00:00",
+          "link": "https://arxiv.org/pdf/2606.23640v1",
+          "tags": [
+            "keyword:rpp",
+            "query:rpp"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "learning process rewards via success visitation matching for efficient RL",
+          "llm_evidence_cn": "通过成功访问匹配学习过程奖励以提升强化学习效率",
+          "llm_evidence": "通过成功访问匹配学习过程奖励以提升强化学习效率",
+          "canonical_evidence": "通过成功访问匹配学习过程奖励以提升强化学习效率",
+          "llm_tldr_en": "Proposes a method to transform sparse rewards into dense process rewards using a discriminator, improving sample efficiency in RL.",
+          "llm_tldr_cn": "该论文针对稀疏奖励强化学习中信用分配困难导致样本效率低下的问题，提出利用判别器区分成功与失败经验，生成密集过程奖励，引导策略模仿成功轨迹的访问分布，实验表明该方法在多个稀疏奖励任务上显著加速学习，提升了样本效率。",
+          "llm_tldr": "该论文针对稀疏奖励强化学习中信用分配困难导致样本效率低下的问题，提出利用判别器区分成功与失败经验，生成密集过程奖励，引导策略模仿成功轨迹的访问分布，实验表明该方法在多个稀疏奖励任务上显著加速学习，提升了样本效率。",
+          "llm_tags": [
+            "query:rpp"
+          ],
+          "matched_query_tag": "query:rpp",
+          "matched_query_text": "sample efficient reinforcement learning",
+          "matched_requirement_id": "req-7",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.23640v1",
+          "carry_days": 1
+        }
+      ]
     }
   }
 }
