@@ -1,0 +1,352 @@
+Title: Reconstructing GRACE Terrestrial Water Storage with Spatio-Temporal Graph Neural Networks: An Application to South America
+
+URL Source: https://arxiv.org/pdf/2606.23833v1
+
+Published Time: Wed, 24 Jun 2026 00:06:17 GMT
+
+Number of Pages: 12
+
+Markdown Content:
+# Reconstructing GRACE Terrestrial Water Storage with Spatio-Temporal Graph Neural Networks: An Application to South America [Applications] 
+
+# Lukas Arzoumanidis 
+
+lukas.arzoumanidis@hcu-hamburg.de HafenCity University, Computational Methods Lab Hamburg, Germany 
+
+# Lara Johannsen, Klara Middendorf 
+
+{firstname.lastname}@hcu-hamburg.de HafenCity University, Geodesy and Adjustment Theory Hamburg, Germany 
+
+# Annette Eicker 
+
+annette.eicker@gfz.de GFZ Helmholtz Centre for Geosciences, Global Geomonitoring and Gravity Field Potsdam, Germany 
+
+# Youness Dehbi 
+
+youness.dehbi@hcu-hamburg.de HafenCity University, Computational Methods Lab Hamburg, Germany 
+
+## Abstract 
+
+Terrestrial water storage (TWS) integrates snow, soil moisture, surface water, and groundwater and is a key indicator of how cli-mate variability and human activity reshape the global water cycle. The GRACE and GRACE-FO satellite missions provide the only direct, globally consistent observations of TWS change, but their record only begins in 2002 which is too short for many climate-scale analyses. We present a deep learning application that reconstructs monthly GRACE-like TWS anomalies (TWSA) back to 1940 by learning the relationship between daily ERA5 meteorological forc-ing (precipitation, evapotranspiration, runoff) and monthly GRACE observations. In contrast to prior reconstruction approaches based on grid-cell-wise regression, CNNs, or LSTMs, we adapt a multi-variate time series graph neural network (MTGNN) architecture, which was originally developed for mobility and traffic forecasting on urban sensor networks to this satellite-geodesy task. Spatial de-pendencies are encoded in a static, interpretable hybrid adjacency matrix that combines geodesic proximity with lagged correlations of climatic time series, capturing both local hydrological coupling and large-scale teleconnections. Evaluated over South America against GRACE/GRACE-FO (2002–2023), the reconstruction achieves a grid-cell Pearson correlation of 0.69, a basin-mean correlation of 0.94, and a near-zero bias, and it reproduces the spatial fingerprints of the 2015/16 El Niño and 2020/21 La Niña events. A systematic com-parison with established reconstruction approaches (GTWS-MLrec, RM-REC, GRAiCE) shows that the graph-based model is statisti-cally competitive at basin scale, reaching a correlation within 0.025 of the best baseline while using only roughly half to a tenth of the predictors the other models require and revealing characteristic  
+
+> Permission to make digital or hard copies of all or part of this work for personal or classroom use is granted without fee provided that copies are not made or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. Copyrights for components of this work owned by others than the author(s) must be honored. Abstracting with credit is permitted. To copy otherwise, or republish, to post on servers or to redistribute to lists, requires prior specific permission and/or a fee. Request permissions from permissions@acm.org.
+> Conference acronym ’XX, Woodstock, NY
+> ©2026 Copyright held by the owner/author(s). Publication rights licensed to ACM. ACM ISBN 978-1-4503-XXXX-X/2018/06 https://doi.org/XXXXXXX.XXXXXXX
+
+weaknesses in arid regions in all models. We discuss best prac-tices and lessons learned from deploying graph deep learning in a satellite-geodesy application, and outline extensions via additional predictors and physics-informed constraints based on the terres-trial water balance equation. To support reproducibility and future research, the complete implementation is publicly available at https: //github.com/hcu-cml/MTGNN-TWS-Reconstruction-GRACE. 
+
+## CCS Concepts 
+
+• Applied computing → Earth and atmospheric sciences ; •
+
+Computing methodologies → Supervised learning by regression ;
+
+Neural networks .
+
+## Keywords 
+
+Terrestrial water storage, GRACE, Graph neural networks, Spatio-temporal modeling, ERA5, Climate reconstruction, GeoAI 
+
+ACM Reference Format: 
+
+Lukas Arzoumanidis, Lara Johannsen, Klara Middendorf, Annette Eicker, and Youness Dehbi. 2026. Reconstructing GRACE Terrestrial Water Storage with Spatio-Temporal Graph Neural Networks: An Application to South America [Applications]. In Proceedings of Make sure to enter the correct conference title from your rights confirmation email (Conference acronym ’XX). 
+
+ACM, New York, NY, USA, 12 pages. https://doi.org/XXXXXXX.XXXXXXX 
+
+## 1 Introduction 
+
+Understanding changes in the Earth’s water storage is crucial for quantifying the impacts of climate variability and anthropogenic activity on the global water cycle. Terrestrial water storage (TWS) comprises the water stored above and below the land surface in the form of snow, ice, soil moisture, surface water, and groundwater, and acts as a key integrator of hydrological processes. TWS is highly sensitive to climate change: it registers shifts in precipitation, temperature, and extreme weather, and its variations relate directly to the occurrence of droughts, floods, and changes in seasonal water availability. Accurate TWS data are therefore essential for separating natural variability from human-induced trends and for managing freshwater resources under accelerating global change [16, 39].  
+
+> arXiv:2606.23833v1 [cs.LG] 22 Jun 2026 Conference acronym ’XX, June 03–05, 2018, Woodstock, NY Arzoumanidis et al.
+
+Since 2002, the Gravity Recovery and Climate Experiment [ 34 ]and its successor GRACE-FO [ 21 ] have provided the only direct, globally consistent measurements of TWS change. By tracking variations in the distance between two co-orbiting satellites, the missions resolve monthly changes in the Earth’s gravity field, from which mass redistribution can be inferred, including continental water movement, ice mass change, and groundwater depletion [17 , 35 ]. Unlike sparse ground-based monitoring networks, GRACE captures subsurface and large-scale hydrological processes with homogeneous accuracy, making it a benchmark dataset of Earth system science, particularly in regions where in-situ networks are weak or absent [17]. The observational record, however, spans barely more than two decades. This is a severe limitation for climate science, where multi-decadal time series are required to identify trends, detect tipping points, and attribute variability to large-scale drivers such as the El Niño–Southern Oscillation (ENSO) [ 16 ]. To cover the pre-GRACE era, a growing body of work therefore reconstructs GRACE-like sig-nals from meteorological data using statistical and machine learning methods (Section 3). Yet most existing approaches, which are grid-cell-wise regressions, CNNs, and LSTMs, treat grid cells as spatially independent or only implicitly model spatial context. They thereby ignore the inherently networked character of the water cycle, in which hydrological connectivity and atmospheric teleconnections couple distant regions. This paper reports on the application of spatio-temporal graph 
+
+deep learning to this reconstruction problem. Notably, the archi-tecture we deploy was not designed for the Earth sciences at all: the multivariate time series graph neural network (MTGNN) of Wu et al . [38] originates in the mobility domain, where it was developed for forecasting traffic conditions on urban road-sensor networks. The structural analogy that motivates the transfer is straightforward. In traffic forecasting, sensors form the nodes of a graph, congestion propagates along the road network, and the model must capture how a disturbance at one location influences readings elsewhere with a delay. In continental hydrology, grid cells form the nodes, water and atmospheric moisture propagate along river systems and circulation patterns, and a precipitation anomaly in one region influences storage elsewhere with a lag of days to months. Both are multivariate time series regression problems on a fixed set of spatially embedded nodes whose mutual influence is structured, directional in time, and only partially explained by geometric proximity. We adapt MTGNN to the gravimetric setting where 1◦ grid cells become graph nodes carrying daily ERA5 forcing variables, and a static, interpretable adjacency matrix, constructed from geodesic distance and lagged climatic correlations, replaces both the road network and MTGNN’s learned graph, encoding lo-cal hydrological coupling as well as long-range teleconnections. Trained on the GRACE/GRACE-FO period, the model reconstructs monthly TWS anomalies (TWSA) back to 1940, the start of the ERA5 reanalysis. The implementation presented here focuses on South America (1,120 land nodes) as a test region within a globally designed workflow. Our main contributions are practical and methodological: 
+
+• We demonstrate that a graph architecture from urban mo-bility forecasting transfers to gravimetric satellite data with adaptation, and we document the design decisions, most notably replacing the learned graph structure with a static, domain-informed hybrid adjacency matrix, that made the application robust and interpretable. 
+
+• We provide a multi-stage evaluation against GRACE/GRACE-FO (2002–2023), covering quantitative metrics, seasonal and spatial error structure, interannual residuals, and the spatial fingerprints of the 2015/16 El Niño and 2020/21 La Niña events. 
+
+• We benchmark the reconstruction against three existing approaches spanning the methodological spectrum (GTWS-MLrec [ 39 ], RM-REC [ 22 ], GRAiCE [ 27 ]) and show that a graph model is statistically competitive at basin scale (cor-relation 0.94 with GRACE) using only three input variables ,where the better-scoring baselines consume from roughly six to over twenty predictors, while sharing the community-wide weakness in arid, human-influenced regions. 
+
+• We report lessons learned and two concrete extension paths. Input parameter expansion (a temperature pilot already raises grid-cell correlation from 0.69 to 0.71) and physics-informed training via the terrestrial water balance equation. 
+
+## 2 Background and Problem Definition 
+
+This section provides the domain context needed to follow the application without a background in geodesy or hydrology, and then states the learning problem formally. 
+
+## 2.1 Why Satellite Gravimetry with GRACE? 
+
+GRACE, launched in 2002 as a collaboration between the National Aeronautics and Space Administration (NASA) and Deutsches Zen-trum für Luft- und Raumfahrt (DLR) (eng. German Aerospace Cen-ter ), consists of two satellites flying on the same orbit, one trailing the other. When the leading satellite passes over a region of slightly higher mass, such as a mountain range or an aquifer after a wet season, it is accelerated marginally earlier than its follower, and the inter-satellite distance changes. A K-band microwave ranging sys-tem measures these distance variations continuously. In addition to that GRACE-FO (launched 2018 after GRACE ended in 2017) adds a laser ranging interferometer of even higher precision [ 5 , 35 ]. Over the course of a month the satellite pair samples the entire globe, and the accumulated ranging data are inverted into a monthly model of the Earth’s gravity field. These monthly gravity fields are expressed as spherical harmonic coefficients —a frequency-domain representation of a function on the sphere, analogous to a 2D Fourier transform, where low degrees encode planetary-scale structures and higher degrees encode finer spatial details. The solutions used here resolve up to degree 96 and after the necessary spatial filtering have an effective spatial resolution of roughly 300 km) [ 5 , 20 ]. Subtracting a static mean field isolates the time-variable component, which over land is domi-nated by water mass redistribution [ 33 ]. After standard corrections (Section 4.1), the coefficients are transformed onto a geographic grid and expressed as equivalent water height (EWH), representing the thickness of a hypothetical water layer that would produce the observed gravity change. A value of −0.2 m EWH at a grid cell thus means the cell has lost mass equivalent to 20 cm of water Reconstructing GRACE Terrestrial Water Storage with Spatio-Temporal Graph Neural Networks: An Application to South America [Applications] Conference acronym ’XX, June 03–05, 2018, Woodstock, NY 
+
+spread over its area, regardless of whether that loss occurred in soil moisture, surface water, or groundwater. Values are reported as anomalies (TWSA) relative to a 2004–2009 baseline mean, so the quantity of interest is the deviation from a reference state, not abso-lute storage. This integrated view is what makes GRACE unique, as groundwater depletion at depths of hundreds of meters is invisible to optical and radar satellites but detectable by gravimetry. 
+
+## 2.2 Reanalysis Data 
+
+The model input comes from ERA5 [ 14 ], an atmospheric reanalysis .A reanalysis is best understood as a globally consistent, physics-constrained interpolation of the historical observation record: a numerical weather model is run over the past, and at every assimila-tion step the model state is optimally corrected toward all available observations (satellites, weather stations, radiosondes, ships, air-craft) [ 13 ]. The result is a gap-free, gridded estimate of atmospheric and land-surface variables that is dynamically consistent across space, time, and variables, unlike raw station data, which are sparse and heterogeneous. Crucial for this application, ERA5 extends back to 1940, more than six decades before the first GRACE observation, with global hourly coverage. Its quality is not uniform over time (fewer observations constrain the early decades, and the satellite era begins around 1979), a caveat that applies to every reconstruction built on it. 
+
+## 2.3 Problem Definition 
+
+Let 𝑉 = {𝑣 1, . . . , 𝑣 𝑁 } be the set of 𝑁 = 1,120 land grid cells of the 1◦
+
+South American domain, embedded in a weighted undirected graph 
+
+𝐺 = (𝑉 , 𝐸, 𝐴 ) with adjacency matrix 𝐴 ∈ R𝑁 ×𝑁 (Section 5.4). For each calendar month 𝑚 , the input is a window of 𝑇 = 30 daily data of 𝐷 = 3 ERA5 flux variables (precipitation, evapotranspiration, runoff) at every node, 𝑋 𝑚 ∈ R𝑇 ×𝑁 ×𝐷 , and the target is the GRACE TWSA of that month at every node, 𝑦 𝑚 ∈ R𝑁 . The task is to learn a function 
+
+𝑓 𝜃 :  𝑋 𝑚 , 𝐺  ↦ −→ ˆ𝑦 𝑚 , (1) i.e., a node-level regression conditioned on the graph structure, by supervised training on the months for which GRACE observations exist (April 2002 – December 2023). Reconstruction then consists of applying the trained 𝑓 𝜃 to the ERA5 record outside the supervision period (1940–2002), where no gravimetric ground truth exists. Two properties make this a spatial-computing problem rather than a generic regression: the physical processes linking input and target are spatially networked (water moves between cells; atmospheric teleconnections couple distant regions), and the supervision sig-nal lives at a coarser temporal resolution (monthly) than the input (daily), so the model must learn both spatial aggregation over the graph and temporal aggregation over the window. The implicit as-sumption underlying any such reconstruction, shared by all related work in Section 3, is that the mapping from meteorological forcing to storage response learned in the satellite era is stationary enough to be applied to earlier decades. 
+
+## 3 Related Work 
+
+Approaches for extending TWSA beyond the GRACE/GRACE-FO period fall into three categories: statistical methods, physically based hydrological models, and, increasingly, machine learning. We summarize the data-driven reconstructions that serve as method-ological context and, later, as comparison baselines. Humphrey and Gudmundsson [16] present GRACE-REC, a sta-tistical reconstruction of climate-driven TWS from 1901 to 2019. A linear reservoir model with seasonally varying, temperature-parameterized residence time is updated daily from precipitation and temperature, calibrated per GRACE mascon on de-trended and de-seasonalized GRACE data. An ensemble of 100 simulations quantifies parameter and residual uncertainty. Despite its simplicity, GRACE-REC matches or outperforms complex hydrological models in reproducing interannual variability. Li et al . [22] develop a global reconstruction (1979–2020, 0.5◦;referred to here as RM-REC) combining machine learning (ANN, ARX, and MLR) with statistical mode decomposition and time series decomposition. Rather than fitting each grid cell independently, it reconstructs a few leading spatial modes of the GRACE field over regions of varying size (continents, multi-basins, and basins), which allows it to assimilate predictors located outside the study area, such as sea surface temperature and climate indices, alongside precipita-tion, temperature, soil moisture, runoff, and evaporation. Trained on 2002–2017 GRACE mascons and validated against GRACE-FO, satellite laser ranging, and global mean sea level, it reproduces strong El Niño signals well. Yin et al . [39] present GTWS-MLrec, a global reconstruction (1940–2022) from an ensemble of five machine learning and statis-tical models trained pixel by pixel with locally selected predictors from meteorological, hydrological, land use, and vegetation cate-gories. Per-cell model selection over eight input schemes yields several consistent global products tied to different mascon solu-tions. Palazzoli et al . [27] introduce GRAiCE (1984–2021, 0.5◦), training LSTM and BiLSTM models per grid cell with lags of up to 24 months and Optuna-based hyperparameter search. The five meteorological predictors are total precipitation, snow depth water equivalent, surface net solar radiation, surface air temperature, and relative hu-midity, with solar-induced fluorescence added as an optional sixth predictor. The reconstructions achieve global Pearson correlations above 0.9 against GRACE/GRACE-FO and capture ENSO extremes well, but accuracy declines in arid, human-influenced regions. Gentner et al . [10] propose DeepRec (1941–2023), a CNN encoder over 17 .5◦ patches followed by an LSTM, fed by 16 ERA5 variables together with sea surface temperature, the ENSO index, ISIMIP land-use and lake fractions, and engineered geographic/temporal features, and targeting the full TWS signal including human-influenced trends, with validation against global mean sea level and satellite laser ranging. Table 1 contrasts these approaches. Common to all is that spatial structure is treated implicitly (per-cell models) or through regular convolution on grids. Graph neural networks, in contrast, oper-ate directly on irregular neighborhood structures and have proven effective in climate and geospatial flow applications, e.g., ENSO forecasting with graph convolutions [ 4 ], spatially explicit GeoAI on networks [ 32 , 41 ], place characterization [ 36 ], or semantic seg-mentation of historical urban plans [ 1]. Within SIGSPATIAL, GNNs have recently been applied to inter-county food flow prediction [ 40 ] and related spatial-network problems, underscoring their abil-ity to generalize across spatial scales from topological regularities. Conference acronym ’XX, June 03–05, 2018, Woodstock, NY Arzoumanidis et al. 
+
+To our knowledge, this work is the first to apply spatio-temporal graph deep learning to TWS reconstruction, explicitly encoding hydroclimatic teleconnections in the graph topology. 
+
+Table 1: Published GRACE reconstruction approaches used for context and comparison. Spatial resolution is given in degree-sized patches.                                  
+
+> Model Type Period Res. GRACE-REC [16] Statistical memory 1901–2019 0.5◦×0.5◦
+> MTGNN (ours) Spatio-temporal GNN 1940–2023 1◦×1◦
+> GRAiCE [27] (Bi)LSTM 1984–2021 0.5◦×0.5◦
+> GTWS-MLrec [39] ML ensemble 1940–2022 0.25 ◦×0.25 ◦
+> DeepRec [10] CNN + LSTM 1941–2023 0.5◦×0.5◦
+> RM-REC [22] ML + decomposition 1979–2020 0.5◦×0.5◦
+
+## 4 Data 
+
+The application links two physically related datasets through the terrestrial water balance: GRACE/GRACE-FO observations of in-tegrated storage change serve as the prediction target, and ERA5 reanalysis fluxes serve as model input. 
+
+## 4.1 GRACE/GRACE-FO Terrestrial Water Storage 
+
+We use monthly gravity field solutions from the ITSG-Grace2018 series (GRACE) and ITSG-Grace_operational (GRACE-FO) provided by Graz University of Technology [ 26 ], processed with the GROOPS software [ 25 ]. Standard corrections are applied: degree-1 (geocen-ter) coefficients are restored following Cheng et al . [6] , Sun et al .[33] ; the 𝐶 20 coefficient is replaced by satellite laser ranging es-timates [ 5]; glacial isostatic adjustment is removed with a GIA model; and a DDK3 decorrelation filter suppresses striping errors and high-frequency noise [ 28 ]. The corrected spherical harmonic coefficients (up to degree 96) are converted to equivalent water heights (EWH) [ 11 ] and expressed as anomalies relative to the 2004–2009 GRACE baseline. Gaps in the monthly record, includ-ing the 2017/18 inter-mission gap, are interpolated, and a leakage mask removes coastal cells affected by ocean signal leakage [ 8 ]. The resulting target dataset covers April 2002 to December 2023 on a global geographical 1◦ × 1◦ grid with the South American subset, used in this work, containing 1,120 grid cells. 
+
+## 4.2 ERA5 Meteorological Forcing 
+
+ERA5, the fifth-generation atmospheric reanalysis of the European Centre for Medium-Range Weather Forecasts (ECMWF) 1, assim-ilates decades of observations into a globally consistent estimate of the atmosphere from 1940 to the present [ 13 , 14 ]. We use three single-level variables that constitute the terrestrial water balance [ 13 ], namely, total precipitation ( 𝑃 ), surface latent heat flux con-verted to evapotranspiration ( 𝐸 ), and total runoff ( 𝑅 ). Hourly fields are aggregated to daily values, re-gridded to the same 1◦ grid, ex-pressed in EWH via a spherical harmonic expansion to degree 96, and provided as NetCDF ensuring full spatial consistency with the GRACE prediction target. 
+
+> 1https://www.ecmwf.int/
+
+## 4.3 Physical Link: Water Balance Equation 
+
+The two datasets are physically coupled through the terrestrial water balance [8, 23]: 
+
+𝑃 − 𝐸 − 𝑅 = 𝑑𝑆 𝑑𝑡 , (2) where the storage change 𝑑𝑆 /𝑑𝑡 is observed by GRACE and the flux terms are represented by ERA5. 
+
+## 5 Methodology 5.1 Spatio-Temporal Graph-Based Architecture 
+
+Conventional CNNs assume a regular grid with fixed local neigh-borhoods. This assumption is problematic for global climate data because important relationships are not always local. Regions sepa-rated by large distances may still exhibit strong interactions through river systems, ocean currents, and large-scale atmospheric circula-tion patterns [ 4 , 37 ]. Graph convolution generalizes the convolution operation to variable, unstructured neighborhoods and has deliv-ered strong results in climate applications such as ENSO forecasting [4 ]. Spatio-temporal GNNs (STGNNs) combine per-time-step graph convolution with temporal convolution or recurrence over node sequences, processing input tensors 𝑋 ∈ R𝑇 ×𝑁 ×𝐷 (𝑇 time steps, 𝑁 
+
+nodes, 𝐷 features) [37]. 
+
+## 5.2 MTGNN 
+
+The architecture we deploy, MTGNN [ 38 ], was developed and demonstrated in the mobility and traffic forecasting domain: predict-ing future readings of road-sensor networks from their multivariate history, where each sensor is a graph node and the (partly latent) road topology governs how congestion propagates. We selected it for this application not despite but because of that origin. The traffic problem and the hydrological problem share their abstract structure which can be defined as a fixed set of spatially embedded nodes, multivariate time series per node, propagation of influence along a network with characteristic delays, and the need to capture periodicities at multiple time scales (rush hours and weekly cycles in traffic; rainy seasons and annual cycles in hydrology). MTGNN’s dilated temporal convolutions, designed for exactly such multi-scale periodicity, and its mix-hop graph convolutions, designed for delayed multi-node propagation, therefore map naturally onto hydroclimatic dynamics. Table 2 summarizes the correspondence and the adaptations that were required. Three adaptations deserve emphasis. First, the prediction task changes from forecasting (predicting future values of the input quantity itself) to cross-variable regression with temporal aggrega-tion . The model maps a 30-day window of daily fluxes to a single monthly value of a different physical quantity, observed by a differ-ent instrument. Second, the graph is prescribed rather than learned, for reasons detailed in Section 5.4. Third, the supervision regime is far more constrained: instead of years of dense sensor data, only 183 monthly target fields exist for training, which pushed the de-sign toward strong regularization (dropout, weight decay) and a deliberately moderate model capacity. Reconstructing GRACE Terrestrial Water Storage with Spatio-Temporal Graph Neural Networks: An Application to South America [Applications] Conference acronym ’XX, June 03–05, 2018, Woodstock, NY 
+
+Table 2: Transfer mapping from the original mobility setting of MTGNN [38] to the gravimetric application.                   
+
+> Mobility forecasting TWSA reconstruction (this work) Road sensors as nodes 1◦ERA5 grid cells as nodes ( 𝑁 =1120 ); Speed/volume readings Daily 𝑃 ,𝐸 ,𝑅 fluxes ( 𝐷 =3); Congestion propagation along roads Water propagation along river systems, atmospheric teleconnections; Learned latent adjacency Static hybrid adjacency from geodesic distance and lagged climate correla-tions (Sec. 5.4); Rush-hour/weekly periodicity Seasonal/annual hydrological cycles; Multi-step forecasting of the same quantity Cross-variable regression: monthly TWSA from a 30-day flux window; Abundant sensor history 183 training months (short, gap-affected satellite record);
+
+## 5.3 MTGNN Adapted to Hydrology 
+
+We retain the three functional components of MTGNN [ 38 ]: a graph (structure) layer, graph convolution modules, and temporal convo-lution modules. Graph convolution uses two mix-hop propagation layers that aggregate information over multiple hop distances while a retention factor counteracts over-smoothing [ 38 , 41 ]. Temporal convolution uses dilated inception layers with kernel sizes 1 × 2,
+
+1 × 3, 1 × 6, and 1 × 7 and a tanh/sigmoid as activation functions for the gating mechanism, yielding exponentially growing receptive fields that capture delayed hydrological responses. Residual and skip connections stabilize training and preserve node-level history [ 38 ]. Figure 1 shows the adapted architecture: nodes are 1◦ ERA5 grid cells, node features are daily 𝑃 , 𝐸 , 𝑅 sequences, and the output is one TWSA value per node and month. 
+
+Figure 1: Model architecture of the adapted MTGNN (modi-fied from Wu et al. [38]). 
+
+## 5.4 A Static, Interpretable Hybrid Graph 
+
+The original MTGNN learns its adjacency matrix from randomly initialized node embeddings with subgraph sampling [ 38 ]. For this application we deliberately replaced the learned structure with a static graph, for reasons that we consider an important prac-tical lesson. First, learned graphs are hard to interpret, whereas transparency about spatial dependencies is essential in a geoscien-tific setting. Second, jointly optimizing a latent graph and a deep predictive model proved prone to convergence instability on hetero-geneous meteorological inputs, while random subgraph sampling can sever physically meaningful dependencies [15, 19]. The static graph is undirected and homogeneous, and its weights combine two similarity terms. Climate similarity captures telecon-nections via the maximum-lag Pearson correlation between node time series [ 3 , 30 ]. Here, 𝜌 (𝑓 ) 
+
+> 𝑖 𝑗
+
+is the Pearson correlation coefficient, which measures linear dependence on a scale from −1 to 1, between the time series of variable 𝑓 at nodes 𝑖 and 𝑗 . It is evaluated at the lag 𝜏 ∈ [ 0, 𝜏 max ] that gives the largest absolute correlation. Using this lagged cross-correlation rather than the zero-lag value captures relationships in which one region’s signal leads or trails another’s, as is typical of propagating or transport-driven teleconnection pat-terns. The per-variable correlations are aggregated into a single similarity, 
+
+𝑠 climate  
+
+> 𝑖 𝑗
+
+=∑︁ 
+
+> 𝑓
+
+𝑤 𝑓 · |𝜌 (𝑓 ) 
+
+> 𝑖 𝑗
+
+| + 12 , (3) where the absolute value lets strong anti-correlations contribute as much as strong positive ones, and 𝑤 𝑓 weights each variable. Spatial proximity converts the geodesic distance 𝑑 𝑖 𝑗 into a similarity with a distance-decay Gaussian kernel [42]: 
+
+𝑠 distance  
+
+> 𝑖 𝑗
+
+= exp 
+
+
+
+−𝑑 𝑖 𝑗 
+
+𝜎 
+
+
+
+, (4) where the length scale 𝜎 (in the units of 𝑑 𝑖 𝑗 ) controls the rate of distance decay. At 𝑑 𝑖 𝑗 = 𝜎 , the similarity falls to 1/𝑒 ≈ 0.37 of its maximum value. Small 𝜎 emphasizes local connections, while large 𝜎 permits stronger links between distant cells. The trade-off adjacency weight is their convex combination, 
+
+𝐴 𝑖 𝑗 = 𝛼 · 𝑠 climate  
+
+> 𝑖 𝑗
+
++ ( 1 − 𝛼 ) · 𝑠 distance  
+
+> 𝑖 𝑗
+
+, (5) with 𝛼 = 0.6 and 𝜎 = 3500 km selected for the South American domain. Figure 2 shows the resulting edge weights for a single node. In addition to nearby locations, distant regions with similar climate conditions can also receive substantial weight. These long-range connections capture teleconnection patterns that grid-based models cannot represent. 
+
+Figure 2: Adjacency weights of a single node in South America under the hybrid graph construction (Eq. 5). 
+
+## 5.5 Training Setup 
+
+Each training example pairs a 30-day window of daily ERA5 in-puts with the GRACE TWSA of the corresponding month, i.e., 
+
+𝑥 ∈ R30 ×1120 ×3 → 𝑦 ∈ R1×1120 ×1. Feature-wise Z-score normaliza-tion is fitted on the training partition only and applied consistently to validation and test data [ 31 ]. Because random splits leak infor-mation in time series, the data are split sequentially [ 29 ]. Training Conference acronym ’XX, June 03–05, 2018, Woodstock, NY Arzoumanidis et al. 
+
+covers April 2002 to June 2017 (183 months, containing the 2004– 2009 GRACE baseline and excluding the interpolated inter-mission gap), followed by 34 validation and 33 test months as can be seen in Figure 3. 
+
+Figure 3: Sequential train/validation/test split along the GRACE record. 
+
+The model is trained for 40 epochs with the Adam optimizer [ 18 ](learning rate 10 −3, batch size 64, dropout 0.4, weight decay 0.005) and an MSE loss, which penalizes the large deviations associated with hydrological extremes more strongly than MAE [ 7 ]. Architec-ture hyperparameters were tuned manually against validation error resulting in a graph convolution depth of 4, 32 convolution channels, 64 residual and skip channels and 128 end channels. Training and validation losses decrease monotonically without divergence, indi-cating no overfitting. The final validation metrics are MSE 0.0117, RMSE 0.1083, MAE 0.0830 (normalized units). On the held-out test months the model achieves MSE 0.0128, RMSE 0.1131, and MAE 0.0862, which is consistent with validation and evidence of stable generalization. Temporally aggregated test predictions track the observed basin-mean signal closely, while the spatial correlation of time-averaged fields is 0.61, foreshadowing the regional weaknesses analyzed below. 
+
+## 6 Experimental Results 
+
+The evaluation proceeds in three stages: (i) direct validation against GRACE/GRACE-FO over 2002–2023, (ii) analysis of seasonal, spa-tial, and interannual error structure including ENSO case studies, and (iii) a systematic comparison with established reconstruction approaches. 
+
+## 6.1 Correlation with GRACE Observations 
+
+Table 3 summarizes the correlation between predictions and obser-vations over South America from April 2002 to December 2023. All metrics are computed at the grid-cell level and pooled across all land cells and months. As a result, they measure performance at the native 1◦ resolution rather than after spatial averaging. Given a grid-cell dynamic range of approximately ±0.6 m EWH, the RMSE of 0.132 m and MAE of 0.096 m indicate high overall correlation. The bias is close to zero ( −0.004 m ), suggesting no systematic over-or underestimation. The grid-cell Pearson correlation of 0.69 indi-cates a strong positive relationship between predicted and observed variability. This correlation is lower than the value obtained after spatial averaging. This difference is expected because spatial av-eraging reduces local errors and emphasizes large-scale seasonal variability. In contrast, the grid-cell metric preserves regional dif-ferences, including higher correlation in the humid Amazon and weaker correlation in the arid southern regions, as discussed in Sec. 6.2. 
+
+Table 3: Model evaluation against GRACE over South Amer-ica (2002–2023). 
+
+Quality measure Value Root Mean Squared Error (RMSE) [m EWH] 0.1323 Mean Absolute Error (MAE) [m EWH] 0.0955 Bias [m EWH] −0.0044 
+
+Pearson correlation (all grid cells) 0.6931 Figure 4 compares predicted and observed time series for the area mean and an exemplary Amazon grid cell (Figure 2). The prediction follows the seasonal cycle closely, and the scatter plots cluster around the identity line. Smaller deviations concentrate in extreme wet and dry phases, and are slightly more pronounced at the single cell than in the spatial mean, indicating lower consistency for local phenomena. The exemplary cell also exhibits a clearly negative observed long-term trend whose direction the model reproduces but whose magnitude it underestimates. 
+
+> (a) area mean over South America
+> (b) exemplary grid cell in the Amazon basin
+
+Figure 4: Observed vs. predicted TWSA with scatter plots for (a) the area mean and (b) an exemplary Amazon grid cell (Figure 2). Reconstructing GRACE Terrestrial Water Storage with Spatio-Temporal Graph Neural Networks: An Application to South America [Applications] Conference acronym ’XX, June 03–05, 2018, Woodstock, NY 
+
+The spatial correlation map (Figure 5) shows where the model is strongest. The central Amazon basin, where the seasonal stor-age signal is most pronounced, reaches the highest correlations, confirming that the model excels in regions dominated by strong, regular hydrological cycles. 
+
+Figure 5: Per-grid-cell Pearson correlation between the MT-GNN reconstruction and GRACE over South America (April 2002–December 2023). Correlation is highest in the cen-tral Amazon, where the seasonal storage signal is most pro-nounced, and falls below 0.5 in the arid south (parts of Bolivia, Paraguay, and Argentina, Chile), revealing the regional struc-ture behind the aggregate grid-cell correlation reported in Table 3. 
+
+## 6.2 Seasonal and Spatial Error Structure 
+
+A monthly error analysis at the Amazon cell (Figure 6) reveals systematic seasonal behavior. The TWSA is slightly underestimated from December to June and slightly overestimated in the second half of the year, with the largest error variability in the transition months between dry and rainy season. The model thus struggles most at the onset and end of the rainy season, and occasional outliers point to difficulties with extreme events. 
+
+Figure 6: Monthly distribution of errors (predicted − ob-served) at the exemplary Amazon grid cell. 
+
+Seasonal difference maps (Figure 7) highlight the strong influence of spatial information on the error analysis. Rainy season errors (e.g., February 2010) are large but spatially coherent, whereas dry season errors (e.g., July 2010) are fragmented, suggesting that the model’s ability to distribute water within the region degrades at low storage levels. The long-term mean difference exposes a persistent regional bias with a slight overestimation in the northwestern basin and underestimation in the southeast. 
+
+Figure 7: Spatial difference between prediction and observa-tion for (a) rainy vs. dry season and (b) the full-period mean. 
+
+## 6.3 Interannual Signals and ENSO Case Study 
+
+To test whether the model captures more than trend and seasonality, we fit a harmonic regression with linear trend and (semi-)annual components [9], 
+
+ˆ𝑆 (𝑡 ) = 𝑎 +𝑏𝑡 +𝑐 cos (𝜔𝑡 ) + 𝑑 sin (𝜔𝑡 ) + 𝑒 cos (2𝜔𝑡 ) + 𝑓 sin (2𝜔𝑡 ), (6) and analyze the residuals, which carry the interannual signal in-cluding extreme events. At the Amazon cell (Figure 8), predicted and observed residuals agree in waveform, timing, and magnitude. Additionally, peaks and troughs coincide, multi-year excursions are followed, and amplitudes are comparable, though the prediction is somewhat smoothed at extreme outliers. 
+
+Figure 8: Residual (de-trended, de-seasonalized) TWSA of prediction and observation at exemplary Amazon grid cell. Note that the outlier in 2015 is known and results from poor sampling in a repeat orbit, meaning the error is due to low quality ground truth data rather than the proposed approach. 
+
+Figure 9 examines the two strongest recent ENSO events as spatial anomaly maps relative to the climatological monthly mean. During the 2015/16 El Niño, GRACE shows large-scale drought (neg-ative anomalies) in the Amazon and pronounced wet anomalies in Conference acronym ’XX, June 03–05, 2018, Woodstock, NY Arzoumanidis et al. 
+
+the La Plata basin. Our model reproduces this contrasting pattern with correct extent and position, though with slightly weaker inten-sity. During the 2020/21 La Niña, the reversed pattern, drought in southern Brazil, wet conditions in the Amazon, is likewise captured. The model thus identifies the characteristic spatial fingerprints of large-scale climate anomalies while underestimating their ampli-tude, consistent with the smoothing seen in the residual analysis. 
+
+Figure 9: Deviations from the climatological monthly mean in observation and prediction during (a) the 2015/16 El Niño and (b) the 2020/21 La Niña. 
+
+## 6.4 Comparison with SOTA Reconstruction Approaches 
+
+We compare against GTWS-MLrec [ 39 ], RM-REC [ 22 ], and GRAiCE [27 ], which together span statistical, ensemble-ML, and recurrent neural approaches. All products are harmonized to a common 1◦
+
+grid, masked to the South American domain, and restricted to the shared overlap period 2002–2020, so that methodological differences are not confounded with technical ones. Table 4 reports metrics on the spatially averaged time series plus the correlation at the exemplary Amazon cell. 
+
+Table 4: Comparison of established reconstruction ap-proaches against GRACE based on basin-mean time series. 
+
+Corr. (Amazon) denotes the correlation at a single exemplary grid cell in the Amazon, while Corr. refers to the basin-mean (spatially averaged) time series.                               
+
+> Model Inputs Corr. Std. dev. RMSE Corr.(Amazon) GRACE –1.000 0.083 –1.000 MTGNN (ours) 30.939 0.088 0.030 0.866 GRAiCE 60.964 0.083 0.026 0.907 GTWS-MLrec 16 0.940 0.074 0.031 0.932 RM-REC 25 0.931 0.078 0.031 0.902
+
+The results of all reconstruction approaches correlate highly with GRACE ( > 0.93 ) and lie within an RMSE band of 0.026–0.031, i.e., a few centimeters of water column. GRAiCE performs best overall and matches the GRACE variability almost exactly; GTWS-MLrec slightly dampens variability (std. 0.074), whereas MTGNN slightly overemphasizes it (0.088). At the single Amazon cell, MTGNN is weakest (0.866), suggesting that the graph model trades some fine-scale robustness for its large-scale structure. Both the single-cell correlation (0.866) and the basin-mean correlation (0.939) differ from the all-cells correlation of 0.69 reported in Table 3. The all-cells metric includes every grid cell in the domain, including regions in the arid south where correlations are relatively low. In contrast, the single-cell value represents one location in the Amazon with strong correlation, while the basin-mean value is computed from spatially averaged time series. The Taylor diagram in Figure 10 condenses these relationships. These numbers must be read against the predictor budget each model consumes, shown in the Inputs column of Table 4. While MT-GNN is driven by only precipitation, evapotranspiration, and runoff, the better-scoring baselines rely on substantially richer feature sets. GRAiCE uses five meteorological variables (total precipitation, snow depth water equivalent, surface net solar radiation, surface air temperature, and relative humidity), adding solar-induced fluo-rescence in its full variant [ 27 ]. RM-REC combines precipitation, temperature, sea surface temperature, soil moisture, runoff, and evaporation with 17 climate indices [ 22 ]. GTWS-MLrec ingests four whole categories of meteorological, hydrological, land-use, and vegetation predictors (16 variables in total) with per-cell fea-ture selection [ 39 ] while DeepRec combines 16 ERA5 variables with sea surface temperature, an ENSO index, land-use and lake fractions, and engineered geographic and temporal features [ 10 ]. Seen this way, the graph model reaches a basin-mean correlation of 0.939, within 0.025 of GRAiCE and statistically indistinguishable from GTWS-MLrec, using roughly half to a tenth of the inputs that the better-scoring baselines require. The slight performance gap is therefore better interpreted as a favorable accuracy-per-variable trade-off than as a deficit. Furthermore, the topology of the spatio-temporal graph appears to substitute for part of the information that competing models must supply through additional covariates. This parsimony is not merely aesthetic. It lowers data-acquisition and preprocessing cost, reduces exposure to predictors that are themselves poorly constrained in the pre-satellite era, and makes the learned mapping easier to attribute to physical drivers, which is an advantage we expand on in Section 7. The temporal view at the Amazon cell (Figure 11) adds nuance: MTGNN matches the phase of the GRACE signal well—better than GTWS-MLrec, whose phase is slightly delayed—while underesti-mating peak amplitudes in parts of the record and producing a less smoothed series overall, indicating higher sensitivity to short-term events (a potential advantage) at the cost of possible model noise. GRAiCE, despite its leading global metrics, follows the reference poorly at this particular cell in the first half of the record. Because GTWS-MLrec is the only baseline extending back to the 1940s, it enables a pre-GRACE consistency check (Figure 12). In the spatial mean, MTGNN consistently shows higher amplitude but tracks the temporal evolution closely: both products reproduce the 1948/49 decline, the prolonged late-1960s decrease and recovery, and the decline since 2010. At the exemplary cell, deviations alter-nate without systematic bias, and the major historical excursions (1948/49, 1955, 1961, early 1970s, post-2015) agree. Indicated by the spatial correlation maps (Figure 13) MTGNN matches the baselines in the humid Amazon but falls below 0.5 in parts of Bolivia, Paraguay, Argentina, and easternmost Brazil which can be characterized as arid and semi-arid regions where hydroclimatic processes are more complex and human influence Reconstructing GRACE Terrestrial Water Storage with Spatio-Temporal Graph Neural Networks: An Application to South America [Applications] Conference acronym ’XX, June 03–05, 2018, Woodstock, NY 
+
+Figure 10: Taylor diagram of the reconstructions relative to GRACE, with radial axes indicating standard deviation. 
+
+Figure 11: TWSA at the exemplary Amazon grid cell for each reconstruction approach vs. GRACE (2002–2023). The dashed blue line denotes GRACE, the orange line denotes MTGNN (ours), the green line denotes GTWS-MLrec, the pink line denotes RM-REC, and the purple line denotes GRAiCE. 
+
+(e.g., groundwater extraction) is stronger. The same regions are also the weakest for the baselines, but less severely so. This community-wide pattern echoes the limitations reported by Palazzoli et al . [27] and Yin et al. [39] for arid, human-influenced areas. In summary, the graph-based reconstruction is statistically on par with established reconstruction approaches at basin scale (corre-lation 0.94, RMSE 0.030), captures phase and interannual dynamics particularly well, but exhibits specific spatial deficits in arid regions and slightly overemphasized variability. 
+
+Figure 12: MTGNN (orange line) vs. GTWS-MLrec (green line) from 1940 onward (top: spatial mean; bottom: exemplary Amazon grid cell). 
+
+Figure 13: Spatial correlation with GRACE for all reconstruc-tion approaches evaluated over the overlap period. 
+
+## 7 Flexible Extensions and Lessons Learned 7.1 Input Parameter Expansion 
+
+The reconstruction uses only the three water balance core vari-ables, whereas the strongest baselines integrate broader predic-tor sets spanning meteorological drivers, hydrological states, and land surface/anthropogenic factors [ 10 , 22 , 27 , 39 ]. As established in Section 6.4, the graph model nearly matches these established approaches on a fraction of their inputs. This raises an obvious question: if so much is achieved with three variables, how much further could the model go—and, more importantly, how cheaply can the additional variables be added? The architecture makes such expansion structurally straightfor-ward. Because each predictor enters as an additional channel of the per-node feature dimension 𝐷 (Section 2.3), adding a meteo-rological forcing means extending the node feature tensor from 
+
+R𝑇 ×𝑁 ×𝐷 to R𝑇 ×𝑁 × ( 𝐷 +1) and widening the first layer. The graph topology, the temporal modules, and the entire training pipeline are untouched. No new model has to be trained per variable, and no per-cell feature-selection stage is required. This contrasts with the comparing approaches. While GTWS-MLrec must rerun its ensemble and per-pixel selection over eight input schemes when its predictor set changes [ 39 ], the per-grid-cell (Bi)LSTMs of GRAiCE are configured and tuned cell by cell [ 27 ], and the patch-based CNN of DeepRec fixes its feature stack in the patch construction [10 ]. In the spatio-temporal graph, by contrast, a new forcing vari-able is simply one more signal observed at every node, propagated Conference acronym ’XX, June 03–05, 2018, Woodstock, NY Arzoumanidis et al. 
+
+by the same shared convolutional weights, meaning the marginal engineering cost of testing a candidate predictor is close to zero. As a pilot exploiting exactly this property, we appended 2 m temperature, known to be a key driver of evaporation, snowmelt, and soil water dynamics a single feature channel that is consistently available in ERA5. The effect is measurable (Table 5), reducing vali-dation errors and increasing correlation with GRACE from 0.693 to 0.713 (grid-cell) and from 0.945 to 0.947 (basin level). Given that the architecture accepts arbitrary numbers of node features at this near-zero cost, soil moisture and snow water equivalent are natural next candidates, since empirical studies link soil moisture anomalies tightly to TWS variations in semi-arid regions [ 12 ]. Furthermore, anthropogenic predictors are essential where groundwater deple-tion dominates the signal [ 2] directly targeting the arid-region weakness identified above. The favorable accuracy-per-variable position observed in Table 4 thus reflects headroom, not a ceiling. As a result, the cheap expansion path is precisely the one that can close the remaining gap to the input-heavy baselines while keeping the model interpretable. 
+
+Table 5: Validation quality without and with temperature as input. 
+
+MSE RMSE MAE Corr. 
+
+𝑃, 𝐸, 𝑅 0.0117 0.1083 0.0830 0.693 
+
+𝑃, 𝐸, 𝑅,𝑇 0.0105 0.1025 0.0789 0.713 
+
+## 7.2 Physics-Informed Training 
+
+Physics-informed neural networks (PINNs) integrate physical laws as soft constraints into the loss function, improving plausibility and generalization where data are sparse [ 24 ]. The water balance (Eq. 2) translates directly into such a constraint. With TWSA 𝜃 the network prediction, the combined loss 𝐿 = 𝛼𝐿 data + 𝛽𝐿 physics uses 
+
+𝐿 physics = 1
+
+𝑁 
+
+> 𝑁
+
+∑︁ 
+
+> 𝑖 =1
+
+ TWSA 𝜃 (𝑡 𝑖 ) − TWSA 𝜃 (𝑡 𝑖 −1)
+
+−   ¯𝑃 (𝑡 𝑖 ) − ¯𝐸 (𝑡 𝑖 ) − ¯𝑅 (𝑡 𝑖 )2
+
+,
+
+(7) penalizing violations of the discrete storage recursion 𝑆 (𝑡 ) =
+
+𝑆 (𝑡 − 1) + 𝑃 − 𝐸 − 𝑅 . Whereas Gentner et al . [10] used the water bal-ance for post-hoc validation, embedding it into training (Figure 14) turns it into a regularizer, particularly promising for arid regions and extreme events where purely data-driven training has shown deficits. This constraint is the natural consequence of the input choice. Because the three node features ( 𝑃 , 𝐸 , 𝑅 ) are exactly the flux terms of the water balance and the target ( TWSA ) is its storage term, inputs and output already stand in a closed physical relationship (Eq. 2). The physics loss asks the network to respect, between consecutive months, the same equation that motivated the feature set in the first place. As a result, no auxiliary variables, derived quantities, or separate physical model are needed to evaluate it. This represents a structural advantage of the parsimonious design over input-heavy baselines. Their larger predictor sets, including vegetation indices, land-use fractions, and radiation balances, do not naturally conform to a conservation law, making comparable constraints difficult to enforce. Here the loss is, by construction, hydrologically interpretable which both eases tuning of the weight 
+
+𝛽 and makes residual violations diagnosable as genuine hydrological inconsistencies rather than opaque model error. In short, choosing the minimal water-balance feature set buys not only data efficiency but also a loss function that is naturally aligned with the governing physics. 
+
+Figure 14: Hybrid framework combining the data loss with a water balance physics loss. 
+
+## 8 Conclusion 
+
+In this work, we applied spatio-temporal graph deep learning to reconstruct terrestrial water storage prior to the GRACE mission, ad-dressing a long-standing problem in hydrology and satellite geodesy. An MTGNN with a static, interpretable hybrid graph, combining geodesic proximity and lagged climatic correlations, was trained on daily ERA5 fluxes against monthly GRACE TWSA and used to reconstruct South American water storage anomalies back to 1940. Against GRACE/GRACE-FO the reconstruction achieves a grid-cell correlation of 0.69, a basin-mean correlation of 0.94 with near-zero bias, and correctly reproduces the spatial fingerprints of major ENSO events. Compared with three established reconstruc-tion methods (GTWS-MLrec, RM-REC, and GRAiCE), our approach achieves competitive basin-scale performance using only three pre-dictor variables, while sharing the common challenge of reduced accuracy in arid and human-influenced regions. This case study demonstrates that graph architectures matured on urban mobility problems transfer to global geophysical fields once the graph encodes domain structure such as teleconnections. Our results show that an analogy between traffic flow in road net-works and water transport in the climate system is not merely conceptual but can be directly exploited in graph-based architec-tures. They also highlight that the choice between learned and prescribed graphs is a key modeling decision rather than an im-plementation detail. For the field of hydrology and geodesy, the resulting reconstruction offers a new, topology-aware perspective on historical water storage that complements existing per-cell re-construction approaches. Ongoing work scales the workflow from the South American test region to the global 1◦ grid, expands the predictor set toward hydrological states and anthropogenic factors, and integrates the water balance constraint into training. Reconstructing GRACE Terrestrial Water Storage with Spatio-Temporal Graph Neural Networks: An Application to South America [Applications] Conference acronym ’XX, June 03–05, 2018, Woodstock, NY 
+
+## References 
+
+[1] Lukas Arzoumanidis, Julius Knechtel, Jan-Henrik Haunert, and Youness Dehbi. 2026. Semantic Segmentation of Historical Maps Using Self-Constructing Graph Convolutional Networks. Cartography and Geographic Information Science 53, 2 (2026), 177–187. doi:10.1080/15230406.2025.2468304 [2] Akarsh Asoka and Vimal Mishra. 2020. Anthropogenic and Climate Contributions on the Changes in Terrestrial Water Storage in India. Journal of Geophysical Research: Atmospheres 125, 10 (2020), 1–21. doi:10.1029/2020JD032470 [3] Jules J. Berman. 2016. Chapter 4 - Understanding Your Data. In Data Simplification .Morgan Kaufmann, Boston, 135–187. doi:10.1016/B978-0-12-803781-2.00004-7 [4] Salva Rühling Cachay, Emma Erickson, Arthur Fender C. Bucker, Ernest Pokropek, Willa Potosnak, Salomey Osei, and Björn Lütjens. 2020. Graph Neural Networks for Improved El Niño Forecasting. In Tackling Climate Change with Machine Learning Workshop at NeurIPS 2020 . https://www.climatechange.ai/papers/ neurips2020/86 [5] Jianli Chen, Anny Cazenave, Christoph Dahle, William Llovel, Isabelle Panet, Julia Pfeffer, and Lorena Moreira. 2022. Applications and Challenges of GRACE and GRACE Follow-On Satellite Gravimetry. Surveys in Geophysics 43, 1 (2022), 305–345. doi:10.1007/s10712-021-09685-x [6] Minkang Cheng, Byron D. Tapley, and John C. Ries. 2013. Deceleration in the Earth’s Oblateness. Journal of Geophysical Research: Solid Earth 118, 2 (2013), 740–747. doi:10.1002/jgrb.50058 [7] Gabriel Jonas da Silva Duarte, Tamara Arruda Pereira, Erik Jhones Fernandes Nascimento, Diego Parente Paiva Mesquita, and Amauri Holanda de Souza Jr. 2021. How Do Loss Functions Impact the Performance of Graph Neural Networks?. In Congresso Brasileiro de Inteligência Computacional (CBIC 2021) . doi:10.21528/ CBIC2021-161 [8] Annette Eicker, Laura Jensen, Viviana Wöhnke, Henryk Dobslaw, Andreas Kvas, Torsten Mayer-Gürr, and Robert Dill. 2020. Daily GRACE Satellite Data Evaluate Short-term Hydro-meteorological Fluxes from Global Atmospheric Reanalyses. 
+
+Scientific Reports 10, 1 (2020), 4504. doi:10.1038/s41598-020-61166-0 [9] European Space Agency. 2020. CCI Sea Level Budget Closure: Product Validation and Intercomparison Report (PVIR) . Technical Report D4.7 v1.1. Climate Change Initiative. https://climate.esa.int/documents/192/ESA_SLBC_cci_D4.7_v1.1.pdf [10] Luis Q. Gentner, Junyang Gou, Mohammad J. Tourian, Lara Börger, Nico Sneeuw, and Benedikt Soja. 2026. DeepRec: Global Terrestrial Water Storage Recon-struction Since 1941 Using Spatiotemporal-Aware Deep Learning Model. Jour-nal of Geophysical Research: Machine Learning and Computation 3, 1 (2026). doi:10.1029/2025JH000889 [11] Jinyun Guo, Dapeng Mu, Xin Liu, Haoming Yan, and Honglei Dai. 2014. Equiv-alent Water Height Extracted from GRACE Gravity Field Model with Robust Independent Component Analysis. Acta Geophysica 62, 4 (01 Aug 2014), 953–972. doi:10.2478/s11600-014-0210-0 [12] Yi Guo, Naichen Xing, Fuping Gan, Baikun Yan, and Juan Bai. 2023. Evaluating the Hydrological Components Contributions to Terrestrial Water Storage Changes in Inner Mongolia with Multiple Datasets. Sensors 23, 14 (2023). doi:10.3390/ s23146452 [13] Hans Hersbach, Bill Bell, Paul Berrisford, Giovanni Biavati, András Horányi, Joaquín Muñoz Sabater, Julien Nicolas, Carole Peubey, Raluca Radu, Iryna Rozum, Dinand Schepers, Adrian Simmons, Cornel Soci, Dick Dee, and Jean-Noël Thépaut. 2023. ERA5 Hourly Data on Single Levels from 1940 to Present. Copernicus Cli-mate Change Service (C3S) Climate Data Store (CDS). doi:10.24381/cds.adbb2d47 [14] Hans Hersbach, Bill Bell, Paul Berrisford, Shoji Hirahara, András Horányi, Joaquín Muñoz-Sabater, Julien Nicolas, Carole Peubey, Raluca Radu, Dinand Schepers, Adrian Simmons, Cornel Soci, Saleh Abdalla, Xavier Abellan, Gianpaolo Bal-samo, Peter Bechtold, Gionata Biavati, Jean Bidlot, Massimo Bonavita, Giovanna De Chiara, Per Dahlgren, Dick Dee, Michail Diamantakis, Rossana Dragani, Jo-hannes Flemming, Richard Forbes, Manuel Fuentes, Alan Geer, Leo Haimberger, Sean Healy, Robin J. Hogan, Elías Hólm, Marta Janisková, Sarah Keeley, Patrick Laloyaux, Philippe Lopez, Cristina Lupu, Gabor Radnoti, Patricia de Rosnay, Iryna Rozum, Freja Vamborg, Sebastien Villaume, and Jean-Noël Thépaut. 2020. The ERA5 Global Reanalysis. Quarterly Journal of the Royal Meteorological Society 
+
+146, 730 (2020), 1999–2049. doi:10.1002/qj.3803 [15] Ruixi Huang, Yin Long, and Tehseen Zia. 2025. A Physical-Enhanced Spatio-Temporal Graph Convolutional Network for River Flow Prediction. Applied Sciences 15, 16 (2025). doi:10.3390/app15169054 [16] Vincent Humphrey and Lukas Gudmundsson. 2019. GRACE-REC: A Reconstruc-tion of Climate-driven Water Storage Changes over the Last Century. Earth System Science Data 11, 3 (2019), 1153–1170. doi:10.5194/essd-11-1153-2019 [17] Laura Jensen, Annette Eicker, Henryk Dobslaw, and Roland Pail. 2020. Emerging Changes in Terrestrial Water Storage Variability as a Target for Future Satellite Gravity Missions. Remote Sensing 12, 23 (2020). doi:10.3390/rs12233898 [18] Diederik P. Kingma and Jimmy Ba. 2015. Adam: A Method for Stochastic Op-timization. In 3rd International Conference on Learning Representations (ICLR) .https://arxiv.org/abs/1412.6980 [19] Nikolas Kirschstein and Yixuan Sun. 2024. The merit of river network topology for neural flood forecasting. In Proceedings of the 41st International Conference on Machine Learning (Vienna, Austria) (ICML’24) . Article 990, 13 pages. [20] Enrico Kurtenbach, Annette Eicker, Torsten Mayer-Gürr, Matthias Holschneider, Hayn Hayn, Marcel Fuhrmann, and Jürgen Kusche. 2012. Improved daily GRACE gravity field solutions using a Kalman smoother. Journal of Geodynamics 59–60 (2012), 39–48. doi:10.1016/j.jog.2012.02.006 [21] Felix W. Landerer, Frank M. Flechtner, Himanshu Save, Frank H. Webb, Tamara Bandikova, William I. Bertiger, Srinivas V. Bettadpur, Sung Hun Byun, Christoph Dahle, Henryk Dobslaw, Eugene Fahnestock, Nate Harvey, Zhigui Kang, Gerhard L. H. Kruizinga, Bryant D. Loomis, Christopher McCullough, Michael Murböck, Peter Nagel, Meegyeong Paik, Nadege Pie, Steve Poole, Dmitry Strekalov, Mark E. Tamisiea, Furun Wang, Michael M. Watkins, Hui-Ying Wen, David N. Wiese, and Dah-Ning Yuan. 2020. Extending the Global Mass Change Data Record: GRACE Follow-On Instrument and Science Data Performance. Geophysical Research Letters 47, 12 (2020). doi:10.1029/2020GL088306 [22] Fupeng Li, Jürgen Kusche, Nengfang Chao, Zhengtao Wang, and Anno Löcher. 2021. Long-Term (1979-Present) Total Water Storage Anomalies Over the Global Land Derived by Reconstructing GRACE Data. Geophysical Research Letters 48, 8 (2021), 1–10. doi:10.1029/2021GL093492 [23] Christof Lorenz, Harald Kunstmann, Balaji Devaraju, Mohammad J. Tourian, Nico Sneeuw, and Johannes Riegger. 2014. Large-Scale Runoff from Landmasses: A Global Assessment of the Closure of the Hydrological and Atmospheric Water Balances. Journal of Hydrometeorology 15, 6 (2014), 2111–2139. doi:10.1175/JHM-D-13-0157.1 [24] Kuang Luo, Jingshang Zhao, Yingping Wang, Jiayao Li, Junjie Wen, Jiong Liang, Henry Soekmadji, and Shaolin Liao. 2025. Physics-Informed Neural Networks for PDE Problems: A Comprehensive Review. Artificial Intelligence Review 58, 10 (2025), 323. doi:10.1007/s10462-025-11322-7 [25] Torsten Mayer-Gürr, Saniya Behzadpour, Annette Eicker, Matthias Ellmer, Beate Koch, Sandro Krauss, Christian Pock, Daniel Rieser, Sebastian Strasser, Barbara Süsser-Rechberger, Norbert Zehentner, and Andreas Kvas. 2021. GROOPS: A Software Toolkit for Gravity Field Recovery and GNSS Processing. Computers & Geosciences 155 (2021), 104864. doi:10.1016/j.cageo.2021.104864 [26] Torsten Mayer-Gürr, Saniya Behzadpur, Matthias Ellmer, Andreas Kvas, Beate Klinger, Sebastian Strasser, and Norbert Zehentner. 2018. ITSG-Grace2018 – Monthly, Daily and Static Gravity Field Solutions from GRACE. doi:10.5880/ ICGEM.2018.003 [27] Irene Palazzoli, Serena Ceola, and Pierre Gentine. 2025. GRAiCE: reconstructing terrestrial water storage anomalies with recurrent neural networks. Scientific Data 12, 1 (2025), 146. doi:10.1038/s41597-025-04403-3 [28] Nijia Qian, Guobin Chang, Pavel Ditmar, Jingxiang Gao, and Zhengqiang Wei. 2022. Sparse DDK: A Data-Driven Decorrelation Filter for GRACE Level-2 Products. Remote Sensing 14, 12 (2022). doi:10.3390/rs14122810 [29] Zuzana Reitermanová. 2010. Data Splitting. In WDS’10 Proceedings of Contributed Papers: Part I – Mathematics and Computer Sciences . 31–36. [30] Filipi N. Silva, Didier A. Vega-Oliveros, Xiaoran Yan, Alessandro Flammini, Filippo Menczer, Filippo Radicchi, Ben Kravitz, and Santo Fortunato. 2021. Detecting Climate Teleconnections With Granger Causality. Geophysical Research Letters 
+
+48, 18 (2021). doi:10.1029/2021GL094707 [31] Dalwinder Singh and Birmohan Singh. 2022. Feature wise normalization: An effective way of normalizing data. Pattern Recognition 122 (2022), 108307. doi:10. 1016/j.patcog.2021.108307 [32] Alexander Y. Sun, Peishi Jiang, Maruti K. Mudunuru, and Xingyuan Chen. 2021. Explore Spatio-Temporal Learning of Large Sample Hydrology Using Graph Neu-ral Networks. Water Resources Research 57, 12 (2021). doi:10.1029/2021WR030394 [33] Yu Sun, Pavel Ditmar, and Riccardo Riva. 2017. Statistically optimal estimation of degree-1 and C20 coefficients based on GRACE data and an ocean bottom pressure model. Geophysical Journal International 210, 3 (2017), 1305–1322. doi:10.1093/gji/ggx241 [34] B. D. Tapley, S. Bettadpur, M. Watkins, and C. Reigber. 2004. The gravity recovery and climate experiment: Mission overview and early results. Geophysical Research Letters 31, 9 (2004). doi:10.1029/2004GL019920 [35] Byron D. Tapley, Michael M. Watkins, Frank Flechtner, Christoph Reigber, Srini-vas Bettadpur, Matthew Rodell, Ingo Sasgen, James S. Famiglietti, Felix W. Lan-derer, Don P. Chambers, John T. Reager, Alex S. Gardner, Himanshu Save, Erik R. Ivins, Sean C. Swenson, Carmen Boening, Christoph Dahle, David N. Wiese, Henryk Dobslaw, Mark E. Tamisiea, and Isabella Velicogna. 2019. Contributions of GRACE to Understanding Climate Change. Nature Climate Change 9, 5 (2019), 358–369. doi:10.1038/s41558-019-0456-2 [36] Isaac Ronald Ward, Jack Joyner, Casey Lickfold, Yulan Guo, and Mohammed Bennamoun. 2022. A Practical Tutorial on Graph Neural Networks. ACM Comput. Surv. 54, 10s (2022), 35 pages. doi:10.1145/3503043 [37] Zonghan Wu, Shirui Pan, Fengwen Chen, Guodong Long, Chengqi Zhang, and Philip S. Yu. 2021. A Comprehensive Survey on Graph Neural Networks. IEEE Transactions on Neural Networks and Learning Systems 32, 1 (2021), 4–24. doi:10. 1109/TNNLS.2020.2978386 [38] Zonghan Wu, Shirui Pan, Guodong Long, Jing Jiang, Xiaojun Chang, and Chengqi Zhang. 2020. Connecting the Dots: Multivariate Time Series Forecasting with Graph Neural Networks. In Proceedings of the 26th ACM SIGKDD International Conference acronym ’XX, June 03–05, 2018, Woodstock, NY Arzoumanidis et al. 
+
+Conference on Knowledge Discovery & Data Mining (Virtual Event, CA, USA) 
+
+(KDD ’20) . Association for Computing Machinery, New York, NY, USA, 753–763. doi:10.1145/3394486.3403118 [39] Jiabo Yin, Louise J. Slater, Abdou Khouakhi, Le Yu, Pan Liu, Fupeng Li, Yadu Pokhrel, and Pierre Gentine. 2023. GTWS-MLrec: global terrestrial water storage reconstruction by machine learning from 1940 to present. Earth System Science Data 15, 12 (2023), 5597–5615. doi:10.5194/essd-15-5597-2023 [40] Qianheng Zhang, Dev Paul, Michelle Miller, Alfonso Morales, and Song Gao. 2025. Scalable Inter-County Food Flow Prediction Using Graph Neural Networks. In 
+
+Proceedings of the 33rd ACM International Conference on Advances in Geographic Information Systems (The Graduate Hotel Minneapolis, Minneapolis, MN, USA) 
+
+(SIGSPATIAL ’25) . Association for Computing Machinery, New York, NY, USA, 985–994. doi:10.1145/3748636.3764168 [41] Jie Zhou, Ganqu Cui, Shengding Hu, Zhengyan Zhang, Cheng Yang, Zhiyuan Liu, Lifeng Wang, Changcheng Li, and Maosong Sun. 2020. Graph neural networks: A review of methods and applications. AI Open 1 (2020), 57–81. doi:10.1016/j. aiopen.2021.01.001 [42] Xiaojin Zhu and Zoubin Ghahramani. 2002. Learning from Labeled and Unlabeled Data with Label Propagation . Technical Report CMU-CALD-02-107. Carnegie Mellon University, School of Computer Science. https://mlg.eng.cam.ac.uk/ zoubin/papers/CMU-CALD-02-107.pdf

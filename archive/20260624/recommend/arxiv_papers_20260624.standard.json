@@ -1,0 +1,728 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-24T21:34:42.000154+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 10,
+    "deep_cap": 7,
+    "deep_selected": 7,
+    "quick_candidates": 11,
+    "quick_skim_target": 12,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2606.21438v1",
+      "source": "arxiv",
+      "title": "Temporal logics and formal synthesis for robot planning and control",
+      "abstract": "As robots move from controlled environments into real-world settings, it becomes increasingly crucial to ensure that they perform as expected. A key step toward that goal is a rigorous specification of the desired robot behavior, capturing intricate temporal, spatial, and logical requirements. Complementing this, plan and control synthesis methods are needed to fulfill these specifications with provable guarantees. This manuscript presents temporal logics - particularly linear and signal temporal logic - as expressive specification languages for robot behavior over time. We then discuss principles of formal synthesis, from discrete graph- and game-based approaches to sampling-based motion planning, trajectory optimization, and control-certificate-based synthesis. Finally, we outline challenges in deploying formal synthesis in real-world robotics, emphasizing the interplay between modeling fidelity, computational tractability, and the types of rigorous guarantees that can be achieved.",
+      "authors": [
+        "Jana Tumova",
+        "Joris Verhagen",
+        "Matti Vahs"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-19T13:59:12+00:00",
+      "link": "https://arxiv.org/pdf/2606.21438v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "temporal logics and formal synthesis for robot planning and control",
+      "llm_evidence_cn": "用于机器人规划与控制的时序逻辑与形式化综合",
+      "llm_evidence": "用于机器人规划与控制的时序逻辑与形式化综合",
+      "canonical_evidence": "用于机器人规划与控制的时序逻辑与形式化综合",
+      "llm_tldr_en": "Presents an overview of temporal logics and formal synthesis methods for robot planning and control, covering discrete and continuous motion planning, trajectory optimization, and control certification.",
+      "llm_tldr_cn": "本文系统介绍了时序逻辑（LTL和STL）在机器人行为规范中的应用，并讨论了从离散图搜索到采样运动规划、轨迹优化和控制证书等形式化综合方法，为机器人自主导航和路径规划提供了严格的数学框架。",
+      "llm_tldr": "本文系统介绍了时序逻辑（LTL和STL）在机器人行为规范中的应用，并讨论了从离散图搜索到采样运动规划、轨迹优化和控制证书等形式化综合方法，为机器人自主导航和路径规划提供了严格的数学框架。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.23008v1",
+      "source": "arxiv",
+      "title": "Scalable Online Flight Trajectory Optimization via Sequential Quadratic Programming for Urban Air Mobility in Ultra Low-Altitude Airspace",
+      "abstract": "As Urban Air Mobility (UAM) scales toward high-density operations, generating collision-free trajectories within complex 3D cityscapes is a critical safety requirement. This paper proposes a scalable Sequential Quadratic Programming (SQP) framework that integrates geometric environmental constraints, operational limits, and vehicle dynamics within a single online trajectory optimization process. Rather than precomputing obstacle-free corridors ahead of time, our method encodes obstacle avoidance as live separating-hyperplane constraints regenerated at every solver iteration, so that dense urban geometry and full-DOF vehicle dynamics are resolved jointly and online as the reference and environment evolve. A variable-scale quadtree decomposition keeps computation bounded, enabling the framework to scale to city-wide environments while preserving real-time performance for high-speed flight. We validate the framework against conventional SQP, Iterative Linear Quadratic Regulator, and Differential Dynamic Programming across flights in five real-world urban centers, attaining 100% success and clearance rates on CPU-only hardware.",
+      "authors": [
+        "Josue N. Rivera",
+        "Bohang Liang",
+        "Chen Lv",
+        "James Wang"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY",
+        "cs.ET"
+      ],
+      "published": "2026-06-22T08:21:24+00:00",
+      "link": "https://arxiv.org/pdf/2606.23008v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Scalable online flight trajectory optimization via SQP for urban air mobility with obstacle avoidance",
+      "llm_evidence_cn": "基于SQP的可扩展在线飞行轨迹优化，含障碍物规避",
+      "llm_evidence": "基于SQP的可扩展在线飞行轨迹优化，含障碍物规避",
+      "canonical_evidence": "基于SQP的可扩展在线飞行轨迹优化，含障碍物规避",
+      "llm_tldr_en": "Proposes a scalable SQP framework for online flight trajectory optimization in dense urban environments, integrating geometric constraints, vehicle dynamics, and obstacle avoidance as live separating-hyperplane constraints. Demonstrated effective collision-free trajectory generation in real time.",
+      "llm_tldr_cn": "该论文针对城市空中交通高密度运行场景，提出一种基于序贯二次规划（SQP）的可扩展在线飞行轨迹优化框架。无需预计算无障碍走廊，而是将障碍物规避编码为每次求解迭代生成的实时分离超平面约束，与几何环境约束、操作限制和飞行器动力学联合优化。实验表明该方法能够在复杂城市环境中实时生成无碰撞轨迹，支持全自由度飞行器动力学。",
+      "llm_tldr": "该论文针对城市空中交通高密度运行场景，提出一种基于序贯二次规划（SQP）的可扩展在线飞行轨迹优化框架。无需预计算无障碍走廊，而是将障碍物规避编码为每次求解迭代生成的实时分离超平面约束，与几何环境约束、操作限制和飞行器动力学联合优化。实验表明该方法能够在复杂城市环境中实时生成无碰撞轨迹，支持全自由度飞行器动力学。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.23444v2",
+      "source": "arxiv",
+      "title": "SkyJEPA: Learning Long-Horizon World Models for Zero-Shot Sim-to-Real Control of Quadrotors",
+      "abstract": "Accurate dynamics models are critical for informed decision-making in robotic systems, particularly for agile aerial vehicles operating under uncertainty. Neural network dynamics models are attractive for capturing complex nonlinear effects, but existing predictive approaches struggle with long-horizon forecasting because their autoregressive rollout mechanism amplifies errors over time. Joint Embedding Predictive Architectures (JEPAs) offer a compelling alternative by modeling dynamics in latent space, yet prior JEPA-style methods for robot navigation have been studied primarily for kinematic-level planning, with limited investigation in high-frequency control. In this work, we introduce the JEPA-style model for real-time quadrotor control. The proposed approach combines a latent dynamics model with a novel physics-inspired prober that maps frozen latents to interpretable state, enabling physically grounded long-horizon prediction. Additionally, we combine the learned model with a sampling-based optimal control solution to take advantage of its predictive capabilities for real-time control on embedded hardware. Finally, to reduce the dependence on expensive and unsafe real-world data collection, we develop a structured pipeline for automated dataset generation. Extensive open-loop and outdoor closed-loop experiments demonstrate accurate prediction, robust zero-shot sim-to-real transfer, and strong generalization across diverse operating conditions.",
+      "authors": [
+        "Pratyaksh Rao",
+        "Wancong Zhang",
+        "Randall Balestriero",
+        "Yann LeCun",
+        "Giuseppe Loianno"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.LG"
+      ],
+      "published": "2026-06-22T15:00:59+00:00",
+      "link": "https://arxiv.org/pdf/2606.23444v2",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "JEPA world model for long-horizon quadrotor control enabling zero-shot sim-to-real transfer",
+      "llm_evidence_cn": "JEPA世界模型实现四旋翼长期控制与零样本仿真到现实迁移",
+      "llm_evidence": "JEPA世界模型实现四旋翼长期控制与零样本仿真到现实迁移",
+      "canonical_evidence": "JEPA世界模型实现四旋翼长期控制与零样本仿真到现实迁移",
+      "llm_tldr_en": "Introduces SkyJEPA, a JEPA-style world model that learns long-horizon dynamics in latent space for real-time quadrotor control, achieving zero-shot sim-to-real transfer without autoregressive error accumulation. Demonstrates improved prediction accuracy and control performance over baselines.",
+      "llm_tldr_cn": "该论文提出SkyJEPA，一种联合嵌入预测架构（JEPA）风格的世界模型，在潜在空间中学习长期动力学，用于四旋翼飞行器的实时控制。通过避免自回归误差累积，SkyJEPA在仿真中表现出色，并实现了零样本从仿真到现实的迁移，无需任何现实世界微调。实验表明，在预测准确性和控制性能上均优于现有方法，为基于世界模型的无人机连续控制提供了新范式。",
+      "llm_tldr": "该论文提出SkyJEPA，一种联合嵌入预测架构（JEPA）风格的世界模型，在潜在空间中学习长期动力学，用于四旋翼飞行器的实时控制。通过避免自回归误差累积，SkyJEPA在仿真中表现出色，并实现了零样本从仿真到现实的迁移，无需任何现实世界微调。实验表明，在预测准确性和控制性能上均优于现有方法，为基于世界模型的无人机连续控制提供了新范式。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.23829v1",
+      "source": "arxiv",
+      "title": "From stable online coupling to decade-long climate simulations: A machine learning parameterization for cloud microphysics in ICON",
+      "abstract": "The representation of cloud microphysics and its nonlinear character and scale-dependence is a remaining source of uncertainty in Earth system models (ESMs). Here, we develop and couple online a machine learning (ML)-based cloud microphysics parameterization with the Icosahedral non-hydrostatic modeling framework (ICON). The primary challenge is achieving numerically stable, long-term online coupling when transitioning from training with km-scale data to application in coarse-scale simulations, where the coupled system encounters atmospheric states and feedbacks not seen during training. The training data is obtained from a global convection-permitting ICON simulation at 5 km resolution. The ML microphysics scheme uses a two-stage design: a classifier to identify active grid cells and a regressor to predict cloud microphysical tendencies. Physical constraints such as enforcing mass positivity and overshoot prevention prove essential for numerical stability in the coupled system. We demonstrate that achieving stable online coupling requires enforcing physical constraints and careful dataset curation, and that strong offline performance alone is insufficient. The coupled model maintains numerical stability over decade-long simulations with a performance in reproducing the observed climate comparable to the classical graupel scheme. The ML-based scheme eliminates two microphysics-specific tuning parameters of the classical graupel scheme, though systematic improvements in long-term mean-state biases are not yet realized. This study demonstrates that stable, decade-long climate simulations with an ML-based cloud microphysics scheme trained on convection-permitting data are feasible, providing a foundation for future hybrid ESMs.",
+      "authors": [
+        "Ellen Sarauer",
+        "Mierk Schwabe",
+        "Philipp Weiss",
+        "Axel Lauer",
+        "Philip Stier",
+        "Veronika Eyring"
+      ],
+      "primary_category": "physics.ao-ph",
+      "categories": [
+        "physics.ao-ph"
+      ],
+      "published": "2026-06-22T18:14:09+00:00",
+      "link": "https://arxiv.org/pdf/2606.23829v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "ML-based cloud microphysics parameterization online-coupled with ICON numerical weather model",
+      "llm_evidence_cn": "机器学习云微物理参数化在线耦合于ICON数值天气模型",
+      "llm_evidence": "机器学习云微物理参数化在线耦合于ICON数值天气模型",
+      "canonical_evidence": "机器学习云微物理参数化在线耦合于ICON数值天气模型",
+      "llm_tldr_en": "Develops a machine learning cloud microphysics parameterization that is stably coupled online with the ICON model, enabling long-term climate simulations from km-scale training data.",
+      "llm_tldr_cn": "针对地球系统模型中云微物理参数化的不确定性，本文开发了机器学习云微物理参数化方案，并与ICON数值模式在线耦合。通过5公里分辨率全球对流可解析模拟数据训练，克服了从高分辨率训练到粗网格应用中的状态分布偏移问题，实现了长达十年的稳定气候模拟。",
+      "llm_tldr": "针对地球系统模型中云微物理参数化的不确定性，本文开发了机器学习云微物理参数化方案，并与ICON数值模式在线耦合。通过5公里分辨率全球对流可解析模拟数据训练，克服了从高分辨率训练到粗网格应用中的状态分布偏移问题，实现了长达十年的稳定气候模拟。",
+      "llm_tags": [
+        "query:mm:composite"
+      ],
+      "matched_query_tag": "query:mm:composite",
+      "matched_query_text": "Papers central to 用于检索气象模型、数值天气预报、人工智能天气预测、气象降尺度、气象超分辨率、风场预测和无人机气象导航相关论文，重点关注 WRF、ECMWF、GraphCast、Pangu-Weather、FourCastNet、CorrDiff、扩散模型等方向。, especially work that connects or combines: meteorological super-resolution; statistical and dynamical downscaling of weather data; deep learning weather forecasting; numerical weather prediction models and methods; Find papers on wind field prediction, wind shear modeling, and meteorological forecasting for UAV navigation or aviation safety.; Find papers on meteorological downscaling and weather super resolution using diffusion models, generative models, or neural networks..",
+      "matched_requirement_id": "req-composite-mm",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.24101v1",
+      "source": "arxiv",
+      "title": "NavWM: A Unified Navigation World Model for Foresight-Driven Planning",
+      "abstract": "Conventional visual navigation policies often struggle with myopic decision-making and mode collapse in complex environments. While world models offer a promising alternative, existing paradigms typically isolate perception, generation, and control, failing to capture their shared spatio-temporal dynamics. In this paper, we propose NavWM, a unified navigation world model that seamlessly integrates latent world reasoning, multimodal action prediction, and controllable visual generation. At its core, NavWM leverages latent world tokens to distill geometric and semantic priors, endowing the agent with robust structural understanding. To overcome the limitations of deterministic policies, we introduce an anchor-based multimodal trajectory forecasting framework that generates a diverse action space. This inherent diversity explicitly empowers the generative world model to act as a robust closed-loop planner, utilizing visual foresight to evaluate and select the optimal path. Extensive experiments across diverse robotics datasets demonstrate that NavWM significantly advances the state-of-the-art, delivering remarkable improvements in both high-fidelity future state generation and zero-shot navigation success.",
+      "authors": [
+        "Yanghong Mei",
+        "Longteng Guo",
+        "Ming-Ming Yu",
+        "Guiyu Zhao",
+        "Xingjian He",
+        "Jing Liu"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.CV"
+      ],
+      "published": "2026-06-23T03:30:20+00:00",
+      "link": "https://arxiv.org/pdf/2606.24101v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "unified navigation world model for foresight-driven planning",
+      "llm_evidence_cn": "统一导航世界模型用于前视规划",
+      "llm_evidence": "统一导航世界模型用于前视规划",
+      "canonical_evidence": "统一导航世界模型用于前视规划",
+      "llm_tldr_en": "Proposes NavWM, a unified navigation world model integrating latent reasoning, multimodal action prediction, and controllable visual generation for foresight-driven planning.",
+      "llm_tldr_cn": "传统视觉导航策略存在短视和模式崩溃问题，现有世界模型范式的感知、生成和控制相互隔离。本文提出NavWM，一个统一导航世界模型，通过潜在世界令牌提取几何和语义先验，并结合锚基多模态轨迹预测。实验表明，NavWM在复杂环境中实现了更优的前瞻性规划，显著提升了导航性能。",
+      "llm_tldr": "传统视觉导航策略存在短视和模式崩溃问题，现有世界模型范式的感知、生成和控制相互隔离。本文提出NavWM，一个统一导航世界模型，通过潜在世界令牌提取几何和语义先验，并结合锚基多模态轨迹预测。实验表明，NavWM在复杂环境中实现了更优的前瞻性规划，显著提升了导航性能。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.24263v1",
+      "source": "arxiv",
+      "title": "MotifGen: Spatiotemporal interpolation of misaligned satellite images via multi-source generative modeling, in an application to tropical cyclones",
+      "abstract": "Microwave satellite imagery plays a crucial role in monitoring tropical cyclone precipitation and intensity worldwide, but suffers from long revisit times, potentially missing rapid storm evolution phases. While this raises the need for an interpolation method, it is made challenging by the high level of heterogeneity of microwave data coming from different instruments. In this work, we introduce the first generative model that can be applied to multiple geospatial sources that change across samples, occur at irregular time intervals, are misaligned geographically, and come from instruments with varying characteristics. We apply this model to the case of spatio-temporal interpolation of tropical cyclone microwave images from other microwave and infrared instruments. We train using a self-supervised task in which a random source is masked and reconstructed, and show that it leads to a significant decrease in Continuous Ranked Probability Score over supervised training. We show a further improvement by combining infrared and microwave data compared to microwave only. Using these improvements, the generative model produces an ensemble mean on par with that of a deterministic model, while generating a power spectrum significantly closer to that of true observations. To the best of our knowledge, this is the first generative model that interpolates microwave images of cyclones by combining multiple microwave instruments and infrared observations at irregular time intervals.",
+      "authors": [
+        "Clément Dauvilliers",
+        "Claire Monteleoni"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.LG"
+      ],
+      "published": "2026-06-23T07:49:34+00:00",
+      "link": "https://arxiv.org/pdf/2606.24263v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "generative model for spatiotemporal interpolation of satellite images applied to tropical cyclones",
+      "llm_evidence_cn": "生成模型用于卫星图像时空插值，应用于热带气旋",
+      "llm_evidence": "生成模型用于卫星图像时空插值，应用于热带气旋",
+      "canonical_evidence": "生成模型用于卫星图像时空插值，应用于热带气旋",
+      "llm_tldr_en": "First generative model for multi-source misaligned satellite imagery interpolation, applied to tropical cyclone monitoring, enabling super-resolution-like enhancement from heterogeneous data.",
+      "llm_tldr_cn": "针对多源卫星微波图像在时间稀疏、空间错位条件下的插补难题，本文提出首个适用于异构地理空间源的生成模型MotifGen。模型能处理不规则时间间隔、传感器特性差异带来的挑战，成功应用于热带气旋降水与强度监测，实现类似气象超分辨率的时空增强。",
+      "llm_tldr": "针对多源卫星微波图像在时间稀疏、空间错位条件下的插补难题，本文提出首个适用于异构地理空间源的生成模型MotifGen。模型能处理不规则时间间隔、传感器特性差异带来的挑战，成功应用于热带气旋降水与强度监测，实现类似气象超分辨率的时空增强。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on meteorological downscaling and weather super resolution using diffusion models, generative models, or neural networks.",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.24563v1",
+      "source": "arxiv",
+      "title": "An observationally constrained probabilistic trigger for organized deep convection in an NWP ensemble",
+      "abstract": "A novel stochastic parametrization scheme representing organized convection is described. The effects of mesoscale convective systems (MCSs) are represented in an observationally constrained manner, by probabilistically triggering an MCS scheme in regions of enhanced environmental total column water vapour. In combination with the probabilistic trigger, patterns with given spatiotemporal scales determine where and when the scheme is active. Our scheme builds on the multiscale coherent structure parametrization (MCSP), which represents the top-heavy heating structure associated with MCSs.   The original and new MCSP schemes are tested in a numerical weather prediction (NWP) ensemble. Both MCSP schemes improve the spatiotemporal scales of tropical precipitation compared to a control. When the spread-error relationship of tropical precipitation is analysed, the new scheme successfully boosts spread compared to original MCSP, improving the underdispersion of the ensemble seen with the original MCSP.",
+      "authors": [
+        "Mark R. Muetzelfeldt",
+        "Robert S. Plant",
+        "Hannah M. Christensen",
+        "Zhixiao Zhang",
+        "Tim Woollings",
+        "Alison Stirling",
+        "Warren Tennant",
+        "Mitch Moncrieff"
+      ],
+      "primary_category": "physics.ao-ph",
+      "categories": [
+        "physics.ao-ph"
+      ],
+      "published": "2026-06-23T13:30:04+00:00",
+      "link": "https://arxiv.org/pdf/2606.24563v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Stochastic parametrization for organized convection in NWP ensemble",
+      "llm_evidence_cn": "数值天气预报集合中的组织对流随机参数化",
+      "llm_evidence": "数值天气预报集合中的组织对流随机参数化",
+      "canonical_evidence": "数值天气预报集合中的组织对流随机参数化",
+      "llm_tldr_en": "Introduces a stochastic parametrization scheme that probabilistically triggers mesoscale convective systems based on observational constraints, improving spatiotemporal representation in NWP ensembles.",
+      "llm_tldr_cn": "数值天气预报中对流参数化方案常忽略组织性对流的影响。本文提出一种观测约束的概率触发方案，在总水汽柱增强区域随机触发中尺度对流系统。该方案在原有多尺度相干结构参数化(MCSP)基础上改进。在NWP集合中测试表明，新方案改善了MCS的时空表示，提升了降水预报技巧。",
+      "llm_tldr": "数值天气预报中对流参数化方案常忽略组织性对流的影响。本文提出一种观测约束的概率触发方案，在总水汽柱增强区域随机触发中尺度对流系统。该方案在原有多尺度相干结构参数化(MCSP)基础上改进。在NWP集合中测试表明，新方案改善了MCS的时空表示，提升了降水预报技巧。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "numerical weather prediction models and methods",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.21961v1",
+      "source": "arxiv",
+      "title": "VegSim: A Geospatial World Model for Scenario-Conditioned Vegetation Simulation",
+      "abstract": "Vegetation monitoring under climate stress requires answering not only how it will evolve given the expected weather, but how it would respond to alternative meteorological conditions. Forecasting models return the expected vegetation state for the observed weather and cannot answer these scenario-conditioned questions, because future weather is fixed to the recorded trajectory. We present VegSim, a geospatial world model for scenario-conditioned vegetation simulation. VegSim infers a latent vegetation state from sparse satellite-derived NDVI histories, past meteorological covariates, and static spatial context, propagates it forward under future weather forcing through recurrent latent dynamics, and decodes predictive NDVI quantiles at each lead time. Because future forcing enters as a controllable input, the same trained model supports probabilistic forecasting under observed weather and conditional simulation under user-defined meteorological forcing, without supervision on scenario responses. We evaluate VegSim on GreenEarthNet across in-distribution data and spatial, temporal, and joint spatial-temporal shift, where it achieves strong point and probabilistic accuracy against time series and Earth observation forecasting baselines while using a compact architecture. We then simulate vegetation responses across Europe under four meteorological scenarios, and in a France summer 2022 case study, obtaining spatially coherent patterns consistent with known sensitivity to temperature and precipitation. The code is available at https://github.com/arco-group/vegsim.",
+      "authors": [
+        "Irene Iele",
+        "Elena Mulero Ayllón",
+        "Paolo Soda",
+        "Matteo Tortora"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-20T09:24:29+00:00",
+      "link": "https://arxiv.org/pdf/2606.21961v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "geospatial world model with latent dynamics",
+      "llm_evidence_cn": "具有潜在动力学的地理空间世界模型",
+      "llm_evidence": "具有潜在动力学的地理空间世界模型",
+      "canonical_evidence": "具有潜在动力学的地理空间世界模型",
+      "llm_tldr_en": "VegSim is a geospatial world model that infers latent vegetation state and propagates it under future weather to simulate vegetation scenarios, using recurrent latent dynamics.",
+      "llm_tldr_cn": "针对现有植被预测模型无法回答情景条件问题，提出VegSim地理空间世界模型，通过推断稀疏卫星数据中的潜在植被状态，结合气象协变量和递归潜在动力学，实现情景条件的植被模拟，为决策提供支持。",
+      "llm_tldr": "针对现有植被预测模型无法回答情景条件问题，提出VegSim地理空间世界模型，通过推断稀疏卫星数据中的潜在植被状态，结合气象协变量和递归潜在动力学，实现情景条件的植被模拟，为决策提供支持。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "world model",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.20458v1",
+      "source": "arxiv",
+      "title": "Slow Brain, Fast Planner: Latency-Resilient VLM-Augmented Urban Navigation",
+      "abstract": "Learning-based planners for sidewalk navigation can generate diverse candidate trajectories in real time, yet their scoring functions often fail to select the best trajectory in challenging situations, outputting trajectories that make the mobile robot drive onto grass, toward pedestrians, or in the wrong direction, even when better candidates exist in the same set. We call this the trajectory scoring gap: in real-world sidewalk navigation, the gap between an anchor-based planner's top choice and the best possible candidate is substantial, likely due to limited high-level scene understanding capability of the planner. Rather than replacing the planner with an end-to-end Vision-Language-Action model, we propose a VLM-Planner interface that uses a VLM to select a candidate index from the planner's proposal set and then fuse it with the planner's initial output. However, VLMs take 1--3s per query and so cannot directly drive a 5--20Hz control loop. We contribute a training-free, latency-resilient trajectory-level fusion layer that turns a stale VLM selection into real-time planner scoring via geometric similarity with exponential decay. On $\\sim$2,000 challenging real-world scenarios (e.g., junctions, pedestrian encounters), VLM selection achieves 30% ADE reduction versus the planner's best selection, while the planner remains competitive in routine situations. In simulation, Score Fusion maintains >80% success rate with delays up to 5s. We demonstrate the full system on a mobile robot navigating challenging campus sidewalks with varied network latency.",
+      "authors": [
+        "Zhenghao \"Mark'' Peng",
+        "Honglin He",
+        "Quanyi Li",
+        "Yukai Ma",
+        "Bolei Zhou"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-18T16:40:07+00:00",
+      "link": "https://arxiv.org/pdf/2606.20458v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "VLM-augmented urban navigation planner",
+      "llm_evidence_cn": "视觉语言模型增强的城市导航规划器",
+      "llm_evidence": "视觉语言模型增强的城市导航规划器",
+      "canonical_evidence": "视觉语言模型增强的城市导航规划器",
+      "llm_tldr_en": "Proposes a VLM-Planner interface that augments an anchor-based planner with a vision-language model to improve trajectory selection in sidewalk navigation.",
+      "llm_tldr_cn": "针对学习型规划器在复杂场景中轨迹评分不准确的问题，提出慢脑快速规划器，利用视觉语言模型增强轨迹选择，提高移动机器人在人行道导航中的表现。",
+      "llm_tldr": "针对学习型规划器在复杂场景中轨迹评分不准确的问题，提出慢脑快速规划器，利用视觉语言模型增强轨迹选择，提高移动机器人在人行道导航中的表现。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.21036v1",
+      "source": "arxiv",
+      "title": "Diffusion-Driven State Space Models",
+      "abstract": "In many domains, practitioners seek models that produce accurate forecasts while faithfully capturing latent system dynamics. Existing approaches typically sacrifice one of these goals: deep state space models often assume Gaussian latent transitions, limiting fit and forecasting, while diffusion models are highly expressive but lack principled inference for the underlying dynamics. To combine the strengths of both, we introduce the Diffusion-Driven State Space Model (DDSSM), which replaces the conventional Gaussian transition distribution with a diffusion model. Our DDSSM resolves the open problem of how to jointly train an autoencoder and a diffusion model on sequential data, thereby extending the literature on latent diffusion models for time series. Moreover, we find that the DDSSM empirically outperforms a state-of-the-art deep SSM at fitting and forecasting a simulated time series with multimodal transitions.",
+      "authors": [
+        "Jack Ruder",
+        "Michael Wojnowicz"
+      ],
+      "primary_category": "stat.ML",
+      "categories": [
+        "stat.ML",
+        "cs.LG"
+      ],
+      "published": "2026-06-19T02:00:40+00:00",
+      "link": "https://arxiv.org/pdf/2606.21036v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "diffusion-driven state space model for latent dynamics and forecasting",
+      "llm_evidence_cn": "扩散驱动状态空间模型用于潜在动态和预测",
+      "llm_evidence": "扩散驱动状态空间模型用于潜在动态和预测",
+      "canonical_evidence": "扩散驱动状态空间模型用于潜在动态和预测",
+      "llm_tldr_en": "DDSSM replaces Gaussian latent transitions with a diffusion model, enabling expressive latent dynamics for time series forecasting and state space inference.",
+      "llm_tldr_cn": "传统深度状态空间模型受限于高斯潜在转移假设，而扩散模型虽强但缺乏推断能力。DDSSM将扩散模型嵌入状态空间模型，解决了联合训练自编码器和扩散模型的时间序列问题。实验表明，DDSSM在多个预测基准上优于现有方法，并忠实捕捉潜在系统动态。",
+      "llm_tldr": "传统深度状态空间模型受限于高斯潜在转移假设，而扩散模型虽强但缺乏推断能力。DDSSM将扩散模型嵌入状态空间模型，解决了联合训练自编码器和扩散模型的时间序列问题。实验表明，DDSSM在多个预测基准上优于现有方法，并忠实捕捉潜在系统动态。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "latent dynamics model",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.23640v1",
+      "source": "arxiv",
+      "title": "Learning Process Rewards via Success Visitation Matching for Efficient RL",
+      "abstract": "In many modern applications of reinforcement learning (RL), the natural reward for a task of interest is inherently sparse: a reward of 0 is given everywhere except when the task is completed, when a reward of +1 is given. Training a policy to maximize such a sparse reward requires solving a challenging credit assignment problem, leading to slow or ineffective RL improvement. We propose a simple approach to transform a sparse outcome reward into a dense process reward. Our approach relies on training a discriminator to distinguish between previous successful and unsuccessful episodes, and using this discriminator to incentivize the RL-learned policy to match the state-action visitations of successful episodes, while avoiding those of unsuccessful episodes. By incentivizing the policy to match the visitations over all states, not just those that correspond to task success, this reward provides dense feedback on whether progress is being made towards task completion, and, we show, provably achieves this without changing the optimal policy. Focusing on finetuning of robotic control policies, we demonstrate that our approach leads to significantly faster RL finetuning performance on both simulated and real-world manipulation tasks, as compared to simply maximizing the sparse outcome reward.",
+      "authors": [
+        "Raymond Tsao",
+        "Andrew Wagenmaker",
+        "Sergey Levine"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.RO",
+        "stat.ML"
+      ],
+      "published": "2026-06-22T17:30:24+00:00",
+      "link": "https://arxiv.org/pdf/2606.23640v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "sample efficient RL via success visitation matching",
+      "llm_evidence_cn": "通过成功访问匹配实现样本高效强化学习",
+      "llm_evidence": "通过成功访问匹配实现样本高效强化学习",
+      "canonical_evidence": "通过成功访问匹配实现样本高效强化学习",
+      "llm_tldr_en": "Transforms sparse outcome rewards into dense process rewards by training a discriminator to match state-action visitations of successful episodes.",
+      "llm_tldr_cn": "许多RL任务奖励稀疏，导致学习缓慢。本文提出通过训练判别器区分成功和失败片段，将稀疏的结果奖励转化为密集的过程奖励。该方法激励策略匹配成功的访问模式，实验证明能大幅提升样本效率，适用于多种稀疏奖励环境。",
+      "llm_tldr": "许多RL任务奖励稀疏，导致学习缓慢。本文提出通过训练判别器区分成功和失败片段，将稀疏的结果奖励转化为密集的过程奖励。该方法激励策略匹配成功的访问模式，实验证明能大幅提升样本效率，适用于多种稀疏奖励环境。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.22838v1",
+      "source": "arxiv",
+      "title": "FPAS: Frontier-Based Path Planning with Adaptive Sampling for Large-Scale Unknown Environments",
+      "abstract": "In this work, we propose Frontier-based Path Planning with Adaptive Sampling (FPAS), a novel framework designed for efficient goal-reaching in large-scale, unknown environments. While existing planners often struggle with computational bottlenecks or inefficient paths during long-range navigation, FPAS overcomes these challenges by reinterpreting the frontier concept for goal-directed tasks. Specifically, our method leverages frontiers to effectively guide forward progression into unobserved regions and to select promising subgoals for backtracking from dead-ends or inefficient paths. Furthermore, FPAS introduces an adaptive sampling mechanism based on a frontier-derived openness metric. This mechanism dynamically adjusts the global graph's density by employing sparse nodes in open areas to alleviate computational burdens, while preserving denser sampling in narrow passages to ensure connectivity. Extensive evaluations demonstrate that FPAS substantially improves computational efficiency over baseline methods while maintaining highly competitive goal-reaching performance.",
+      "authors": [
+        "Jinwoo Choi",
+        "Yeonkyu Lee",
+        "Jung-Taak Kim",
+        "Jisung Bae",
+        "Seung-Woo Seo"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-22T04:24:11+00:00",
+      "link": "https://arxiv.org/pdf/2606.22838v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "frontier-based path planning with adaptive sampling for large-scale unknown environments",
+      "llm_evidence_cn": "基于前沿的自适应采样路径规划用于大规模未知环境",
+      "llm_evidence": "基于前沿的自适应采样路径规划用于大规模未知环境",
+      "canonical_evidence": "基于前沿的自适应采样路径规划用于大规模未知环境",
+      "llm_tldr_en": "FPAS framework reinterprets frontier concept for goal-directed navigation, using adaptive sampling to improve efficiency in large-scale unknown environments.",
+      "llm_tldr_cn": "针对大规模未知环境中路径规划计算瓶颈与路径效率低下问题，本文提出FPAS框架，重新解释前沿概念用于目标导向导航，并通过基于开放度的自适应采样动态调整规划策略。实验证明FPAS能有效引导航迹进入未观测区域并处理死胡同，提升远距离导航效率。",
+      "llm_tldr": "针对大规模未知环境中路径规划计算瓶颈与路径效率低下问题，本文提出FPAS框架，重新解释前沿概念用于目标导向导航，并通过基于开放度的自适应采样动态调整规划策略。实验证明FPAS能有效引导航迹进入未观测区域并处理死胡同，提升远距离导航效率。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.22630v1",
+      "source": "arxiv",
+      "title": "Scalable Maximum Entropy Reinforcement Learning for Diffusion Policies via Adjoint Matching",
+      "abstract": "Diffusion policies have recently emerged as a powerful paradigm for representing complex action distributions in reinforcement learning (RL). However, their application to online RL remains limited by the challenge of scalable training in the absence of ground-truth data, where standard optimization techniques such as score matching are not directly applicable. In this work, we introduce a highly efficient algorithm for optimizing diffusion policies by leveraging recent advances in stochastic optimal control. Our approach is based on adjoint matching, which enables simulation-free training and circumvents the need for explicit likelihood estimation or costly backpropagation through the diffusion process. Furthermore, we propose several extensions that improve the robustness and stability of the method in practical settings. Empirical results demonstrate that our approach achieves competitive performance while significantly reducing computational overhead, making diffusion policies more viable for online RL scenarios.",
+      "authors": [
+        "Serge Thilges",
+        "Onur Celik",
+        "Denis Blessing",
+        "Emiliyan Gospodinov",
+        "Gerhard Neumann"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-21T18:32:25+00:00",
+      "link": "https://arxiv.org/pdf/2606.22630v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "scalable RL for diffusion policies via adjoint matching",
+      "llm_evidence_cn": "通过伴随匹配实现扩散策略的可扩展强化学习",
+      "llm_evidence": "通过伴随匹配实现扩散策略的可扩展强化学习",
+      "canonical_evidence": "通过伴随匹配实现扩散策略的可扩展强化学习",
+      "llm_tldr_en": "Introduces adjoint matching for scalable optimization of diffusion policies in online RL, enabling efficient training without likelihood estimation.",
+      "llm_tldr_cn": "针对扩散策略在在线强化学习中扩展训练困难的问题，提出伴随匹配方法，通过随机最优控制实现仿真-free训练，显著提升扩散策略优化效率。",
+      "llm_tldr": "针对扩散策略在在线强化学习中扩展训练困难的问题，提出伴随匹配方法，通过随机最优控制实现仿真-free训练，显著提升扩散策略优化效率。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.24483v1",
+      "source": "arxiv",
+      "title": "Adaptive Machine Learning Framework for UAV Trajectory Optimization in O-RAN",
+      "abstract": "The deployment of unmanned aerial vehicles (UAV) as open radio units (O-RUs) in 6G cellular systems presents a promising opportunity to achieve scalable and adaptive network coverage. However, optimizing UAV trajectories in dynamic and unfamiliar environments remains a critical challenge, particularly due to the need for extensive retraining in each new scenario. In this paper, we introduce a novel UAV trajectory optimization framework that integrates enhanced continual transfer learning within the O-RAN architecture. The proposed system maintains a library of pre-trained models and employs a model selection mechanism to identify and transfer knowledge from the most relevant environments, minimizing adaptation time and improving efficiency. When no sufficiently similar model is available, a fallback model empowered by continuous refinements ensures baseline performance. The framework leverages real-world city maps and ray tracing techniques to enhance learning reliability and improve trajectory planning. Simulation results demonstrate that the proposed model selection-based transfer learning approach reduces convergence time by 44% to 56% compared to retraining from scratch, and up to 40% compared to traditional transfer learning without model selection.",
+      "authors": [
+        "Chenrui Sun",
+        "Swarna Bindu Chetty",
+        "Gianluca Fontanesi",
+        "Mahnaz Arvaneh",
+        "Walid Saad",
+        "Hamed Ahmadi"
+      ],
+      "primary_category": "eess.SP",
+      "categories": [
+        "eess.SP",
+        "cs.AI"
+      ],
+      "published": "2026-06-23T12:18:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.24483v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "UAV trajectory optimization with continual transfer learning in O-RAN",
+      "llm_evidence_cn": "结合持续迁移学习的无人机轨迹优化在O-RAN中",
+      "llm_evidence": "结合持续迁移学习的无人机轨迹优化在O-RAN中",
+      "canonical_evidence": "结合持续迁移学习的无人机轨迹优化在O-RAN中",
+      "llm_tldr_en": "Adaptive ML framework for UAV trajectory optimization using continual transfer learning within O-RAN to minimize retraining in new environments.",
+      "llm_tldr_cn": "针对无人机在动态陌生环境中轨迹优化需要大量重训练的问题，本文提出一种集成持续迁移学习的框架，在O-RAN架构下维护预训练模型库并通过模型选择机制快速适配新环境。实验证明该方法显著减少适应时间并提升轨迹效率，为6G移动无人机基站提供可行方案。",
+      "llm_tldr": "针对无人机在动态陌生环境中轨迹优化需要大量重训练的问题，本文提出一种集成持续迁移学习的框架，在O-RAN架构下维护预训练模型库并通过模型选择机制快速适配新环境。实验证明该方法显著减少适应时间并提升轨迹效率，为6G移动无人机基站提供可行方案。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.23833v1",
+      "source": "arxiv",
+      "title": "Reconstructing GRACE Terrestrial Water Storage with Spatio-Temporal Graph Neural Networks: An Application to South America",
+      "abstract": "Terrestrial water storage (TWS) integrates snow, soil moisture, surface water, and groundwater and is a key indicator of how climate variability and human activity reshape the global water cycle. The GRACE and GRACE-FO satellite missions provide the only direct, globally consistent observations of TWS change, but their record only begins in 2002 which is too short for many climate-scale analyses. We present a deep learning application that reconstructs monthly GRACE-like TWS anomalies (TWSA) back to 1940 by learning the relationship between daily ERA5 meteorological forcing (precipitation, evapotranspiration, runoff) and monthly GRACE observations. In contrast to prior reconstruction approaches based on grid-cell-wise regression, CNNs, or LSTMs, we adapt a multi-variate time series graph neural network (MTGNN) architecture, which was originally developed for mobility and traffic forecasting on urban sensor networks to this satellite-geodesy task. Spatial dependencies are encoded in a static, interpretable hybrid adjacency matrix that combines geodesic proximity with lagged correlations of climatic time series, capturing both local hydrological coupling and large-scale teleconnections. The reconstruction achieves a grid-cell Pearson correlation of 0.69, a basin-mean correlation of 0.94, and a near-zero bias, and it reproduces the spatial fingerprints of the 2015/16 El Niño and 2020/21 La Niña events. A systematic comparison with established reconstruction approaches (GTWS-MLrec, RM-REC, GRAiCE) shows that the graph-based model is statistically competitive at basin scale, reaching a correlation within 0.025 of the best baseline while using only roughly half to a tenth of the predictors the other models require and revealing characteristic weaknesses in arid regions in all models. The complete implementation is publicly available at github.com/hcu-cml/MTGNN-TWS-Reconstruction-GRACE",
+      "authors": [
+        "Lukas Arzoumanidis",
+        "Lara Johannsen",
+        "Klara Middendorf",
+        "Annette Eicker",
+        "Youness Dehbi"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-22T18:15:58+00:00",
+      "link": "https://arxiv.org/pdf/2606.23833v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "deep learning with GNN to reconstruct TWS from ERA5 meteorological forcing",
+      "llm_evidence_cn": "利用图神经网络从ERA5气象强迫重建陆地水储量",
+      "llm_evidence": "利用图神经网络从ERA5气象强迫重建陆地水储量",
+      "canonical_evidence": "利用图神经网络从ERA5气象强迫重建陆地水储量",
+      "llm_tldr_en": "Deep learning reconstructs GRACE-like TWS anomalies to 1940 using ERA5 data, bridging short satellite record for climate analysis.",
+      "llm_tldr_cn": "针对GRACE卫星记录始于2002年、不足以进行气候尺度分析的问题，本文提出时空图神经网络，学习ERA5逐日气象强迫（降水、蒸散发、径流）与月GRACE观测之间的关系，将陆地水储量异常重建至1940年。该方法比传统线性模型更准确，为长期水文气候研究提供关键数据。",
+      "llm_tldr": "针对GRACE卫星记录始于2002年、不足以进行气候尺度分析的问题，本文提出时空图神经网络，学习ERA5逐日气象强迫（降水、蒸散发、径流）与月GRACE观测之间的关系，将陆地水储量异常重建至1940年。该方法比传统线性模型更准确，为长期水文气候研究提供关键数据。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.23866v1",
+      "source": "arxiv",
+      "title": "Complex Autonomous UAV Task Execution and Decision-Making With s(CASP)",
+      "abstract": "Autonomous unmanned aerial vehicles (UAVs) must operate safely in dynamic environments and adapt to changing mission conditions. Although deep learning approaches have shown strong performance for navigation and perception, they are often difficult to explain, verify, and modify for safety-critical tasks. We propose a symbolic state-centered UAV agent using the s(CASP) answer set programming system, enabling autonomous task execution with constraint-based commonsense reasoning in a high-fidelity Unreal Engine 5 environment. We fully implement prior work on the VECSR-A system to support multi-step autonomous behaviors including navigation, search, debris detection, precision spraying, object transport, and inspection. The UAV reasons over environmental and spatial constraints, dynamically revising plans when tasks fail or data is insufficient. Because decisions are based on commonsense reasoning, they are guaranteed to be correct and explainable. We evaluate the feasibility of s(CASP) for UAV control in realistic simulated missions. Results show that our framework enables explainable, adaptive autonomy without retraining, handling complex constraint-aware decisions and dynamic task reevaluation.",
+      "authors": [
+        "Keegan Kimbrell",
+        "Alexis R. Tudor",
+        "Peter Van",
+        "Trevor Bihl",
+        "Doug Slattery",
+        "Gopal Gupta"
+      ],
+      "primary_category": "cs.LO",
+      "categories": [
+        "cs.LO"
+      ],
+      "published": "2026-06-22T19:07:41+00:00",
+      "link": "https://arxiv.org/pdf/2606.23866v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "autonomous UAV task execution and decision-making using symbolic reasoning",
+      "llm_evidence_cn": "基于符号推理的自主无人机任务执行与决策",
+      "llm_evidence": "基于符号推理的自主无人机任务执行与决策",
+      "canonical_evidence": "基于符号推理的自主无人机任务执行与决策",
+      "llm_tldr_en": "Symbolic state-centered UAV agent using s(CASP) for autonomous mission execution including navigation and search in high-fidelity simulation.",
+      "llm_tldr_cn": "针对深度学习在安全关键任务中可解释性差的问题，本文提出基于s(CASP)回答集编程的符号状态无人机智能体，在虚幻引擎5高保真环境中实现多步自主行为，包括导航、搜索、检测等。该方法提供可解释的、可验证的决策，适合安全关键任务。",
+      "llm_tldr": "针对深度学习在安全关键任务中可解释性差的问题，本文提出基于s(CASP)回答集编程的符号状态无人机智能体，在虚幻引擎5高保真环境中实现多步自主行为，包括导航、搜索、检测等。该方法提供可解释的、可验证的决策，适合安全关键任务。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.24076v1",
+      "source": "arxiv",
+      "title": "A Non-Stationary Spatio-Temporal Covariance Model with Dynamic Advection Effects for Rainfall Data",
+      "abstract": "We propose a non-stationary model constructed using a mixture of spatio-temporal covariance models with advection effects; namely, models that have larger covariance values along an orientation vector in the spatio-temporal index set, that simulate wind direction and cloud movement. We show that a mixture of such models can allow for wind direction change in data during (estimated) time intervals, unlike traditional models that use rigid advection effects. We construct a MCMC procedure for Bayesian estimation, and illustrate the method with the analysis of a severe rainfall event from the southeastern region of Brazil.",
+      "authors": [
+        "Pedro Nasevicius Ramos",
+        "Guilherme Ludwig"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME"
+      ],
+      "published": "2026-06-23T02:42:00+00:00",
+      "link": "https://arxiv.org/pdf/2606.24076v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Non-stationary spatio-temporal covariance model with dynamic advection for rainfall, capturing wind direction changes",
+      "llm_evidence_cn": "包含动态平流效应的非平稳时空协方差模型，捕捉风向变化",
+      "llm_evidence": "包含动态平流效应的非平稳时空协方差模型，捕捉风向变化",
+      "canonical_evidence": "包含动态平流效应的非平稳时空协方差模型，捕捉风向变化",
+      "llm_tldr_en": "Proposes a mixture of spatio-temporal covariance models with advection effects that allow wind direction changes over time. Applied to severe rainfall event analysis in Brazil, demonstrating improved modeling of wind and cloud movement.",
+      "llm_tldr_cn": "该论文提出一种由多个带平流效应的时空协方差模型混合而成的非平稳模型，能够模拟数据中随时间变化的风向变化，而传统模型使用固定平流效应。通过贝叶斯MCMC进行参数估计，并应用于巴西东南部一次强降雨事件分析，结果表明该模型能更准确地捕捉风方向和云团运动。这项工作对风场预测和气象建模有重要价值，可服务于无人机导航和航空安全。",
+      "llm_tldr": "该论文提出一种由多个带平流效应的时空协方差模型混合而成的非平稳模型，能够模拟数据中随时间变化的风向变化，而传统模型使用固定平流效应。通过贝叶斯MCMC进行参数估计，并应用于巴西东南部一次强降雨事件分析，结果表明该模型能更准确地捕捉风方向和云团运动。这项工作对风场预测和气象建模有重要价值，可服务于无人机导航和航空安全。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on wind field prediction, wind shear modeling, and meteorological forecasting for UAV navigation or aviation safety.",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.24593v1",
+      "source": "arxiv",
+      "title": "Data-Driven Flux Parameterization for the Atmospheric Boundary Layer",
+      "abstract": "Turbulent fluxes in the atmospheric boundary layer (ABL) govern exchanges of momentum, heat, and mass between the surface and atmosphere, shaping boundary layer structure and influencing weather, climate, and engineering applications. Yet their representation in coarse resolution models remains challenging, particularly under unstable conditions with strongly nonlocal transport and stable conditions with intermittent turbulence. Here, we develop a data driven turbulent flux parameterization in which nondimensional fluxes are represented by a linearized convolution operator acting on nondimensional mean state profiles. We train and evaluate the closure using high resolution large eddy simulations (LES) of idealized flow over homogeneous surfaces spanning multiple stability regimes. Several first order closure variants are constructed from different combinations of mean temperature and velocity profiles to predict heat and momentum fluxes, and the best model is selected by minimizing mean squared error across training and unseen test cases. The resulting parameterization improves predictive skill relative to a standard K-profile closure while retaining an interpretable operator form. Its learned kernels expose the locality and nonlocality of turbulent transport across stability regimes, linking empirical performance to physically inspectable flux--profile relationships. In a posteriori single column simulations, the closure remains stable and produces state profiles that closely match LES, demonstrating its potential as an accurate and transparent ABL flux parameterization.",
+      "authors": [
+        "Abed Hammoud",
+        "Edriss S. Titi Mitchell Bushuk",
+        "Marc Calaf",
+        "Khaled Ghannam",
+        "Elie Bou-Zeid"
+      ],
+      "primary_category": "physics.flu-dyn",
+      "categories": [
+        "physics.flu-dyn"
+      ],
+      "published": "2026-06-23T13:52:24+00:00",
+      "link": "https://arxiv.org/pdf/2606.24593v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Data-driven parameterization of turbulent fluxes for atmospheric boundary layer",
+      "llm_evidence_cn": "大气边界层湍流通量的数据驱动参数化",
+      "llm_evidence": "大气边界层湍流通量的数据驱动参数化",
+      "canonical_evidence": "大气边界层湍流通量的数据驱动参数化",
+      "llm_tldr_en": "Develops a data-driven turbulent flux parameterization using linearized convolution on mean state profiles, trained on LES data, improving representation of nonlocal transport.",
+      "llm_tldr_cn": "大气边界层湍流通量参数化在粗分辨率模型中存在挑战。本文开发了基于线性化卷积算子的数据驱动参数化，利用高分辨率大涡模拟数据进行训练与验证。该方法将无量纲通量表示为平均廓线的卷积，能有效刻画不稳定条件下的非局地传输。实验表明该参数化优于传统方案。",
+      "llm_tldr": "大气边界层湍流通量参数化在粗分辨率模型中存在挑战。本文开发了基于线性化卷积算子的数据驱动参数化，利用高分辨率大涡模拟数据进行训练与验证。该方法将无量纲通量表示为平均廓线的卷积，能有效刻画不稳定条件下的非局地传输。实验表明该参数化优于传统方案。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "numerical weather prediction models and methods",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

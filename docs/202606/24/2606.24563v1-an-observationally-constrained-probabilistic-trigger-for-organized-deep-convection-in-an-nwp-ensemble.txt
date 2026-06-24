@@ -1,0 +1,297 @@
+Title: An observationally constrained probabilistic trigger for organized deep convection in an NWP ensemble
+
+URL Source: https://arxiv.org/pdf/2606.24563v1
+
+Published Time: Wed, 24 Jun 2026 01:11:49 GMT
+
+Number of Pages: 14
+
+Markdown Content:
+manuscript submitted to QJRMS 
+
+# An observationally constrained probabilistic trigger for organized deep convection in an NWP ensemble 
+
+M. R. Muetzelfeldt 1, R. S. Plant 1, H. M. Christensen 2, Z. Zhang 2,T. Woollings 2, A. Stirling 3, W. Tennant 3, and M. Moncrieff 4
+
+> 1
+
+Department of Meteorology, University of Reading, Reading, UK 
+
+> 2
+
+Atmospheric, Oceanic and Planetary Physics, University of Oxford, Oxford, UK 
+
+> 3
+
+Met Office, Exeter, UK 
+
+> 4
+
+Climate and Global Dynamics, National Center for Atmospheric Research, USA 
+
+Key Points:  
+
+> •
+
+A novel stochastic scheme is used to represent MCS activity in atmospheric mod-els  
+
+> •
+
+The trigger condition is constrained by environmental conditions associated with organized deep convection  
+
+> •
+
+The scheme is shown to improve the spread-error relationship in tests with an NWP ensemble 
+
+Corresponding author: Mark Muetzelfeldt, mark.muetzelfeldt@reading.ac.uk 
+
+–1–  
+
+> arXiv:2606.24563v1 [physics.ao-ph] 23 Jun 2026 manuscript submitted to QJRMS
+
+Abstract 
+
+A novel stochastic parametrization scheme representing organized convection is described. The effects of mesoscale convective systems (MCSs) are represented in an observation-ally constrained manner, by probabilistically triggering an MCS scheme in regions of en-hanced environmental total column water vapour. In combination with the probabilis-tic trigger, patterns with given spatiotemporal scales determine where and when the scheme is active. Our scheme builds on the multiscale coherent structure parametrization (MCSP), which represents the top-heavy heating structure associated with MCSs. The original and new MCSP schemes are tested in a numerical weather prediction (NWP) ensemble. Both MCSP schemes improve the spatiotemporal scales of tropical precipitation compared to a control. When the spread-error relationship of tropical pre-cipitation is analysed, the new scheme successfully boosts spread compared to original MCSP, improving the underdispersion of the ensemble seen with the original MCSP. 
+
+1 Introduction 
+
+Atmospheric convection can organize at many different scales. Mesoscale convec-tive systems (MCSs) represent an important category of organized convection, produc-ing high fractions of total rainfall over large swathes of the tropics and extratropics (Nesbitt et al., 2006; Feng et al., 2021). They can be both mesoscale collections of many deep con-vective cumulonimbus with accompanying anvil cloud, as well as constituents of larger-scale organized convection such as convectively coupled equatorial waves (CCEWs), the Madden-Julian Oscillation (MJO), and the InterTropical Convergence Zone (ITCZ). Their anvil clouds distinguish them from simply being aggregations of cumulonimbus clouds, by altering their heating profile to be more top-heavy (Schumacher et al., 2004; Houze Jr., 2004). Here, we investigate the effect of adding a top-heavy heating profile to a numer-ical model, doing so in an observationally constrained way based on the probability of MCS occurrence for the first time. Relatively little direct attention has been paid to how to represent organized con-vection in coarser models, instead relying on the interaction between the model’s con-vection parametrization and microphysics schemes to create realistic approximations of MCSs. However, this may not be sufficient. The mesoscale circulations that occur within MCSs cannot be represented by models with a grid length of greater than 20 km, and biases have been seen at grid lengths as fine as 10 km (Moncrieff & Liu, 2006). Here, we extend a scheme which is designed to represent the missing top-heavy heating caused by MCSs, the multiscale coherent structure parametrization (MCSP; Moncrieff et al., 2017). In models with grid lengths of order 100-km, this has been shown to improve pre-cipitation in the ITCZ and the coupling to CCEWs, as well as improving the MJO (Moncrieff et al., 2017; Chen et al., 2021; Zhang et al., 2025). Zhang et al. (2025) also investigated how MCSs are represented in a 75-km (grid spacing over tropics) model using MCSP, and we build on this work. To know when to apply MCSP, it is necessary to have a model of when upscale or-ganization of convection will occur. In previous studies, this has come solely from the convection parametrization scheme and the dynamical wind conditions, relying on the presence of convection along with a minimum threshold on wind shear to trigger the scheme (Moncrieff et al., 2017; Chen et al., 2021; Zhang et al., 2025). We augment these trig-ger conditions based on recent work that shows that the probability of MCS-type con-vection occurring relative to all deep convection scales approximately linearly with to-tal column water vapour (TCWV; Muetzelfeldt et al., 2025). The aim is to ensure that MCSP is active only in those places where the environment is favourable for MCS for-mation; a more targeted observationally constrained approach to triggering the scheme.  
+
+> –2– manuscript submitted to QJRMS
+
+The probabilistic nature of our targeted trigger lends itself to an approach linked to existing stochastic parametrization schemes. Schemes such as stochastic perturbed parameter tendencies (SPPT; Buizza et al., 1999; Berner et al., 2017) use a generated pattern with given decorrelation length and time scales to modulate their activity. Our approach is to use the generated pattern as a probability field, determining the likeli-hood of MCS occurrence by testing against a probability calculated from the environ-mental conditions. This represents a new class of phenomenon-based stochastic parametriza-tion, distinct from model-uncertainty (e.g., Buizza et al., 1999) and sampling-based (e.g., Plant & Craig, 2008) stochastic parametrization. The pattern field has a suitable length and time scales to represent MCSs. Unlike SPPT, which can only scale the structure pro-vided by existing parametrizations, our new scheme can represent new physics, the or-ganization of convection, with a changed structure to the column heating through the introduction of a top-heavy heating profile. To explore the effect of our scheme, we use an NWP ensemble. Our hypothesis is that adding a stochastic trigger will increase the spread of our simulations compared to MCSP only, similar to existing stochastic parametrization schemes (Palmer et al., 2009). However, our scheme differs from existing ones by first having a strong link to an atmo-spheric phenomenon, MCSs, and second providing some justification for the length and time scales associated with the generated pattern. We initialize forecasts on the first of each month spanning one year, ensuring that we sample different seasons and atmospheric conditions to test the robustness of our results. The aim of this work is to test our new scheme in an ensemble setting, testing first the spatial and temporal scales of precipitation, before examining the spread-error re-lationships of the ensemble. In Section 2, we set out our data sources and describe the existing MCSP scheme, before detailing our modifications to it and our analysis meth-ods. We present our results in Section 3, showing how our scheme affects the spatiotem-poral scales of precipitation, before analysing ensemble spread-error characteristics. We end with a conclusion and some closing remarks in Section 4. 
+
+2 Data and Methods 
+
+2.1 GPM IMERG Precipitation 
+
+For comparison against observed precipitation, we use the Global Precipitation Mea-surement (GPM) Integrated Multi-satellitE Retrivals for GPM (IMERG) Final product (version 6), which provides global estimates of precipitation at half-hourly temporal fre-quency over a spatial discretization of 0.1 ◦ (Huffman et al., 2020). The Final product includes a monthly mean correction to gauge data where available. We use the data at hourly temporal frequency to match our simulation output, and we coarsen the data to the resolution of our model using conservative interpolation. 
+
+2.2 Ensemble Simulations 
+
+We use N216 resolution Unified Model (UM) simulations (approximately 75 km grid length at the equator), as described in Zhang et al. (2025), with 10 ensemble members. Ensemble member 0 is a deterministic control, so we disregard results from this mem-ber. We run with three model configurations: Control , PRIME-MCSP , and Stoch-PRIME-MCSP . Control uses the standard operational UM settings (M. Bush et al., 2023) with the addition of the CoMorph-A convection parametrization scheme (Lock et al., 2024), which all simulations use due to its improved representation of precipitation temporal variability. PRIME-MCSP is original version of MSCP exactly as described in Zhang et al. (2025), and Stoch-PRIME-MCSP is the stochastic version of MCSP described be-low. For each configuration, 12 simulations initiated on the 1 st of each month of 2020 are run for 10 days, with the initial conditions provided by MOGREPS-G (Inverarity  
+
+> –3– manuscript submitted to QJRMS
+
+et al., 2023), ensuring that we have simulated days that span all seasons. We use both stochastic physics schemes in Control : stochastic kinetic energy backscatter (SKEB: Ten-nant et al., 2011) and stochastic perturbed tendencies (SPT: Sanchez et al., 2016) to main-tain a similar configuration to the operational MOGREPS-G ensemble. These are also enabled in the MCSP simulations to mimimize the configuration changes between these and Control .
+
+2.3 Multiscale Coherent Structure Parametrization 
+
+MCSP was developed to represent the heating and momentum effects of organized deep convection (Moncrieff et al., 2017). The key argument behind its development is that similar coherent structures resembling the archetypal squall line occur over a wide range of scales. MCSP parametrizes the effects of such systems by adding a top-heavy heating tendency and a momentum tendency to those produced by a standard convec-tion parametrization scheme. Top-heavy heating profiles are associated with organized deep convection and MCSs (e.g. Houze Jr., 2004). In Zhang et al. (2025) we developed a simple improved trigger for the MCSP scheme to better represent MCSs: the top-heavy heating is triggered by the presence of deep convection, which must have a depth of over 300 hPa and a top above the freezing level, as well as a shear of over 3 m s −1 between 5 km and 500 m. We call this the PRIME-MCSP scheme. 
+
+2.3.1 MCSP Observationally Constrained Probabilistic Trigger 
+
+We extend PRIME-MCSP in two ways. First, we add in extra dependence on the environmental conditions in the model. To do this, we make use of the observed rela-tionship between total column water vapour (TCWV) and MCS occurrence discovered by Muetzelfeldt et al. (2025). We found that the probability of MCS-type convection given that deep convection is active scales close to linearly with TCWV (our Figure 8a). The knowledge of whether deep convection is active in the numerical model is provided by the convection parametrization scheme, and so this relationship gives us the probabil-ity that the parametrized convection should be MCS-like based on the grid-column value of TCWV. The relationship can thus be used as the basis for a targeted trigger for MCSP. The relationship from Muetzelfeldt et al. (2025) is inherently probabilistic. To ap-ply it, we combine the conditional probability of MCS-type convection with the pattern generated by stochastic parametrization schemes (described below). These patterns are an integral part of stochastic parametrizations, and ensure that the applied stochastic-ity is not filtered out by the model’s dynamics (Kober & Craig, 2016). They are used to represent model error, and increase ensemble spread such that the spread-error rela-tionship holds more closely (Palmer et al., 2009). The patterns have a characteristic length and time scale associated with them, and we want information about the presence or ab-sence of an MCS to span multiple grid cells, so using these patterns is a natural fit. The stochastic patterns used for the operational Met Office global ensemble have a decorrelation length scale set to 500 km, and decorrelation time scale set to approx-imately 6 h (20 000 s) (Inverarity et al., 2023). These have been tuned to give the best results for the stochastic schemes used by the Unified Model, the SPT and SKEB schemes (Sanchez et al., 2016). Since these scales are broadly similar to the length and time scales associated with MCSs (e.g., Feng et al., 2021), we adopt them here as being represen-tative of the scales of organized deep convection. However, we apply a transform to the pattern – a translation by 180 ◦ about the pole 1 – so that the pattern we use is uncor-related with those used by SPPT and SKEB. We call the new scheme developed here   
+
+> 1This is not a rotation: each point is effectively translated by half a circumference along its meridian, such that the transform does not retain any correlation with the original pattern.
+> –4– manuscript submitted to QJRMS
+
+Stoch-PRIME-MCSP due to its use of stochastic patterns. Halving or doubling the decor-relation length scale did not have a substantial impact on the spatial scale of simulated precipitation features (Buppanimitr, 2025, pers. comm.). 
+
+2.4 Analysing Scales of Precipitation 
+
+To assess the impact of our modifications of convection parametrization, we use anal-ysis based on Analysing Scales of Precipitation (ASoP; Klingaman et al., 2017, cf their Figures 1 and 2). Specifically, we partition the rainfall into intensity bins in order to ex-plore an existing bias in the original MCSP scheme, whereby too much precipitation is seen in the western Pacific (Zhang et al., 2025). The analysis is performed by calculat-ing the fractional contributions of different precipitation bins, low, moderate, heavy and extreme rainfall (see Figure 2 for the bin ranges). We also compute spatiotemporal correlations of rainfall to explore how the MCSP schemes match the scales of precipitation associated with MCSs. This analysis involves first calculating a 3-hour mean of the precipitation data, then calculating the correla-tion between a reference grid cell and those surrounding it in the x- and y-dimensions. Correlations are also performed along the time dimension. The information from the spa-tial dimensions is aggregated from those cells which are a given distance from the ref-erence grid cell (Figure 3). 
+
+2.5 Gaussian Smoothing of Precipitation 
+
+Precipitation is a noisy field with high variance. To perform spread-error analy-sis on such a field, it can be useful to apply spatial smoothing . This enables one to avoid the “double counting” problem for small displacements of localized rainfall features. For regional modelling, a common technique is to use fractions skill score (FSS; Roberts, 2008), which can be adapted to produce spread-error relationships (Dey et al., 2014). However, such an analysis is tied to the underlying grid, and cannot easily take into account cells with aspect ratios that differ from unity, as in our simulations. Therefore, we prefer in-stead to use a Gaussian smoothing of the precipitation to facilitate spread-error anal-ysis. Gaussian smoothing is applied over the entire tropics (30 ◦S–30 ◦N) using various length scales to obtain a series of spread-error relationships as a function of the width of the smoothing kernel. The aspect ratio is a function of latitude, as the zonal distance changes whereas the meridional does not for a latitude-longitude grid; we use the mean aspect ratio over the tropics to scale the smoothing kernel. We use root mean squared error (RMSE) as our error metric. Adapting Dey et al. (2014) who used similar definitions for FSS, we compute a dispersion RMSE (dRMSE) to characterize the spread of an ensemble, as measured by the mean of the pairwise member-to-member RMSE at a given spatial smoothing. We similarly compute an ensemble RMSE (eRMSE) to characterize the error, which is measured by the mean of the member-to-observation RMSE at a given spatial smoothing. 
+
+3 Results 
+
+3.1 Spatiotemporal Scales of Precipitation 
+
+To illustrate the nature of convection in the three simulations, we show a snapshot of precipitation over the Indian Ocean in Figure 1. Figure 1b shows that the rainfall in 
+
+Control is too broken up, and not aggregated enough, compared to IMERG. Where pre-cipitation occurs, it tends to be too strong. PRIME-MCSP does better at capturing the organized convection near the centre left of the domain, but is too broken on the east-ern side (Figure 1c). Stoch-PRIME-MCSP is similar to PRIME-MCSP , with more ag-gregation than Control but with perhaps too many localized centres of scattered con- 
+
+> –5– manuscript submitted to QJRMS
+
+vection (Figure 1d). The snapshot is one day into the simulation, so it is not expected that the simulations will exactly reproduce the organized features, but these examples are indicative of the general characteristics of each model. These results suggest that there is not enough spatial organization of convection in Control .      
+
+> Figure 1. Instantaneous precipitation rates over the Indian Ocean in (a) IMERG coarsened to the resolution of the model grid and (b) Control , (c) PRIME-MCSP , and (d) Stoch-PRIME-MCSP simulations at 08:40 local solar time (LST; from centre of domain) on 4 February 2020.
+
+We assess the degree of spatiotemporal organization using ASoP analysis (Section 2.4). The results are from a single, non-deterministic ensemble member, encompassing the full time span of all the simulations: 12 start dates for 10 days each. The results of the other ensemble members were checked, and all show the same qualitative behaviour with little variation between them – the same regional patterns for Figure 2 and typi-cally within one one-hundredth of the absolute difference in correlations for Figure 3 (not shown).         
+
+> –6– manuscript submitted to QJRMS
+> Figure 2. Fractional contribution of binned rate of precipitation to the total over the tropics for IMERG (four top-left panels) and Control ,PRIME-MCSP and Stoch-PRIME-MCSP (one per quadrant). The bin ranges are above each panel, and are referred to in the text as low, moderate, heavy, and extreme. The sum for each grid cell in a four-panel quadrant is unity.
+
+We investigate how well the different simulations match the precipitation from dif-ferent rain rates in Figure 2: we show the fractional contribution of the total for each simulation that precipitation rates (expressed as mm day −1) occupy of each of the four bins. For IMERG, Figure 2a,b,c,d can be compared to Klingaman et al. (2017) (their Figure 1 is only for the equatorial warm pool, see our Figure S1 for a direct compari-son). These show similar partitioning between the 4 bins, with the moderate bin pro-viding around 0.4–0.6 of the total precipitation over the warm pool. Extreme precipi-tation ( >100 mm day −1) provides an important contribution over the warm pool, Indian Ocean, and ITCZ. 
+
+Control (Figure 2e,f,g,h) has too little contribution from the low bin over the west-ern Pacific subtropical high, and too much from the moderate bin in this region. The heavy bin provides too much precipitation across the ITCZ, Indian Ocean, and warm pool. 
+
+> –7–
+
+manuscript submitted to QJRMS 
+
+Both PRIME-MCSP and Stoch-PRIME-MCSP show the moderate bin providing too much rainfall (0.5–0.7) over most areas except the subtropical highs and the Sahara. Both contribute too little from the low and extreme bins. The heavy bin also contributes too much, and more so than Control , particularly over the western Pacific. This sheds light on the overestimation of precipitation in this region with PRIME-MCSP (Zhang et al., 2025), pointing to too much heavy precipitation over the western Pacific in the simulations, although they were using a coarser climate model than here. The heavy rain 
+
+rates indicate that this is likely to be driven by organized systems, with both the con-vective and stratiform components contributing. Figure 2g shows too much heavy pre-cipitation over the Indian Ocean in Control , a region where there is a known bias in the UM (S. J. Bush et al., 2015) and which PRIME-MCSP improved (Zhang et al., 2025). The mechanism here seems to be the same as for the western Pacific but in reverse; MCSP schemes improve the bias here by reducing the heavy, presumably organized convection in this region. 0                                                                    
+
+> 1
+> 2
+> 3
+> 4
+> Lag (3 hourly)
+> 1.00 0.72 0.55 0.33
+> 0.66 0.54 0.46 0.31
+> 0.35 0.33 0.31 0.26
+> 0.23 0.22 0.22 0.20
+> 0.17 0.17 0.17 0.16
+> IMERG a)
+> 1.00 0.22 0.22 0.10
+> 0.70 0.20 0.20 0.10
+> 0.37 0.16 0.15 0.09
+> 0.22 0.12 0.11 0.08
+> 0.14 0.10 0.09 0.06
+> Control b)
+> 0123
+> x(approx. 75 km at equator)
+> 0
+> 1
+> 2
+> 3
+> 4
+> Lag (3 hourly)
+> 1.00 0.59 0.49 0.34
+> 0.60 0.46 0.41 0.32
+> 0.35 0.31 0.30 0.26
+> 0.27 0.25 0.24 0.22
+> 0.23 0.22 0.21 0.20
+> PRIME-MCSP c)
+> 0123
+> x(approx. 75 km at equator)
+> 1.00 0.53 0.45 0.29
+> 0.60 0.42 0.37 0.27
+> 0.33 0.28 0.27 0.22
+> 0.24 0.22 0.21 0.19
+> 0.20 0.19 0.18 0.17
+> STOCH-PRIME-MCSP d)
+> 0.05
+> 0.15
+> 0.25
+> 0.35
+> 0.45
+> 0.55
+> 0.65
+> 0.75
+> 0.85
+> 0.95
+> Corr. with centre at lag=0
+
+Figure 3. Spatiotemporal correlation of precipitation over the tropics for (a) IMERG and (b) 
+
+Control , (c) PRIME-MCSP , and (d) Stoch-PRIME-MCSP simulations. The spatial correlation of each grid cell at a given distance from the reference grid cell is shown in the x direction, and the temporal correlation of each grid cell with the reference grid cell is shown in the y direction. A 3-hour time average is used, as in Klingaman et al. (2017). 
+
+Figure 3 shows the spatiotemporal correlation of precipitation at the grid scale (Klingaman et al., 2017). Figures 3a,b show that Control is poorly correlated in space with a refer-ence grid cell, but well correlated in time. The poor spatial correlation is consistent with the reduced organized convection seen in Figure 1. PRIME-MCSP and Stoch-PRIME-MCSP both improve the spatiotemporal correlations to the reference cell. PRIME-MCSP 
+
+produces the most realistic spatial correlation, although it is not strong enough at the shortest spatial scale. There is little difference between PRIME-MCSP and Stoch-PRIME-MCSP for the temporal correlation, although the temporal correlation of PRIME-MCSP 
+
+is marginally too strong at longer lag times of nine hours (Lag 3) and longer. 
+
+–8– manuscript submitted to QJRMS 
+
+These results indicate that the MCSP schemes improve the organization of con-vection in these simulations compared to Control , with improved spatiotemporal corre-lations between grid cells (Figure 3). A plausible mechanism for this could be that the top-heavy heating structure triggers a larger-scale adjustment, for example by a grav-ity wave response, that organized the convection and its precipitation on larger spatial scales. However, the MCSP schemes do degrade the overall distributions of precipita-tion (Figure 2) compared to Control . The top-heavy heating profile will stabilize the tro-posphere, which might lead to too little precipitation in the extreme bin as the convec-tion decreases. This would lead to a greater fraction of precipitation coming from the moderate and heavy bins. 
+
+3.2 Comparing Spread and Error 
+
+Does the improvement of the structure of organized precipitation lead to an im-provement in ensemble skill? We address this question with Figure 4, which compares the temporal growth of ensemble spread and error in the ensemble mean for precipita-tion forecasts. The three panels show different levels of smoothing of the precipitation fields. Figure 4a shows that Control is overdispersed for unsmoothed precipitation fore-casts for all times beyond 12 h. PRIME-MCSP and Stoch-PRIME-MCSP both have much lower errors than Control , indicating much improved skill. The spread is higher for Stoch-PRIME-MCSP , as hypothesized due to adding in stochasticity, and for no spatial smooth-ing almost exactly matches the error. PRIME-MCSP is slightly underdispersed. A di-urnal cycle is evident for all configurations, with the likely cause being the distribution of land masses in the tropics. The peak occurs at approximately 1300Z, indicating that the strong diurnal cycle over Africa could be responsible, as 1300Z is close to when so-lar forcing is at a maximum and when the simulated diurnal cycle of convection over land typically peaks (e.g., Muetzelfeldt et al., 2021). With no spatial smoothing, the error for each simulation saturates at around day 2 (notwithstanding the diurnal cycle), indicating that no useful forecast information is being generated at the grid scale by the models after this time, as the simulations have developed into a climatology, or are potentially capturing the slow variation of tropical models like the MJO and El Ni˜ no-Southern Oscillation (ENSO), of precipitation. Some sort of spatial smoothing (e.g., FSS, see Section 2.5) is advisable for comparing models and observation at the grid-scale, as NWP models do not have much skill for precipi-tation at this scale, and it avoids the double counting problem. The MSCP simulations are plausibly smoothing the precipitation field because of their use of spatiotemporal cor-related patterns or their better representation of larger organized features, increasing their skill at this level. 
+
+> –9–
+
+manuscript submitted to QJRMS 0 1 2 3 4 5 6 7 8 9 10                     
+
+> time (day)
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 2.0
+> RMSE (mm h  1)
+> = 0 a)
+> 012345678910
+> time (day)
+> 0.0
+> 0.2
+> 0.4
+> = 2 b)
+> 012345678910
+> time (day)
+> 0.1
+> 0.0
+> 0.1
+> 0.2
+> 0.3
+> = 4 c)
+> Control error
+> Control spread
+> Control spread - error
+> PRIME-MCSP error
+> PRIME-MCSP spread
+> PRIME-MCSP spread - error
+> STOCH-PRIME-MCSP error
+> STOCH-PRIME-MCSP spread
+> STOCH-PRIME-MCSP spread - error
+
+Figure 4. Precipitation spread and error over the tropics for the three configurations, at three scales of spatial smoothing ( σ). Spread is given by dRMSE (dashed lines), and error by eRMSE (solid lines; Section 2.5). (a) σ = 0 is no spatial smoothing (i.e., at the grid scale), (b) σ = 2 ap-plies Gaussian smoothing with a kernel that has an e-folding distance of 2 times the grid spacing in the zonal direction, and similarly (c) for σ = 4. The dotted lines gives spread minus error; if it is above zero this means the simulation is overdispersed and vice versa . Data from all 12 start dates are averaged in each case. 
+
+When spatial smoothing is applied (Figures 4b,c), Control has the best spread-error relationship. However, the error for both MCSP simulations remains lower than that for 
+
+Control , again showing an improvement in model skill. Spread for Stoch-PRIME-MCSP 
+
+is consistently higher than that for PRIME-MCSP , demonstrating the value of includ-ing stochasticity in the trigger function and matching our initial hypothesis. The spread and error increase (with diurnal cycle superimposed) over the 10-day duration of these experiments, and have not saturated by the end. This indicates that there is substan-tial noise in the unsmoothed precipitation which potentially saturates the spread and error earlier for them than for the smoothed precipitation. That adding in MCSP ( PRIME-MCSP ) decreases the spread is interesting. This implies that adding in a top-heavy heating where there is convection makes the upscale growth of differences between ensemble members smaller. We speculate that this could be due to a more consistent upscale growth of convection between the different ensem-ble members, i.e. an improvement in the coupling between convection and organization. This may mean that if PRIME-MCSP were to be run operationally, it would be neces-sary to increase the strength of the stochastic parametrizations to counteract this reduc-tion in spread. Overall, adding in MCSP is positive for model skill, and Stoch-PRIME-MCSP fur-ther improves the spread-error relationship. Given the results from Section 3.1 indicat-ing that both MCSP schemes improve spatiotemporal precipitation scales, we interpret this as indicating that the improved spatiotemporal structures lead to an improvement in model skill. This implies that the organized convection that MCSP represents is im-proving not just the structure of the precipitation field (Section 3.1), but the upscale ef-fect that the organized convection produces improves the location of larger-scale precip-itation features. At a coarser resolution, PRIME-MCSP improves tropical phenomena such as Kelvin waves and the MJO (Zhang et al., 2025), and it is possible that these im-provements are present at the resolution used here. If so, this could also lead to an im-
+
+–10– manuscript submitted to QJRMS 
+
+provement in skill over longer time periods. However, it is difficult to assess this with only 10-day simulations. 
+
+4 Conclusions 
+
+We have developed a new class of phenomenon-based stochastic parametrization, designed to represent organized deep convection in this case. It triggers MCSP selectively where MCS activity is likely, using the background TCWV field as an environmental con-trol. It is different from stochastic parametrizations such as SPPT because it can have impacts by triggering new behaviour, not just modifying tendencies produced by parametriza-tion schemes but changing their vertical structure. However, similarly to SPPT, it does require the existing convection scheme to be active in order for it to trigger, and it is pos-sible for it to have a secondary effect on subsequent triggering by feedbacks onto the larger-scale state. Stoch-PRIME-MCSP uses the spatiotemporal correlation patterns from SPPT, which are reasonably well suited to representing MCSs. Improving the evidence base for choosing the length and time decorrelation scales for the stochastic pattern fields and performing experiments with changes to these are promising avenues for future research. Both MCSP schemes improve the organization of convection in our simulations, producing more realistic spatial patterns of precipitation and better near-grid-scale cor-relations compared to IMERG. This indicates that the top-heavy heating profile produced by these schemes is beneficial for organizing convection, supporting the rationale in Moncrieff et al. (2017), presumably through feedback onto the model’s dynamics. Figure 2 indi-cates that the overestimation of precipitation by MCSP in the western Pacific (Zhang et al., 2025) is due to the heavy rain produced by these simulations. This should be ex-plored further by more closely analysing this region by, for example, varying the strength of the top-heavy profile and exploring how this affects the precipitation response in the western Pacific and the precipitation distribution globally. The MCSP configurations both improve the error of simulated precipitation com-pared to IMERG, perhaps as a consequence of the improvement in organized convection. However, PRIME-MCSP is underdispersed even as the precipitation field is smoothed to allow comparisons at larger scales. Stoch-PRIME-MCSP improves this underdisper-sion by boosting spread, consistent with our original hypothesis. Both MCSP schemes therefore provide value at improving forecasts out to 10 days – extending the simulations would allow these results to be tested further. Here, we only treat the top-heavy heating from MCSs. In previous a previous study, both the heating and momentum transports have been considered (Moncrieff et al., 2017), and the momentum was shown to affect the precipitation structure. In future work, MCS momentum transports should also be considered, with care taken to calculate the prop-agation direction and MCS orientation in order to correctly apply the momentum trans-port. Additionally, it may be necessary to categorize shear-perpendicular and shear-parallel MCSs, which have different characteristics for momentum transport, and are particu-larly important in the ITCZ. Other phenomena may be candidates for similar schemes. Here, we have focused on MCSs when they are of a similar size to the grid spacing, i.e. we are in the MCS grey zone. A potential candidate for a follow-on scheme would be representing individual cu-mulonimbus clouds in a kilometre-scale model, in the deep convective grey zone. 
+
+Statement of Author Contributions 
+
+MRM: Conceptualization, Investigation, Methodology, Software, Validation, Vi-sualization, Writing – original draft. RSP: Methodology, Funding acquisition, Writing – review and editing. HMC: Methodology, Funding acquisition, Writing – review and edit- 
+
+> –11– manuscript submitted to QJRMS
+
+ing. ZZ: Methodology, Writing – review and editing. TW: Methodology, Funding acqui-sition, Writing – review and editing. AS: Methodology, Writing – review and editing. WT: Methodology, Writing – review and editing. MM: Writing – review and editing. 
+
+Conflict of Interest 
+
+The authors declare no conflicts of interest. 
+
+Acknowledgements 
+
+All simulations were run on Monsoon2, a collaborative High-Performance Comput-ing facility funded by the Met Office and the Natural Environment Research Council https:// www.metoffice.gov.uk/research/approach/collaboration/jwcrp/monsoon-hpc . All analysis was done on JASMIN, the UK’s collaborative data analysis environment ( https:// www.jasmin.ac.uk ). 
+
+Funding Information 
+
+This work was made possible by the Mesoscale Convective Systems: PRobabilis-tic forecasting and upscale IMpacts in the grey zonE (MCS:PRIME) Natural Environ-mental Research Council (NERC) Grant NE/W005530/1, which supported MRM, RSP, HMC, ZZ, and TW. HMC was also supported by NERC grant NE/P018238/1 and by a Leverhulme Trust Research Leadership Award ‘Seamless Uncertainty Quantification for Earth System prediction’ (SUQCES). 
+
+Data Availability 
+
+The Unified Model output is stored on JASMIN, and will be made available upon reasonable request. The Unified Model source code is available to use under licence. The specific branch and configuration used for these simulations can be found at https:// code.metoffice.gov.uk/trac/um/browser/main/branches/dev/markmuetzelfeldt/ vn13.0 org conv (Met Office Science Repository Service (MOSRS) account required). The GPM IMERG Final Precipitation Half Hourly 0.1 degree x 0.1 degree V06 data were obtained from the NASA Goddard Earth Sciences Data and Information Services Center (GES DISC) at https://doi.org/10.5067/GPM/IMERG/3B-HH/06 .
+
+Code Availability 
+
+All analysis scripts used to produce the figures in this paper are available at https:// github.com/markmuetz/MCSP stoch trigger ensemble , and will be archived before fi-nal submission. 
+
+References 
+
+Berner, J., Achatz, U., Batte, L., Bengtsson, L., De La Camara, A., Christensen, H. M., . . . others (2017). Stochastic parameterization: towards a new view of weather and climate models. Bulletin of the American Meteorological Soci-ety (2017). doi: 10.1175/BAMS-D-15-00268.1 Buizza, R., Milleer, M., & Palmer, T. N. (1999). Stochastic representation of model uncertainties in the ECMWF ensemble prediction system. Quar-terly Journal of the Royal Meteorological Society , 125 (560), 2887–2908. doi: 10.1002/qj.49712556006  
+
+> –12– manuscript submitted to QJRMS
+
+Bush, M., Boutle, I., Edwards, J., Finnenkoetter, A., Franklin, C., Hanley, K., . . . others (2023). The second Met Office Unified Model–JULES regional atmo-sphere and land configuration, RAL2. Geoscientific Model Development , 16 (6), 1713–1734. doi: 10.5194/gmd-16-1713-2023 Bush, S. J., Turner, A. G., Woolnough, S. J., Martin, G. M., & Klingaman, N. P. (2015). The effect of increased convective entrainment on Asian monsoon bi-ases in the MetUM general circulation model. Quarterly Journal of the Royal Meteorological Society , 141 (686), 311–326. doi: 10.1002/qj.2371 Chen, C. C., Richter, J. H., Liu, C., Moncrieff, M. W., Tang, Q., Lin, W., . . . Rasch, P. J. (2021). Effects of organized convection parameterization on the MJO and precipitation in E3SMv1. Part I: Mesoscale heating. Journal of Advances in Modeling Earth Systems , 13 (6), e2020MS002401. doi: 10.1029/2020MS002401 Dey, S. R., Leoncini, G., Roberts, N. M., Plant, R. S., & Migliorini, S. (2014). Aspatial view of ensemble spread in convection permitting ensembles. Monthly Weather Review , 142 (11), 4091–4107. Feng, Z., Leung, L. R., Liu, N., Wang, J., Houze Jr, R. A., Li, J., . . . Guo, J. (2021). A global high-resolution mesoscale convective system database using satellite-derived cloud tops, surface precipitation, and tracking. Journal of Geophysical Research: Atmospheres , 126 (8), e2020JD034202. doi: 10.1029/2020JD034202 Houze Jr., R. A. (2004). Mesoscale convective systems. Reviews of Geophysics ,
+
+42 (4), RG4003. doi: 10.1029/2004RG000150 Huffman, G. J., Bolvin, D. T., Nelkin, E. J., & Tan, J. (2020). Integrated Multi-satellitE Retrievals for GPM (IMERG) technical documentation. NASA/GSFC Code , 612 (2015), 47. Inverarity, G., Tennant, W., Anton, L., Bowler, N., Clayton, A., Jardak, M., . . . oth-ers (2023). Met Office MOGREPS-G initialisation using an ensemble of hybrid four-dimensional ensemble variational (En-4DEnVar) data assimilations. Quar-terly Journal of the Royal Meteorological Society , 149 (753), 1138–1164. doi: 10.1002/qj.4431 Klingaman, N. P., Martin, G. M., & Moise, A. F. (2017). ASoP (v1. 0): A set of methods for analyzing scales of precipitation in general circulation models. 
+
+Geoscientific Model Development , 10 (1), 57–83. doi: 10.5194/gmd-10-57-2017 Kober, K., & Craig, G. C. (2016). Physically based stochastic perturbations (PSP) in the boundary layer to represent uncertainty in convective initiation. Journal of the Atmospheric Sciences , 73 (7), 2893–2911. doi: 10.1175/JAS-D-15-0144 .1 Lock, A., Whitall, M., Stirling, A., Williams, K., Lavender, S., Morcrette, C., . . . others (2024). The performance of the CoMorph-A convection package in global simulations with the Met Office Unified Model. Quarterly Journal of the Royal Meteorological Society , 150 (763), 3527–3543. doi: 10.1002/qj.4781 Moncrieff, M. W., & Liu, C. (2006). Representing convective organization in predic-tion models by a hybrid strategy. Journal of the Atmospheric Sciences , 63 (12), 3404–3420. doi: 10.1175/JAS3812.1 Moncrieff, M. W., Liu, C., & Bogenschutz, P. (2017). Simulation, modeling, and dynamically based parameterization of organized tropical convection for global climate models. Journal of the Atmospheric Sciences , 74 (5), 1363–1380. doi: 10.1175/JAS-D-16-0166.1 Muetzelfeldt, M. R., Plant, R. S., Christensen, H. M., Zhang, Z., Woollings, T., Feng, Z., & Li, P. (2025). Environmental conditions affecting global mesoscale convective system occurrence. Journal of the Atmospheric Sciences , 82 (2), 391–407. doi: 10.1175/JAS-D-24-0058.1 Muetzelfeldt, M. R., Schiemann, R., Turner, A. G., Klingaman, N. P., Vidale, P. L., & Roberts, M. J. (2021). Evaluation of asian summer precipitation in dif-ferent configurations of a high-resolution general circulation model in a range of decision-relevant spatial scales. Hydrology and Earth System Sciences , 25 , 
+
+> –13– manuscript submitted to QJRMS
+
+6381–6405. doi: 10.5194/hess-25-6381-2021 Nesbitt, S. W., Cifelli, R., & Rutledge, S. A. (2006). Storm morphology and rain-fall characteristics of TRMM precipitation features. Monthly Weather Review ,
+
+134 (10), 2702–2721. doi: 10.1175/MWR3200.1 Palmer, T. N., Buizza, R., Doblas-Reyes, F., Jung, T., Leutbecher, M., Shutts, G. J., . . . Weisheimer, A. (2009). Stochastic parametrization and model uncertainty. doi: 10.21957/ps8gbwbdv Plant, R. S., & Craig, G. C. (2008). A stochastic parameterization for deep con-vection based on equilibrium statistics. Journal of the Atmospheric Sciences ,
+
+65 (1), 87–105. doi: 10.1175/2007JAS2263.1 Roberts, N. (2008). Assessing the spatial and temporal variation in the skill of pre-cipitation forecasts from an NWP model. Meteorological Applications , 15 (1), 163–169. doi: 10.1002/met.57 Sanchez, C., Williams, K. D., & Collins, M. (2016). Improved stochastic physics schemes for global weather and climate models. Quarterly Journal of the Royal Meteorological Society , 142 (694), 147–159. doi: 10.1002/qj.2640 Schumacher, C., Houze Jr, R. A., & Kraucunas, I. (2004). The tropical dynami-cal response to latent heating estimates derived from the TRMM precipita-tion radar. Journal of the Atmospheric Sciences , 61 (12), 1341–1358. doi: 10.1175/1520-0469(2004)061 ⟨1341:TTDRTL ⟩2.0.CO;2 Tennant, W. J., Shutts, G. J., Arribas, A., & Thompson, S. A. (2011). Using a stochastic kinetic energy backscatter scheme to improve MOGREPS prob-abilistic forecast skill. Monthly Weather Review , 139 (4), 1190–1206. doi: 10.1175/2010MWR3430.1 Zhang, Z., Christensen, H. M., Muetzelfeldt, M. R., Woollings, T., Plant, R. S., Stir-ling, A. J., . . . Feng, Z. (2025). Advancing organized convection representation in the Unified Model: Implementing and enhancing multiscale coherent struc-ture parameterization. Journal of Advances in Modeling Earth Systems , 17 (3), e2024MS004370. doi: 10.1029/2024MS004370

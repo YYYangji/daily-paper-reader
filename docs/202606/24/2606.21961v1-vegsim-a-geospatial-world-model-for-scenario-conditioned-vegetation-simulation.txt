@@ -1,0 +1,531 @@
+Title: VegSim: A Geospatial World Model for Scenario-Conditioned Vegetation Simulation
+
+URL Source: https://arxiv.org/pdf/2606.21961v1
+
+Published Time: Tue, 23 Jun 2026 01:52:36 GMT
+
+Number of Pages: 11
+
+Markdown Content:
+# VegSim: A Geospatial World Model for Scenario-Conditioned Vegetation Simulation 
+
+# Irene Iele 
+
+Università Campus Bio-Medico di Roma Rome, Italy irene.iele@unicampus.it 
+
+# Elena Mulero Ayllón 
+
+Università Campus Bio-Medico di Roma Rome, Italy e.muleroayllon@unicampus.it 
+
+# Paolo Soda ∗
+
+Umeå University Umeå, Sweden paolo.soda@umu.se 
+
+# Matteo Tortora †
+
+University of Genoa Genoa, Italy matteo.tortora@unige.it 
+
+## Abstract 
+
+Vegetation monitoring under climate stress requires answering not only how it will evolve given the expected weather, but how it would respond to alternative meteorological conditions. Forecast-ing models return the expected vegetation state for the observed weather and cannot answer these scenario-conditioned questions, because future weather is fixed to the recorded trajectory. We present VegSim, a geospatial world model for scenario-conditioned vegetation simulation. VegSim infers a latent vegetation state from sparse satellite-derived NDVI histories, past meteorological co-variates, and static spatial context, propagates it forward under future weather forcing through recurrent latent dynamics, and de-codes predictive NDVI quantiles at each lead time. Because future forcing enters as a controllable input, the same trained model sup-ports probabilistic forecasting under observed weather and condi-tional simulation under user-defined meteorological forcing, with-out supervision on scenario responses. We evaluate VegSim on GreenEarthNet across in-distribution data and spatial, temporal, and joint spatial-temporal shift, where it achieves strong point and probabilistic accuracy against time series and Earth observa-tion forecasting baselines while using a compact architecture. We then simulate vegetation responses across Europe under four me-teorological scenarios, and in a France summer 2022 case study, obtaining spatially coherent patterns consistent with known sen-sitivity to temperature and precipitation. The code is available at https://github.com/arco-group/vegsim. 
+
+## CCS Concepts 
+
+• Computing methodologies → Machine learning ; • Applied computing → Earth and atmospheric sciences .
+
+## Keywords 
+
+Geospatial world models, Earth observation, vegetation forecasting, vegetation dynamics, scenario simulation, climate stress 
+
+## 1 Introduction 
+
+Vegetation monitoring supports the assessment of ecosystem re-sponse under weather and climate stress, including drought pre-paredness, heatwave impact analysis, and regional climate-risk 
+
+> ∗Also with Università Campus Bio-Medico di Roma.
+> †Corresponding author.
+
+assessment. In these settings, the relevant question is often not only what vegetation will do under the expected weather trajectory, but how it would respond under alternative meteorological condi-tions. Practitioners may ask how a region would respond to a late frost, how a growing season would evolve under a precipitation deficit, or how vegetation would change under projected climate trajectories. These scenario-conditioned questions cannot be ad-dressed by a forecaster that returns the expected vegetation state under observed weather. They require a model that exposes future weather as a controllable forcing input, rather than only predicting the future observed in the data. Earth Observation (EO) provides a natural basis for this task, but it also imposes specific modeling constraints. Satellite-derived vegetation indices, such as Normalized Difference Vegetation Index (NDVI), provide geographically localized measurements of vegeta-tion greenness, but valid clear-sky observations are sparse because cloud cover and revisit cycles limit usable acquisitions. Meteorolog-ical drivers are available on a denser temporal grid and influence vegetation through delayed and cumulative effects. The response also depends on location, climate regime, and season. A useful sim-ulator must therefore combine sparse clear-sky observations, daily weather forcing, and static spatial context, while remaining reliable across unseen regions and years. Learning-based EO methods have made vegetation forecasting a mature task, predicting future greenness from past satellite acquisi-tions and meteorological inputs. These forecasters, however, treat future weather as a fixed input rather than a controllable one, so they cannot answer the scenario-conditioned questions above. In parallel, world models have emerged as learned latent simulators of dynamical systems, where an internal state is propagated forward under external conditioning signals. Recent studies have begun to apply this paradigm to remote sensing for spatio-temporal un-derstanding and future scene forecasting [ 20 , 37 ]. Its potential for modeling vegetation dynamics under controllable meteorological forcing remains unexplored. We address this gap with VegSim, a geospatial world model for scenario-conditioned vegetation simulation. Here, a geospa-tial world model is a learned latent simulator of satellite-observed vegetation dynamics, conditioned on static spatial context and fu-ture meteorological forcing. VegSim infers a latent vegetation state from sparse historical observations and past weather covariates, rolls this state forward under future meteorological drivers, and 
+
+> arXiv:2606.21961v1 [cs.LG] 20 Jun 2026 Iele et al.
+
+decodes predictive quantiles at each lead time. The same trained model addresses two related tasks. Under observed future forcing, it performs probabilistic forecasting , predicting NDVI quantiles that can be evaluated against ground truth. Under a perturbed future trajectory, such as warmer temperatures or reduced precipitation over a target season, it performs scenario-conditioned simulation ,for which no labeled response is available. Our contributions are: 
+
+• We formulate scenario-conditioned vegetation simulation as probabilistic latent rollout under controllable meteoro-logical forcing, from sparse satellite-derived NDVI histories and daily weather covariates. 
+
+• We introduce VegSim, a geospatial world model combining history encoding, spatial conditioning, future-forcing en-coding, recurrent latent dynamics, and quantile decoding. 
+
+• We evaluate VegSim on GreenEarthNet in-distribution and under spatial, temporal and joint spatial-temporal shift, against recurrent, convolutional, transformer-based, foundation-model, and EO-specific baselines. 
+
+• We demonstrate scenario-conditioned simulation under me-teorological perturbations, analyzing spatially structured NDVI responses across Europe and a France summer 2022 case study. The remainder of this paper is organized as follows. Section 2 reviews vegetation forecasting, weather perturbation, and world models. Section 3 describes the data and preprocessing. Section 4 presents VegSim. Section 5 details the experimental setup, and Sec-tion 6 reports the forecasting and scenario-simulation results. Sec-tion 7 concludes. 
+
+## 2 Related Work 
+
+Vegetation Forecasting and Weather Perturbation in Earth Observation. 
+
+EO provides repeated optical measurements of vegetation ac-tivity, but valid clear-sky observations are sparse and irregularly spaced in time. Satellite-based vegetation forecasting therefore estimates future vegetation states from incomplete satellite obser-vation histories, meteorological covariates, and static spatial con-text. EarthNet2021 introduced a large-scale benchmark for Earth surface forecasting, where future Sentinel-2 observations are pre-dicted from past acquisitions, topography, and meteorological vari-ables [ 28 ]. This benchmark was designed for generic surface fore-casting and evaluates predicted satellite observations rather than vegetation trajectories directly. GreenEarthNet reformulates this line for high-resolution vegetation forecasting across Europe, com-bining Sentinel-2 observations, meteorological time series, and an evaluation protocol tailored to vegetation modeling [ 2]. The same work introduces Contextformer, a multi-modal architecture for geospatial vegetation forecasting. Several architectures have been proposed for this setting. ConvLSTM-based models learn short-term surface dynamics from satellite and meteorological inputs, and have been applied to vegetation greenness prediction over Europe and Africa, including drought-related anomalies and extreme vegetation responses [ 5 , 16 , 29 ]. Transformer-based and diffusion-based approaches further extend vegetation forecasting beyond deterministic prediction. VegeD-iff models geospatial vegetation forecasting with a latent diffu-sion process to generate multiple plausible vegetation futures un-der dynamic meteorological and static environmental drivers [ 38 ], while [ 12 ] uses quantile decoding and losses adapted to sparse clear-sky observations and irregular satellite revisit patterns. These works establish vegetation forecasting as a mature EO task under observed or given meteorological forcing. A smaller set of studies examines the sensitivity of trained forecasters to modified meteorological inputs. On EarthNet2021, weather-channel perturbations have been used to analyze how Con-vLSTM predictions react to changes in individual meteorological variables [ 5]. Diffusion-based vegetation forecasters also evaluate sensitivity to meteorological drivers, while global LSTM models project vegetation change under CMIP6 SSP scenarios [ 3, 32 , 38 ]. These studies show that learned predictors can respond to altered forcing. However, perturbation is used mainly as auxiliary analysis on models trained and evaluated for forecasting. The primary task remains the prediction of future observations under the meteo-rological trajectories provided by the data. This leaves open the problem of treating future weather as a controllable forcing path and comparing vegetation trajectories from the same initial state under alternative meteorological scenarios. 
+
+World Models for Scenario-Conditioned Simulation. 
+
+World models are learned dynamics models that roll an envi-ronment state forward under conditioning inputs. In model-based reinforcement learning, the state is often latent and the condi-tioning inputs are actions [ 7, 8]. The Dreamer family instantiates this formulation through observation encoders, recurrent latent dynamics, and decoders trained on imagined rollouts [ 8]. Recent joint-embedding predictive architectures further show that future states can be modeled through latent prediction rather than direct pixel reconstruction [ 21 ]. The same principle has been applied to physical robot learning and autonomous driving, where learned roll-outs support action-conditioned prediction in embodied or driving environments [11, 36]. For environmental systems, the relevant conditioning input is not an agent action, but an external forcing trajectory. Meteorolog-ical variables provide such forcing for vegetation dynamics. This view separates two elements that are often coupled in standard forecasting: the latent state of the system and the future driver sequence used to propagate it. Once the dynamics are learned, re-placing the driver sequence at inference yields a rollout under a specified external scenario without retraining the model. Recent remote-sensing world models have begun to use this paradigm for spatio-temporal change understanding and future scene forecast-ing, but they do not address vegetation response under controllable meteorological forcing [37]. In this work, we formulate satellite-observed vegetation simula-tion as a geospatial world-model problem. VegSim infers a latent vegetation state from sparse NDVI histories and past meteorologi-cal covariates, propagates this state under future weather forcing, and decodes predictive NDVI quantiles. By replacing only the fu-ture meteorological sequence at inference time, the same trained model supports forecasting under observed forcing and scenario simulation under user-defined perturbations. This formulation uses the separation between observation history, latent dynamics, and VegSim: A Geospatial World Model for Scenario-Conditioned Vegetation Simulation 
+
+external drivers for conditional rollout, rather than for agent-based control. The resulting simulations are conditional responses under distributional shift, not causal estimates of weather effects. 
+
+## 3 Materials 
+
+We evaluate VegSim on GreenEarthNet, a continental-scale EO dataset that aligns satellite observations, meteorological drivers, and static geospatial variables over Europe [ 2]. GreenEarthNet fol-lows the Earth system data cube paradigm, where heterogeneous geospatial layers are organized into spatio-temporal minicubes [ 24 ,25 ]. This structure matches our application setting: observed vege-tation dynamics are coupled with the meteorological drivers used for scenario-conditioned simulation. Each sample is a minicube containing 30 Sentinel-2 observations sampled every five days and 150 daily meteorological observations. The spatial extent is 128 × 128 pixels, corresponding to 2.56 × 2.56 
+
+km at 20 m resolution. Although Sentinel-2 provides multiple spec-tral bands, we use only the red (B04) and narrow near-infrared (B8A) bands to compute NDVI. The meteorological drivers include wind speed, relative humidity, shortwave downwelling radiation, rainfall, sea-level pressure, and daily minimum, mean, and max-imum temperature. These variables define the observed forcing trajectories used for forecasting and the channels perturbed during scenario-conditioned simulation. VegSim operates on clear-sky vegetation time series extracted from each Sentinel-2 minicube. For a given minicube, let Ω de-note the set of pixels in its spatial footprint. At acquisition time 
+
+𝜏 𝑡 , the GreenEarthNet quality mask defines the subset of valid pix-els Ωvalid  
+
+> 𝑡
+
+⊆ Ω. For each valid pixel 𝑝 ∈ Ωvalid  
+
+> 𝑡
+
+, we compute the Normalized Difference Vegetation Index as: 
+
+NDVI 𝑡 (𝑝 ) = NIR 𝑡 (𝑝 ) − RED 𝑡 (𝑝 )
+
+NIR 𝑡 (𝑝 ) + RED 𝑡 (𝑝 ) , (1) where NIR and RED correspond to the Sentinel-2 B8A and B04 bands, respectively. The minicube-level observation is obtained by averaging NDVI over valid pixels: 
+
+𝑦 𝑡 = 1
+
+|Ωvalid  
+
+> 𝑡
+
+|∑︁ 𝑝 ∈Ωvalid 
+
+> 𝑡
+
+NDVI 𝑡 (𝑝 ). (2) Acquisitions with no valid pixels are treated as missing targets. This preprocessing converts each minicube into a sparse, irregular NDVI sequence {( 𝑦 𝑡 , 𝜏 𝑡 )} 𝑇 ℎ 
+
+> 𝑡 =1
+
+paired with dense daily meteorological covariates and static spatial metadata. Figure 1(a) summarizes this preprocessing pipeline. Meteorological covariates are enriched with cumulative indica-tors of water input and thermal stress. This design is motivated by the delayed and cumulative nature of vegetation responses to meteorological forcing, since rainfall accumulation, water deficits, and repeated exposure to cold or hot conditions may affect vegeta-tion activity over several days rather than only at the acquisition date. In addition to the raw daily drivers, we include cumulative rainfall and counts of cold and hot days, computed both between consecutive target timestamps and over rolling windows of 7 and 14 days. The interval-based features summarize the meteorological forcing accumulated between two consecutive vegetation predic-tion times, thereby accounting for the irregular temporal spacing of the supervised targets, while the rolling features describe short-term antecedent weather conditions. Cold and hot days are defined using temperature thresholds of 10 ◦C and 30 ◦C, respectively, which provide coarse indicators of thermal stress conditions affecting veg-etation activity [ 9]. The same construction is applied to historical and future covariates before normalization. We follow the GreenEarthNet evaluation protocol. The val split contains minicubes close to the training locations in 2020. The 
+
+ood-s split contains minicubes from regions outside the training areas in 2017–2019, testing spatial extrapolation. The ood-t split uses the same locations as validation but covers 2021–2022, testing temporal extrapolation. The ood-st split combines both shifts by using unseen regions in 2021–2022. These splits are aligned with our scenario-conditioned setting, where a useful vegetation simulator must remain reliable across new seasons, new regions, and their combination. The same data representation supports both forecasting and scenario-conditioned simulation. Historical NDVI observations pro-vide sparse measurements of the vegetation state, while future me-teorological covariates define the forcing trajectory for the rollout. At inference time, VegSim can replace the observed future covariate sequence with a perturbed sequence representing a specified mete-orological scenario. This design uses the same trained model for forecasting and scenario-conditioned simulation, without requiring labeled scenario responses. 
+
+## 4 Method 
+
+VegSim is a geospatial world model for probabilistic vegetation sim-ulation under user-defined meteorological scenario perturbations. The model is trained on real observations; scenario-conditioned inference requires no additional supervision and is obtained by substituting the future covariate sequence at test time. 
+
+## 4.1 Problem Formulation 
+
+Each minicube is associated with static spatial metadata s = (sgeo , 𝑠 clim ),where sgeo ∈ R2 contains latitude and longitude, and 𝑠 clim denotes a categorical Köppen–Geiger climate-zone label. For each minicube, we observe a sparse and irregular sequence of historical clear-sky acquisitions {( 𝑦 𝑡 , xhist  
+
+> 𝑡
+
+, 𝜏 𝑡 )} 𝑇 ℎ 
+
+> 𝑡 =1
+
+, where 𝑦 𝑡 ∈ [− 1, 1] is the NDVI value at acquisition time 𝜏 𝑡 and xhist  
+
+> 𝑡
+
+∈ R𝑑 ℎ denotes the paired historical meteorological covariates. Missing values are represented through feature-level masks. Future covariates {xfut  
+
+> 𝑘
+
+}𝐿 𝑘 =1 with xfut  
+
+> 𝑘
+
+∈ R𝑑 𝑓 , are defined on the model rollout axis. Each rollout step 𝑘 has an associated lead time 
+
+Δ𝑡 𝑘 in days from the last historical acquisition. Let 𝑚 𝑘 ∈ { 0, 1}
+
+indicate whether step 𝑘 has an observed NDVI target, and let 
+
+M = {𝑘 ∈ { 1, . . . , 𝐿 } : 𝑚 𝑘 = 1} (3) denote the supervised index set. Future NDVI targets are therefore available only for the sparse subset of rollout steps corresponding to subsequent clear-sky satellite acquisitions. We address two related tasks. The first, probabilistic forecasting ,requires prediction of the conditional quantiles 
+
+ˆ𝑞 𝑘,𝑎 ≈ 𝑄 𝑎 
+
+h
+
+𝑦 𝑘 | {( 𝑦 𝑡 , xhist  
+
+> 𝑡
+
+, 𝜏 𝑡 )} 𝑇 ℎ
+
+> 𝑡 =1
+
+, xfut 1: 𝐿 , Δ𝑡 1: 𝐿 , s
+
+i
+
+(4) Iele et al. 
+
+Figure 1: Overview of VegSim. (a) Data pipeline: for each minicube, the Sentinel-2 B04 and B8A bands, geographic coordinates, and Köppen–Geiger class are processed into cloud-masked NDVI and aligned with daily and engineered meteorological covariates, producing the sparse historical NDVI series and the dense future forcing. (b) Model architecture: the history encoder 
+
+𝐸 ℎ𝑖𝑠𝑡 maps the observed series, and a state summarizer pools its tokens into the initial latent state z0; the future encoder 𝐸 𝑓 𝑢𝑡 
+
+encodes the future forcing together with the lead-time embedding eΔ𝑡 𝑘 ; the spatial encoder 𝐸 𝑠𝑝𝑎𝑡𝑖𝑎𝑙 produces the static context 
+
+c𝑠 . At each step MLP 𝑖𝑛 combines these into u𝑘 , the GRU updates the latent state z𝑘 , and the shared decoder 𝐷𝑒𝑐 outputs the NDVI quantiles ˆq𝑘 . (c) Latent dynamics: the state is rolled out autoregressively from z0 over the full horizon 𝑘 = 1, . . . , 𝐿 under the per-step input u𝑘 .
+
+for each future step 𝑘 ∈ { 1, . . . , 𝐿 } and quantile level 𝑎 ∈ A =
+
+{0.1, 0.5, 0.9}. Losses are evaluated only on M, whereas the latent rollout and decoder operate over all 𝐿 future steps. The second, scenario simulation , requires the same prediction under a perturbed future covariate forcing ˜xfut that encodes a me-teorological scenario; both tasks share parameters and training data. 
+
+## 4.2 Architecture 
+
+The model comprises a history encoder, a state summarizer, a fu-ture encoder, a spatial conditioning module, a recurrent dynamics module, and a probabilistic decoder. Figure 1(b) shows the resulting architecture. 
+
+4.2.1 History encoding and latent state initialization. At each his-torical acquisition time, the NDVI value and the paired historical covariates are represented as a single feature vector [xhist  
+
+> 𝑡
+
+∥ 𝑦 𝑡 ] and projected to R𝑑 model . Missing feature values are set to zero before projection and tracked through feature-level masks. Sinusoidal po-sitional encodings are added to encode temporal order. The resulting sequence is processed by a Transformer encoder [ 34 ]with 𝑁 ℎ self-attention layers, yielding token embeddings {h𝑡 }𝑇 ℎ 
+
+> 𝑡 =1
+
+,
+
+h𝑡 ∈ R𝑑 model . Let 𝑟 ℎ𝑡 ∈ { 0, 1} indicate whether historical token 𝑡 
+
+is valid, i.e., not padding and not entirely missing. Invalid tokens are excluded from self-attention through the Transformer padding mask. The state summarizer compresses the valid token sequence into a single latent vector through learned-query attention pooling. With a learnable query q ∈ R𝑑 model , the attention weights are 
+
+𝜔 𝑡 =
+
+𝑟 ℎ𝑡 exp 
+
+
+
+q⊤h𝑡 /√︁ 𝑑 model 
+
+Í𝑇 ℎ  
+
+> 𝑡 ′=1
+
+𝑟 ℎ𝑡 ′ exp 
+
+
+
+q⊤h𝑡 ′ /√︁ 𝑑 model 
+
+ , hpool =
+
+> 𝑇 ℎ
+
+∑︁ 
+
+> 𝑡 =1
+
+𝜔 𝑡 h𝑡 . (5) A linear projection yields the initial latent state: 
+
+z0 = W𝑧 hpool + b𝑧 , z0 ∈ R𝑑 𝑧 . (6) 
+
+4.2.2 Future encoding and horizon embedding. Each future covari-ate vector xfut  
+
+> 𝑘
+
+∈ R𝑑 𝑓 is linearly projected to the model dimension. To provide the encoder with an explicit lead-time signal, we use a learnable horizon embedding eΔ𝑡 𝑘 ∈ R𝑑 𝑒 indexed by the discretized lead time Δ𝑡 𝑘 , measured in days from the last historical acquisi-tion. The projected horizon embedding is added to the projected covariate: 
+
+˜xin  
+
+> 𝑘
+
+= W𝑓 xfut  
+
+> 𝑘
+
++ W𝑒 eΔ𝑡 𝑘 , (7) where W𝑓 ∈ R𝑑 model ×𝑑 𝑓 and W𝑒 ∈ R𝑑 model ×𝑑 𝑒 . After adding sinu-soidal positional encodings, the sequence is passed through a Trans-former encoder, with 𝑁 𝑓 layers, producing future tokens {f𝑘 }𝐿 𝑘 =1,
+
+f𝑘 ∈ R𝑑 model .
+
+4.2.3 Spatial conditioning. The continuous coordinates sgeo are expanded through a harmonic feature map [23, 31], 
+
+𝛾 (sgeo ) = sgeo , sin (2𝑗 sgeo ), cos (2𝑗 sgeo )𝐹 −1 
+
+> 𝑗 =0
+
+, (8) VegSim: A Geospatial World Model for Scenario-Conditioned Vegetation Simulation 
+
+The encoded coordinates are passed through a multilayer percep-tron 𝜙 𝑐 , yielding c = 𝜙 𝑐 (𝛾 (sgeo )) ∈ R𝑑 sp . The categorical climate label 𝑠 clim is mapped through a deterministic vocabulary function 
+
+𝜄 to a learned embedding c′ = Emb (𝜄 (𝑠 clim )) . The two branches are concatenated and linearly projected to a static spatial context vector c𝑠 ∈ R𝑑 sp , fixed across all rollout steps. 
+
+4.2.4 Latent dynamics. The latent state evolves through a Gated Recurrent Unit [ 4]. At each step, the future token, spatial context, and lead-time embedding are projected by an input MLP before being passed to the recurrent cell: 
+
+u𝑘 = MLP in 
+
+   f𝑘 ∥ c𝑠 ∥ eΔ𝑡 𝑘 
+
+  ,
+
+z𝑘 = GRUCell (u𝑘 , z𝑘 −1) , 𝑘 = 1, . . . , 𝐿. (9) The rollout spans the full horizon 𝐿 at both training and inference; no thinning is applied to the latent trajectory. Figure 1(c) illustrates this rollout. Observation sparsity affects only the supervised loss: the latent state is rolled out over every future step, while the lead-time embedding eΔ𝑡 𝑘 provides the model with the temporal spacing of the rollout. The transition function operates in latent space and is trained to propagate the state across all 𝐿 steps. This design differs from direct multi-horizon decoders, which emit all future outputs in a single decoding pass [ 18 , 39 ]; VegSim instead maintains an explicit latent trajectory conditioned on future forcing at each step. 
+
+4.2.5 Probabilistic decoder. A multilayer perceptron decoder, with weights shared across horizons, maps each latent state to a vector of quantile estimates. At step 𝑘 :
+
+ˆq𝑘 = Dec    z𝑘 ∥ c𝑠 
+
+  =   ˆ𝑞 𝑘,𝑎 
+
+ 
+
+> 𝑎 ∈ A
+
+. (10) The spatial context c𝑠 provides a skip path for location-dependent effects that bypass GRU recurrence. The median estimate ˆ𝑞 𝑘, 0.5
+
+serves as the point forecast; the 10 𝑡ℎ and 90 𝑡ℎ percentiles quantify predictive uncertainty. 
+
+## 4.3 Training Objective 
+
+Let 𝑦 𝑘 denote the observed target at steps 𝑘 ∈ M , as defined in Sec-tion 4.1. The primary objective is a temporally weighted pinball loss [ 12 ,17]: 
+
+Lpin = 1
+
+|A| Í𝑘 ∈ M 𝑤 𝑘 ∑︁ 𝑘 ∈ M 
+
+𝑤 𝑘 ∑︁ 
+
+> 𝑎 ∈ A
+
+𝜌 𝑎 
+
+ 𝑦 𝑘 − ˆ𝑞 𝑘,𝑎 
+
+ , (11) where 
+
+𝜌 𝑎 (𝑒 ) = max (𝑎 𝑒, (𝑎 − 1) 𝑒 ). (12) The temporal weight is 
+
+𝑤 𝑘 = 11 + 𝛼 Δ𝑡 𝑘 
+
+, (13) with Δ𝑡 𝑘 denoting the lead time in days from the last historical acquisition, and 𝛼 > 0 selected on the validation split. The denomi-nator |A| Í𝑘 ∈ M 𝑤 𝑘 yields a weighted average over all valid targets and quantile levels, rendering the loss invariant to variation in both the number and lead-time distribution of supervised steps across batches. To discourage quantile crossing, we add a soft ordering penalty: 
+
+Lnc = 1
+
+|M|(|A| − 1)∑︁ 𝑘 ∈ M | A | − 1∑︁ 
+
+> 𝑖 =1
+
+ReLU   ˆ𝑞 𝑘,𝑎 𝑖 − ˆ𝑞 𝑘,𝑎 𝑖 +1
+
+ , (14) where 𝑎 𝑖 < 𝑎 𝑖 +1. The full objective is 
+
+L = Lpin + 𝜆 nc Lnc . (15) Quantile ordering is soft-constrained through the loss rather than hard-enforced via output parameterization, avoiding the inductive bias of monotone heads. 
+
+## 4.4 Scenario Simulation 
+
+At inference, a scenario is defined by a set of future meteorolog-ical covariate channels C, an optional temporal window W ⊆{1, . . . , 𝐿 }, a perturbation rule, and per-channel magnitudes. If no temporal window is specified, the perturbation is applied over the full rollout axis, i.e., W = {1, . . . , 𝐿 }. The perturbation rule is se-lected by variable type: additive perturbations are used for variables on an unbounded scale, such as temperature, while multiplicative perturbations are used for non-negative variables, such as precipi-tation. Partitioning C into additive channels C+ and multiplicative channels C× , the perturbed future covariate is 
+
+˜𝑥 fut  
+
+> 𝑘,𝑐
+
+=
+
+
+
+𝑥 fut  
+
+> 𝑘,𝑐
+
++ 𝛿 𝑐 , 𝑐 ∈ C +, 𝑘 ∈ W ,𝑥 fut  
+
+> 𝑘,𝑐
+
+· 𝜌 𝑐 , 𝑐 ∈ C ×, 𝑘 ∈ W ,𝑥 fut  
+
+> 𝑘,𝑐
+
+, otherwise, (16) where 𝛿 𝑐 ∈ R is a signed anomaly and 𝜌 𝑐 > 0 is a multiplicative factor. Perturbations are specified in physical units before normal-ization using statistics fitted on the training split. When engineered meteorological covariates are present, they are recomputed from the perturbed raw future sequence before the input is transformed back to model space. The perturbed sequence is propagated through the same trained model, yielding scenario quantiles ˆ𝑞 scen  
+
+> 𝑘,𝑎
+
+. We quantify the scenario response relative to the unperturbed rollout as 
+
+Δ𝑞 𝑘,𝑎 = ˆ𝑞 scen  
+
+> 𝑘,𝑎
+
+− ˆ𝑞 base  
+
+> 𝑘,𝑎
+
+, 𝑎 ∈ A . (17) where ˆ𝑞 base  
+
+> 𝑘,𝑎
+
+are the quantiles under the unperturbed forcing. Re-porting Δ𝑞 𝑘,𝑎 across quantile levels reveals both shifts in central tendency and changes in predictive spread, including asymmetric tail responses. This formulation requires no labeled scenario data. The model is trained on the joint distribution of real meteorological inputs and observed NDVI; scenario-conditioned rollout follows from substi-tuting the future covariate sequence and propagating it through the same learned dynamics. Scenario rollouts are therefore conditional simulations under distributional shift, not causal effect estimates. 
+
+## 5 Experimental Setup 5.1 Training Details 
+
+The history and future Transformer encoders use 𝑁 ℎ = 𝑁 𝑓 = 4
+
+layers with model dimension 𝑑 model = 128 ; the latent state dimen-sion is 𝑑 𝑧 = 128 , the lead-time embedding dimension 𝑑 𝑒 = 32 , the spatial embedding dimension 𝑑 sp = 32 , and the number of harmonic Iele et al. 
+
+Table 1: Quantitative comparison across GreenEarthNet evaluation splits (val, ood-s, ood-t, ood-st). Lower values are better for all error metrics. Bold values indicate the best result for each split and metric. AvgWins reports the percentage of split–metric pairs won by each model. 
+
+Model Subset RMSE ↓ MAE ↓ WMAPE ↓ MASE ↓ CRPS ↓ Pinball ↓ Param (M) MFLOPs AvgWins (%) 
+
+LSTM [10] val 0.122 ±0.150 0.088 ±0.085 0.185 ±0.180 1.171 ±1.142 0.055 ±0.060 0.094 ±0.016 
+
+3.99 M 208.20 0.0% ood-s 0.140 ±0.172 0.097 ±0.101 0.198 ±0.207 1.008 ±1.050 0.062 ±0.072 0.107 ±0.032 
+
+ood-t 0.112 ±0.151 0.077 ±0.081 0.198 ±0.209 1.164 ±1.225 0.049 ±0.057 0.084 ±0.025 
+
+ood-st 0.127 ±0.165 0.089 ±0.091 0.215 ±0.219 1.101 ±1.121 0.057 ±0.065 0.099 ±0.030 
+
+TimeLLM [14] val 0.113 ±0.160 0.075 ±0.085 0.159 ±0.179 1.007 ±1.130 – –124.44 M 510.61 0.0% ood-s 0.151 ±0.190 0.101 ±0.112 0.207 ±0.228 1.052 ±1.158 – –ood-t 0.111 ±0.164 0.072 ±0.084 0.185 ±0.215 1.088 ±1.264 – –ood-st 0.127 ±0.177 0.086 ±0.094 0.207 ±0.227 1.058 ±1.163 – –InceptionTime [13] val 0.123 ±0.130 0.092 ±0.081 0.195 ±0.171 1.234 ±1.083 0.068 ±0.064 0.125 ±0.168 
+
+1.23 M 64.42 0.0% ood-s 0.144 ±0.161 0.103 ±0.100 0.211 ±0.204 1.074 ±1.036 0.078 ±0.079 0.142 ±0.000 
+
+ood-t 0.113 ±0.133 0.082 ±0.078 0.210 ±0.200 1.232 ±1.173 0.060 ±0.061 0.110 ±0.000 
+
+ood-st 0.124 ±0.154 0.089 ±0.085 0.216 ±0.207 1.104 ±1.057 0.067 ±0.068 0.122 ±0.000 
+
+iTransformer [19] val 0.116 ±0.138 0.084 ±0.080 0.177 ±0.170 1.123 ±1.074 – –4.22 M 8.43 0.0% ood-s 0.150 ±0.175 0.106 ±0.106 0.218 ±0.217 1.106 ±1.103 – –ood-t 0.111 ±0.158 0.078 ±0.079 0.201 ±0.202 1.180 ±1.185 – –ood-st 0.129 ±0.163 0.091 ±0.090 0.221 ±0.219 1.132 ±1.119 – –TimeXer [35] val 0.121 ±0.190 0.075 ±0.095 0.158 ±0.202 1.000 ±1.276 – –6.33 M 21.06 12.50% ood-s 0.154 ±0.219 0.096 ±0.120 0.197 ±0.245 1.001 ±1.244 – –ood-t 0.109 ±0.187 0.066 ±0.087 0.170 ±0.224 0.996 ±1.314 – –ood-st 0.129 ±0.201 0.081 ±0.100 0.196 ±0.242 1.000 ±1.238 – –Chronos-2 [1] val 0.141 ±0.233 0.086 ±0.111 0.181 ±0.235 1.147 ±1.488 0.057 ±0.069 0.033 ±0.040 
+
+28 M 316.87 0.0% ood-s 0.177 ±0.287 0.110 ±0.138 0.225 ±0.283 1.142 ±1.436 0.074 ±0.091 0.043 ±0.055 
+
+ood-t 0.130 ±0.336 0.077 ±0.105 0.197 ±0.270 1.156 ±1.588 0.052 ±0.068 0.030 ±0.040 
+
+ood-st 0.151 ±0.395 0.092 ±0.119 0.223 ±0.289 1.141 ±1.476 0.062 ±0.079 0.036 ±0.048 
+
+Contextformer [2] val 0.145 ±0.035 0.121 ±0.031 0.237 ±0.089 0.732 ±0.200 – –6.1 M 173 × 10 3 16.67% ood-s 0.154 ±0.042 0.129 ±0.038 0.242 ±0.087 0.732 ±0.186 – –ood-t 0.141 ±0.043 0.119 ±0.041 0.277 ±0.116 0.688 ±0.186 – –ood-st 0.146 ±0.042 0.123 ±0.039 0.281 ±0.114 0.718 ±0.244 – –VegSim val 0.067 ±0.062 0.057 ±0.051 0.134 ±0.170 0.765 ±0.678 0.035 ±0.034 0.020 ±0.020 
+
+1.3 M 3.28 70.83% ood-s 0.089 ±0.078 0.077 ±0.066 0.239 ±2.117 0.775 ±0.663 0.047 ±0.043 0.026 ±0.025 
+
+ood-t 0.068 ±0.065 0.060 ±0.057 0.184 ±0.347 0.916 ±0.878 0.037 ±0.038 0.021 ±0.022 
+
+ood-st 0.088 ±0.073 0.077 ±0.065 0.225 ±0.601 0.917 ±0.772 0.047 ±0.043 0.026 ±0.025 
+
+frequencies 𝐹 = 4. Models are trained with Adam [ 15 ] at an ini-tial learning rate of 10 −4 for 200 epochs with batch size 128. The learning rate is reduced by a factor of 0.2 after 20 epochs without validation loss improvement, with a minimum of 5 × 10 −5. We hold out 20% of the training minicubes as an internal validation set for learning-rate scheduling and early stopping. This internal split is distinct from the GreenEarthNet val split used for evaluation. The temporal decay parameter is 𝛼 = 0.1 and the non-crossing weight 
+
+𝜆 nc = 10 −2. All experiments run on a single NVIDIA T4 GPU. 
+
+## 5.2 Baselines and Evaluation Protocol 
+
+Scenario-conditioned simulation cannot be evaluated against ground truth, since no vegetation observations exist for the perturbed mete-orological forcing. We therefore assess VegSim through probabilistic forecasting under observed future forcing. This evaluation tests the consistency of the learned dynamics with observed vegetation tra-jectories before applying the same dynamics to perturbed forcing sequences. We compare VegSim against forecasting baselines spanning re-current, convolutional, transformer-based, foundation-model, and EO-specific architectures, as reported in Table 1. The recurrent base-line is LSTM [ 10 ]. The convolutional baseline is InceptionTime [ 13 ]. Transformer-based competitors include iTransformer [ 19 ], TimeXer [ 35 ], and TimeLLM [ 14 ]. We also include Chronos-2 [ 1], a pretrained foundation model for time series forecasting, and Contextformer [ 2 ], an EO model designed for geospatial vegetation forecasting under spatio-temporal distribution shifts. TimeLLM, iTransformer, and TimeXer are implemented using the NeuralForecast library [ 27 ]. Chronos-2 is evaluated within the AutoGluon framework [ 30 ]. LSTM and InceptionTime are implemented using the tsai library [ 26 ]. Contextformer follows the official implementation released with GreenEarthNet. VegSim: A Geospatial World Model for Scenario-Conditioned Vegetation Simulation 
+
+Figure 2: Seasonal spatial distribution of VegSim MAE over Europe. Pointwise NDVI errors are aggregated across all evaluation splits, binned spatially, and averaged within each season. Lower is better. 
+
+All models are evaluated on the same GreenEarthNet splits. Point accuracy is assessed with RMSE, MAE, WMAPE, and MASE [ 33 ]. For probabilistic models, these metrics are computed on the median prediction ˆ𝑞 𝑘, 0.5; for deterministic models, on the point forecast. Probabilistic accuracy is assessed with the Continuous Ranked Probability Score (CRPS), 
+
+CRPS (𝐹, 𝑦 ) =
+
+∫ +∞ −∞ 
+
+(𝐹 (𝑧 ) − I(𝑧 ≥ 𝑦 )) 2 𝑑𝑧, (18) and with the pinball loss averaged over the quantile levels in A.CRPS and pinball loss are reported only for models that provide probabilistic outputs. All metrics are minimized. 
+
+## 6 Results 
+
+We organize the results around the two requirements of a scenario-conditioned vegetation simulator. First, the learned dynamics must reproduce observed vegetation trajectories under observed meteo-rological forcing. We therefore evaluate VegSim as a probabilistic forecaster across validation, spatial-shift, temporal-shift, and joint spatial-temporal-shift splits in Section 6.1. We then analyze sea-sonal error patterns in Section 6.2, inspect temporal consistency on a representative minicube in Section 6.3, and ablate the main model components in Section 6.4. Second, the same learned dynam-ics must produce coherent responses when future meteorological forcing is perturbed. We assess this property through controlled scenarios over Europe in Section 6.5 and through a France summer 2022 case study in Section 6.6. This structure separates observed-forcing validation from perturbed-forcing simulation, while using the same trained model in both settings. 
+
+## 6.1 Quantitative Analysis 
+
+Table 1 compares VegSim with recurrent, convolutional, transformer-based, foundation-model, and EO-specific baselines. VegSim achieves the lowest RMSE and MAE across all evaluation splits. Point accu-racy remains close to the validation regime under temporal extrap-olation, while larger errors appear under spatial and joint shifts. Generalization to unseen regions is therefore the main challenge in this setting. Among probabilistic models, VegSim obtains the best CRPS and pinball loss in every split, which matters for scenario simulation, where the rollout must yield reliable predictive distributions and not only median forecasts. VegSim is less dominant on scale-normalized metrics, with Contextformer achieving lower MASE and TimeXer remaining competitive on WMAPE. To verify that the observed im-provements are not driven by isolated sources, we further assessed statistical significance using one-sided paired Wilcoxon signed-rank tests on source-level metric differences, with Holm–Bonferroni cor-rection for multiple comparisons within each split. This analysis confirmed that the main performance gains of VegSim are statisti-cally supported across the evaluation splits. AvgWins summarizes the percentage of split–metric pairs in which a model obtains the best score across the reported evaluation metrics. VegSim reaches the highest AvgWins at 70 .83% while using a compact architecture of 1.3M parameters and 3.28 MFLOPs. These results show that VegSim is an accurate and efficient probabilistic forecaster under spatial and temporal distribution shift. 
+
+## 6.2 Seasonal Error Diagnostics 
+
+To analyze where the learned dynamics are most reliable under ob-served forcing, we aggregate pointwise errors across all evaluation splits and compute MAE within spatial bins for each season. Fig-ure 2 shows smooth and generally low error during spring, summer, and autumn. Winter errors are larger and more spatially hetero-geneous, with the strongest values over northern and continental regions. Predictive reliability therefore depends on both season and geography, and winter is the least reliable regime. These maps act as a spatial diagnostic for the scenario-conditioned rollouts: regions and seasons with higher observed-forcing error warrant greater caution under perturbed forcing. 
+
+## 6.3 Qualitative Temporal Consistency 
+
+Figure 3 inspects VegSim on a minicube in southwestern Sweden (58 .261429 ◦N, 12 .914835 ◦E) over a sequence of Sentinel-2 acquisi-tions. The top panel compares the observed minicube-level NDVI with the VegSim median prediction. The model follows the ob-served temporal profile, capturing the initial high vegetation ac-tivity and the subsequent decline toward the end of the window, with a smoother trajectory that slightly damps the peak and the late drop. The lower panels show the Sentinel-2 RGB images and NDVI heatmaps for the same acquisitions. Greener scenes with high heatmap values align with the higher points in the time series, while the final acquisition shows reduced vegetation and a lower aggregate NDVI. The minicube-level forecasts therefore remain consistent with the visual evidence in the underlying satellite ob-servations, despite local spatial heterogeneity within the minicube. Iele et al. 
+
+Figure 3: Qualitative temporal consistency on a minicube located in southwestern Sweden. The top panel compares the observed minicube-level NDVI with the VegSim median prediction over the acquisition window; horizontal bands denote NDVI-based vegetation health classes. The lower panels report the corresponding Sentinel-2 RGB observations and NDVI heatmaps. w/o Horizon Embeddings w/o Spatial Harmonics Sinusoidal Horizon Embedding w/o Feature Engineering 
+
+> −2
+> 0
+> 2
+> 4RMSE  ↓
+> ∆ vs Full (%)
+
+val 
+
+> w/o Horizon Embeddings w/o Spatial Harmonics Sinusoidal Horizon Embedding w/o Feature Engineering
+
+ood-s 
+
+> w/o Horizon Embeddings w/o Spatial Harmonics Sinusoidal Horizon Embedding w/o Feature Engineering
+
+ood-t 
+
+> w/o Horizon Embeddings w/o Spatial Harmonics Sinusoidal Horizon Embedding w/o Feature Engineering
+
+ood-st 
+
+> w/o Horizon Embeddings w/o Spatial Harmonics Sinusoidal Horizon Embedding w/o Feature Engineering
+> −2
+> 0
+> 2
+> 4
+> 6CRPS  ↓
+> ∆ vs Full (%)
+
+val 
+
+> w/o Horizon Embeddings w/o Spatial Harmonics Sinusoidal Horizon Embedding w/o Feature Engineering
+
+ood-s 
+
+> w/o Horizon Embeddings w/o Spatial Harmonics Sinusoidal Horizon Embedding w/o Feature Engineering
+
+ood-t 
+
+> w/o Horizon Embeddings w/o Spatial Harmonics Sinusoidal Horizon Embedding w/o Feature Engineering
+
+ood-st 
+
+Figure 4: Ablation and variant sensitivity relative to the Full Model. Bars denote the percentage change in RMSE and CRPS when a component is removed ( w/o ) or, for the horizon embedding, when the learned embedding is replaced by a fixed sinusoidal one ( Sinusoidal Horizon Embedding ). Red values indicate degradation and blue values indicate improvement; all metrics are minimized. 
+
+## 6.4 Ablation Study 
+
+Figure 4 reports the change in RMSE and CRPS for each ablation and variant relative to the Full Model. On the validation split, every change degrades both RMSE and CRPS, so the Full Model benefits from the joint use of engineered, spatial, and temporal representa-tions. Under spatial shift, removing feature engineering or spatial har-monics is among the most damaging ablations, which indicates that spatial generalization relies on both structured covariates and explicit spatial encoding. Feature engineering remains the most beneficial component under joint spatial-temporal shift. The horizon embedding shows a regime-dependent effect. In-distribution and under spatial shift, the learned embedding used by the Full Model is the best option, since both removing it and replacing it with a fixed sinusoidal encoding increase error. Under temporal shift, removing the embedding improves performance, and the sinusoidal variant is worse than the learned one. Under joint spatial-temporal shift, removing the embedding again gives the largest improvement, while the sinusoidal variant yields only a VegSim: A Geospatial World Model for Scenario-Conditioned Vegetation Simulation 
+
+marginal gain over the learned one. The learned embedding there-fore aids in-distribution prediction and spatial generalization, but encodes temporal structure that transfers poorly to unseen time ranges, and a fixed sinusoidal encoding does not remedy this. 
+
+## 6.5 Scenario-Conditioned Simulation 
+
+We analyze VegSim under four meteorological scenarios, each de-fined by a temperature anomaly Δ𝑇 (°C) and a fractional precip-itation anomaly Δ𝑃 (%) applied to a target season according to the perturbation protocol of Section 4.4: Late frost, Wet warming, Drought, and SSP5-8.5 [ 32 ]. These scenarios span distinct forcing regimes and cover three seasons. Figure 5 reports the spatial distri-bution of the median NDVI response for each scenario, aggregated across all evaluation subsets (val, ood-s, ood-t, ood-st) and averaged within each spatial tile. The reported responses should be inter-preted as conditional simulations under perturbed meteorological forcing. 
+
+Late frost (Spring, Δ𝑇 = −3 ◦C, Δ𝑃 = +5% ). A spring cooling per-turbation produces a geographically structured negative response across central and northern Europe, where vegetation is in active green-up at the time of perturbation. The Mediterranean area re-mains near-neutral, reflecting lower phenological sensitivity to spring cooling in regions where the growing season onset occurs earlier. This contrast is consistent with the known latitudinal gra-dient in frost vulnerability during the green-up phase. 
+
+Wet warming (Winter, Δ𝑇 = +1.5 ◦C , Δ𝑃 = +15% ). Winter warm-ing produces a weak but broadly positive response across the study area. Low temperature is the primary limiting factor for vegetation activity during the cold season, and a modest warming combined with increased precipitation relaxes this constraint. This is the only scenario of the four with a net positive NDVI response, providing a reference for the direction of modeled sensitivity. 
+
+Drought (Summer, Δ𝑇 = +2 ◦C, Δ𝑃 = −40% ). A strong summer precipitation deficit produces a spatially homogeneous negative response across Europe. The signal is driven primarily by the pre-cipitation component: the −40% anomaly exceeds the interannual variability range for most European agricultural areas and reduces soil water availability below the threshold that governs transpira-tion and canopy development. The absence of strong spatial dif-ferentiation indicates that, at this magnitude of water deficit, the response is not confined to water-limited climate zones. 
+
+SSP5-8.5 (Summer, Δ𝑇 = +4 ◦C , Δ𝑃 = −35% ). The high-emission scenario produces the most geographically differentiated response among the summer scenarios. Negative anomalies concentrate in the Mediterranean and central-southern Europe, while northern areas remain near-neutral. The spatial pattern diverges from the Drought scenario despite a similar precipitation reduction: the larger temperature anomaly ( +4 ◦C ) amplifies heat stress in regions already operating near the upper thermal tolerance of summer veg-etation, consistent with the documented vulnerability of Mediter-ranean ecosystems to compound heat-drought events. Across all scenarios, VegSim produces spatially coherent re-sponses that align with expected patterns of vegetation sensitivity to meteorological forcing. 
+
+## 6.6 Case Study: Summer 2022 over France 
+
+We use France during summer 2022 as a regional case study. This season is a strong stress-test setting, since summer 2022 was the hottest on record in Europe [ 22 ] and Western Europe experienced repeated heatwave conditions [ 6 ]. We select all French minicubes whose temporal window covers summer 2022 and use their ob-served meteorological trajectories as the reference forcing. Starting from these observed trajectories, we evaluate VegSim under two opposite perturbations. The first increases temperature by +4 ◦C
+
+and reduces precipitation by 40% , an intensification of hot and dry summer conditions. The second decreases temperature by −4 ◦C
+
+and increases precipitation by 40% , a cooler and wetter alternative to the observed 2022 forcing. Both perturbations are applied to the same set of French minicubes, so the simulated responses can be compared under symmetric changes in meteorological stress. Figure 6 reports the spatial response at lead times of 5, 10, 15, 30, and 50 days. The two perturbations produce opposite NDVI responses: warming with drying yields a negative response, and cooling with wetting yields a positive one. This sign reversal in-dicates that the model is sensitive to the direction of the imposed forcing. The magnitude also depends on lead time: the response is moderate at short lead times and becomes more pronounced at 30 and 50 days, reaching its largest values at the longest horizon. Veg-Sim therefore not only reacts instantaneously to perturbed inputs, but propagates their cumulative effect through the latent vegetation trajectory. This case study shows how VegSim can serve regional climate-risk and drought-impact assessment. Starting from an observed anomalous season, a practitioner can explore how vegetation would respond under more or less severe heat and water stress, and obtain spatially distributed responses across lead times that indicate where vegetation is most exposed under a hypothesized intensification. Such outputs can inform monitoring priorities and drought pre-paredness. The maps remain conditional simulations relative to the observed forcing, not causal estimates of the effect of temperature or precipitation changes. 
+
+## 7 Conclusion 
+
+We introduced VegSim, a geospatial world model for scenario-conditioned vegetation simulation from sparse satellite-derived vegetation time series, daily meteorological covariates, and static spatial context. The model is trained only on observed trajectories, but exposes future meteorological inputs as controllable forcing variables at inference time. This formulation connects probabilis-tic vegetation forecasting with scenario-conditioned simulation, without requiring labeled responses under perturbed weather con-ditions. The forecasting experiments show that VegSim learns reliable vegetation dynamics under observed meteorological forcing. Across validation, spatial-shift, temporal-shift, and joint spatial-temporal-shift splits, VegSim achieves strong point and probabilistic accuracy while using a compact architecture. The seasonal diagnostics indi-cate that reliability varies across geography and season, with winter and spatially shifted regions remaining more challenging. The ab-lation study identifies engineered meteorological indicators and spatial encoding as the main contributors to generalization, while Iele et al. 
+
+Figure 5: Spatial distribution of the median NDVI response ( ΔNDVI) under four meteorological scenarios, aggregated across all evaluation subsets and averaged within each spatial tile. Blue denotes a positive response and red a negative one. The maps are conditional simulations under perturbed forcing, not causal effect estimates. 
+
+Figure 6: Relative NDVI change ( ΔNDVI, %) for the France summer 2022 case study at lead times of 5, 10, 15, 30, and 50 days. Top row: warming with drying ( Δ𝑇 = +4 ◦C, Δ𝑃 = −40% ). Bottom row: cooling with wetting ( Δ𝑇 = −4 ◦C, Δ𝑃 = +40% ). Blue denotes a positive response and red a negative one. The maps are conditional simulations relative to the observed forcing, not causal effect estimates. 
+
+the learned horizon embedding mainly benefits in-distribution and spatially shifted settings. The scenario experiments show that the same learned dynamics can produce spatially coherent vegetation responses under con-trolled meteorological perturbations. Across Europe, VegSim cap-tures distinct response patterns for spring cooling, winter warming, summer drought, and high-emission summer stress. In the France summer 2022 case study, opposite temperature and precipitation perturbations lead to opposite NDVI responses, whose magnitude grows at longer lead times. These results suggest that VegSim can support regional exploration of vegetation sensitivity under alter-native meteorological trajectories. VegSim has limitations. Scenario-conditioned rollouts are con-ditional simulations under perturbed inputs, not causal estimates of the effect of weather variables. Their reliability depends on the learned dynamics, the support of the training distribution, and the observed-forcing error in each region and season. Future work will extend VegSim toward richer vegetation descriptors, finer spatial outputs, stronger uncertainty calibration under perturbation, and integration with interactive tools for user-defined scenario analysis. 
+
+## Acknowledgments 
+
+Irene Iele is a Ph.D. student enrolled in the National Ph.D. in Arti-ficial Intelligence, course on Health and Life Sciences, organized by Università Campus Bio-Medico di Roma. We acknowledge the EuroHPC Joint Undertaking for granting this project access to the EuroHPC supercomputer Vega, hosted by the Institute of Infor-mation Science (Slovenia), under a EuroHPC Development Access call. 
+
+## References       
+
+> [1] Abdul Fatir Ansari, Oleksandr Shchur, Jaris Küken, Andreas Auer, Boran Han, Pedro Mercado, Syama Sundar Rangapuram, Huibin Shen, Lorenzo Stella, Xiyuan Zhang, Mononito Goswami, Shubham Kapoor, Danielle C. Maddix, Pablo Guerron, Tony Hu, Junming Yin, Nick Erickson, Prateek Mutalik Desai, Hao Wang, Huzefa Rangwala, George Karypis, Yuyang Wang, and Michael Bohlke-Schneider. 2025. Chronos-2: From Univariate to Universal Forecasting. (2025). https://arxiv.org/abs/2510.15821 [2] Vitus Benson, Claire Robin, Christian Requena-Mesa, Lazaro Alonso, Nuno Carvalhais, José Cortés, Zhihan Gao, Nora Linscheid, Mélanie Weynants, and Markus Reichstein. 2024. Multi-modal Learning for Geospatial Vegetation Fore-casting. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition . 27788–27799. [3] Zhi-Ting Chen, Hong-Yan Liu, Chong-Yang Xu, Xiu-Chen Wu, Bo-Yi Liang, Jing Cao, and Deliang Chen. 2022. Deep learning projects future warming-induced vegetation growth changes under SSP scenarios. Advances in Climate Change Research 13, 2 (2022), 251–257.
+
+VegSim: A Geospatial World Model for Scenario-Conditioned Vegetation Simulation 
+
+[4] Kyunghyun Cho, Bart van Merriënboer, Caglar Gulcehre, Dzmitry Bahdanau, Fethi Bougares, Holger Schwenk, and Yoshua Bengio. 2014. Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation. In Proceedings of the 2014 Conference on Empirical Methods in Natural Language Processing . Association for Computational Linguistics, Doha, Qatar, 1724–1734. doi:10.3115/v1/D14-1179 [5] Codru t,-Andrei Diaconu, Sudipan Saha, Stephan Günnemann, and Xiao Xiang Zhu. 2022. Understanding the role of weather data for earth surface forecasting using a ConvLSTM-based model. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition . 1362–1371. [6] Thibault Guinaldo, Aurore Voldoire, Robin Waldman, Stéphane Saux Picart, and Hervé Roquet. 2023. Response of the sea surface temperature to heatwaves during the France 2022 meteorological summer. Ocean Science 19, 3 (2023), 629–647. [7] David Ha and Jürgen Schmidhuber. 2018. Recurrent world models facilitate policy evolution. Advances in neural information processing systems 31 (2018). [8] Danijar Hafner, Jurgis Pasukonis, Jimmy Ba, and Timothy Lillicrap. 2025. Mas-tering diverse control tasks through world models. Nature 640, 8059 (2025), 647–653. [9] Jerry L Hatfield and John H Prueger. 2015. Temperature extremes: Effect on plant growth and development. Weather and climate extremes 10 (2015), 4–10. [10] Sepp Hochreiter and Jürgen Schmidhuber. 1997. Long short-term memory. 
+
+Neural computation 9, 8 (1997), 1735–1780. [11] Anthony Hu, Lloyd Russell, Hudson Yeo, Zak Murez, George Fedoseev, Alex Kendall, Jamie Shotton, and Gianluca Corrado. 2023. Gaia-1: A generative world model for autonomous driving. arXiv preprint arXiv:2309.17080 (2023). [12] Irene Iele, Giulia Romoli, Daniele Molino, Elena Mulero Ayllón, Filippo Ruffini, Paolo Soda, and Matteo Tortora. 2026. Probabilistic NDVI Forecasting from Sparse Satellite Time Series and Weather Covariates. arXiv preprint arXiv:2602.17683 
+
+(2026). [13] Hassan Ismail Fawaz, Benjamin Lucas, Germain Forestier, Charlotte Pelletier, Daniel F Schmidt, Jonathan Weber, Geoffrey I Webb, Lhassane Idoumghar, Pierre-Alain Muller, and François Petitjean. 2020. Inceptiontime: Finding alexnet for time series classification. Data Mining and Knowledge Discovery 34, 6 (2020), 1936–1962. [14] Ming Jin, Shiyu Wang, Lintao Ma, Zhixuan Chu, James Zhang, Xiaoming Shi, Pin-Yu Chen, Yuxuan Liang, Yuan-Fang Li, Shirui Pan, et al . 2024. Time-LLM: Time Series Forecasting by Reprogramming Large Language Models. In International conference on learning representations , Vol. 2024. 23857–23880. [15] Diederik P Kingma and Jimmy Ba. 2014. Adam: A method for stochastic opti-mization. arXiv preprint arXiv:1412.6980 (2014). [16] Klaus-Rudolf Kladny, Marco Milanta, Oto Mraz, Koen Hufkens, and Benjamin D Stocker. 2024. Enhanced prediction of vegetation responses to extreme drought using deep learning and Earth observation data. Ecological Informatics 80 (2024), 102474. [17] Roger Koenker and Gilbert Bassett. 1978. Regression Quantiles. Econometrica 46, 1 (1978), 33–50. doi:10.2307/1913643 [18] Bryan Lim, Sercan O. Arik, Nicolas Loeff, and Tomas Pfister. 2021. Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting. In-ternational Journal of Forecasting 37, 4 (2021), 1748–1764. doi:10.1016/j.ijforecast. 2021.03.012 [19] Yong Liu, Tengge Hu, Haoran Zhang, Haixu Wu, Shiyu Wang, Lintao Ma, and Mingsheng Long. 2023. itransformer: Inverted transformers are effective for time series forecasting. arXiv preprint arXiv:2310.06625 (2023). [20] Yuxi Lu, Biao Wu, Zhidong Li, Kunqi Li, Chenya Huang, Huacan Wang, Qizhen Lan, Ronghao Chen, Ling Chen, and Bin Liang. 2025. Remote Sensing-Oriented World Model. arXiv preprint arXiv:2509.17808 (2025). [21] Lucas Maes, Quentin Le Lidec, Damien Scieur, Yann LeCun, and Randall Balestriero. 2026. Leworldmodel: Stable end-to-end joint-embedding predic-tive architecture from pixels. arXiv preprint arXiv:2603.19312 (2026). [22] João PA Martins, Sara Caetano, Carlos Pereira, Emanuel Dutra, and Rita M Cardoso. 2024. A satellite view of the exceptionally warm summer of 2022 over Europe. Natural Hazards and Earth System Sciences 24, 4 (2024), 1501–1520. [23] Ben Mildenhall, Pratul P Srinivasan, Matthew Tancik, Jonathan T Barron, Ravi Ramamoorthi, and Ren Ng. 2021. NeRF: Representing scenes as neural radiance fields for view synthesis. Commun. ACM 65, 1 (2021), 99–106. [24] David Montero, César Aybar, Chaonan Ji, Guido Kraemer, Maximilian Söchting, Khalil Teber, and Miguel D Mahecha. 2024. On-demand earth system data cubes. In IGARSS 2024-2024 IEEE International Geoscience and Remote Sensing Symposium .IEEE, 7529–7532. [25] David Montero, Guido Kraemer, Anca Anghelea, César Aybar, Gunnar Brandt, Gustau Camps-Valls, Felix Cremer, Ida Flik, Fabian Gans, Sarah Habershon, et al .2024. Earth system data cubes: Avenues for advancing earth system research. 
+
+Environmental Data Science 3 (2024), e27. [26] Ignacio Oguiza. 2023. tsai - A state-of-the-art deep learning library for time series and sequential data. Github. https://github.com/timeseriesAI/tsai [27] Kin G. Olivares, Cristian Challú, Federico Garza, Max Mergenthaler Canseco, and Artur Dubrawski. 2022. NeuralForecast: User friendly state-of-the-art neural forecasting models. PyCon Salt Lake City, Utah, US 2022. https://github.com/ Nixtla/neuralforecast [28] Christian Requena-Mesa, Vitus Benson, Markus Reichstein, Jakob Runge, and Joachim Denzler. 2021. EarthNet2021: A large-scale dataset and challenge for Earth surface forecasting as a guided video prediction task.. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition . 1132–1142. [29] Claire Robin, Christian Requena-Mesa, Vitus Benson, Lazaro Alonso, Jeran Poehls, Nuno Carvalhais, and Markus Reichstein. 2022. Learning to forecast vegetation greenness at fine resolution over Africa with ConvLSTMs. arXiv preprint arXiv:2210.13648 (2022). [30] Oleksandr Shchur, Caner Turkmen, Nick Erickson, Huibin Shen, Alexander Shirkov, Tony Hu, and Yuyang Wang. 2023. AutoGluon-TimeSeries: AutoML for Probabilistic Time Series Forecasting. In International Conference on Automated Machine Learning .[31] Matthew Tancik, Pratul P. Srinivasan, Ben Mildenhall, Sara Fridovich-Keil, Nithin Raghavan, Utkarsh Singhal, Ravi Ramamoorthi, Jonathan T. Barron, and Ren Ng. 2020. Fourier Features Let Networks Learn High Frequency Functions in Low Dimensional Domains. In Advances in Neural Information Processing Systems ,Vol. 33. 7537–7547. [32] Claudia Tebaldi, Kevin Debeire, Veronika Eyring, Erich Fischer, John Fyfe, Pierre Friedlingstein, Reto Knutti, Jason Lowe, Brian O’Neill, Benjamin Sanderson, et al . 2021. Climate model projections from the scenario model intercomparison project (ScenarioMIP) of CMIP6. Earth System Dynamics 12, 1 (2021), 253–293. [33] Matteo Tortora, Francesco Conte, Gianluca Natrella, and Paolo Soda. 2026. MAT-Net: Multi-Level Fusion Transformer-Based Model for Day-Ahead PV Generation Forecasting. Frontiers in Artificial Intelligence (2026). [34] Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, and Illia Polosukhin. 2017. Attention Is All You Need. In Advances in Neural Information Processing Systems , Vol. 30. [35] Yuxuan Wang, Haixu Wu, Jiaxiang Dong, Guo Qin, Haoran Zhang, Yong Liu, Yunzhong Qiu, Jianmin Wang, and Mingsheng Long. 2024. TimeXer: Empowering transformers for time series forecasting with exogenous variables. Advances in Neural Information Processing Systems 37 (2024), 469–498. [36] Philipp Wu, Alejandro Escontrela, Danijar Hafner, Pieter Abbeel, and Ken Gold-berg. 2023. Daydreamer: World models for physical robot learning. In Conference on robot learning . PMLR, 2226–2240. [37] Linrui Xu, Zhongan Wang, Fei Shen, Gang Xu, Huiping Zhuang, Ming Li, and Haifeng Li. 2026. RS-WorldModel: a Unified Model for Remote Sensing Under-standing and Future Sense Forecasting. arXiv preprint arXiv:2603.14941 (2026). [38] Sijie Zhao, Hao Chen, Xueliang Zhang, Pengfeng Xiao, and Lei Bai. 2025. VegeDiff: Latent Diffusion Model for Geospatial Vegetation Forecasting. IEEE Transactions on Geoscience and Remote Sensing 63 (2025), 4410214. doi:10.1109/TGRS.2025. 3564317 [39] Haoyi Zhou, Shanghang Zhang, Jieqi Peng, Shuai Zhang, Jianxin Li, Hui Xiong, and Wancai Zhang. 2021. Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting. In Proceedings of the AAAI Conference on Artificial Intelligence , Vol. 35. 11106–11115. doi:10.1609/aaai.v35i12.17325

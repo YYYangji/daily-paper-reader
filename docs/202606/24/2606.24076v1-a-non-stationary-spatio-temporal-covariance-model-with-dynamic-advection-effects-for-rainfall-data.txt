@@ -1,0 +1,849 @@
+Title: A Non-Stationary Spatio-Temporal Covariance Model with Dynamic Advection Effects for Rainfall Data
+
+URL Source: https://arxiv.org/pdf/2606.24076v1
+
+Published Time: Wed, 24 Jun 2026 00:24:50 GMT
+
+Number of Pages: 10
+
+Markdown Content:
+# A N ON -S TATIONARY SPATIO -T EMPORAL COVARIANCE MODEL WITH DYNAMIC ADVECTION EFFECTS FOR RAINFALL DATA 
+
+Pedro Nasevicius Ramos 
+
+Department of Statistics – IMECC University of Campinas São Paulo, Brazil 
+
+ra185812@dac.unicamp.br 
+
+Guilherme Ludwig 
+
+Department of Statistics – IMECC University of Campinas São Paulo, Brazil 
+
+gvludwig@unicamp.br 
+
+June 24, 2026 
+
+ABSTRACT 
+
+We propose a non-stationary model constructed using a mixture of spatio-temporal covariance models with advection effects; namely, models that have larger covariance values along an orientation vector in the spatio-temporal index set, that simulate wind direction and cloud movement. We show that a mixture of such models can allow for wind direction change in data during (estimated) time intervals, unlike traditional models that use rigid advection effects. We construct a MCMC procedure for Bayesian estimation, and illustrate the method with the analysis of a severe rainfall event from the southeastern region of Brazil. 
+
+Keywords Spatial statistics, Spatio-temporal data, Bayesian methods, Short-term rainfall forecasting 
+
+1 Introduction 
+
+Separable spatio-temporal covariance models are a restrictive class of covariance functions, defined as the product of a strictly spatial covariance function and a strictly temporal one. While separability allows for easier computation, especially when using likelihood-based approaches Cressie and Wikle (2011, p.310), it is considered an unrealistic assumption, especially in fields such as atmospheric sciences and epidemiology. Non-separable flexible models and methods to assess non-separability of data have been studied in recent years (O’Hagan, 1998; Gneiting et al., 2006; Bourotte et al., 2016; De Iaco et al., 2019). For rainfall data, short term rainfall phenomena may satisfy Taylor’s hypothesis (Taylor, 1938), a less restrictive type of symmetry, for which the correlation decay rate between two distinct locations, as we consider locations further apart, is proportional to a correlation decay in time between measurements at the same location. Taylor’s hypothesis does not always hold, particularly in South American forests (Poveda and Zuluaga, 2005), but it is a reasonable assumption when studying rainfall during short periods for which wind changes have a strong effect in cloud movement (Northrop, 2024). Covariance models with advection effects have been introduced by Gupta and Waymire (1987) and Cox and Isham (1988). Recently, Salvaña and Genton (2020) extended such models to the multivariate case with a Lagrangian framework, including scenarios with multiple advection effects in Salvaña et al. (2023). 
+
+2 Spatio-temporal models with advection 
+
+Let t ∈ T ⊂ R and s ∈ S ⊂ R2. Define space-time covariance function as 
+
+C(s, s′; t, t ′) = Cov (Y (s, t ), Y (s′, t ′)) .
+
+A simple model of space-time covariances is the separable model , where 
+
+C(s, s′, t, t ′) = CS (s, s′)CT (t, t ′).
+
+This formulation has computational advantages: A separable model allows us to choose known spatial and temporal covariance functions. Moreover, separability also allows for an easier computational implementation, in particular with 
+
+> arXiv:2606.24076v1 [stat.ME] 23 Jun 2026
+
+A PREPRINT - J UNE 24, 2026 regards to likelihood-based approaches, since for a dataset with identical resolution and equal number of temporal observations across sites, one would have ΣT ⊗ ΣS covariance matrix. However, separability implies complete symmetry (CS), that for all s, s′ ∈ Rd and t, t ′ ∈ R, we have Cov (Y (s, t ), Y (s′, t ′)) = Cov (Y (s, t ′), Y (s′, t )) .
+
+Complete symmetry is limiting: assume that clouds travel 25km/h towards east. If we model rainfall using a stochastic process, we expect that correlation between Paraty at noon and Rio de Janeiro around 5pm (approximately 200 km apart) to be higher than dependence between Rio de Janeiro around 5pm and Paraty at noon. However a CS model postulates they are the same. Non-separable stationary and non-stationary spatio-temporal covariance functions can be constructed based on Cressie and Huang (1999), Gneiting (2002), and others. In this work, we focus on the class of functions that satisfy Taylor’s hypothesis (Taylor, 1938): that there exists a vector V ∈ Rd such that 
+
+C(0; u) = C(Vu; 0) .
+
+The units of V are the ratio between units of h and u, space / time, thus V can be interpreted as a speed vector. The advection class of spatio-temporal covariance functions was introduced in Gupta and Waymire (1987), and Cox and Isham (1988) extended it; both cases consider univariate Gaussian random fields (the multivariate case was studied in Salvaña and Genton, 2020; Salvaña et al., 2023). Consider a random field with finite variance 
+
+Y (s, t ) = ˜Y (s − Vt), (s, t ) ∈ Rd × R, V ∈ Rd, d ≥ 1,
+
+where ˜Y (s) is a purely spatial random field, and V is the advection vector that controls speed and transport direction for ˜Y (s). Its spatio-temporal covariance function is given by 
+
+C(h, u ) = CS (h − Vu), h = s′ − s, u = t′ − t, 
+
+where CS is a purely spatial covariance function. We can treat V as a constant vector, and thus the associated random processes are called frozen fields (Gupta and Waymire, 1987). If we treat V as a random variable, the associated random processes are called non-frozen fields (Cox and Isham, 1988). Treating V as a random variable allow the transported random field to show some diffusion in time, unlike the frozen fields which are rigidly transported along V. For example, an exponential covariance model using Gupta and Waymire (1987) formulation would be 
+
+C(h, u ) = φ(h − Vu) = σ2 exp 
+
+
+
+− ∥h − Vu∥
+
+θ
+
+
+
+, (1) with paramters σ2 > 0, for spatial variance, and θ > 0 for spatial dependence. On the other hand, for a non-frozen field 
+
+case of Cox and Isham (1988), the advection vector is sampled from V ∼ N (μV, ΣV), where μ) controls the expected direction of the advection vector, and ΣV controls the process’ diffusion. The expected spatio-temporal covariance function is thus 
+
+C(h, u ) = 1
+
+p|I2×2 + ΣVu2| φ
+
+(h − μu)T (I2×2 + ΣVu2)−1(h − μu)1/2
+
+, (2) where φ(·) is a spatial covariance function, such as the exponential in 1), with parameters σ2 > 0 and θ > 0.
+
+3 A model with multiple advection effects 
+
+We propose a flexible model that allows for advection from multiple sources. This model adapts the data fusion framework of Chu et al. (2014) and Ludwig et al. (2017). For a fixed L, let 
+
+C(h, u ) = 
+
+> L
+
+X
+
+> k=1
+
+λkck(h − Vku)ϕk(t)ϕk(t′),
+
+where h = s − s′, u = t − t′, and for k = 1 , 2, . . . , L, λ k > 0, and ck(·) = exp {− ∥·∥ /θ k} . We assume t ∈ [0 , T ],
+
+and that the functions ϕk are step functions of the form ϕk(t) = 1{t ≤ τk}, with unknown τk, for k = 1 , 2, . . . , L − 1,
+
+and ϕL(t) = 1{t > τ L−1}. This choice of ϕk leads to a simpler Gibbs sampler, but other choices can be used, such as spline functions (see Ludwig et al., 2017). Let s1, . . . , sn be the n spatial sites, each with complete observations indexed by 0 = t1 < · · · < t m = T. Let 
+
+Z = {Z(s1, t 1), . . . , Z (sn, t m)}T and Σ = Σ(λ, θ, V1, . . . , VL, τ ) = Cov (Z). Let Z|Σ ∼ N (0, Σ). We considered 2A PREPRINT - J UNE 24, 2026 a Bayesian framework to estimate the parameters, and implemented the Gibbs sampler with Metropolis steps. The following priors are used: 
+
+λk|ak, b k ∼ Inv-Gamma (ak, b k), θk|gk, ω k ∼ Gamma (gk, ω k),
+
+Vk|μk, σ 2 
+
+> k
+
+∼ N (μk, σ 2
+
+> k
+
+I2), τ ∼ 1{0 ≤ τ1 < · · · < τ L−1 ≤ T }.
+
+Observe the joint posterior distribution of parameters is given by 
+
+π(θ, λ, V , τ |Z, others ) ∝
+
+" LY
+
+> k=1
+
+π(θk|ωk)π(λk|ak, b k)π(Vk|σ2
+
+> k
+
+, μ k)
+
+#
+
+× π(τ ) × L (Z|Θ) 
+
+∝
+
+> L
+
+Y
+
+> k=1
+
+e−ωk θi 1{θk >0}
+
+| {z } 
+
+> priors for θk
+
+ 1
+
+λk
+
+ak +1 
+
+exp 
+
+
+
+− bk
+
+λk
+
+
+
+1{λk >0}
+
+| {z } 
+
+> priors for λk
+
+× | σ2
+
+> k
+
+I2|−1/2 exp 
+
+
+
+− 12σ2
+
+> k
+
+(Vk − μk)T (Vk − μk)
+
+| {z } 
+
+> priors for Vk
+
+× 1{0 ≤ τ1 < · · · < τ L−1 ≤ T }
+
+| {z } 
+
+> priors for τk
+
+|Σ(Θ) |−1/2 exp 
+
+
+
+− 12 ZT Σ(Θ) −1Z
+
+| {z }
+
+> likelihood
+
+(3) The full conditionals based on Equation (3) and the Gibbs sampler is shown in Algorithm 1. The full conditionals of 
+
+λk|others , θ k|others , and Vk|others require Metropolis steps. To determine L, model selection can be done via information criteria, such as Watanabe-Akaike criterion Watanabe and Opper (2010), given by WAIC = −2
+
+> n
+
+X
+
+> i=1
+> m
+
+X
+
+> j=1
+
+log 
+
+"
+
+1
+
+M
+
+> M
+
+X
+
+> ℓ=1
+
+π(zij | θℓ)
+
+#
+
++ 2 
+
+> n
+
+X
+
+> i=1
+> m
+
+X
+
+> j=1
+
+Var  log π(zij | ¯θ) ,
+
+where ¯θ is the average posterior sample of the parameters (see also Gelman et al., 2014; Porcu et al., 2023). A smaller WAIC is preferred when performing model selection. For the case L = 2 , we use 
+
+ϕ1(t) = 1{t ≤ τ }, ϕ2(t) = 1{t > τ },
+
+and the prior 
+
+τ ∼ U {t1, t 2, . . . , t m}.
+
+In this configuration, the posterior of τ |others is a discrete random variable with mass 
+
+P(τ = τj |others ) = 
+
+1 + X
+
+> ℓ̸=j
+
+|Σ−1 
+
+> τℓ
+
+Στj |1/2 exp 
+
+
+
+− 12 ZT 
+
+Σ−1 
+
+> τℓ
+
+Z − Σ−1 
+
+> τj
+
+Z
+
+
+
+> −1
+
+,
+
+and therefore it is possible to sample from τ without a Metropolis step, unlike in Algorithm 1. 
+
+4 Simulation study 
+
+We will perform a brief simulation study. We considered: • A set S of n = 36 spatial locations, either on a regular grid or a random configuration fixed across replications. We sample a Gaussian process at m = 12 + 1 equidistant time points T ∪ T 1+ = {1, 2, . . . , 12 } ∪ { 13 }. We will report only the results of the regular grid, as the results from the random grid are virtually the same. • The data was simulated using τ = 6; as well as V1 = (0 .25 0.25) T , V2 = (0 .00 −0.25) T .
+
+• The spatial dependence parameters are θ1 = 0 .1, θ 2 = 0 .2. These values correspond to a practical range of 0.3 and 0.6 distance units in S, respectively. We use λ1 = λ2 = 1 for spatial variances. 3A PREPRINT - J UNE 24, 2026 
+
+Algorithm 1 Gibbs sampler for the multiple advection model 
+
+Require: Initialize λ(1)  
+
+> k
+
+, θ (1)  
+
+> k
+
+, V(1)  
+
+> k
+
+, μk, σ 2
+
+> k
+
+, τ k, for k = 1 , . . . , L ; initialize Σ(1) , υ1
+
+for ℓ=1,. . . ,M do for k=1,. . . ,L do 
+
+λ∗ ∼ LN (λ(ℓ−1)  
+
+> k
+
+, υ(λk ) 
+
+> ℓ
+
+) ▷ υℓ is an adaptive proposal size; LN = log-normal proposals U ∼ U (0 , 1) Σ∗ ← Σ( λ(ℓ)1 , θ (ℓ)1 , V(ℓ)1 , τ (ℓ−1) 1 , . . . , λ ∗, θ (ℓ−1)  
+
+> k
+
+, V(ℓ−1)  
+
+> k
+
+, τ (ℓ−1)  
+
+> k
+
+, . . . , τ (ℓ−1)  
+
+> L−1
+
+, λ (ℓ−1)  
+
+> L
+
+, θ (ℓ−1)  
+
+> L
+
+, V(ℓ−1)  
+
+> L
+
+)
+
+α ←
+
+ λ(ℓ−1) 
+
+> k
+> λ∗
+> k
+
+ak
+
+exp 
+
+
+
+− bk
+
+> λ∗
+> k
+
++ bk
+
+> λ(ℓ−1)
+> k
+
+ |Σ(ℓ−1) |1/2 
+
+> |Σ∗|1/2
+
+exp 
+
+n
+
+− 12 ZT (Σ ∗−1
+
+− Σ(ℓ−1) −1
+
+)Z
+
+o
+
+if U ≤ min(1 , α ) then 
+
+λ(ℓ) 
+
+> k
+
+← λ∗
+
+Σ(ℓ) ← Σ∗
+
+else 
+
+λ(ℓ) 
+
+> k
+
+← λ(ℓ−1) 
+
+> k
+
+end if 
+
+θ∗ ∼ LN (θ(ℓ−1)  
+
+> k
+
+, υ(θk ) 
+
+> ℓ
+
+) ▷ υℓ is an adaptive proposal size; LN = log-normal proposals U ∼ U (0 , 1) Σ∗ ← Σ( λ(ℓ)1 , θ (ℓ)1 , V(ℓ)1 , τ (ℓ−1) 1 , . . . , λ (ℓ−1)  
+
+> k
+
+, θ ∗, V(ℓ−1)  
+
+> k
+
+, τ (ℓ−1)  
+
+> k
+
+, . . . , τ (ℓ−1)  
+
+> L−1
+
+, λ (ℓ−1)  
+
+> L
+
+, θ (ℓ−1)  
+
+> L
+
+, V(ℓ−1)  
+
+> L
+
+)
+
+α ← exp 
+
+n
+
+wk(θ(ℓ−1)  
+
+> k
+
+− θ∗)
+
+o 
+
+> θ∗
+> θ(ℓ−1)
+> k
+
+ |Σ(ℓ−1) |1/2 
+
+> |Σ∗|1/2
+
+exp 
+
+n
+
+− 12 ZT (Σ ∗−1
+
+− Σ(ℓ−1) −1
+
+)Z
+
+o
+
+if U ≤ min(1 , α ) then 
+
+θ(ℓ) 
+
+> k
+
+← θ∗
+
+Σ(ℓ) ← Σ∗
+
+else 
+
+θ(ℓ) 
+
+> k
+
+← θ(ℓ−1) 
+
+> k
+
+end if V∗ ∼ N (V(ℓ−1)  
+
+> k
+
+, υ(Vk ) 
+
+> ℓ
+
+I2×2) ▷ υℓ is an adaptive proposal variance U ∼ U (0 , 1) Σ∗ ← Σ( λ(ℓ)1 , θ (ℓ)1 , V(ℓ)1 , τ (ℓ−1) 1 , . . . , λ (ℓ−1)  
+
+> k
+
+, θ (ℓ−1)  
+
+> k
+
+, V∗, τ (ℓ−1)  
+
+> k
+
+, . . . , τ (ℓ−1)  
+
+> L−1
+
+, λ (ℓ−1)  
+
+> L
+
+, θ (ℓ−1)  
+
+> L
+
+, V(ℓ−1)  
+
+> L
+
+)
+
+α ← exp 
+
+(
+
+12σ2(ℓ−1) 
+
+> k
+
+
+
+−V∗T
+
+V∗ + 2 V∗T
+
+μk + V(ℓ−1) T 
+
+> k
+
+V(ℓ−1)  
+
+> k
+
+− 2V(ℓ−1) T 
+
+> k
+
+μk
+
+)
+
+× |Σ(ℓ−1) |1/2
+
+|Σ∗|1/2 exp 
+
+
+
+− 12 ZT (Σ ∗−1
+
+− Σ(ℓ−1) −1
+
+)Z
+
+
+
+if U ≤ min(1 , α ) then V(ℓ) 
+
+> k
+
+← V∗
+
+Σ(ℓ) ← Σ∗
+
+else V(ℓ) 
+
+> k
+
+← V(ℓ−1) 
+
+> k
+
+end if end for 
+
+τ ∗ ∼ 1{0 ≤ τ1 < · · · < τ L−1 ≤ T } ▷ τ ∗ proposal can be made in block, outside k = 1 , . . . , L loop 
+
+Σ∗ ← Σ( λ(ℓ)1 , θ (ℓ)1 , V(ℓ)1 , τ ∗ 
+
+> 1
+
+, . . . , λ (ℓ) 
+
+> k
+
+, θ (ℓ) 
+
+> k
+
+, V(ℓ) 
+
+> k
+
+, τ ∗ 
+
+> k
+
+, . . . , τ ∗
+
+> L−1
+
+, λ (ℓ) 
+
+> L
+
+, θ (ℓ) 
+
+> L
+
+, V(ℓ) 
+
+> L
+
+)
+
+α ← | Σ∗− 1Σ(ℓ)|1/2 exp 
+
+n
+
+− 12 ZT
+
+
+
+Σ∗− 1Z − Σ(ℓ)−1
+
+Z
+
+o 
+
+.
+
+if U ≤ min(1 , α ) then 
+
+τ (ℓ) ← τ ∗
+
+Σ(ℓ) ← Σ∗
+
+else 
+
+τ (ℓ) ← τ (ℓ−1) 
+
+end if end for 
+
+4A PREPRINT - J UNE 24, 2026 1 2 3 4 5 6 7 8 9 10           
+
+> lambda1  lambda2  tau  theta1  theta2  V11  V12  V21  V22
+> 0250 500 7501000 0250 500 7501000 0250 500 7501000 0250 500 7501000 0250 500 7501000 0250 500 7501000 0250 500 7501000 0250 500 7501000 0250 500 7501000 0250 500 7501000
+> 0.5 1.0 1.5
+> 12
+> 46810
+> 0.05 0.10 0.15 0.20 0.25
+> 0.2 0.4 0.6 0.8
+> 0.0 0.5 1.0 1.5
+> −0.5 0.0 0.5 1.0
+> −1.0 −0.5 0.0 0.5 1.0 1.5
+> −1.5 −1.0 −0.5 0.0 0.5
+> estimation
+
+Figure 1: Trace plots across 10 independent MCMC simulations (columns) versus posterior samples of the parameters (rows). The vertical red line indicates the end of the burn-in period. In this simulation study, the spatial locations are on random sites (uniformly distributed), but fixed across simulations. • The likelihood function is built using only data observed in S × T ; we will use the data in S × T 1+ to assess prediction. • We repeated each scenario B = 10 independent times. MCMC was run for 1000 steps, with a burn-in period of 200 (this takes roughly 5 minutes per configuration). The results of the simulated study are shown in Figure 1. We obtain stationarity of λ posterior samples without issues, centered on the correct (that is, simulated) values. The parameters θ are sensitive to choice of priors. In this simulation, we used an Exponential(6), so the expected priors are informative, not too far from the “true” values from which data was simulated from ( θ1 = 0 .1, θ 2 = 0 .2). The behavior of the spatial dependence parameter in spatial covariance models is known to require informative priors; see the discussion in Zhang (2004). The Metropolis steps for V tend to almost always reject proposals (we are using random-walk normal proposals). We have thus made very small proposal steps for them, but we will need much larger MCMC chains to get reliable posterior samples of V. Lastly, the estimate of τ is concentrated on the “true” simulated value of τ = 6 , but for L = 2 the posterior distribution of τ is conjugated, and therefore we can conclude that the posterior mass is indeed concentrated on the change point value. To compare predictions, we also implemented MCMC for the Gupta-Waymire model (Gupta and Waymire, 1987) using the same priors and no change function ϕ. We remark that the Gupta-Waymore model suffers from the same issues when posterior sampling θ and V. Prediction is done by averaging ordinary Kriging over the posterior sample of the parameters. The average squared prediction error, and its standard deviation, for the models are shown in Table 1. 
+
+5 Case study: extreme weather event in Southeastern Brazil 
+
+Rainfall weather stations data are collected automatically and reported in INMET’s website, updated every 15 minutes: 
+
+https://mapas.inmet.gov.br/ (INMET - National Institute for Meteorology). Wind speed and direction are also available. The southeastern region of Brazil has shocks between Equatorial continental winds and tropical Atlantic 5A PREPRINT - J UNE 24, 2026 Table 1: Average squared prediction error (EP) and standard deviation for Gupta-Waymire and Dynamic Advection (proposed model), considering sample sites both in a regular grid and random (fixed across simulations). Forecast is performed on one hour into the future. Grid Dynamic Advection Gupta-Waymire Regular 0.89 (0.33) 1.13 (0.31) Random 0.67 (0.26) 0.85 (0.17) Brasil: massas de ar no verão      
+
+> mTa mTc mEc mEa Brasil: massas de ar no inverno
+> mTa mTc mEc mEa mPa −23 −22 −21 −20
+> −45.0 −44.5 −44.0 −43.5 −43.0 −42.5
+> lon
+> lat
+> Region of Interest
+
+Figure 2: South American air masses during summer (left) and winter (middle); region of interest (right). winds during summer (Figure 2, left). This leads to tropical rainstorms in the region of interest, seen in Figure 2, right. We used 24 hours of data from the day of 2022-12-20, as the region of interest had an extreme weather event on the day, with large volume of rainfall. We aggregated data every 15 minutes to one hour blocks, to reduce variation. Figure 3 shows the spatial sites, with each panel displaying one hour of aggregated data. The resulting wind direction is shown with line segments, with length proportional to wind speed and direction indicating the observed flow direction (and not the direction where the wind is coming from). The color intensity corresponds to the registered log-Precipitation volume. The fitted model with L = 2 detected a change of wind direction at ˆτ | others = 13:00 . We also included an additional parameter λ0, which served as a nugget effect, and smoothed out the kriging maps. In Figure 4, the posterior samples of the parameters are shown in a traceplot. After discarding the first 200 observations as burn-in, Figure 5 shows the posterior distribution of λ0 | others , λ 1 | others and λ2 | others (spatial variances, top row), θ1 | others , θ 2 | others (spatial dependence, mid row) as well as V1 | others and V2 | others (advection direction; spatial histograms in R2,
+
+bottom row). The posterior mode of τ | others is 13:00. In Figure 6, we show the predicted posterior maps of Z, by exponential transforming the kriging maps for the log-precipitation data. We observe a drift south-southest in the first hours of the day, followed by a drift east after 13:00, as predicted from our model. Using data for the next hour of rainfall (2022-12-20 from midnight to 1am), wee compare mean squared forecast aposteriori error for one time period, using Gupta-Waymire’s model with MCMC; and the dynamic advection model proposed in this work (DA). The results are summarized in Table 2. 
+
+6 Discussion 
+
+Future work includes scalability issues; SPDE-based approaches for models with advection have been discussed in Carrizo Vergara et al. (2022), which may allow the use of INLA-based approximations Rue et al. (2009). Table 2: Squared average prediction error (standard deviation) for the case study data, using one hour into the future of the model calibration dataset. Model EP (s.d.) Gupta-Waymire 4.11 (5.91) DA 3.67 (5.03) 6A PREPRINT - J UNE 24, 2026 2022−12−20 20:00:00 2022−12−20 21:00:00 2022−12−20 22:00:00 2022−12−20 23:00:00                                   
+
+> 2022−12−20 15:00:00 2022−12−20 16:00:00 2022−12−20 17:00:00 2022−12−20 18:00:00 2022−12−20 19:00:00
+> 2022−12−20 10:00:00 2022−12−20 11:00:00 2022−12−20 12:00:00 2022−12−20 13:00:00 2022−12−20 14:00:00
+> 2022−12−20 05:00:00 2022−12−20 06:00:00 2022−12−20 07:00:00 2022−12−20 08:00:00 2022−12−20 09:00:00
+> 2022−12−20 00:00:00 2022−12−20 01:00:00 2022−12−20 02:00:00 2022−12−20 03:00:00 2022−12−20 04:00:00
+> −45 −44 −43 −42 −45 −44 −43 −42 −45 −44 −43 −42 −45 −44 −43 −42
+> −45 −44 −43 −42
+> −23 −22 −21 −20
+> −23 −22 −21 −20
+> −23 −22 −21 −20
+> −23 −22 −21 −20
+> −23 −22 −21 −20
+> long
+> lat
+> log−Precipitation
+> −4 −2 02
+
+Figure 3: Hourly aggregated data from rainfall stations, where log-rainfall intensity (color) and wind direction (segments, rotated wind flow), in the region of interest (Rio de Janeiro and southern Minas Gerais states), December 20th, 2022. 
+
+Acknowledgments 
+
+Pedro N. Ramos received support from FAEPEX/PRP Unicamp Foundation process 2536/20. Guilherme Ludwig acknowledges funding from FAPESP processes 2019/03517-0, 2023/02538-0, 2024/05242-7, and 2026/07255-4. 
+
+Financial disclosure 
+
+None reported. 
+
+Conflict of interest 
+
+The authors declare no potential conflict of interests. 
+
+References 
+
+Bourotte, M., Allard, D., and Porcu, E. (2016). A flexible class of non-separable cross-covariance functions for multivariate space-time data. Spatial Statistics , 18:125–146. Carrizo Vergara, R., Allard, D., and Desassis, N. (2022). A general framework for SPDE-based stationary random fields. Bernoulli , 28(1):1–32. Chu, T., Wang, H., and Zhu, J. (2014). On semiparametric inference of geostatistical models via local Karhunen–Loève expansion. Journal of the Royal Statistical Society: Series B (Statistical Methodology) , 76(4):817–832. Cox, D. R. and Isham, V. (1988). A simple spatial-temporal model of rainfall. Proceedings of the Royal Society of London: Series A (Mathematical and Physical Sciences) , 415(1849):317–328. Cressie, N. and Huang, H.-C. (1999). Classes of nonseparable, spatio-temporal stationary covariance functions. Journal of the American Statistical Association , 94(448):1330–1339. Cressie, N. and Wikle, C. K. (2011). Statistics for Spatio-Temporal Data . Wiley, New York. 7A PREPRINT - J UNE 24, 2026 lambda1  lambda2  tau  theta1  theta2  V11  V12  V21  V22    
+
+> 02000 4000 6000
+> 2.5 5.0 7.5 10.0
+> 246
+> 10 11 12 13 14 15
+> 0.00 0.25 0.50 0.75 1.00
+> 0.1 0.2 0.3 0.4 0.5
+> 0.0 0.2 0.4 0.6
+> −0.50 −0.25 0.00 0.25
+> 0.0 0.1 0.2
+> −0.10 −0.05 0.00
+> estimation
+
+Figure 4: Traceplot of the posterior distribution of λ0 | others , λ 1 | others and λ2 | others , θ 1 | others , θ 2 | others ,τ | others as well as V1 | others and V2 | others .
+
+De Iaco, S., Posa, D., Cappello, C., and Maggio, S. (2019). Isotropy, symmetry, separability and strict positive definiteness for covariance functions: a critical review. Spatial Statistics , 29:89–108. Gelman, A., Hwang, J., and Vehtari, A. (2014). Understanding predictive information criteria for bayesian models. 
+
+Statistics and Computing , 24(6):997–1016. Gneiting, T. (2002). Nonseparable, stationary covariance functions for space–time data. Journal of the American Statistical Association , 97(458):590–600. Gneiting, T., Genton, M. G., and Guttorp, P. (2006). Geostatistical space-time models, stationarity, separability, and full symmetry. Monographs On Statistics and Applied Probability , 107:151. Gupta, V. K. and Waymire, E. (1987). On Taylor’s hypothesis and dissipation in rainfall. Journal of Geophysical Research: Atmospheres , 92(D8):9657–9660. Ludwig, G., Chu, T., Zhu, J., Wang, H., and Koehler, K. (2017). Static and roving sensor data fusion for spatio-temporal hazard mapping with application to occupational exposure assessment. The Annals of Applied Statistics ,11(1):139–160. Northrop, P. J. (2024). Stochastic models of rainfall. Annual Review of Statistics and Its Application , 11. O’Hagan, A. (1998). A Markov property for covariance structures. Statistics Research Report , 98(13):510. Porcu, E., White, P. A., and Genton, M. G. (2023). Stationary nonseparable space-time covariance functions on networks. Journal of the Royal Statistical Society: Series B (Statistical Methodology) , 85(5):1417–1440. Poveda, G. and Zuluaga, M. D. (2005). Testing Taylor’s hypothesis in Amazonian rainfall fields during the WE-TAMC/LBA experiment. Advances in Water Resources , 28(11):1230–1239. Rue, H., Martino, S., and Chopin, N. (2009). Approximate bayesian inference for latent gaussian models by using integrated nested laplace approximations. Journal of the Royal Statistical Society: Series B (Statistical Methodology) ,71(2):319–392. Salvaña, M. L. O. and Genton, M. G. (2020). Nonstationary cross-covariance functions for multivariate spatio-temporal random fields. Spatial Statistics , page 100411. 8A PREPRINT - J UNE 24, 2026 2468  
+
+> lambda0 lambda1 lambda2
+> estimates
+
+Posterior distribution of λ 
+
+> 0.2 0.4 0.6
+> theta1 theta2
+> estimates
+
+Posterior distribution of θ    
+
+> −0.2 −0.1 0.0 0.1 0.2
+> −0.2 −0.1 0.0 0.1 0.2
+> V11
+> V12
+> probs
+> 99%
+> 95%
+> 80%
+> 50%
+
+Posterior distribution of V1    
+
+> −0.2 −0.1 0.0 0.1 0.2
+> −0.2 −0.1 0.0 0.1 0.2
+> V21
+> V22
+> probs
+> 99%
+> 95%
+> 80%
+> 50%
+
+Posterior distribution of V2
+
+Figure 5: Posterior distribution of λ0 | others , λ 1 | others and λ2 | others (spatial variances, top row), θ1 | others , θ 2 |
+
+others (spatial dependence, mid row) as well as V1 | others and V2 | others (advection direction; spatial histograms in 
+
+R2, bottom row). The posterior mode of τ | others is 13:00. Salvaña, M. L. O., Lenzi, A., and Genton, M. G. (2023). Spatio-temporal cross-covariance functions under the lagrangian framework with multiple advections. Journal of the American Statistical Association , 118(544):2746–2761. Taylor, G. I. (1938). The spectrum of turbulence. Proceedings of the Royal Society of London: Series A (Mathematical and Physical Sciences) , 164(919):476–490. Watanabe, S. and Opper, M. (2010). Asymptotic equivalence of bayes cross validation and widely applicable information criterion in singular learning theory. Journal of Machine Learning Research , 11(12). Zhang, H. (2004). Inconsistent estimation and asymptotically equal interpolations in model-based geostatistics. Journal of the American Statistical Association , 99(465):250–261. 9A PREPRINT - J UNE 24, 2026 21 22 23 24 
+
+16 17 18 19 20 
+
+11 12 13 14 15 
+
+6 7 8 9 10 
+
+1 2 3 4 5
+
+−45.0−44.5−44.0−43.5−43.0−42.5 −45.0−44.5−44.0−43.5−43.0−42.5 −45.0−44.5−44.0−43.5−43.0−42.5 −45.0−44.5−44.0−43.5−43.0−42.5 
+
+−45.0−44.5−44.0−43.5−43.0−42.5 
+
+−23 −22 −21 −20 
+
+−23 −22 −21 −20 
+
+−23 −22 −21 −20 
+
+−23 −22 −21 −20 
+
+−23 −22 −21 −20 
+
+lon 
+
+> lat
+
+Z
+
+246
+
+Figure 6: Predicted maps with posterior average of Z | { Zobs , others }. The posterior mode of τ | others is 13:00. 10
