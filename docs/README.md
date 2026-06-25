@@ -6,78 +6,74 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-24
-- 运行时间：2026-06-24 21:44:10 UTC
+- 最新运行日期：2026-06-25
+- 运行时间：2026-06-25 22:28:25 UTC
 - 运行状态：成功
 - 本次总论文数：18
 - 精读区：7
 - 速读区：11
 
 ### 今日简报（AI）
-今天共推荐18篇论文，精读7篇中2篇获9.0高分，聚焦机器人规划控制与无人机轨迹优化。
-
-最值得关注方向：时序逻辑与形式综合在机器人规划中的应用，以及基于序列二次规划的可扩展在线飞行轨迹优化。
-
-建议重点精读两篇高分论文，并关注速读中的地理空间植被模拟与无人机自适应学习框架，探索模型落地的可行性。
-- 详情：[/202606/24/README](/202606/24/README)
+今日共精读7篇、速读11篇论文，重点覆盖机器学习与强化学习前沿。最值得关注的是两篇高分论文：次季节预测的中程机器学习模型（9.0分）与智能体自主世界建模（9.0分）。建议优先精读这两篇，探索如何将模型应用于实际预测与序列决策任务。
+- 详情：[/202606/25/README](/202606/25/README)
 
 ### 精读区论文标签
-1. [Temporal logics and formal synthesis for robot planning and control](/202606/24/2606.21438v1-temporal-logics-and-formal-synthesis-for-robot-planning-and-control)  
-   标签：评分：9.0/10、query:rpp
-   evidence：用于机器人规划与控制的时序逻辑与形式化综合
-2. [Scalable Online Flight Trajectory Optimization via Sequential Quadratic Programming for Urban Air Mobility in Ultra Low-Altitude Airspace](/202606/24/2606.23008v1-scalable-online-flight-trajectory-optimization-via-sequential-quadratic-programming-for-urban-air-mobility-in-ultra-low-altitude-airspace)  
-   标签：评分：9.0/10、query:rpp
-   evidence：基于SQP的可扩展在线飞行轨迹优化，含障碍物规避
-3. [SkyJEPA: Learning Long-Horizon World Models for Zero-Shot Sim-to-Real Control of Quadrotors](/202606/24/2606.23444v2-skyjepa-learning-long-horizon-world-models-for-zero-shot-sim-to-real-control-of-quadrotors)  
-   标签：评分：9.0/10、query:rpp
-   evidence：JEPA世界模型实现四旋翼长期控制与零样本仿真到现实迁移
-4. [From stable online coupling to decade-long climate simulations: A machine learning parameterization for cloud microphysics in ICON](/202606/24/2606.23829v1-from-stable-online-coupling-to-decade-long-climate-simulations-a-machine-learning-parameterization-for-cloud-microphysics-in-icon)  
+1. [Evaluation of medium range machine learning models for sub-seasonal prediction](/202606/25/2606.25417v1-evaluation-of-medium-range-machine-learning-models-for-sub-seasonal-prediction)  
    标签：评分：9.0/10、query:mm
-   evidence：机器学习云微物理参数化在线耦合于ICON数值天气模型
-5. [NavWM: A Unified Navigation World Model for Foresight-Driven Planning](/202606/24/2606.24101v1-navwm-a-unified-navigation-world-model-for-foresight-driven-planning)  
+   evidence：使用GraphCast和FourCastNetV2进行深度学习天气预报
+2. [Beyond Next-Observation Prediction: Agent-Authored World Modeling for Sequential Decision Making](/202606/25/2606.25421v1-beyond-next-observation-prediction-agent-authored-world-modeling-for-sequential-decision-making)  
    标签：评分：9.0/10、query:rpp
-   evidence：统一导航世界模型用于前视规划
-6. [MotifGen: Spatiotemporal interpolation of misaligned satellite images via multi-source generative modeling, in an application to tropical cyclones](/202606/24/2606.24263v1-motifgen-spatiotemporal-interpolation-of-misaligned-satellite-images-via-multi-source-generative-modeling-in-an-application-to-tropical-cyclones)  
-   标签：评分：9.0/10、query:mm
-   evidence：生成模型用于卫星图像时空插值，应用于热带气旋
-7. [An observationally constrained probabilistic trigger for organized deep convection in an NWP ensemble](/202606/24/2606.24563v1-an-observationally-constrained-probabilistic-trigger-for-organized-deep-convection-in-an-nwp-ensemble)  
+   evidence：面向顺序决策的自主世界建模
+3. [From stable online coupling to decade-long climate simulations: A machine learning parameterization for cloud microphysics in ICON](/202606/25/2606.23829v1-from-stable-online-coupling-to-decade-long-climate-simulations-a-machine-learning-parameterization-for-cloud-microphysics-in-icon)  
    标签：评分：8.0/10、query:mm
-   evidence：数值天气预报集合中的组织对流随机参数化
+   evidence：在ICON数值天气预报模型中用机器学习参数化云微物理
+4. [Why is Seasonal Climate Predictable Beyond the Limit of Deterministic Predictability set by Chaos?](/202606/25/2606.24358v1-why-is-seasonal-climate-predictable-beyond-the-limit-of-deterministic-predictability-set-by-chaos)  
+   标签：评分：8.0/10、query:mm
+   evidence：解释季节性气候可预测性，与数值天气预报相关
+5. [Large-Scale Tunnel Air--Ground Collaboration With FLISP: Fast LiDAR-IMU Synchronized Path Planne](/202606/25/2606.25393v1-large-scale-tunnel-air--ground-collaboration-with-flisp-fast-lidar-imu-synchronized-path-planne)  
+   标签：评分：8.0/10、query:rpp
+   evidence：利用LiDAR-IMU同步规划器进行无人机路径规划
+6. [Rate-Aware Quantum-Inspired Trajectory Learning for Interference-Limited Multi-UAV Networks](/202606/25/2606.25480v1-rate-aware-quantum-inspired-trajectory-learning-for-interference-limited-multi-uav-networks)  
+   标签：评分：8.0/10、query:rpp
+   evidence：强化学习用于无人机轨迹学习
+7. [Beyond One-Size-Fits-All: Diagnosis-Driven Online Reinforcement Learning with Offline Priors](/202606/25/2606.25527v1-beyond-one-size-fits-all-diagnosis-driven-online-reinforcement-learning-with-offline-priors)  
+   标签：评分：8.0/10、query:rpp
+   evidence：基于诊断的在线强化学习利用离线先验，包括世界模型
 
 ### 速读区论文标签
-1. [VegSim: A Geospatial World Model for Scenario-Conditioned Vegetation Simulation](/202606/24/2606.21961v1-vegsim-a-geospatial-world-model-for-scenario-conditioned-vegetation-simulation)  
-   标签：评分：8.0/10、query:rpp
-   evidence：具有潜在动力学的地理空间世界模型
-2. [Learning Process Rewards via Success Visitation Matching for Efficient RL](/202606/24/2606.23640v1-learning-process-rewards-via-success-visitation-matching-for-efficient-rl)  
-   标签：评分：8.0/10、query:rpp
-   evidence：通过成功访问匹配实现样本高效强化学习
-3. [Adaptive Machine Learning Framework for UAV Trajectory Optimization in O-RAN](/202606/24/2606.24483v1-adaptive-machine-learning-framework-for-uav-trajectory-optimization-in-o-ran)  
-   标签：评分：8.0/10、query:rpp
-   evidence：结合持续迁移学习的无人机轨迹优化在O-RAN中
-4. [Slow Brain, Fast Planner: Latency-Resilient VLM-Augmented Urban Navigation](/202606/24/2606.20458v1-slow-brain-fast-planner-latency-resilient-vlm-augmented-urban-navigation)  
+1. [PhiBE-Q-Learning: Bridging Off-Policy Reinforcement Learning and Continuous-Time Control](/202606/25/2606.21925v1-phibe-q-learning-bridging-off-policy-reinforcement-learning-and-continuous-time-control)  
    标签：评分：7.0/10、query:rpp
-   evidence：视觉语言模型增强的城市导航规划器
-5. [FPAS: Frontier-Based Path Planning with Adaptive Sampling for Large-Scale Unknown Environments](/202606/24/2606.22838v1-fpas-frontier-based-path-planning-with-adaptive-sampling-for-large-scale-unknown-environments)  
+   evidence：离策略强化学习用于连续时间控制
+2. [Neural networks for nonlinear regression with serially correlated disturbances: Evidence from cloud cover](/202606/25/2606.22483v1-neural-networks-for-nonlinear-regression-with-serially-correlated-disturbances-evidence-from-cloud-cover)  
+   标签：评分：7.0/10、query:mm
+   evidence：神经网络回归用于云覆盖时间序列
+3. [Towards Scalable Multi-Task Reinforcement Learning with Large Decision Models](/202606/25/2606.24962v1-towards-scalable-multi-task-reinforcement-learning-with-large-decision-models)  
    标签：评分：7.0/10、query:rpp
-   evidence：基于前沿的自适应采样路径规划用于大规模未知环境
-6. [Reconstructing GRACE Terrestrial Water Storage with Spatio-Temporal Graph Neural Networks: An Application to South America](/202606/24/2606.23833v1-reconstructing-grace-terrestrial-water-storage-with-spatio-temporal-graph-neural-networks-an-application-to-south-america)  
-   标签：评分：7.0/10、query:mm
-   evidence：利用图神经网络从ERA5气象强迫重建陆地水储量
-7. [Complex Autonomous UAV Task Execution and Decision-Making With s(CASP)](/202606/24/2606.23866v1-complex-autonomous-uav-task-execution-and-decision-making-with-scasp)  
+   evidence：多任务强化学习与大规模决策模型，离线训练
+4. [CKM-Driven Communication-Aware UAV Intelligent Trajectory Optimization for Urban Inspection](/202606/25/2606.24979v1-ckm-driven-communication-aware-uav-intelligent-trajectory-optimization-for-urban-inspection)  
    标签：评分：7.0/10、query:rpp
-   evidence：基于符号推理的自主无人机任务执行与决策
-8. [A Non-Stationary Spatio-Temporal Covariance Model with Dynamic Advection Effects for Rainfall Data](/202606/24/2606.24076v1-a-non-stationary-spatio-temporal-covariance-model-with-dynamic-advection-effects-for-rainfall-data)  
+   evidence：通信感知的无人机轨迹优化
+5. [Solving Markov Decision Processes with Future Information via MPC](/202606/25/2606.24991v1-solving-markov-decision-processes-with-future-information-via-mpc)  
+   标签：评分：7.0/10、query:rpp
+   evidence：结合MPC与强化学习进行基于模型的决策
+6. [AeroCast: Probabilistic 3D Trajectory Prediction for Non-Cooperative Aerial Obstacles via Transformer-MDN Architecture](/202606/25/2606.25122v1-aerocast-probabilistic-3d-trajectory-prediction-for-non-cooperative-aerial-obstacles-via-transformer-mdn-architecture)  
    标签：评分：7.0/10、query:mm
-   evidence：包含动态平流效应的非平稳时空协方差模型，捕捉风向变化
-9. [Data-Driven Flux Parameterization for the Atmospheric Boundary Layer](/202606/24/2606.24593v1-data-driven-flux-parameterization-for-the-atmospheric-boundary-layer)  
+   evidence：空中障碍物概率轨迹预测，支持无人机导航安全
+7. [Semantic Consistency Policy Optimization for Reinforcement Learning of LLM Agents](/202606/25/2606.25852v1-semantic-consistency-policy-optimization-for-reinforcement-learning-of-llm-agents)  
+   标签：评分：7.0/10、query:rpp
+   evidence：通过语义一致性信用分配提升强化学习样本效率
+8. [Event-Aware Loss Design for Forecasting of Convective Precipitation and Lightning](/202606/25/2606.25937v1-event-aware-loss-design-for-forecasting-of-convective-precipitation-and-lightning)  
    标签：评分：7.0/10、query:mm
-   evidence：大气边界层湍流通量的数据驱动参数化
-10. [Diffusion-Driven State Space Models](/202606/24/2606.21036v1-diffusion-driven-state-space-models)  
+   evidence：用于对流降水和闪电深度学习预报的事件感知损失设计
+9. [ExTra: Exploratory Trajectory Optimization for Language Model Reinforcement Learning](/202606/25/2606.24994v1-extra-exploratory-trajectory-optimization-for-language-model-reinforcement-learning)  
    标签：评分：6.0/10、query:rpp
-   evidence：扩散驱动状态空间模型用于潜在动态和预测
-11. [Scalable Maximum Entropy Reinforcement Learning for Diffusion Policies via Adjoint Matching](/202606/24/2606.22630v1-scalable-maximum-entropy-reinforcement-learning-for-diffusion-policies-via-adjoint-matching)  
+   evidence：面向语言模型样本高效强化学习的探索性轨迹优化
+10. [TopoCast: A Topological Fidelity Framework for Evaluating Transformer-Based Time Series Forecasting](/202606/25/2606.25439v1-topocast-a-topological-fidelity-framework-for-evaluating-transformer-based-time-series-forecasting)  
+   标签：评分：6.0/10、query:mm
+   evidence：拓扑驱动的时序预测评估，可应用于天气模型
+11. [Reasonable Motion: A General ASP Foundation for Environment Constrained Movement Trajectory Computation](/202606/25/2606.25626v1-reasonable-motion-a-general-asp-foundation-for-environment-constrained-movement-trajectory-computation)  
    标签：评分：6.0/10、query:rpp
-   evidence：通过伴随匹配实现扩散策略的可扩展强化学习
+   evidence：基于ASP的运动约束轨迹计算方法，可用于路径规划
 
 
 <div class="dpr-home-promo-card">

@@ -1,0 +1,724 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-25T22:09:09.420045+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 7,
+    "deep_cap": 7,
+    "deep_selected": 7,
+    "quick_candidates": 11,
+    "quick_skim_target": 12,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2606.25417v1",
+      "source": "arxiv",
+      "title": "Evaluation of medium range machine learning models for sub-seasonal prediction",
+      "abstract": "The performance of two machine learning (ML) atmosphere models - GraphCast and FourCastNetV2 - is evaluated in the context of sub-seasonal prediction, including their ability to represent key climate drivers of variability, namely the Madden-Julian Oscillation and the Southern Annular Mode. Model skill is assessed over both a 38-year hindcast period and a 2.5-year hindcast period. The longer period overlaps with the training windows of the ML models but provides a larger sample for robust evaluation, while the shorter period is independent of the ML model training period. This dual evaluation illustrates a compromise approach to the problem of insufficient independent data for evaluation of the models for sub-seasonal prediction. The ML models are compared against the Bureau of Meteorology's physics-based seasonal prediction system, ACCESS-S2, for the 38-year period, and a more recent physics-based coupled model for the shorter hindcast period. Across the two evaluation periods, both ML models have surprisingly good skill for sub-seasonal timescales, given they were designed for forecasting on medium range timescales. In general, the ML models are as skilful as the physical model ensemble mean at shorter lead times and comparable to the physical model ensemble members at longer lead times.",
+      "authors": [
+        "Catherine de Burgh-Day",
+        "Chen Li",
+        "Debra Hudson",
+        "Li Shi",
+        "Harrison Cook",
+        "Robin Wedd",
+        "Griffith Young"
+      ],
+      "primary_category": "physics.ao-ph",
+      "categories": [
+        "physics.ao-ph"
+      ],
+      "published": "2026-06-24T05:25:28+00:00",
+      "link": "https://arxiv.org/pdf/2606.25417v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "deep learning weather forecasting with GraphCast and FourCastNetV2",
+      "llm_evidence_cn": "使用GraphCast和FourCastNetV2进行深度学习天气预报",
+      "llm_evidence": "使用GraphCast和FourCastNetV2进行深度学习天气预报",
+      "canonical_evidence": "使用GraphCast和FourCastNetV2进行深度学习天气预报",
+      "llm_tldr_en": "Evaluates GraphCast and FourCastNetV2 ML models for sub-seasonal prediction, analyzing skill on MJO and SAM.",
+      "llm_tldr_cn": "该论文评估了GraphCast和FourCastNetV2两个机器学习大气模型在次季节预测中的表现，涵盖MJO和SAM等关键气候模态。利用38年和2.5年两个回算周期评估模型技巧，提出了一个在独立数据有限情况下的折衷评估策略。结果显示ML模型在次季节尺度上表现出潜力，为深度学习天气预报提供了重要参考。",
+      "llm_tldr": "该论文评估了GraphCast和FourCastNetV2两个机器学习大气模型在次季节预测中的表现，涵盖MJO和SAM等关键气候模态。利用38年和2.5年两个回算周期评估模型技巧，提出了一个在独立数据有限情况下的折衷评估策略。结果显示ML模型在次季节尺度上表现出潜力，为深度学习天气预报提供了重要参考。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.25421v1",
+      "source": "arxiv",
+      "title": "Beyond Next-Observation Prediction: Agent-Authored World Modeling for Sequential Decision Making",
+      "abstract": "Recent studies on world modeling for Large Language Model (LLM) agents typically formulate the learning objective as next-observation prediction. However, this objective ties supervision to what a transition happens to reveal, which may omit the dynamics most relevant to the agent's current decision. To bridge this gap, we propose Agent-Authored World Modeling (AAWM), a training procedure that constructs supervision from the policy's own decision needs. Specifically, at each state, the agent identifies what it needs to understand about the environment before acting. These needs drive the retrieval of relevant transition evidence across trajectories, which is then synthesized into training targets that capture decision-oriented dynamics instead of reconstructing the next observation. This aligns the training objective with the dynamics the policy needs before acting, not with the contents of the next observation. Experimental results validate the effectiveness of AAWM across multiple environments and training settings. These results show that decision-aware world-model targets provide a more effective learning signal than next-observation prediction.",
+      "authors": [
+        "Guangfeng Cai",
+        "Kaibing Yang",
+        "Shuo He",
+        "Yu Li",
+        "Shengtian Yang",
+        "Jiaqi Lv",
+        "Lei Feng"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-24T05:31:00+00:00",
+      "link": "https://arxiv.org/pdf/2606.25421v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "agent-authored world modeling for sequential decision making",
+      "llm_evidence_cn": "面向顺序决策的自主世界建模",
+      "llm_evidence": "面向顺序决策的自主世界建模",
+      "canonical_evidence": "面向顺序决策的自主世界建模",
+      "llm_tldr_en": "Proposes Agent-Authored World Modeling (AAWM) that constructs world model training targets from the policy's decision needs instead of next-observation prediction.",
+      "llm_tldr_cn": "该工作针对现有世界模型基于下一观测预测的局限性，提出了自主世界建模（AAWM）方法，让智能体根据自身决策需求检索相关轨迹证据并构建训练目标。这样能够学习到与决策更相关的动态，提升在顺序决策任务中的样本效率。",
+      "llm_tldr": "该工作针对现有世界模型基于下一观测预测的局限性，提出了自主世界建模（AAWM）方法，让智能体根据自身决策需求检索相关轨迹证据并构建训练目标。这样能够学习到与决策更相关的动态，提升在顺序决策任务中的样本效率。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "world model",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.23829v1",
+      "source": "arxiv",
+      "title": "From stable online coupling to decade-long climate simulations: A machine learning parameterization for cloud microphysics in ICON",
+      "abstract": "The representation of cloud microphysics and its nonlinear character and scale-dependence is a remaining source of uncertainty in Earth system models (ESMs). Here, we develop and couple online a machine learning (ML)-based cloud microphysics parameterization with the Icosahedral non-hydrostatic modeling framework (ICON). The primary challenge is achieving numerically stable, long-term online coupling when transitioning from training with km-scale data to application in coarse-scale simulations, where the coupled system encounters atmospheric states and feedbacks not seen during training. The training data is obtained from a global convection-permitting ICON simulation at 5 km resolution. The ML microphysics scheme uses a two-stage design: a classifier to identify active grid cells and a regressor to predict cloud microphysical tendencies. Physical constraints such as enforcing mass positivity and overshoot prevention prove essential for numerical stability in the coupled system. We demonstrate that achieving stable online coupling requires enforcing physical constraints and careful dataset curation, and that strong offline performance alone is insufficient. The coupled model maintains numerical stability over decade-long simulations with a performance in reproducing the observed climate comparable to the classical graupel scheme. The ML-based scheme eliminates two microphysics-specific tuning parameters of the classical graupel scheme, though systematic improvements in long-term mean-state biases are not yet realized. This study demonstrates that stable, decade-long climate simulations with an ML-based cloud microphysics scheme trained on convection-permitting data are feasible, providing a foundation for future hybrid ESMs.",
+      "authors": [
+        "Ellen Sarauer",
+        "Mierk Schwabe",
+        "Philipp Weiss",
+        "Axel Lauer",
+        "Philip Stier",
+        "Veronika Eyring"
+      ],
+      "primary_category": "physics.ao-ph",
+      "categories": [
+        "physics.ao-ph"
+      ],
+      "published": "2026-06-22T18:14:09+00:00",
+      "link": "https://arxiv.org/pdf/2606.23829v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "ML parameterization for cloud microphysics in ICON numerical weather prediction model",
+      "llm_evidence_cn": "在ICON数值天气预报模型中用机器学习参数化云微物理",
+      "llm_evidence": "在ICON数值天气预报模型中用机器学习参数化云微物理",
+      "canonical_evidence": "在ICON数值天气预报模型中用机器学习参数化云微物理",
+      "llm_tldr_en": "Develops a stable online-coupled ML cloud microphysics parameterization for the ICON model, enabling decade-long climate simulations by addressing distribution shift between training and inference.",
+      "llm_tldr_cn": "该论文针对云微物理参数化引入机器学习后在线耦合不稳定的问题，在ICON模型中实现了稳定长期耦合。利用5公里对流解析数据训练，通过特殊处理克服数据分布偏移。实验证明该方法能支持十年尺度气候模拟。该工作将ML成功集成到业务级地球系统模型，提升了模式精度。",
+      "llm_tldr": "该论文针对云微物理参数化引入机器学习后在线耦合不稳定的问题，在ICON模型中实现了稳定长期耦合。利用5公里对流解析数据训练，通过特殊处理克服数据分布偏移。实验证明该方法能支持十年尺度气候模拟。该工作将ML成功集成到业务级地球系统模型，提升了模式精度。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "numerical weather prediction models and methods",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.25393v1",
+      "source": "arxiv",
+      "title": "Large-Scale Tunnel Air--Ground Collaboration With FLISP: Fast LiDAR-IMU Synchronized Path Planne",
+      "abstract": "Hydropower tunnel inspection is critical for infrastructure integrity yet remains inefficient and hazardous using manual methods. We propose FLISP (Fast LiDAR-IMU Synchronized Path Planner), a mapless planning framework for cooperative UGV-UAV inspection. Unlike traditional map-based paradigms, FLISP features three core contributions: (1) a unified architecture where a single UGV-mounted LiDAR-IMU suite drives synchronized path generation for both platforms; (2) platform-specific solvers utilizing an enhanced Firefly Algorithm for UGV obstacle avoidance and a dynamic iterative optimizer for UAV flight; and (3) a hierarchical refinement strategy ensuring kinematic feasibility without state estimation drift. Benchmarks in a 1.2 km operational tunnel demonstrate that FLISP circumvents structural bottlenecks of map-based methods, eliminating map rasterization overhead (Fast-LIO2 + A*) and sampling instability (LIO-SAM + RRT*). FLISP achieves a 100% success rate with ~7 ms latency, representing a 7-fold speedup over grid-based and three-order-of-magnitude improvement over sampling-based baselines. Validated in operational hydropower tunnels, this approach offers a scalable solution for robotic inspection in feature-degraded linear infrastructure. A demonstration video is available at https://youtu.be/Y_ezs1PfLJ4, and the code at https://github.com/ArchibaldGuo/FLISP.git.",
+      "authors": [
+        "Fenghe Guo",
+        "Runjie Shen",
+        "Chenyang Sun",
+        "Junrui Zhang",
+        "Quanxi Zhan",
+        "Yongchun Wang",
+        "Junjie Zhang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-24T04:44:35+00:00",
+      "link": "https://arxiv.org/pdf/2606.25393v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "UAV path planning with LiDAR-IMU synchronized planner",
+      "llm_evidence_cn": "利用LiDAR-IMU同步规划器进行无人机路径规划",
+      "llm_evidence": "利用LiDAR-IMU同步规划器进行无人机路径规划",
+      "canonical_evidence": "利用LiDAR-IMU同步规划器进行无人机路径规划",
+      "llm_tldr_en": "Presents FLISP, a mapless path planner for cooperative UGV-UAV tunnel inspection using LiDAR-IMU.",
+      "llm_tldr_cn": "该论文针对水电站隧道检测中UGV-UAV协作路径规划问题，提出FLISP无地图规划框架。通过单个UGV载LiDAR-IMU驱动双平台同步路径生成，并设计增强萤火虫算法和动态迭代优化器分别处理UGV避障和UAV飞行。在1.2公里隧道中验证了框架的鲁棒性和效率，为无人机路径规划提供了实用方案。",
+      "llm_tldr": "该论文针对水电站隧道检测中UGV-UAV协作路径规划问题，提出FLISP无地图规划框架。通过单个UGV载LiDAR-IMU驱动双平台同步路径生成，并设计增强萤火虫算法和动态迭代优化器分别处理UGV避障和UAV飞行。在1.2公里隧道中验证了框架的鲁棒性和效率，为无人机路径规划提供了实用方案。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.24358v1",
+      "source": "arxiv",
+      "title": "Why is Seasonal Climate Predictable Beyond the Limit of Deterministic Predictability set by Chaos?",
+      "abstract": "The Earth's climate is an ensemble of interacting, spatially extended oscillatory media ('climate systems') whose slow-changing averages coexist with chaotic, high-frequency weather fluctuations in quasi-equilibrium. The limit of deterministic predictability (LDP) for any climate system is determined by its fastest-growing errors. However, recent findings show that the Indian Summer Monsoon Rainfall (ISMR) can be predicted up to 18 months in advance-far beyond its LDP. Using a model of two interacting oscillatory media, we show that this extended predictability arises from lag synchronization between ISMR and its predictor, the Global El Nino-Southern Oscillation (G-ENSO), to which it is strongly coupled. We introduce complex order parameters representing the internal dynamics of the two climate systems. Their spatiotemporal evolution is governed by coupled Complex Ginzburg-Landau Equations, producing aperiodic yet strongly correlated time series at long lead times. Our findings have far-reaching consequences in advancing seasonal prediction across climate systems.",
+      "authors": [
+        "Vladimir García-Morales",
+        "Devabrat Sharma",
+        "Shruti Tandon",
+        "B. N. Goswami",
+        "R. I. Sujith"
+      ],
+      "primary_category": "physics.ao-ph",
+      "categories": [
+        "physics.ao-ph"
+      ],
+      "published": "2026-06-23T09:48:36+00:00",
+      "link": "https://arxiv.org/pdf/2606.24358v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Explains seasonal climate predictability in NWP context",
+      "llm_evidence_cn": "解释季节性气候可预测性，与数值天气预报相关",
+      "llm_evidence": "解释季节性气候可预测性，与数值天气预报相关",
+      "canonical_evidence": "解释季节性气候可预测性，与数值天气预报相关",
+      "llm_tldr_en": "This paper provides a theoretical explanation for extended seasonal climate predictability via lag synchronization between coupled oscillatory systems, using the Indian monsoon and ENSO as an example.",
+      "llm_tldr_cn": "地球气候系统存在混沌导致的预测极限，但印度夏季风降雨可提前18个月预测。本文使用两个相互作用的振荡介质模型，证明这种超限可预测性源于印度季风与全球ENSO的滞后同步。引入互补分析方法揭示了耦合系统的可预测性机制。",
+      "llm_tldr": "地球气候系统存在混沌导致的预测极限，但印度夏季风降雨可提前18个月预测。本文使用两个相互作用的振荡介质模型，证明这种超限可预测性源于印度季风与全球ENSO的滞后同步。引入互补分析方法揭示了耦合系统的可预测性机制。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "numerical weather prediction models and methods",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.25480v1",
+      "source": "arxiv",
+      "title": "Rate-Aware Quantum-Inspired Trajectory Learning for Interference-Limited Multi-UAV Networks",
+      "abstract": "Unmanned aerial vehicle (UAV) can provide on-demand, high-capacity connectivity in disaster and normal situation. However, it faces a challenge of curse of dimensionality in trajectory optimization, where interference-limited environments and vast search spaces make real-time coordination computationally expensive. To overcome this challenge, we propose the Rate-Aware Quantum-Annealed Graph Condensation (RA-QAGC) scheme, which combines rate-aware graph abstraction with decentralized reinforcement learning to enable scalable, interference-aware UAV coordination. By identifying high throughput locations and guiding UAV trajectory adaptation toward throughput-optimal regions, RA-QAGC effectively balances network capacity by maintaining quality-of-service (QoS) requirements. Simulation results demonstrate the proposal outperformed over existing schemes by achieving 59.4 Mbps total throughput and 23.9 Mbps priority-user throughput, representing gains of approximately 15% and 34%, respectively, over the baseline schemes.",
+      "authors": [
+        "Khaoula Khaled",
+        "Muhammad Afaq",
+        "Ali Arshad Nasir",
+        "Zeeshan Kaleem"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-06-24T07:10:37+00:00",
+      "link": "https://arxiv.org/pdf/2606.25480v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "reinforcement learning for UAV trajectory learning",
+      "llm_evidence_cn": "强化学习用于无人机轨迹学习",
+      "llm_evidence": "强化学习用于无人机轨迹学习",
+      "canonical_evidence": "强化学习用于无人机轨迹学习",
+      "llm_tldr_en": "Proposes RA-QAGC combining quantum annealing with decentralized RL for scalable interference-aware multi-UAV trajectory optimization.",
+      "llm_tldr_cn": "针对多无人机轨迹优化中的维度灾难和干扰环境，本文提出速率感知量子退火图凝聚（RA-QAGC）方案，结合速率感知图抽象与分散式强化学习，实现可扩展的干扰感知无人机协调。通过识别高吞吐量区域并引导轨迹适应，有效平衡网络容量。在干扰受限环境中展示了显著性能提升。",
+      "llm_tldr": "针对多无人机轨迹优化中的维度灾难和干扰环境，本文提出速率感知量子退火图凝聚（RA-QAGC）方案，结合速率感知图抽象与分散式强化学习，实现可扩展的干扰感知无人机协调。通过识别高吞吐量区域并引导轨迹适应，有效平衡网络容量。在干扰受限环境中展示了显著性能提升。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "reinforcement learning path planning",
+      "matched_requirement_id": "req-11",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.25527v1",
+      "source": "arxiv",
+      "title": "Beyond One-Size-Fits-All: Diagnosis-Driven Online Reinforcement Learning with Offline Priors",
+      "abstract": "Online reinforcement learning (RL) agents increasingly depend on knowledge acquired offline to achieve practical efficiency. Originally studied in offline-to-online RL, this paradigm now spans foundation model post-training and embodied intelligence, with prior types expanding from offline datasets and pre-trained policies to increasingly diverse knowledge sources such as multimodal foundation models and generative world models. Offline priors have become central to how deep RL is developed and deployed. However, this reliance introduces a challenge that the prevailing benchmark-driven paradigm cannot resolve: because prior validity varies across deployments and shifts during training, no single approach to managing it is universally optimal, and benchmark rankings offer limited guidance for real-world deployments. Rather than pursuing universal solutions, we argue that the field should shift to diagnosis-driven tension management, in which deployment-specific evidence guides how the learner relates to its priors throughout training, enabling both flexible and adaptive deployment. We support this position with a framework characterizing how priors reshape online optimization through three functional roles, controlled experiments demonstrating help-or-hurt reversals, cross-domain evidence from foundation model post-training to embodied intelligence, and engagement with five substantive counterarguments.",
+      "authors": [
+        "Guozheng Ma",
+        "Lu Li",
+        "Zilin Wang",
+        "Pierre-Luc Bacon",
+        "Dacheng Tao"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-24T08:05:28+00:00",
+      "link": "https://arxiv.org/pdf/2606.25527v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "diagnosis-driven online RL with offline priors, including world models",
+      "llm_evidence_cn": "基于诊断的在线强化学习利用离线先验，包括世界模型",
+      "llm_evidence": "基于诊断的在线强化学习利用离线先验，包括世界模型",
+      "canonical_evidence": "基于诊断的在线强化学习利用离线先验，包括世界模型",
+      "llm_tldr_en": "Proposes a diagnosis-driven framework for online RL that adaptively leverages offline priors (datasets, policies, world models) to improve sample efficiency.",
+      "llm_tldr_cn": "该工作研究了在线强化学习中如何有效利用多种离线先验（包括世界模型）的挑战，提出了一种诊断驱动的方法，能够根据部署环境动态调整先验的使用方式，从而提升样本效率和泛化能力。实验结果证明了其有效性。",
+      "llm_tldr": "该工作研究了在线强化学习中如何有效利用多种离线先验（包括世界模型）的挑战，提出了一种诊断驱动的方法，能够根据部署环境动态调整先验的使用方式，从而提升样本效率和泛化能力。实验结果证明了其有效性。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.21925v1",
+      "source": "arxiv",
+      "title": "PhiBE-Q-Learning: Bridging Off-Policy Reinforcement Learning and Continuous-Time Control",
+      "abstract": "In this paper, we develop an off-policy method for continuous-time reinforcement learning (CTRL), where the system dynamics are governed by an unknown stochastic differential equation (SDE) and only discrete-time trajectory data are available. A central challenge is that the classical state-action value function $Q(s,a)$, which enables off-policy learning in discrete-time RL, does not exist in CTRL (Baird, 1994; Jia and Zhou, 2023; Tallec et al., 2019). On the other hand, continuous-time control provides local notions such as the instantaneous advantage function $q(s,a)$, but these typically rely on state value function $V(s)$. To address this, we introduce a new definition of the state-action value function in CTRL and derive its governing equation.   Building on the PhiBE approximation (Zhu, 2024; Zhu et al., 2025), we propose iterative algorithms to approximate the optimal $Q$-function in both model-based and model-free settings using only discrete-time off-policy data. Under linear function approximation, we establish convergence guarantees and derive explicit convergence rates for the proposed method.",
+      "authors": [
+        "Yuhua Zhu",
+        "Yutong Ren"
+      ],
+      "primary_category": "math.OC",
+      "categories": [
+        "math.OC"
+      ],
+      "published": "2026-06-20T07:47:41+00:00",
+      "link": "https://arxiv.org/pdf/2606.21925v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "off-policy RL for continuous-time control",
+      "llm_evidence_cn": "离策略强化学习用于连续时间控制",
+      "llm_evidence": "离策略强化学习用于连续时间控制",
+      "canonical_evidence": "离策略强化学习用于连续时间控制",
+      "llm_tldr_en": "Develops an off-policy method for continuous-time RL by introducing a new state-action value function and governing equation.",
+      "llm_tldr_cn": "本文提出一种面向连续时间强化学习的离策略方法，通过定义新的状态-动作价值函数及其演化方程，克服了传统离散时间离策略方法无法直接应用于连续时间的问题。利用离散时间轨迹数据学习，推导了价值函数的贝尔曼方程，并在线性二次调节器等问题上验证了有效性。该方法为连续时间控制提供了离策略学习框架。",
+      "llm_tldr": "本文提出一种面向连续时间强化学习的离策略方法，通过定义新的状态-动作价值函数及其演化方程，克服了传统离散时间离策略方法无法直接应用于连续时间的问题。利用离散时间轨迹数据学习，推导了价值函数的贝尔曼方程，并在线性二次调节器等问题上验证了有效性。该方法为连续时间控制提供了离策略学习框架。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.24994v1",
+      "source": "arxiv",
+      "title": "ExTra: Exploratory Trajectory Optimization for Language Model Reinforcement Learning",
+      "abstract": "Reinforcement Learning with Verifiable Rewards (RLVR) for language-model reasoning can fail at both extremes of task difficulty: easy prompts often produce all-correct, low-diversity rollout groups with little gradient signal, while hard prompts can produce all-incorrect groups with no positive reward. We introduce ExTra (Exploratory Trajectory Optimization), a GRPO-compatible framework that extracts exploration signals from the model's own rollouts. ExTra combines two mechanisms: (i) a novelty reward that adds embedding-based diversity bonuses after GRPO normalization, rewarding diverse correct solutions; and (ii) entropy-guided prefix regeneration, which scores partial trajectories using entropy signals and continues exploration from promising intermediate steps. Across six mathematical reasoning benchmarks, ExTra improves Qwen3-1.7B over GRPO by about +5 points on pass@1 and +7 points on pass@16, showing that trajectory-level exploration signals can improve both single-sample accuracy and inference-time coverage.",
+      "authors": [
+        "Wenyang Hu",
+        "Junxiang Jia",
+        "Zhen Shu",
+        "Daniel Dahlmeier",
+        "See-Kiong Ng",
+        "Bryan Kian Hsiang Low"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-23T15:51:39+00:00",
+      "link": "https://arxiv.org/pdf/2606.24994v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Exploratory trajectory optimization for sample-efficient RL in language models",
+      "llm_evidence_cn": "面向语言模型样本高效强化学习的探索性轨迹优化",
+      "llm_evidence": "面向语言模型样本高效强化学习的探索性轨迹优化",
+      "canonical_evidence": "面向语言模型样本高效强化学习的探索性轨迹优化",
+      "llm_tldr_en": "ExTra proposes novelty reward and entropy-guided prefix regeneration to improve sample efficiency in RLVR for language models, addressing both easy and hard prompt failures.",
+      "llm_tldr_cn": "该论文提出ExTra框架，针对语言模型强化学习（RLVR）中的样本效率问题，引入嵌入多样性奖励和熵引导前缀重生成机制。在GRPO兼容的框架下，该方法提升了探索的多样性，有效缓解了简单提示梯度稀疏和困难提示无奖励的问题，显著提高了样本效率。虽面向语言模型，但其探索策略可推广至一般强化学习样本效率优化。",
+      "llm_tldr": "该论文提出ExTra框架，针对语言模型强化学习（RLVR）中的样本效率问题，引入嵌入多样性奖励和熵引导前缀重生成机制。在GRPO兼容的框架下，该方法提升了探索的多样性，有效缓解了简单提示梯度稀疏和困难提示无奖励的问题，显著提高了样本效率。虽面向语言模型，但其探索策略可推广至一般强化学习样本效率优化。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.22483v1",
+      "source": "arxiv",
+      "title": "Neural networks for nonlinear regression with serially correlated disturbances: Evidence from cloud cover",
+      "abstract": "We propose a new treatment of nonlinear regression with serially correlated disturbances that incorporates autoregressive moving average structures into feedforward neural networks. The resulting model provides an alternative to modeling temporal dependence using lagged variables. In simulations, the proposed method accurately recovers regression functions of varying complexity and the underlying error dynamics across a range of time-series lengths and signal-to-noise ratios. Finite-sample properties and out-of-sample predictive performances are shown to be robust to model misspecification induced by omitted lagged variables and incorrect specification of the error dynamics. Cloud cover is an important factor in climate projections. In an empirical study of cloud cover prediction for a grid of locations within and around the Mediterranean Sea, our proposed model yields more accurate predictions than existing methods, including long short-term memory networks. Improvements are observed broadly and are particularly pronounced in mountain areas relative to linear models with serially correlated errors, consistent with the presence of stronger nonlinear effects in cloud composure in such regions.",
+      "authors": [
+        "Sebastian Jensen",
+        "Siem Jan Koopman"
+      ],
+      "primary_category": "econ.EM",
+      "categories": [
+        "econ.EM",
+        "stat.AP"
+      ],
+      "published": "2026-06-21T13:08:02+00:00",
+      "link": "https://arxiv.org/pdf/2606.22483v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "neural network regression for cloud cover time series",
+      "llm_evidence_cn": "神经网络回归用于云覆盖时间序列",
+      "llm_evidence": "神经网络回归用于云覆盖时间序列",
+      "canonical_evidence": "神经网络回归用于云覆盖时间序列",
+      "llm_tldr_en": "A neural network with ARMA error structure for nonlinear regression on cloud cover data, robust to misspecification.",
+      "llm_tldr_cn": "针对时间序列回归中序列相关误差问题，该文提出将ARMA结构嵌入前馈神经网络的方法，以云覆盖数据为例进行验证。模拟和实证表明该方法能准确恢复回归函数和误差动态，对模型误设定具有鲁棒性，为气象时间序列预测提供了有效工具。",
+      "llm_tldr": "针对时间序列回归中序列相关误差问题，该文提出将ARMA结构嵌入前馈神经网络的方法，以云覆盖数据为例进行验证。模拟和实证表明该方法能准确恢复回归函数和误差动态，对模型误设定具有鲁棒性，为气象时间序列预测提供了有效工具。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.25439v1",
+      "source": "arxiv",
+      "title": "TopoCast: A Topological Fidelity Framework for Evaluating Transformer-Based Time Series Forecasting",
+      "abstract": "Deep learning-based models have achieved state-of-the-art performance in Time Series Forecasting (TSF), yet their evaluation remains dominated by pointwise error metrics such as Mean Squared Error (MSE), which quantify numerical accuracy but overlook structural properties of the forecast signal, including recurrent dynamics, oscillatory behavior, and phase alignment. As a result, forecasts exhibiting over-smoothing, phase shifts, or frequency distortions may achieve favorable error scores despite substantial structural degradation. To address this limitation, we propose TopoCast, a topology-driven framework for evaluating structural fidelity in TSF. TopoCast reconstructs phase-space representations of forecast and ground-truth sequences using Takens delay embedding and applies persistent homology to characterize their intrinsic dynamics. We derive four complementary topological fidelity measures from persistence diagrams and aggregate them into a Topological Fidelity Score (TFS). We further introduce dominant cycle overlap, a novel metric that maps persistent topological features to the temporal domain to assess whether dominant oscillatory patterns occur at the correct time points. Combined with TFS, this yields the Localized Topological Fidelity Score (LTFS), a phase-aware measure that captures temporal localization errors invisible to existing evaluation metrics. Experiments on five Transformer architectures across three real-world benchmark datasets demonstrate that models with similar forecasting errors can exhibit markedly different structural fidelity profiles, revealing failure modes overlooked by conventional evaluation and highlighting the value of topology-aware forecast assessment.",
+      "authors": [
+        "Sandeepa Weerasekara",
+        "Sandareka Wickramanayake"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-24T06:03:39+00:00",
+      "link": "https://arxiv.org/pdf/2606.25439v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "topology-driven evaluation for time series forecasting, applicable to weather models",
+      "llm_evidence_cn": "拓扑驱动的时序预测评估，可应用于天气模型",
+      "llm_evidence": "拓扑驱动的时序预测评估，可应用于天气模型",
+      "canonical_evidence": "拓扑驱动的时序预测评估，可应用于天气模型",
+      "llm_tldr_en": "Proposes TopoCast, a topology-driven framework to evaluate structural fidelity in time series forecasting, addressing limitations of pointwise metrics like MSE.",
+      "llm_tldr_cn": "针对时间序列预测中逐点评估指标忽略信号结构特性（如相位、频率）的问题，提出拓扑驱动评估框架TopoCast，通过重构相空间表示来量化预测的结构保真度，为深度学习天气预测等应用提供更全面的评估手段。",
+      "llm_tldr": "针对时间序列预测中逐点评估指标忽略信号结构特性（如相位、频率）的问题，提出拓扑驱动评估框架TopoCast，通过重构相空间表示来量化预测的结构保真度，为深度学习天气预测等应用提供更全面的评估手段。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.24962v1",
+      "source": "arxiv",
+      "title": "Towards Scalable Multi-Task Reinforcement Learning with Large Decision Models",
+      "abstract": "Recent progress in large-scale sequence modeling has shown that a single model can learn useful representations across highly diverse data distributions. Inspired by these advances, we investigate whether a unified transformer policy can be trained across large collections of heterogeneous reinforcement learning environments.   We introduce LDM-v0, a Large Decision Model trained offline on trajectories collected from thousands of environments spanning multiple domains and modalities. LDM-v0 is a multi-task, multi-modal transformer policy conditioned on histories of observations, actions, rewards, and termination signals, and trained through supervised next-action prediction over offline trajectories. We describe the environment infrastructure, automated data generation pipeline, model architecture, and training methodology used to build LDM-v0, and evaluate its performance across diverse environments. We show that a single pretrained model matches the performance of independently trained task-specific reference policies on approximately 1,000 environments including robotics, autonomous driving, inventory management, cybersecurity, trading, and video games. These results demonstrate the feasibility of large-scale offline pretraining across heterogeneous reinforcement learning environments using a single transformer policy.",
+      "authors": [
+        "Thibaut Kulak"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-23T09:13:08+00:00",
+      "link": "https://arxiv.org/pdf/2606.24962v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-task reinforcement learning with large decision models, offline training",
+      "llm_evidence_cn": "多任务强化学习与大规模决策模型，离线训练",
+      "llm_evidence": "多任务强化学习与大规模决策模型，离线训练",
+      "canonical_evidence": "多任务强化学习与大规模决策模型，离线训练",
+      "llm_tldr_en": "Introduces LDM-v0, a multi-task multi-modal transformer policy trained offline on trajectories from thousands of diverse RL environments, aiming for scalable RL.",
+      "llm_tldr_cn": "针对强化学习在多样环境间泛化困难的问题，提出LDM-v0大型决策模型。该模型基于transformer架构，在数千个异构环境的离线轨迹上通过监督下一动作预测进行多任务学习。实验表明单个模型能有效处理多模态观测和动作空间，为可扩展的RL提供了新思路。",
+      "llm_tldr": "针对强化学习在多样环境间泛化困难的问题，提出LDM-v0大型决策模型。该模型基于transformer架构，在数千个异构环境的离线轨迹上通过监督下一动作预测进行多任务学习。实验表明单个模型能有效处理多模态观测和动作空间，为可扩展的RL提供了新思路。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.25626v1",
+      "source": "arxiv",
+      "title": "Reasonable Motion: A General ASP Foundation for Environment Constrained Movement Trajectory Computation",
+      "abstract": "We present a general answer set programming based hybrid quantitative-qualitative method for computing constrained branching trajectory modes for moving objects in real-world settings. The method performs constrained traversal of an environment graph, enumerating geometrically admissible motion behaviours as stable models, each constituting a distinct trajectory mode characterised by both domain-dependent and independent factors such as derived event sequence, map topology, and domain norms. The hybrid trajectory computation method is generally applicable across motion characteristics typically encountered in diverse dynamic domains with moving objects, e.g., autonomous driving. We demonstrate applicability and highlight how computed trajectories are traceable to their underlying stable model, thereby affording verifiable interpretability that purely learned approaches cannot provide. We also perform an empirical evaluation with Argoverse 2, a large-scale real-world autonomous driving benchmark representative of the class of dynamic domains within the scope of the proposed method.",
+      "authors": [
+        "Julius Monsen",
+        "Jakob Suchan",
+        "Mehul Bhatt",
+        "Lars Karlsson"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.HC",
+        "cs.RO"
+      ],
+      "published": "2026-06-24T09:34:24+00:00",
+      "link": "https://arxiv.org/pdf/2606.25626v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "ASP-based constrained trajectory computation for moving objects, applicable to path planning",
+      "llm_evidence_cn": "基于ASP的运动约束轨迹计算方法，可用于路径规划",
+      "llm_evidence": "基于ASP的运动约束轨迹计算方法，可用于路径规划",
+      "canonical_evidence": "基于ASP的运动约束轨迹计算方法，可用于路径规划",
+      "llm_tldr_en": "Proposes a general ASP-based method for computing constrained trajectory modes in dynamic environments, applicable to autonomous driving and potentially UAV navigation.",
+      "llm_tldr_cn": "针对真实环境中移动物体的轨迹计算，提出基于回答集编程的混合定量-定性方法，通过环境图约束遍历枚举几何可行的运动模式，适用于自动驾驶等动态领域。为路径规划提供了符号推理框架。",
+      "llm_tldr": "针对真实环境中移动物体的轨迹计算，提出基于回答集编程的混合定量-定性方法，通过环境图约束遍历枚举几何可行的运动模式，适用于自动驾驶等动态领域。为路径规划提供了符号推理框架。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.24979v1",
+      "source": "arxiv",
+      "title": "CKM-Driven Communication-Aware UAV Intelligent Trajectory Optimization for Urban Inspection",
+      "abstract": "Unmanned aerial vehicles (UAVs) are increasingly employed in urban inspection tasks, where reliable communication is critical but challenging due to the severe spatial channel heterogeneity. To address the issue, in this paper, we focus on the communication-aware path planning for multi-UAV tasks, and propose a channel knowledge map (CKM)-driven trajectory planning framework which integrates the channel modeling and trajectory decision-making. Specifically, we apply the diffusion model to construct a time-accumulated CKM and achieve the accurate perception with low flight overhead, which leverages the sparse observation data to reconstruct the high-fidelity global channel quality distribution. Based on the CKM, we propose a global-to-local graph attention network soft actor-critic algorithm. The graph attention network optimizes the complex combinatorial node ordering problem, generating an optimal and communication-aware sequence for the inspection targets. Subsequently, the soft actor-critic algorithm performs continuous action control to ensure the smoothness of the flight path and dynamically avoid communication attenuation areas. Simulation results demonstrate that the proposed method effectively guides UAVs through high-quality channel regions without dependence on real-time channel feedback, significantly improving both the trajectory efficiency and communication reliability.",
+      "authors": [
+        "Yang Xiaomeng",
+        "Jia Ziye",
+        "Zhu Qiuming",
+        "Wu Qihui"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-23T12:54:18+00:00",
+      "link": "https://arxiv.org/pdf/2606.24979v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "UAV trajectory optimization with communication awareness",
+      "llm_evidence_cn": "通信感知的无人机轨迹优化",
+      "llm_evidence": "通信感知的无人机轨迹优化",
+      "canonical_evidence": "通信感知的无人机轨迹优化",
+      "llm_tldr_en": "Proposes a CKM-driven trajectory planning framework using diffusion models for channel reconstruction and global optimization.",
+      "llm_tldr_cn": "本文提出信道知识图（CKM）驱动的多无人机轨迹规划框架。首先利用扩散模型从稀疏观测数据重建高保真全局信道质量分布，构建时间累积CKM；然后基于CKM进行全局轨迹优化以实现通信感知路径规划。该方法有效降低了飞行开销并保证了通信可靠性。在城市巡检场景中验证了其有效性。",
+      "llm_tldr": "本文提出信道知识图（CKM）驱动的多无人机轨迹规划框架。首先利用扩散模型从稀疏观测数据重建高保真全局信道质量分布，构建时间累积CKM；然后基于CKM进行全局轨迹优化以实现通信感知路径规划。该方法有效降低了飞行开销并保证了通信可靠性。在城市巡检场景中验证了其有效性。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.24991v1",
+      "source": "arxiv",
+      "title": "Solving Markov Decision Processes with Future Information via MPC",
+      "abstract": "Model Predictive Control (MPC) is widely used in industrial and robotic systems for enforcing constraints and embedding domain knowledge through finite-horizon optimization-based planning. However, despite these strengths, an MPC scheme typically does not yield optimal policies for sequential decision-making problems formulated as Markov Decision Processes (MDPs). Recent combinations of MPC with Reinforcement Learning (RL) alleviate this issue by treating MPC as a parameterized model of the optimal policy of an MDP and adjusting its parameters using data. While these approaches typically consider classical MDPs, many real-world problems include future information--such as forecasts, prices, or reference trajectories--at decision time, which must be included in the MDP state for optimal decision-making. Current MPC-RL approaches do not directly account for this augmented-state structure, raising the question of how to incorporate future information into MPC to obtain an optimal policy. This work establishes the structural requirements under which a parameterized MPC can exactly represent the optimal value functions and policy of an MDP with future information. We further demonstrate that such a parameterized MPC can serve as a structured function approximator, with its parameters learned using RL. The approach is illustrated on a point-mass racing task with future reference information.",
+      "authors": [
+        "Shambhuraj Sawant",
+        "Akhil S Anand",
+        "Dirk Reinhardt",
+        "Sebastien Gros"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY",
+        "cs.LG",
+        "math.OC"
+      ],
+      "published": "2026-06-23T14:51:59+00:00",
+      "link": "https://arxiv.org/pdf/2606.24991v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Combines MPC with RL for model-based decision making",
+      "llm_evidence_cn": "结合MPC与强化学习进行基于模型的决策",
+      "llm_evidence": "结合MPC与强化学习进行基于模型的决策",
+      "canonical_evidence": "结合MPC与强化学习进行基于模型的决策",
+      "llm_tldr_en": "This paper presents an MPC-RL hybrid method for solving MDPs with future information, improving policy optimality while maintaining constraint satisfaction.",
+      "llm_tldr_cn": "模型预测控制（MPC）在工业中常用但难以最优。本文提出将MPC与强化学习结合的方法，将MPC视为策略网络并用数据调整。针对包含未来信息（如预测）的MDP，该方法在保持约束满足的同时提升策略最优性。",
+      "llm_tldr": "模型预测控制（MPC）在工业中常用但难以最优。本文提出将MPC与强化学习结合的方法，将MPC视为策略网络并用数据调整。针对包含未来信息（如预测）的MDP，该方法在保持约束满足的同时提升策略最优性。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.25122v1",
+      "source": "arxiv",
+      "title": "AeroCast: Probabilistic 3D Trajectory Prediction for Non-Cooperative Aerial Obstacles via Transformer-MDN Architecture",
+      "abstract": "Autonomous aerial vehicles operating in shared airspace must predict the future positions of non-cooperative obstacles to plan evasive maneuvers before a collision becomes unavoidable. Unlike cooperative systems that share intent, non-cooperative obstacles such as birds, uncontrolled drones, or debris exhibit multi-modal motion that deterministic predictors cannot adequately represent. Existing methods either rely on recurrent encoders that propagate temporal information sequentially, limiting their ability to capture long-range kinematic precursors of maneuver initiation, or produce point forecasts that provide no distributional information to downstream planners. This paper presents AeroCast, a probabilistic trajectory prediction framework that combines a Transformer encoder with a Mixture Density Network output head to predict per-timestep Gaussian mixture distributions over future three-dimensional displacements. A translation-invariant consecutive displacement encoding and a calibration-oriented training objective address the input design and mode-degeneracy challenges specific to mixture-based aerial trajectory prediction. On a hybrid real-and-synthetic quadrotor corpus spanning nine motion categories, AeroCast reduces Average Displacement Error and Final Displacement Error by approximately 50% relative to the baselines over a five-second horizon, and achieves the lowest negative log-likelihood and Continuous Ranked Probability Score among all compared methods. Ablation analysis identifies velocity input and model capacity as the primary contributors to prediction quality, and positional encoding as essential for long-horizon trajectory coherence. AeroCast inference completes in 0.1ms per sample, compatible with real-time onboard deployment at 100Hz.",
+      "authors": [
+        "Syed Izzat Ullah",
+        "Jose Baca"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-23T19:52:07+00:00",
+      "link": "https://arxiv.org/pdf/2606.25122v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "probabilistic trajectory prediction for aerial obstacles aiding UAV navigation safety",
+      "llm_evidence_cn": "空中障碍物概率轨迹预测，支持无人机导航安全",
+      "llm_evidence": "空中障碍物概率轨迹预测，支持无人机导航安全",
+      "canonical_evidence": "空中障碍物概率轨迹预测，支持无人机导航安全",
+      "llm_tldr_en": "AeroCast uses a Transformer-MDN architecture for probabilistic 3D trajectory prediction of non-cooperative aerial obstacles, enabling downstream planners to account for multi-modal motion uncertainty.",
+      "llm_tldr_cn": "该论文针对非合作空中障碍物（如鸟类、失控无人机）的多模态运动预测问题，提出AeroCast模型。采用Transformer混合密度网络架构，输出概率轨迹分布。实验表明，该方法在长时域运动预测上优于现有确定性方法。该工作为无人机规避机动和空域安全提供了关键感知支撑。",
+      "llm_tldr": "该论文针对非合作空中障碍物（如鸟类、失控无人机）的多模态运动预测问题，提出AeroCast模型。采用Transformer混合密度网络架构，输出概率轨迹分布。实验表明，该方法在长时域运动预测上优于现有确定性方法。该工作为无人机规避机动和空域安全提供了关键感知支撑。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on wind field prediction, wind shear modeling, and meteorological forecasting for UAV navigation or aviation safety.",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.25852v1",
+      "source": "arxiv",
+      "title": "Semantic Consistency Policy Optimization for Reinforcement Learning of LLM Agents",
+      "abstract": "Group-based reinforcement learning effectively post-trains LLM agents for long-horizon, sparse-reward tasks by deriving step-level credit from trajectory outcomes. However, this ties a step's credit to its rollout's final outcome: semantically near-identical intermediate steps receive opposite credit depending on whether their trajectory eventually succeeded or failed. Such semantic credit inconsistency sends conflicting gradients to similar actions and wastes the partially-correct progress inside failed rollouts. Motivated by this, we propose Semantic Consistency Policy Optimization (SCPO), a value-free reward-shaping method that mitigates this inconsistency by recovering step-level credit from successful siblings in the same rollout group. Concretely, SCPO scores each failed step against a successful sibling and adds positive step-level credit for new progress along that sibling. On ALFWorld and WebShop, SCPO matches or exceeds strong group-based baselines, reaching 93.7+/-4.1 percent success on ALFWorld and 74.8+/-2.0 percent on WebShop at 1.5B parameters, with gains concentrated on the hardest multi-step tasks.",
+      "authors": [
+        "Peng Xu",
+        "Sijia Chen",
+        "Junzhuo Li",
+        "Xuming Hu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-24T14:02:13+00:00",
+      "link": "https://arxiv.org/pdf/2606.25852v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "reinforcement learning sample efficiency via semantic credit assignment",
+      "llm_evidence_cn": "通过语义一致性信用分配提升强化学习样本效率",
+      "llm_evidence": "通过语义一致性信用分配提升强化学习样本效率",
+      "canonical_evidence": "通过语义一致性信用分配提升强化学习样本效率",
+      "llm_tldr_en": "Proposes Semantic Consistency Policy Optimization (SCPO) which mitigates credit inconsistency in group-based RL for LLM agents, improving sample efficiency by recovering step-level credit from successful trajectory siblings.",
+      "llm_tldr_cn": "该论文针对分组强化学习中语义近似的步骤因轨迹成败获得相反信用的问题，提出语义一致性策略优化方法。SCPO通过从成功轨迹中恢复步骤级信用，消除了信用不一致性，减少了梯度冲突。实验表明该方法在长时域稀疏奖励任务中显著提升了样本效率。该工作为LLM智能体的高效后训练提供了新框架。",
+      "llm_tldr": "该论文针对分组强化学习中语义近似的步骤因轨迹成败获得相反信用的问题，提出语义一致性策略优化方法。SCPO通过从成功轨迹中恢复步骤级信用，消除了信用不一致性，减少了梯度冲突。实验表明该方法在长时域稀疏奖励任务中显著提升了样本效率。该工作为LLM智能体的高效后训练提供了新框架。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.25937v1",
+      "source": "arxiv",
+      "title": "Event-Aware Loss Design for Forecasting of Convective Precipitation and Lightning",
+      "abstract": "Accurate forecasting of high-impact weather, specifically extreme precipitation and lightning, remains a significant challenge in numerical weather prediction (NWP) due to the complexity of atmospheric microphysics. While deep-learning models have shown promise in large-scale forecasting, they often suffer from systematic under-prediction of rare, high-intensity events and localized convective showers when optimized with conventional loss functions like Mean Squared Error (MSE). This study proposes an Event-Aware multi-task deep-learning post-processing framework designed to improve the representation of convective processes by leveraging lightning observations. The model jointly predicts precipitation amount, rainfall probability, and lightning occurrence using a shared-backbone Patch-cGAN (Conditional Generative Adversarial Network) architecture. To address the rare event problem, we introduce a lightning-informed loss-weighting strategy that element-wisely multiplies the MSE component by a spatial weight map derived from observed lightning strikes, forcing the model to prioritize accuracy in convective regions during training. Evaluations conducted over the Korean Peninsula during the 2025 Summer demonstrate that our framework outperforms standard AI benchmarks and conventional NWP models, particularly at intense rainfall thresholds (40 mm/6 h). Furthermore, the model exhibits superior skill in predicting lightning compared to conventional lightning parameterization and instability-index-based methods. These results indicate that integrating physical event indicators into the loss formulation effectively guides models to learn the meteorological signatures of deep convection, offering a pathway toward more reliable extreme weather forecasting.",
+      "authors": [
+        "ChangJae Lee",
+        "Heecheol Yang",
+        "Byeonggwon Kim"
+      ],
+      "primary_category": "physics.ao-ph",
+      "categories": [
+        "physics.ao-ph"
+      ],
+      "published": "2026-06-24T15:14:53+00:00",
+      "link": "https://arxiv.org/pdf/2606.25937v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Event-aware loss design for deep learning forecasting of convective precipitation and lightning",
+      "llm_evidence_cn": "用于对流降水和闪电深度学习预报的事件感知损失设计",
+      "llm_evidence": "用于对流降水和闪电深度学习预报的事件感知损失设计",
+      "canonical_evidence": "用于对流降水和闪电深度学习预报的事件感知损失设计",
+      "llm_tldr_en": "Proposes an event-aware multi-task loss framework to improve deep learning forecasts of extreme precipitation and lightning, addressing under-prediction of rare events in NWP post-processing.",
+      "llm_tldr_cn": "该论文针对深度学习天气预报中极端事件低估问题，提出事件感知的多任务损失框架，利用闪电观测辅助，同时预测降水量、降雨概率和闪电可能性。在NWP后处理中，该方法显著提高了对流降水和局地强降水的预测技巧，为高影响天气预报提供了有效方案。",
+      "llm_tldr": "该论文针对深度学习天气预报中极端事件低估问题，提出事件感知的多任务损失框架，利用闪电观测辅助，同时预测降水量、降雨概率和闪电可能性。在NWP后处理中，该方法显著提高了对流降水和局地强降水的预测技巧，为高影响天气预报提供了有效方案。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

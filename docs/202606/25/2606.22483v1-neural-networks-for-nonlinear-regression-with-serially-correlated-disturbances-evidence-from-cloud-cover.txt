@@ -1,0 +1,520 @@
+Title: Neural networks for nonlinear regression with serially correlated disturbances: Evidence from cloud cover
+
+URL Source: https://arxiv.org/pdf/2606.22483v1
+
+Published Time: Tue, 23 Jun 2026 02:37:18 GMT
+
+Number of Pages: 60
+
+Markdown Content:
+# Neural networks for nonlinear regression with serially correlated disturbances: Evidence from cloud cover 
+
+## Sebastian Jensen ∗a and Siem Jan Koopman baAarhus University, Denmark 
+
+> b
+
+## Vrije Universiteit Amsterdam, The Netherlands 
+
+Abstract 
+
+We propose a new treatment of nonlinear regression with serially correlated disturbances that incorporates autoregressive moving average structures into feedforward neural networks. The resulting model provides an alternative to modeling temporal dependence using lagged variables. In simulations, the proposed method accurately recovers regression functions of varying complexity and the underlying error dynamics across a range of time-series lengths and signal-to-noise ratios. Finite-sample properties and out-of-sample predictive performances are shown to be robust to model misspecification induced by omitted lagged variables and incorrect specification of the error dynamics. Cloud cover is an important factor in climate projections. In an empirical study of cloud cover prediction for a grid of locations within and around the Mediterranean Sea, our proposed model yields more accurate predictions than existing methods, including long short-term memory networks. Improvements are observed broadly and are particularly pronounced in mountain areas relative to linear models with serially correlated errors, consistent with the presence of stronger nonlinear effects in cloud composure in such regions. 
+
+Keywords: Neural networks; Time series; Nonlinear regressions; Serially correlated disturbances; Autoregressive moving average model; Durbin-Levinson; Cloud cover prediction. 
+
+> ∗
+
+Corresponding author: Department of Economics and Business Economics and CoRE, Aarhus University, Uni-versitetsbyen 51, 8000 Aarhus C, Denmark. E-mail: smjensen@econ.au.dk 
+
+1
+
+> arXiv:2606.22483v1 [econ.EM] 21 Jun 2026
+
+# 1 Introduction 
+
+Machine learning methods, including neural networks, are increasingly used in data science, econo-metrics and statistics (Hastie et al., 2009; Athey and Imbens, 2019; Efron, 2020). These methods offer considerable flexibility for modeling nonlinear relationships in regression problems, even in high-dimensional settings. Temporal dependence is often accommodated by including a set of lagged dependent (output) and lagged regressor (input) variables in the regression component. The disturbances are typically left unmodeled or treated as coming from a white noise process, un-der the implicit assumption that all predictable temporal dependence is absorbed by a sufficiently rich set of lagged variables. Any remaining serial correlation in the disturbance process therefore re-flects misspecification. This approach of expanding the predictor space may, however, unnecessarily increase the number of predictors, particularly in a setting that is already high-dimensional. Fur-thermore, in a machine learning context, it is difficult to use statistical inference to guide the choice of variables and their lag lengths. An alternative approach to modeling temporal dependence via lagged variables in the regression component is to capture it through a dynamic stochastic process for the disturbances. Although presented here as alternatives, the two approaches can be combined. A classical time series model, such as the autoregressive moving average (ARMA) model, provides a parsimonious and interpretable representation of temporal dependence. In the linear framework, the use of such structured stochastic models for the disturbance process is well established in the literature. However, integrating structured stochastic models for the disturbances into flexible machine learning frameworks remains largely unexplored and is the focus of this paper. In this paper, we develop a methodology for flexible nonlinear regression and prediction with serially correlated disturbances by integrating ARMA error structures into feedforward neural networks. The resulting model is denoted as NNARMA. We focus on ARMA dynamics for the disturbances as they provide a parsimonious representation of a wide variety of serial correlation patterns, see Box et al. (2015) for a textbook treatment. We focus on feedforward neural networks for a number of reasons. They are universal approximators (Hornik et al., 1989; Cybenko, 1989; Leshno et al., 1993) and are known to perform well in practice on a number of regression and predictions tasks (Gu et al., 2020; Bennedsen et al., 2023). Theoretical justification is starting to be developed (Farrell et al., 2021). Schmidt-Hieber (2020) shows that feedforward neural networks are superior to classical nonparametric methods, such as kernel-based estimators and splines, if the unknown target function is a composition of simpler functions. To reduce overfitting, neural networks incorporate various regularization techniques (Goodfellow et al., 2016). Bach (2017) and Bauer and Kohler (2019) show that feedforward neural networks solve the curse of dimensionality that affects classical nonparametric methods (Stone, 1982). The proposed estimation procedure is a conceptually straightforward generalization of well-known techniques for linear regression with serially correlated disturbances. We compute a Cholesky decomposition of the disturbance covariance structure using the Durbin-Levinson algorithm (Levin-son, 1946; Durbin, 1960) and pre-whiten the model to obtain serially uncorrelated disturbances. Estimation proceeds by minimizing the residual sum of squares of the pre-whitened model, cor-responding to what is also known as feasible generalized least squares. Complications arise from the nonlinear regression function. Our main contribution is the development of a neural network 2framework that is able to jointly estimate the unknown regression function and ARMA parameters. We conduct an empirical study of cloud cover prediction, an important factor in climate pro-jections. Using daily measures of cloud cover for a grid of locations within and around the Mediter-ranean Sea (Southern Europe and Northern Africa), the proposed NNARMA model leads to more accurate predictions than existing methods, including the long short-term memory (LSTM) net-work of Hochreiter and Schmidhuber (1997). The empirical results indicate improvements across locations, with particularly pronounced gains in mountain areas relative to linear models with ARMA errors, consistent with stronger nonlinear effects in such regions. Simulation evidence suggests that the proposed estimation procedure accurately recovers re-gression functions of varying complexity and the underlying ARMA dynamics across a range of time-series lengths and signal-to-noise ratios. The finite-sample properties of the estimation pro-cedure and the out-of-sample predictive performance of the NNARMA model demonstrate ro-bustness to ARMA misspecification, and the latter further demonstrates robustness to dynamic misspecification induced by omitted lagged variables. Both remain stable except under substantial underspecification of the ARMA disturbance structure or the network architecture. The remaining part of the paper is structured as follows. Section 2 discusses the literature on regression with serially correlated disturbances and our contribution. In Section 3, we present our methodology for neural network regression with ARMA errors, including estimation and model selection. Section 4 demonstrates the finite-sample properties and out-of-sample predictive perfor-mance of our methodology, including under various forms of misspecification, by summarizing key results from extensive Monte Carlo experiments reported in Appendix C. In Section 5, we present our empirical study of cloud cover prediction. Section 6 briefly summarizes and concludes. 
+
+# 2 Nonlinear regression with serially correlated disturbances 
+
+Consider the univariate time series process for some variable y as denoted by {yt}t∈Z, for time index t with regular spacing. We define the nonlinear regression model with serially correlated disturbances for yt as 
+
+yt = f (xt; β) + ut, (1) where f (·) is the scalar nonlinear regression function, xt is a column vector of known regressors (explanatory variables), β is a column vector of regression coefficients, and the disturbance sequence 
+
+{ut}t∈Z is a weakly stationary process with zero mean, E(ut) = 0, finite variance, Var( ut) = ω2 > 0, and serial correlation Cov( ut, u t−h) = γh, for h = 1 , 2, 3, . . . , where ω2 and γh can be treated as unknown coefficients. For notational convenience, we omit an intercept in (1); its inclusion is straightforward. In the linear case, re-centering yt and each element in xt provides an equivalent representation. 
+
+## 2.1 Linear regression with ARMA disturbances 
+
+It is common practice for the statistical treatment of model (1) to impose parametric restrictions on both the functional form of f (·) and the dynamics of the serially corrrelated disturbances ut.3For example, one may consider model (1) with 
+
+f (xt; β) = xt ′β, ut = ϕu t−1 + et, (2) where both xt and β are column vectors, ϕ is an autoregressive coefficient, and {et}t∈Z is a white noise sequence of innovations with zero mean, E(et) = 0, and finite variance, Var( et) = σ2 > 0. For this specification, model (1) reduces to a linear regression with autocorrelated disturbances of order one, and with ω2 = σ2/(1 − ϕ2) and γh = ω2 ϕh. To ensure a stationary disturbance process 
+
+{ut}, one typically imposes the restriction | ϕ | < 1 such that both ω2 < ∞ and γh < ∞, for all h.The resulting linear regression model with serially correlated errors is the framework from which the Durbin-Watson test is developed for the null hypothesis H0 : ϕ = 0 (Durbin and Watson, 1950, 1951). The best linear unbiased estimate (BLUE) of β, for a given and known value of ϕ, can be obtained by least squares after pre-whitening the disturbances using the data transformations 
+
+y∗ 
+
+> t
+
+= yt − ϕy t−1, x∗ 
+
+> t
+
+= xt − ϕx t−1, t = 2 , 3, 4, . . . . 
+
+The least squares method applied to y∗ 
+
+> t
+
+= x∗ 
+
+> t
+
+β + et delivers the BLUE of β.In this paper, we consider the autoregressive moving average process, denoted by ARMA( p, q ), for the disturbance sequence {ut}t∈Z. It is specified as 
+
+ut = ϕ1ut−1 + . . . + ϕput−p + et + ω1et−1 + . . . + ωqet−q, (3) with autoregressive coefficients ϕ1, . . . , ϕ p and moving average coefficients ω1, . . . , ω q. Particular stability conditions can be imposed on the autoregressive coefficients to ensure a stationary process 
+
+{ut} (Hamilton, 1994). The least squares method applied to the regression model (2) with ARMA disturbances from (3) is originally treated by Pierce (1971). The exact maximum likelihood ap-proach of Harvey and Phillips (1979) entails the joint estimation of β and the ARMA coefficients by adopting data transformations and using the Kalman filter to numerically compute the likelihood function. We adopt a similar approach but rely on the pre-whitening transformations carried out by the Durbin–Levinson algorithm, which is tailored for the case of ARMA disturbances. Also, we adopt this approach for nonlinear neural network regression. 
+
+## 2.2 Parametric and nonparametric nonlinear regression 
+
+The nonlinear regression model (1) with a known parametric functional form for f (·) and serially uncorrelated disturbances {ut} is treated in textbooks such as Gallant (1987) and Bates and Watts (1988), which establish the asymptotic theory of the nonlinear least squares (NLS) estimator. When disturbances follow an ARMA process (3), NLS remains consistent but is inefficient. This inefficiency has motivated likelihood-based methods that jointly estimate the nonlinear regression function f (·) and the ARMA parameters (Harvey, 1990; Hamilton, 1994). These approaches build on the pre-whitening ideas in Harvey and Phillips (1979) and yield efficiency gains and more reliable inference. In practice, it can be challenging to justify a known parametric functional form for f (·), moti-vating the use of nonparametric and semiparametric regression methods. Kernel-based estimators 4such as the Nadaraya–Watson estimator (Nadaraya, 1964; Watson, 1964) and local polynomial estimators, together with spline methods, have been shown to be consistent under mixing or other weak-dependence conditions (Robinson, 1983, 1988; H¨ ardle and Tsybakov, 1997); see also Pagan and Ullah (1999) and Li and Racine (2007). However, as in the parametric case, ignoring serial cor-relation in the disturbances may lead to inefficiency. Accordingly, methods based on pre-whitening transformations have also been proposed in classical nonparametric regression settings (Xiao et al., 2003; Su and Ullah, 2006; Liu et al., 2010). 
+
+## 2.3 Neural network regression 
+
+Neural networks have emerged as powerful tools for nonlinear regression in data rich environments. They can handle high-dimensional input vectors xt, whereas classical nonparametric methods suf-fer from the curse of dimensionality. Early econometric work of White and Domowitz (1984) established consistency of feedforward networks as flexible nonlinear regressors, while the universal approximation results of Hornik et al. (1989) provided the theoretical foundation for their use in regression; see also White (1989). Extensions to time series settings have been considered, for example, by Chen and White (1999), who establish results under mixing conditions. In the context of time series forecasting, Zhang (2003) considers hybrid neural network meth-ods for ARMA models, while Ter¨ asvirta et al. (2006) show how neural network regressions can be embedded in variable selection methods. Finally, the research of Sun et al. (2021) is most closely related to our study. It considers a neural network regression model with serially correlated disturbances. The key differences are that Sun et al. (2021) focus on a system of multiple time series variables where single regressions take place on the other variables, assume autoregressive disturbances of order one, ut = ϕu t−1 +et, for each regression, and rely on approximate methods for pre-whitening the data. We treat the single equation (1) with output variable yt and input vector 
+
+xt, assume ARMA disturbances ut as in (3), integrate the Durbin-Levinson pre-whitening within the neural network method, and jointly estimate the nonlinear function and ARMA parameters. As in other nonparametric techniques, to control for the bias-variance tradeoff, estimation relies on a set of smoothing parameters. For example, Altman (1990); Hart (1991); Herrmann et al. (1992); Ray and Tsay (1997); Krivobokova and Kauermann (2007); Brabanter et al. (2018) discuss the choice of smoothing parameters in nonparametric regression with serially correlated disturbances. In our neural network approach, the bias-variance tradeoff is controlled by both the number of layers through which the data are transformed and the size of each layer. We find that early stopping Prechelt (2012), a regularization technique, can alleviate the need for extensive model selection, making it practical to use a sufficiently flexible network architecture. Finally, an alternative to the explicit modeling of serial correlation in the disturbances of model (1) is to assume that disturbances are uncorrelated after lagged values of the dependent variable and the regressors are included in the regression function f (·). In the linear framework, this strategy corresponds to autoregressive distributed lag (ADL) models (Hendry and Nielsen, 2007). Within nonlinear and nonparametric settings, this strategy is standard in machine learning methods (Chen and Tsay, 1993; Medeiros et al., 2021). Modern machine learning methods such as recurrent neural networks and their specialized form, long short-term memory (LSTM) networks, 5are designed to exploit lagged information to capture complex nonlinear dynamics (Rumelhart et al., 1986; Hochreiter and Schmidhuber, 1997). The LSTM variant has been shown to achieve state-of-the-art performance for a wide range of problems (Jozefowicz et al., 2015; Greff et al., 2017) and thus serves as a natural benchmark in our empirical analysis. 
+
+# 3 Neural networks with ARMA disturbances 
+
+We consider a time series length T , an observed univariate time series y1, . . . , y T (output), a number of regressor variables K, an observed K × 1 vector time series x1, . . . , x T (input), and a univariate series of disturbances u1, . . . , u T . In matrix notation, our proposed NNARMA model is given by 
+
+y = f (X; θ2) + u, (4) where 
+
+y := ( y1, . . . , y T )′, X := [ x1, . . . , x T ]′, f (X) := ( f (x1), . . . , f (xT )) ′, u := ( u1, . . . , u T )′,
+
+such that y, f (X), u ∈ RT and X ∈ RT ×K , and where f (·; θ2) represents a feedforward neural network with some set of parameters θ2. We assume that the disturbance sequence u1, . . . , u T is a sample from the weakly stationary ARMA process as specified in (3) with set of parameters 
+
+θ1 = {ϕ1, . . . , ϕ p, ω 1, . . . , ω q} and innovation variance σ2. It follows that u has zero mean and covariance matrix Var( u) = Ω( θ1, σ 2) = σ2Ψ( θ1), where Ψ( θ1) is symmetric and has a Toeplitz (or band) structure. We compute a Cholesky decomposition of the scaled covariance matrix Ψ( θ1) = 
+
+C(θ1)−1[C(θ1)−1]′, where C(θ1) is a T × T lower triangular matrix computed via the Durbin– Levinson algorithm; details are provided in Appendix A. The (inverse) Cholesky factor C(θ1) is used for pre-whitening the data. Pre-multiplying both sides of (4) by C(θ1) yields a regression model with serially uncorrelated disturbances with mean zero and variance σ2, we obtain 
+
+y∗ = C(θ1)f (X; θ2) + u∗, (5) where y∗ = C(θ1)y and u∗ = C(θ1)u, such that we have mean vector E(u∗) = 0 and covariance matrix Var( u∗) = σ2IT . In case f (·) is linear, we simply have θ2 = {β} and the matrix factor 
+
+C(θ1) can be pre-multiplied directly onto X to obtain X∗ = C(θ1)X. Then, the least squares estimator is obtained by minimizing the residual sum of squares in the pre-whitened regression model ∥y∗ − X∗β∥22 with respect to β, subject to a given set of values for θ1. The joint estimation of θ1 and β can be obtained by NLS, that is numerically minimizing the least squares objective with respect to {θ1, β }. Next, we extend this approach to the nonlinear case where f (·) is represented by a neural network. For the transformed NNARMA model (5) where f (·) is represented by a neural network, the complication arises that f (·) does not commute. However, we can exploit the compositional struc-ture induced by the layered network architecture and implement the regression component in (5) through the scheme 
+
+C(θ1)f (X; θ2) = Z∗(h)β, Z∗(h) = C(θ1)Z(h), (6) 6where β remains a regression coefficient vector and the h ∈ N hidden layers jointly construct the recursive system of matrix equations 
+
+Z(h) = g
+
+
+
+κ(h) + Z(h−1) Γ(h)
+
+,
+
+... (7) 
+
+Z(1) = g
+
+
+
+κ(1) + XΓ(1) 
+
+,
+
+with element-wise nonlinear activation function g(·), intercept vector κ(ℓ) and coefficient matrix Γ(ℓ), for ℓ = 1 , . . . , h , and parameter set θ2 = {β, κ (1) , . . . , κ (h), Γ(1) , . . . , Γ(h)}. The pre-whitening mechanism in (6) is novel in a neural network context. Instead of applying the pre-whitening mechanism directly to X as in the linear model, it is applied to the variables derived by the network Z(h) to obtain Z∗(h). The output of the network in (6) is linear in Z∗(h), such that vector 
+
+Z∗(h)β ∈ RT . The variables derived by the network constitute nonlinear transformations of the regressors X, learned through a sequence of feedforward hidden layers in (7). The output of each layer is a T × mℓ matrix Z(ℓ), ℓ = 1 , . . . , h , obtained from an affine transformation of its inputs followed by elementwise application of the nonlinear (activation) function g(·). The function g(·)induces nonlinear input transformations in each layer, introducing flexibility into the regression function and allowing the network to represent nonlinear relationships between X and y. We use the Swish function, defined as g(z) = z (1 + exp( −z)) −1 for z ∈ R, which is a generalization of the widely used rectified linear unit (ReLU; Nair and Hinton, 2010). It has been shown to perform well in comparison with ReLU for a range of problems (Ramachandran et al., 2018). In each hidden layer, κ(ℓ) is a mℓ-dimensional vector of intercepts that is added row-wise, and Γ (ℓ) is a mℓ−1 × mℓ
+
+coefficients matrix. We follow the convention to set m0 ≡ K. The hyperparameter h ≥ 1 denotes the number of hidden layers (the network depth), and mℓ denotes the number of columns in Z(ℓ)
+
+(the size of the ℓth hidden layer). The choice of network architecture, as characterized by its depth and layer sizes, is a standard model selection problem subject to a bias-variance tradeoff. Model selection is discussed in Section 3.3. To compute predictions ˆ y = f (X; ˆθ2) + ˆ u based on the NNARMA model in 4, neural network predictions of the regression component (without the pre-whitening mechanism) f (X; ˆθ2) are com-bined with ARMA predictions of the disturbance component ˆ u. The latter is conveniently obtained from the Durbin–Levinson algorithm applied to the neural network residuals. 
+
+## 3.1 Parameter estimation 
+
+To jointly estimate the set of ARMA parameters θ1 = {ϕ1, . . . , ϕ p, ω 1, . . . , ω q} and the set of neural network parameters θ2 = {β, κ (1) , . . . , κ (h), Γ(1) , . . . , Γ(h)}, we minimize the residual sum of squares from the pre-whitened model in (5), that is min 
+
+> θ1
+
+min 
+
+> θ2
+
+∥y∗ − C(θ1)f (X; θ2)∥22, (8) subject to two sets of constraints within θ1 given by 1 − ϕ1z − . . . − ϕpzp̸ = 0 , 1 + ω1z + . . . + ωqzq̸ = 0 , z ∈ C, |z| ≤ 1, (9) 7which are imposed to enforce stability, for a stationary process ut, and invertibility, for unique identification of ω1, . . . , ω q, of the ARMA process in (3), respectively (Hamilton, 1994). We solve the joint minimization problem by profiling out θ2 from the sum of squares. For a given θ1, an estimate of θ2 is obtained by numerically solving the inner minimization problem in (8) using standard techniques from the neural networks literature, ˆθ2(θ1) = arg min 
+
+> θ2
+
+∥y∗ − C(θ1)f (X; θ2)∥22. (10) We rely on the popular Adam variant of gradient descent (Kingma and Ba, 2014) to obtain estimates from (10). We use all data available in the estimation sample when evaluating gradients, sometimes referred to as batch learning. An estimate of θ1 is obtained by solving the outer minimization problem in (8), for the given choice of θ2 = ˆθ2(θ1) and subject to the constraints in (9), we have ˆθ1 = arg min 
+
+> θ1
+
+∥y∗ − C(θ1)f (X; ˆθ2(θ1)) ∥22. (11) We use Jones’ reparametrization of the parameters in θ1 to impose the stability and invertibility constraints in (9), allowing (11) to be solved via unconstrained optimization; see Appendix B for details. We therefore rely simply on traditional (gradient free) numerical optimization techniques of Powell (1964) to obtain (11) subject to the constraints implied by (9). Finally, the estimate of 
+
+σ2 is obtained from ˆσ2 = ∥y∗ − C(ˆθ1)f (X; ˆθ2(ˆθ1)) ∥22
+
+T . (12) We emphasize that the estimation procedure above solves the minimization problem in (8) with respect to θ1 and θ2 subject to constraints (9). It is not an iterative step-by-step method such as the Cochrane–Orcutt procedure, where the estimate of θ1 is fixed when minimizing over θ2, after which the estimate of θ2 is fixed when minimizing over θ1.The Adam algorithm is used to solve (10) and the Powell algorithm is used to solve (11) and they are both local optimization routines. The minimization problem in (10) is solved with respect to θ2 for different candidate choices of θ1. Each time, we initialize the slope coefficients in the neural network ( β, Γ(1) , . . . , Γ(h)) randomly from a Gaussian distribution, as suggested by He et al. (2015). Intercepts ( κ(1) , . . . , κ (h)) are initialized at zero, following standard practice in the neural networks literature (Goodfellow et al., 2016). Initial values for θ1 are obtained by estimating the ARMA parameters as in (11) based on residuals from an initial neural network regression as in (10), assuming serially uncorrelated disturbances for ut, such that θ1 ∈ ∅ and C(θ1) = IT .
+
+## 3.2 Early stopping 
+
+We employ early stopping (Prechelt, 2012) to mitigate overfitting and reduce the need for extensive model selection. In practice, early stopping reduces sensitivity to the choice of network architecture; see Section 3.3. The observation sample is split into an estimation and a validation sample. Let T and Tval 
+
+denote the lengths of the estimation and the validation sample, with Ttot = T + Tval denoting the length of the joint estimation and validation sample. The validation sample consists of observations 8(Xt, y t) for t = T + 1 , . . . , T tot , and follows the estimation sample in time to avoid information spillover due to serial correlation (look-ahead bias). We define 
+
+y1: Ttot := ( y1, . . . , y Ttot )′, X1: Ttot := [ x1, . . . , x Ttot ]′,f (X1: Ttot ) := ( f (x1), . . . , f (xTtot )) ′, u1: Ttot := ( u1, . . . , u Ttot )′.
+
+Let C(ˆθ1)1: Ttot denote the Cholesky factor of Var( u1: Ttot ). Denote by C(ˆθ1)T +1: Ttot the submatrix formed by the last Tval rows of C(ˆθ1)1: Ttot . After each iteration of the Adam algorithm used to estimate the parameters of the neural network θ2, early stopping monitors the loss on the validation sample based on candidate choices ˆθ1, ˆθ2,
+
+Lval = ∥C(ˆθ1)T +1: Ttot (y1: Ttot − f (X1: Ttot ; ˆθ2)) ∥22. (13) Pre-multiplication by C(ˆθ1)T +1: Ttot instead of C(ˆθ1)1: Ttot in (13) restricts attention to the validation sample. The Adam algorithm is stopped when no significant decrease in the validation loss Lval is observed over 100 consecutive iterations, using a tolerance level of 10 −6. We restore the estimate of θ2 associated with the lowest validation loss across iterations (not necessarily the last iteration). 
+
+## 3.3 Model selection 
+
+Our proposed NNARMA model requires choices for the number of hidden layers in the neural network h, the size of each layer m1, . . . , m h, and the ARMA orders p and q. Model selection can be performed based on in-sample criteria or out-of-sample predictive performances using time series cross-validation. However, repeated re-estimation across candidate network architectures and ARMA specifications quickly becomes computationally prohibitive. We therefore adopt a practical strategy that avoids such repeated estimation and is motivated by simulation evidence. Specifically, we fix a sufficiently flexible network architecture combined with early stopping and select the ARMA orders p and q by minimizing the Bayesian information criterion (BIC) applied to residuals from a preliminary neural network regression that assumes serially uncorrelated errors. Simulation evidence demonstrates largely stable validation loss across network architectures, with mostly very narrow networks tending to produce higher losses (Appendix C.6). With early stopping, performance is therefore largely insensitive to the precise choice of architecture once the network is sufficiently flexible. Further, it is shown that the ARMA specification selected by our practical strategy generally converges to the true specification as the sample size increases. 
+
+# 4 Monte Carlo experiments 
+
+In this section, we summarize the results from a comprehensive suite of Monte Carlo experiments. We examine the finite-sample properties of the estimation procedure in Section 3.1, with early stopping as described in Section 3.2, and evaluate the out-of-sample predictive performance of the NNARMA model relative to existing feedforward neural networks with lagged variables. We consider both correct specification of the NNARMA model and misspecification arising from the ARMA component as well as from omitted lagged variables (dynamic misspecification). Additional 9details on the Monte Carlo experiments, including the data-generating processes and supplementary results, are provided in Appendix C. 
+
+## 4.1 Monte Carlo setup and benchmark models 
+
+For all experiments except those involving dynamic misspecification (Section 4.5), we generate a univariate response variable yt as the sum of a single regression function f (x1t, x 2t) (a hump-shaped or a sinusoidal regression function, respectively) and a noise term. The regression input variables x1t and x2t are generated by stationary AR(1) zero-mean processes, with autoregressive coefficients 0 .8 and 0 .7, respectively. The noise term is generated by a stationary ARMA(1 , 2) zero-mean process (3) with autoregressive coefficient ϕ1 = 0 .9 and moving average coefficients 
+
+ω1 = −0.5 and ω2 = 0 .2. We split each Monte Carlo sample into three consecutive parts: (1) an estimation sample (first 60%), (2) a validation sample used for early stopping (next 20%), and (3) a test sample reserved for out-of-sample evaluation (final 20%). All models are estimated once, and we compute out-of-sample predictions conditional on the regressors (and lagged response variables) in the test sample. This setup mimics the empirical setting in Section 5. For convenience, we denote by NNARMA( p, q ) the model proposed in Section 3 with ARMA( p, q )disturbances. We denote by NN( ℓy, ℓ x) the feedforward neural network benchmark models with lagged variables, where ℓy, ℓ x ∈ N denote the number of lagged dependent variables and regressors (including contemporaneous regressors), respectively. Under this notation, NNARMA(0 , 0) and NN(0 , 0) are equivalent. We consider 8 benchmark models: NN(0 , 0), NN(1 , 0), NN(0 , 1), NN(1 , 1), NN(2 , 2), NN(3 , 3), NN(5 , 5), NN(10 , 10). We fix the network architecture to two hidden layers with 32 units in the first and 16 in the second, both for the NNARMA model and the benchmark models. This architecture is not intended to be optimal, but rather serves as a representative, sufficiently flexible choice for illustrating model performance without extensive tuning; see the discussion in Section 3.3. We use the same network architecture in the NNARMA model and the benchmark models to ensure that differences in predictive performance reflect differences in model specification rather than architecture tuning. We denote the signal-to-noise ratio by r and the sample size by T . Our results below are aggregated for both regression functions and all combinations of r ∈ { 0.05 , 1.0} and T ∈ { 250 , 1000 , 5000 }
+
+using 100 Monte Carlo replications. Appendix C extends the analysis to r ∈ { 0.05 , 0.1, 0.2, 1.0}
+
+and T ∈ { 250 , 500 , 1000 , 5000 } for a more comprehensive evaluation. These additional results do not alter the conclusions of this section. 
+
+## 4.2 Finite sample properties 
+
+We start by examining the finite sample properties of the proposed estimation procedure, including early stopping, under the assumption that the NNARMA model is correctly specified. Figure 1 displays the NNARMA average estimate of the hump-shaped and sinusoidal regression function. For both regression functions, accuracy of the estimated surface is increasing with r and 
+
+T as expected. For high r (strong signal) and large T (large sample), both functions are estimated 10 (a) Hump-shaped regression function (b) Sinusoidal regression function 
+
+Figure 1: Average estimate of the hump-shaped (panel a) and the sinusoidal (panel b) regression functions. Subplots are arranged by r (signal-to-noise ratio; columns) and T (sample size; rows). The true function is shown transparently in the background. with a high degree of accuracy. The hump-shaped function is estimated with reasonable accuracy even for low r (noisy signal) and small T (small sample), especially in the interior of the input region. All estimated surfaces exhibit reduced accuracy near the boundaries of the input region, a pattern that is particularly pronounced for the sinusoidal function and is well known in nonparametric settings (Cattaneo et al., 2020) and neural network applications (Bennedsen et al., 2023). At low 
+
+r, the sinusoidal function is estimated fairly well provided the sample size is large enough. It generally requires a larger sample size than for the hump-shaped function. Corresponding to the surface estimates in Figure 1, Figure 2 displays the sampling distribution of the ARMA coefficient estimates. 1 The behavior of the coefficient estimates closely mirrors that of the surface estimates: estimation accuracy is decreasing with r and increasing with T . For low r and large T , all coefficients are accurately estimated for both regression functions. For the hump-shaped function, estimation accuracy is high even for high r and small T . For the sinusoidal function, the AR coefficient is accurately estimated for high r and even for small T , although a larger sample size than for the hump-shaped function is required for the finite sample distribution of the MA coefficients to peak at their true values. 
+
+> 1Throughout, sampling distributions are estimated by kernel density estimation using a Gaussian kernel and the bandwidth suggested by Silverman (1986).
+
+11 Figure 2: Sampling distribution of the ARMA coefficient estimates for the hump-shaped (solid) and sinusoidal (dashed) regression functions. Subplots are arranged by r (columns) and T (rows). Vertical dashed lines indicate the true coefficient values. 
+
+## 4.3 Out-of-sample prediction performance 
+
+We next extend the in-sample analysis using the same simulated data, and evaluate out-of-sample prediction accuracy of the correctly specified NNARMA model relative to the benchmark models with lagged variables. Figure 3 presents Box plots of relative out-of-sample mean squared error (MSE) for all bench-mark models, normalized against the NNARMA(1 , 2) model. To avoid distorting Figure 3, we omit the results for NN(0 , 0) and NN(0 , 1) because their MSEs are substantially higher, and also for NN(10 , 10) its performance is always worse than specifications with fewer lags. Since almost all relative MSEs are above one, we can conclude that the NNARMA model almost always leads to more accurate predictions than the benchmarks, especially for the sinusoidal function. The improvements in accuracy of NNARMA relative to the benchmarks are increasing with r and T .
+
+## 4.4 ARMA misspecification 
+
+We examine the effect of NNARMA misspecification on the finite-sample properties and out-of-sample predictive performances of the NNARMA models using the same simulated data set as above. Specifically, we consider all 16 NNARMA( p, q ) model specifications with p, q ∈ { 0, 1, 2, 3}.Here, we focus on the out-of-sample performance. Appendix C.4 presents a detailed discussion of both finite-sample properties and out-of-sample performance. Figure 4 presents Box plots of the relative out-of-sample MSE for all NNARMA misspecified models, except NNARMA(0 , 0), normalized against the correct specification NNARMA(1 , 2). The 12 Figure 3: Out-of-sample results for NN and NNARMA (correctly specified) models with Box plots of relative MSEs normalized against NNARMA, for the hump-shaped (in blue) and the sinusoidal (in red) regression functions, where values above one indicate that NNARMA has lowest error. Subplots are arranged by r (columns) and T (rows). NNARMA(0 , 0) specification yields substantially higher MSE values, especially for the sinusoidal function, and is therefore omitted to avoid distorting the graphs. Prediction accuracy is lower than that of the correct specification when the ARMA structure is substantially underspecified. In particular, the specifications NNARMA(0 , j ), for j = 1 , 2, 3, produce less accurate predictions than NNARMA(1,2). The predictions of NNARMA(1 , 0) are also less accurate for the smaller samples, but are as accurate as those of NNARMA(1,2) for T = 5000, especially for the hump-shape regression function. The accuracy of NNARMA(1,1) and all specifications where the ARMA structure is overspecified fluctuates around the same level as NNARMA(1,2), for all combinations of T and r.
+
+## 4.5 Dynamic misspecification 
+
+In our final simulation experiment, we analyze the out-of-sample predictive performance of the NNARMA model when it is misspecified and the benchmark model NN(2 , 2) is correctly specified. For this experiment, we generate a new data set for yt from the following data generation process, 
+
+yt = f (0 .4xt + 0 .3xt−1 + 0 .2xt−2) + 0 .5yt−1 + 0 .4yt−2 + et, et ∼ N ID (0 , 1/r ),
+
+with 2 × 1 regressor vector xt = ( x1t, x 2t)′, for t = 1 , . . . , T . We consider the same hump-shaped and sinusoidal regression functions for f (·) and the same values for T and r. The simulated data 13 Figure 4: Out-of-sample results for NNARMA misspecified models (NNARMA(1 , 2) is correctly specified) models with Box plots of relative MSEs normalized against NNARMA(1 , 2), for the hump-shaped (in blue) and the sinusoidal (in red) regression functions, where values above one indicate that NNARMA has lowest error. Subplots are arranged by r (columns) and T (rows). set for xt remains the same as above. To analyze the effect of omitting lagged variables from the NN(2 , 2) specification, we compare the out-of-sample MSEs to the model specifications NN(1 , 0), NN(1 , 1), and NNARMA. In the latter case, the NNARMA orders p and q are selected using our practical strategy discussed in Section 3.3. For completeness, we also present the results for two overspecified models, NN(3 , 3) and NN(5 , 5). A detailed discussion of this simulation exercise is provided in Appendix C.5 together with results from a similar experiment where model NN(0 , 2) is the correct specification. The out-of-sample prediction accuracy for a selection of NN models is presented in Figure 5. The MSEs are normalized against the NNARMA model optimized for each simulated series. The correct specification NN(2 , 2) is more accurate than the optimized NNARMA model for high r
+
+and large T , especially for the sinusoidal function with r = 1 and T = 5000. In this scenario, the correct specification NN(2 , 2) is considerably more accurate than any other benchmark. For all other combinations of T and r, the accuracy of NNARMA is comparable to that of the benchmarks, including the correctly specified NN(2 , 2), with various instances of a higher accuracy for the NNARMA model. Appendix C.5 reports the model rankings by MSEs for each simulated series. For r ∈ { 0.05 , 0.1, 0.2}, the NNARMA model and the correct NN(2 , 2) model show broadly similar frequencies of being the most accurate, especially for the sinusoidal function. 14 Figure 5: Out-of-sample results for a selection of NN models (NN(2 , 2) is correctly specified model) with Box plots of relative MSEs normalized against NNARMA, for the hump-shaped (in blue) and the sinusoidal (in red) regression functions, where values above one indicate that NNARMA has lowest error. Subplots are arranged by r (columns) and T (rows). The estimation procedure of the NNARMA model includes the optimal selection of p and q.
+
+# 5 Cloud cover prediction 
+
+Clouds play a crucial role in the climate system (Hughes, 1984). They are central to the global water cycle (Bengtsson, 2010), particularly through preciptation formation and distribution (Stephens, 2005). They also act as energy gatekeepers for the climate system by reflecting incoming solar radiation (cooling) and blocking outgoing terrestrial radiation (warming; Stephens et al., 2012; Liu et al., 2023). Future changes in cloud fractional cover (the proportion of the sky covered by clouds) are expected to affect global warming and, in turn, both climate and society (Svennevik et al., 2024). However, projections of future cloud cover are subject to substantial uncertainty (Zelinka et al., 2020), largely because the accurate representation of clouds remains a major bottleneck in numerical climate models, limiting the reliability of climate projections (Stevens and Bony, 2013; Bony et al., 2015; Grundner et al., 2025; Vo et al., 2025). A more accurate representation of clouds in numerical climate models is therefore required. One solution is a statistical downscaling procedure based on regression as discussed by (Svennevik et al., 2024). We propose NNARMA as a candidate regression model, and show that it is useful for representing the nonlinear statistical relations between cloud cover and other climate variables and for improving cloud cover predictions. 15 Figure 6: Topography map. Figure 7 shows time series plots for the example locations labeled 1–5. 
+
+## 5.1 Data 
+
+We consider the European Cloud Cover data set from Svennevik et al. (2024), available through the Open Science Framework (Hicks et al., 2023). The data set comprises satellite observations of cloud fractional cover together with reanalysis fields for ( i) air temperature in Kelvin (K), ( ii )specific humidity expressed in kilograms of water vapor per kilogram of air (kg/kg), ( iii ) relative humidity, measured by the amount of water vapor in the air as a percentage of the amount the air could potentially hold at that temperature and pressure, and ( iv ) surface pressure in Pascals (Pa). Cloud fractional cover is the response variable in our analysis, and is sourced from the METeosat Second Generation (MSG) cloud mask from the European Organisation for the Exploitation of Meteorological Satellites (EUMETSAT; Schmetz et al., 2002). Sensor failures introduce missing values that are random in time but perfectly synchronous across all spatial locations. The remaining four variables serve as regressors and are sourced from the 5th Generation Reanalysis data (ERA5) from the European Centre for Medium-Range Weather Forecasts (Hersbach et al., 2020). They are retrieved from the surface or the closest pressure level (1000hPa). No missing values occur for the four regressor variables. Cloud formation occurs when air becomes saturated with water vapor. Saturation can arise either from decreases in temperature (cooling) or from increases in water vapor. These mechanisms are reflected in the four regressors: ( i) temperature determines the saturation level; ( ii ) specific humidity measures the amount of water vapor present; ( iii ) relative humidity defines proximity to saturation; ( iv ) surface pressure captures additional dynamical effects through its link to vertical air movement, with low surface pressure typically associated with rising air that cools and promotes condensation. Relative humidity is derived as a nonlinear transformation of temperature and specific humidity, and therefore may imply potential redundancy in the flexible neural network models. Since relative humidity encodes key thermodynamic relationships governing saturation, 16 Figure 7: NNARMA predictions over the tests sample (red) together with observed cloud fractional cover (black) for the locations indicated in Figure 6. this variable helps in representing the resulting nonlinearities in the data (Romps, 2014). At the same time, relative humidity reflects only proximity to saturation, and cloud formation is influenced by thermodynamic structure in addition to relative humidity (Slingo, 1987). The geographical domain of the data set is between 30 ° and 50 ° latitude (degrees north) and -15 ° and 25 ° longitude (degrees east), covering Southern Europe and Northern Africa as shown in the topography map in Figure 6. The data are provided at a 0.25 °horizontal resolution with hourly sampling from April 2004 to December 2018. We average the data to daily frequency and sample these at a 1.0 °horizontal resolution. The temporal aggregation eliminates most missing values, as days with at least one valid observation yield a complete daily record. In total, we consider 861 geographical locations. At each location, the effective sample size is T = 5370 observations. Atotal of 11 observations are omitted due to missing values, and 7 initial observations are reserved as initial conditions for benchmark models with lagged dependent variables, see the discussion below. The initial observations are also omitted in models without lagged dependent variables to ensure a common sample across specifications. Appendix D, Figure D.1 summarizes the spatial distribution of the sample mean and standard deviation of cloud fractional cover and the regressors, computed over time at each location. Mean cloud fractional cover is higher over the eastern North Atlantic Ocean, particularly between 40 °
+
+and 50 ° latitude, than over land and the Mediterranean Sea. Variability follows the opposite pattern. Over the ocean, a steady supply of water vapor and limited temperature variation maintain consistently high and stable relative humidity and cloud cover. Over land, a limited supply of water vapor reduces mean cloud cover, while strong day–night temperature fluctuations increase the variability of relative humidity and cloud cover. The Mediterranean Sea exhibits large variability in specific humidity due to alternating dry continental and moist marine air masses, with cloud 17 (a) Empirical distribution of ARMA specifications. 
+
+> (b) Spatial distribution of model classes.
+
+Figure 8: Empirical distribution of ARMA specifications across the 861 geographical locations (panel a) and spatial distribution of model classes (AR, MA, or ARMA; panel b) selected by NNARMA and a linear model with ARMA errors. cover showing intermediate mean and variability. 
+
+## 5.2 Empirical design and benchmark methods 
+
+For each of the 861 geographical locations, we separately predict cloud fractional cover from the four regressors which are treated as given and known. We compare the prediction accuracy of our NNARMA model to that of the following benchmarks: a linear regression model with and without a lagged dependent variable yt−1, as adopted in Svennevik et al. (2024), a linear regression model with ARMA disturbances, and an LSTM neural network with and without a lagged dependent variable 
+
+yt−1. The recurrent structure of the LSTM network incorporates all prior input information when predicting cloud cover. Appendix D.1 presents the key figures from this section for an expanded set of benchmarks, which includes the same models but with seven lagged dependent variables instead of one. It is found that including more lags has a negligible effect on the results presented below. In all specifications, an explicit intercept term is included to align with the linear benchmark models. For estimating the regression function and the parameters, including those for the ARMA part, we consider the same two-layer network architecture (with 32 and 16 units) as adopted in the Monte Carlo study, both for the NNARMA model and the LSTM network. We select the ARMA specifications for the NNARMA model and the linear regression with ARMA disturbances using the practical strategy discussed in Section 3.3. We consider 36 ARMA( p, q ) specifications, for 18 Figure 9: Predictions over the tests sample (red) together observed cloud fractional cover (black) for the location labeled 1 in Figure 6. 
+
+p, q ∈ { 0, 1, 2, 3, 4, 5}, as candidates. We split the daily sample into three consecutive parts: an estimation sample (2004–2012), a validation sample used for early stopping (2013–2015), and a test sample reserved for out-of-sample evaluation (2016–2018). Only the NNARMA model and the LSTM network rely on early stopping. The linear benchmarks do not, and for these models we collapse the period from 2004–2015 into an extended estimation sample. All models are estimated once. No re-estimation is performed, and predictions are conditional on the regressors (and possibly lagged dependent variables) in the test sample. This design is motivated by Svennevik et al. (2024) and mimics the Monte Carlo design in Section 4. We measure prediction accuracy by out-of-sample mean squared errors and use the Diebold and Mariano (1995) test to determine statistically significant differences across models. 2
+
+The response variable yt lies in the unit interval [0 , 1]. To avoid introducing additional model complexity, we follow Svennevik et al. (2024) and do not explicitly enforce this constraint through the loss function nor through structural constraints such as bounded link functions. All models are estimated with regular squared error loss. All regressors are standardized to have zero mean and unit variance. Ex post, predictions below 0 are set to 0 and predictions above 1 are set to 1. Appendix D, Figure D.2 shows box plots, across geographical locations, of the percentage of unrestricted out-of-sample predictions falling below 0, above 1, and outside the admissible range [0 , 1]. The median percentage of unrestricted predictions outside the admissible range is 1.6% for          
+
+> 2Diebold–Mariano tests are computed using a Bartlett lag window and a truncation lag of 7. Similar results are obtained with truncation lags in {1,2,3,4,5,6,14 ,21 }and are available upon request.
+
+19 Figure 10: Relative MSEs over the test sample normalized to NNARMA (left), where values above one (red) indicate lower error for NNARMA. p-values from a two-sided Diebold-Mariano test of equal predictive accuracy to NNARMA (right), where values below 0 .05 (red) indicate significant differences in predictive accuracy at that level. NNARMA and 1.8% or below for the remaining models. Thus, violations of the range constraint are rare in practice. 
+
+## 5.3 Results 
+
+Figure 7 presents NNARMA out-of-sample predictions for the five illustrative locations indicated in Figure 6 together with the observed cloud fractional cover time series. These five locations span a representative range of land and ocean environments and altitudes that are present among the total 861 locations in our study. Consistent with the data discussion above, these time series exhibit distinct temporal dynamics. The NNARMA model appears to capture much of this variation across locations. The variation in temporal dynamics across locations is reflected in the heterogeneity of ARMA specifications selected for the NNARMA model and its linear counterpart, see Figure 8, panel a. Across locations, the most frequent selections are ARMA(2 , 1) and ARMA(2 , 2) for the NNARMA model and the linear model, respectively. The extreme candidate specifications ARMA(0 , 0) and 20 Figure 11: Relative MSEs over the test sample normalized to NNARMA (left), where values above one (red) indicate lower error for NNARMA. The color bar limits differ from Figure 10. p-values from a two-sided Diebold-Mariano test of equal predictive accuracy to NNARMA (right), where values below 0 .05 (red) indicate significant differences in predictive accuracy at that level. ARMA(5 , 5) are never selected. Figure 9 illustrates the NNARMA predictions in comparison with those of the benchmarks models for location 1. Most visibly, the LSTM network with no lagged dependent variable captures the least amount of variation in the observed series. The accuracy of the LSTM network increases substantially with the inclusion of a lagged dependent variable yt−1. In contrast, the inclusion of 
+
+yt−1 appears to have a negligible effect on the accuracy of the linear model. Similar patterns are observed across the other locations; see Appendix D, Figure D.3 for location 2. Figures 10 and 11 summarize prediction accuracy across the entire geographical domain of the Mediterranean, by reporting relative MSEs for the benchmark models normalized against NNARMA, together with the p-values from two-sided Diebold-Mariano tests. Cloud formation is inherently threshold-based and nonlinear with respect to thermodynamic variables (e.g., Sundqvist et al., 1989; Xu and Randall, 1996; Romps, 2014). Consistent with this nonlinear behavior, the NNARMA model provides significantly more accurate predictions than the linear model, with or without a lagged dependent variable, across most locations in the geographical domain. The use of ARMA disturbances in place of lagged dependent variables significantly improves the accuracy of the linear model; see also Appendix D, Figure D.4, which contrasts the linear specifications. This pattern is consistent with the ARMA selections in Figure 8, panel b. Across most of the geographical locations, the selected ARMA specifications include moving-average dynamics, which are often important for accurate predictions but difficult to capture using a finite number of lagged dependent variables. The NNARMA model often performs significantly better than the linear model with ARMA 21 errors in mountain regions (compare Figures 10 and 6), characterized by low surface pressure and large variability in relative humidity (compare Figure 10 and Appendix D, Figure D.1). This pat-tern is consistent with how mountains modify airflow and temperature through terrain-induced vertical motion and associated thermodynamic changes (e.g., Smith, 1979; Houze Jr., 2012), which can amplify nonlinear effects, including threshold behavior, regime switching, and interactions. Mountain terrain forces air to rise and sink over slopes, with rapid cooling during ascent and rapid warming during descent. These processes generate large variability in relative humidity and repeat-edly push air above and below the saturation threshold, creating abrupt, value-dependent changes in cloud-response sensitivity. Related to this, mountain regions exhibits strong regime switching because the terrain makes vertical wind motion highly sensitive to wind direction and atmospheric stability. Small changes in regional wind patterns or atmospheric stability can trigger a switch be-tween cloud-forming and cloud-suppressing states, which may be better captured by the flexibility of the NNARMA model. In addition, mountains increase the importance of interaction effects. One example is the coupling of temperature and specific humidity. As air is forced to rise or sink over slopes, cooling or warming occurs without an immediate change in specific humidity, bringing the air closer to or farther away from saturation. As a result, temperature directly modulates the effect of specific humidity on cloud formation. Vertical motion also promotes mixing between air masses with different temperature and specific humidity. The NNARMA model naturally captures these interaction effects. In contrast, oceans typically experience smoother and more coherent atmospheric variability, leading to more gradual cloud responses and allowing the linear models to perform comparatively well. Throughout most of the geographical domain, the NNARMA model achieves significantly higher predictive accuracy than the LSTM network without a lagged dependent variable. Including a lagged dependent variable in the LSTM network improves performance and leads to statistically indistinguishable accuracy relative to NNARMA across mainland Europe and large parts of the Mediterranean Sea, with each model occasionally outperforming the other. Across most of the remaining domain, including large portions of North Africa and the eastern North Atlantic Ocean, the NNARMA model continues to significantly outperform the LSTM network. In conclusion, incorporating ARMA structures can improve predictive accuracy in both linear and neural network models in this application of cloud cover prediction. 
+
+# 6 Conclusion 
+
+In this paper, we have introduced the NNARMA model, which integrates autoregressive moving average (ARMA) error structures into feedforward neural networks for flexible nonlinear regression and prediction with serially correlated disturbances. We have developed a method for the joint estimation of the neural network and ARMA coefficients. Simulation experiments have demon-strated accurate estimation of unknown regression functions and the underlying dynamics in the disturbances across a range of time series lengths and signal-to-noise ratios. An empirical study of cloud cover has shown improved prediction accuracy of NNARMA relative to existing methods, including LSTM networks, with particularly pronounced gains in mountain regions compared to 22 linear models with ARMA errors. Our findings underscore the complementary roles of flexible nonlinear regression and structured stochastic modeling of the disturbances within the proposed framework. Explicitly representing temporal dependence through ARMA disturbances may provide advantages relative to the inclusion of lagged variables in the regression component in settings characterized by structured temporal dynamics. The simulations further indicate that ARMA disturbances can partially mitigate the impact of omitted lags in the regression equation, suggesting that the disturbance-based represen-tation of temporal dependence can accommodate certain forms of dynamic misspecification. The neural network regression component enables the model to accommodate complex relationships that may not be well captured by linear specifications. The pronounced differences observed in mountain regions provide a concrete illustration of this mechanism. Together, these elements il-lustrate the potential of integrating structured stochastic modeling into flexible machine learning frameworks such as neural networks. From a practical perspective, the NNARMA model shows robustness to the choices of ARMA specification and network architecture, with noticeable deteri-oration only under substantial underspecification. While the proposed NNARMA model emphasizes flexible nonlinear regression and structured stochastic modeling of the disturbances, several aspects remain open for further development. In particular, a rigorous theoretical analysis of the statistical properties of the proposed estimation procedure under serial dependence has not yet been established, formal uncertainty quantification is not yet available, and interpretability of the estimated nonlinear relationships may warrant further investigation. These considerations reflect broader methodological challenges in reconciling flexible neural network methods with formal statistical inference, and with particular attention to dynamic stochastic systems. Further, as alternatives to ARMA structures for the disturbances, stochastic processes implied by hidden Markov models and spatial-temporal models can, for example, be considered. Continued efforts to strengthen the theoretical foundation and inferential tools for such advanced methods may further enhance their applicability in time series analysis and forecasting. 23 References 
+
+Altman, N. S. (1990). Kernel smoothing of data with correlated errors. Journal of the American Statistical Association 85 (411), 749–759. Athey, S. and G. W. Imbens (2019). Machine learning methods that economists should know about. Annual Review of Economics 11 (Volume 11, 2019), 685–725. Bach, F. (2017). Breaking the curse of dimensionality with convex neural networks. Journal of Machine Learning Research 18 (19), 1–53. Bates, D. M. and D. G. Watts (1988). Nonlinear Regression Analysis and Its Applications . New York: Wiley. Bauer, B. and M. Kohler (2019). On deep learning as a remedy for the curse of dimensionality in nonparametric regression. The Annals of Statistics 47 (4), 2261 – 2285. Bengtsson, L. (2010). The global atmospheric water cycle. Environmental Research Letters 5 (2), 025202. Bennedsen, M., E. Hillebrand, and S. Jensen (2023). A neural network approach to the environ-mental Kuznets curve. Energy Economics 126 , 106985. Bony, S., B. Stevens, D. Frierson, C. Jakob, M. Kageyama, R. Pincus, T. Shepherd, S. Sherwood, A. Siebesma, M. Watanabe, and M. Webb (2015). Clouds, circulation and climate sensitivity. 
+
+Nature Geoscience 8 , 261–268. Box, G., G. Jenkins, G. Reinsel, and G. Ljung (2015). Time Series Analysis: Forecasting and Control . Wiley Series in Probability and Statistics. Wiley. Brabanter, K. D., F. Cao, I. Gijbels, and J. Opsomer (2018). Local polynomial regression with correlated errors in random design and unknown correlation structure. Biometrika 105 (3), pp. 681–690. Cattaneo, M. D., M. Jansson, and X. Ma (2020). Simple local polynomial density estimators. 
+
+Journal of the American Statistical Association 115 (531), 1449–1455. Chen, R. and R. S. Tsay (1993). Nonlinear additive ARX models. Journal of the American Statistical Association 88 (423), 955–967. Chen, X. and H. White (1999). Improved rates and asymptotic normality for nonparametric neural network estimators. IEEE Transactions on Information Theory 45 (2), 682–691. Cybenko, G. (1989). Approximation by superpositions of a sigmoidal function. Mathematics of Control, Signals and Systems 2 (4), 303–314. Diebold, F. X. and R. S. Mariano (1995). Comparing predictive accuracy. Journal of Business & Economic Statistics 13 (3), 253–263. 24 Durbin, J. (1960). The fitting of time-series models. Review of the International Statistical Insti-tute 28 (3), 233–244. Durbin, J. and G. S. Watson (1950). Testing for serial correlation in least squares regression, i. 
+
+Biometrika 37 (3–4), 409–428. Durbin, J. and G. S. Watson (1951). Testing for serial correlation in least squares regression, ii. 
+
+Biometrika 38 (1–2), 159–179. Efron, B. (2020). Prediction, estimation, and attribution. Journal of the American Statistical Association 115 (530), 636–655. Farrell, M. H., T. Liang, and S. Misra (2021). Deep neural networks for estimation and inference. 
+
+Econometrica 89 (1), 181–213. Gallant, A. R. (1987). Nonlinear Statistical Models . New York: Wiley. Goodfellow, I., Y. Bengio, and A. Courville (2016). Deep Learning . MIT Press. http://www. deeplearningbook.org .Greff, K., R. K. Srivastava, J. Koutn´ ık, B. R. Steunebrink, and J. Schmidhuber (2017). Lstm: A search space odyssey. IEEE Transactions on Neural Networks and Learning Systems 28 (10), 2222–2232. Grundner, A., T. Beucler, J. Savre, A. Lauer, M. Schlund, and V. Eyring (2025). Reduced cloud cover errors in a hybrid ai-climate model through equation discovery and automatic tuning. 
+
+Scientific Reports 15 (1), 43836. Gu, S., B. Kelly, and D. Xiu (2020). Empirical Asset Pricing via Machine Learning. The Review of Financial Studies 33 (5), 2223–2273. Hamilton, J. D. (1994). Time Series Analysis . Princeton University Press. H¨ ardle, W. and A. Tsybakov (1997). Local polynomial estimators under dependence. Annals of Statistics 25 , 118–148. Hart, J. D. (1991). Kernel regression estimation with time series errors. Journal of the Royal Statistical Society. Series B (Methodological) 53 (1), 173–187. Harvey, A. C. (1990). The Econometric Analysis of Time Series (2nd ed.). The MIT Press. Harvey, A. C. and G. D. A. Phillips (1979). Maximum likelihood estimation of regression models with autoregressive- moving average disturbances. Biometrika 66 (1), 49–58. Hastie, T., R. Tibshirani, and J. H. Friedman (2009). The Elements of Statistical Learning: Data Mining, Inference, and Prediction (2 ed.). Springer Series in Statistics. New York, NY: Springer. 25 He, K., X. Zhang, S. Ren, and J. Sun (2015). Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification. In The IEEE International Conference on Computer Vision (ICCV) .Hendry, D. F. and B. Nielsen (2007). Econometric Modeling: A Likelihood Approach . Princeton, NJ: Princeton University Press. Herrmann, E., T. Gasser, and A. Kneip (1992). Choice of bandwidth for kernel regression when residuals are correlated. Biometrika 79 (4), 783–795. Hersbach, H., B. Bell, P. Berrisford, S. Hirahara, A. Hor´ anyi, J. Mu˜ noz-Sabater, J. Nicolas, C. Peubey, R. Radu, D. Schepers, A. Simmons, C. Soci, S. Abdalla, X. Abellan, G. Balsamo, P. Bechtold, G. Biavati, J. Bidlot, M. Bonavita, G. De Chiara, P. Dahlgren, D. Dee, M. Dia-mantakis, R. Dragani, J. Flemming, R. Forbes, M. Fuentes, A. Geer, L. Haimberger, S. Healy, R. J. Hogan, E. H´ olm, M. Janiskov´ a, S. Keeley, P. Laloyaux, P. Lopez, C. Lupu, G. Radnoti, P. de Rosnay, I. Rozum, F. Vamborg, S. Villaume, and J.-N. Th´ epaut (2020). The era5 global reanalysis. Quarterly Journal of the Royal Meteorological Society 146 (730), 1999–2049. Hicks, S., M. Riegler, H. Svennevik, and H. L. Hammer (2023). European cloud cover. Open Science Framework . doi:10.17605/OSF.IO/KQDGX. Hochreiter, S. and J. Schmidhuber (1997). Long short-term memory. Neural Computation 9 (8), 1735–1780. Hornik, K., M. Stinchcombe, and H. White (1989). Multilayer feedforward networks are universal approximators. Neural Networks 2 (5), 359–366. Houze Jr., R. A. (2012). Orographic effects on precipitating clouds. Reviews of Geophysics 50 (1). Hughes, N. A. (1984). Global cloud climatologies: A historical review. Journal of Applied Meteo-rology and Climatology 23 (5), 724 – 751. Jones, R. H. (1980). Maximum likelihood fitting of arma models to time series with missing observations. Technometrics 22 , 389–395. Jozefowicz, R., W. Zaremba, and I. Sutskever (2015). An empirical exploration of recurrent network architectures. In Proceedings of the 32nd International Conference on International Conference on Machine Learning - Volume 37 , ICML’15, pp. 2342–2350. JMLR.org. Kingma, D. P. and J. Ba (2014). Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980 .Krivobokova, T. and G. Kauermann (2007). A note on penalized spline smoothing with correlated errors. Journal of the American Statistical Association 102 (480), 1328–1337. Leshno, M., V. Y. Lin, A. Pinkus, and S. Schocken (1993). Multilayer feedforward networks with a nonpolynomial activation function can approximate any function. Neural Networks 6 (6), 861– 867. 26 Levinson, N. (1946). The wiener (root mean square) error criterion in filter design and prediction. 
+
+Journal of Mathematics and Physics 25 (1-4), 261–278. Li, Q. and J. Racine (2007). Nonparametric Econometrics: Theory and Practice . Princeton, NJ: Princeton University Press. Liu, H., I. Koren, O. Altaratz, and M. D. Chekroun (2023). Opposing trends of cloud coverage over land and ocean under global warming. Atmospheric Chemistry and Physics 23 (11), 6559–6569. Liu, J. M., R. Chen, and Q. Yao (2010). Nonparametric transfer function models. Journal of Econometrics 157 (1), 151–164. Nonlinear and Nonparametric Methods in Econometrics. Masters, T. (1993). Practical neural network recipes in C++ . (Academic Press). Medeiros, M. C., G. F. R. Vasconcelos, ´Alvaro Veiga, and E. Zilberman (2021). Forecasting inflation in a data-rich environment: The benefits of machine learning methods. Journal of Business & Economic Statistics 39 (1), 98–119. Nadaraya, E. A. (1964). On estimating regression. Theory of Probability & Its Applications 9 (1), 141–142. Nair, V. and G. E. Hinton (2010). Rectified linear units improve restricted boltzmann machines. In Proceedings of the 27th International Conference on International Conference on Machine Learning , ICML’10, Madison, WI, USA, pp. 807–814. Omnipress. Pagan, A. and A. Ullah (1999). Nonparametric Econometrics . Cambridge: Cambridge University Press. Pierce, D. A. (1971). Least squares estimation in the regression model with autoregressive-moving average errors. Biometrika 58 (2), 299–312. Powell, M. J. D. (1964). An efficient method for finding the minimum of a function of several variables without calculating derivatives. The Computer Journal 7 (2), 155–162. Prechelt, L. (2012). Early Stopping — But When? , pp. 53–67. Berlin, Heidelberg: Springer Berlin Heidelberg. Ramachandran, P., B. Zoph, and Q. V. Le (2018). Searching for Activation Functions. In 6th International Conference on Learning Representations, ICLR 2018, Vancouver, BC, Canada, Workshop Track Proceedings . OpenReview.net. Ray, B. K. and R. S. Tsay (1997). Bandwidth selection for kernel regression with long-range dependent errors. Biometrika 84 (4), 791–802. Robinson, P. M. (1983). Nonparametric estimators for time series. Journal of Time Series Analy-sis 4 (3), 185–207. Robinson, P. M. (1988). Root-n-consistent semiparametric regression. Econometrica 56 , 931–954. 27 Romps, D. M. (2014). An analytical model for tropical relative humidity. Journal of Cli-mate 27 (19), 7432 – 7449. Rumelhart, D. E., G. E. Hinton, and R. J. Williams (1986). Learning representations by back-propagating errors. Nature 323 , 533–536. Schmetz, J., P. Pili, S. Tjemkes, D. Just, J. Kerkmann, S. Rota, and A. Ratier (2002). An introduction to meteosat second generation (msg). Bulletin of the American Meteorological Society 83 (7), 977 – 992. Schmidt-Hieber, J. (2020). Nonparametric regression using deep neural networks with ReLU acti-vation function. The Annals of Statistics 48 (4), 1875 – 1897. Silverman, B. W. (1986). Density estimation for statistics and data analysis . London: Chapman and Hall. Slingo, J. M. (1987). The development and verification of a cloud prediction scheme for the ecmwf model. Quarterly Journal of the Royal Meteorological Society 113 (477), 899–927. Smith, R. B. (1979). The influence of mountains on the atmosphere. Volume 21 of Advances in Geophysics , pp. 87–230. Elsevier. Stephens, G. L. (2005). Cloud feedbacks in the climate system: A critical review. Journal of Climate 18 (2), 237 – 273. Stephens, G. L., J. Li, M. Wild, C. A. Clayson, N. Loeb, S. Kato, T. L’Ecuyer, P. W. Stackhouse, M. Lebsock, and T. Andrews (2012). An update on earth’s energy balance in light of the latest global observations. Nature Geoscience 5 (10), 691–696. Stevens, B. and S. Bony (2013). What are climate models missing? Science 340 (6136), 1053–1054. Stone, C. J. (1982). Optimal global rates of convergence for nonparametric regression. The Annals of Statistics 10 (4), 1040–1053. Su, L. and A. Ullah (2006). More efficient estimation in nonparametric regression with nonpara-metric autocorrelated errors. Econometric Theory 22 (1), 98–126. Sun, F.-K., C. I. Lang, and D. S. Boning (2021). Adjusting for autocorrelated errors in neural networks for time series. Sundqvist, H., E. Berge, and J. E. Kristj´ ansson (1989). Condensation and cloud parameterization studies with a mesoscale numerical weather prediction model. Monthly Weather Review 117 (8), 1641 – 1657. Svennevik, H., S. Hicks, M. Riegler, T. Storelvmo, and H. Hammer (2024). A dataset for predicting cloud cover over europe. Scientific Data 11 (1), 245. Ter¨ asvirta, T., M. Medeiros, and G. Rech (2006). Building neural network models for time series: a statistical approach. Journal of Forecasting 25 (1), 49–75. 28 Vo, T. T., L. Hu, L. Xue, and S. Chen (2025). Trends in cloud covers across conus (1980–2020). 
+
+Journal of Climate 38 (19), 5371 – 5390. Watson, G. S. (1964). Smooth regression analysis. Sankhy¯ a: The Indian Journal of Statistics, Series A (1961-2002) 26 (4), 359–372. White, H. (1989). Some Asymptotic Results for Learning in Single-Hidden-Layer Feedforward Networks. Neural Networks 2 , 425–431. White, H. and I. Domowitz (1984). Nonlinear regression with dependent observations. Economet-rica 52 (1), 143–161. Xiao, Z., O. B. Linton, R. J. Carroll, and E. Mammen (2003). More efficient local polynomial estimation in nonparametric regression with autocorrelated errors. Journal of the American Statistical Association 98 (464), 980–992. Xu, K.-M. and D. A. Randall (1996). A semiempirical cloudiness parameterization for use in climate models. Journal of Atmospheric Sciences 53 (21), 3084 – 3102. Zelinka, M. D., T. A. Myers, D. T. McCoy, S. Po-Chedley, P. M. Caldwell, P. Ceppi, S. A. Klein, and K. E. Taylor (2020). Causes of higher climate sensitivity in cmip6 models. Geophysical Research Letters 47 (1), e2019GL085782. Zhang, G. (2003). Time series forecasting using a hybrid arima and neural network model. Neu-rocomputing 50 , 159–175. 29 Appendix 
+
+A Cholesky decomposition of the covariance matrix 31 B Jones’ reparametrization 32 C Monte Carlo experiments 33 
+
+C.1 Monte Carlo setup and benchmark models . . . . . . . . . . . . . . . . . . . . . . . 33 C.2 Finite sample properties . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 35 C.3 Out-of-sample prediction performance . . . . . . . . . . . . . . . . . . . . . . . . . 40 C.4 ARMA misspecification . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 43 C.5 Dynamic misspecification . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 48 C.6 Model selection . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 53 
+
+D Additional cloud cover results 56 
+
+D.1 Results for an expanded set of benchmarks . . . . . . . . . . . . . . . . . . . . . . 59 30 A Cholesky decomposition of the covariance matrix 
+
+We use the Durbin–Levinson algorithm to efficiently perform a Cholesky decomposition of the scaled covariance matrix Ψ( θ1) = C(θ1)−1[C(θ1)−1]′, defined in Section 3. The algorithm is recur-sive and initiated from the autocovaraince function of the ARMA process. We denote by γ(h; θ1)the value of the ARMA autocovariance function at lag h. For simplicity, dependence on θ1 is suppressed in the remainder of this section, e.g. Ψ( θ1) ≡ Ψ and γ(h; θ1) ≡ γ(h). As explained below, we use the Durbin–Levinson algorithm to perform the decomposition Ψ = L−1D−1[L−1]′, from which it can be deduced that C = D 12 L. The matrices L and D are defined as follows 
+
+L =
+
+
+
+1 0 . . . . . . . . . 0
+
+−ϕ11 1 0 . . . . . . 0
+
+−ϕ22 −ϕ21 1 0 . . . 0
+
+−ϕ33 −ϕ32 −ϕ31 1 . . . 0... ... . . . . . . . . . ...
+
+−ϕT −1,T −1 −ϕT −1,T −2 −ϕT −1,T −3 . . . −ϕt−1,1 1
+
+
+
+(14) and 
+
+D = σ2diag( v−10 , v −11 , . . . , v −1 
+
+> T−1
+
+). (15) The coefficients ϕtj define the orthogonal projection of ut+1 onto the linear span of u1, . . . , u T ,ˆut+1 = Psp {u1,...,u t}ut+1 =
+
+> t
+
+X
+
+> j=1
+
+ϕtj ut+1 −j , t = 1 , . . . , T − 1, (16) with mean squared errors 
+
+vt = E (ut+1 − ˆut+1 )2 . (17) We note that E(Lu [Lu ]′) = σ2LΨL′ = σ2D−1. The decomposition Ψ = L−1D−1[L−1]′ follows immediately. The coefficients ϕtj and mean squared errors vt are determined from the Durbin– Levinson recursions. Set ϕ11 = γ(1) /γ (0), v0 = γ(0), 
+
+ϕtt = γ(t) − Pt−1 
+
+> j=1
+
+ϕt−1,j γ(t − j)
+
+vt−1
+
+, t = 1 , . . . , T − 1, (18) 
+
+ϕtj = ϕt−1,j − ϕtt ϕt−1,t −j , j = 1 , . . . , t − 1, (19) and 
+
+vt = vt−1[1 − ϕ2
+
+> tt
+
+]. (20) The innovation variance σ2 cancels out in (15) and (18), as the mean squared errors vt and the autocovariances γt are both proportional to σ2. Thus, C can be obtained without assumptions on 
+
+σ2. The coefficients ϕtt equal the partial autocorrelations of the process ut at lag t; see Appendix B. 31 B Jones’ reparametrization 
+
+We use the reparametrization technique of Jones (1980) to transform the constrained minimization problem in (11), subject to the constraints implied by (9), into an unconstrained problem. Here, we focus on how to impose the stability condition by reparametrization of the autoregressive coefficients ϕ1, . . . , ϕ p. The same technique applies to the invertibility condition, which can be phrased as a “stability condition” on the negative of the moving average coefficients −ω1, . . . , −ωq.Following Jones (1980), the stability condition in (9) is imposed by reparametrizing the autore-gressive coefficients ϕ1, . . . , ϕ p in terms of partial autocorrelations a1, . . . , a p, constrained to the open interval ( −1, 1) by the transformation 
+
+at = 1 − exp( −wt)1 + exp( −wt) , t = 1 , . . . , p, (21) where the coefficients w1, . . . , w p are unconstrained. Based on the partial autocorrelations in (21), the autoregressive coefficients are obtained from the Durbin–Levinson recursions, 
+
+ϕtt = at, t = 1 , . . . , p, (22) 
+
+ϕtj = ϕt−1,j − ϕtt ϕt−1,t −j , j = 1 , . . . , t − 1, (23) with ϕj = ϕpj , j = 1 , . . . , p . Optimization is carried out with respect to the unconstrained coeffi-cients w1, . . . , w p.We use the inverse of the above transformation for initialization, as it is more convenient to specify initial values in terms of the original coefficients ϕ1, . . . , ϕ p rather than the corresponding unconstrained coefficients w1, . . . , w p. The inverse transformation is obtained by solving (21) for the unconstrained coefficients, 
+
+wt = log(1 + at) − log(1 − at), t = 1 , . . . , p, (24) where the partial autocorrelations are obtained from the Durbin–Levinson algorithm with ϕtt = at
+
+and initialization based on the original coefficients, as explained in Appendix A. 32 C Monte Carlo experiments 
+
+This Appendix provides a comprehensive account of the Monte Carlo experiments summarized in Section 4, including the full data-generating equations as well as additional results and discussion. It is structured as follows. Appendix C.1 describes the Monte Carlo setup and the benchmark models used for out-of-sample evaluation. In Appendix C.2, we investigate the finite-sample prop-erties of the estimation procedure in Section 3.1, with early stopping as described in Section 3.2. Appendix C.3 evaluates out-of-sample prediction accuracy. Both Appendix C.2 and C.3 assume the NNARMA model is correctly specified. Appendix C.4 and C.5 examine, respectively, ARMA misspecification and dynamic misspecification induced by omitted lagged variables. Appendix C.6 motivates a simple and practical strategy for model selection in the NNARMA model. 
+
+## C.1 Monte Carlo setup and benchmark models 
+
+For all experiments except those involving dynamic misspecification (Appendix C.5), we generate a univariate response variable yt from two regressors x1t and x2t, according to the data generating process 
+
+yt = f (x1t, x 2t) + ut, t = 1 , . . . , T, (25) where T denotes the sample size. The regressors are generated as independent and stationary AR(1) processes 
+
+x1t = 0 .8x1t−1 + ν1t, ν1t ∼ N IID (0 , 1) , (26) 
+
+x2t = 0 .7x2t−1 + ν2t, ν2t ∼ N IID (0 , 1) . (27) The disturbance term in (25) is simulated from an ARMA(1,2) process 
+
+ut = 0 .9ut−1 + et − 0.5et−1 + 0 .2et−2, et ∼ N IID (0 , 1/r ), (28) where r is the signal-to-noise ratio. We analyze all combinations of r ∈ { 0.05 , 0.1, 0.2, 1.0} and 
+
+T ∈ { 250 , 500 , 1000 , 5000 }. Sample sizes of 250, 500, and 1000 reflect typical studies with quarterly and monthly observations, while a sample size of 5000 corresponds to the empirical study in Section 5 (daily observations). We consider two specifications of the regression function in (25) of varying complexity 
+
+f (x1t, x 2t) = 3 − 0.25 x21t − 0.25 x22t, (Hump-shaped) 
+
+f (x1t, x 2t) = 2 sin(3 x1t) + 2 sin(3 x2t). (Sinusoidal) Both specifications are illustrated in Figure C.1, where each regressor is varied over the interval defined by its mean (zero) plus or minus two standard deviations. Appendix C.5 considers a modified setup in which the NNARMA model is dynamically misspecified. In all experiments, we split each Monte Carlo sample into three consecutive parts: (1) an estimation sample (first 60%), (2) a validation sample used for early stopping (next 20%), and (3) a test sample reserved for out-of-sample evaluation (final 20%). Appendix C.2 and C.6 rely solely 33 Figure C.1: The hump-shaped (left) and sinusoidal (right) regression function. on the estimation and validation samples to analyze the finite-sample properties of the proposed estimation procedure (including early stopping) and model selection. Appendix C.3–C.5 use the test sample to evaluate out-of-sample predictive performance under different assumptions about the true model, as follows. For each Monte Carlo replication, all models are estimated once using the estimation sample, with the validation sample used for early stopping. No re-estimation is performed, and out-of-sample prediction accuracy is evaluated over the entire test sample. We compute out-of-sample predictions conditional on the regressors (and lagged response variables) in the test sample, and measure accuracy by MSE. This setup mimics the empirical setting in Section 5. The set of benchmark models used for out-of-sample evaluation comprises existing feedforward neural networks with lagged variables. Using the notation of Section 4, they can be listed as 
+
+• NN(0,0): yt = f NN (xt) + ut
+
+• NN(1,0): yt = f NN (xt, y t−1) + ut
+
+• NN(0,1): yt = f NN (xt, x t−1) + ut
+
+• NN(1,1): yt = f NN (xt, y t−1, x t−1) + ut
+
+• NN(2,2): yt = f NN (xt, y t−1, y t−2, x t−1, x t−2) + ut
+
+• NN(3,3): yt = f NN (xt, y t−1, . . . , y t−3, x t−1, . . . , x t−3) + ut
+
+• NN(5,5): yt = f NN (xt, y t−1, . . . , y t−5, x t−1, . . . , x t−5) + ut
+
+• NN(10,10): yt = f NN (xt, y t−1, . . . , y t−10 , x t−1, . . . , x t−10 ) + ut
+
+34 where f NN (·) represents a feedforward neural network and ut is left unmodeled. The benchmark models are estimated using squared errors loss, as in the NNARMA model. No explicit inter-cept is included in the NNARMA model or the benchmark models; constant components can be represented within the network. Model selection is performed using the practical strategy motivated in Appendix C.6 and dis-cussed in Section 3.3. Throughout all experiments, we fix the network architecture to two hidden layers with 32 units in the first and 16 in the second, both for the NNARMA model and the bench-mark models. This network architecture serves as a representative choice for illustrating model performance without extensive tuning. We use the same network architecture in the NNARMA model and the benchmark models to ensure that differences in predictive performance reflect dif-ferences in model specification rather than architecture tuning. The ARMA structure is assumed to be known in Appendix C.2 and C.3, while Appendix C.4 considers a range of ARMA misspec-ifications. In Appendix C.5, we select the ARMA specification separately for each Monte Carlo replication using our practical strategy. Results through Appendix C.2–C.6 are, unless otherwise noted, aggregated across all combina-tions of r and T using 100 Monte Carlo replications. 
+
+## C.2 Finite sample properties 
+
+Figures C.2 and C.3 display the average estimate of the hump-shaped and sinusoidal regression function, respectively. For both regression functions, accuracy of the estimated surface is increasing with r and T as expected. For high r (strong signal) and large T (large sample), both functions are estimated with a high degree of accuracy. The hump-shaped function is estimated with reasonable accuracy even for low r (noisy signal) and small T (small sample), especially in the interior of the input region. All estimated surfaces exhibit reduced accuracy near the boundaries of the input region, a pattern that is particularly pronounced for the sinusoidal function and is well known in nonparametric settings (Cattaneo et al., 2020) and neural network applications (Bennedsen et al., 2023). At low r, the sinusoidal function is estimated fairly well provided the sample size is large enough. It generally requires a larger sample size than for the hump-shaped function. Corresponding to the surface estimates in Figures C.2 and C.3, Figures C.4 and C.5 display the sampling distribution of the ARMA parameter estimates. The behavior of the ARMA parameter estimates closely mirrors that of the surface estimates. Estimation accuracy is decreasing with r
+
+and increasing with T . For low r and large T , all parameters are accurately estimated for both regression functions. For the hump-shaped function, estimation accuracy is high even for high r
+
+and small T . For the sinusoidal function, the AR coefficient is accurately estimated at high r even for small T , though a larger sample size than for the hump-shaped function is required for the distribution of the MA coefficients to peak at their true values and to sharpen the distribution of the innovation variance estimate, especially when r = 1. 35 Figure C.2: Average estimate of the hump-shaped regression function. Subplots are arranged by r
+
+(signal-to-noise ratio; columns) and T (sample size; rows). The true function is shown transparently in the background. 36 Figure C.3: Average estimate of the sinusoidal regression function. Subplots are arranged by r
+
+(columns) and T (rows). The true function is shown transparently in the background. 37 (a) ARMA coefficient estimates  
+
+> (b) Innovation variance estimate scaled by r
+
+Figure C.4: Hump-shaped regression function: ARMA coefficient estimates (panel a) and innova-tion variance estimate scaled by r (panel b), both shown as sampling distributions. Subplots are arranged by r (columns) and T (rows). Vertical dashed lines indicate true parameter values. 38 (a) ARMA coefficient estimates  
+
+> (b) Innovation variance estimate scaled by r
+
+Figure C.5: Sinusoidal regression function: ARMA coefficient estimates (panel a) and innovation variance estimate scaled by r (panel b), both shown as sampling distributions. Subplots are arranged by r (columns) and T (rows). Vertical dashed lines indicate true parameter values. 39 C.3 Out-of-sample prediction performance 
+
+We next evaluate the out-of-sample prediction accuracy of the NNARMA model relative to that of the benchmark models. This section extends the in-sample analysis using the same simulated data. In this setting, the NNARMA model is correctly specified and the benchmarks are misspecified. Appendix C.5 examines the opposite scenario in which the NNARMA model is misspecified. Figures C.6 and C.7 present results for the hump-shaped and sinusoidal regression functions, showing both the distribution of out-of-sample MSE values and the per-sample model ranking by MSE. The same reporting structure is adopted in all subsequent out-of-sample experiments. The specifications NN(0 , 0) and NN(0 , 1) yield substantially higher MSE-values and are henceforth omitted to prevent distortion of the graphical presentation. As expected, panel (a) shows that the NNARMA model often leads to more accurate predictions (lower MSE values) than the bench-marks, especially for the sinusoidal function. The improvements in accuracy of NNARMA relative to the benchmarks are increasing with r and T . Accordingly, the frequency with which NNARMA is the most accurate model is increasing with r and T , see panel (b). For both regression functions, the NNARMA model is consistently the most accurate for high r and large T . Even for low r and small T , the NNARMA model is typically the most accurate. 40 (a) MSE sampling distribution 
+
+> (b) Per-sample model ranking by MSE
+
+Figure C.6: Out-of-sample results with NNARMA as the correct specification (bold). Hump-shaped regression function: MSE distribution (panel a) and per-sample model rankings (panel b), ordered from lowest MSE (1/dark) to highest MSE (7/light). Subplots are arranged by r (columns) and T (rows). 41 (a) MSE sampling distribution 
+
+> (b) Per-sample model ranking by MSE
+
+Figure C.7: Out-of-sample results with NNARMA as the correct specification (bold). Sinusoidal regression function: MSE distribution (panel a) and per-sample model rankings (panel b), ordered from lowest MSE (1/dark) to highest MSE (7/light). Subplots are arranged by r (columns) and T
+
+(rows). 42 C.4 ARMA misspecification 
+
+We examine the effect of ARMA misspecification on the finite-sample properties and out-of-sample predictive performance of the NNARMA model using the same simulated data as in the preceding analyses. Using the notation of Section 4, we consider all 16 NNARMA( p, q ) specifications with 
+
+p, q ∈ { 0, 1, 2, 3}:
+
+• NNARMA(0,0): yt = f NN (xt) + ut, ut ∼ ARMA(0 , 0) 
+
+• NNARMA(0,1): yt = f NN (xt) + ut, ut ∼ ARMA(0 , 1) 
+
+• NNARMA(0,2): yt = f NN (xt) + ut, ut ∼ ARMA(0 , 2) 
+
+• NNARMA(0,3): yt = f NN (xt) + ut, ut ∼ ARMA(0 , 3) 
+
+• NNARMA(1,0): yt = f NN (xt) + ut, ut ∼ ARMA(1 , 0) 
+
+• NNARMA(1,1): yt = f NN (xt) + ut, ut ∼ ARMA(1 , 1) ...
+
+• NNARMA(3,3): yt = f NN (xt) + ut, ut ∼ ARMA(3 , 3) In this setting, only the NNARMA(1 , 2) specification is correctly specified. Figures C.8 and C.9 replicate Figure 1 from Section 4 and display average estimates of the hump-shaped and sinusoidal regression functions for selected misspecifications—NNARMA(0 , 0), NNARMA(0 , 1), NNARMA(1 , 1), and NNARMA(3 , 3)—over a limited range of r and T . The NNARMA(0 , 0) specification does not account for serial correlation in the disturbance process. For the hump-shaped regression function, larger sample sizes than for the remaining specifications are required to accurately capture the true function, especially for low r. For the sinusoidal func-tion, systematic variation is effectively treated as noise, resulting in nearly flat estimated surfaces. The specification NNARMA(0 , 1) is substantially underspecified but already yields a marked im-provement in the estimated surfaces. In settings with low r, the hump-shaped function is estimated more accurately. For the sinusoidal function, the estimated surfaces capture some systematic varia-tion rather than collapsing to a flat surface. For the mildly underspecified NNARMA(1 , 1) and the substantially overspecified NNARMA(3 , 3), the surface estimates resemble those from the correct NNARMA(1 , 2) specification in Figure 1. Figures C.10 and C.11 present the out-of-sample results for all NNARMA specifications except NNARMA(0 , 0) and corroborates the in-sample results. The NNARMA(0 , 0) specification yields substantially higher MSE-values, especially for the sinusoidal function, and is omitted to avoid distorting the graphical presentation. Panel (a) reveals that prediction accuracy is lower than that of the correct specification when the ARMA structure is substantially underspecified. In particular, the specifications NNARMA(0 , 1), NNARMA(0 , 2), NNARMA(0 , 3), and NNARMA(1 , 0) produce less accurate predictions than NNARMA(1,2). The differences are easier to discern as T increases and r decreases. The accuracy of NNARMA(1,1) and all specifications where the ARMA structure is overspecified fluctuates around the same level as NNARMA(1,2) for all T and r, and no model is systematically preferred, see panel (b). 43 (a) NNARMA(0,0) 
+
+> (b) NNARMA(0,1)
+
+Figure C.8: Average estimates of the hump-shaped and sinusoidal regression functions un-der ARMA misspecification for NNARMA(0 , 0) (panel a) and NNARMA(0 , 1) (panel b), with NNARMA(1 , 2) as the correct specification. Subplots are arranged by r (columns) and T (rows). The true function is shown transparently in the background. 44 (a) NNARMA(1,1) 
+
+> (b) NNARMA(3,3)
+
+Figure C.9: Average estimates of the hump-shaped and sinusoidal regression functions un-der ARMA misspecification for NNARMA(1 , 1) (panel a) and NNARMA(3 , 3) (panel b), with NNARMA(1 , 2) as the correct specification. Subplots are arranged by r (columns) and T (rows). The true function is shown transparently in the background. 45 (a) MSE sampling distribution 
+
+> (b) Per-sample model ranking by MSE
+
+Figure C.10: Out-of-sample results under ARMA misspecification, with NNARMA(1 , 2) as the correct specification (bold). Hump-shaped regression function: MSE distribution (panel a) and per-sample model rankings (panel b), ordered from lowest MSE (1/dark) to highest MSE (15/light). Subplots are arranged by r (columns) and T (rows). 46 (a) MSE sampling distribution 
+
+> (b) Per-sample model ranking by MSE
+
+Figure C.11: Out-of-sample results under ARMA misspecification, with NNARMA(1 , 2) as the correct specification (bold). Sinusoidal regression function: MSE distribution (panel a) and per-sample model rankings (panel b), ordered from lowest MSE (1/dark) to highest MSE (15/light). Subplots are arranged by r (columns) and T (rows). 47 C.5 Dynamic misspecification 
+
+We next analyze how omitting lagged variables affects the out-of-sample predictive performance of the NNARMA model. We modify the simulation setup used in the preceding analysis so that the NNARMA model is dynamically misspecified. First, we omit lagged input variables from the NNARMA model. Next, we omit both lagged input and lagged output variables. 
+
+Omission of lagged inputs 
+
+To examine the effect of omitting lagged regressors from the NNARMA model, we generate the dependent variables as 
+
+yt = f (˜ x1t, ˜x2t) + ut, t = 1 , . . . , T, (29) where ˜xjt = 0 .4xjt + 0 .3xjt −1 + 0 .2xjt −2, j = 1 , 2, (30) and ut ∼ N IID (0 , 1/r ). The exogenous variables x1t, x 2t are generated as in (26)–(27). We also consider the same choices of r, T , hump-shaped, and sinusoidal regression function as above. While the regression function in (29) includes lagged regressors, we estimate the NNARMA model without lags and compare its out-of-sample prediction accuracy with that of the benchmarks. We include in the comparison the correctly specified benchmark with two lagged regressors, referred to as NN(0 , 2). Results are presented in Figures C.12 and C.13. As expected, the correct specification NN(0 , 2) is more accurate than the NNARMA model for high r and large T , especially for the combination of r = 1 and T = 5000; see panel (a). In this scenario, the correct specification NN(0 , 2) is also considerably more accurate than most misspecified benchmarks. For the hump-shaped regression function, NNARMA is consistently the least accurate model for the combination of r = 1 and 
+
+T = 5000, see panel (b). In many of the remaining ( r, T ) scenarios, the accuracy of the NNARMA model fluctuates around the same level as the benchmarks, including the correct specification NN(0 , 2). 
+
+Omission of lagged inputs and outputs 
+
+We augment the data generating process in 29–30 with lagged dependent variables: 
+
+yt = f (˜ x1t, ˜x2t) + 0 .5yt−1 + 0 .4yt−2 + ut, t = 1 , . . . , T. (31) The setup is otherwise as above. Again, we estimate the NNARMA model without lags and compare its out-of-sample prediction accuracy with that of the benchmarks. In this setting, the benchmark specification NN(2,2) is the correct model specification. Figures C.14 and C.15 present the results, which largely mirror those in Figures C.12 and C.13, but with NN(2 , 2) as the correct specification. One new pattern is that in scenarios with 
+
+r ∈ { 0.05 , 0.1, 0.2}, the NNARMA model tends to be more accurate than the benchmarks with only one lagged dependent variable, NN(1 , 0) and NN(1 , 1), especially when T is large, see panel (a). For the same set of scenarios, the NNARMA model and the correct specification NN(2 , 2) show broadly similar frequencies of being the most accurate, especially for the sinusoidal function, see panel (b). 48 (a) MSE sampling distribution 
+
+> (b) Per-sample model ranking by MSE
+
+Figure C.12: Out-of-sample results under dynamic misspecification, with NN(0 , 2) as the correct specification (bold). Hump-shaped regression function: MSE distribution (panel a) and per-sample model rankings (panel b), ordered from lowest MSE (1/dark) to highest MSE (8/light). Subplots are arranged by r (columns) and T (rows). 49 (a) MSE sampling distribution 
+
+> (b) Per-sample model ranking by MSE
+
+Figure C.13: Out-of-sample results under dynamic misspecification, with NN(0 , 2) as the correct specification (bold). Sinusoidal regression function: MSE distribution (panel a) and per-sample model rankings (panel b), ordered from lowest MSE (1/dark) to highest MSE (8/light). Subplots are arranged by r (columns) and T (rows). 50 (a) MSE sampling distribution 
+
+> (b) Per-sample model ranking by MSE
+
+Figure C.14: Out-of-sample results under dynamic misspecification, with NN(2 , 2) as the correct specification (bold). Hump-shaped regression function: MSE distribution (panel a) and per-sample model rankings (panel b), ordered from lowest MSE (1/dark) to highest MSE (7/light). Subplots are arranged by r (columns) and T (rows). 51 (a) MSE sampling distribution 
+
+> (b) Per-sample model ranking by MSE
+
+Figure C.15: Out-of-sample results under dynamic misspecification, with NN(2 , 2) as the correct specification (bold). Sinusoidal regression funciont: MSE distribution (panel a) and per-sample model rankings (panel b), ordered from lowest MSE (1/dark) to highest MSE (7/light). Subplots are arranged by r (columns) and T (rows). 52 C.6 Model selection 
+
+This section motivates the simple and practical strategy for model selection in the NNARMA model discussed in Section 3.3, using Monte Carlo evidence and the setup described in Appendix C.1. In turn, we discuss the choice of ARMA specification and neural network architecture. 
+
+ARMA specification 
+
+Figure C.16 illustrates the distribution of ARMA specifications selected across Monte Carlo replica-tions using our practical strategy. We consider 36 ARMA( p, q ) specification with p, q ∈ { 0, 1, 2, 3, 4, 5}
+
+as candidates. Results are presented for the hump-shaped and sinusoidal regression functions, us-ing the same simulated data as in Appendix C.2–C.4. Across ( r, T ) scenarios, the distribution of selected ARMA specifications is concentrated around the true ARMA(1 , 2) specification. As T
+
+increases, the distribution generally collapses to the true specification. For the sinusoidal function with r = 1, however, convergence appears slower and may require a sample size larger than 5000. Our strategy for selecting p and q is based on the BIC. We also considered the AIC, but the dis-tribution of selected ARMA specifications was less concentrated and did not converge to the true specification as T increased. 
+
+Neural network architecture 
+
+Figure C.17 shows the validation loss of the NNARMA model for different network architectures, computed from an initial simulated sample. Results are presented for both the hump-shaped and sinusoidal regression functions. In line with Masters (1993); Gu et al. (2020); Bennedsen et al. (2023), we consider 55 different rectangular and pyramid-shaped network architectures. Such architectures are useful for learning gradually more abstract transformations of the input variables and for keeping the number of free parameters at a reasonable level (Masters, 1993). The set of achitectures is divided into three blocks consisting of one, two, and three hidden layers. The initial architectures in each block are the narrowest (each layer is small) and simplest by parameter count. The validation loss is largely stable across architectures. It is mostly very narrow networks that sometimes produce higher losses. In particular, for the sinusoidal regression function with 
+
+r ∈ { 0.2, 1} or T ∈ { 1000 , 5000 }, the validation loss spikes for the initial set of architectures in each block, see panel (b). These results suggests that, under early stopping, performance is largely insensitive to the specific architecture once the network is sufficiently flexible. The two-layered architecture (32 and 16 units) used in the Monte Carlo experiments and the empirical study provides an illustrative and sufficiently flexible specification without extensive tuning. 53 (a) Hump-shaped regression function 
+
+> (b) Sinusoidal regression function
+
+Figure C.16: Distribution of selected ARMA specifications across Monte Carlo replications for the hump-shaped (panel a) and sinusoidal (panel b) regression functions. Bars show the percentage of replications selecting each ARMA specification (summing to 100% within each panel), excluding specifications never selected. Subplots are arranged by r (columns) and T (rows). 54 (a) Hump-shaped regression function 
+
+> (b) Sinusoidal regression function
+
+Figure C.17: Validation loss of NNARMA across network architectures for the hump-shaped (panel a) and sinusoidal (panel b) regression functions. The “grey”, “blue”, and “brown” blocks indicate one, two, and three hidden layers, respectively. “( a, b, c )” indicates a network architecture with a
+
+units in the first layer, b in the second, and c in the third. Subplots are arranged by r (columns) and T (rows). 55 D Additional cloud cover results 
+
+Figure D.1: Sample mean (left) and standard deviation (right) of each variable employed in Section 5, computed over time separately at each geographical location. 56 Figure D.2: Box plots, across geographical locations, of the percentage of unrestricted out-of-sample predictions falling below 0 (gray), above 1 (teal), and outside the admissible range [0 , 1] (brown). 
+
+Figure D.3: Predictions over the tests sample (red) together observed cloud fractional cover (black) for the location labeled 2 in Figure 6. 57 Figure D.4: Comparison of linear benchmarks. Relative MSEs over the test sample normalized to the linear model with ARMA errors (left), where values above one (red) indicate lower error for this model. The color bar limits differ from Figures 10 and 11. p-values from a two-sided Diebold-Mariano test of equal predictive accuracy to the linear model with ARMA errros (right), where values below 0 .05 (red) indicate significant differences in predictive accuracy at that level. 58 D.1 Results for an expanded set of benchmarks 
+
+Figure D.5: Relative MSEs over the test sample normalized to NNARMA (left), where values above one (red) indicate lower error for NNARMA. p-values from a two-sided Diebold-Mariano test of equal predictive accuracy to NNARMA (right), where values below 0 .05 (red) indicate significant differences in predictive accuracy at that level. 59 Figure D.6: Relative MSEs over the test sample normalized to NNARMA (left), where values above one (red) indicate lower error for NNARMA. The color bar limits differ from Figure D.5. 
+
+p-values from a two-sided Diebold-Mariano test of equal predictive accuracy to NNARMA (right), where values below 0 .05 (red) indicate significant differences in predictive accuracy at that level. 60
