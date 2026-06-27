@@ -1,0 +1,798 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-27T20:02:48.167884+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 15,
+    "deep_cap": 7,
+    "deep_selected": 7,
+    "quick_candidates": 20,
+    "quick_skim_target": 12,
+    "quick_selected": 12
+  },
+  "deep_dive": [
+    {
+      "id": "2606.23079v1",
+      "source": "arxiv",
+      "title": "AdaReP:Adaptive Re-Planning under Model Mismatch for Neural World-Model Predictive Control",
+      "abstract": "Neural world models coupled with model predictive control (MPC) replan at every environment step to bound accumulated prediction error, but this incurs substantial computational overhead. Reusing a cached plan reduces this overhead, yet its effectiveness depends on how prediction mismatch propagates through the local dynamics. We analyze this trade-off with a perturbation-based dynamic-regret framework and show that stale-plan penalties scale with the reuse tolerance, the accumulated mismatch since the last replanning step, and the local dynamics sensitivity. Based on this structure, we propose AdaReP, a training-free wrapper that adapts the replanning tolerance online using the current deviation from the cached rollout and a local sensitivity estimate, without modifying the learned world model or planner. Across image-space planning, latent-space control, and real-world robotic manipulation, AdaReP substantially reduces planner-side computation while maintaining comparable task performance, including over 80% fewer queries on a 50-trial physical robot study.",
+      "authors": [
+        "Yutian Cheng",
+        "Xiaojian Ma",
+        "Xianhao Wang",
+        "Min Yang",
+        "Rongpeng Su",
+        "Hangxin Liu",
+        "Xi Chen",
+        "Shuai Li",
+        "Qing Li"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-06-22T09:27:50+00:00",
+      "link": "https://arxiv.org/pdf/2606.23079v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "adaptive replanning under model mismatch for world-model MPC",
+      "llm_evidence_cn": "世界模型预测控制中模型失配下的自适应重规划",
+      "llm_evidence": "世界模型预测控制中模型失配下的自适应重规划",
+      "canonical_evidence": "世界模型预测控制中模型失配下的自适应重规划",
+      "llm_tldr_en": "Proposes AdaReP, a training-free wrapper that adapts replanning tolerance for neural world-model MPC, balancing computational cost and plan quality.",
+      "llm_tldr_cn": "基于世界模型的模型预测控制每次重规划计算量大，而缓存计划存在模型失配问题。本文提出AdaReP，一种无需训练的自适应重规划容差调整方法，基于当前偏差和局部动力学灵敏度动态调整重规划频率，在降低计算开销的同时保持控制性能，对无人机实时导航具有重要参考价值。",
+      "llm_tldr": "基于世界模型的模型预测控制每次重规划计算量大，而缓存计划存在模型失配问题。本文提出AdaReP，一种无需训练的自适应重规划容差调整方法，基于当前偏差和局部动力学灵敏度动态调整重规划频率，在降低计算开销的同时保持控制性能，对无人机实时导航具有重要参考价值。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.26389v1",
+      "source": "arxiv",
+      "title": "Sampling sea state using a diffusion model",
+      "abstract": "Sea state prediction is essential for operational maritime applications and coupled earth system modeling, yet current spectral wave models remain computationally prohibitive for many use cases, including online coupling to climate simulations and making probabilistic (ensemble-based) predictions. While deep learning has recently demonstrated strong performance in weather forecasting, existing AI-based wave models are predominantly deterministic and largely limited to bulk variables such as significant wave height, leaving probabilistic sea state estimation largely unexplored. In this work, we propose a diffusion-based generative model for global sea state estimation that conditions on a relatively long history (5 days) of global wind forcing. This generative model directly samples the complex conditional distribution of sea state without autoregressive time-stepping. Unlike prior approaches, our framework naturally extends beyond bulk variables to estimate partition-related variables and derived quantities, such as Stokes drift and mean square slope. Trained on a 30-year global WAVEWATCH-III hindcast, the model achieves substantial computational acceleration compared with numerical spectral models while delivering skillful predictions and a calibrated ensemble spread for the bulk variables. Our results suggest that diffusion-based sea state sampling offers a promising path toward probabilistic wave forecasting and efficient coupling of sea state information into broader earth system models.",
+      "authors": [
+        "Jiarong Wu",
+        "Bertrand Chapron",
+        "Laure Zanna"
+      ],
+      "primary_category": "physics.ao-ph",
+      "categories": [
+        "physics.ao-ph",
+        "cs.AI"
+      ],
+      "published": "2026-06-24T21:19:59+00:00",
+      "link": "https://arxiv.org/pdf/2606.26389v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "diffusion-based generative model for sea state estimation conditioned on wind",
+      "llm_evidence_cn": "基于扩散模型的全球海况生成模型，以风场为条件",
+      "llm_evidence": "基于扩散模型的全球海况生成模型，以风场为条件",
+      "canonical_evidence": "基于扩散模型的全球海况生成模型，以风场为条件",
+      "llm_tldr_en": "Proposes a diffusion model for probabilistic sea state estimation conditioned on wind history, addressing limitations of deterministic wave models.",
+      "llm_tldr_cn": "针对现有深度学习波模型仅限于确定性预测且缺乏概率估计的问题，本文提出一种基于扩散的生成模型，以5天全球风场为条件进行海况采样。该模型能生成多样化的海况集合，弥补了谱波模型计算昂贵的不足，为气象超分辨率和降尺度提供了新范式。",
+      "llm_tldr": "针对现有深度学习波模型仅限于确定性预测且缺乏概率估计的问题，本文提出一种基于扩散的生成模型，以5天全球风场为条件进行海况采样。该模型能生成多样化的海况集合，弥补了谱波模型计算昂贵的不足，为气象超分辨率和降尺度提供了新范式。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on meteorological downscaling and weather super resolution using diffusion models, generative models, or neural networks.",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.26421v1",
+      "source": "arxiv",
+      "title": "Otter Weather: Skillful and Computationally Efficient Medium-Range Weather Forecasting",
+      "abstract": "State-of-the-art medium-range AI weather models can outperform traditional Numerical Weather Prediction (NWP) but require massive training budgets. This restricts usage for under-resourced groups and severely limits fast model iteration. Here we develop Otter Weather, a highly efficient spatiotemporal forecasting model designed to democratise high-performance weather prediction with AI. Evaluated on ERA5 reanalysis data at 1.5° resolution using standard WeatherBench protocols, the Otter family significantly advances the skill-compute Pareto frontier. The deterministic version outperforms the best NWP baseline by 9.6% at a 24-hour lead time while requiring fewer than 3.5 A100-days for training. It provides a 2x efficiency gain over lightweight AI models and a 100-fold reduction in compute compared to resource-intensive frontier architectures. We extend these efficiency gains into probabilistic forecasting by training via the Continuous Ranked Probability Score (CRPS). Scaling to a larger architecture, Otter-XL achieves a 9.7% CRPS improvement over the IFS ENS baseline. This yields an almost two-fold increase in predictive skill over comparable lightweight models at similar compute budgets. Otter-XL also outperforms frontier architectures like GenCast by over 2%, while using an order of magnitude less compute. Finally, Otter is applied out-of-the-box to a complex acoustic scattering PDE task where it outperforms a state-of-the-art foundation modelling approach, suggesting that the advances made here might apply across a range of scientific domains.",
+      "authors": [
+        "Cristiana Diaconu",
+        "Jonas Scholz",
+        "Aliaksandra Shysheya",
+        "Stratis Markou",
+        "Payel Mukhopadhyay",
+        "Miles Cranmer",
+        "Richard E. Turner"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.CE"
+      ],
+      "published": "2026-06-24T22:23:13+00:00",
+      "link": "https://arxiv.org/pdf/2606.26421v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "efficient deep learning medium-range weather forecasting",
+      "llm_evidence_cn": "高效深度学习中期天气预报",
+      "llm_evidence": "高效深度学习中期天气预报",
+      "canonical_evidence": "高效深度学习中期天气预报",
+      "llm_tldr_en": "Otter Weather achieves state-of-the-art medium-range weather prediction with 2x efficiency over light baselines, outperforming NWP by 9.6% at 24h lead time.",
+      "llm_tldr_cn": "针对现有AI天气模型训练成本高昂、限制资源匮乏群体使用的问题，本文提出Otter Weather高效时空预测模型，在ERA5 1.5°分辨率下，确定性版本24小时预报比最佳NWP基线提升9.6%，且训练仅需不到3.5个A100天，大幅推进了技能-计算帕累托前沿。",
+      "llm_tldr": "针对现有AI天气模型训练成本高昂、限制资源匮乏群体使用的问题，本文提出Otter Weather高效时空预测模型，在ERA5 1.5°分辨率下，确定性版本24小时预报比最佳NWP基线提升9.6%，且训练仅需不到3.5个A100天，大幅推进了技能-计算帕累托前沿。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.27014v1",
+      "source": "arxiv",
+      "title": "A Generalization Theory for JEPA-Based World Models",
+      "abstract": "Joint Embedding Predictive Architectures (JEPAs) have recently emerged as a promising paradigm for world modeling by learning predictive dynamics in a latent space rather than generating future observations at the input level. Despite their empirical success, the theoretical understanding of JEPA-based world models remains limited. In this paper, we develop the first generalization theory for JEPA-based world models. We formulate JEPA pretraining as a conditional spectral graph learning problem and show that the JEPA objective is equivalent to a low-rank factorization of an action-conditioned co-occurrence matrix. Building on this characterization, we establish a connection between JEPA pretraining error and downstream planning regret, leading to a finite-sample generalization bound for JEPA-based world models. Our analysis reveals an inherent trade-off between approximation and sample errors with respect to the latent dimension, providing theoretical insights into the advantages and limitations of latent predictive models compared with input-level predictive approaches.",
+      "authors": [
+        "Jingyi Cui",
+        "Qi Zhang",
+        "Hongwei Wen",
+        "Yisen Wang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-25T13:29:20+00:00",
+      "link": "https://arxiv.org/pdf/2606.27014v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "generalization theory for JEPA-based world models, core to world model and latent dynamics",
+      "llm_evidence_cn": "基于JEPA的世界模型的泛化理论，对世界模型和潜在动力学建模至关重要",
+      "llm_evidence": "基于JEPA的世界模型的泛化理论，对世界模型和潜在动力学建模至关重要",
+      "canonical_evidence": "基于JEPA的世界模型的泛化理论，对世界模型和潜在动力学建模至关重要",
+      "llm_tldr_en": "This paper develops the first generalization theory for JEPA-based world models, linking pretraining error to planning regret, and providing finite-sample bounds.",
+      "llm_tldr_cn": "本文建立了基于联合嵌入预测架构（JEPA）的世界模型的首次泛化理论。将JEPA预训练形式化为条件谱图学习问题，证明其目标等价于动作条件共现矩阵的低秩分解，并建立了预训练误差与下游规划遗憾之间的联系，给出有限样本泛化界。该理论为理解世界模型（如DreamerV3）的样本效率和规划能力提供了基础。",
+      "llm_tldr": "本文建立了基于联合嵌入预测架构（JEPA）的世界模型的首次泛化理论。将JEPA预训练形式化为条件谱图学习问题，证明其目标等价于动作条件共现矩阵的低秩分解，并建立了预训练误差与下游规划遗憾之间的联系，给出有限样本泛化界。该理论为理解世界模型（如DreamerV3）的样本效率和规划能力提供了基础。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "world model",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.24593v2",
+      "source": "arxiv",
+      "title": "Data-Driven Flux Parameterization for the Atmospheric Boundary Layer",
+      "abstract": "Turbulent fluxes in the atmospheric boundary layer (ABL) govern exchanges of momentum, heat, and mass between the surface and atmosphere, shaping boundary layer structure and influencing weather, climate, and engineering applications. Yet their representation in coarse resolution models remains challenging, particularly under unstable conditions with strongly nonlocal transport and stable conditions with intermittent turbulence. Here, we develop a data driven turbulent flux parameterization in which nondimensional fluxes are represented by a linearized convolution operator acting on nondimensional mean state profiles. We train and evaluate the closure using high resolution large eddy simulations (LES) of idealized flow over homogeneous surfaces spanning multiple stability regimes. Several first order closure variants are constructed from different combinations of mean temperature and velocity profiles to predict heat and momentum fluxes, and the best model is selected by minimizing mean squared error across training and unseen test cases. The resulting parameterization improves predictive skill relative to a standard K-profile closure while retaining an interpretable operator form. Its learned kernels expose the locality and nonlocality of turbulent transport across stability regimes, linking empirical performance to physically inspectable flux--profile relationships. In a posteriori single column simulations, the closure remains stable and produces state profiles that closely match LES, demonstrating its potential as an accurate and transparent ABL flux parameterization.",
+      "authors": [
+        "Abed Hammoud",
+        "Edriss S. Titi",
+        "Mitchell Bushuk",
+        "Marc Calaf",
+        "Khaled Ghannam",
+        "Elie Bou-Zeid"
+      ],
+      "primary_category": "physics.flu-dyn",
+      "categories": [
+        "physics.flu-dyn"
+      ],
+      "published": "2026-06-23T13:52:24+00:00",
+      "link": "https://arxiv.org/pdf/2606.24593v2",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Data-driven flux parameterization for ABL in NWP",
+      "llm_evidence_cn": "大气边界层通量参数化的数据驱动方法",
+      "llm_evidence": "大气边界层通量参数化的数据驱动方法",
+      "canonical_evidence": "大气边界层通量参数化的数据驱动方法",
+      "llm_tldr_en": "Develops a data-driven turbulent flux parameterization using convolution operators trained on high-resolution LES, improving representation of nonlocal transport in coarse models.",
+      "llm_tldr_cn": "针对粗分辨率模式中大气边界层湍流通量表示的挑战（尤其在非稳定条件下），该文提出了一种数据驱动参数化方案。利用线性卷积算子将无量纲通量表示为无量纲平均状态剖面的函数，并基于高分辨率大涡模拟（LES）数据进行训练和评估。结果表明，该方案能有效捕捉非局地输送，提升粗分辨率模式中边界层通量的模拟精度。该工作为数值天气预报模式中的物理过程改进提供了新思路。",
+      "llm_tldr": "针对粗分辨率模式中大气边界层湍流通量表示的挑战（尤其在非稳定条件下），该文提出了一种数据驱动参数化方案。利用线性卷积算子将无量纲通量表示为无量纲平均状态剖面的函数，并基于高分辨率大涡模拟（LES）数据进行训练和评估。结果表明，该方案能有效捕捉非局地输送，提升粗分辨率模式中边界层通量的模拟精度。该工作为数值天气预报模式中的物理过程改进提供了新思路。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "numerical weather prediction models and methods",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.26361v1",
+      "source": "arxiv",
+      "title": "Does Aurora Encode Atmospheric Structure? Latent Regime Analysis and Attribution",
+      "abstract": "ML foundation models are able to emulate atmospheric dynamics accurately and efficiently but operate as opaque ``black boxes''. We investigate the internal representations of the Aurora model using spatially pooled PCA and layer-wise relevance propagation (LRP). We find evidence that Aurora's latent space is primarily organized by seasonal cycles, whereas extreme storm events do not form a linearly separable cluster. LRP indicates that the model attends to features consistent with the 3D vertical structure of the Great Storm of 1987. Perturbation tests show masking relevant regions degrades forecasts $3.31\\times$ more than random masking. These findings suggest that Aurora learns meteorological coherence and vertical structure without explicit instruction.",
+      "authors": [
+        "Emma Kasteleyn",
+        "Ana Lucic"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "physics.ao-ph"
+      ],
+      "published": "2026-06-24T20:18:12+00:00",
+      "link": "https://arxiv.org/pdf/2606.26361v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "analysis of Aurora foundation model for atmospheric structure, relevant to deep learning weather forecasting and NWP",
+      "llm_evidence_cn": "对Aurora大气基础模型内部表示的分析，与深度学习天气预报和数值天气预报相关",
+      "llm_evidence": "对Aurora大气基础模型内部表示的分析，与深度学习天气预报和数值天气预报相关",
+      "canonical_evidence": "对Aurora大气基础模型内部表示的分析，与深度学习天气预报和数值天气预报相关",
+      "llm_tldr_en": "This paper investigates the internal representations of the Aurora atmospheric foundation model, revealing that latent space is organized by seasonal cycles and attends to vertical structure, providing insight into ML weather models.",
+      "llm_tldr_cn": "本文研究了Aurora大气基础模型的内部表示，通过空间池化PCA和逐层相关性传播分析，发现其潜在空间主要由季节循环组织，并能够捕捉天气事件的垂直结构。干扰测试表明模型对相关区域敏感，证明了其学到气象一致性。这些发现加深了对深度学习天气模型的理解，有助于改进气象降尺度和预报方法。",
+      "llm_tldr": "本文研究了Aurora大气基础模型的内部表示，通过空间池化PCA和逐层相关性传播分析，发现其潜在空间主要由季节循环组织，并能够捕捉天气事件的垂直结构。干扰测试表明模型对相关区域敏感，证明了其学到气象一致性。这些发现加深了对深度学习天气模型的理解，有助于改进气象降尺度和预报方法。",
+      "llm_tags": [
+        "query:mm:composite"
+      ],
+      "matched_query_tag": "query:mm:composite",
+      "matched_query_text": "Papers central to 用于检索气象模型、数值天气预报、人工智能天气预测、气象降尺度、气象超分辨率、风场预测和无人机气象导航相关论文，重点关注 WRF、ECMWF、GraphCast、Pangu-Weather、FourCastNet、CorrDiff、扩散模型等方向。, especially work that connects or combines: meteorological super-resolution; statistical and dynamical downscaling of weather data; deep learning weather forecasting; numerical weather prediction models and methods; Find papers on wind field prediction, wind shear modeling, and meteorological forecasting for UAV navigation or aviation safety.; Find papers on meteorological downscaling and weather super resolution using diffusion models, generative models, or neural networks..",
+      "matched_requirement_id": "req-composite-mm",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.26699v1",
+      "source": "arxiv",
+      "title": "Modelling convective cell occurrence in proximity to cold fronts using extreme gradient boosting",
+      "abstract": "Machine learning is emerging as a valuable tool for convection-related applications such as post-processing numerical weather prediction output, improving understanding of convective storm climatology and potentially improving existing convective parameterization schemes. In a rapidly developing field, it is vital to assess the strengths and limitations of machine learning approaches across different applications. Here, a probabilistic model is developed using a convective cell dataset as ground truth and predictors primarily from ERA5. The model's ability to reproduce the convective cell climatology at different regions relative to cold fronts (i.e. post-frontal and pre-frontal) is assessed during the warm-season in Germany. The optimal number of features (predictors) is selected using a feature elimination strategy. Overall, the optimised model exhibits high skill in reproducing the spatial and temporal cell frequency at different regions relative to the front. While the highest cell frequency is correctly identified near the surface front, the model underestimates the actual cell count in this region. Feature importance analysis shows that the model depends most heavily on CAPE to make its predictions. Additionally, the time of day predictor is key for accurately capturing the diurnal cycle of convective cells on both sides of the cold front. The study highlights both the advantages and the limitations of data-driven models, offering valuable insights for future data-driven climate and weather prediction models.",
+      "authors": [
+        "George Pacey",
+        "Stephan Pfahl",
+        "Lisa Schielicke"
+      ],
+      "primary_category": "physics.ao-ph",
+      "categories": [
+        "physics.ao-ph"
+      ],
+      "published": "2026-06-25T07:32:05+00:00",
+      "link": "https://arxiv.org/pdf/2606.26699v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "deep learning for convective cell forecasting",
+      "llm_evidence_cn": "深度学习用于对流细胞预报",
+      "llm_evidence": "深度学习用于对流细胞预报",
+      "canonical_evidence": "深度学习用于对流细胞预报",
+      "llm_tldr_en": "Uses extreme gradient boosting with ERA5 data to model probabilistic convective cell occurrence near cold fronts, assessing ML limitations.",
+      "llm_tldr_cn": "本文利用极端梯度提升模型，以ERA5再分析数据为预测因子，构建对流细胞发生的概率预报模型，评估机器学习在锋面附近对流应用中的能力与局限，为改善数值天气预报后处理提供参考。",
+      "llm_tldr": "本文利用极端梯度提升模型，以ERA5再分析数据为预测因子，构建对流细胞发生的概率预报模型，评估机器学习在锋面附近对流应用中的能力与局限，为改善数值天气预报后处理提供参考。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.25073v1",
+      "source": "arxiv",
+      "title": "GCT-MARL: Graph-Based Contrastive Transfer for Sample-Efficient Cooperative Multi-Agent Reinforcement Learning",
+      "abstract": "In cooperative multi-agent reinforcement learning (MARL), from a deployment perspective, it is challenging and expensive to train agents from scratch for each new environment or task. In this work, we propose GCT-MARL, a transfer learning framework that builds on the multi-view graph contrastive backbone of MAIL and augments it with a per-view, adaptively weighted alignment loss and a two-phase training protocol specifically designed for transfer across populations of varying sizes and compositions. We empirically demonstrate that the proposed framework markedly accelerates convergence on the target task relative to from-scratch training, in both homogeneous (within-faction, varying N) and heterogeneous (cross-faction and mixed unit-type) transfer scenarios. Furthermore, we show that the framework naturally supports continual learning by sequentially chaining the two-phase transfer protocol across a series of related tasks. Overall, this work provides a unified approach to mitigating key limitations in current MARL transfer methods with new insights at both methodological and empirical levels.",
+      "authors": [
+        "Animesh Animesh",
+        "Satheesh K Perepu",
+        "Kaushik Dey"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-06-23T18:31:27+00:00",
+      "link": "https://arxiv.org/pdf/2606.25073v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "sample-efficient multi-agent RL via graph contrastive transfer",
+      "llm_evidence_cn": "通过图对比迁移实现样本高效的多智能体强化学习",
+      "llm_evidence": "通过图对比迁移实现样本高效的多智能体强化学习",
+      "canonical_evidence": "通过图对比迁移实现样本高效的多智能体强化学习",
+      "llm_tldr_en": "GCT-MARL uses graph contrastive learning for transfer in cooperative MARL, significantly speeding up convergence on new tasks.",
+      "llm_tldr_cn": "针对多智能体强化学习在新环境上训练效率低的问题，提出GCT-MARL框架，利用多视图图对比学习骨干和自适应对齐损失实现跨群体迁移。实验表明该框架在同类和异类群体间均能显著加速收敛，提高了样本效率。",
+      "llm_tldr": "针对多智能体强化学习在新环境上训练效率低的问题，提出GCT-MARL框架，利用多视图图对比学习骨干和自适应对齐损失实现跨群体迁移。实验表明该框架在同类和异类群体间均能显著加速收敛，提高了样本效率。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.24347v1",
+      "source": "arxiv",
+      "title": "MVG-KAN: Multi-View Geo-Wind Guided KAN for PM$_{2.5}$ Forecasting",
+      "abstract": "Accurate short-term PM$_{2.5}$ forecasting is important for public health protection, air-quality early warning, and urban environmental management. However, PM$_{2.5}$ variation is driven by multiple coupled factors, including stable periodic changes induced by human activities and meteorological regularity, station-specific short-term concentration evolution, and meteorology-driven pollutant dispersion among monitoring stations. Existing spatio-temporal forecasting methods may capture station relationships to some extent, but distance-only, correlation-based, or purely adaptive graphs are often insufficient to comprehensively represent these heterogeneous factors, especially wind-direction-dependent pollutant transport. To address this problem, we propose a Multi-View Geo-Wind Guided KAN model for PM$_{2.5}$ forecasting, named \\textbf{MVG-KAN}, which models station-level PM$_{2.5}$ evolution from three complementary views: local periodic regularity, station-wise residual temporal dynamics, and meteorological-environment-guided spatial dispersion. Specifically, the periodic-residual forecasting backbone first separates stable daily and weekly patterns from non-periodic residual variations. A Geo-Wind Graph is constructed by combining geographic distance decay with wind-direction- and wind-speed-aware transport, providing a lightweight physically motivated directed spatial prior for residual propagation among stations. In addition, a temporal Kolmogorov-Arnold network (TKAN) residual head is then introduced to learn station-wise nonlinear autoregressive correction from de-periodized PM$_{2.5}$ residuals and historical multi-pollutant sequences, thereby enhancing the modeling of local residual inertia and pollutant co-variation.",
+      "authors": [
+        "Cheng Huang",
+        "Muyao Guan",
+        "Jairus Yougui Railey",
+        "Ning Xu",
+        "Honghui Xu",
+        "Changjiang Zhang",
+        "Zhen Zhang",
+        "Shiqing Zhang",
+        "Cong Bai"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-23T09:38:14+00:00",
+      "link": "https://arxiv.org/pdf/2606.24347v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "wind-guided multi-view network for PM2.5 forecasting, involves wind field modeling",
+      "llm_evidence_cn": "结合风向引导的多视角网络进行PM2.5预报，涉及风场建模",
+      "llm_evidence": "结合风向引导的多视角网络进行PM2.5预报，涉及风场建模",
+      "canonical_evidence": "结合风向引导的多视角网络进行PM2.5预报，涉及风场建模",
+      "llm_tldr_en": "This paper proposes MVG-KAN, a multi-view geo-wind guided Kolmogorov-Arnold Network for short-term PM2.5 forecasting that explicitly incorporates wind-direction-dependent pollutant transport, improving prediction accuracy.",
+      "llm_tldr_cn": "针对PM2.5预报中传统方法难以全面刻画风向依赖的污染物输送问题，本文提出MVG-KAN模型，通过多视角地理风引导的KAN网络，融合气象规律和站点间风向驱动扩散，实现更准确的短期空气质量预报。实验表明该方法在多个城市数据集上优于现有基线。",
+      "llm_tldr": "针对PM2.5预报中传统方法难以全面刻画风向依赖的污染物输送问题，本文提出MVG-KAN模型，通过多视角地理风引导的KAN网络，融合气象规律和站点间风向驱动扩散，实现更准确的短期空气质量预报。实验表明该方法在多个城市数据集上优于现有基线。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on wind field prediction, wind shear modeling, and meteorological forecasting for UAV navigation or aviation safety.",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.21350v1",
+      "source": "arxiv",
+      "title": "A Reward-Petri-Net Interpretation of Temporal Behavior Trees",
+      "abstract": "This paper introduces an interpretation of Temporal Behavior Trees (TBTs) as Reward-Petri-Nets (RPNs) for reinforcement learning (RL). Designing reward functions for complex, long-horizon robotic tasks is notoriously difficult, especially when tasks have hierarchical structure and temporal constraints. TBTs extend conventional behavior trees (BTs) used in robotic applications by incorporating temporal properties into their leaf nodes. This allows TBTs to represents not only the behavioral task structure defined by BT operators such as Sequence, Fallback, and Parallel, but also the task's temporal constraints. In this work, the constraints are specified in the leaf nodes using Linear Temporal Logic. In order to inform RL rewards using TBTs, we provide a translation from TBT into a Petri Net (PN) and show how rewards can be automatically assigned based on the TBT's structure, resulting in a RPN. In a series of increasingly challenging environments, we demonstrate how TBT-based rewards enable learning where vanilla RL fails, improve sample efficiency, and offer flexible, intuitive control over the learning progress. We showcase the learning impact by using different reward distribution schemes and TBT structures.",
+      "authors": [
+        "Till Schmeil",
+        "Günther Waxenegger-Wilfing",
+        "Sebastian Schirmer"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-19T11:47:54+00:00",
+      "link": "https://arxiv.org/pdf/2606.21350v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "reward function design for RL with temporal behavior trees",
+      "llm_evidence_cn": "用时序行为树为强化学习设计奖励函数",
+      "llm_evidence": "用时序行为树为强化学习设计奖励函数",
+      "canonical_evidence": "用时序行为树为强化学习设计奖励函数",
+      "llm_tldr_en": "Translates Temporal Behavior Trees into Reward-Petri-Nets to generate rewards for RL, handling hierarchical and temporal task constraints.",
+      "llm_tldr_cn": "针对复杂机器人任务中奖励函数设计困难的问题，将时序行为树解释为奖励Petri网，自动生成蕴含层次结构与时间约束的奖励信号，提升强化学习在长时域任务中的训练效率。",
+      "llm_tldr": "针对复杂机器人任务中奖励函数设计困难的问题，将时序行为树解释为奖励Petri网，自动生成蕴含层次结构与时间约束的奖励信号，提升强化学习在长时域任务中的训练效率。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.25393v2",
+      "source": "arxiv",
+      "title": "Large-Scale Tunnel Air-Ground Collaboration With FLISP: Fast LiDAR-IMU Synchronized Path Planner",
+      "abstract": "Hydropower tunnel inspection is critical for infrastructure integrity yet remains inefficient and hazardous using manual methods. We propose FLISP (Fast LiDAR-IMU Synchronized Path Planner), a mapless planning framework for cooperative UGV-UAV inspection. Unlike traditional map-based paradigms, FLISP features three core contributions: (1) a unified architecture where a single UGV-mounted LiDAR-IMU suite drives synchronized path generation for both platforms; (2) platform-specific solvers utilizing an enhanced Firefly Algorithm for UGV obstacle avoidance and a dynamic iterative optimizer for UAV flight; and (3) a hierarchical refinement strategy ensuring kinematic feasibility without state estimation drift. Benchmarks in a 1.2 km operational tunnel demonstrate that FLISP circumvents structural bottlenecks of map-based methods, eliminating map rasterization overhead (Fast-LIO2 + A*) and sampling instability (LIO-SAM + RRT*). FLISP achieves a 100% success rate with 7 ms latency, representing a 7-fold speedup over grid-based and a three-order-of-magnitude improvement over sampling-based baselines. Validated in operational hydropower tunnels, this approach offers a scalable solution for robotic inspection in feature-degraded linear infrastructure. A demonstration video is available at https://youtu.be/Y_ezs1PfLJ4, and the code at https://github.com/ArchibaldGuo/FLISP.git.",
+      "authors": [
+        "Fenghe Guo",
+        "Runjie Shen",
+        "Chenyang Sun",
+        "Junrui Zhang",
+        "Quanxi Zhan",
+        "Yongchun Wang",
+        "Junjie Zhang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-24T04:44:35+00:00",
+      "link": "https://arxiv.org/pdf/2606.25393v2",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "UAV path planning with FLISP framework",
+      "llm_evidence_cn": "FLISP框架用于无人机路径规划",
+      "llm_evidence": "FLISP框架用于无人机路径规划",
+      "canonical_evidence": "FLISP框架用于无人机路径规划",
+      "llm_tldr_en": "FLISP proposes a mapless planning framework for cooperative UGV-UAV tunnel inspection, featuring platform-specific solvers and hierarchical refinement for UAV flight.",
+      "llm_tldr_cn": "提出FLISP框架，用于隧道检测中无人机-无人车协作的无地图路径规划。包含基于增强萤火虫算法的地面车避障和动态迭代优化的无人机飞行求解器，以及分层精化策略确保运动可行性。在1.2公里隧道基准测试中验证了有效性，实现了稳定同步协作。",
+      "llm_tldr": "提出FLISP框架，用于隧道检测中无人机-无人车协作的无地图路径规划。包含基于增强萤火虫算法的地面车避障和动态迭代优化的无人机飞行求解器，以及分层精化策略确保运动可行性。在1.2公里隧道基准测试中验证了有效性，实现了稳定同步协作。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.24597v1",
+      "source": "arxiv",
+      "title": "Qwen-AgentWorld: Language World Models for General Agents",
+      "abstract": "A world model predicts environment dynamics based on current observations and actions, serving as a core cognitive mechanism for reasoning and planning. In this work, we investigate how world modeling based on language models can further push the boundaries of general agents. (i) We first focus on building foundation models for agentic environment simulation. We introduce Qwen-AgentWorld-35B-A3B and Qwen-AgentWorld-397B-A17B, the first language world models capable of simulating agentic environments covering 7 domains via long chain-of-thought reasoning. Leveraging more than 10M environment interaction trajectories of 7 domains in real-world environments, we develop Qwen-AgentWorld through a three-stage training pipeline: CPT injects general-purpose world modeling capabilities from the state transition dynamics and augmented professional corpora, SFT activates next-state-prediction reasoning, and RL sharpens simulation fidelity through a tailored framework with hybrid rubric-and-rule rewards. To evaluate language world models, we present AgentWorldBench, a comprehensive benchmark constructed from real-world interactions of 5 frontier models on 9 established benchmarks. Empirical results demonstrate that Qwen-AgentWorld significantly outperforms existing frontier models. (ii) Beyond foundation models, we further investigate two complementary paradigms through which world modeling enhances general agents. First, as a decoupled environment simulator, Qwen-AgentWorld supports scalable and controllable simulation of thousands of real-world environments for agentic RL, yielding gains that surpass real-environment training alone. Second, as a unified agent foundation model, world-model training acts as a highly effective warm-up that improves downstream performance across 7 agentic benchmarks. Code: https://github.com/QwenLM/Qwen-AgentWorld",
+      "authors": [
+        "Yuxin Zuo",
+        "Zikai Xiao",
+        "Li Sheng",
+        "Fei Huang",
+        "Jianhong Tu",
+        "Yuxuan Liu",
+        "Tianyi Tang",
+        "Xiaomeng Hu",
+        "Yang Su",
+        "Qingfeng Lan",
+        "Yantao Liu",
+        "Qin Zhu",
+        "Yinger Zhang",
+        "Bowen Yu",
+        "Haiquan Zhao",
+        "Haiyang Xu",
+        "Jianxin Yang",
+        "Jiayang Cheng",
+        "Junyang Wang",
+        "Lianghao Deng",
+        "Mingfeng Xue",
+        "Tianyi Bai",
+        "Yang Fan",
+        "Yubo Ma",
+        "Yucheng Li",
+        "Zeyu Cui",
+        "Zhihai Wang",
+        "Zhihui Xie",
+        "Zhuorui Ye",
+        "An Yang",
+        "Dayiheng Liu",
+        "Jingren Zhou",
+        "Ning Ding"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-23T13:53:55+00:00",
+      "link": "https://arxiv.org/pdf/2606.24597v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "language world models for general agents",
+      "llm_evidence_cn": "通用代理的语言世界模型",
+      "llm_evidence": "通用代理的语言世界模型",
+      "canonical_evidence": "通用代理的语言世界模型",
+      "llm_tldr_en": "Introduces large language world models (Qwen-AgentWorld) that simulate multi-domain agentic environments via chain-of-thought reasoning.",
+      "llm_tldr_cn": "该论文构建了首个能够模拟7个领域智能体环境的语言世界模型Qwen-AgentWorld，通过长思维链推理和千万级交互轨迹训练，采用三阶段流程：CPT注入通用世界建模。虽然面向语言代理，但其世界模型概念可直接支撑世界模型需求，为样本高效决策提供仿真基础。",
+      "llm_tldr": "该论文构建了首个能够模拟7个领域智能体环境的语言世界模型Qwen-AgentWorld，通过长思维链推理和千万级交互轨迹训练，采用三阶段流程：CPT注入通用世界建模。虽然面向语言代理，但其世界模型概念可直接支撑世界模型需求，为样本高效决策提供仿真基础。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "world model",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.25076v1",
+      "source": "arxiv",
+      "title": "Machine learning is revolutionizing weather forecasting -- the next step is a change in how we work",
+      "abstract": "Following the success of machine learning in producing weather predictions with competitive skill compared to complex traditional systems, this article shifts attention from forecast output to the working practices that make prediction systems possible. We argue that machine learning and recent digital technologies will reshape the forecasting value chain: how models are coded and developed, how observations and Earth-system data are exploited, how data and computing are managed, how systems are verified, and how information is created, evaluated and turned into services. We discuss six non-exhaustive areas in which agentic software engineering, open and compressed data, shared verification workflows, interactive computing and generative methods may make modelling, evaluation and service creation faster, more interactive and more widely accessible. These changes will require weather and climate centres to adapt their infrastructures, data stewardship, trust and quality-assurance frameworks, skills and service delivery while maintaining scientific understanding, operational reliability, human expertise and their public-service role.",
+      "authors": [
+        "Peter Dueben",
+        "Peter Bauer",
+        "Oliver Fuhrer",
+        "Nikolay Koldunov",
+        "Jørn Kristiansen"
+      ],
+      "primary_category": "physics.ao-ph",
+      "categories": [
+        "physics.ao-ph",
+        "cs.CY"
+      ],
+      "published": "2026-06-23T18:33:33+00:00",
+      "link": "https://arxiv.org/pdf/2606.25076v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Machine learning revolutionizing weather forecasting",
+      "llm_evidence_cn": "机器学习革新天气预报",
+      "llm_evidence": "机器学习革新天气预报",
+      "canonical_evidence": "机器学习革新天气预报",
+      "llm_tldr_en": "Argues that ML and digital technologies will reshape the weather forecasting value chain, including coding, data exploitation, verification, and service delivery.",
+      "llm_tldr_cn": "该文认为，继机器学习在天气预报中取得与传统系统相媲美的预测能力后，下一步是改变预报系统的工作方式。机器学习及其他数字技术将重塑预报价值链：包括模型编码、观测与地球系统数据利用、数据与计算管理、系统检验以及信息创建与服务的整个流程。文章讨论了六大变革方向，为气象预报领域的未来研究提供了路线图。",
+      "llm_tldr": "该文认为，继机器学习在天气预报中取得与传统系统相媲美的预测能力后，下一步是改变预报系统的工作方式。机器学习及其他数字技术将重塑预报价值链：包括模型编码、观测与地球系统数据利用、数据与计算管理、系统检验以及信息创建与服务的整个流程。文章讨论了六大变革方向，为气象预报领域的未来研究提供了路线图。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.26392v1",
+      "source": "arxiv",
+      "title": "MPC-Injection: Biasing Off-Policy Locomotion RL Toward Controller-Induced Behavior Basins",
+      "abstract": "Reinforcement learning (RL) for locomotion frequently converges to locally optimal but undeployable behaviors, such as vibrating limbs or scooting on the torso, that maximize return without producing a usable gait. We present MPC-Injection, a low-overhead method that steers RL toward a designer-preferred gait by inserting transitions into the replay buffer from a model predictive controller solving the same Markov decision process. Unlike reward shaping, MPC-Injection does not require redesigning the task reward, and unlike adversarial imitation learning, it adds no discriminator, no kinematic retargeting, and no auxiliary objective. Instead, the controller's preferred behavior is transferred to the policy purely through the replay state distribution. On a 2D walker in simulation and with sim-to-real evaluation on a Go2 quadruped, we show that MPC-Injection drives the policy into the controller's behavior basin using a one to two-term task reward, producing gaits qualitatively comparable to those of reward shaping with twenty-one tuned terms and of adversarial motion priors without their discriminator and retargeting overhead. We further analyze how the injected transitions bias actor-critic updates toward controller-visited states, allowing the policy to learn behaviors that pure RL may fail to reach under simple reward functions.",
+      "authors": [
+        "Roy Xing",
+        "Seyoung Ree",
+        "Brian Plancher"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-24T21:23:22+00:00",
+      "link": "https://arxiv.org/pdf/2606.26392v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "MPC injection for sample-efficient locomotion RL",
+      "llm_evidence_cn": "通过MPC注入实现样本高效的强化学习控制",
+      "llm_evidence": "通过MPC注入实现样本高效的强化学习控制",
+      "canonical_evidence": "通过MPC注入实现样本高效的强化学习控制",
+      "llm_tldr_en": "MPC-Injection biases RL toward desired gaits by inserting MPC-generated transitions into the replay buffer, improving sample efficiency without reward redesign or adversarial training.",
+      "llm_tldr_cn": "针对强化学习在运动控制中收敛至不可用步态的问题，该文提出MPC-Injection方法。通过在重放缓冲区中插入模型预测控制器（MPC）求解同一任务产生的过渡数据，无需重新设计奖励函数或引入判别器，即可引导策略收敛至设计者偏好的步态。实验表明，该方法仅通过重放缓冲区的偏置就显著提升了样本效率和最终步态质量，为基于模型的控制与RL结合提供了轻量级方案。该工作对无人机等连续控制系统的样本高效学习具有参考价值。",
+      "llm_tldr": "针对强化学习在运动控制中收敛至不可用步态的问题，该文提出MPC-Injection方法。通过在重放缓冲区中插入模型预测控制器（MPC）求解同一任务产生的过渡数据，无需重新设计奖励函数或引入判别器，即可引导策略收敛至设计者偏好的步态。实验表明，该方法仅通过重放缓冲区的偏置就显著提升了样本效率和最终步态质量，为基于模型的控制与RL结合提供了轻量级方案。该工作对无人机等连续控制系统的样本高效学习具有参考价值。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.24669v1",
+      "source": "arxiv",
+      "title": "LaGO: Latent Action Guidance for Online Reinforcement Learning",
+      "abstract": "Large language models (LLMs) have shown strong potential for planning and sequential decision-making, but prior work often relies on using them as direct controllers, which requires precise action generation and can be unreliable in practice. This paper proposes Latent Action Guidance for Online Reinforcement Learning (LaGO), a framework that uses a pretrained LLM as a latent action prior to softly guide online policy optimization, rather than treating the LLM as an explicit planner or controller. Experiments on both a discrete-control benchmark, CLEVR-Robot, and a continuous-control benchmark, Meta-World, demonstrate that LaGO consistently improves both reward and success rate over Vanilla PPO. In particular, LaGO increases the average success rate from 15.1% to 27.2% on CLEVR-Robot and from 2.7% to 15.2% on Meta-World. Our analysis further shows that stronger pretrained LLMs provide more effective guidance, suggesting that LLM knowledge can improve planning and online decision-making.",
+      "authors": [
+        "Kuan-Yen Liu",
+        "Ren-Jyun Huang",
+        "Ti-Rong Wu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-23T15:03:31+00:00",
+      "link": "https://arxiv.org/pdf/2606.24669v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "latent action prior for online RL improves sample efficiency",
+      "llm_evidence_cn": "隐动作先验用于在线强化学习提升样本效率",
+      "llm_evidence": "隐动作先验用于在线强化学习提升样本效率",
+      "canonical_evidence": "隐动作先验用于在线强化学习提升样本效率",
+      "llm_tldr_en": "LaGO uses a pretrained LLM as a latent action prior to softly guide online policy optimization, improving sample efficiency on continuous-control tasks.",
+      "llm_tldr_cn": "LaGO提出利用预训练大语言模型作为隐动作先验，通过软引导在线策略优化提升样本效率。在离散和连续控制任务上，与PPO相比，平均成功率从15.1%显著提升。该方法避免了直接使用LLM作为控制器的不稳定性。",
+      "llm_tldr": "LaGO提出利用预训练大语言模型作为隐动作先验，通过软引导在线策略优化提升样本效率。在离散和连续控制任务上，与PPO相比，平均成功率从15.1%显著提升。该方法避免了直接使用LLM作为控制器的不稳定性。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.25593v1",
+      "source": "arxiv",
+      "title": "Low-Complexity Policy Tessellations in Structured Markov Decision Processes",
+      "abstract": "We study optimal-policy geometry in structured Markov decision processes. While approximate dynamic programming and reinforcement learning typically approximate high-dimensional value functions, we show that optimal policies induce simpler decision tessellations. We propose boundary-based policy approximations that learn policy regions directly. A policy-loss decomposition links performance degradation to action margins and explains why errors concentrate near indifference boundaries. Inventory control and queue admission experiments show lower policy error, smaller value gaps, faster error decay, and stability than reinforcement learning baselines.",
+      "authors": [
+        "Fredy Pokou"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-24T09:00:16+00:00",
+      "link": "https://arxiv.org/pdf/2606.25593v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "policy learning theory for structured MDPs",
+      "llm_evidence_cn": "结构化MDP策略学习理论",
+      "llm_evidence": "结构化MDP策略学习理论",
+      "canonical_evidence": "结构化MDP策略学习理论",
+      "llm_tldr_en": "Studies optimal policy geometry in structured MDPs, proposing boundary-based policy approximations that learn regions directly with lower error than RL baselines.",
+      "llm_tldr_cn": "本文研究结构化马尔可夫决策过程中最优策略的几何结构，发现最优策略诱导简单的决策划分，并基于此提出边界策略近似方法，直接学习策略区域，在库存控制和队列接纳实验中取得比强化学习基线更低的策略误差和更小的性能差距。",
+      "llm_tldr": "本文研究结构化马尔可夫决策过程中最优策略的几何结构，发现最优策略诱导简单的决策划分，并基于此提出边界策略近似方法，直接学习策略区域，在库存控制和队列接纳实验中取得比强化学习基线更低的策略误差和更小的性能差距。",
+      "llm_tags": [
+        "query:rpp:composite"
+      ],
+      "matched_query_tag": "query:rpp:composite",
+      "matched_query_text": "Papers central to 用于检索强化学习路径规划、基于模型的强化学习、世界模型、DreamerV3、MPC、无人机自主导航、动态避障、连续控制和实时轨迹优化相关论文，重点关注样本效率、复杂环境决策、潜在动力学建模和智能路径规划方法。, especially work that connects or combines: sample efficient reinforcement learning; UAV path planning; latent dynamics model; world model; reinforcement learning path planning; Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.; Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control..",
+      "matched_requirement_id": "req-composite-rpp",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.27094v1",
+      "source": "arxiv",
+      "title": "Learning Climate Variability from Scarce Data with Diffusion Models: A Test Case for ENSO",
+      "abstract": "Diffusion models are increasingly applied to climate emulation, but whether they capture the correct modes of variability remains unclear, a concern amplified by data scarcity at longer timescales. We investigate this using synthetic tropical Pacific SST fields from Linear Inverse Models (LIMs), whose known low-order structure bypasses the overlapping and confounding modes of real observations. With sufficient training data, our model recovers the correct structure of both Gaussian and non-Gaussian LIMs, including ENSO's Eastern/Central Pacific asymmetry. Yet an ablation study on the number of monthly training samples reveals that the 700 observations in ERSSTv5 fall an order of magnitude short of the 7,000 samples needed for convergence, and that not all diffusion parameterisations recover the correct low-order structure. Pre-training on CMIP6 with a learned model embedding, followed by fine-tuning on scarce observations, closes this gap, reproducing observed statistics more faithfully than both Gaussian and non-Gaussian LIMs.",
+      "authors": [
+        "Lluis Palma",
+        "Vincent Verjans",
+        "Amanda Duarte",
+        "Albert Soret",
+        "Markus Donat"
+      ],
+      "primary_category": "physics.ao-ph",
+      "categories": [
+        "physics.ao-ph"
+      ],
+      "published": "2026-06-25T14:31:17+00:00",
+      "link": "https://arxiv.org/pdf/2606.27094v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "diffusion models for climate variability from scarce data",
+      "llm_evidence_cn": "利用扩散模型从稀缺数据学习气候变率",
+      "llm_evidence": "利用扩散模型从稀缺数据学习气候变率",
+      "canonical_evidence": "利用扩散模型从稀缺数据学习气候变率",
+      "llm_tldr_en": "Investigates whether diffusion models capture correct climate variability modes from scarce data, finding that while they can recover ENSO structure with sufficient samples, real observations are often insufficient.",
+      "llm_tldr_cn": "扩散模型在气候仿真中应用广泛，但能否从稀缺数据中正确捕获变率模式尚不清楚。本文以ENSO为测试案例，发现扩散模型在足够训练样本下能恢复东西太平洋不对称等结构，但实际观测数量远低于收敛所需，揭示了数据稀缺对气候应用的关键挑战。",
+      "llm_tldr": "扩散模型在气候仿真中应用广泛，但能否从稀缺数据中正确捕获变率模式尚不清楚。本文以ENSO为测试案例，发现扩散模型在足够训练样本下能恢复东西太平洋不对称等结构，但实际观测数量远低于收敛所需，揭示了数据稀缺对气候应用的关键挑战。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on meteorological downscaling and weather super resolution using diffusion models, generative models, or neural networks.",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.26463v1",
+      "source": "arxiv",
+      "title": "Finding the Time to Think: Learning Planning Budgets in Real-Time RL",
+      "abstract": "Deliberating takes time. In real-time settings, that time is not free. Standard reinforcement learning (RL) sidesteps this as the environment waits indefinitely for the agent's decision. Instead, we study real-time RL environments where the environment progresses while waiting for the agent's action. Building on prior real-time formalizations, we introduce variable-delay real-time RL, where the agent chooses how long to deliberate at each decision point since the environment progresses. For the planning agents we use, the right delay is state-dependent, and naively planning how long to plan can paralyze the agent. We instead approach this setting by training a lightweight gating policy on top of a planner to select state-dependent planning budgets. Across real-time Pac-Man, Tetris, Snake, Speed Hex, and Speed Go, our gating policy outperforms fixed-budget and heuristic baselines, and transfers to a real-time setup where the environment and agent run on two different GPUs.",
+      "authors": [
+        "Aneesh Muppidi",
+        "Firas Darwish",
+        "Dylan Cope",
+        "João F. Henriques",
+        "Jakob Nicolaus Foerster"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-24T23:55:15+00:00",
+      "link": "https://arxiv.org/pdf/2606.26463v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "real-time RL planning budgets for efficiency",
+      "llm_evidence_cn": "实时强化学习规划预算以提高效率",
+      "llm_evidence": "实时强化学习规划预算以提高效率",
+      "canonical_evidence": "实时强化学习规划预算以提高效率",
+      "llm_tldr_en": "Introduces variable-delay real-time RL where agents choose deliberating time, and trains a gating policy to select state-dependent planning budgets.",
+      "llm_tldr_cn": "针对标准强化学习忽略实时环境中决策耗时的问题，本文提出可变延迟实时强化学习框架，允许智能体在每个决策点自主选择思考时间，并训练轻量级门控策略来选取状态相关的规划预算，实现了在实时约束下的高效决策。",
+      "llm_tldr": "针对标准强化学习忽略实时环境中决策耗时的问题，本文提出可变延迟实时强化学习框架，允许智能体在每个决策点自主选择思考时间，并训练轻量级门控策略来选取状态相关的规划预算，实现了在实时约束下的高效决策。",
+      "llm_tags": [
+        "query:rpp:composite"
+      ],
+      "matched_query_tag": "query:rpp:composite",
+      "matched_query_text": "Papers central to 用于检索强化学习路径规划、基于模型的强化学习、世界模型、DreamerV3、MPC、无人机自主导航、动态避障、连续控制和实时轨迹优化相关论文，重点关注样本效率、复杂环境决策、潜在动力学建模和智能路径规划方法。, especially work that connects or combines: sample efficient reinforcement learning; UAV path planning; latent dynamics model; world model; reinforcement learning path planning; Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.; Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control..",
+      "matched_requirement_id": "req-composite-rpp",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.26790v1",
+      "source": "arxiv",
+      "title": "OPID: On-Policy Skill Distillation for Agentic Reinforcement Learning",
+      "abstract": "Outcome-based reinforcement learning provides a stable optimization backbone for language agents, but its sparse trajectory-level rewards provide little guidance on which intermediate decisions should be reinforced or suppressed. On-policy self-distillation offers dense token-level supervision, yet existing skill-conditioned variants often rely on external skill memories or retrieved privileged context, which are costly to maintain and can be mismatched with the state distribution induced by the current policy in multi-turn interaction. We propose \\textbf{OPID} (\\textbf{O}n-\\textbf{P}olicy Sk\\textbf{i}ll \\textbf{D}istillation), a framework that extracts skill supervision directly from completed on-policy trajectories. OPID represents trajectory hindsight as hierarchical skills: episode-level skills capture global workflows or failure-avoidance rules, while step-level skills capture local decision knowledge at critical timesteps. A critical-first routing mechanism uses step-level skills when critical decisions are identified and falls back to episode-level skills as default guidance otherwise. The selected skill is injected into the interaction history, allowing the old policy to re-score the same sampled response under both original and skill-augmented contexts. The resulting log-probability shift yields a token-level self-distillation advantage, which is combined with the outcome advantage for policy optimization. OPID thus preserves RL as the primary training objective while introducing dense, distribution-matched hindsight supervision. Experiments on ALFWorld, WebShop and Search-based QA demonstrate that OPID generally improves agent performance, sample efficiency, and robustness over outcome-only RL and existing skill-distillation baselines. Our code is available at https://github.com/jinyangwu/OPID/tree/main.",
+      "authors": [
+        "Shuo Yang",
+        "Jinyang Wu",
+        "Zhengxi Lu",
+        "Yuhao Shen",
+        "Fan Zhang",
+        "Lang Feng",
+        "Shuai Zhang",
+        "Haoran Luo",
+        "Zheng Lian",
+        "Zhengqi Wen",
+        "Jianhua Tao"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-25T09:24:09+00:00",
+      "link": "https://arxiv.org/pdf/2606.26790v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "on-policy skill distillation for sample efficient reinforcement learning in language agents",
+      "llm_evidence_cn": "在线策略技能蒸馏用于语言智能体的样本高效强化学习",
+      "llm_evidence": "在线策略技能蒸馏用于语言智能体的样本高效强化学习",
+      "canonical_evidence": "在线策略技能蒸馏用于语言智能体的样本高效强化学习",
+      "llm_tldr_en": "OPID extracts dense token-level supervision from on-policy trajectories for skill distillation, improving sample efficiency in reinforcement learning for language agents without external memories.",
+      "llm_tldr_cn": "OPID框架直接从在线策略轨迹中提取密集的令牌级监督信号进行技能蒸馏，无需外部记忆或特权上下文，显著提升了语言智能体强化学习的样本效率。该方法通过轨迹事后总结生成技能描述，为稀疏奖励问题提供了有效解决方案。尽管针对语言领域，其核心思想可迁移至其他强化学习场景。",
+      "llm_tldr": "OPID框架直接从在线策略轨迹中提取密集的令牌级监督信号进行技能蒸馏，无需外部记忆或特权上下文，显著提升了语言智能体强化学习的样本效率。该方法通过轨迹事后总结生成技能描述，为稀疏奖励问题提供了有效解决方案。尽管针对语言领域，其核心思想可迁移至其他强化学习场景。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

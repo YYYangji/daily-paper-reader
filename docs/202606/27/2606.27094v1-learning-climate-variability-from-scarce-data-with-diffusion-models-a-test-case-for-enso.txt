@@ -1,0 +1,242 @@
+Title: Learning Climate Variability from Scarce Data with Diffusion Models: A Test Case for ENSO
+
+URL Source: https://arxiv.org/pdf/2606.27094v1
+
+Published Time: Fri, 26 Jun 2026 01:23:46 GMT
+
+Number of Pages: 14
+
+Markdown Content:
+manuscript submitted to Geophysical Research Letters 
+
+# Learning Climate Variability from Scarce Data with Diffusion Models: A Test Case for ENSO 
+
+Llu´ ıs Palma 1,2, Vincent Verjans 1, Amanda Duarte 1, Albert Soret 1and Markus Donat 1,3
+
+> 1
+
+Barcelona Supercomputing Center, Earth Sciences Department, Barcelona, Spain. 2 
+
+> 2
+
+Facultat de F´ ısica, Universitat de Barcelona, Barcelona, Spain. 3 
+
+> 3
+
+Instituci´ o Catalana de Recerca i Estudis Avan¸ cats (ICREA), Barcelona, Spain 
+
+Key Points:  
+
+> •
+
+We train diffusion models on synthetic (LIM-based) tropical Pacific SST fields to assess whether they recover the underlying low-dimensional structure of the data.  
+
+> •
+
+Diffusion models recover the low-order structure given sufficient data, but the ∼
+
+700 monthly observations in ERSSTv5 fall an order of magnitude below the ∼ 7, 000 needed for convergence.  
+
+> •
+
+Pre-training on CMIP6 with a learned model embedding, followed by fine-tuning on scarce observations, overcomes this data limitation. 
+
+Corresponding author: Llu´ ıs Palma, lluis.palma@bsc.es 
+
+–1–  
+
+> arXiv:2606.27094v1 [physics.ao-ph] 25 Jun 2026 manuscript submitted to Geophysical Research Letters
+
+Abstract 
+
+Diffusion models are increasingly applied to climate emulation, but whether they capture the correct modes of variability remains unclear, a concern amplified by data scarcity at longer timescales. We investigate this using synthetic tropical Pacific SST fields from Linear Inverse Models (LIMs), whose known low-order structure bypasses the overlap-ping and confounding modes of real observations. With sufficient training data, our model recovers the correct structure of both Gaussian and non-Gaussian LIMs, including ENSO’s Eastern-Pacific/Central-Pacific El Ni˜ no/La Ni˜ na asymmetry. Yet an ablation on the num-ber of monthly training samples reveals that the 700 observations in ERSSTv5 fall an order of magnitude below the 7,000 samples needed for convergence, and not all diffu-sion parameterisations recover the correct low-order structure. Pre-training on CMIP6 with a learned model embedding, followed by fine-tuning on scarce observations, closes this gap — reproducing observed statistics more faithfully than both Gaussian and non-Gaussian LIMs. 
+
+Plain Language Summary 
+
+El Ni˜ no and La Ni˜ na are major climate phenomena that affect weather patterns worldwide, yet we only have about 70 years of detailed sea surface temperature obser-vations — too few for modern AI methods that typically need thousands of examples to learn reliably. We tested whether diffusion models, a type of AI originally developed for image generation, can learn the essential patterns of tropical Pacific variability us-ing synthetic datasets with known characteristics. These models succeed when given enough data but struggle with the limited observational record, often memorising training ex-amples rather than learning general patterns. To overcome data scarcity, we developed a strategy that first trains the model on output from many different climate simulations, embedding each simulation’s identity, and then fine-tunes on real observations. This ap-proach produces realistic variability patterns without memorisation. 
+
+1 Introduction 
+
+Deep learning has driven recent advances in data-driven weather prediction, rivalling traditional Numerical Weather Prediction (NWP) models (Pathak et al., 2022; Lam et al., 2023; Kochkov et al., 2024; Price et al., 2024). These advances have motivated ex-tending such approaches to longer timescales (Pan et al., 2022; Rader & Barnes, 2023; Watt-Meyer et al., 2025; Kent et al., 2025; Palma et al., 2026), where NWPs and climate models are computationally expensive and limited in skill. Yet progress is hampered by the short span of available reanalyses (40–70 years). Unlike weather forecasting, where high-frequency variability yields many independent samples over short periods, longer timescales yield far fewer (Gibson et al., 2021; Miloshevich et al., 2023; Materia et al., 2024). One example is the El Ni˜ no–Southern Oscillation (ENSO), the dominant mode of interannual variability in the tropical Pacific (Wang et al., 2017). Its warm phase (El Ni˜ no), characterised by anomalous warming of the central and eastern equatorial Pacific, recurs every 2–7 years and alternates with the cold La Ni˜ na phase. ENSO-driven anoma-lies alter tropical convection and trigger atmospheric teleconnections that drive temper-ature and precipitation impacts in large parts of the world with major societal conse-quences (McPhaden et al., 2006; Liu et al., 2023). Yet a single reanalysis may contain only a few dozen ENSO cycles, limiting the application of deep learning algorithms with a large number of trainable parameters. Some Machine learning (ML) approaches address observational data scarcity by training on climate model output (Andersson et al., 2021; Gibson et al., 2021; Pan et al., 2022; Palma et al., 2026), benefiting from thousands of simulated years that span regime shifts and unobserved trends, though at the cost of inheriting model biases, such  
+
+> –2– manuscript submitted to Geophysical Research Letters
+
+as misrepresented teleconnections and unresolved small-scale processes. An emerging al-ternative trains AI weather models on reanalysis data and runs them autoregressively to longer lead times (Watt-Meyer et al., 2025; Kent et al., 2025), avoiding model errors but reintroducing small test sets with no guarantee of extrapolation beyond the train-ing distribution. Across all approaches, complex architectures make it difficult to ver-ify that learned relationships are physically consistent, with skill scores and summary statistics typically serving as proxy validation (Rasp et al., 2024). From all the variety of ML architectures, diffusion models (Ho et al., 2020; Song et al., 2021; Karras et al., 2022; Lipman et al., 2023) have demonstrated strong perfor-mance in weather and climate emulation tasks owing to their ability to model the non-linear, non-Gaussian behaviour intrinsic to the climate system. Their progressive denois-ing objective provides implicit regularisation: the model must produce coherent fields from heavily corrupted to nearly clean inputs, helping prevent overfitting and avoiding the oversmoothed fields typical of direct RMSE objectives. Diffusion models have been used for applications ranging from climate emulation to downscaling and bias adjustment (Bassetti et al., 2024; Price et al., 2024; Aich et al., 2026). Yet they necessitate large data amounts and are not exempt from the interpretability challenges shared among deep learn-ing methods (de Regt, 2020; Krenn et al., 2022; Channing & Ghosh, 2026). Assessing whether machine-learned relationships are physically meaningful can be approached from different perspectives. Here, we adopt a distribution-matching perspec-tive which assumes that a small number of modes capture the dominant fraction of cli-mate variability (de Viron et al., 2013). Verifying whether an ML model has learned such structure from real data is challenging, as overlapping timescales and confounding modes can obscure the signal, and true low-order structure is a priori unknown. To address this, we leverage a synthetic multi-millennial SST dataset derived from a low-order ENSO model (Martinez-Villalobos et al., 2025). This dataset is long enough to serve as ground truth for evaluating the model’s learned representation, in a controlled, idealised setup free from trends, distributional shifts, or other higher-order modes affecting ENSO — something not possible with real-world reanalysis. By evaluating if diffusion models can recover an idealised low-dimensional representation of ENSO, this study assesses a prerequisite for their application to the full climate system. Thus, we formulate the following questions: Can diffusion models recover the low-dimensional structure of a synthetic tropical Pacific SST dataset? Are there differences between diffusion parametrisations? Is the sample size of current reanalyses sufficient to reach optimal performance in terms of low-order recovery? If not, how can we mit-igate this through different training strategies? 
+
+2 Data and Methods 
+
+2.1 Data 
+
+To learn ENSO variability, we use 120k monthly tropical Pacific SST fields gen-erated from two sets of Linear Inverse Models (LIMs; Penland (1989); Martinez-Villalobos et al. (2025); Martinez-Villalobos (2026)). Specifically, we use both the standard LIM and non-Gaussian (NG-LIM) versions (Martinez-Villalobos et al., 2025). In a standard stationary LIM, the evolution of the tropical Pacific state vector is parametrised as fol-lows: 
+
+dx
+
+dt = Mx + Bη (1) where x is a 10-dimensional state vector whose first two components are the East and Central Pacific (EP, CP) indices, defined as linear combinations of the leading two Principal Components (PCs) of tropical Pacific SST variability, and whose remaining eight  
+
+> –3– manuscript submitted to Geophysical Research Letters
+
+components are PCs 3–10. The matrix M represents the linearized deterministic dynam-ics derived from the empirical 1 month lag covariance matrix (Penland & Sardeshmukh, 1995), B is the noise covariance matrix derived from the fluctuation-dissipation relation-ship (Penland & Matrosova, 1994), and η is a Gaussian white noise vector. The NG-LIM applies an additional Yeo-Johnson transformation (Yeo & Johnson, 2000) to map the state variables x, to near-Gaussianity, better capturing ENSO nonlinearities and asymmetries (Choi et al., 2013; DiNezio & Deser, 2014; Martinez-Villalobos et al., 2019). Thus, both LIM and NG-LIM synthetic datasets have a known low-dimensional structure (the first 10 PCs explaining 90% of tropical Pacific SST variability). All LIMs are calibrated to the 1948-2022 ERSSTv5 observations (Huang et al., 2017). Additionally, we use the same raw ERSSTv5 SST fields and NG-LIM emulations of 30 CMIP6 (Eyring et al., 2016) models also obtained from (Martinez-Villalobos, 2026), and with the same calibration period. 
+
+2.2 Diffusion Model 
+
+Generative models — and diffusion models (DMs; Ho et al. (2020); Song et al. (2021)) in particular — learn to draw samples from complex data distributions for which we have empirical observations but whose true form is unknown. Inspired by non-equilibrium ther-modynamics (Sohl-Dickstein et al., 2015), DMs follow a two-stage process: a forward pro-cess that gradually corrupts data with Gaussian noise, and a reverse process that gen-erates new samples by denoising. More formally, the DM forward process progressively adds noise to data samples according to: 
+
+zt = αtx + σtϵ (2) where αt is the signal scaling coefficient at time t, controlling how much of the orig-inal data x is preserved, and σt controls the noise level ( ϵ ∼ N (0 , I )). Note that dif-fusion time t indexes the noising process, not the physical time over which weather evolves. Thus, as the noising process progresses (in our convention, from t = 1 at the original data to t = 0 at pure noise), the ratio αt/σ t decreases monotonically, making the data indistinguishable from noise. These marginals form a time-continuous, increasingly noisy sequence — the probability path: 
+
+p(zt) = 
+
+Z
+
+p(zt | x) p(x) dx =
+
+Z
+
+N (zt | αtx, σ 2 
+
+> t
+
+I) p(x) dx (3) In this work, we adopt the ordinary differential equation (ODE)-based (Ho et al., 2020) formulation of flow matching (Lipman et al., 2023), though it is closely intertwined with other diffusion formalisms (we refer the reader to Lai et al. (2025) for a compre-hensive overview). We parameterise the time evolution of p(zt) via the time derivative of z, a velocity field v, which prescribes how samples must evolve so that their distri-bution matches p(zt) at every t — a constraint formalised by the continuity equation. For the Gaussian path defined by Eq. 3, the corresponding probability flow ODE can be expressed as: 
+
+dzt
+
+dt = vt(zt) (4) We adopt a simple linear schedule (Lipman et al., 2023), for which αt = t and σt =1 − t. The objective is then to learn a neural network vθ (zt, t ) ≈ vt(zt) that approxi-mates this velocity field. As vt(zt) is generally intractable, we seek to minimise the net-work output against the conditional velocity vt(zt | x), which can be derived from the time derivative of Equation 2 as:  
+
+> –4– manuscript submitted to Geophysical Research Letters
+
+vt(zt | x) = α′
+
+> t
+
+x + σ′
+
+> t
+
+ϵ = x − ϵ = x − zt
+
+1 − t = zt − ϵ
+
+t (5) yielding the conditional (on x) flow matching loss: 
+
+L = Et∼U (0 ,1) , x∼p(x), ϵ∼N (0 ,I )
+
+h
+
+∥vθ (zt, t ) − vt(zt | x)∥2i
+
+(6) Lipman et al. (2023) shows that this loss shares the same gradient with respect to 
+
+θ as the marginal flow matching loss (Mean Squared Error against vt(zt)), so minimis-ing one also minimises the other. Intuitively, sampling multiple ( x, ϵ) pairs drives the conditional expectation of vt(zt | x) over x towards vt(zt). Once vθ is learned, the gen-erative process recovers samples from the data distribution: we integrate Equation 4 from 
+
+t = 0 to t = 1, replacing vt(zt) with vθ (zt, t ). It is important to note that, given the relationship established in Equation 5, our network dθ can predict different quantities at each time step t: the clean data x (vt =  
+
+> dθ−zt
+> 1−t
+
+) — as in the original Denoising Diffusion Probabilistic Models (DDPM) formu-lation (Sohl-Dickstein et al., 2015; Song & Ermon, 2020; Ho et al., 2020) —, the noise 
+
+ϵ (vt = zt−dθ 
+
+> t
+
+) (Ho et al., 2020), or vt directly (Salimans & Ho, 2022; Lipman et al., 2023). These are related by simple identities and differ in training only by time-dependent reweighting factors (Lai et al., 2025; Li & He, 2025). In practice, however, these parameterisations behave very differently. Li and He (2025) argue that natural data occupy a low-dimensional manifold within the high-dimensional observation space, while noise spans the full space. A network predicting clean data ( x-prediction) therefore only needs to capture this low-dimensional structure, whereas pre-dicting noise ( ϵ-prediction), or an intermediate quantity ( v-prediction), requires preserv-ing high-dimensional information. We hypothesise that this reasoning extends to climate fields, where a low-dimensional structure can explain a large fraction of climate variabil-ity (de Viron et al., 2013). Thus, our model ingests monthly SST anomaly fields from the tropical Pacific ( x ∈
+
+Rnlat ×nlon ) and learns the velocity field ( vθ ∈ Rnlat ×nlon ) that drives the distribution underlying SST variability in the region. For details on the network architecture, train-ing, and sampling strategy, we refer the reader to the Supplementary Information. 
+
+3 Results 
+
+To evaluate whether diffusion models recover the correct low-dimensional structure, we start by training our model ( x-prediction) on both the LIM and NG-LIM synthetic datasets and compare the generated and true fields. In line with Martinez-Villalobos et al. (2025), Figure 1 shows the joint PC1–PC2 scatter plots (a, f) and spatial skewness maps, testing whether the model preserves the non-Gaussian warm–cold asymmetry characteristic of ENSO, for true (b, g) and gener-ated (c, h) data. Overall, the diffusion model successfully reproduces both the Gaussian (LIM) and non-Gaussian (NG-LIM) distributions. When trained on the NG-LIM dataset, generated samples reproduce the characteristic U shape (highlighted by the quadratic fit curves), reflecting the tendency for EP El Ni˜ nos (positive PC1, positive PC2) and CP La Ni˜ nas (negative PC1, positive PC2) to reach larger anomalies (Choi et al., 2013; Martinez-Villalobos et al., 2019). The skewness maps (b, c, g, h) further validate that the model preserves the non-Gaussian warm–cold asymmetry, with a horseshoe shape with posi-tive skewness in the eastern Pacific and negative skewness in the western Pacific. Be-yond these, we compare the spatial EOF patterns of true and generated data via a cross-correlation matrix (d, i). Again, the diffusion model consistently recovers the first 10 EOFs    
+
+> –5– manuscript submitted to Geophysical Research Letters
+> Figure 1. Top row (a,b,c,d,e): model trained on Linear Inverse Model (LIM) data. Bottom row (f,g,h,i,j): trained on nonlinear-Gaussian LIM (NG-LIM). Note that “true” refers to LIM-and NG-LIM-generated data in the top and bottom row, respectively. (a,f) Scatter plots of the two leading principal components (PC1 vs PC2) for true data (green) and generated samples (grey/black), with quadratic fit curves highlighting the nonlinear PC1–PC2 relationship. (b,c,g,h) Spatial skewness maps for true (b,g) and generated (c,h) data. (d,i) EOF spatial pattern cross-correlation heatmaps between true and generated samples (note the nonlinear color scaling). (e,j) Percentage variance explained by the leading projected (on True EOFs) PCs for true (dashed) and generated (solid) data.
+
+from both the LIM and NG-LIM datasets, as indicated by strong (above 0.9) diagonal and weak (below 0.35) off-diagonal correlations. To assess whether EOF relationships are preserved, we project the generated data onto the true EOFs. The projected vari-ance per EOF (e, j) closely matches the true variance structure (max. ∼ 7% difference), confirming that the model faithfully reproduces both the spatial patterns and their rel-ative importance on both datasets. Motivated by Li and He (2025), we test on the NG-LIM dataset whether results differ across diffusion parameterisations: x-prediction, v-prediction, and ϵ-prediction (Lai et al., 2025). Figure S1 shows PC1–PC2 scatter plots, EOF spatial cross-correlation ma-trices, and projected variance per EOF for each diffusion variant. ϵ-prediction fails all three diagnostics. v-prediction reproduces the PC1–PC2 distribution and EOF corre-lations well (diagonal mean of 0.92), but projects substantially less variance onto the true EOF patterns. Projecting v-prediction samples onto their own leading 10 EOFs recov-ers only 19.6% of their variance (not shown), indicating that v-prediction dramatically overestimates the effective dimensionality of the data. Thus, only x-prediction fully re-covers the true low-dimensional structure of the data. We further test the sensitivity to the input dimension D (Fig. S2) by reducing it from its full dimensionality to the manifold dimension d using PCA. The grey shaded region marks the under-capacity regime ( D > 256, the hidden layer width), where the input must be compressed through a narrower internal representation, forcing the net-work to learn a lower-dimensional encoding. ϵ-prediction recovers the data only near the  
+
+> –6– manuscript submitted to Geophysical Research Letters
+
+manifold dimension and degrades as D grows, consistent with its failure at full D in Fig-ure S1. Overall x-prediction is the only parameterisation that holds across dimension-alities and diagnostics — we hypothesise that the degradation at D ∼ 110 reflects a double-descent-like transition: as D decreases, the network shifts from a regime where the bottleneck forces generalisation through compression to one where excess capacity lets it interpolate the training data, improving generalisation. Thus, consistent with Li and He (2025), these results confirm that directly predicting clean data enables under-capacity networks to operate effectively in high-dimensional spaces. So far, the results indicate that diffusion models can recover the low-dimensional structure of both Gaussian and non-Gaussian ENSO synthetic datasets. We now ask whether this methodology could be extended to real observational data, which is far scarcer ( 720 vs. 120k monthly samples). We perform an ablation study by randomly subsampling the training set from 120k down to 50 samples. Figure 2 shows a reduced version of the previously shown diagnostics. The cross-correlation matrix is summarised as a single variance-weighted diagonal correlation score. We also compute the mean projected variance ratio per mode — the mean variance of generated samples projected onto each true EOF, divided by the corresponding true vari-ance — and the spatial correlation of the skewness pattern. In addition, as diffusion mod-els are prone to memorising training data, we track a nearest-neighbour memorisation ratio: for each generated and held-out test sample, we find the nearest training sample by L2 distance and compare median distances. A ratio near 1.0 indicates healthy gen-eralisation; values well below 1.0 signal memorisation. The vertical dotted line marks N = 720, the number of monthly samples in the observational record (ERSSTv5) available for training (80% of the 1948-2022 set). Results show a clear convergence at around 7000 samples, well beyond the number of available samples in ERSSTv5. Some metrics, such as the EOF diagonal correlation or the skewness correlation, show high values even though the memorisation ratio shows high degrees of memorisation. This highlights limitations of standard statistical verification when applied to generative models with strong mem-orisation capabilities. Additionally, we remove extreme values (defined by the El Ni˜ no 3.4 index) from the training set and recompute skewness maps (Supplementary Figure S3) and El Ni˜ no composites (Supplementary Figure S4). Without extremes in the train-ing data, the model fails to reproduce them — as reflected in both the skewness maps and composite differences — underscoring the sensitivity of diffusion models to train-ing set composition. Deep learning algorithms are known to underperform in data-scarce regimes. Sev-eral strategies have been proposed to address this, ranging from fine-tuning and trans-fer learning to dimensionality reduction (Andersson et al., 2021; Gibson et al., 2021; Pan et al., 2022; Materia et al., 2024). We test several of these to bridge the gap shown in Figure 2 between model performance with abundant and scarce training data. Figure 3 shows the same metrics as Figure 2, but restricted to 720 NG-LIM sam-ples. Black bars show the performance achieved when training directly on 720 samples (as in Figure 2 for N = 720). Hollow white bars represent ”optimal” performance achieved by training on the full 120k samples dataset. We test several approaches to close this gap. First (blue), we test whether dimensionality reduction (to 100D) via Principal Com-ponent Analysis (PCA) helps overcome the data scarcity gap. Next (purple), inspired by several works (Andersson et al., 2021; Gibson et al., 2021; Pan et al., 2022; Miloshe-vich et al., 2023; Palma et al., 2026), we train a diffusion model on the NG-LIM CMIP6 dataset, pooling all models into a single training set. Once trained, we evaluate this model against the NG-LIM target samples. Building on this, we extend the approach in two ways. The first (orange) involves fine-tuning the CMIP6 pre-trained model on 720 sam-ples of the ERSSTv5 NG-LIM dataset. The second (red) goes a step further by adding a model embedding during CMIP6 pre-training (Guo & Berkhahn, 2016; Rasp & Lerch, 2018; Pan et al., 2022): a one-hot encoding of the CMIP6 model identifier, linearly pro-       
+
+> –7– manuscript submitted to Geophysical Research Letters
+> Figure 2. Performance of x-prediction diffusion as a function of training set size ( N), eval-uated on the NG-LIM dataset. (a) Variance-weighted PC pattern correlation. (b) Projected variance ratio. (c) Training (solid) and validation (dashed) loss. (d) Spatial skewness correlation. (e) Memorization ratio (nearest-neighbour distance of generated vs held-out to training set). Shaded bands show ±1 standard deviation across 10 random seeds. Vertical dotted line marks
+> N= 720, the number of monthly samples in the observational record (ERSSTv5). Subsampling is performed at random across the training set.
+
+jected into an 8-dimensional vector fed to the network. In a subsequent stage, we fine-tune only this 8-dimensional vector using the 720 ERSSTv5 NG-LIM samples, keeping the rest of the network frozen. This serves two purposes. First, during training, it makes the network aware of inter-model differences, preventing it from confounding different model dynamics or collapsing them into an averaged-out signal. Second, it allows the network to learn directions of inter-model variability in the 8-dimensional embedding space. During fine-tuning, the network can navigate along these directions — and even extrap-olate beyond them — to better approximate the observational target, even when no sin-gle CMIP6 model fully captures the observed behaviour. The PCA-based approach (blue) achieves high matched correlation (above 0.85) but low skewness pattern correlation (below 0.75), low projected variance ratio, and a low memorisation ratio (both below 0.6), showing clear memorisation of the training set. Results are similar regardless of whether PCA is computed over the full or scarce ERSSTv5 NG-LIM dataset (not shown). The CMIP6 pre-trained model without fine-tuning (pur-ple) shows the opposite pattern: low matched correlation (below 0.7), moderate skew-ness pattern correlation (above 0.75), and high projected variance and memorisation ra-tios (1.2 and 1.3, respectively). These results suggest that CMIP6 pre-training avoids overfitting but leads the model to learn an erroneous variability structure, reflecting known biases in CMIP6 simulations. This is further supported by the comparison of NG-LIM EOFs across CMIP6 models (Figures S5–6). Turning to fine-tuning strategies, direct fine-tuning improves on or matches the di-rect, PCA, and CMIP6 pre-trained approaches for the EOF cross-correlation (above 0.85), the skewness pattern correlation (above 0.7), and projected variance ratio ( 0.7). Yet it remains far from optimal and shows clear memorisation ( 0.6), indicating overfitting to      
+
+> –8– manuscript submitted to Geophysical Research Letters
+> Figure 3. Comparison of training strategies for learning the NG-LIM distribution from only
+> N= 720 samples. (a) Variance-weighted PC pattern correlation, (b) spatial skewness correlation, (c) projected variance ratio, and (d) memorisation ratio. Strategies shown: direct training in full space (black), PCA reduction to 100D (blue), CMIP6 pre-training without fine-tuning (purple), CMIP6 pre-training with fine-tuning (orange), and CMIP6 pre-training with model-ID embed-ding finetuned (red). Hollow bars show the performance of the direct approach trained on the full 120k-sample dataset. Error bars indicate ±1 standard deviation across 10 seeds.
+
+the scarce ERSSTv5 NG-LIM data. In contrast, the approach of fine-tuning only the model embedding to the ERSSTv5 NG-LIM data brings substantial improvements: with an EOF cross-correlation above 0.85, a skewness pattern correlation above 0.9, a projected vari-ance ratio above 0.8, and a memorisation ratio close to 0.95. This indicates that the method recovers bias-adjusted modes of variability without memorising the training data. These results indicate that the 8-dimensional embedding is sufficiently small to regularise the network, preventing overfitting, while sufficiently large to capture meaningful inter-model differences in their representation of variability and identify relevant directions for im-provement. A 16-dim embedding vector was also tested, and similar results were found (not shown). Finally, as a demonstration on scarce real-world observations, we fine-tune the CMIP6 NG-LIM pre-trained model on raw ERSSTv5 SST fields rather than synthetic NG-LIM fields. Figure 4 compares PC1–PC2 scatter plots (a–d) and skewness maps (e–h) across the LIM (a, e), NG-LIM (b, f), our diffusion model fine-tuned on ERSSTv5 via CMIP6 pre-training and model embedding (c, g), and the raw ERSSTv5 observations (d, h). Our approach captures the skewness pattern better than the NG-LIM (pattern correlation: 0.95 vs. 0.80; RMSE: 0.14 vs. 0.27), particularly the extension of positive skewness from the eastern into the central Pacific and the elongated pattern of negative skewness south-east of Indonesia. The PC1–PC2 scatter plots further show that the diffusion model bet-ter captures the vertical asymmetry (along the EP+/CP- axis), whereas the NG-LIM displays a more symmetric pattern. 
+
+4 Summary and Discussion 
+
+In this study, we trained a diffusion model on monthly synthetic tropical Pacific SST fields derived from LIMs (Martinez-Villalobos et al., 2025) and assessed whether it recovers its underlying low-dimensional structure (10 PCs). The main findings are:  
+
+> •
+
+Diffusion models accurately recover the low-dimensional structure of both Gaus-sian and non-Gaussian synthetic datasets given sufficient training data.  
+
+> •
+
+Only the x-prediction parameterisation recovers all target statistics under a low-capacity architecture (a simple multi-layer perceptron), consistent with Li and He (2025).     
+
+> –9– manuscript submitted to Geophysical Research Letters
+> Figure 4. (a–d) Scatter plots of the two dominant modes of sea surface temperature variabil-ity (PC1 vs PC2), as generated by: (a) a linear model (LIM), (b) a non-Gaussian linear model (NG-LIM), (c) our diffusion model leveraging CMIP6 simulations and fine-tuned to ERSSTv5, and (d) the observed record (ERSSTv5, 1948–2022). (e–h) Maps of skewness—a measure of warm–cold asymmetry, where positive values (red) indicate that warm anomalies (El Ni˜ no) reach larger anomalies than cold anomalies (La Ni˜ na).
+> •
+
+The ∼700 monthly samples in ERSSTv5 fall well below the ∼7,000 sample thresh-old at which the diffusion model converges to optimal performance, confirming that current observational records alone are insufficient.  
+
+> •
+
+Pre-training on CMIP6 with a learned model embedding, followed by the fine-tuning of the embedding on scarce observations, yields the best performance on both syn-thetic and raw ERSSTv5 observations. Alternative strategies — including CMIP6 pre-training with or without fine-tuning and dimensionality reduction — yield sub-optimal results. Our results confirm that diffusion models are effective tools for modelling complex, non-Gaussian distributions in climate applications such as ENSO. Yet not all parame-terisations recover the low-order structure of the data, as noted by (Li & He, 2025). Be-sides, we quantify that these models require thousands of samples to achieve optimal per-formance. The success of the learned model embedding aligns with the findings of Pan et al. (2022), demonstrating that leveraging multi-model diversity can compensate for observational scarcity when properly exploited. However, our experiments also highlight important caveats: removing extremes from the training data prevents the model from reproducing them, and commonly used summary statistics in climate evaluation can fail to detect overfitting and memorisation, highlighting the need for more sensitive diagnos-tics. Controlled synthetic experiments, such as those presented here, offer a principled complement to skill-based benchmarks for diagnosing ML model capabilities and fail-ure modes across climate applications. Several limitations should be acknowledged. Our experiments use a controlled, syn-thetic setup that excludes non-stationary behaviour such as long-term trends or regime shifts, which is far from the true complexity of the climate system. Furthermore, our eval-uation framework is purely statistical and unconditional (random distribution sampling): it assesses whether diffusion models match the low-dimensional manifold of the train-ing distribution. However, it does not evaluate temporal dynamics or the predictive skill that would require a conditional (on an initial state) modelling framework. Accordingly, the model does not serve as an ENSO prediction system in its current form (unlike the  
+
+> –10– manuscript submitted to Geophysical Research Letters
+
+LIM and NG-LIM). Besides, the state of ENSO is solely characterised by SSTs, in line with (Martinez-Villalobos et al., 2025), which is a strong simplification of the coupled nature of it. Conditional generation constitutes the most natural extension of this work, open-ing the door to the emulation of ENSO dynamics and its prediction. Turning this frame-work into a prediction system would require careful evaluation, as the short observational ENSO record induces skill sampling uncertainties (Verjans et al., 2026). Approaches such as classifier-free guidance (Ho & Salimans, 2022), diffusion posterior sampling (Chung et al., 2023), or coupled flow matching (Lipman et al., 2023) offer promising avenues in this regard. Besides, several studies have already started to apply conditional diffusion approaches for weather and climate emulation (Price et al., 2024; Stock et al., 2025; Cachay et al., 2025). Furthermore, exploring the connections between such conditional setups and dynamical systems theory could yield more mechanistic interpretations of the learned relationships. For ENSO applications specifically, richer state characterisation, includ-ing subsurface ocean heat content and surface wind stress forcings, would provide a more physically grounded conditional setup (Newman et al., 2011). Finally, considering the success of the diversity captured by the model embedding, incorporating higher-resolution simulations (Rackow et al., 2025; Doblas-Reyes et al., 2026) as pre-training data (beyond the current CMIP6 ensemble) would likely enhance the fidelity of the learned distribu-tion. 
+
+Open Research Section 
+
+All datasets used in this publication are publicly available at https://zenodo.org/ records/18773512 . Code and instructions to reproduce the results of this manuscript can be found in https://gitlab.earth.bsc.es/es/enso diff .
+
+Conflict of Interest declaration 
+
+The authors declare there are no conflicts of interest for this manuscript. 
+
+Acknowledgments 
+
+We thank the reviewers for their useful comments and suggestions. V.V. acknowl-edges funding from the European Union Horizon project EXPECT (grant 101137656). 
+
+References 
+
+Aich, M., Hess, P., Pan, B., Bathiany, S., Huang, Y., & Boers, N. (2026, March). Conditional diffusion models for downscaling and bias correction of Earth sys-tem model precipitation. Geoscientific Model Development , 19 (4), 1791–1808. doi: 10.5194/gmd-19-1791-2026 Andersson, T. R., Hosking, J. S., P´ erez-Ortiz, M., Paige, B., Elliott, A., Russell, C., . . . Shuckburgh, E. (2021, August). Seasonal Arctic sea ice forecasting with probabilistic deep learning. Nature Communications 2021 12:1 , 12 (1), 1–12. doi: 10.1038/s41467-021-25257-4 Bassetti, S., Hutchinson, B., Tebaldi, C., & Kravitz, B. (2024). DiffESM: Condi-tional Emulation of Temperature and Precipitation in Earth System Models With 3D Diffusion Models. Journal of Advances in Modeling Earth Systems ,
+
+16 (10), e2023MS004194. doi: 10.1029/2023MS004194 Cachay, S. R., Aittala, M., Kreis, K., Brenowitz, N., Vahdat, A., Mardani, M., & Yu, R. (2025, December). Elucidated Rolling Diffusion Models for Probabilis-tic Forecasting of Complex Dynamics (No. arXiv:2506.20024). arXiv. doi: 10.48550/arXiv.2506.20024  
+
+> –11– manuscript submitted to Geophysical Research Letters
+
+Channing, G., & Ghosh, A. (2026, March). AI for Scientific Discovery is a Social Problem. Patterns , 7 (3), 101497. doi: 10.1016/j.patter.2026.101497 Choi, K.-Y., Vecchi, G. A., & Wittenberg, A. T. (2013, December). ENSO Tran-sition, Duration, and Amplitude Asymmetries: Role of the Nonlinear Wind Stress Coupling in a Conceptual Model. Journal of Climate , 26 (23), 9462– 9476. doi: 10.1175/JCLI-D-13-00045.1 de Viron, O., Dickey, J. O., & Ghil, M. (2013). Global modes of climate variability. 
+
+Geophysical Research Letters , 40 (9), 1832–1837. doi: 10.1002/grl.50386 de Regt, H. W. (2020, December). Understanding, Values, and the Aims of Science. 
+
+Philosophy of Science , 87 (5), 921–932. doi: 10.1086/710520 DiNezio, P. N., & Deser, C. (2014, October). Nonlinear Controls on the Persistence of La Ni˜ na. Journal of Climate , 27 (19), 7335–7355. doi: 10.1175/JCLI-D-14 -00033.1 Doblas-Reyes, F. J., Kontkanen, J., Sandu, I., Acosta, M., Al Turjmam, M. H., Alsina-Ferrer, I., . . . Zimmermann, J. (2026, April). The Destination Earth digital twin for climate change adaptation. Geoscientific Model Development ,
+
+19 (7), 2821–2848. doi: 10.5194/gmd-19-2821-2026 Eyring, V., Bony, S., Meehl, G. A., Senior, C. A., Stevens, B., Stouffer, R. J., & Taylor, K. E. (2016, May). Overview of the Coupled Model Intercomparison Project Phase 6 (CMIP6) experimental design and organization. Geoscientific Model Development , 9 (5), 1937–1958. doi: 10.5194/gmd-9-1937-2016 Gibson, P. B., Chapman, W. E., Altinok, A., Delle Monache, L., DeFlorio, M. J., & Waliser, D. E. (2021, August). Training machine learning models on climate model output yields skillful interpretable seasonal precipita-tion forecasts. Communications Earth & Environment , 2 (1), 159. doi: 10.1038/s43247-021-00225-4 Guo, C., & Berkhahn, F. (2016, April). Entity Embeddings of Categorical Variables 
+
+(No. arXiv:1604.06737). arXiv. doi: 10.48550/arXiv.1604.06737 Ho, J., Jain, A., & Abbeel, P. (2020, December). Denoising Diffusion Probabilistic Models (No. arXiv:2006.11239). arXiv. doi: 10.48550/arXiv.2006.11239 Huang, B., Thorne, P. W., Banzon, V. F., Boyer, T., Chepurin, G., Lawrimore, J. H., . . . Zhang, H.-M. (2017, October). Extended Reconstructed Sea Surface Temperature, Version 5 (ERSSTv5): Upgrades, Validations, and Intercompar-isons. Journal of Climate , 30 (20), 8179–8205. doi: 10.1175/JCLI-D-16-0836.1 Karras, T., Aittala, M., Aila, T., & Laine, S. (2022, October). Elucidating the Design Space of Diffusion-Based Generative Models (No. arXiv:2206.00364). arXiv. doi: 10.48550/arXiv.2206.00364 Kent, C., Scaife, A. A., Dunstone, N. J., Smith, D., Hardiman, S. C., Dunstan, T., & Watt-Meyer, O. (2025, August). Skilful global seasonal predictions from a machine learning weather model trained on reanalysis data. npj Climate and Atmospheric Science , 8 (1), 314. doi: 10.1038/s41612-025-01198-3 Kochkov, D., Yuval, J., Langmore, I., Norgaard, P., Smith, J., Mooers, G., . . . Hoyer, S. (2024, August). Neural general circulation models for weather and climate. Nature , 632 (8027), 1060–1066. doi: 10.1038/s41586-024-07744-y Krenn, M., Pollice, R., Guo, S. Y., Aldeghi, M., Cervera-Lierta, A., Friederich, P., . . . Aspuru-Guzik, A. (2022, December). On scientific understanding with artificial intelligence. Nature Reviews Physics , 4 (12), 761–769. doi: 10.1038/s42254-022-00518-3 Lai, C.-H., Song, Y., Kim, D., Mitsufuji, Y., & Ermon, S. (2025, October). The Principles of Diffusion Models (No. arXiv:2510.21890). arXiv. doi: 10.48550/ arXiv.2510.21890 Lam, R., Sanchez-Gonzalez, A., Willson, M., Wirnsberger, P., Fortunato, M., Alet, F., . . . Battaglia, P. (2023, December). Learning skillful medium-range global weather forecasting. Science , 382 (6677), 1416–1421. doi: 10.1126/science.adi2336  
+
+> –12– manuscript submitted to Geophysical Research Letters
+
+Li, T., & He, K. (2025, November). Back to Basics: Let Denoising Generative Mod-els Denoise (No. arXiv:2511.13720). arXiv. doi: 10.48550/arXiv.2511.13720 Lipman, Y., Chen, R. T. Q., Ben-Hamu, H., Nickel, M., & Le, M. (2023, February). 
+
+Flow Matching for Generative Modeling (No. arXiv:2210.02747). arXiv. doi: 10 .48550/arXiv.2210.02747 Liu, Y., Cai, W., Lin, X., Li, Z., & Zhang, Y. (2023, September). Nonlinear El Ni˜ no impacts on the global economy under climate change. Nature Communications ,
+
+14 (1), 5887. doi: 10.1038/s41467-023-41551-9 Martinez-Villalobos, C. (2026, February). Tropical Pacific SST anomalies generated by a Non-Gaussian Linear Inverse Model (NG-LIM). Zenodo. doi: 10.5281/ zenodo.18773512 Martinez-Villalobos, C., Capotondi, A., Deser, C., Dewitte, B., Holbrook, N. J., Newman, M., . . . Wittenberg, A. T. (2025). A Low-Order Data-Driven Model of ENSO Diversity. Geophysical Research Letters , 52 (24), e2025GL118649. doi: 10.1029/2025GL118649 Martinez-Villalobos, C., Newman, M., Vimont, D. J., Penland, C., & David Neelin, J. (2019). Observed El Ni˜ no-La Ni˜ na Asymmetry in a Linear Model. Geophys-ical Research Letters , 46 (16), 9909–9919. doi: 10.1029/2019GL082922 Materia, S., Garc´ ıa, L. P., van Straaten, C., O, S., Mamalakis, A., Cavicchia, L., . . . Donat, M. (2024). Artificial intelligence for climate prediction of extremes: State of the art, challenges, and future perspectives. WIREs Climate Change ,
+
+15 (6), e914. doi: 10.1002/wcc.914 McPhaden, M. J., Zebiak, S. E., & Glantz, M. H. (2006, December). ENSO as an Integrating Concept in Earth Science. Science , 314 (5806), 1740–1745. doi: 10 .1126/science.1132588 Miloshevich, G., Cozian, B., Abry, P., Borgnat, P., & Bouchet, F. (2023, April). Probabilistic forecasts of extreme heatwaves using convolutional neural net-works in a regime of lack of data. Physical Review Fluids , 8 (4), 040501. doi: 10.1103/PhysRevFluids.8.040501 Newman, M., Alexander, M. A., & Scott, J. D. (2011, November). An empirical model of tropical ocean dynamics. Climate Dynamics , 37 (9), 1823–1841. doi: 10.1007/s00382-011-1034-0 Palma, L., Peraza, A., Civantos-Prieto, D., Duarte, A., Materia, S., Mu˜ noz, ´A. G., . . . Donat, M. G. (2026, January). Data-driven seasonal climate predictions via variational inference and transformers. npj Climate and Atmospheric Science , 9 (1), 48. doi: 10.1038/s41612-026-01320-z Pan, B., Anderson, G. J., Goncalves, A., Lucas, D. D., Bonfils, C. J., & Lee, J. (2022, March). Improving Seasonal Forecast Using Probabilistic Deep Learning. Journal of Advances in Modeling Earth Systems , 14 (3). doi: 10.1029/2021MS002766 Pathak, J., Subramanian, S., Harrington, P., Raja, S., Chattopadhyay, A., Mar-dani, M., . . . Anandkumar, A. (2022, February). FourCastNet: A Global Data-driven High-resolution Weather Model using Adaptive Fourier Neural Operators (No. arXiv:2202.11214). arXiv. doi: 10.48550/arXiv.2202.11214 Penland, C. (1989, October). Random Forcing and Forecasting Using Principal Os-cillation Pattern Analysis. Monthly Weather Review , 117 (10), 2165–2185. doi: 10.1175/1520-0493(1989)117 ⟨2165:RFAFUP ⟩2.0.CO;2 Penland, C., & Matrosova, L. (1994, September). A Balance Condition for Stochas-tic Numerical Models with Application to the El Ni˜ no-Southern Oscillation. 
+
+Journal of Climate , 7 (9), 1352–1372. doi: 10.1175/1520-0442(1994)007 ⟨1352: ABCFSN ⟩2.0.CO;2 Penland, C., & Sardeshmukh, P. D. (1995, August). The Optimal Growth of Trop-ical Sea Surface Temperature Anomalies. Journal of Climate , 8 (8), 1999–2024. doi: 10.1175/1520-0442(1995)008 ⟨1999:TOGOTS ⟩2.0.CO;2 Price, I., Sanchez-Gonzalez, A., Alet, F., Andersson, T. R., El-Kadi, A., Masters,  
+
+> –13– manuscript submitted to Geophysical Research Letters
+
+D., . . . Willson, M. (2024, May). GenCast: Diffusion-based ensemble fore-casting for medium-range weather (No. arXiv:2312.15796). arXiv. doi: 10.48550/arXiv.2312.15796 Rackow, T., Pedruzo-Bagazgoitia, X., Becker, T., Milinski, S., Sandu, I., Aguri-dan, R., . . . Ziemen, F. (2025, January). Multi-year simulations at kilo-metre scale with the Integrated Forecasting System coupled to FESOM2.5 and NEMOv3.4. Geoscientific Model Development , 18 (1), 33–69. doi: 10.5194/gmd-18-33-2025 Rader, J. K., & Barnes, E. A. (2023). Optimizing Seasonal-To-Decadal Analog Fore-casts With a Learned Spatially-Weighted Mask. Geophysical Research Letters ,
+
+50 (23), e2023GL104983. doi: 10.1029/2023GL104983 Rasp, S., Hoyer, S., Merose, A., Langmore, I., Battaglia, P., Russell, T., . . . Sha, F. (2024). WeatherBench 2: A Benchmark for the Next Generation of Data-Driven Global Weather Models. Journal of Advances in Modeling Earth Sys-tems , 16 (6), e2023MS004019. doi: 10.1029/2023MS004019 Rasp, S., & Lerch, S. (2018, November). Neural Networks for Postprocessing Ensem-ble Weather Forecasts. Monthly Weather Review , 146 (11), 3885–3900. doi: 10 .1175/MWR-D-18-0187.1 Salimans, T., & Ho, J. (2022, June). Progressive Distillation for Fast Sampling of Diffusion Models (No. arXiv:2202.00512). arXiv. doi: 10.48550/arXiv.2202 .00512 Sohl-Dickstein, J., Weiss, E. A., Maheswaranathan, N., & Ganguli, S. (2015, Novem-ber). Deep Unsupervised Learning using Nonequilibrium Thermodynamics (No. arXiv:1503.03585). arXiv. doi: 10.48550/arXiv.1503.03585 Song, Y., & Ermon, S. (2020, October). Generative Modeling by Estimating Gradi-ents of the Data Distribution (No. arXiv:1907.05600). arXiv. doi: 10.48550/ arXiv.1907.05600 Song, Y., Sohl-Dickstein, J., Kingma, D. P., Kumar, A., Ermon, S., & Poole, B. (2021, February). Score-Based Generative Modeling through Stochas-tic Differential Equations (No. arXiv:2011.13456). arXiv. doi: 10.48550/ arXiv.2011.13456 Stock, J., Arcomano, T., & Kotamarthi, R. (2025, September). Swift: An Autoregressive Consistency Model for Efficient Weather Forecasting (No. arXiv:2509.25631). arXiv. doi: 10.48550/arXiv.2509.25631 Verjans, V., Donat, M. G., Delgado-Torres, C., & DelSole, T. (2026, April). Large potential of performance-based model weighting to improve decadal cli-mate forecast skill. npj Climate and Atmospheric Science . doi: 10.1038/ s41612-026-01397-6 Wang, C., Deser, C., Yu, J.-Y., DiNezio, P., & Clement, A. (2017). El Ni˜ no and Southern Oscillation (ENSO): A Review. In P. W. Glynn, D. P. Manzello, & I. C. Enochs (Eds.), Coral Reefs of the Eastern Tropical Pacific (Vol. 8, pp. 85–106). Dordrecht: Springer Netherlands. doi: 10.1007/978-94-017-7499-4 4 Watt-Meyer, O., Henn, B., McGibbon, J., Clark, S. K., Kwa, A., Perkins, W. A., . . . Bretherton, C. S. (2025, May). ACE2: Accurately learning subseasonal to decadal atmospheric variability and forced responses. npj Climate and Atmospheric Science , 8 (1), 205. doi: 10.1038/s41612-025-01090-0 Yeo, I.-K., & Johnson, R. A. (2000). A New Family of Power Transformations to Im-prove Normality or Symmetry. Biometrika , 87 (4), 954–959.
