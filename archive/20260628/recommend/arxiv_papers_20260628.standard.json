@@ -1,0 +1,642 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-28T20:14:55.531484+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 6,
+    "deep_cap": 7,
+    "deep_selected": 6,
+    "quick_candidates": 10,
+    "quick_skim_target": 12,
+    "quick_selected": 10
+  },
+  "deep_dive": [
+    {
+      "id": "2606.27001v1",
+      "source": "arxiv",
+      "title": "Uncertainty quantification via conformal prediction in data assimilation",
+      "abstract": "Quantifying the evolution of uncertainty is critical to both probabilistic forecasting and data assimilation in numerical weather prediction. In this study, we investigate the applicability of conformal prediction (CP), a recent machine learning (ML) method, to quantify uncertainty in a controlled, idealized setting. We use the one dimensional modified shallow water model, designed to mimic the convective process. CP provides a set of possible outcomes with a chosen confidence level. Here, we compare and evaluate the average empirical coverage, the average interval length, miss low, miss high and average interval score loss (AISL) for three variants of CP, namely a) Standard CP, b) Normalized CP and c) Conformalized Quantile Regression. We further compare these CP-based uncertainty estimates with traditional ensemble-based measures such as standard deviation intervals and ensemble spread. In addition, we investigate the integration of CP-derived uncertainty within the data assimilation cycle through CP perturbations. Our results highlight the strengths and limitations of each approach, providing insight into the effectiveness of CP to complement common ensemble-based uncertainty quantification in simplified atmospheric models.",
+      "authors": [
+        "Catherine George",
+        "Alireza Javanmardi",
+        "Tijana Janjić",
+        "Eyke Hüllermeier"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-25T13:18:15+00:00",
+      "link": "https://arxiv.org/pdf/2606.27001v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Uncertainty quantification via conformal prediction in data assimilation for NWP",
+      "llm_evidence_cn": "在数值天气预报数据同化中使用共形预测进行不确定性量化",
+      "llm_evidence": "在数值天气预报数据同化中使用共形预测进行不确定性量化",
+      "canonical_evidence": "在数值天气预报数据同化中使用共形预测进行不确定性量化",
+      "llm_tldr_en": "This paper applies conformal prediction to quantify uncertainty in a shallow water model mimicking convective processes, comparing three CP variants for coverage and interval scores, showing promise for NWP data assimilation.",
+      "llm_tldr_cn": "该论文将共形预测方法应用于模拟对流过程的浅水模型，以量化数据同化中的不确定性。比较了标准CP、归一化CP和分位数回归共形化三种变体的经验覆盖率和区间长度，展示了机器学习在数值天气预报不确定性量化中的潜力。",
+      "llm_tldr": "该论文将共形预测方法应用于模拟对流过程的浅水模型，以量化数据同化中的不确定性。比较了标准CP、归一化CP和分位数回归共形化三种变体的经验覆盖率和区间长度，展示了机器学习在数值天气预报不确定性量化中的潜力。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "numerical weather prediction models and methods",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.27267v1",
+      "source": "arxiv",
+      "title": "Sparse Sensor Placement for Reducing Forecast Errors in Ensemble Kalman Filtering",
+      "abstract": "Designing efficient observation networks for reducing forecast errors is a fundamental challenge in numerical weather prediction. Data-driven sparse sensor placement (SSP) and ensemble-based data assimilation via the Ensemble Kalman Filter (EnKF) have each addressed this challenge independently, yet their mathematical connections have not been systematically formalized. This study presents a unified theoretical framework integrating SSP and EnKF through optimal experimental design, providing new theoretical and algorithmic results. While conventional SSP methods aim to reduce analysis errors, this study extends the SSP to target forecast error reduction by using a tangent linear model approximated by an ensemble forecast. We derive the Fisher information matrices in the ensemble and model spaces for the EnKF, and clarify the mathematical interpretations of A-, D-, and E-optimality in terms of forecast error reduction. A-optimality in the model space minimizes the mean forecast error variance; D-optimality is ill-defined in the model space due to rank deficiency and is therefore formulated in the ensemble space, where it maximizes the Shannon information content of assimilated observations; and E-optimality in the model space minimizes the worst-case forecast error variance. We further propose a fast greedy algorithm for selecting observation locations under A-optimality in the model space, avoiding matrix inversion at each greedy step and substantially reducing computational cost. Numerical experiments using the Lorenz-96 model support these theoretical findings. Among the three optimality criteria, A-optimality in the model space most consistently reduces forecast spread and root-mean-square error, and yields stable incremental improvements consistent with post-assimilation observation impact diagnostics.",
+      "authors": [
+        "Takumi Saito",
+        "Shunji Kotsuki"
+      ],
+      "primary_category": "physics.ao-ph",
+      "categories": [
+        "physics.ao-ph"
+      ],
+      "published": "2026-06-25T16:50:15+00:00",
+      "link": "https://arxiv.org/pdf/2606.27267v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "sparse sensor placement for forecast error reduction in NWP EnKF",
+      "llm_evidence_cn": "用于数值天气预报集合卡尔曼滤波的稀疏传感器布置",
+      "llm_evidence": "用于数值天气预报集合卡尔曼滤波的稀疏传感器布置",
+      "canonical_evidence": "用于数值天气预报集合卡尔曼滤波的稀疏传感器布置",
+      "llm_tldr_en": "Provides a unified framework integrating sparse sensor placement and EnKF to reduce forecast errors in numerical weather prediction.",
+      "llm_tldr_cn": "针对数值天气预报中观测网络设计效率低的问题，提出将稀疏传感器布置与集合卡尔曼滤波融合的理论框架，通过最优实验设计减少预报误差。理论推导了Fisher信息矩阵，并利用集合预报的切线性模型近似，扩展了传统SSP方法。该方法为NWP中的降维观测设计提供了新的数学基础。",
+      "llm_tldr": "针对数值天气预报中观测网络设计效率低的问题，提出将稀疏传感器布置与集合卡尔曼滤波融合的理论框架，通过最优实验设计减少预报误差。理论推导了Fisher信息矩阵，并利用集合预报的切线性模型近似，扩展了传统SSP方法。该方法为NWP中的降维观测设计提供了新的数学基础。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "numerical weather prediction models and methods",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.27292v1",
+      "source": "arxiv",
+      "title": "BOWConnect: Parallel Bayesian Optimization over Windows with Learned Local Cost Maps for Sample-Efficient Kinodynamic Motion Planning",
+      "abstract": "This paper presents BOWConnect, a bidirectional parallel kinodynamic motion planner that addresses three fundamental limitations of existing sampling-based methods: sample inefficiency in high-dimensional state spaces, unreliable cost heuristics under dynamic constraints, and poor performance in narrow passage environments. Unlike classical planners that rely on random control sampling and geometric distance heuristics, BOWConnect integrates Bayesian Optimization over Windows (BOW) as a learning-based steering function within a parallel tree-based exploration framework, enabling each worker to learn local cost maps and constraints to guide sampling toward dynamically feasible and collision-free controls. A bidirectional architecture simultaneously grows forward and backward trees from the start and goal regions in parallel threads, with a spatial hashing mechanism enabling fast connection queries and a boundary value problem solver generating kinodynamically consistent bridge trajectories. Extensive evaluations across ten benchmark environments demonstrate that BOWConnect achieves 100\\% success while delivering the fastest or near-fastest planning time in complex scenarios, including narrow passages and non-convex spaces where state-of-the-art planners fail or degrade substantially. Real-world deployment on a ground vehicle and a quadrotor confirms real-time planning with no collisions. Videos of real-world and simulated experiments, high-resolution versions of the figures, and the open-source code are available at https://bow-connect.github.io/.",
+      "authors": [
+        "Sourav Raxit",
+        "Abdullah Al Redwan Newaz",
+        "Jose Fuentes",
+        "Leonardo Bobadilla"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-25T17:11:33+00:00",
+      "link": "https://arxiv.org/pdf/2606.27292v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Bayesian optimization for sample-efficient kinodynamic motion planning with learned local cost maps",
+      "llm_evidence_cn": "贝叶斯优化用于样本高效运动规划，学习局部成本图",
+      "llm_evidence": "贝叶斯优化用于样本高效运动规划，学习局部成本图",
+      "canonical_evidence": "贝叶斯优化用于样本高效运动规划，学习局部成本图",
+      "llm_tldr_en": "BOWConnect integrates Bayesian Optimization over Windows as a learning-based steering function for bidirectional parallel kinodynamic motion planning, achieving sample efficiency in high-dimensional spaces.",
+      "llm_tldr_cn": "提出BOWConnect，一种双向并行运动规划器，利用窗口贝叶斯优化作为学习型转向函数，在并行树探索框架中学习局部成本图，有效解决了高维空间中的采样效率低下、成本启发式不可靠和狭窄通道问题。",
+      "llm_tldr": "提出BOWConnect，一种双向并行运动规划器，利用窗口贝叶斯优化作为学习型转向函数，在并行树探索框架中学习局部成本图，有效解决了高维空间中的采样效率低下、成本启发式不可靠和狭窄通道问题。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.27348v1",
+      "source": "arxiv",
+      "title": "Bridging Performance and Generalization in Reinforcement Learning for Agile Flight",
+      "abstract": "Autonomous drone racing is a fundamentally challenging regime for autonomous aerial robots, requiring time-optimal control while operating under persistent actuation saturation. While reinforcement learning (RL) has achieved human-level performance in this domain, current methods fail to generalize; policies trained on specific environments often crash immediately in unseen configurations. This failure reflects the intrinsic difficulty of zero-shot generalization in agile flight, arising from high-dimensional task variation and the tight coupling between safety and performance at high speeds. Existing approaches that improve generalization impose a substantial cost on flight speed: control policies must significantly degrade performance to achieve even modest levels of generalization. In this work, we propose a framework for zero-shot generalization in agile flight for RL-based drone racing. By combining task-aware switching based on learning progress with a physically informed procedural track generator, the framework produces a fast and robust generalist policy without test-time adaptation. Our method achieves strong zero-shot performance across a wide range of unseen racetracks in the real world, demonstrating a 7.4x improvement in generalization over the state-of-the-art approaches, while maintaining competitive racing speeds. We validate our method's results in both simulation and real-world settings, including a challenging vision-based, end-to-end control setting that operates without explicit state estimation, where all prior approaches fail to generalize.",
+      "authors": [
+        "Jonathan Green",
+        "Jiaxu Xing",
+        "Nico Messikommer",
+        "Angel Romero",
+        "Davide Scaramuzza"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-25T17:54:36+00:00",
+      "link": "https://arxiv.org/pdf/2606.27348v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "RL for agile drone flight addressing generalization",
+      "llm_evidence_cn": "强化学习用于敏捷无人机飞行，解决泛化问题",
+      "llm_evidence": "强化学习用于敏捷无人机飞行，解决泛化问题",
+      "canonical_evidence": "强化学习用于敏捷无人机飞行，解决泛化问题",
+      "llm_tldr_en": "This paper addresses the generalization failure of RL policies in agile drone racing, proposing methods to bridge performance and generalization.",
+      "llm_tldr_cn": "该论文针对强化学习在敏捷无人机竞赛中泛化能力差的问题，分析了高速环境下安全与性能的紧密耦合，指出现有方法提升泛化会牺牲飞行速度，亟需新方法在不降低速度的情况下实现零样本泛化。该工作直接面向无人机自主导航与动态避障，与UAV路径规划需求高度一致。",
+      "llm_tldr": "该论文针对强化学习在敏捷无人机竞赛中泛化能力差的问题，分析了高速环境下安全与性能的紧密耦合，指出现有方法提升泛化会牺牲飞行速度，亟需新方法在不降低速度的情况下实现零样本泛化。该工作直接面向无人机自主导航与动态避障，与UAV路径规划需求高度一致。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.26463v1",
+      "source": "arxiv",
+      "title": "Finding the Time to Think: Learning Planning Budgets in Real-Time RL",
+      "abstract": "Deliberating takes time. In real-time settings, that time is not free. Standard reinforcement learning (RL) sidesteps this as the environment waits indefinitely for the agent's decision. Instead, we study real-time RL environments where the environment progresses while waiting for the agent's action. Building on prior real-time formalizations, we introduce variable-delay real-time RL, where the agent chooses how long to deliberate at each decision point since the environment progresses. For the planning agents we use, the right delay is state-dependent, and naively planning how long to plan can paralyze the agent. We instead approach this setting by training a lightweight gating policy on top of a planner to select state-dependent planning budgets. Across real-time Pac-Man, Tetris, Snake, Speed Hex, and Speed Go, our gating policy outperforms fixed-budget and heuristic baselines, and transfers to a real-time setup where the environment and agent run on two different GPUs.",
+      "authors": [
+        "Aneesh Muppidi",
+        "Firas Darwish",
+        "Dylan Cope",
+        "João F. Henriques",
+        "Jakob Nicolaus Foerster"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-24T23:55:15+00:00",
+      "link": "https://arxiv.org/pdf/2606.26463v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Reinforcement learning with planning in real-time environments, learning planning budgets",
+      "llm_evidence_cn": "在实时环境中使用规划的强化学习，学习规划预算",
+      "llm_evidence": "在实时环境中使用规划的强化学习，学习规划预算",
+      "canonical_evidence": "在实时环境中使用规划的强化学习，学习规划预算",
+      "llm_tldr_en": "Introduces variable-delay real-time RL where the agent chooses deliberation time, training a gating policy to select state-dependent planning budgets, improving sample efficiency in real-time settings.",
+      "llm_tldr_cn": "该论文研究实时强化学习中的规划时间分配问题。提出可变延迟实时RL形式化，允许智能体在每个决策点自主选择思考时间。通过训练一个轻量级门控策略来决定规划预算，在多个连续控制环境中验证了方法有效性，为实时RL中的样本效率提供了新思路。",
+      "llm_tldr": "该论文研究实时强化学习中的规划时间分配问题。提出可变延迟实时RL形式化，允许智能体在每个决策点自主选择思考时间。通过训练一个轻量级门控策略来决定规划预算，在多个连续控制环境中验证了方法有效性，为实时RL中的样本效率提供了新思路。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.27180v1",
+      "source": "arxiv",
+      "title": "Automating Potential-based Reward Shaping with Vision Language Model Guidance",
+      "abstract": "Sparse rewards are inherently challenging for reinforcement learning agents as they lack intermediate feedback to guide exploration and to correctly attribute the sparse success rewards to relevant parts of the trajectory. Naive reward shaping can induce reward hacking, yielding policies that exploit auxiliary signals instead of solving the intended task. Potential-based reward shaping (PBRS) guarantees preservation of the optimal policy set, but requires the definition of a heuristic potential function over the state space. In this work, we introduce the VLM-guided PBRS framework VLM-PBRS that learns the potential function directly from vision language model (VLM) feedback. We query a lightweight VLM to obtain preferences over image pairs and train a model of the potential function using these preferences. As this approach is based on potential-based reward shaping, it preserves the original optimal policies, and removes the need for expert-designed reward shaping terms. Because large VLMs are prohibitively expensive to invoke repeatedly during policy learning, we employ smaller, more computationally efficient VLMs. Although the resulting preference labels are less accurate, empirical evidence shows that the preference labels can still be used to accelerate learning. We validate our method empirically in the Meta-World and Franka Kitchen environments and highlight the connection between VLM preference label accuracy and sample efficiency improvements. Our contributions are threefold: (1) the first application of VLM preference-based learning to synthesize a potential function for PBRS, (2) a principled, low-cost solution that leverages small VLMs, and (3) extensive empirical demonstration of improved sample efficiency and robustness to reward hacking.",
+      "authors": [
+        "Henrik Müller",
+        "Daniel Kudenko"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.RO"
+      ],
+      "published": "2026-06-25T15:45:57+00:00",
+      "link": "https://arxiv.org/pdf/2606.27180v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "uses VLM to automate potential-based reward shaping to address sparse rewards, improving sample efficiency",
+      "llm_evidence_cn": "利用视觉语言模型自动进行基于势能的奖励塑形以解决稀疏奖励问题，提升样本效率",
+      "llm_evidence": "利用视觉语言模型自动进行基于势能的奖励塑形以解决稀疏奖励问题，提升样本效率",
+      "canonical_evidence": "利用视觉语言模型自动进行基于势能的奖励塑形以解决稀疏奖励问题，提升样本效率",
+      "llm_tldr_en": "Proposes VLM-PBRS framework that learns a potential function from VLM feedback to shape rewards, improving sample efficiency in RL with sparse rewards.",
+      "llm_tldr_cn": "针对强化学习中的稀疏奖励问题，该论文提出VLM-PBRS框架，通过轻量级视觉语言模型对图像对进行偏好判断，自动学习基于势能的奖励塑形函数。该方法在保持最优策略集不变的前提下，有效引导探索，显著提升样本效率。实验表明，在多种稀疏奖励环境中，该方法优于手工设计奖励和传统奖励塑形。",
+      "llm_tldr": "针对强化学习中的稀疏奖励问题，该论文提出VLM-PBRS框架，通过轻量级视觉语言模型对图像对进行偏好判断，自动学习基于势能的奖励塑形函数。该方法在保持最优策略集不变的前提下，有效引导探索，显著提升样本效率。实验表明，在多种稀疏奖励环境中，该方法优于手工设计奖励和传统奖励塑形。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.22946v1",
+      "source": "arxiv",
+      "title": "Neural Operator Processes for Probabilistic Operator Learning under Partial Observations",
+      "abstract": "Neural operators learn mappings between function spaces, but are typically developed with dense input-output training fields and fully observed inputs at inference. Many scientific problems require instead predicting solution fields from sparse, irregular, or partial observations under uncertainty. We introduce Neural Operator Processes (NOPs), a framework that unifies neural-process conditioning with neural-operator decoding to predict full output fields from limited context. NOPs condition on sparse joint input-output observations and support deterministic and probabilistic prediction within a shared encoder-decoder architecture. We study two conditioning strategies, convolutional pooled summaries and query-aligned attention, and analyze how their interaction with latent stochastic variables depends on PDE geometry. Across function regression and three PDE benchmarks, we find that sparse conditional operator learning is viable and can match dense-grid behavior in several regimes, that preserving local context-query geometry is essential in non-periodic settings but less so in spectrally smooth periodic regimes, and that uncertainty-aware operator learning succeeds when latent conditioning complements rather than overwrites the local geometric pathway. These results provide a basis for probabilistic operator learning under partial observations and help bridge operator learning and probabilistic meta-learning in function space.",
+      "authors": [
+        "Jose Miguel Lara-Rangel",
+        "Serge Guillas"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-22T07:25:01+00:00",
+      "link": "https://arxiv.org/pdf/2606.22946v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "probabilistic operator learning from sparse observations applicable to downscaling",
+      "llm_evidence_cn": "从稀疏观测进行概率算子学习，可应用于气象降尺度",
+      "llm_evidence": "从稀疏观测进行概率算子学习，可应用于气象降尺度",
+      "canonical_evidence": "从稀疏观测进行概率算子学习，可应用于气象降尺度",
+      "llm_tldr_en": "NOPs combine neural processes and neural operators to predict full fields from sparse observations, suited for probabilistic downscaling.",
+      "llm_tldr_cn": "针对科学问题中从稀疏、不规则观测预测全场且需不确定性估计的需求，提出神经算子进程（NOP）框架，统一了神经进程的条件机制和神经算子的解码能力。NOPs支持从稀疏联合输入-输出观测中预测确定性或概率性全场。两种条件策略（卷积池化摘要和查询对齐注意力）均有效，为降尺度等应用提供了可泛化的概率建模工具。",
+      "llm_tldr": "针对科学问题中从稀疏、不规则观测预测全场且需不确定性估计的需求，提出神经算子进程（NOP）框架，统一了神经进程的条件机制和神经算子的解码能力。NOPs支持从稀疏联合输入-输出观测中预测确定性或概率性全场。两种条件策略（卷积池化摘要和查询对齐注意力）均有效，为降尺度等应用提供了可泛化的概率建模工具。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on meteorological downscaling and weather super resolution using diffusion models, generative models, or neural networks.",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.22394v1",
+      "source": "arxiv",
+      "title": "Curvature-Adaptive Consistency Flow Matching: Autonomous Trajectory Optimization via Reinforcement Learning",
+      "abstract": "Consistency distillation has significantly accelerated the inference of diffusion models. In this work, we reveal an intriguing asymmetry: while Logit-Normal sampling priors are highly efficacious for standard iterative generation, consistency distillation exhibits a distinctly different difficulty profile (e.g., U-shaped). We identify that the primary optimization bottlenecks reside at the boundary stages (initialization or final refinement) rather than the intermediate steps. To address the limitations of static sampling in accommodating evolving learning requirements, we propose Curvature-Adaptive Consistency Flow Matching (CACFM). By formulating distillation as a dynamic decision process, CACFM employs a lightweight Reinforcement Learning agent to actively probe Probability Flow ODE trajectories, automatically constructing an efficiency-oriented curriculum that prioritizes critical regions without manual scheduling. Integrated with a novel Flow Distribution Matching Distillation (DMD) objective, our approach achieves new state-of-the-art results on large-scale models such as FLUX and SDXL. It effectively mitigates structural deformities and preserves high-frequency details in extreme few-step regimes, achieving unprecedented visual fidelity.",
+      "authors": [
+        "Songtao Tian",
+        "Guhan Chen",
+        "Bohan Li",
+        "Jingyi Ma",
+        "Zixiong Yu"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-21T08:49:50+00:00",
+      "link": "https://arxiv.org/pdf/2606.22394v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "RL-based autonomous trajectory optimization using consistency distillation",
+      "llm_evidence_cn": "基于强化学习的自主轨迹优化，使用一致性蒸馏",
+      "llm_evidence": "基于强化学习的自主轨迹优化，使用一致性蒸馏",
+      "canonical_evidence": "基于强化学习的自主轨迹优化，使用一致性蒸馏",
+      "llm_tldr_en": "CACFM frames consistency distillation as a dynamic decision process with RL, adapting sampling for trajectory optimization.",
+      "llm_tldr_cn": "Curvature-Adaptive Consistency Flow Matching将一致性蒸馏建模为动态决策过程，采用强化学习自适应调整采样策略，以解决边界阶段优化瓶颈。该方法在轨迹优化任务中展现了优于静态采样的性能，加速了扩散模型推理，为自主导航中的轨迹规划提供了新思路。",
+      "llm_tldr": "Curvature-Adaptive Consistency Flow Matching将一致性蒸馏建模为动态决策过程，采用强化学习自适应调整采样策略，以解决边界阶段优化瓶颈。该方法在轨迹优化任务中展现了优于静态采样的性能，加速了扩散模型推理，为自主导航中的轨迹规划提供了新思路。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.24300v1",
+      "source": "arxiv",
+      "title": "Prediction of spatio-temporal data on meshed surfaces using advection-diffusion SPDEs",
+      "abstract": "The aim of this work is to propose a statistical model for spatio-temporal data on meshed surfaces based on the Stochastic Partial Differential Equation (SPDE) modeling approach. Specifically, we focus on a class of advection-diffusion SPDEs defined on smooth compact orientable closed Riemannian manifolds of dimension 2, and their discretization via a Galerkin approach. We demonstrate how this method enables the development of scalable algorithms for the simulation and prediction of Gaussian random fields that are solutions to the discretized SPDE. Additionally, we present recent developments in the inference of such models. The method is applied to a simulated spatio-temporal dataset exhibiting advective and diffusive behavior on the sphere, as well as to a real case study on aerosol optical depth in the atmosphere across the globe's surface.",
+      "authors": [
+        "Mike Pereira",
+        "Lucia Clarotto",
+        "Nicolas Desassis"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME",
+        "stat.AP"
+      ],
+      "published": "2026-06-23T08:26:48+00:00",
+      "link": "https://arxiv.org/pdf/2606.24300v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "spatio-temporal modeling with advection-diffusion SPDEs for weather",
+      "llm_evidence_cn": "使用平流-扩散随机偏微分方程进行时空建模，适用于天气",
+      "llm_evidence": "使用平流-扩散随机偏微分方程进行时空建模，适用于天气",
+      "canonical_evidence": "使用平流-扩散随机偏微分方程进行时空建模，适用于天气",
+      "llm_tldr_en": "Proposes statistical model for spatio-temporal data on surfaces using advection-diffusion SPDEs, with applications to weather-like simulated data.",
+      "llm_tldr_cn": "提出基于平流-扩散随机偏微分方程的曲面时空数据统计模型，通过Galerkin离散化实现可扩展的模拟和预测算法，并在展示平流扩散行为的模拟时空数据集上验证。该方法可应用于数值天气预报中的大气流动模拟，与NWP模型方法高度相关。",
+      "llm_tldr": "提出基于平流-扩散随机偏微分方程的曲面时空数据统计模型，通过Galerkin离散化实现可扩展的模拟和预测算法，并在展示平流扩散行为的模拟时空数据集上验证。该方法可应用于数值天气预报中的大气流动模拟，与NWP模型方法高度相关。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "numerical weather prediction models and methods",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.22995v1",
+      "source": "arxiv",
+      "title": "Group-Graph Policy Optimization for Long-Horizon Agentic Reinforcement Learning",
+      "abstract": "Group-based Reinforcement Learning (RL) has significantly enhanced Large Language Models (LLMs) in agentic scenarios. To achieve finer-grained policy updates, recent agentic RL frameworks have shifted from trajectory-level to step-level training. However, long-horizon agentic RL suffers from severe reward sparsity and delay, as feedback is often deferred for dozens of interaction steps. While existing step-level frameworks refine training granularity, their credit assignment remains coarse-grained and still treats agent exploration as isolated, linear trajectories. This oversimplified perspective ignores the inherent graph structure of state transitions, leading to high-variance state-value estimation and myopic, localized credit assignment. To overcome these critical bottlenecks, we propose Group-Graph Policy Optimization (G2PO), a novel group-based RL algorithm tailored for multi-turn agentic tasks. G2PO explicitly transforms linear interaction trajectories into a global state-transition graph. By aggregating identical observations across different trajectories, we introduce group-aggregation state-value estimation that reduces sampling variance and trajectory-dependent bias. Furthermore, we redefine agent actions as transitions between state nodes and propose an edge-centric advantage estimation strategy. By globally standardizing Temporal Difference (TD) errors across the entire graph, G2PO explicitly identifies and prioritizes critical transitions that drive absolute task progress. Extensive experiments on representative long-horizon benchmarks-WebShop, ALFWorld, and AppWorld-demonstrate that G2PO substantially outperforms state-of-the-art prompt-based and RL baselines, achieving remarkable success rate improvements of up to 22.2% over GRPO.",
+      "authors": [
+        "Yunan Wang",
+        "Minghui Song",
+        "Zihan Zhang",
+        "Shaohan Huang",
+        "Haizhen Huang",
+        "Furu Wei",
+        "Weiwei Deng",
+        "Feng Sun",
+        "Qi Zhang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-06-22T08:12:47+00:00",
+      "link": "https://arxiv.org/pdf/2606.22995v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Addresses sample efficiency in long-horizon RL using graph-based credit assignment; applicable to sample-efficient RL.",
+      "llm_evidence_cn": "利用基于图的信用分配解决长视界RL样本效率问题，适用于样本高效强化学习。",
+      "llm_evidence": "利用基于图的信用分配解决长视界RL样本效率问题，适用于样本高效强化学习。",
+      "canonical_evidence": "利用基于图的信用分配解决长视界RL样本效率问题，适用于样本高效强化学习。",
+      "llm_tldr_en": "Proposes Group-Graph Policy Optimization (GGPO) for long-horizon agentic RL, using graph structure for fine-grained credit assignment to improve sample efficiency.",
+      "llm_tldr_cn": "长视界强化学习面临奖励稀疏和延迟，现有步级训练方法信用分配粗糙。该工作提出群图策略优化（GGPO），将状态转移建模为图结构，实现细粒度信用分配。在多个长视界任务上，GGPO显著提升了样本效率和策略性能，为样本高效强化学习提供了新方法。",
+      "llm_tldr": "长视界强化学习面临奖励稀疏和延迟，现有步级训练方法信用分配粗糙。该工作提出群图策略优化（GGPO），将状态转移建模为图结构，实现细粒度信用分配。在多个长视界任务上，GGPO显著提升了样本效率和策略性能，为样本高效强化学习提供了新方法。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.24631v1",
+      "source": "arxiv",
+      "title": "Optimization-based Safe Trajectory Planning for Autonomous Ground Vehicle in Multi-Floor Scenarios",
+      "abstract": "The development of trajectory planning strategies for autonomous ground vehicles (AGVs) represents a prevailing research interest within the domain of intelligent transportation systems. This paper introduces a trajectory planning framework tailored for multi-floor scenarios. The framework consists of two main modules: the task planning module and the trajectory planning module. The task planning module involves a strategic selection phase, where a task planning strategy based on generalized voronoi diagrams (GVD) and multi-objective algorithms is proposed to select the floor exits for each floor. The trajectory planning module utilizes optimization-based methods to generate high-quality trajectories, and a warm-started hierarchical planning framework is designed to ensure rapid convergence. Additionally, for handling complex obstacle constraints, a correlation constraint calculation method is designed for reducing obstacle constraints in trajectory planning. Finally, the feasibility and effectiveness of the proposed framework are verified through simulations.",
+      "authors": [
+        "Zishang Xiang",
+        "Runda Zhang",
+        "Runqi Chai",
+        "Kaiyuan Chen",
+        "Senchun Chai",
+        "Yuanqing Xia"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-23T14:26:22+00:00",
+      "link": "https://arxiv.org/pdf/2606.24631v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "optimization-based safe trajectory planning for autonomous vehicles, applicable to UAV path planning",
+      "llm_evidence_cn": "基于优化的自主车辆安全轨迹规划，可迁移至无人机路径规划",
+      "llm_evidence": "基于优化的自主车辆安全轨迹规划，可迁移至无人机路径规划",
+      "canonical_evidence": "基于优化的自主车辆安全轨迹规划，可迁移至无人机路径规划",
+      "llm_tldr_en": "Proposes an optimization-based trajectory planning framework for autonomous ground vehicles in multi-floor scenarios; method may transfer to UAV path planning.",
+      "llm_tldr_cn": "该论文针对多楼层场景下的自主地面车辆提出了一种基于优化的安全轨迹规划框架，包含任务规划（基于广义Voronoi图和多目标算法）和轨迹规划模块。虽然研究对象为地面车辆，但其优化方法对无人机路径规划具有方法论上的借鉴意义，尤其适用于结构化环境中的轨迹生成。",
+      "llm_tldr": "该论文针对多楼层场景下的自主地面车辆提出了一种基于优化的安全轨迹规划框架，包含任务规划（基于广义Voronoi图和多目标算法）和轨迹规划模块。虽然研究对象为地面车辆，但其优化方法对无人机路径规划具有方法论上的借鉴意义，尤其适用于结构化环境中的轨迹生成。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.23391v1",
+      "source": "arxiv",
+      "title": "Distribution-Aware Diffusion-LLM for Robust Ultra-Long-Term Time Series Forecasting",
+      "abstract": "Time series forecasting is a fundamental machine learning task. Recent work has explored Large Language Models (LLMs) for this purpose due to their strong generalization, pattern recognition, and zero-shot or few-shot capabilities. Despite their suitability for long-context learning, LLMs face challenges in multimodal settings: they lack calibrated probabilistic modeling for non-text data and struggle to align heterogeneous representations. To address these issues, we propose a new framework Diffusion-LLM that integrates a conditional diffusion model into an LLM-based forecasting pipeline. This joint design enables learning the conditional distribution of future data while improving semantic alignment in a shared latent space. We evaluate Diffusion-LLM on six long-term forecasting benchmarks, including ETT, Weather, and ECL. Our method consistently outperforms existing LLM-based baseline, achieving notable gains in ultra-long-term and few-shot forecasting and demonstrating the value of distribution-aware regularization for enhancing robustness and generalization in time series LLMs.",
+      "authors": [
+        "Falguni Ghosh",
+        "Vahid Hashemi",
+        "Bernhard Kainz"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-22T14:18:28+00:00",
+      "link": "https://arxiv.org/pdf/2606.23391v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "diffusion-LLM for time series forecasting applicable to weather",
+      "llm_evidence_cn": "扩散-LLM用于时间序列预测，可应用于天气",
+      "llm_evidence": "扩散-LLM用于时间序列预测，可应用于天气",
+      "canonical_evidence": "扩散-LLM用于时间序列预测，可应用于天气",
+      "llm_tldr_en": "Proposes Diffusion-LLM combining conditional diffusion with LLM for robust ultra-long-term time series forecasting.",
+      "llm_tldr_cn": "提出Diffusion-LLM框架，将条件扩散模型集成到基于LLM的预测管道中，实现联合学习未来数据的条件分布并改善语义对齐，在超长期时间序列预测上表现鲁棒。该方法可迁移至气象领域，提升深度学习天气预报的长期预测能力。",
+      "llm_tldr": "提出Diffusion-LLM框架，将条件扩散模型集成到基于LLM的预测管道中，实现联合学习未来数据的条件分布并改善语义对齐，在超长期时间序列预测上表现鲁棒。该方法可迁移至气象领域，提升深度学习天气预报的长期预测能力。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.25629v1",
+      "source": "arxiv",
+      "title": "Event-Adaptive Motion Planning with Distilled Vision-Language Model in Safety-Critical Situations",
+      "abstract": "Robot navigation in safety-critical scenarios faces significant challenges from unforeseen semantic events, where collisions arise primarily from the unpredictable behaviors of dynamic agents rather than unseen objects. While large vision-language models (VLMs) offer remarkable capabilities in commonsense reasoning, frequently invoking them within the continuous control loop introduces severe computational latency, fundamentally destabilizing physical execution. To address these challenges, we propose event-adaptive motion planning (EAMP), an efficient framework for VLM-based robot navigation. Specifically, a prompt-configurable semantic event trigger (PC-SET) selectively activates semantic intervention by continuously monitoring short temporal clips for behavioral anomalies. Upon triggering, an event-triggered distilled SemNav-VLM, fine-tuned via physically verified semantic distillation, maps detected anomalies into discrete strategy-level decisions. Subsequently, a semantic model predictive control (SMPC) module translates these strategies into dynamic reconfigurations of optimization objectives and geometric references. Extensive experiments in safety-critical logistics scenarios demonstrate that EAMP effectively aligns high-level reasoning with low-level control, significantly improving dynamic safety margins over existing baselines while preserving real-time efficiency.",
+      "authors": [
+        "Zhenwei Huang",
+        "Changsheng You",
+        "Shuai Wang",
+        "Chao Zhou",
+        "Wei Xu",
+        "Yi Gong"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "eess.SP"
+      ],
+      "published": "2026-06-24T09:35:26+00:00",
+      "link": "https://arxiv.org/pdf/2606.25629v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "event-adaptive motion planning with distilled VLM for safety-critical robot navigation",
+      "llm_evidence_cn": "基于蒸馏视觉语言模型的事件自适应运动规划，用于安全关键机器人导航",
+      "llm_evidence": "基于蒸馏视觉语言模型的事件自适应运动规划，用于安全关键机器人导航",
+      "canonical_evidence": "基于蒸馏视觉语言模型的事件自适应运动规划，用于安全关键机器人导航",
+      "llm_tldr_en": "EAMP uses a distilled VLM with event trigger for real-time safety-critical robot navigation, reducing latency while leveraging semantic reasoning.",
+      "llm_tldr_cn": "Event-Adaptive Motion Planning提出事件自适应运动规划框架，利用蒸馏后的视觉语言模型进行语义推理，通过提示可配置的语义事件触发器选择性激活干预，在保持安全性的同时大幅降低计算延迟。在安全关键导航场景中验证了有效性。适用于无人机等机器人在动态环境中的避障规划。",
+      "llm_tldr": "Event-Adaptive Motion Planning提出事件自适应运动规划框架，利用蒸馏后的视觉语言模型进行语义推理，通过提示可配置的语义事件触发器选择性激活干预，在保持安全性的同时大幅降低计算延迟。在安全关键导航场景中验证了有效性。适用于无人机等机器人在动态环境中的避障规划。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.26333v1",
+      "source": "arxiv",
+      "title": "Mesh-RL: Coupled subgrid reinforcement learning",
+      "abstract": "Reinforcement learning in large or sparse-reward environments suffers from slow temporal-difference reward propagation, as value information spreads only locally across the state space. We propose Mesh-RL, a spatial domain-decomposition framework inspired by the finite element method and domain decomposition theory, which partitions the environment into overlapping subgrids and enforces boundary-consistent temporal-difference updates. Such an approach enables localized learning while ensuring globally coherent value propagation. Unlike hierarchical or model-based approaches, Mesh-RL accelerates long-range credit assignment without modifying the reward function, Bellman operator, or introducing explicit planning mechanisms. We evaluate Mesh-RL on hazard-dense grid-world environments with varying geometries and mesh resolutions. Across Q-learning, SARSA, and Dyna-Q, Mesh-RL consistently improves convergence speed, cumulative reward, and learning stability. Higher mesh resolutions sustain exploration, prevent premature convergence, and substantially accelerate value propagation to distant states. While Dyna-Q already benefits from internal planning, it still achieves additional gains under structured decomposition. Overall, Mesh-RL introduces a principled spatial domain-decomposition mechanism for accelerating temporal-difference learning. Our framework bridges finite element method-inspired boundary-consistency techniques from scientific computing with reinforcement learning to improve sample efficiency in sparse-reward environments. We will release source code of the study.",
+      "authors": [
+        "Behnam Gheshlaghi",
+        "Bahador Rashidi",
+        "Shahin Atakishiyev"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-24T19:16:34+00:00",
+      "link": "https://arxiv.org/pdf/2606.26333v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "spatial domain decomposition for RL to improve credit assignment and sample efficiency",
+      "llm_evidence_cn": "空间区域分解加速RL信用分配，提升样本效率",
+      "llm_evidence": "空间区域分解加速RL信用分配，提升样本效率",
+      "canonical_evidence": "空间区域分解加速RL信用分配，提升样本效率",
+      "llm_tldr_en": "Mesh-RL partitions RL environments into overlapping subgrids for localized learning with globally consistent value propagation, improving sample efficiency.",
+      "llm_tldr_cn": "Mesh-RL受有限元方法启发，提出空间区域分解框架，将环境划分为重叠子网格并执行边界一致的时序差分更新。该方法在不修改奖励函数或引入规划机制的前提下，加速了长距离信用分配，提高了样本效率。在稀疏奖励网格世界任务中验证了有效性。",
+      "llm_tldr": "Mesh-RL受有限元方法启发，提出空间区域分解框架，将环境划分为重叠子网格并执行边界一致的时序差分更新。该方法在不修改奖励函数或引入规划机制的前提下，加速了长距离信用分配，提高了样本效率。在稀疏奖励网格世界任务中验证了有效性。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.26361v1",
+      "source": "arxiv",
+      "title": "Does Aurora Encode Atmospheric Structure? Latent Regime Analysis and Attribution",
+      "abstract": "ML foundation models are able to emulate atmospheric dynamics accurately and efficiently but operate as opaque ``black boxes''. We investigate the internal representations of the Aurora model using spatially pooled PCA and layer-wise relevance propagation (LRP). We find evidence that Aurora's latent space is primarily organized by seasonal cycles, whereas extreme storm events do not form a linearly separable cluster. LRP indicates that the model attends to features consistent with the 3D vertical structure of the Great Storm of 1987. Perturbation tests show masking relevant regions degrades forecasts $3.31\\times$ more than random masking. These findings suggest that Aurora learns meteorological coherence and vertical structure without explicit instruction.",
+      "authors": [
+        "Emma Kasteleyn",
+        "Ana Lucic"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "physics.ao-ph"
+      ],
+      "published": "2026-06-24T20:18:12+00:00",
+      "link": "https://arxiv.org/pdf/2606.26361v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "analysis of deep learning weather forecasting model Aurora",
+      "llm_evidence_cn": "深度学习天气预报模型Aurora的分析",
+      "llm_evidence": "深度学习天气预报模型Aurora的分析",
+      "canonical_evidence": "深度学习天气预报模型Aurora的分析",
+      "llm_tldr_en": "Investigates internal representations of the Aurora foundation model for weather, finding latent space organized by seasonal cycles and attention to 3D storm structure, revealing learned meteorological coherence.",
+      "llm_tldr_cn": "为理解气象基础模型Aurora的黑箱性质，采用空间池化PCA和逐层相关性传播分析其潜在空间。发现潜在表示主要按季节周期组织，极端风暴事件并非线性可分，但模型通过注意力机制捕获了风暴的三维垂直结构。扰动测试表明相关区域对预测至关重要，证明Aurora学到了气象模式的一致性。该工作增进了对深度学习天气预报模型可解释性的理解。",
+      "llm_tldr": "为理解气象基础模型Aurora的黑箱性质，采用空间池化PCA和逐层相关性传播分析其潜在空间。发现潜在表示主要按季节周期组织，极端风暴事件并非线性可分，但模型通过注意力机制捕获了风暴的三维垂直结构。扰动测试表明相关区域对预测至关重要，证明Aurora学到了气象模式的一致性。该工作增进了对深度学习天气预报模型可解释性的理解。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.27277v1",
+      "source": "arxiv",
+      "title": "EO-WM: A Physically Informed World Model for Probabilistic Earth Observation Forecasting",
+      "abstract": "Earth Observation (EO) forecasting aims to predict future Earth surface dynamics from satellite observations under changing meteorological conditions. In this paper, we view this task as a partially observed, weather-driven world modeling problem, in which weather acts as a conditioning signal, while forecasting remains uncertain due to sparse observations and unobserved land-surface states. However, existing methods do not fully capture this setting: deterministic models collapse uncertainty into a single future prediction, while diffusion-based methods typically treat weather variables as undifferentiated conditioning signals, and existing benchmarks focus mainly on reconstruction accuracy rather than whether forecasts respond correctly to changed weather forcing.We introduce EO-WM, a video diffusion transformer for multispectral EO forecasting. EO-WM incorporates a physically informed conditioning framework that represents meteorological forcing through a climatological baseline, weather anomalies, and cumulative physical stress signals. Specifically, it separates baseline and anomaly through distinct conditioning pathways, and accumulates anomalous forcing over time to capture sustained heat and drought stress. To evaluate weather-response behavior beyond standard metrics, we introduce two diagnostic benchmarks: an Extreme Summer Benchmark for severity-aware prediction of vegetation degradation under extreme weather, and a Seasonal Matched-Pair Benchmark for testing response fidelity under changed weather forcing. Experiments show that EO-WM reduces the error in predicted Normalized Difference Vegetation Index (NDVI) decline amplitude by a relative 5.63% and improves directional hit rate by a relative 7.80%, while remaining competitive on standard pixel-level metrics. The benchmarks and model will be made open-source at https://github.com/Luo-Z13/EO-WM.",
+      "authors": [
+        "Junwei Luo",
+        "Shuai Yuan",
+        "Zhenya Yang",
+        "Yansheng Li",
+        "Zhe Liu",
+        "Hengshuang Zhao"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CV"
+      ],
+      "published": "2026-06-25T16:53:30+00:00",
+      "link": "https://arxiv.org/pdf/2606.27277v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "physically informed world model for probabilistic earth observation forecasting conditioned on weather",
+      "llm_evidence_cn": "物理信息世界模型用于概率性地球观测预报，以天气为条件",
+      "llm_evidence": "物理信息世界模型用于概率性地球观测预报，以天气为条件",
+      "canonical_evidence": "物理信息世界模型用于概率性地球观测预报，以天气为条件",
+      "llm_tldr_en": "Proposes EO-WM, a physically informed world model for probabilistic Earth observation forecasting, treating weather as a conditioning signal.",
+      "llm_tldr_cn": "提出EO-WM，一种物理信息驱动的世界模型，用于概率性地球观测预报，将天气作为条件信号。该模型处理部分观测和不确定性，克服了确定性模型和扩散方法的局限。",
+      "llm_tldr": "提出EO-WM，一种物理信息驱动的世界模型，用于概率性地球观测预报，将天气作为条件信号。该模型处理部分观测和不确定性，克服了确定性模型和扩散方法的局限。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "world model",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

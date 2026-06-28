@@ -1,137 +1,17 @@
 {
-  "generated_at": "2026-06-27T20:02:48.169256+00:00",
-  "updated_date": "20260627",
+  "generated_at": "2026-06-28T20:14:55.532801+00:00",
+  "updated_date": "20260628",
   "carryover_days": 9,
   "tag_states": {
     "mm": {
-      "updated_date": "20260627",
+      "updated_date": "20260628",
       "carryover_days": 9,
-      "items": [
-        {
-          "id": "2606.27267v1",
-          "source": "arxiv",
-          "title": "Sparse Sensor Placement for Reducing Forecast Errors in Ensemble Kalman Filtering",
-          "abstract": "Designing efficient observation networks for reducing forecast errors is a fundamental challenge in numerical weather prediction. Data-driven sparse sensor placement (SSP) and ensemble-based data assimilation via the Ensemble Kalman Filter (EnKF) have each addressed this challenge independently, yet their mathematical connections have not been systematically formalized. This study presents a unified theoretical framework integrating SSP and EnKF through optimal experimental design, providing new theoretical and algorithmic results. While conventional SSP methods aim to reduce analysis errors, this study extends the SSP to target forecast error reduction by using a tangent linear model approximated by an ensemble forecast. We derive the Fisher information matrices in the ensemble and model spaces for the EnKF, and clarify the mathematical interpretations of A-, D-, and E-optimality in terms of forecast error reduction. A-optimality in the model space minimizes the mean forecast error variance; D-optimality is ill-defined in the model space due to rank deficiency and is therefore formulated in the ensemble space, where it maximizes the Shannon information content of assimilated observations; and E-optimality in the model space minimizes the worst-case forecast error variance. We further propose a fast greedy algorithm for selecting observation locations under A-optimality in the model space, avoiding matrix inversion at each greedy step and substantially reducing computational cost. Numerical experiments using the Lorenz-96 model support these theoretical findings. Among the three optimality criteria, A-optimality in the model space most consistently reduces forecast spread and root-mean-square error, and yields stable incremental improvements consistent with post-assimilation observation impact diagnostics.",
-          "authors": [
-            "Takumi Saito",
-            "Shunji Kotsuki"
-          ],
-          "primary_category": "physics.ao-ph",
-          "categories": [
-            "physics.ao-ph"
-          ],
-          "published": "2026-06-25T16:50:15+00:00",
-          "link": "https://arxiv.org/pdf/2606.27267v1",
-          "tags": [
-            "keyword:mm",
-            "keyword:rpp",
-            "query:mm"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "numerical weather prediction ensemble Kalman filter sparse sensor placement forecast error",
-          "llm_evidence_cn": "数值天气预报集合卡尔曼滤波稀疏传感器放置预报误差",
-          "llm_evidence": "数值天气预报集合卡尔曼滤波稀疏传感器放置预报误差",
-          "canonical_evidence": "数值天气预报集合卡尔曼滤波稀疏传感器放置预报误差",
-          "llm_tldr_en": "Unifies sparse sensor placement and Ensemble Kalman Filtering through optimal experimental design, extending SSP to target forecast error reduction using an ensemble-approximated tangent linear model, with theoretical and algorithmic results for numerical weather prediction.",
-          "llm_tldr_cn": "该研究针对数值天气预报中观测网络设计问题，将数据驱动的稀疏传感器放置（SSP）与集合卡尔曼滤波（EnKF）统一在最优实验设计框架下。传统SSP以分析误差为目标，本文将其扩展到预报误差减少，利用集合预报近似切线线性模型。推导了Fisher信息矩阵的理论形式，并给出了新算法。在简化模型中验证了有效性，为实际天气观测网络优化提供了理论基础。",
-          "llm_tldr": "该研究针对数值天气预报中观测网络设计问题，将数据驱动的稀疏传感器放置（SSP）与集合卡尔曼滤波（EnKF）统一在最优实验设计框架下。传统SSP以分析误差为目标，本文将其扩展到预报误差减少，利用集合预报近似切线线性模型。推导了Fisher信息矩阵的理论形式，并给出了新算法。在简化模型中验证了有效性，为实际天气观测网络优化提供了理论基础。",
-          "llm_tags": [
-            "query:mm"
-          ],
-          "matched_query_tag": "query:mm",
-          "matched_query_text": "numerical weather prediction models and methods",
-          "matched_requirement_id": "req-4",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.27267v1",
-          "carry_days": 1
-        }
-      ]
+      "items": []
     },
     "rpp": {
-      "updated_date": "20260627",
+      "updated_date": "20260628",
       "carryover_days": 9,
-      "items": [
-        {
-          "id": "2606.27180v1",
-          "source": "arxiv",
-          "title": "Automating Potential-based Reward Shaping with Vision Language Model Guidance",
-          "abstract": "Sparse rewards are inherently challenging for reinforcement learning agents as they lack intermediate feedback to guide exploration and to correctly attribute the sparse success rewards to relevant parts of the trajectory. Naive reward shaping can induce reward hacking, yielding policies that exploit auxiliary signals instead of solving the intended task. Potential-based reward shaping (PBRS) guarantees preservation of the optimal policy set, but requires the definition of a heuristic potential function over the state space. In this work, we introduce the VLM-guided PBRS framework VLM-PBRS that learns the potential function directly from vision language model (VLM) feedback. We query a lightweight VLM to obtain preferences over image pairs and train a model of the potential function using these preferences. As this approach is based on potential-based reward shaping, it preserves the original optimal policies, and removes the need for expert-designed reward shaping terms. Because large VLMs are prohibitively expensive to invoke repeatedly during policy learning, we employ smaller, more computationally efficient VLMs. Although the resulting preference labels are less accurate, empirical evidence shows that the preference labels can still be used to accelerate learning. We validate our method empirically in the Meta-World and Franka Kitchen environments and highlight the connection between VLM preference label accuracy and sample efficiency improvements. Our contributions are threefold: (1) the first application of VLM preference-based learning to synthesize a potential function for PBRS, (2) a principled, low-cost solution that leverages small VLMs, and (3) extensive empirical demonstration of improved sample efficiency and robustness to reward hacking.",
-          "authors": [
-            "Henrik Müller",
-            "Daniel Kudenko"
-          ],
-          "primary_category": "cs.LG",
-          "categories": [
-            "cs.LG",
-            "cs.AI",
-            "cs.RO"
-          ],
-          "published": "2026-06-25T15:45:57+00:00",
-          "link": "https://arxiv.org/pdf/2606.27180v1",
-          "tags": [
-            "keyword:rpp",
-            "query:rpp"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "sample efficient RL via VLM-based reward shaping",
-          "llm_evidence_cn": "基于VLM的奖励塑形提升样本效率",
-          "llm_evidence": "基于VLM的奖励塑形提升样本效率",
-          "canonical_evidence": "基于VLM的奖励塑形提升样本效率",
-          "llm_tldr_en": "Introduces VLM-PBRS, which learns potential functions for reward shaping from vision language model feedback to address sparse rewards in RL.",
-          "llm_tldr_cn": "针对强化学习中稀疏奖励导致样本效率低下的问题，提出VLM-PBRS框架，利用视觉语言模型自动学习势能函数进行奖励塑形，在保留最优策略集的同时有效引导探索，提升样本效率。",
-          "llm_tldr": "针对强化学习中稀疏奖励导致样本效率低下的问题，提出VLM-PBRS框架，利用视觉语言模型自动学习势能函数进行奖励塑形，在保留最优策略集的同时有效引导探索，提升样本效率。",
-          "llm_tags": [
-            "query:rpp"
-          ],
-          "matched_query_tag": "query:rpp",
-          "matched_query_text": "sample efficient reinforcement learning",
-          "matched_requirement_id": "req-7",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.27180v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2606.27348v1",
-          "source": "arxiv",
-          "title": "Bridging Performance and Generalization in Reinforcement Learning for Agile Flight",
-          "abstract": "Autonomous drone racing is a fundamentally challenging regime for autonomous aerial robots, requiring time-optimal control while operating under persistent actuation saturation. While reinforcement learning (RL) has achieved human-level performance in this domain, current methods fail to generalize; policies trained on specific environments often crash immediately in unseen configurations. This failure reflects the intrinsic difficulty of zero-shot generalization in agile flight, arising from high-dimensional task variation and the tight coupling between safety and performance at high speeds. Existing approaches that improve generalization impose a substantial cost on flight speed: control policies must significantly degrade performance to achieve even modest levels of generalization. In this work, we propose a framework for zero-shot generalization in agile flight for RL-based drone racing. By combining task-aware switching based on learning progress with a physically informed procedural track generator, the framework produces a fast and robust generalist policy without test-time adaptation. Our method achieves strong zero-shot performance across a wide range of unseen racetracks in the real world, demonstrating a 7.4x improvement in generalization over the state-of-the-art approaches, while maintaining competitive racing speeds. We validate our method's results in both simulation and real-world settings, including a challenging vision-based, end-to-end control setting that operates without explicit state estimation, where all prior approaches fail to generalize.",
-          "authors": [
-            "Jonathan Green",
-            "Jiaxu Xing",
-            "Nico Messikommer",
-            "Angel Romero",
-            "Davide Scaramuzza"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO"
-          ],
-          "published": "2026-06-25T17:54:36+00:00",
-          "link": "https://arxiv.org/pdf/2606.27348v1",
-          "tags": [
-            "keyword:rpp",
-            "query:mm",
-            "query:rpp"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "reinforcement learning for agile flight (drone racing), addresses generalization and path planning",
-          "llm_evidence_cn": "强化学习用于敏捷飞行（无人机竞速），解决泛化和路径规划问题",
-          "llm_evidence": "强化学习用于敏捷飞行（无人机竞速），解决泛化和路径规划问题",
-          "canonical_evidence": "强化学习用于敏捷飞行（无人机竞速），解决泛化和路径规划问题",
-          "llm_tldr_en": "This paper addresses zero-shot generalization in RL for agile drone flight, proposing methods that improve generalization without sacrificing flight speed.",
-          "llm_tldr_cn": "该论文聚焦于强化学习在敏捷无人机飞行中的零样本泛化问题，现有方法在未见过环境中极易失败，且提升泛化通常以牺牲速度为代价。作者提出了在不显著降低飞行性能的前提下改善泛化能力的方法，在无人机竞速场景中验证了效果。该研究对无人机自主导航和实时轨迹优化有直接指导意义。",
-          "llm_tldr": "该论文聚焦于强化学习在敏捷无人机飞行中的零样本泛化问题，现有方法在未见过环境中极易失败，且提升泛化通常以牺牲速度为代价。作者提出了在不显著降低飞行性能的前提下改善泛化能力的方法，在无人机竞速场景中验证了效果。该研究对无人机自主导航和实时轨迹优化有直接指导意义。",
-          "llm_tags": [
-            "query:rpp"
-          ],
-          "matched_query_tag": "query:rpp",
-          "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
-          "matched_requirement_id": "req-12",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.27348v1",
-          "carry_days": 1
-        }
-      ]
+      "items": []
     }
   }
 }
