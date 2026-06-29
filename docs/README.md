@@ -6,70 +6,44 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-28
-- 运行时间：2026-06-28 20:23:43 UTC
+- 最新运行日期：2026-06-29
+- 运行时间：2026-06-29 21:47:40 UTC
 - 运行状态：成功
-- 本次总论文数：16
-- 精读区：6
-- 速读区：10
+- 本次总论文数：8
+- 精读区：2
+- 速读区：6
 
 ### 今日简报（AI）
-1) 今日精读两篇高分论文：数据同化中的保形预测不确定性量化，以及集合卡尔曼滤波中稀疏传感器布置以减少预测误差。  
-2) 最值得关注不确定性量化与传感器优化方向，前者提升预测可靠性，后者降低计算成本。  
-3) 建议优先精读两篇9分论文，再结合速读中的神经算子过程与时空SPDE模型拓展应用。
-- 详情：[/202606/28/README](/202606/28/README)
+今日处理8篇AI论文，精读聚焦风险敏感扩散规划与跨传感器超分辨率域差距量化。最值得关注《RS-Diffuser》的分布值引导风险敏感规划，以及《Mind the Gap》对超分辨率域差距的量化分析。建议普通读者优先精读这两篇高分论文，掌握风险敏感决策与域适应前沿。
+- 详情：[/202606/29/README](/202606/29/README)
 
 ### 精读区论文标签
-1. [Uncertainty quantification via conformal prediction in data assimilation](/202606/28/2606.27001v1-uncertainty-quantification-via-conformal-prediction-in-data-assimilation)  
-   标签：评分：9.0/10、query:mm
-   evidence：在数值天气预报数据同化中使用共形预测进行不确定性量化
-2. [Sparse Sensor Placement for Reducing Forecast Errors in Ensemble Kalman Filtering](/202606/28/2606.27267v1-sparse-sensor-placement-for-reducing-forecast-errors-in-ensemble-kalman-filtering)  
-   标签：评分：9.0/10、query:mm
-   evidence：用于数值天气预报集合卡尔曼滤波的稀疏传感器布置
-3. [BOWConnect: Parallel Bayesian Optimization over Windows with Learned Local Cost Maps for Sample-Efficient Kinodynamic Motion Planning](/202606/28/2606.27292v1-bowconnect-parallel-bayesian-optimization-over-windows-with-learned-local-cost-maps-for-sample-efficient-kinodynamic-motion-planning)  
+1. [RS-Diffuser: Risk-Sensitive Diffusion Planning with Distributional Value Guidance](/202606/29/2606.27766v1-rs-diffuser-risk-sensitive-diffusion-planning-with-distributional-value-guidance)  
    标签：评分：9.0/10、query:rpp
-   evidence：贝叶斯优化用于样本高效运动规划，学习局部成本图
-4. [Bridging Performance and Generalization in Reinforcement Learning for Agile Flight](/202606/28/2606.27348v1-bridging-performance-and-generalization-in-reinforcement-learning-for-agile-flight)  
-   标签：评分：9.0/10、query:rpp
-   evidence：强化学习用于敏捷无人机飞行，解决泛化问题
-5. [Finding the Time to Think: Learning Planning Budgets in Real-Time RL](/202606/28/2606.26463v1-finding-the-time-to-think-learning-planning-budgets-in-real-time-rl)  
-   标签：评分：8.0/10、query:rpp
-   evidence：在实时环境中使用规划的强化学习，学习规划预算
-6. [Automating Potential-based Reward Shaping with Vision Language Model Guidance](/202606/28/2606.27180v1-automating-potential-based-reward-shaping-with-vision-language-model-guidance)  
-   标签：评分：8.0/10、query:rpp
-   evidence：利用视觉语言模型自动进行基于势能的奖励塑形以解决稀疏奖励问题，提升样本效率
+   evidence：离线强化学习中的风险敏感扩散规划；基于模型的强化学习与世界模型
+2. [Mind the Gap: Quantifying the Domain Gap in Cross-Sensor Diffusion Super-Resolution](/202606/29/2606.28039v1-mind-the-gap-quantifying-the-domain-gap-in-cross-sensor-diffusion-super-resolution)  
+   标签：评分：9.0/10、query:mm
+   evidence：扩散超分辨率、跨传感器卫星图像、域差异
 
 ### 速读区论文标签
-1. [Neural Operator Processes for Probabilistic Operator Learning under Partial Observations](/202606/28/2606.22946v1-neural-operator-processes-for-probabilistic-operator-learning-under-partial-observations)  
-   标签：评分：7.0/10、query:mm
-   evidence：从稀疏观测进行概率算子学习，可应用于气象降尺度
-2. [Prediction of spatio-temporal data on meshed surfaces using advection-diffusion SPDEs](/202606/28/2606.24300v1-prediction-of-spatio-temporal-data-on-meshed-surfaces-using-advection-diffusion-spdes)  
-   标签：评分：7.0/10、query:mm
-   evidence：使用平流-扩散随机偏微分方程进行时空建模，适用于天气
-3. [Optimization-based Safe Trajectory Planning for Autonomous Ground Vehicle in Multi-Floor Scenarios](/202606/28/2606.24631v1-optimization-based-safe-trajectory-planning-for-autonomous-ground-vehicle-in-multi-floor-scenarios)  
+1. [Low-Complexity Policy Tessellations in Structured Markov Decision Processes](/202606/29/2606.25593v1-low-complexity-policy-tessellations-in-structured-markov-decision-processes)  
    标签：评分：7.0/10、query:rpp
-   evidence：基于优化的自主车辆安全轨迹规划，可迁移至无人机路径规划
-4. [Event-Adaptive Motion Planning with Distilled Vision-Language Model in Safety-Critical Situations](/202606/28/2606.25629v1-event-adaptive-motion-planning-with-distilled-vision-language-model-in-safety-critical-situations)  
-   标签：评分：7.0/10、query:rpp
-   evidence：基于蒸馏视觉语言模型的事件自适应运动规划，用于安全关键机器人导航
-5. [Does Aurora Encode Atmospheric Structure? Latent Regime Analysis and Attribution](/202606/28/2606.26361v1-does-aurora-encode-atmospheric-structure-latent-regime-analysis-and-attribution)  
+   evidence：提出基于边界的策略近似方法，提升强化学习样本效率
+2. [Learning Probabilistic Filters with Strictly Proper Scoring Rules](/202606/29/2606.26497v1-learning-probabilistic-filters-with-strictly-proper-scoring-rules)  
    标签：评分：7.0/10、query:mm
-   evidence：深度学习天气预报模型Aurora的分析
-6. [EO-WM: A Physically Informed World Model for Probabilistic Earth Observation Forecasting](/202606/28/2606.27277v1-eo-wm-a-physically-informed-world-model-for-probabilistic-earth-observation-forecasting)  
+   evidence：提出一种基于合成轨迹的集成数据同化方法，适用于数值天气预报
+3. [Support-Constrained RL Enables Real-World Policy Improvement without Real-World Experience](/202606/29/2606.27475v1-support-constrained-rl-enables-real-world-policy-improvement-without-real-world-experience)  
    标签：评分：7.0/10、query:rpp
-   evidence：物理信息世界模型用于概率性地球观测预报，以天气为条件
-7. [Curvature-Adaptive Consistency Flow Matching: Autonomous Trajectory Optimization via Reinforcement Learning](/202606/28/2606.22394v1-curvature-adaptive-consistency-flow-matching-autonomous-trajectory-optimization-via-reinforcement-learning)  
-   标签：评分：6.0/10、query:rpp
-   evidence：基于强化学习的自主轨迹优化，使用一致性蒸馏
-8. [Group-Graph Policy Optimization for Long-Horizon Agentic Reinforcement Learning](/202606/28/2606.22995v1-group-graph-policy-optimization-for-long-horizon-agentic-reinforcement-learning)  
-   标签：评分：6.0/10、query:rpp
-   evidence：利用基于图的信用分配解决长视界RL样本效率问题，适用于样本高效强化学习。
-9. [Distribution-Aware Diffusion-LLM for Robust Ultra-Long-Term Time Series Forecasting](/202606/28/2606.23391v1-distribution-aware-diffusion-llm-for-robust-ultra-long-term-time-series-forecasting)  
+   evidence：使用支持约束的基于模型强化学习实现仿真到真实迁移
+4. [From Tokens to States: LLMs as a Special Case of World Models and the Continuous Path Beyond](/202606/29/2606.28127v1-from-tokens-to-states-llms-as-a-special-case-of-world-models-and-the-continuous-path-beyond)  
+   标签：评分：7.0/10、query:rpp
+   evidence：主张大语言模型是世界模型的特例，直接涉及世界模型理论。
+5. [FDN: Interpretable Spatiotemporal Forecasting with Future Decomposition Networks](/202606/29/2606.25201v1-fdn-interpretable-spatiotemporal-forecasting-with-future-decomposition-networks)  
    标签：评分：6.0/10、query:mm
-   evidence：扩散-LLM用于时间序列预测，可应用于天气
-10. [Mesh-RL: Coupled subgrid reinforcement learning](/202606/28/2606.26333v1-mesh-rl-coupled-subgrid-reinforcement-learning)  
-   标签：评分：6.0/10、query:rpp
-   evidence：空间区域分解加速RL信用分配，提升样本效率
+   evidence：时空预测、可解释性、可应用于水文和能源系统
+6. [A Two-Step Ensemble Score Filter for Data Assimilation in Partially Observed Systems](/202606/29/2606.28264v1-a-two-step-ensemble-score-filter-for-data-assimilation-in-partially-observed-systems)  
+   标签：评分：6.0/10、query:mm
+   evidence：针对部分观测系统的数据同化，与数值天气预报方法相关
 
 
 <div class="dpr-home-promo-card">

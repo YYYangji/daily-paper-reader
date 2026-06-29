@@ -1,0 +1,327 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-29T21:40:11.446653+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 2,
+    "deep_cap": 7,
+    "deep_selected": 2,
+    "quick_candidates": 6,
+    "quick_skim_target": 12,
+    "quick_selected": 6
+  },
+  "deep_dive": [
+    {
+      "id": "2606.27766v1",
+      "source": "arxiv",
+      "title": "RS-Diffuser: Risk-Sensitive Diffusion Planning with Distributional Value Guidance",
+      "abstract": "Offline reinforcement learning enables policy learning from fixed datasets without additional environment interaction, making it appealing for safety-critical applications where online exploration is costly or unsafe. Diffusion-based decision-making methods have recently achieved strong performance in offline RL by modeling rich, multimodal trajectory distributions. However, existing diffusion planners are typically risk-neutral and therefore may overlook rare but catastrophic outcomes that are crucial in real-world deployment. In this work, we propose RS-Diffuser, a risk-sensitive offline diffusion planning framework that combines diffusion-based trajectory generation with distributional value critics. RS-Diffuser learns a diffusion planner over future state trajectories, a separate inverse dynamics model for action decoding, and a Monte Carlo distributional critic that estimates the full return distribution of candidate plans through quantile regression. At sampling time, we incorporate a risk-sensitive guidance signal into the denoising process, using gradients computed from tail-aware objectives such as Conditional Value at Risk to steer generation toward desired risk profiles. As a result, a single trained model can flexibly produce risk-averse, risk-neutral, or risk-seeking behaviors by changing only the inference-time risk parameter. Extensive experiments on risk-sensitive D4RL and risky robot navigation benchmarks demonstrate that RS-Diffuser achieves state-of-the-art performance, improving both overall return and worst-case robustness while reducing safety violations.",
+      "authors": [
+        "Shiqiang Gong"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.RO"
+      ],
+      "published": "2026-06-26T06:51:16+00:00",
+      "link": "https://arxiv.org/pdf/2606.27766v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "risk-sensitive diffusion planning in offline RL; model-based RL with world models",
+      "llm_evidence_cn": "离线强化学习中的风险敏感扩散规划；基于模型的强化学习与世界模型",
+      "llm_evidence": "离线强化学习中的风险敏感扩散规划；基于模型的强化学习与世界模型",
+      "canonical_evidence": "离线强化学习中的风险敏感扩散规划；基于模型的强化学习与世界模型",
+      "llm_tldr_en": "RS-Diffuser combines diffusion-based trajectory generation with distributional value critics for risk-sensitive offline planning, improving safety in decision-making.",
+      "llm_tldr_cn": "该工作提出RS-Diffuser，一种风险敏感的离线扩散规划框架。它结合扩散轨迹生成与分布值函数，在离线强化学习中考虑稀有但灾难性的后果。与现有的风险中性扩散规划器相比，RS-Diffuser在安全关键型任务中显著降低了风险，是模型强化学习和世界模型领域的重要进展。",
+      "llm_tldr": "该工作提出RS-Diffuser，一种风险敏感的离线扩散规划框架。它结合扩散轨迹生成与分布值函数，在离线强化学习中考虑稀有但灾难性的后果。与现有的风险中性扩散规划器相比，RS-Diffuser在安全关键型任务中显著降低了风险，是模型强化学习和世界模型领域的重要进展。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.28039v1",
+      "source": "arxiv",
+      "title": "Mind the Gap: Quantifying the Domain Gap in Cross-Sensor Diffusion Super-Resolution",
+      "abstract": "Demand for high-resolution satellite imagery has increased interest in super-resolution (SR) to bridge the spatial resolution gap between freely available missions such as Sentinel-2 and commercial systems like PlanetScope. Because no sensor provides true paired low- and high-resolution observations, SR models are usually trained on synthetically degraded data, creating a domain gap on real cross-sensor imagery. In this work, we provide the first systematic study of how this synthetic-to-real mismatch affects the performance of modern diffusion-based SR models. Using a large, geometrically and temporally aligned dataset of Sentinel-2 and PlanetScope imagery, we evaluate five state-of-the-art diffusion architectures under controlled experimental settings. We also introduce LPIPS-Sat, a domain-adapted perceptual metric based on Sentinel-2 self-supervised features. Our results show two persistent challenges: synthetically trained models degrade sharply on real pairs, while models trained on real cross-sensor data exhibit optimisation difficulties and struggle to adapt to the physical and radiometric diversity. These findings highlight a key limitation of current SR and motivate methods that disentangle super-resolution from domain adaptation.",
+      "authors": [
+        "Dawid Kopeć",
+        "Katarzyna Jabłońska",
+        "Wojciech Kozłowski",
+        "Maciej Zięba"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-06-26T12:43:42+00:00",
+      "link": "https://arxiv.org/pdf/2606.28039v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "diffusion super-resolution, cross-sensor satellite imagery, domain gap",
+      "llm_evidence_cn": "扩散超分辨率、跨传感器卫星图像、域差异",
+      "llm_evidence": "扩散超分辨率、跨传感器卫星图像、域差异",
+      "canonical_evidence": "扩散超分辨率、跨传感器卫星图像、域差异",
+      "llm_tldr_en": "First systematic study of synthetic-to-real domain gap affecting diffusion-based SR on satellite imagery, using Sentinel-2 and PlanetScope data.",
+      "llm_tldr_cn": "该论文针对卫星图像超分辨率中合成数据与真实跨传感器图像之间的域差异问题，首次系统研究了该差异对现代扩散超分辨率模型的影响。利用大尺寸几何和时间对齐的Sentinel-2与PlanetScope数据集，评估了五种扩散架构。发现域差异导致性能显著下降，并分析了原因。该工作对气象降尺度和超分辨率中的扩散模型应用具有重要参考价值。",
+      "llm_tldr": "该论文针对卫星图像超分辨率中合成数据与真实跨传感器图像之间的域差异问题，首次系统研究了该差异对现代扩散超分辨率模型的影响。利用大尺寸几何和时间对齐的Sentinel-2与PlanetScope数据集，评估了五种扩散架构。发现域差异导致性能显著下降，并分析了原因。该工作对气象降尺度和超分辨率中的扩散模型应用具有重要参考价值。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on meteorological downscaling and weather super resolution using diffusion models, generative models, or neural networks.",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.25593v1",
+      "source": "arxiv",
+      "title": "Low-Complexity Policy Tessellations in Structured Markov Decision Processes",
+      "abstract": "We study optimal-policy geometry in structured Markov decision processes. While approximate dynamic programming and reinforcement learning typically approximate high-dimensional value functions, we show that optimal policies induce simpler decision tessellations. We propose boundary-based policy approximations that learn policy regions directly. A policy-loss decomposition links performance degradation to action margins and explains why errors concentrate near indifference boundaries. Inventory control and queue admission experiments show lower policy error, smaller value gaps, faster error decay, and stability than reinforcement learning baselines.",
+      "authors": [
+        "Fredy Pokou"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-24T09:00:16+00:00",
+      "link": "https://arxiv.org/pdf/2606.25593v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "proposes boundary-based policy approximations for RL, improving sample efficiency",
+      "llm_evidence_cn": "提出基于边界的策略近似方法，提升强化学习样本效率",
+      "llm_evidence": "提出基于边界的策略近似方法，提升强化学习样本效率",
+      "canonical_evidence": "提出基于边界的策略近似方法，提升强化学习样本效率",
+      "llm_tldr_en": "Shows that optimal policies induce simple decision tessellations, and proposes boundary-based approximations that achieve lower policy error and faster convergence than RL baselines.",
+      "llm_tldr_cn": "本文研究了结构化马尔可夫决策过程中最优策略的几何结构，发现最优策略诱导简单的决策区域划分。提出的基于边界的策略近似方法直接学习策略区域，在库存控制和队列管理实验中比传统强化学习基线实现了更低的策略误差、更快的误差衰减和更好的稳定性。",
+      "llm_tldr": "本文研究了结构化马尔可夫决策过程中最优策略的几何结构，发现最优策略诱导简单的决策区域划分。提出的基于边界的策略近似方法直接学习策略区域，在库存控制和队列管理实验中比传统强化学习基线实现了更低的策略误差、更快的误差衰减和更好的稳定性。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.25201v1",
+      "source": "arxiv",
+      "title": "FDN: Interpretable Spatiotemporal Forecasting with Future Decomposition Networks",
+      "abstract": "Spatiotemporal systems comprise a collection of spatially distributed yet interdependent entities each generating unique dynamic signals. Highly sophisticated methods have been proposed in recent years delivering state-of-the-art (SOTA) forecasts but few have focused on interpretability. To address this, we propose the Future Decomposition Network (FDN), a novel forecast model capable of (a) providing interpretable predictions through classification (b) revealing latent activity patterns in the target time-series and (c) delivering forecasts competitive with SOTA methods at a fraction of their memory and runtime cost. We conduct comprehensive analyses on FDN for multiple datasets from hydrologic, traffic, and energy systems, demonstrating its improved accuracy and interpretability.",
+      "authors": [
+        "Nicholas Majeske",
+        "Ariful Azad"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-23T21:47:19+00:00",
+      "link": "https://arxiv.org/pdf/2606.25201v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "spatiotemporal forecasting, interpretable, applicable to hydrologic and energy systems",
+      "llm_evidence_cn": "时空预测、可解释性、可应用于水文和能源系统",
+      "llm_evidence": "时空预测、可解释性、可应用于水文和能源系统",
+      "canonical_evidence": "时空预测、可解释性、可应用于水文和能源系统",
+      "llm_tldr_en": "Proposes FDN for interpretable spatiotemporal forecasting via classification, revealing latent patterns, achieving SOTA at lower cost.",
+      "llm_tldr_cn": "该论文针对时空预测模型缺乏可解释性的问题，提出未来分解网络（FDN）。FDN通过分类进行可解释预测，揭示序列中的潜在活动模式，在多个水文、交通、能源数据集上达到与SOTA相当的性能，且内存和计算成本更低。该工作为气象等领域的可解释深度学习预测提供了新思路。",
+      "llm_tldr": "该论文针对时空预测模型缺乏可解释性的问题，提出未来分解网络（FDN）。FDN通过分类进行可解释预测，揭示序列中的潜在活动模式，在多个水文、交通、能源数据集上达到与SOTA相当的性能，且内存和计算成本更低。该工作为气象等领域的可解释深度学习预测提供了新思路。",
+      "llm_tags": [
+        "query:mm:composite"
+      ],
+      "matched_query_tag": "query:mm:composite",
+      "matched_query_text": "Papers central to 用于检索气象模型、数值天气预报、人工智能天气预测、气象降尺度、气象超分辨率、风场预测和无人机气象导航相关论文，重点关注 WRF、ECMWF、GraphCast、Pangu-Weather、FourCastNet、CorrDiff、扩散模型等方向。, especially work that connects or combines: meteorological super-resolution; statistical and dynamical downscaling of weather data; deep learning weather forecasting; numerical weather prediction models and methods; Find papers on wind field prediction, wind shear modeling, and meteorological forecasting for UAV navigation or aviation safety.; Find papers on meteorological downscaling and weather super resolution using diffusion models, generative models, or neural networks..",
+      "matched_requirement_id": "req-composite-mm",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.26497v1",
+      "source": "arxiv",
+      "title": "Learning Probabilistic Filters with Strictly Proper Scoring Rules",
+      "abstract": "Bayesian filtering of partially and noisily observed dynamical systems seeks to infer the evolving conditional distribution of the state of a dynamical system, given observations, in an online fashion. This Bayesian filtering distribution is the natural object for uncertainty quantification, but it is rarely available as a supervised learning target. However, one can often use the forecast model to generate synthetic system trajectories, along with synthetic observations. We introduce the proper scoring ensemble filter (PSEF), an ensemble data assimilation method based on training an analysis map to approximate the filtering distribution using only synthetic state--observation trajectories. The analysis step is represented as a permutation-invariant, transformer-based map that takes as input a forecast ensemble and observations, producing an analysis ensemble. Training is based on strictly proper scoring rules -- with the energy score used in our implementation -- so that probabilistic accuracy is rewarded over the whole probability distribution. We prove that, under a realizability assumption, the population objective is minimized by the true Bayesian filtering distribution. We also derive the finite-ensemble empirical objective used in training and relate its single state--observation trajectory form to the population objective, using a mean-field consistency argument. Numerical experiments show that the learned filter accurately approximates challenging filtering distributions, including nonlinear, non-Gaussian, and multi-modal posteriors, and achieves stronger performance in data assimilation tasks than classical methods or learning-based methods with mean-squared-error objectives. For close-to-Gaussian problems, learning a correction to the EnKF is the best approach, while for highly non-Gaussian problems an end-to-end approach that discards this inductive bias is superior.",
+      "authors": [
+        "Eviatar Bach",
+        "Ricardo Baptista",
+        "Jochen Bröcker",
+        "Bohan Chen",
+        "Andrew Stuart"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "math.DS",
+        "stat.ML"
+      ],
+      "published": "2026-06-25T01:04:21+00:00",
+      "link": "https://arxiv.org/pdf/2606.26497v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "introduces an ensemble data assimilation method using synthetic trajectories from forecast models",
+      "llm_evidence_cn": "提出一种基于合成轨迹的集成数据同化方法，适用于数值天气预报",
+      "llm_evidence": "提出一种基于合成轨迹的集成数据同化方法，适用于数值天气预报",
+      "canonical_evidence": "提出一种基于合成轨迹的集成数据同化方法，适用于数值天气预报",
+      "llm_tldr_en": "Proposes a proper scoring ensemble filter (PSEF) that learns the filtering distribution from synthetic state-observation trajectories, enabling data assimilation without explicit likelihood.",
+      "llm_tldr_cn": "本文提出了一种基于严格评分规则的集成滤波器PSEF，通过合成状态-观测轨迹训练分析映射来近似贝叶斯滤波分布。该方法在数据同化领域有潜力，尤其适用于如数值天气预报等难以获得真实滤波分布的系统。实验证明其能够有效学习不确定性的演化。",
+      "llm_tldr": "本文提出了一种基于严格评分规则的集成滤波器PSEF，通过合成状态-观测轨迹训练分析映射来近似贝叶斯滤波分布。该方法在数据同化领域有潜力，尤其适用于如数值天气预报等难以获得真实滤波分布的系统。实验证明其能够有效学习不确定性的演化。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "numerical weather prediction models and methods",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.28264v1",
+      "source": "arxiv",
+      "title": "A Two-Step Ensemble Score Filter for Data Assimilation in Partially Observed Systems",
+      "abstract": "Data assimilation blends model forecasts with observations to estimate the evolving state of complex dynamical systems, but sparse observing networks remain challenging because unobserved state variables are not directly constrained by observations. In this work, we introduce the Ensemble Score Filter with Linear Regression (EnSF-LR), a two-step filtering method for partially observed nonlinear systems. At each analysis time, EnSF-LR first applies the Ensemble Score Filter (EnSF) to update the observed state components using a nonlinear score-based analysis update. It then computes the resulting observed-state analysis increments and maps these corrections to the unobserved components through the ensemble-based prior covariance matrix. The latter amounts to the same linear regression mechanism used by Ensemble Kalman Filters (EnKFs). We evaluate EnSF-LR using the Lorenz-63 and 40-dimensional Lorenz-96 systems with sparse linear and nonlinear observations. The method is compared with the original EnSF and with the classical stochastic EnKF. In the linear-observation experiments, EnSF-LR produces accuracy comparable to the EnKF baseline while substantially reducing error relative to the original EnSF. In the nonlinear-observation experiments, EnSF-LR achieves lower full-state root-mean-square error than both the original EnSF and the EnKF reference. These results suggest that hybridizing score-based and EnKF analysis schemes provides an effective strategy for assimilating sparse and nonlinear observations.",
+      "authors": [
+        "Zixiang Xiong",
+        "Feng Bao",
+        "Hristo G. Chipilski",
+        "Siming Liang",
+        "Jingqiao Tang",
+        "Guannan Zhang"
+      ],
+      "primary_category": "physics.ao-ph",
+      "categories": [
+        "physics.ao-ph"
+      ],
+      "published": "2026-06-26T16:55:42+00:00",
+      "link": "https://arxiv.org/pdf/2606.28264v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "data assimilation for partially observed systems, relevant to NWP methods",
+      "llm_evidence_cn": "针对部分观测系统的数据同化，与数值天气预报方法相关",
+      "llm_evidence": "针对部分观测系统的数据同化，与数值天气预报方法相关",
+      "canonical_evidence": "针对部分观测系统的数据同化，与数值天气预报方法相关",
+      "llm_tldr_en": "Introduces EnSF-LR, a two-step ensemble score filter for data assimilation in partially observed nonlinear systems, combining score-based updates with linear regression to handle unobserved states.",
+      "llm_tldr_cn": "本文针对稀疏观测网络下部分观测系统的数据同化问题，提出了EnSF-LR两步滤波方法。该方法首先利用集成分数滤波器更新观测分量，然后通过先验协方差矩阵将校正映射到未观测分量。该方法提高了部分观测系统的状态估计准确性，对数值天气预报中的数据同化具有潜在价值。",
+      "llm_tldr": "本文针对稀疏观测网络下部分观测系统的数据同化问题，提出了EnSF-LR两步滤波方法。该方法首先利用集成分数滤波器更新观测分量，然后通过先验协方差矩阵将校正映射到未观测分量。该方法提高了部分观测系统的状态估计准确性，对数值天气预报中的数据同化具有潜在价值。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "numerical weather prediction models and methods",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.27475v1",
+      "source": "arxiv",
+      "title": "Support-Constrained RL Enables Real-World Policy Improvement without Real-World Experience",
+      "abstract": "Robots trained on real world data tend to be imprecise, slow, and brittle to perturbations. Improving these policies with reinforcement learning (RL) is an appealing alternative, but this process often requires expensive training in the real world. Performing policy improvement in simulation instead provides a far cheaper alternative, but unconstrained RL in simulation can exploit contact and dynamics mismatches, resulting in unsafe behaviors that do not transfer to hardware. Common forms of regularization can furthermore limit improvement by overconstraining to an imperfect behavior prior. In this work, we propose Support-Constrained Off-Domain REinforcement (SCORE), a real-to-sim-to-real framework that constrains RL in simulation to the support of a generative policy pretrained on real data. We instantiate this constraint through flow steering, restricting SCORE to actions the base policy can already produce, which ensures transferable behaviors while maximizing policy improvement. Improving a policy with SCORE requires minimal effort: it learns from sparse rewards, avoids distillation, and leaves the base policy untouched. Across eight real-world dexterous multi-fingered robotic manipulation tasks, SCORE improves average success rate from 37.8% to 89.9%, compared to 59.5% for the best baseline, and reaches success in 36.8% fewer steps than the base policy. Ultimately, through extensive experiments and ablations, we show that simulation can substantially improve real-world manipulation policies when policy optimization is appropriately constrained, introducing a new paradigm for real-to-sim-to-real policy improvement. Videos and code are available at https://weirdlabuw.github.io/score/.",
+      "authors": [
+        "Raymond Yu",
+        "William Huey",
+        "Mustafa Mukadam",
+        "Anusha Nagabandi",
+        "Abhishek Gupta"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.LG"
+      ],
+      "published": "2026-06-25T18:52:27+00:00",
+      "link": "https://arxiv.org/pdf/2606.27475v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "model-based RL with support constraints for sim-to-real transfer",
+      "llm_evidence_cn": "使用支持约束的基于模型强化学习实现仿真到真实迁移",
+      "llm_evidence": "使用支持约束的基于模型强化学习实现仿真到真实迁移",
+      "canonical_evidence": "使用支持约束的基于模型强化学习实现仿真到真实迁移",
+      "llm_tldr_en": "Proposes SCORE, a sim-to-real RL framework that constrains policy improvement with support from an offline dataset, enabling real-world transfer without real-world experience.",
+      "llm_tldr_cn": "针对真实世界训练昂贵且仿真迁移存在接触和动力学失配的问题，提出支持约束离域强化学习（SCORE），在仿真中利用离线真实数据集支持约束策略更新，避免不安全行为。该方法无需真实世界交互即可改善真实世界策略，在多种机器人任务上验证了有效性。",
+      "llm_tldr": "针对真实世界训练昂贵且仿真迁移存在接触和动力学失配的问题，提出支持约束离域强化学习（SCORE），在仿真中利用离线真实数据集支持约束策略更新，避免不安全行为。该方法无需真实世界交互即可改善真实世界策略，在多种机器人任务上验证了有效性。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.28127v1",
+      "source": "arxiv",
+      "title": "From Tokens to States: LLMs as a Special Case of World Models and the Continuous Path Beyond",
+      "abstract": "The AI community has framed the relationship between large language models (LLMs) and world models as a dichotomy: LLMs predict tokens; world models simulate reality. Yann LeCun argues in 2022 that reaching general intelligence requires abandoning autoregressive token prediction in favour of latent-space architectures. This framing is unnecessarily binary. Two claims will be defended. First, LLMs are a degenerate special case of world models: the state space is the set of all token sequences, the only action is appending one token, and world models are therefore a strict generalisation of LLMs, not a replacement. Second, there is a natural continuous spectrum from NTP to JEPA, with multi-token prediction, future-summary prediction, and next-latent prediction as intermediate stations already populated by current research. Moving along this spectrum relaxes the LLM constraints one by one. It also progressively surrenders the two practical advantages that make LLMs trainable at scale: internet-scale self-supervised data, and a transformer architecture co-designed for discrete token prediction. Both are examined as open research questions: the data question (the cliff from self-supervised text to instrumented action-labelled environments) and the architecture question (whether the transformer generalises to continuous-state prediction, or whether a new primitive is needed).",
+      "authors": [
+        "Paul Dubois"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-26T14:27:50+00:00",
+      "link": "https://arxiv.org/pdf/2606.28127v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Argues that LLMs are a degenerate case of world models, directly engaging with world model theory.",
+      "llm_evidence_cn": "主张大语言模型是世界模型的特例，直接涉及世界模型理论。",
+      "llm_evidence": "主张大语言模型是世界模型的特例，直接涉及世界模型理论。",
+      "canonical_evidence": "主张大语言模型是世界模型的特例，直接涉及世界模型理论。",
+      "llm_tldr_en": "Defends that LLMs are a special case of world models, proposing a continuous spectrum from token prediction to latent-space world models.",
+      "llm_tldr_cn": "该论文挑战了LLMs与世界模型的二元对立，主张LLMs是世界模型的退化解。提出了从自回归标记预测到潜在空间世界模型的连续谱系，为统一理解和构建更强大的世界模型提供了理论视角。",
+      "llm_tldr": "该论文挑战了LLMs与世界模型的二元对立，主张LLMs是世界模型的退化解。提出了从自回归标记预测到潜在空间世界模型的连续谱系，为统一理解和构建更强大的世界模型提供了理论视角。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "world model",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
