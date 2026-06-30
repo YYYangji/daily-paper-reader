@@ -1,0 +1,6746 @@
+Title: CORDEX-ML-Bench: A Benchmark for Data-Driven Regional Climate Downscaling -Experiment Design and Overview
+
+URL Source: https://arxiv.org/pdf/2606.29172v1
+
+Published Time: Tue, 30 Jun 2026 01:06:00 GMT
+
+Number of Pages: 47
+
+Markdown Content:
+manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES) 
+
+## CORDEX-ML-Bench: A Benchmark for Data-Driven Regional Climate Downscaling—Experiment Design and Overview 
+
+Neelesh Rampal 1, Jose González-Abad 2, Henry Addison 3, Jorge Baño-Medina 2, Maria Laura Bettolli 4, Valentina Blasone 5, Ben Booth 6, Erika Coppola 5, Serafina Di Gioia 5, Joshua Oldham-Dorrington 7, Antoine Doury 8,Francois Engelbrecht 9, Ramón Fuentes-Franco 10 , Peter B. Gibson 1, Luca Glawion 11 , Caroline Hardy 9, Mikhail Ivanov 10 , Hugo Kyo Lee 12 , Mikel N. Legasa 13 , Matias Olmo 14 , Andrew Orr 15 , Julius Polz 16 , Martin S. J. Rogers 15 ,Maybritt Schillinger 17 , Shivani Sharma 15 , Pedro M. M. Soares 18 , Stefan Sobolowski 7, Jessica Steinkopf 9, Wenchang Tang 5, Jr-Ben Tian 19 , Ricardo Tomé 18 , Ko-Chih Wang 19 , Yi-Chi Wang 10 , Peter A. G. Watson 3, Tom Wetherell 6, Martin Widmann 20 , José M. Gutiérrez 2
+
+> 1
+
+Earth Sciences New Zealand, Wellington, New Zealand 
+
+> 2
+
+Instituto de Física de Cantabria (IFCA), CSIC-Universidad de Cantabria, Santander, Spain 
+
+> 3
+
+School of Geographical Sciences, University of Bristol (UoB), Bristol, UK 
+
+> 4
+
+Departamento de Ciencias de la Atmósfera y los Océanos, Universidad de Buenos Aires, CONICET, IFAECI/CNRS-IRD-UBA, Buenos Aires, Argentina 
+
+> 5
+
+Abdus Salam International Centre for Theoretical Physics (ICTP), Trieste, Italy 
+
+> 6
+
+Met Office, Exeter, UK 
+
+> 7
+
+Geophysical Institute, University of Bergen and Bjerknes Centre for Climate Research (UiB), Bergen, Norway 
+
+> 8
+
+Centre National de Recherches Météorologiques (CNRM), Université de Toulouse, Météo-France, CNRS, Toulouse, France 
+
+> 9
+
+Global Change Institute, University of the Witwatersrand, Johannesburg, South Africa 
+
+> 10
+
+Swedish Meteorological and Hydrological Institute, Rossby Centre (SMHI), Norrköping, Sweden 
+
+> 11
+
+Institute of Meteorology and Climate Research – Atmospheric Environmental Research (IMKIFU), Karlsruhe Institute of Technology, Campus Alpin, Garmisch-Partenkirchen, Germany 
+
+> 12
+
+Jet Propulsion Laboratory (JPL), California Institute of Technology, Pasadena, CA, USA 
+
+> 13
+
+Laboratoire des Sciences du Climat et de l’Environnement (LSCE-IPSL), CEA/CNRS/UVSQ, Université Paris-Saclay, Gif-sur-Yvette, France 
+
+> 14
+
+Barcelona Supercomputing Center, Barcelona, Spain 
+
+> 15
+
+British Antarctic Survey (BAS), Cambridge, UK 
+
+> 16
+
+Institute of Meteorology and Climate Research – Atmospheric Trace Gases and Remote Sensing (IMKASF), Karlsruhe Institute of Technology (KIT), Karlsruhe, Germany 
+
+> 17
+
+Seminar for Statistics, ETH Zurich, Zurich, Switzerland 
+
+> 18
+
+Instituto Dom Luiz (IDL), Faculdade de Ciências, Universidade de Lisboa, Lisbon, Portugal 
+
+> 19
+
+Department of Computer Science and Information Engineering, National Taiwan Normal University (NTNU), Taipei, Taiwan 
+
+> 20
+
+School of Geography, Earth and Environmental Sciences, University of Birmingham, Birmingham, UK 
+
+Key Points:  
+
+> •
+
+The first multi-domain benchmark for evaluating several leading data-driven down-scaling algorithms.  
+
+> •
+
+Models trained only on historical periods underestimate future climate change sig-nals, raising concerns for their broader use in downscaling.  
+
+> •
+
+Generative models generally outperform deterministic approaches for most met-rics including extremes and capturing fine-scale spatial detail. 
+
+Corresponding author: Neelesh Rampal, neelesh.rampal@earthsciences.nz 
+
+–1–  
+
+> arXiv:2606.29172v1 [physics.ao-ph] 28 Jun 2026 manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES)
+
+Abstract 
+
+Machine learning (ML) has emerged as a cost-effective approach to complement dynamical downscaling for producing high-resolution regional climate projections. How-ever, the absence of standardised training and evaluation protocols, applied consistently across multiple domains, continues to hinder meaningful model intercomparison. We in-troduce CORDEX-ML-Bench, a benchmark aligned with the Coordinated Regional Cli-mate Downscaling Experiment (CORDEX), which constitutes the first phase of a com-munity initiative to advance data-driven downscaling toward operational readiness, and complement future dynamical downscaling efforts under the Coupled Model Intercom-parison Project Phase 7 (CMIP7). The framework targets downscaled daily maximum temperature and precipitation to ∼10 km resolution (20 × increase) across three distinct pilot regions; European Alps, New Zealand, and Southern Africa. Using a perfect-model experimental design, we evaluate 40 ML configurations developed independently, span-ning traditional ML, convolutional U-Nets, vision transformers, graph neural networks, and generative models based on diffusion, flow matching, and generative adversarial net-works. Models are trained under two experimental periods, an empirical-statistical down-scaling pseudo-reality (historical period only) and Emulator (historical and future pe-riods) — and are evaluated against a core set of metrics developed specifically for assess-ing downscaling skill. Generative models consistently outperform deterministic approaches for precipitation, better capturing fine-scale variability and extremes. For maximum tem-perature, the generative advantage narrows and deterministic architectures remain com-petitive. Models trained solely on the historical period systematically underestimate fu-ture climate-change signals while those additionally trained on a future period perform considerably better. These findings raise concerns about historically trained models widely used in operational downscaling, underscoring the need for rigorous extrapolation test-ing. 
+
+Plain Language Summary 
+
+High-resolution projections are traditionally obtained through dynamical downscal-ing, a process that enhances the spatial resolution of global climate models using com-putationally expensive physics-based regional climate models. Machine learning (ML) offers a cost-effective alternative for downscaling climate models, yet no consistent frame-work exists to evaluate these approaches, making it difficult to distinguish genuinely skil-ful methods from those that simply perform well on idealised tests. CORDEX-ML-Bench addresses this gap by providing a standardised benchmark that evaluates 40 ML down-scaling configurations across three climatically diverse regions (European Alps, New Zealand, and Southern Africa), using a publicly available dataset, consistent experimental design, and common evaluation criteria applied to daily accumulated precipitation and maxi-mum temperature. By providing open datasets and evaluation code, CORDEX-ML-Bench gives the community a shared infrastructure to rigorously develop the next generation of data-driven regional climate projections. Our results show that training on simula-tions spanning future periods, not just historical ones, is important for generating re-liable climate projections, as models trained on historical data alone systematically un-derestimate future changes in temperature and precipitation extremes. Generative ML models, particularly diffusion and flow-matching approaches, generally outperform regression-based methods, especially for precipitation extremes. 
+
+1 Introduction 
+
+Dynamical downscaling involves running a physics-based Regional Climate Model (RCM) over a limited domain at much higher spatial resolution than its driving Global Climate Model (GCM), constrained through lateral boundary conditions or nudging of selected large-scale variables. This allows them to explicitly represent mesoscale processes  
+
+> –2– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES)
+
+such as the interaction of atmospheric flow with complex orography, that are not resolved at the coarse spatial resolutions typical of GCMs ( ∼130 km). RCMs are therefore im-portant tools for studying climate variability and change at fine spatial scales, provid-ing the detailed information needed for climate-impact assessments and adaptation plan-ning (e.g., Giorgi and Gutowski Jr, 2015; Rummukainen, 2016). An important interna-tional effort in this area is the Coordinated Regional Climate Downscaling Experiment (CORDEX; Giorgi et al., 2009), which organizes multi-model dynamical downscaling across 14 domains covering most of the Earth’s land areas. CORDEX provides substantially finer-scale climate projections than GCMs—typically at 10—25 km resolution in the Cou-pled Model Intercomparison Project Phase 6 (CMIP6; Gutowski Jr et al., 2016). In RCMs, doubling the spatial resolution can increase the computational expense of simulations by roughly an order of magnitude, imposing heavy constraints on the achievable reso-lution in the context of domain size, the number of scenarios, and ensemble size (Kendon et al., 2025). This subsequently limits the ability to comprehensively and robustly sam-ple different types of uncertainty in regional climate projections. This is especially rel-evant for uncertainty as a result of internal variability — the irreducible uncertainty aris-ing from chaotic processes within the climate system rather than external forcings. It represents a substantial and often underappreciated source of uncertainty in regional cli-mate projections (Hawkins and Sutton, 2009; Maher et al., 2021; Deser et al., 2020; Lehner and Deser, 2023; Lewis et al., 2025), particularly for extremes (Aalbers et al., 2018; Ram-pal et al., 2025b). Machine learning (ML) is emerging as a complementary approach to dynamical down-scaling, enabling high-resolution climate projections at a fraction of the cost and mak-ing it feasible to generate large ensembles (Rampal et al., 2024b; Sun et al., 2024; Kendon et al., 2025). More broadly, the computational efficiency of ML-based approaches may reduce barriers to generating high-resolution climate information in regions where dy-namical downscaling at scale remains computationally prohibitive. Early efforts using convolutional neural networks (e.g., Baño-Medina et al., 2021; Doury et al., 2023; Van Der Meer et al., 2023; Soares et al., 2024b) produced the first ML approaches suitable for climate change downscaling, and have since contributed to a rapidly expanding body of literature, including several recent reviews (Rampal et al., 2024b; Sun et al., 2024; Kendon et al., 2025). Two main data-driven downscaling approaches have been extensively ex-plored in the literature: empirical-statistical downscaling (ESD; also known as observa-tional downscaling) and RCM emulation. Under the perfect prognosis approach, ESD develops empirical relationships between coarse-resolution atmospheric fields and local observations, with training constrained to the historical record (Maraun et al., 2010; Gutiér-rez et al., 2019). In contrast, RCM emulation trains algorithms to replicate physics-based RCM output from coarse GCM-scale predictors, drawing on simulations that can span both historical and future climates (e.g., Doury et al., 2023; Chadwick et al., 2011; Holden et al., 2015; Baño-Medina et al., 2024; Balmaceda-Huarte et al., 2024). Once trained, either approach can be applied to GCM output to generate high-resolution projections (Rampal et al., 2024b). Although climate downscaling and computer vision (image super-resolution) share enough parallels to motivate similar model architectures, there are several important dif-ferences. Most notably, climate downscaling requires predictions that are physically con-sistent, and must generalise reliably across weather systems and climate states well out-side the training distribution (Rampal et al., 2024b; Maraun et al., 2015). An important limitation for ML downscaling is the lack of coordination and standardisation. Studies frequently differ in their choice of predictor variables, training strategy, experiment de-sign, evaluation metrics, and geographic domains, making systematic intercomparison of leading ML models difficult (González-Abad and Gutiérrez, 2025; Harder et al., 2026). Many metrics borrowed from computer science are poorly suited to climate applications, and standard training and evaluation protocols in the downscaling literature are often not designed with real-world use cases in mind (Rampal et al., 2024b). Without clearly  
+
+> –3– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES)
+
+defined standards, it remains difficult to distinguish genuine methodological advances from performance gains attributable to favourable experimental design. Benchmarking frameworks have proven transformative in related fields. WeatherBench (Rasp et al., 2020, 2024) and AIMIP (Henn et al., 2026) are notable examples, establishing standardised protocols for medium-range weather prediction and measurably accelerated progress in data-driven forecasting. The need for robust benchmarking frameworks specific to cli-mate downscaling has been recognised (Langguth et al., 2024; Harder et al., 2026), but existing efforts remain poorly aligned with the evaluation needs of the regional climate modelling community. Unlike weather forecasting benchmarks, such frameworks must address challenges specific to climate projections: extrapolation to future climates across GCMs, transferability across emissions scenarios, and skill across diverse geographic do-mains. Despite the growing body of downscaling literature, these considerations are ad-dressed by only a small number of studies, underscoring the need for a comprehensive benchmarking framework tailored to the demands of climate projection applications. To address these gaps, we introduce CORDEX-ML-Bench, a standardised bench-marking framework and dataset for data-driven climate downscaling explicitly aligned with CORDEX, openly available at Rampal et al. (2026). CORDEX-ML-Bench supports rigorous and reproducible evaluation of two main data-driven downscaling approaches; ESD and RCM emulation, and builds on lessons learned from VALUE (Gutiérrez et al., 2019) – a previous European collaboration to benchmark statistical techniques for down-scaling, while incorporating recent advances in ML and explicitly targeting RCM em-ulation. The framework aims to foster coordinated methodological development, estab-lish standards of practice, and encourage researchers to develop and evaluate new solu-tions, ultimately laying the foundation for integrating data-driven downscaling into op-erational climate-projection workflows. This first phase of the benchmark places partic-ular emphasis on experiments and evaluation metrics that address key climate-specific challenges such as extrapolation to future climates, non-stationarity, and cross-model and cross-domain transferability. This initial benchmark targets the downscaling of two key surface variables (daily precipitation and maximum temperature) to approximately 10 km ( ∼0.11 ◦) resolution at daily frequency, using predictor fields at 2 ◦ (∼200 km)—an effective 20 × spatial resolution increase. The target resolution was chosen to be consistent with commonly used CORDEX outputs. These two variables were prioritized as they are widely used surface diagnos-tics in climate-impact assessments, and because they present contrasting predictability characteristics. This effort has been facilitated by the CORDEX Machine Learning Task Force, which has subsequently evolved to become a ML Task Team (Gutiérrez et al., 2026). The benchmark encompasses standardised datasets for three climatically and geograph-ically diverse pilot regions — the European Alps, New Zealand, and South Africa. In this first phase, all algorithms are trained in a perfect model framework, in which coarse-resolution predictors are derived by spatially coarsening RCM atmospheric fields to a typical GCM resolution, with the original high-resolution RCM fields serving as targets. The imper-fect framework, in which models are trained using GCM fields directly as predictors (anal-ogous to boundary conditions or spectral nudging in dynamical downscaling; Van Der Meer et al., 2023; Rampal et al., 2024b; Doury et al., 2023), introduces additional complex-ity due to systematic GCM–RCM state discrepancies, which make the statistical rela-tionships harder to learn (Baño-Medina et al., 2024). The perfect-model framework is therefore adopted here to isolate the downscaling function from these additional sources of error (Baño-Medina et al., 2024). 
+
+2 Materials and Methods 
+
+Unlike weather forecasting benchmarks such as WeatherBench (Rasp et al., 2020), where day-to-day accuracy is of primary concern, climate downscaling evaluation must additionally account for distributional skill, long-term trends, non-stationarity, and ex- 
+
+> –4– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES)
+
+trapolation to future climate conditions. We acknowledge that no single metric or set of metrics can fully characterise model quality for all use cases. Rather than treating CORDEX-ML-Bench as a challenge with a single leaderboard, we therefore present it as a frame-work for systematic model comparison, one that establishes a core set of evaluation cri-teria that should be examined before any ML-based approach can be trusted to produce climate projections. We evaluate model performance across four generalisation settings: (i) cross-validation over the historical period (in-sample performance); (ii) interpolation to an unseen pe-riod (RCM emulation); (iii) extrapolation to future out-of-distribution conditions (ESD); and (iv) transferability to unseen real-world CMIP GCMs within the perfect-model set-ting. Aspect (iv) was incorporated into the experimental design but will be the focus of a subsequent study. Evaluation metrics were developed in consultation with both climate scientists and ML researchers to reflect the unique requirements of climate applications. The core evaluation metrics encompass historical climatological skill, the ability to re-produce climate change signals, and performance across the full distribution of simulated values, with particular attention to extremes. 
+
+2.1 Overview of Benchmarking Dataset 
+
+Unlike data-driven weather forecasting—where the goal is to predict the next at-mospheric state from the previous one—climate downscaling predicts the high-resolution field ( y) at time t directly from coarse-resolution predictors ( X) at the same time t.Training and evaluation datasets span three geographically distinct regions: the Eu-ropean Alps and New Zealand represent mid-latitude regions strongly influenced by com-plex orography, while South Africa provides a more subtropical domain shaped by trop-ical and mid-latitude weather systems. The benchmark targets two high-resolution vari-ables simulated by the RCM: daily maximum temperature ( tasmax ) and daily accumu-lated precipitation ( pr ). Target fields are provided on a 128 × 128 grid at approximately 10 km resolution (0.11 ◦ for the Alps and New Zealand domains; 0.10 ◦ for South Africa), as illustrated for the three regional domains in Figure 1. Predictor fields are coarsened directly from the high-resolution RCM output using the perfect framework, ensuring spa-tial and temporal alignment between the low- and high-resolution fields used for train-ing. The daily predictor variables used in this study are listed in Table 1. They were se-lected based on their availability in CMIP6 output, their widespread use in the perfect-prognosis downscaling literature (Maraun et al., 2015; Gutiérrez et al., 2019), and their direct applicability to CMIP GCM projections. Predictor fields are coarsened to a 2 ◦ res-olution using conservative remapping, yielding a 16 × 16 grid across all three regions. In a few cases, the 850 hPa predictors contain missing values over high-elevation areas. These affect a small fraction of timesteps, which are masked out when computing the evaluation metrics. The predictor domain intentionally covers a larger region than the target domain to prevent information scarcity about the domain edges. Grid dimensions of 16 × 16 and 128 × 128 (both powers of two) were chosen to ensure compatibility with standard deep learning architectures, while the factor-of-8 spatial ratio between predic-tor and target grids facilitates the direct application of common upsampling approaches. For each region, training employs a single RCM simulation forced by a single GCM under two different periods: (i) a model trained exclusively on the historical period (1961–1980) within the ESD pseudo-reality setting, and (ii) the RCM Emulator setting where a model is trained on the combined historical (1961-1980) and future periods (2080-2099). Fur-ther details of these experiments are provided in Section 2.2. Evaluation is performed using both the driving GCM—over a period not included in training—and an entirely independent “unseen” GCM. Models are evaluated in two settings: the perfect framework, consistent with the training setup, and the imperfect setting, in which models are ap-plied directly to GCM fields (reflecting real-world application to CMIP-style outputs).   
+
+> –5– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES)
+> Table 1. Overview of predictor and target variables in the CORDEX-ML-Bench dataset.
+
+Long name Short name Description Unit Levels Predictor fields (2 °)
+
+Geopotential z Height of a pressure level m2 s−2 850, 700, 500 Temperature t Atmospheric tempera-ture K 850, 700, 500 Specific humidity q Water vapour mixing ratio kg kg −1 850, 700, 500 U-component of wind u Zonal wind speed m s −1 850, 700, 500 V-component of wind v Meridional wind speed m s −1 850, 700, 500 
+
+Target fields ( ∼10 km) 
+
+Maximum temperature tasmax Daily maximum near-surface temperature K 2-metre Precipitation pr Daily accumulated precipitation mm day −1 Surface 
+
+Constants 
+
+Orography orog Surface elevation m Surface Note that "imperfect evaluation" refers solely to the evaluation setting, not to the im-perfect training framework discussed earlier. Both frameworks are discussed in detail in (Kendon et al., 2025; Rampal et al., 2024b; Boé et al., 2023). For this benchmark, all training and evaluation data are provided at daily temporal resolution to reduce dataset size and ensure accessibility across a wide range of computing environments. This choice also allows us to begin with a simpler setting before extending the methodology to more challenging temporal resolutions (e.g., sub-hourly). The full dataset—covering all train-ing and testing splits across the three regions—amounts to approximately 30GB and is supplied as regional NetCDF files in compressed archives. The data are available for down-load on Zenodo (Rampal et al., 2026). 
+
+2.2 Experimental Protocol 
+
+2.2.1 RCM Training Simulations 
+
+As introduced in Section 2.1, the training data used in this study are derived from previously produced dynamical downscaling regional efforts for CMIP5 and CMIP6. Dif-ferent RCM configurations are used for each region in this benchmark. For the European Alps, target fields are generated using the ALADIN63 RCM (Nabat et al., 2020), a con-ventional limited-area RCM driven by the CNRM-CM5 GCM (Voldoire et al., 2013) un-der the CMIP5 framework. For South Africa and New Zealand, target fields are produced using the Conformal Cubic Atmospheric Model (CCAM; McGregor and Dix, 2008; Thatcher and McGregor, 2009), a global non-hydrostatic variable-resolution climate model. CCAM employs spectral nudging to constrain the large-scale circulation toward that of the driv-ing GCMs (Chapman et al., 2023; Gibson et al., 2023; Engelbrecht et al., 2025). For both the Southern Africa and New Zealand domains, the primary training RCM (CCAM) is driven by the ACCESS-CM2 GCM from CMIP6. Unlike limited-area RCMs such as AL-
+
+> –6–
+
+manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES) 1. Spatial Domains 
+
+Europe an Alps  (Alps) 
+
+0.11 ° Resolution 
+
+South Africa (SA) 
+
+0.10 ° Resolution 
+
+New Zealand (NZ) 
+
+0.11 ° Resolution 
+
+2. Training Configurations 
+
+Exp eriment  1*:
+
+ESD Pseudo -Reality 
+
+1961 - 1980 (Historical) 
+
+Single  RCM 
+
+AND 
+
+Exp eriment  2*:
+
+Emulator Hist -Future 
+
+1961 -1980 & 2081 -2100 
+
+Single RCM 
+
+* Trained w ith & without  orography 
+
+as a co -variate 
+
+3. ML Architectures 
+
+DETERMINISTIC APPROACHES 
+
+ANN  / XGBoost 
+
+Traditional ML 
+
+Vision Transformers 
+
+Attention -based 
+
+Unet / DeepESD  / ConvNP 
+
+Convolutional 
+
+GENERATIVE APPROACHES 
+
+Flow Matching , Diffusion ,
+
+CorrDiff 
+
+Diffusion -based 
+
+SpateGAN  / Res GAN 
+
+Generative  Adversarial  Networks 
+
+4. Evaluation & Testing 
+
+Test Periods 
+
+Historical (1981 –2010) 
+
+Mid -Century (2041 –2060) 
+
+End -Century (2081 –2099) 
+
+Boundary Conditions 
+
+• Perfect  Framework : Applied to 
+
+Coarsened RCM 
+
+(Extrapolation )
+
+• Imperfect  Framework : Raw GCM 
+
+Fields 
+
+(Extrapolation + Transferability) 
+
+Evaluated across both  training GCM /RCM 
+
+pair  and  unseen  GCM /RCM pair 
+
+X: Predictor fields 2 ° (16 x 16) 
+
+Y: Target fields (128 x 128)  En Scale 
+
+Energy Score 
+
+Graph CNNs 
+
+Graph -based 
+
+Prithvi WxC 
+
+Foundational Model 
+
+Figure 1. CORDEX-ML-Bench Experimental Design. The top panel provides a schematic overview of the benchmark, summarizing the spatial domains, training period/experiment, machine-learning architectures, and evaluation periods. The bottom panel shows the regional domains in greater detail, including the coarse-resolution predictor domains (dashed black lines), the nested high-resolution target domains (solid red lines), and the underlying surface elevation (color scale in meters). Insets highlight each region with predictor and target grids overlaid on regional orography. –7– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES) 
+
+ADIN, CCAM operates on a global mesh with locally refined resolution over the target domains, offering a distinct and well-evaluated approach to regional downscaling (Gib-son et al., 2024, 2025; Truong et al., 2025; Engelbrecht et al., 2025; Campbell et al., 2024; Goddard et al., 2025). Each of these RCM configurations has been independently evaluated against ob-servations and reanalysis products, demonstrating skill in reproducing regional clima-tological means, interannual variability, and climate change responses across the respec-tive target domains (Nabat et al., 2020; Campbell et al., 2024; Engelbrecht et al., 2025). These simulations therefore serve as physically consistent and well-characterised refer-ences for key aspects of regional climate, including historical temperature and precip-itation climatology, seasonal and interannual variability, and projected climate change signals. We acknowledge that all RCM simulations carry systematic biases inherited from both the driving GCM and the RCM configuration. It is important to emphasise that the goal of this benchmark is not to assess performance against observations directly, but rather to assess the ability of ML models to emulate the RCM — including its biases — thereby treating the dynamical downscaling output as the learning target. 
+
+2.2.2 Experimental Design and Evaluation 
+
+In the ESD experiment, models are trained on the historical period (1961–1980) using the RCM simulation as a pseudo-reality of observations, allowing out-of-distribution performance to be evaluated against a known future — something not possible when test-ing against true observational data (Vrac et al., 2007). Future projections in CORDEX are driven by emission scenarios, expressed as Representative Concentration Pathways (RCPs) or Shared Socioeconomic Pathways (SSPs) depending on the driving GCM. In the RCM emulator experiment, the training dataset is extended to 40 years by adding end-of-century simulations under a high-emission scenario (2080–2099; RCP8.5 for the European Alps, SSP3-7.0 for South Africa and New Zealand), exposing models to a broader range of climate states and shifting the evaluation emphasis from extrapolation to in-terpolation. Both experiments are conducted with and without high-resolution surface elevation to systematically quantify the influence of static geographic predictors. All mod-els are trained within the perfect framework (Figure 2, left), as this avoids the GCM–RCM discrepancies that degrade out-of-sample transferability when models are trained on raw GCM fields (Doury et al., 2024; Baño-Medina et al., 2024). Once trained, models are applied to coarsened RCM fields (perfect framework) and raw GCM predictors (imperfect evaluation), the latter representing a typical operational setting (Figure 2, right). This paper focuses exclusively on the perfect framework, eval-uating performance on two unseen periods from the training GCM: a historical cross-validation period (1981–2010) and mid-century conditions (2041–2060; Table 2). This perfect-model framework is well established in the ML downscaling and emulation lit-erature (e.g., Baño-Medina et al., 2024; Doury et al., 2023; Rampal et al., 2024b; Ad-dison et al., 2026; Balmaceda-Huarte et al., 2024; Chadwick et al., 2011; Maraun et al., 2015), and provides a controlled setting in which model skill can be attributed unam-biguously to architectural and training choices rather than to observational uncertainty or RCM error. 
+
+2.3 Contributing Models 
+
+CORDEX-ML-Bench encompasses 21 distinct ML model architectures (spanning 40 different configurations) developed independently by 13 research institutions, cover-ing approaches from standard neural networks and gradient-boosted trees to state-of-the-art generative models based on diffusion, flow matching, and Generative Adversar-ial Networks (GANs). This selected subset is broadly representative of the current lit-erature and reflects the state-of-the-art in ML-based statistical downscaling. This diver-
+
+> –8–
+
+manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES) Training Phase 
+
+(Perfect Framework) 
+
+Application Phase 
+
+(Imperfect Framework)  
+
+> High -res RCM (~10km)
+> U, V, Q, T, Z (850, 700, 500hPa)
+
+X
+
+> Low -res RCM
+> Predictor Fields (2 °)
+> U, V, Q, T, Z (850, 700, 500hPa)
+
+ML Training 
+
+Algorithm   
+
+> Dynamical Downscaling
+> Coarsen to 2°
+> (16 x 16)
+
+ML 
+
+Algorithm   
+
+> Re -grid to 2°
+> (16 x 16)
+> GCM fields(2 °)
+> (U, V, Q, T, Z (850, 700, 500hPa)
+
+Y 
+
+> High -res RCM
+> Target Fields (~10km )
+> Tasmax ,Pr
+
+GCM 
+
+> (Boundary conditions)
+> Predictor/Target Normalization
+> Predictor Normalization from
+> Training Dataset
+
+Y 
+
+> High -res RCM
+> Emulated fields (~10km )
+> Tasmax ,Pr
+> Multiple GCMs for evaluation
+
+Figure 2. Schematic of the perfect (training phase, left) and imperfect (application phase, right) frameworks used in CORDEX-ML-Bench. In the perfect framework, high-resolution RCM fields are coarsened to produce low-resolution predictor fields (X), which are paired with high-resolution RCM target fields (Y) for training. RCM-derived target fields (Y) are used for evalua-tion in both the perfect and imperfect settings — the key distinction being that in the imperfect evaluation setting (right), the trained model receives GCM fields as predictors rather than RCM-derived fields, representing real-world CMIP-style application. Note that "imperfect" here refers to evaluation only, not to imperfect training. –9– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES) 
+
+Table 2. Summary of the CORDEX-ML-Bench experimental design and evaluation protocol. 
+
+A) Regional modelling chains and independent out-of-sample GCMs for transferability test-ing. B) Structured evaluation matrix isolating pure downscaling skill from structural biases. 
+
+⋆ Highlighted rows indicate the configurations evaluated in this paper (training-GCM boundary conditions; periods 1981–2010 and 2041–2060). Remaining rows (greyed) are defined for com-pleteness and future work. 
+
+A Regional Domains and RCMs Region RCM Training GCM Test GCM (out-of-sample) European Alps ALADIN63 CNRM-CM5 (CMIP5) MPI-ESM-LR (CMIP5) 
+
+South Africa CCAM ACCESS-CM2 (CMIP6) NorESM2-MM (CMIP6) 
+
+New Zealand CCAM ACCESS-CM2 (CMIP6) EC-Earth3 (CMIP6) 
+
+B Training and Evaluation Matrix Test configuration Evaluation period Predictor source Driving GCM Experiment 1 — ESD Train: 1961–1980 (Historical) 
+
+⋆ Perfect cross-validation 1981–2010 RCM (coarsened) Training 2 Imperfect cross-validation 1981–2010 GCM (raw) Training 
+
+⋆ Perfect extrapolation 2041–2060 RCM (coarsened) Training 4 Imperfect extrapolation 2041–2060; 2080– 2099 GCM (raw) Training 5 Perfect extrapolation (transfer) 2041–2060; 2080– 2099 RCM (coarsened) Out-of-sample 
+
+Experiment 2 — RCM Emulator Train: 1961–1980 & 2080–2099 (Emulator Hist–Future) 
+
+⋆ Perfect cross-validation 1981–2010 RCM (coarsened) Training 2 Imperfect cross-validation 1981–2010 GCM (raw) Training 
+
+⋆ Perfect interpolation 2041–2060 RCM (coarsened) Training 4 Imperfect interpolation 2041–2060 GCM (raw) Training 5 Perfect interpolation (transfer) 2041–2060; 2080– 2099 RCM (coarsened) Out-of-sample 6 Imperfect interpolation (transfer) 2041–2060; 2080– 2099 GCM (raw) Out-of-sample 
+
+sity is intentional, enabling the community to assess the relative merits of a wide range of methods within a consistent evaluation framework applied to multiple regions. To re-flect a more realistic training and evaluation setting, participating groups were provided only with predictor fields for the test period, with target values withheld until indepen-dent evaluation. This ensured a more robust and independent evaluation by preventing 
+
+–10– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES) 
+
+participating groups from overly tuning their models to the test set. Training strategies varied across contributing models, including validation splits and stopping criteria — some models trained for a fixed number of epochs while others used validation loss or other metrics for checkpoint selection — all of which may influence the interpretation of rel-ative performance. Contributing models are divided into two categories: deterministic models, which produce a single prediction per time step, and generative models, which produce stochas-tic ensembles sampling from the conditional distribution of the predictand. For most ex-periments, groups developed paired configurations—one with high-resolution orography as a static co-variate and one without—to systematically assess the value of topographic information. Configurations including orography carry the suffix -orog . The majority of models were trained independently for each target variable, though a small number of models were designed to predict both variables jointly. Further details, including hyper-parameters and hardware specifications, are provided in Supplementary Tables T1-T3. Reported training times are approximate, per configuration, and correspond to the RCM Emulator experiment trained over 40 years of simulation. 
+
+2.3.1 Deterministic Models 
+
+The deterministic algorithms range from shallow networks to sophisticated deep learning architectures. Most commonly, models used Mean Squared Error (MSE) in the loss functions for temperature and implemented more tailored loss functions for precip-itation, reflecting the zero-inflated and heavy-tailed nature of daily rainfall distributions. An overview of each algorithm is provided, with model names followed by the contribut-ing institution or consortium in square brackets:  
+
+> •
+
+Rossby-UNet [SMHI] is adapted from Fuentes-Franco et al. (2025) and is a five-layer U-Net (Ronneberger et al., 2015), with a Convolutional Block Attention Mod-ule (CBAM; Woo et al., 2018), Group normalisation, and Sigmoid Linear Unit (SiLU) activations, trained with a combined MSE-Fast Fourier Transform (FFT) loss that penalises errors in both spatial and spectral domains equally. Predictors are stan-dardised using local monthly climatologies and bicubically interpolated to the tar-get grid.  
+
+> •
+
+DetUNet and DetUNet-v2 [Earth Sciences NZ] are adapted from Rampal et al. (2025a); Ward-Leikis et al. (2025): a ∼3M-parameter U-Net with residual convolutions, self-attention at the latent stage, and Feature-wise Linear Modula-tion (FiLM) layers for day-of-year conditioning, trained with an MSE loss for 250 epochs. Precipitation is log-normalised prior to training; temperature is z-score standardised at the grid-point level. The two variants differ in learning rate (smaller in -v2) and activation function: DetUNet-v2 uses LeakyReLU(0.5) for tempera-ture.  
+
+> •
+
+CNRM-UNeT [CNRM] has been adapted from Doury et al. (2024) and is an asymmetric U-Net with a longer expansion path and a one-dimensional bottleneck that accepts the per-timestep normalisation statistics and external forcings as aux-iliary inputs, allowing the model to retain large-scale information. An asymmet-ric precipitation loss penalises under-prediction of heavy events more strongly than over-prediction. A standard MSE loss is used for temperature.  
+
+> •
+
+Prithvi-UNet [JPL] fine-tunes NASA’s Prithvi-WxC geoscience foundation model with a convolutional U-Net decoder, fine-tuning only selected layers, requiring only 10 epochs per experiment. Coarse predictors are bilinearly interpolated to the high-resolution grid prior to input, and both inputs and targets are normalised using pre-computed statistics. This is the only foundation model algorithm in the bench-mark (Schmude et al., 2024).   
+
+> –11– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES)
+> •
+
+GNN4CD [ICTP] is a Graph Neural Network (GNN) combining a Gated Re-current Unit (GRU)-based temporal encoder with graph convolution and graph attention layers. This updated implementation is adapted from the model described in Blasone et al. (2025). It employs a processor including three residual Graph At-tention Network Convolution blocks (GATv2Conv) with additive aggregation and Layer normalisation. For precipitation, a hybrid loss combining Mean Squared Er-ror (MSE), quantile-aware MSE (QMSE), and Power Spectral Density (PSD) con-straints is used to better represent extremes and spatial structure, while temper-ature is modelled using Gaussian negative log-likelihood to predict both mean and uncertainty. This is the only GNN model in the benchmark, flexible to operate directly on the irregular spatial structure of climate data, without interpolating to a regular grid.  
+
+> •
+
+ParamUNET [LSCE-IPSL] is a compact U-Net (Ronneberger et al., 2015) trained with negative log-likelihood to output the parameters of a Bernoulli-Gamma dis-tribution for precipitation and a Gaussian distribution for temperature, with the expected value submitted as the deterministic point estimate (e.g., Cannon, 2008). This model is included in the benchmark since it is the backbone for the ParamD-iffusion generative model, and has been adapted from Legasa et al. (2026).  
+
+> •
+
+DeepESD-IFCAv1 [IFCA] is a deep CNN comprising three convolutional lay-ers (50, 25, and 1 kernels) followed by a dense output layer, using an asymmet-ric loss for precipitation and MSE for temperature. In the orography variant, high-resolution orography is appended after the final convolutional layer. Training runs 200–600 epochs, with the number of training epochs determined by early stopping on the validation loss (Baño-Medina et al., 2022; González-Abad and Gutiérrez, 2025).  
+
+> •
+
+DeepESD-IDL [IDL] shares the CNN architecture of DeepESD-IFCAv1, but replaces the loss function with a Bernoulli-Gamma negative log-likelihood for pre-cipitation and MSE for temperature, where the different loss components for tem-perature and precipitation were added together with equal weighting (Soares et al., 2024b).  
+
+> •
+
+DeepSensor [BAS] is a neural process model (Andersson et al., 2023) that ap-plies convolutional filters to predict Gaussian distribution parameters over the tar-get domain. Neural processes are inherently probabilistic, providing principled es-timates of predictive uncertainty, however for this benchmark, deterministic pre-dictions are obtained as the posterior mean. Training uses early stopping, typi-cally converging within 150–180 epochs.  
+
+> •
+
+ANN [BSC] is a shallow multi-layer perceptron (two layers with 25 and 15 neu-rons). A Bernoulli-Gamma loss is used for precipitation (where the model predicts parameters of the distribution, and the prediction is the expected value) and MSE for temperature, with training duration determined by early stopping. It is the only algorithm trained entirely on CPU hardware (Olmo and Bettolli, 2022).  
+
+> •
+
+XGBoost [IDL] provides a gradient-boosted decision tree baseline adapted from Bushenkova et al. (2024), trained with RMSE loss for both variables. Inputs are standardised at the grid-box level; key hyperparameters are a maximum tree depth of 6, a learning rate of 0.05, and early stopping after 20 rounds without improve-ment. 
+
+2.3.2 Generative and Probabilistic Models 
+
+The generative algorithms include GANs, flow matching, and diffusion model frame-works, thereby representing the current state of the art in generative modeling. All pro-duce stochastic ensemble outputs that capture uncertainty and spatial variability beyond the reach of deterministic regression.   
+
+> –12– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES)
+> •
+
+FlowMatching-v1 [Met Office UK] is a flow matching model built on a U-Net backbone (128 base channels) trained to transport samples from a Gaussian source to the target distribution, via a linear scheduler (Wetherell, 2026). Precipitation is normalised with a log1p transform followed by z-score standardisation.  
+
+> •
+
+ResGAN and ResGAN-v2 [Earth Sciences NZ] implement a residual Wasser-stein GAN following Rampal et al. (2025a), pairing a U-Net ( ∼3M parameters; DetUNet) that first predicts the conditional mean, with a GAN ( ∼3M parame-ters) that then predicts the stochastic residual. A pooled maximum intensity con-straint (MSE weighted 4.25 ×) is incorporated into the loss function to better cap-ture precipitation extremes as in Rampal et al. (2025a). The two variants differ in learning rate and activation function: ResGAN-v2 uses LeakyReLU(0.5) for tem-perature. A similar ResGAN variant has been evaluated extensively over New Zealand in previous work, with a focus on extrapolation, transferability, and extremes (Ram-pal et al., 2025a, 2024a, 2025b; Ward-Leikis et al., 2025).  
+
+> •
+
+RCMFlow [ESNZ] is a flow matching model adapted from the Lipman et al. (2022) implementation. It uses a ResGAN-style architecture (including activation functions) with additional FiLM layers to embed the flow time variable and en-able interaction with the predictor fields (Ward-Leikis et al., 2025). The model is non-residual and learns the full conditional distribution directly, rather than ap-plying a residual correction, using ∼4.5M parameters. Inference uses an Adams–Bashforth third-order ODE solver with 25 flow-time steps per sample for efficiency. Train-ing uses an exponential moving average of model weights to promote stable con-vergence, with learning rate decay, and is run for a fixed 500 epochs per exper-iment.  
+
+> •
+
+SpaGAN [KIT] uses a U-Net2D generator with a convolutional discriminator, trained using a composite loss combining L1, MSE, adversarial, and diversity terms. Sinusoidal day-of-year encoding provides temporal conditioning, and a stochas-tic noise channel appended at each forward pass generates five ensemble members per time step. Precipitation is log10-transformed and then scaled to the range [-1, 1]. The model is related to that of Glawion et al. (2023, 2025), who used a sim-ilar non-residual GAN for downscaling coarse precipitation inputs. The number of training epochs is determined by early stopping on the validation loss.  
+
+> •
+
+EnScale / EnScale-linex [ETH Zurich] implements a multi-step downscal-ing framework that first maps atmospheric predictors to spatially pooled targets, then iteratively enhances resolution through sparse localised layers, trained with a proper scoring rule as a loss function (Schillinger et al., 2025). EnScale-linex ex-tends this by fitting a linear model first and applying the non-linear EnScale to the residuals. For the ESD setting, an additional stationarity assumption for the residuals is enforced by detrending predictors for EnScale.  
+
+> •
+
+UiBCorrDiff [UiB] is a corrective Elucidated Diffusion Model (EDM) compris-ing a regression U-Net trained with Tweedie deviance loss (p = 1.6) for precip-itation and MSE for temperature, followed by a residual EDM diffusion U-Net trained with score matching (Mardani et al., 2025). The approach was initially developed to downscale from ERA5 to convection permitting scales, but adapted here for down-scaling in a climate context. Both modules use a 128-channel, 5-block U-Net ar-chitecture. Precipitation is scaled by the global 99th percentile of training-period values; ensemble members are generated via different random seeds passed to a deterministic 36-step sampler. Inference uses an 18-step second-order stochastic sampler. No optimal checkpoint selection strategy was employed.  
+
+> •
+
+CorrDiff-TW1 [NTNU/CWA] uses the same EDM-based corrective diffusion architecture as UiBCorrDiff, implemented in NVIDIA PhysicsNeMo (formerly Mod-ulus), comprising a regression U-Net followed by a residual EDM diffusion U-Net. Both modules use a 128-channel U-Net with 5 resolution levels. Unlike UiBCor-rDiff, the regression network is trained with an MSE loss for both precipitation and temperature, without a Tweedie deviance loss. Both precipitation and tem- 
+
+> –13– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES)
+
+perature targets are standardized by per-channel z-score normalization over the training period, following the default CorrDiff preprocessing rather than apply-ing a specific precipitation transform. This variant is trained for substantially more epochs than the UiBCorrDiff implementation.  
+
+> •
+
+ParamDiffusion-orog [LSCE-IPSL] is a diffusion model that uses ParamUNET as its parametric background (predictive information). Precipitation is log-transformed and standardised prior to training, with separate models per variable. The model uses orographic predictors. A single model has been trained for all regions, as op-posed to training a separate model for each region. A comprehensive overview of the model can be found in Legasa et al. (2026).  
+
+> •
+
+RCMGEM-mv-orog [UoB] is a score-based diffusion model using the NCSN++ architecture under a sub-Variance-Preserving SDE formulation (Song et al., 2020), trained with the Adam optimiser at a learning rate of 2×10 −4. The number of training epochs varies substantially by domain and experiment (260–2,000 epochs), with the optimal checkpoint selected using validation metrics including spectral density and seasonal bias. The architecture is the same as that of the Convection-Permitting Model Generative Emulator (CPMGEM) of Addison et al. (2026), here applied to an RCM setting, adapted to produce multi-variate output and include orography as an input variable.  
+
+> •
+
+ViT-IFCAv1 [IFCA] is a Vision Transformer (Dosovitskiy et al., 2020) in which predictors are partitioned into patches, embedded, and passed through Transformer blocks before upscaling to the target resolution. Stochasticity is injected via FiLM. A CRPS-Spectral loss jointly penalises errors in spatial and frequency domains (Nordhagen et al., 2025), and training duration is determined by early stopping on a held-out validation split. 
+
+2.3.3 Training Data normalisation 
+
+The benchmark imposed no prescribed normalisation strategy, allowing groups to adopt their own approaches. This was done deliberately to enable the community to ex-plore how these decisions interact with architecture and loss function design. The strate-gies adopted across approaches show both broad commonalities and instructive differ-ences, which are further detailed in Supplementary Table T2. 
+
+Predictor normalisation . The majority of approaches standardised input pre-dictors to zero mean and unit variance on a per-channel basis over the full training pe-riod 
+
+X′(t, c, x, y ) = X(t, c, x, y ) − ¯μ(c)
+
+σ(c) , (1) where ¯μ(c) and σ(c) are the mean and standard deviation of channel c computed across all time steps and spatial locations in the training period. Three notable departures from this are worth noting. First, ViT-IFCAv1, DeepESD-IFCAv1 and DeepESD-IDL are stan-dardised at the individual grid-point level rather than globally across space, preserving local climatological gradients in the normalised inputs. Second, Rossby-UNet normalised predictors relative to the local monthly climatology rather than the full training-period mean, so that the normalised anomaly is referenced to the seasonal cycle rather than the annual mean. Third, CNRM-UNeT applied per-timestep normalisation, 
+
+X′(t, c, x, y ) = X(t, c, x, y ) − ¯μ(t, c )
+
+σ(t, c ) , (2) where μ(t, c ) and σ(t, c ) are the spatial mean and standard deviation of channel c at time step t only. While this approach removes the instantaneous large-scale state from each input field, the models are also fed the instantaneous normalisation statistics — the per-timestep mean and standard deviation — as additional inputs to the network. Lastly, SpaGAN and DeepSensor apply a min-max normalisation to inputs rather than stan- 
+
+> –14– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES)
+
+dardisation. Orography, the only static predictor, was normalised separately in most cases using global min-max scaling to [0, 1]. 
+
+Target normalisation . For the target variable precipitation, a wide range of dif-ferent normalisation approaches has been used. Most models applied a logarithmic trans-form prior to training with several subsequently applying z-score standardisation to the transformed values (FlowMatching-v1, ResGAN, DetUNet, ParamDiffusion-orog, Prithvi-UNet, RCMFlow). Additionally, UiBCorrDiff scaled precipitation by the global 99th per-centile of training-period gridpoint values, and SpaGAN applied a log10 transform fol-lowed by rescaling to [-1, 1]; EnScale normalised by the per-location standard deviation; CorrDiff-TW1 applied z-score normalization to precipitation and RCMGEM-mv-orog ap-plied a square-root transformation followed by normalisation to [-1, 1]. Also, ParamUNET, ANN and DeepESD-IDL did not explicitly apply a normalisation because they bypassed explicit transformations by directly predicting the parameters of a Bernoulli-Gamma dis-tribution (e.g., Cannon, 2008; Baño-Medina et al., 2020; Rampal et al., 2022). In con-trast, some other models applied no explicit normalisation to precipitation. For temper-ature, normalisation was consistent across different ML approaches, with the large ma-jority applying grid-point-level z-score standardisation computed over the training pe-riod and reapplied at inference. A small number of models instead rescaled temperature to [-1, 1] or [0, 1] to match the output range of their architecture. Additionally, a few models applied no normalization at all to this variable, working directly with raw tem-perature values. 
+
+2.4 Evaluation Metrics 
+
+The core evaluation metrics are summarised in Table 3; unless stated otherwise, all are computed at the grid-point level and spatially averaged over each domain. Each metric is briefly introduced below.  
+
+> •
+
+Root-mean-square error (RMSE) .The primary measure of day-to-day skill used in this study is RMSE, defined as 
+
+RMSE = 
+
+s 1
+
+NtNxNy
+
+X
+
+> t,x,y
+
+ ˆYt,x,y − Yt,x,y 
+
+2
+
+, (3) where ˆYt,x,y and Yt,x,y denote the predicted and reference (ground truth RCM) fields at time step t and grid point (x, y ), and Nt, Nx, and Ny are the numbers of time steps and grid points in each dimension. RMSE is computed separately for daily precipitation (pr) and daily maximum temperature (tasmax).  
+
+> •
+
+Simple Daily Intensity Index (SDII) : The SDII, developed by the Expert Team on Climate Change Detection and Indices (ETCCDI; Zhang et al., 2011), mea-sures mean precipitation intensity on wet days (days with pr ≥ 1 mm day −1), 
+
+SDII = 
+
+P  
+
+> t:pr t≥1
+
+pr t
+
+P  
+
+> t:pr t≥1
+
+1 , (4) where the sums run only over wet days ( pr t ≥ 1 mm day −1). SDII captures whether a model correctly partitions total rainfall between wet-day frequency and wet-day intensity. We evaluate it by computing the RMSE of the SDII climatology (i.e. over a 20-year period) from the predicted field against that from the reference sim-ulation over the period of interest.  
+
+> •
+
+Rx1day and TXx : Skill in reproducing extremes is quantified using two ETC-CDI indices: the annual maximum one-day precipitation (Rx1day) and the an-nual maximum daily maximum temperature (TXx). Both are computed at each   
+
+> –15– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES)
+> Table 3. Core evaluation metrics used in CORDEX-ML-Bench, applied to each of the three pilot domains (ALPS, NZ, SA) and as a domain average (AV). Smaller absolute values are better for all metrics (lower is better) except for Perkins Skill Score. Metrics are computed over the historical (1981–2000) and mid-century future (2041–2060) test periods.
+
+Metric Variable Description 
+
+RMSE pr, tasmax Root-mean-square error (RMSE) of daily val-ues Clim Mean pr, tasmax RMSE of the climatological mean SDII pr RMSE of the Simple Daily Intensity In-dex (SDII; mean precipitation on wet days, 
+
+≥1 mm day −1)Rx1day pr RMSE of the climatological mean annual maximum 1-day precipitation TXx tasmax RMSE of the climatological mean annual maximum daily maximum temperature RALSD pr, tasmax Radially averaged log-spectral distance; mea-sures spatial power-spectral variability LHD pr Logarithmic histogram distance; measures distributional fit PSS tasmax Perkins Skill Score; measures distributional overlap 
+
+∆M signal error pr, tasmax Spatial RMSE of the climate-change signal (future − historical climatological mean) ex-pressed as a percentage grid point, averaged over all years in the evaluation period, and scored as the RMSE between the predicted and reference climatology.  
+
+> •
+
+Interannual Variability (IAV) : For maximum temperature we additionally re-port the interannual variability of annual means. The standard deviation is com-puted from annual means across time at each grid point, and the RMSE is then calculated between the predicted and true interannual variability. This provides a measure of temporal variability and assesses how well the models reproduce RCM simulation year-to-year fluctuations/variability.  
+
+> •
+
+Radially-averaged Log Spectral Distance (RALSD) . A well-known limi-tation of regression-based downscaling is the tendency to produce overly smooth spatial fields, as predictions regress toward the mean and fine-scale variability is underestimated (Rampal et al., 2025a; Subich et al., 2025; Ravuri et al., 2021). This metric evaluates how accurately a model reproduces spatial variability within precipitation or temperature fields across synoptic to fine scales. Following Har-ris et al. (2022); Rampal et al. (2025a), we compute the radially averaged two-dimensional power spectral density (PSD) for both predicted ( S ˆY (k)) and reference ground truth fields ( SY (k)) and subsequently calculate the log-spectral distance: 
+
+RALSD( dB ) = 
+
+s 1
+
+K
+
+X
+
+> k
+
+log SY (k) − log S ˆY (k)2. (5)  
+
+> –16– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES)
+
+where k indexes the radial wavenumber and K is the total number of wavenum-ber bins. RALSD is computed for each day and then averaged across all days. As with most of the metrics, the smaller the value, the better.  
+
+> •
+
+Perkins Skill Score (PSS) : The PSS (Perkins et al., 2007) quantifies the over-lap between the predicted and reference probability density functions as the sum of the minimum counts across all histogram bins: 
+
+PSS = 
+
+> B
+
+X
+
+> b=1
+
+min  HY (b), H ˆY (b) , (6) where HY (b) and H ˆY (b) are the normalised histogram counts for the reference and predicted distributions in bin b, respectively, and B is the total number of bins. PSS ranges from 0 (no overlap) to 1 (perfect agreement). It is applied here to the distribution of daily maximum temperature across all times and locations, rather than on a per-location basis for simplicity. An example illustrating the calcula-tion and interpretation of the PSS for model evaluation is provided in Figure S1.  
+
+> •
+
+Logarithmic Histogram Distance (LHD) : quantifies how well a model repro-duces the full distribution of a variable, analogous to RALSD in spectral space. Contrary to PSS which weights all bins equally and is therefore more sensitive to errors near the mode of the distribution, LHD applies a logarithmic weighting in histogram space so that errors across all intensity bins contribute equally, giving greater sensitivity to the tails of heavy-tailed distributions (e.g. precipitation). It is computed as the root-mean-square distance between the logarithms of normalised frequency histograms of the predicted ( ˆY ) and reference ( Y ) fields: 
+
+LHD( dB ) = 
+
+vuut 1
+
+B
+
+> B
+
+X
+
+> b=1
+
+log HY (b) − log H ˆY (b)2, (7) where HY (b) and H ˆY (b) are the normalised histogram counts in bin b and B is the total number of bins. Lower values indicate a closer match to the reference distribution. The metric is only computed for bins where both distributions con-tain more than 10 counts, and histograms are computed over all times and loca-tions, as with PSS. Figure S2 provides an example illustrating the calculation and interpretation of the LHD for model evaluation.  
+
+> •
+
+Climate-change signal : The climate-change signal error ( ϵ∆M ) measures how well a model captures the change in a climatological metric M between a histor-ical period (1981–2000) and a mid-century period (2041–2060): 
+
+ϵ∆M = ∆ ˆM − ∆M, ∆M = Mf uture − Mhistorical . (8) For temperature metrics, ∆M is an absolute change; for precipitation metrics, it is a relative change ( ∆M / Mhistorical ). The climatological metric M may rep-resent changes in mean fields, such as temperature, or in extremes, such as Rx1day. This error reveals whether a model faithfully extrapolates beyond its training dis-tribution (ESD) or interpolates across historical and future conditions (RCM Em-ulator), and is therefore treated as one of the most important fitness-for-purpose criteria, though its interpretation requires care. Here, we provide an initial assess-ment of the models’ ability to reproduce future changes in extremes for an unseen period within the training GCM, with further analysis across seen and unseen GCMs and the imperfect evaluation setting deferred to forthcoming studies. For generative models, predictions are produced as ensembles of 5 or 10 members, depending on what each contributor to the benchmark was able to generate. For diag-nostics targeting mean aspects of the climate we use the ensemble mean. For extreme  
+
+> –17– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES)
+
+metrics, the statistic is first computed for each ensemble member, then averaged across members before the final metric/score is calculated. For metrics such as RALSD, PSS, LHD, the score is computed for each member, before averaging the score across all mem-bers. This approach provides a consistent basis for evaluating the added value of gen-erative approaches. 
+
+2.5 Reporting and scorecard format 
+
+All metrics described above are reported for both the ESD and RCM Emulator ex-periments and are summarised in a scorecard. The historical period (1981–2000) is ex-cluded from training in both experiments; therefore, evaluation over this held-out pe-riod represents perfect cross-validation, shown in the upper triangle of the scorecard (Fig-ures 11-12). For the future period (2041–2060), evaluation represents either perfect ex-trapolation when models are trained only on historical data (ESD), or perfect interpo-lation in the RCM Emulator configuration, where models are trained on combined his-torical and future data. These scores are shown in the lower triangle of the scorecard. The dual-panel scorecard format introduced in Section 3.4 enables direct comparison of in-sample and out-of-sample skill within each experiment, while also facilitating com-parison between the two experiments. 
+
+3 Results 
+
+In Section 3.1, we first present several case studies to qualitatively illustrate model skill, followed by skill in predicting climatologies in 3.2. Both use the RCM Emulator experiment over the cross-validation period (1981–2000), which provides a representa-tive overview of results across both experiments. Section 3.3 then examines climate change signal skill for both the ESD and RCM Emulator experiments over the mid-century pe-riod (2041-2060) – a period withheld from training. Finally, Section 3.4 provides a com-prehensive multi-metric benchmarking and ranking across historical and future periods. Throughout, evaluation is restricted to the training GCM in an unseen out-of-sample pe-riod under the perfect predictor framework, with a more in-depth analysis of GCM trans-ferability (imperfect evaluation) left for future studies. 
+
+3.1 Case Studies 
+
+We begin with case studies across each of the three domains to illustrate how dif-ferent model architectures predict individual extreme events (Figures 3 and 4). These case studies are selected by their domain-averaged intensity: the hottest day for max-imum temperature and the wettest day for precipitation, ensuring the illustrated events correspond to widespread rather than localised extremes. The six models shown com-prise three drawn from the top-10 and three from the bottom-20 of the overall ranking for each variable, based on the multi-metric scoring described in Section 3.4. It should be noted that lower-ranked models are not necessarily poor performers in an absolute sense since many of these models have demonstrated skill relative to many conventional statistical downscaling approaches (Baño-Medina et al., 2020; González-Abad and Gutiér-rez, 2025). Also note that precipitation and temperature have variability that is not en-tirely predictable using coarse-resolution predictors, with downscaling being an under-constrained problem (ill-posed), so the downscaling methods are not expected to repro-duce the high-resolution targets in full detail. For the maximum temperature case study (Figure 3), most models reproduce the large-scale spatial patterns well across all three domains, including the cooler temper-atures over the European Alps and New Zealand’s Southern Alps, the anomalously warm conditions over north-eastern South Africa, and the localised heating over south-eastern New Zealand consistent with the föhn effect. As for the extreme precipitation case study  
+
+> –18– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES)
+
+(Figure 4), the selected generative models generally produce plausible spatial patterns across all three domains. Over the Alps, RCMGEM-mv-orog, ResGAN-v2-orog, FlowMatching-v1, and CorrDiff capture the orographic enhancement of precipitation over mountain-ous regions, even when the precise location of maximum intensity is not perfectly pre-dicted. Similar behaviour is evident over New Zealand, where generative approaches re-produce key characteristics of narrow frontal precipitation bands extending from the north-west to south-east, which generate strong orographic precipitation over north-eastern parts of the South Island. Over Southern Africa, these generative models capture aspects of larger convective structures, consistent with the mesoscale convective organisation typ-ical of austral-summer circulation. In contrast, deterministic regression models — most notably XGBoost_IDL and ANN-orog — systematically underestimate extreme inten-sities and produce spatially smooth or noise-dominated fields that lack the fine-scale struc-ture expected of a ∼10 km precipitation field, with this limitation most pronounced out-side the Alps domain. This behaviour is a well-documented consequence of regression-to-the-mean in ML-based downscaling (Rampal et al., 2025a; Ravuri et al., 2021; Har-ris et al., 2022; Vosper et al., 2023) and is assessed more formally through the RALSD metric (Section 3.4). Additional case studies, including those for the ESD experiment, are shown in Figures S3–S6. 
+
+3.2 Historical Climatologies 
+
+We next assess climatological skill using two ETCCDI indices: the annual maxi-mum daily maximum temperature (TXx) and annual maximum one-day precipitation (Rx1day), evaluated over the cross-validation period (1981–2000) for the RCM Emula-tor experiment (Figures 5 and 6). For the TXx climatology (Figure 5), most models reproduce the spatial climatol-ogy faithfully across all three domains, capturing the cooler temperatures over the moun-tainous regions of the European and New Zealand Alps, land–sea temperature contrasts over the Italian peninsula and New Zealand, and the warm interior of Southern Africa. The leading models in the RCM Emulator experiment — ParamDiffusion-orog, ViT-IFCAv1, and FlowMatching-v1-orog — achieve RMSE values of 0.3–0.9 ◦C, with the majority of the 40 models clustering below 2 ◦C across all domains. Even the lower-ranked models shown — ResGAN-orog (RMSE; 0.59–1.79 ◦C), ANN-orog (0.93–1.46 ◦C), and Prithvi-UNet (0.73–1.23 ◦C) — broadly reproduce the large-scale spatial patterns of TXx, though some exhibit systematic biases; for example, ResGAN-orog captures the spatial struc-ture well but shows a consistent warm bias across all domains. For the Rx1day climatology (Figure 6), the top-ranked models — RCMGEM-mv-orog, ResGAN-v2-orog, and FlowMatching-v1 — reproduce the broad spatial patterns of annual maximum precipitation across all three domains, including orographic enhance-ment along mountain ranges and the north-south gradient over New Zealand. Bottom-ranked models show substantially larger errors; for example, over Southern Africa, ANN-orog achieves an RMSE of 75 mm day −1 compared to 12.5 mm day −1 for RCMGEM-mv-orog. A dry bias and systematic underestimation of extreme precipitation is a consis-tent feature of the bottom-ranked models, including some generative approaches such as those based on CorrDiff. The inter-model spread and typical RMSE values are largest over Southern Africa and smallest over the Alps across the full model ensemble. We at-tribute the larger RMSE in the South African domain to the dominant role of mesoscale convection during the austral summer (Blamey and Reason, 2013), which we suspect are somewhat less predictable from the set of large-scale predictor fields used here; though this will be explored in greater depth in a companion paper. It is worth noting that rank order is not always consistent across metrics and domains. A model’s overall rank re-flects aggregate skill, and strong performance on one metric does not guarantee skill on another, underscoring the importance of the multi-metric ranking framework discussed in Section 3.4. Similar results for the ESD experiment are shown in Figures S7 and S8. 
+
+> –19–
+
+manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES) ParamDiffusion-orog ViT-IFCAv1 FlowMatching-v1-orog          
+
+> ResGAN-orog ANN-orog Prithvi-UNet
+> 0° 3°E 6°E 9°E 12°E 15°E 18°E 21°E
+> 38°N
+> 40°N
+> 42°N
+> 44°N
+> 46°N
+> 48°N
+> 50°N
+
+Ground truth 
+
+(CNRM-CM5) (2000-08-26) 
+
+20.0 22.5 25.0 27.5 30.0 32.5 35.0 37.5 
+
+Max temperature [°C] 40 45  
+
+> Max intensity [°C]
+> 0.0
+> 0.1
+> Density
+
+Max Intensity across all models          
+
+> ALPS  TOP BOTTOM
+> ParamDiffusion-orog ViT-IFCAv1 FlowMatching-v1-orog
+> ResGAN-orog ANN-orog Prithvi-UNet
+> 22°E 24°E 26°E 28°E 30°E 32°E
+> 34°S
+> 32°S
+> 30°S
+> 28°S
+> 26°S
+> 24°S
+
+Ground truth 
+
+(ACCESS-CM2) (1999-12-11) 
+
+25.0 27.5 30.0 32.5 35.0 37.5 40.0 
+
+Max temperature [°C] 42 44 46 48  
+
+> Max intensity [°C]
+> 0.0
+> 0.2
+> Density
+
+Max Intensity across all models          
+
+> SA  TOP BOTTOM
+> ParamDiffusion-orog ViT-IFCAv1 FlowMatching-v1-orog
+> ResGAN-orog ANN-orog Prithvi-UNet
+> 168°E 170°E 172°E 174°E 176°E 178°E
+> 46°S
+> 44°S
+> 42°S
+> 40°S
+> 38°S
+> 36°S
+> 34°S
+
+Ground truth 
+
+(ACCESS-CM2) (1990-02-13) 
+
+18 20 22 24 26 28 
+
+Max temperature [°C] 30 32 34 36  
+
+> Max intensity [°C]
+> 0.0
+> 0.2
+> Density
+
+Max Intensity across all models 
+
+> NZ  TOP BOTTOM
+
+TASMAX · daily 
+
+Emulator hist future · Case study — rank 1 extreme day 
+
+Figure 3. An extreme-event case study is included to illustrate predictions from different ML models in the RCM Emulator experiment across all three domains. The selected event (2000-08-26 for the European Alps, 1999-12-11 for South Africa, and 1990-02-13 for New Zealand) corresponds to the hottest day from the cross-validation historical period (1981–2010), based on area-averaged daily maximum temperature, representing a widespread extreme heat event in each domain. Six models are shown per domain: three drawn from the top-10 ranked models (ParamDiffusion-orog, VIT-IFCAv1, FlowMatching-v1-orog; green labels) and three from the bottom 20 (ResGAN-orog, ANN-orog and Prithvi-UNet; red labels). For the generative models, only the first ensemble member is show here. The inset beneath the ground-truth panel shows the distribution of spatial maximum intensity across all 40 models for that day, with the vertical black line indicating the observed value. Fields are displayed on the native ∼10 km target grid. –20– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES) RCMGEM-mv-orog ResGAN-v2-orog FlowMatching-v1 
+
+CorrDiff-TW1_NTNU-CWA-orog XGBoost_IDL ANN-orog        
+
+> 0° 3°E 6°E 9°E 12°E 15°E 18°E 21°E
+> 38°N
+> 40°N
+> 42°N
+> 44°N
+> 46°N
+> 48°N
+> 50°N
+
+Ground truth 
+
+(CNRM-CM5) (1992-08-28) 
+
+0 10 20 30 40 50 60 70 
+
+Precipitation [mm day −1 ] 50 100 150 200 250 
+
+Max intensity [mm day −1 ]
+
+0.00 
+
+0.01 
+
+> Density
+
+Max Intensity across all models 
+
+> ALPS  TOP BOTTOM
+
+RCMGEM-mv-orog ResGAN-v2-orog FlowMatching-v1 
+
+CorrDiff-TW1_NTNU-CWA-orog XGBoost_IDL ANN-orog      
+
+> 22°E 24°E 26°E 28°E 30°E 32°E
+> 34°S
+> 32°S
+> 30°S
+> 28°S
+> 26°S
+> 24°S
+
+Ground truth 
+
+(ACCESS-CM2) (1998-11-13) 
+
+0 50 100 150 200 
+
+Precipitation [mm day −1 ] 0 500 1000 1500 2000 
+
+Max intensity [mm day −1 ]
+
+0.000 
+
+0.002 
+
+> Density
+
+Max Intensity across all models 
+
+> SA  TOP BOTTOM
+
+RCMGEM-mv-orog ResGAN-v2-orog FlowMatching-v1 
+
+CorrDiff-TW1_NTNU-CWA-orog XGBoost_IDL ANN-orog      
+
+> 168°E 170°E 172°E 174°E 176°E 178°E
+> 46°S
+> 44°S
+> 42°S
+> 40°S
+> 38°S
+> 36°S
+> 34°S
+
+Ground truth 
+
+(ACCESS-CM2) (1993-01-19) 
+
+0 20 40 60 80 
+
+Precipitation [mm day −1 ] 100 200 300 400 
+
+Max intensity [mm day −1 ]
+
+0.000 
+
+0.005 
+
+> Density
+
+Max Intensity across all models 
+
+> NZ  TOP BOTTOM
+
+PR · daily 
+
+Emulator hist future · Case study — rank 1 extreme day 
+
+Figure 4. Same as Figure 3, but for the wettest day for precipitation (based on area-averages). In this case the selected events are 1992-08-28 for the European Alps, 1998-11-13 for South Africa, and 1993-01-19 for New Zealand. The three models shown from the top-10 ranked models are RCMGEM-mv-orog, ResGAN-v2-orog, and FlowMatching-v1, while the three models shown from the bottom 20 are CorrDiff-TW1_NTNU-CWA-orog, XGBoost_IDL, and ANN-orog. –21– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES) 
+
+Overall, these results highlight a much larger inter-model spread in skill for pre-cipitation than temperature, with generative models showing a clear advantage over de-terministic approaches in capturing fine-scale spatial detail and extremes — a difference far less pronounced for temperature, where most architectures perform well. The inter-model spread in Rx1day RMSE spans nearly an order of magnitude across domains, com-pared with roughly 2 ◦C for TXx. Results here are limited to the RCM Emulator cross-validation period; a comprehensive comparison across experiments, future periods, and the full metric suite is presented in Section 3.4. 
+
+3.3 Future Climate Change Signals 
+
+We now assess the models’ ability to reproduce the mid-century climate-change sig-nal (2041–2060 relative to 1981–2000) in TXx and Rx1day — a period withheld from training in both experiments. Unlike previous sections, we also include results for the ESD experiment, which better tests extrapolation capabilities since models are trained exclusively on historical simulations with no future data involved. Figures 7–10 show pre-dicted signals from three top-ranked and three lower-ranked models alongside the ref-erence RCM signal for each domain, with the area-mean ∆ annotated per panel and the full 40-model distribution shown in the bottom-right inset; note that rankings are based on the overall multi-metric score rather than this specific metric. Results for TXx are discussed first (Figures 7–8), followed by Rx1day (Figures 9–10). The reference (i.e. RCM predicted ground-truth) mid-century warming signal of TXx is +2.27 K over the Alps, +2.74 K over Southern Africa, and +2.26 K over New Zealand. In the ESD experiment (Figure 7), nearly all 40 models underestimate this sig-nal across all three domains. The distributions of area-mean ∆ are systematically shifted to the left of the reference line, with most models predicting warming of only +1.5–2.0 K — an underestimation of roughly 0.3–0.8 K depending on domain, though some in-dividual models underestimate this signal even more. This underestimation is evident even among the highest-ranked ESD models — RCMGEM-mv-orog, Prithvi-UNet-orog, and ParamUNET. While the spatial patterns of warming are broadly plausible, the mag-nitude of the climate change signal is underestimated for all three domains, and across nearly all models. In contrast, for the RCM Emulator experiment (Figure 8), the dis-tributions of the mean climate change signal across all models shift toward the reference mean signal, and most models achieve area-mean ∆ values within 0.1–0.3 K of the ref-erence across all domains. The top-ranked models — ParamDiffusion-orog, ViT-IFCAv1, and FlowMatching-v1-orog — predict area-mean changes in close agreement with the reference values. The RMSE distributions are also considerably narrower than in the ESD experiment. The main exception is ResGAN-orog, which underestimates the TXx sig-nal in the Alps (+1.63 K) and New Zealand (+1.43 K) despite being trained on future data. Overall, these results indicate that including future periods during training is highly beneficial for reproducing future temperature climate change signals, although further analysis of this aspect will be explored in a companion study. For Rx1day, the reference mid-century change is +7.49% over the Alps, +18.17% over Southern Africa, and +18.45% over New Zealand. Unlike mean precipitation, whose global changes are more constrained by radiative energy balance (Trenberth et al., 2003), changes in Rx1day are more strongly influenced by increases in precipitable water via Clausius-Clapeyron scaling and are therefore often positive across many regions, though rates of increase vary (Pfahl et al., 2017; O’Gorman, 2015). Also, the spatial patterns of this climate-change signal are somewhat noisy, as they are more strongly influenced by individual extreme events not linked to the large-scale conditions represented by the predictors (e.g., convective events). This makes RMSE a less informative metric over-all for this diagnostic (Rx1day), making additional qualitative assessment important. In the ESD experiment (Figure 9), all models substantially underestimate the area-mean Rx1day climate change signal across all domains, especially for South Africa and New 
+
+> –22–
+
+manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES) ParamDiffusion-orog 
+
+RMSE 0.42 
+
+> ViT-IFCAv1
+
+RMSE 0.60 
+
+> FlowMatching-v1-orog
+
+RMSE 0.92 
+
+> ResGAN-orog
+
+RMSE 1.41 
+
+> ANN-orog
+
+RMSE 1.30 
+
+> Prithvi-UNet
+
+RMSE 1.23 0° 3°E 6°E 9°E 12°E 15°E 18°E 21°E 
+
+> 38°N
+> 40°N
+> 42°N
+> 44°N
+> 46°N
+> 48°N
+> 50°N
+
+Ground truth 
+
+(CNRM-CM5) 
+
+20.0 22.5 25.0 27.5 30.0 32.5 35.0 37.5 
+
+Max temperature [°C] 0 1 2 3 4
+
+RMSE [°C] 
+
+0
+
+1
+
+> Density
+
+RMSE across all models 
+
+> ALPS  TOP BOTTOM
+> ParamDiffusion-orog
+
+RMSE 0.33 
+
+> ViT-IFCAv1
+
+RMSE 0.83 
+
+> FlowMatching-v1-orog
+
+RMSE 0.38 
+
+> ResGAN-orog
+
+RMSE 0.59 
+
+> ANN-orog
+
+RMSE 1.46 
+
+> Prithvi-UNet
+
+RMSE 0.82      
+
+> 22°E 24°E 26°E 28°E 30°E 32°E
+> 34°S
+> 32°S
+> 30°S
+> 28°S
+> 26°S
+> 24°S
+
+Ground truth 
+
+(ACCESS-CM2) 
+
+25.0 27.5 30.0 32.5 35.0 37.5 40.0 42.5 
+
+Max temperature [°C] 0 1 2 3 4
+
+RMSE [°C] 
+
+0
+
+1
+
+> Density
+
+RMSE across all models 
+
+> SA  TOP BOTTOM
+> ParamDiffusion-orog
+
+RMSE 0.34 
+
+> ViT-IFCAv1
+
+RMSE 0.66 
+
+> FlowMatching-v1-orog
+
+RMSE 0.51 
+
+> ResGAN-orog
+
+RMSE 1.79 
+
+> ANN-orog
+
+RMSE 0.93 
+
+> Prithvi-UNet
+
+RMSE 0.73      
+
+> 168°E 170°E 172°E 174°E 176°E 178°E
+> 46°S
+> 44°S
+> 42°S
+> 40°S
+> 38°S
+> 36°S
+> 34°S
+
+Ground truth 
+
+(ACCESS-CM2) 
+
+16 18 20 22 24 26 28 30 
+
+Max temperature [°C] 0 1 2 3 4
+
+RMSE [°C] 
+
+0
+
+1
+
+> Density
+
+RMSE across all models 
+
+> NZ  TOP BOTTOM
+
+TASMAX · climatology 
+
+Emulator hist future · TXx 
+
+Figure 5. TXx climatology (mean annual maximum daily maximum temperature) over the cross-validation period (1981–2000) for the RCM Emulator experiment. Layout as in Figure 3. The three top-ranked models shown are ParamDiffusion-orog, ViT-IFCAv1, and FlowMatching-v1-orog; the three bottom-ranked models are ResGAN-orog, ANN-orog, and Prithvi-UNet. RMSE relative to the reference RCM climatology is annotated in the bottom-right corner of each panel, and is indicated in units of ◦C. The inset below the ground-truth panel shows the distribution of TXx RMSE across all 40 models; green and red dots indicate the sampled top and bottom models, respectively, and grey dots indicate all other models. Fields are displayed on the native ∼10 km target grid. –23– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES) RCMGEM-mv-orog 
+
+RMSE 3.98 
+
+ResGAN-v2-orog 
+
+RMSE 7.05 
+
+FlowMatching-v1 
+
+RMSE 7.02 
+
+CorrDiff-TW1_NTNU-CWA-orog 
+
+RMSE 12.73 
+
+XGBoost_IDL 
+
+RMSE 22.76 
+
+ANN-orog 
+
+RMSE 27.63 0° 3°E 6°E 9°E 12°E 15°E 18°E 21°E 
+
+> 38°N
+> 40°N
+> 42°N
+> 44°N
+> 46°N
+> 48°N
+> 50°N
+
+Ground truth 
+
+(CNRM-CM5) 
+
+0 20 40 60 80 100 
+
+Precipitation [mm day −1 ] 0 20 40 60 80 
+
+RMSE [mm day −1 ]
+
+0.00 
+
+0.05 
+
+> Density
+
+RMSE across all models 
+
+> ALPS  TOP BOTTOM
+
+RCMGEM-mv-orog 
+
+RMSE 12.47 
+
+ResGAN-v2-orog 
+
+RMSE 23.50 
+
+FlowMatching-v1 
+
+RMSE 26.67 
+
+CorrDiff-TW1_NTNU-CWA-orog 
+
+RMSE 50.92 
+
+XGBoost_IDL 
+
+RMSE 66.73 
+
+ANN-orog 
+
+RMSE 75.49      
+
+> 22°E 24°E 26°E 28°E 30°E 32°E
+> 34°S
+> 32°S
+> 30°S
+> 28°S
+> 26°S
+> 24°S
+
+Ground truth 
+
+(ACCESS-CM2) 
+
+0 20 40 60 80 100 120 140 160 
+
+Precipitation [mm day −1 ] 0 20 40 60 80 
+
+RMSE [mm day −1 ]
+
+0.00 
+
+0.01 
+
+> Density
+
+RMSE across all models 
+
+> SA  TOP BOTTOM
+
+RCMGEM-mv-orog 
+
+RMSE 6.17 
+
+ResGAN-v2-orog 
+
+RMSE 13.41 
+
+FlowMatching-v1 
+
+RMSE 15.68 
+
+CorrDiff-TW1_NTNU-CWA-orog 
+
+RMSE 25.97 
+
+XGBoost_IDL 
+
+RMSE 34.06 
+
+ANN-orog 
+
+RMSE 40.33      
+
+> 168°E 170°E 172°E 174°E 176°E 178°E
+> 46°S
+> 44°S
+> 42°S
+> 40°S
+> 38°S
+> 36°S
+> 34°S
+
+Ground truth 
+
+(ACCESS-CM2) 
+
+0 20 40 60 80 100 120 140 
+
+Precipitation [mm day −1 ] 0 20 40 60 80 
+
+RMSE [mm day −1 ]
+
+0.000 
+
+0.025 
+
+> Density
+
+RMSE across all models 
+
+> NZ  TOP BOTTOM
+
+PR · climatology 
+
+Emulator hist future · Rx1day 
+
+Figure 6. Same as Figure 5, but for the Rx1day climatology (mean annual maximum one-day precipitation). The six model panels show three models drawn from the top-10 ranked configu-rations (green labels; RCMGEM-mv-orog, ResGAN-v2-orog, FlowMatching-v1) and three drawn from the bottom 20 (red labels; CorrDiff-TW1_NTNU-CWA-orog, XGBoost_IDL, ANN-orog). Units of RMSE are in mm day −1.–24– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES) 
+
+Zealand. The distributions are clustered to the left of the reference, with most models predicting area-mean changes of only +2–8% against reference values of +7.5–18.5%. Sev-eral models — notably Rossby-UNet and CNRM-UNeT — produce near-zero or slightly negative area-mean signals over New Zealand (-2.56% and +0.63% respectively) and South-ern Africa (-2.47% and +3.98% respectively), indicating a failure to capture even the sign of the domain-mean response in these regions. ResGAN-v2 produces the largest predicted signals among models shown (+6.37% over the Alps, +23.34% over Southern Africa, +13.03% over New Zealand) and in the Southern Africa and New Zealand domains overestimates the reference in certain regions. Across all domains, the RMSE values in the ESD ex-periment are broadly similar between top- and bottom-ranked models (11–27 %), un-derscoring that RMSE alone does not discriminate skill well between models. In the RCM Emulator experiment (Figure 10), the area-averaged climate change signal distribution of the different models is approximately 5 percentage points greater than in the ESD experiment, with more models predicting positive area-mean changes closer in magnitude to the reference. This improvement is evident across nearly all mod-els (e.g., RCMGEM-mv-orog). However, despite this improvement, RMSE values are not markedly lower than in the ESD experiment (10–22%), and most models continue to un-derestimate the reference domain-mean change, particularly over New Zealand and South-ern Africa where the mean reference signals are largest. There is nonetheless an improve-ment in the spatial structure of the climate change signal relative to the ESD experiment, with stronger and more positive signals across all regions. Some models predict very weak signals even when trained on the future period; for example, ANN-orog produces near-zero spatial structure in the change field over Southern Africa despite predicting a pos-itive area mean (+4.52%), reflecting a tendency to spread the signal uniformly rather than concentrate it in regions of enhanced convective organisation. While Figures 7–10 focus on the mid-century period, extending the evaluation to the end-of-century (2080– 2099) reveals more pronounced underestimation in the ESD experiment, with the RCM Emulator experiment generally improving skill. However, since this period is included in the RCM Emulator experiment’s training data, it does not constitute a proper out-of-sample test (Figures S9–S11). Overall, these results highlight two findings consistent across all 40 models. First, including future periods during training (RCM Emulator vs. ESD) improves the repre-sentation of the TXx climate change signal, largely resolving the systematic underesti-mation seen in the ESD experiment. For Rx1day, training on future data improves the mean magnitude and spatial structure of predicted changes, but does not reduce RMSE in the climate change signal. Second, predicting the climate change signal of precipita-tion extremes is considerably more challenging than for temperature. The inherently noisy character of the Rx1day signal limits the utility of standard pointwise error metrics as a benchmarking diagnostic — requiring subjective assessment in addition — which is why it is not included directly in the scoring framework discussed in Section 3.4. 
+
+3.4 Benchmarking 
+
+Model performance across all metrics, variables, and experiments is summarised in the scorecards shown in Figures 11–12, with an overall rank summary presented in Figure 13. For both variables we report the RMSE, climatological mean RMSE (Clim Mean) and RALSD. To evaluate extremes, we use the Rx1day for precipitation and TXx for maximum temperature. To assess the ability of the models to reproduce the distri-bution of the target variable, we rely on the PSS for maximum temperature and the LHD for precipitation. This distinction reflects the difference in the distributional nature of these two variables (see Section 2.4 for details). In addition, we specifically address the SDII bias for precipitation and the interannual variability for maximum temperature. The values reported in these scorecards are averaged across all domains; further eval-uation within each domain is provided in Supplementary Figures S12–S13. Note, a low 
+
+> –25–
+
+manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES) RCMGEM-mv-orog 
+
+Δ +1.91 K 
+
+RMSE 0.53 
+
+Prithvi-UNet-orog 
+
+Δ +1.75 K 
+
+RMSE 0.67 
+
+ParamUNET 
+
+Δ +1.63 K 
+
+RMSE 0.91 
+
+CorrDiff-TW1_NTNU-CWA 
+
+Δ +1.86 K 
+
+RMSE 0.62 
+
+Prithvi-UNet 
+
+Δ +1.15 K 
+
+RMSE 1.21 
+
+Rossby-UNet 
+
+Δ +0.83 K 
+
+RMSE 1.53 0° 3°E 6°E 9°E 12°E 15°E 18°E 21°E 
+
+> 38°N
+> 40°N
+> 42°N
+> 44°N
+> 46°N
+> 48°N
+> 50°N
+
+Ground truth (CNRM-CM5) 
+
+2041-2060 − 1981-2000 Δ +2.27 K 
+
+0.0 0.5 1.0 1.5 2.0 2.5 
+
+ΔTXx [K] 1 2 3 4
+
+Area-mean Δ [K] 
+
+0.0 
+
+0.5 
+
+> Density
+
+Δ signal KDE 
+
+> truth mean
+> top sampled
+> bot sampled
+> ALPS  TOP BOTTOM
+
+RCMGEM-mv-orog 
+
+Δ +2.34 K 
+
+RMSE 0.57 
+
+Prithvi-UNet-orog 
+
+Δ +2.38 K 
+
+RMSE 0.61 
+
+ParamUNET 
+
+Δ +2.60 K 
+
+RMSE 1.43 
+
+CorrDiff-TW1_NTNU-CWA 
+
+Δ +2.55 K 
+
+RMSE 0.48 
+
+Prithvi-UNet 
+
+Δ +2.25 K 
+
+RMSE 0.69 
+
+Rossby-UNet 
+
+Δ +0.71 K 
+
+RMSE 2.11      
+
+> 22°E 24°E 26°E 28°E 30°E 32°E
+> 34°S
+> 32°S
+> 30°S
+> 28°S
+> 26°S
+> 24°S
+
+Ground truth (ACCESS-CM2) 
+
+2041-2060 − 1981-2000 Δ +2.74 K 
+
+0.0 0.5 1.0 1.5 2.0 2.5 3.0 3.5 
+
+ΔTXx [K] −2.5 0.0 2.5 5.0 
+
+Area-mean Δ [K] 
+
+0.00 
+
+0.25 
+
+> Density
+
+Δ signal KDE 
+
+> truth mean
+> top sampled
+> bot sampled
+> SA  TOP BOTTOM
+
+RCMGEM-mv-orog 
+
+Δ +1.68 K 
+
+RMSE 0.62 
+
+Prithvi-UNet-orog 
+
+Δ +1.62 K 
+
+RMSE 0.76 
+
+ParamUNET 
+
+Δ +1.46 K 
+
+RMSE 1.11 
+
+CorrDiff-TW1_NTNU-CWA 
+
+Δ +1.53 K 
+
+RMSE 0.76 
+
+Prithvi-UNet 
+
+Δ +0.86 K 
+
+RMSE 1.43 
+
+Rossby-UNet 
+
+Δ +0.39 K 
+
+RMSE 1.89      
+
+> 168°E 170°E 172°E 174°E 176°E 178°E
+> 46°S
+> 44°S
+> 42°S
+> 40°S
+> 38°S
+> 36°S
+> 34°S
+
+Ground truth (ACCESS-CM2) 
+
+2041-2060 − 1981-2000 Δ +2.26 K 
+
+0.0 0.5 1.0 1.5 2.0 2.5 
+
+ΔTXx [K] 1 2 3
+
+Area-mean Δ [K] 
+
+0.0 
+
+0.5 
+
+> Density
+
+Δ signal KDE 
+
+> truth mean
+> top sampled
+> bot sampled
+> NZ  TOP BOTTOM
+
+TASMAX · cc_signal 
+
+ESD pseudo reality · ΔTXx 2041-2060 − 1981-2000 
+
+Figure 7. Climate-change signal in TXx ( ∆TXx, K) for the models trained on the historical period only (ESD experiment), defined as the difference in mean annual maximum daily max-imum temperature between the mid-century (2041–2060) and historical (1981–2000) periods. Each row corresponds to one domain (Alps, Southern Africa, New Zealand); the reference signal is shown in the large right-hand panel with the area-mean ∆ annotated. Six models are shown per domain: three from the top of the overall ranking (green labels; RCMGEM-mv-orog, Prithvi-UNet-orog, ParamUNET) and three from the lower end (red labels; CorrDiff-TW1_NTNU-CWA, Prithvi-UNet, Rossby-UNet). The area-mean ∆ and RMSE relative to the reference change field are annotated per panel. The inset shows the distribution of area-mean ∆TXx across all 40 mod-els; the vertical black line marks the reference value. Reference signals are +2.27 K (Alps), +2.74 K (SA), and +2.26 K (NZ). –26– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES) ParamDiffusion-orog 
+
+Δ +2.24 K 
+
+RMSE 0.37 
+
+ViT-IFCAv1 
+
+Δ +2.27 K 
+
+RMSE 0.35 
+
+FlowMatching-v1-orog 
+
+Δ +2.27 K 
+
+RMSE 0.34 
+
+ResGAN-orog 
+
+Δ +1.64 K 
+
+RMSE 0.75 
+
+ANN-orog 
+
+Δ +2.20 K 
+
+RMSE 0.63 
+
+Prithvi-UNet 
+
+Δ +2.11 K 
+
+RMSE 0.50 0° 3°E 6°E 9°E 12°E 15°E 18°E 21°E 
+
+38°N 
+
+40°N 
+
+42°N 
+
+44°N 
+
+46°N 
+
+48°N 
+
+50°N 
+
+Ground truth (CNRM-CM5) 
+
+2041-2060 − 1981-2000 Δ +2.27 K 
+
+0.0 0.5 1.0 1.5 2.0 2.5 3.0 
+
+ΔTXx [K] 1.75 2.00 2.25 2.50 
+
+Area-mean Δ [K] 
+
+0
+
+2
+
+> Density
+
+Δ signal KDE 
+
+> truth mean
+> top sampled
+> bot sampled
+> ALPS  TOP BOTTOM
+
+ParamDiffusion-orog 
+
+Δ +2.75 K 
+
+RMSE 0.37 
+
+ViT-IFCAv1 
+
+Δ +2.83 K 
+
+RMSE 0.41 
+
+FlowMatching-v1-orog 
+
+Δ +2.68 K 
+
+RMSE 0.37 
+
+ResGAN-orog 
+
+Δ +2.73 K 
+
+RMSE 0.43 
+
+ANN-orog 
+
+Δ +2.67 K 
+
+RMSE 0.49 
+
+Prithvi-UNet 
+
+Δ +2.77 K 
+
+RMSE 0.43 
+
+22°E 24°E 26°E 28°E 30°E 32°E 
+
+34°S 
+
+32°S 
+
+30°S 
+
+28°S 
+
+26°S 
+
+24°S 
+
+Ground truth (ACCESS-CM2) 
+
+2041-2060 − 1981-2000 Δ +2.74 K 
+
+0.0 0.5 1.0 1.5 2.0 2.5 3.0 3.5 
+
+ΔTXx [K] 2.6 2.8 3.0 
+
+Area-mean Δ [K] 
+
+0.0 
+
+2.5 
+
+> Density
+
+Δ signal KDE 
+
+> truth mean
+> top sampled
+> bot sampled
+> SA  TOP BOTTOM
+
+ParamDiffusion-orog 
+
+Δ +2.48 K 
+
+RMSE 0.35 
+
+ViT-IFCAv1 
+
+Δ +2.46 K 
+
+RMSE 0.29 
+
+FlowMatching-v1-orog 
+
+Δ +2.40 K 
+
+RMSE 0.28 
+
+ResGAN-orog 
+
+Δ +1.46 K 
+
+RMSE 0.84 
+
+ANN-orog 
+
+Δ +2.44 K 
+
+RMSE 0.33 
+
+Prithvi-UNet 
+
+Δ +2.23 K 
+
+RMSE 0.29 
+
+168°E 170°E 172°E 174°E 176°E 178°E 
+
+46°S 
+
+44°S 
+
+42°S 
+
+40°S 
+
+38°S 
+
+36°S 
+
+34°S 
+
+Ground truth (ACCESS-CM2) 
+
+2041-2060 − 1981-2000 Δ +2.26 K 
+
+0.0 0.5 1.0 1.5 2.0 2.5 3.0 
+
+ΔTXx [K] 0 1 2 3
+
+Area-mean Δ [K] 
+
+0
+
+1
+
+> Density
+
+Δ signal KDE 
+
+> truth mean
+> top sampled
+> bot sampled
+> NZ  TOP BOTTOM
+
+TASMAX · cc_signal 
+
+Emulator hist future · ΔTXx 2041-2060 − 1981-2000 
+
+Figure 8. As Figure 7, but for the RCM Emulator experiment. Models shown are ParamDiffusion-orog, ViT-IFCAv1, and FlowMatching-v1-orog (top); ResGAN-orog, ANN-orog, and Prithvi-UNet (bottom). Reference signals are identical to Figure 7. –27– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES) RCMGEM-mv-orog 
+
+Δ +5.41 % 
+
+RMSE 10.52 
+
+FlowMatching-v1 
+
+Δ +9.04 % 
+
+RMSE 10.71 
+
+ResGAN-v2 
+
+Δ +6.53 % 
+
+RMSE 14.95 
+
+CNRM-UNeT 
+
+Δ +2.39 % 
+
+RMSE 12.70 
+
+ANN 
+
+Δ +6.84 % 
+
+RMSE 11.90 
+
+Rossby-UNet 
+
+Δ +1.69 % 
+
+RMSE 12.89 0° 3°E 6°E 9°E 12°E 15°E 18°E 21°E 
+
+> 38°N
+> 40°N
+> 42°N
+> 44°N
+> 46°N
+> 48°N
+> 50°N
+
+Ground truth (CNRM-CM5) 
+
+2041-2060 − 1981-2000 Δ +7.49 % 
+
+−20 −10 0 10 20 
+
+ΔRx1day [%] 2 4 6 8
+
+Area-mean Δ [%] 
+
+0.0 
+
+0.1 
+
+> Density
+
+Δ signal KDE 
+
+> truth mean
+> top sampled
+> bot sampled
+> ALPS  TOP BOTTOM
+
+RCMGEM-mv-orog 
+
+Δ +10.13 % 
+
+RMSE 19.27 
+
+FlowMatching-v1 
+
+Δ +6.25 % 
+
+RMSE 22.33 
+
+ResGAN-v2 
+
+Δ +21.95 % 
+
+RMSE 26.76 
+
+CNRM-UNeT 
+
+Δ +3.98 % 
+
+RMSE 22.98 
+
+ANN 
+
+Δ +8.15 % 
+
+RMSE 20.25 
+
+Rossby-UNet 
+
+Δ -2.47 % 
+
+RMSE 28.53      
+
+> 22°E 24°E 26°E 28°E 30°E 32°E
+> 34°S
+> 32°S
+> 30°S
+> 28°S
+> 26°S
+> 24°S
+
+Ground truth (ACCESS-CM2) 
+
+2041-2060 − 1981-2000 Δ +18.17 % 
+
+−40 −20 0 20 40 
+
+ΔRx1day [%] −10 0 10 20 
+
+Area-mean Δ [%] 
+
+0.000 
+
+0.025 
+
+> Density
+
+Δ signal KDE 
+
+> truth mean
+> top sampled
+> bot sampled
+> SA  TOP BOTTOM
+
+RCMGEM-mv-orog 
+
+Δ +10.45 % 
+
+RMSE 17.12 
+
+FlowMatching-v1 
+
+Δ +9.89 % 
+
+RMSE 18.07 
+
+ResGAN-v2 
+
+Δ +12.39 % 
+
+RMSE 20.52 
+
+CNRM-UNeT 
+
+Δ +0.63 % 
+
+RMSE 24.60 
+
+ANN 
+
+Δ +10.15 % 
+
+RMSE 19.07 
+
+Rossby-UNet 
+
+Δ -2.56 % 
+
+RMSE 26.93      
+
+> 168°E 170°E 172°E 174°E 176°E 178°E
+> 46°S
+> 44°S
+> 42°S
+> 40°S
+> 38°S
+> 36°S
+> 34°S
+
+Ground truth (ACCESS-CM2) 
+
+2041-2060 − 1981-2000 Δ +18.45 % 
+
+−40 −30 −20 −10 0 10 20 30 40 
+
+ΔRx1day [%] 0 5 10 15 20 
+
+Area-mean Δ [%] 
+
+0.00 
+
+0.05 
+
+> Density
+
+Δ signal KDE 
+
+> truth mean
+> top sampled
+> bot sampled
+> NZ  TOP BOTTOM
+
+PR · cc_signal (relative %) 
+
+ESD pseudo reality · ΔRx1day 2041-2060 − 1981-2000 
+
+Figure 9. Climate-change signal in Rx1day ( ∆Rx1day, %) for the ESD experiment, defined as the relative change in mean annual maximum one-day precipitation between mid-century (2041–2060) and the historical period (1981–2000). Models shown are RCMGEM-mv-orog, FlowMatching-v1, and ResGAN-v2 (top); CNRM-UNeT, ANN, and Rossby-UNet (bottom). The area-mean ∆ and RMSE of the change field are annotated per panel. The inset shows the dis-tribution of area-mean ∆Rx1day across all 40 models; the vertical black line marks the reference domain-mean. Reference signals are +7.49% (Alps), +18.17% (SA), and +18.45% (NZ). –28– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES) RCMGEM-mv-orog 
+
+Δ +6.80 % 
+
+RMSE 9.74 
+
+ResGAN-v2-orog 
+
+Δ +7.57 % 
+
+RMSE 12.41 
+
+FlowMatching-v1 
+
+Δ +5.08 % 
+
+RMSE 10.76 
+
+CorrDiff-TW1_NTNU-CWA-orog 
+
+Δ +5.72 % 
+
+RMSE 10.10 
+
+XGBoost_IDL 
+
+Δ +6.32 % 
+
+RMSE 11.90 
+
+ANN-orog 
+
+Δ +4.51 % 
+
+RMSE 11.43 0° 3°E 6°E 9°E 12°E 15°E 18°E 21°E 
+
+38°N 
+
+40°N 
+
+42°N 
+
+44°N 
+
+46°N 
+
+48°N 
+
+50°N 
+
+Ground truth (CNRM-CM5) 
+
+2041-2060 − 1981-2000 Δ +7.49 % 
+
+−20 −10 0 10 20 
+
+ΔRx1day [%] 4 6 8
+
+Area-mean Δ [%] 
+
+0.0 
+
+0.2 
+
+> Density
+
+Δ signal KDE 
+
+> truth mean
+> top sampled
+> bot sampled
+> ALPS  TOP BOTTOM
+
+RCMGEM-mv-orog 
+
+Δ +15.96 % 
+
+RMSE 17.17 
+
+ResGAN-v2-orog 
+
+Δ +12.37 % 
+
+RMSE 21.03 
+
+FlowMatching-v1 
+
+Δ +13.71 % 
+
+RMSE 18.37 
+
+CorrDiff-TW1_NTNU-CWA-orog 
+
+Δ +15.51 % 
+
+RMSE 20.66 
+
+XGBoost_IDL 
+
+Δ +13.28 % 
+
+RMSE 22.18 
+
+ANN-orog 
+
+Δ +4.52 % 
+
+RMSE 22.11 
+
+22°E 24°E 26°E 28°E 30°E 32°E 
+
+34°S 
+
+32°S 
+
+30°S 
+
+28°S 
+
+26°S 
+
+24°S 
+
+Ground truth (ACCESS-CM2) 
+
+2041-2060 − 1981-2000 Δ +18.17 % 
+
+−40 −20 0 20 40 
+
+ΔRx1day [%] 5 10 15 20 
+
+Area-mean Δ [%] 
+
+0.00 
+
+0.05 
+
+> Density
+
+Δ signal KDE 
+
+> truth mean
+> top sampled
+> bot sampled
+> SA  TOP BOTTOM
+
+RCMGEM-mv-orog 
+
+Δ +16.89 % 
+
+RMSE 14.76 
+
+ResGAN-v2-orog 
+
+Δ +15.38 % 
+
+RMSE 19.48 
+
+FlowMatching-v1 
+
+Δ +12.64 % 
+
+RMSE 16.77 
+
+CorrDiff-TW1_NTNU-CWA-orog 
+
+Δ +9.76 % 
+
+RMSE 17.99 
+
+XGBoost_IDL 
+
+Δ +7.20 % 
+
+RMSE 21.19 
+
+ANN-orog 
+
+Δ +11.60 % 
+
+RMSE 18.93 
+
+168°E 170°E 172°E 174°E 176°E 178°E 
+
+46°S 
+
+44°S 
+
+42°S 
+
+40°S 
+
+38°S 
+
+36°S 
+
+34°S 
+
+Ground truth (ACCESS-CM2) 
+
+2041-2060 − 1981-2000 Δ +18.45 % 
+
+−40 −30 −20 −10 0 10 20 30 40 
+
+ΔRx1day [%] 5 10 15 
+
+Area-mean Δ [%] 
+
+0.0 
+
+0.1 
+
+> Density
+
+Δ signal KDE 
+
+> truth mean
+> top sampled
+> bot sampled
+> NZ  TOP BOTTOM
+
+PR · cc_signal (relative %) 
+
+Emulator hist future · ΔRx1day 2041-2060 − 1981-2000 
+
+Figure 10. As Figure 9, but for the RCM Emulator experiment. Models shown are RCMGEM-mv-orog, ResGAN-v2-orog, and FlowMatching-v1 (top); CorrDiff-TW1_NTNU-CWA-orog, XGBoost_IDL, and ANN-orog (bottom). Reference signals are identical to Figure 9. –29– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES) 
+
+rank does not imply that a model has failed in an absolute sense, but rather reflects its standing relative to the full model ensemble evaluated here. For precipitation in the ESD experiment (Figure 11; left), generative models con-sistently outperform deterministic approaches, particularly on Rx1day, RALSD, and LHD, which assess extremes, spatial variability, and distributional fidelity, respectively. Daily RMSE, widely used in ML, proves a poor proxy for downscaling skill: CorrDiff-TW1_NTNU-CWA and Prithvi-UNet achieve low RMSE yet score poorly on climatological metrics, while the ResGAN and EnScale variants show the converse. The top-performing mod-els (RCMGEM-mv-orog, RCMFlow-orog, ResGAN-v2, ViT-IFCAv1, and FlowMatching-v1) score consistently well across both cross-validation and future extrapolation periods (Figure 11, left panel, rightmost column). Notably, the relative ranking of models is largely consistent across different periods (as indicated by the similarity in shading between tri-angles within a given cell), suggesting that model performance is stable across periods. In the RCM Emulator experiment (Figure 11; right), similar patterns emerge with gen-erally improved scores, as models benefit from training on a future period; here ParamDiffusion-orog additionally proves highly skilful. For temperature in the ESD experiment (Figure 12; left), the performance gap be-tween generative and deterministic models narrows considerably. This may reflect the fact that temperature is spatially smoother and more predictable from large-scale fields (e.g., Doury et al., 2023). As a result, the stochastic variability that generative models produce, which is particularly beneficial for precipitation — matters less here, narrow-ing their advantage over deterministic approaches. RCMGEM-mv-orog remains the top performer across most metrics, while some deterministic models also perform well for cer-tain metrics and periods. A key finding is the large and often inconsistent shift in both relative rank and absolute score between the historical cross-validation and future ex-trapolation periods (visible as colour changes along the scorecard diagonal), in contrast to the precipitation results. For metrics such as TXx and PSS, individual model scores change substantially between periods, with some models jumping from low to high rank and others dropping in the opposite direction. These apparently random rank reversals indicate that strong cross-validation performance does not reliably predict future-period skill when models must generalise beyond their training distribution. In the RCM Emulator experiment (Figure 12; right), the large shifts in relative rank seen in the ESD setting largely disappear: models that perform well in one period do so consistently in the other, and metrics such as TXx and PSS remain stable across eval-uation windows. The top-ranked models are RCMGEM-mv-orog, ParamDiffusion-orog, CorrDiff-TW1_NTNU-CWA, and ViT-IFCAv1. Deterministic models also achieve stronger scores relative to generative approaches than in the precipitation case. This improved consistency likely reflects the fact that the models are trained on data spanning both his-torical and future periods, and therefore need not generalise beyond their training dis-tribution. The contrast with the ESD results suggests that the skill degradation observed there stems from extrapolation difficulty, and that access to future-period training data is important for stable performance under future conditions across multiple metrics. The overall rank summary (Figure 13) shows model ranks for each variable and eval-uation period, consolidated across metrics: for each model, a per-metric rank is computed, averaged across metrics with equal weighting, and then re-ranked to give the final score. RCMGEM-mv-orog is the top-ranked model overall, consistently ranking 1 or 2 across all experiments, variables, and evaluation periods — a level of consistency not matched by any other model. ParamDiffusion-orog also performs exceptionally well in the RCM Emulator experiment, closely matching RCMGEM-mv-orog. Some models perform well specifically for precipitation — notably RCMFlow-orog and the ResGAN variants — but rank in the middle or lower part of the ensemble for temperature. We note that these rankings reflect not only architectural choices but also differences in model selection and hyperparameter tuning, which vary across the different approaches; further tuning and  
+
+> –30– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES)
+
+checkpoint selection could significantly influence model skill. Across all models and ex-periments, domain difficulty follows a consistent ordering: biases are smallest over the Alps, larger over New Zealand, and largest over Southern Africa (Figures S12–S13 re-port skill scores per domain). The latter is likely particularly challenging due to its convective-dominated summer environment, which is less strongly coupled to large-scale atmospheric fields. However, this may also partly reflect differences in RCM configuration (e.g., spec-tral nudging scales) rather than the downscaling task itself (Ratnam et al., 2013; Soares et al., 2024a), warranting further investigation. Finally, even the top-ranked models can underestimate the climate change signal in precipitation extremes (Section 3.3), a limitation not captured by the summary rank-ings. Model selection for a specific application should therefore consider not only over-all benchmark rank but also how well a model represents the climate change signal in the variable and metric of interest. More comprehensive evaluations beyond those pre-sented here will be addressed in future work. 
+
+4 Discussion 
+
+4.1 The performance–compute trade-off 
+
+Many models in this benchmark were originally developed for purposes other than climate downscaling, and were not specifically optimised for preserving climate change signals or performing well across all evaluation metrics. For example, CorrDiff (Mardani et al., 2025) was designed for fine-scale weather downscaling and excels on metrics such as RMSE and RALSD, while ResGAN and its variants were explicitly optimised for Rx1day and RALSD rather than RMSE (Rampal et al., 2025a). Also, the ParamDiffusion-orog model was explicitly designed as an RCM emulator rather than a statistical downscal-ing tool (Legasa et al., 2026), which likely contributes to its comparatively lower per-formance in ESD experiments. Rankings should therefore be interpreted with this con-text in mind: targeted development could readily improve skill for many architectures, and the community is encouraged to continue refining and benchmarking these models. Skill alone, however, is only one dimension of practical utility, and training and infer-ence costs also matter. Figure 14 illustrates the skill–compute relationship for the ML models in this benchmark, plotting Rx1day and TXx RMSE against inference time. While certain approaches were deliberately optimised (e.g., RCMFlow-orog), most models did not optimise training or inference, and much of this overhead could be reduced with fur-ther development. Even so, the figure reveals that inference cost varies by more than 4-5 orders of magnitude across the different approaches. At the low end, inference takes between under one and ten seconds per simulated year for EnScale, ResGAN, and most deterministic approaches. At the high end, RCMGEM-mv-orog requires between 20-40 minutes per simulated year on an A100 GPU (e.g., Addison et al., 2026). While all approaches remain far more efficient than running RCMs, this four to five order-of-magnitude spread in inference cost has real practical implications in contexts where access to GPUs is limited, particularly for downscaling large initial-condition en-sembles of climate projections (Aalbers et al., 2018; Maher et al., 2021). Computation-ally efficient approaches such as ResGAN have already been used to downscale ensem-bles exceeding 15,000 years of projections in under a day on a single A100 GPU (Ram-pal et al., 2025b). Models that are orders of magnitude slower could require weeks or months to complete the same task on a single GPU; with multiple GPUs available, however, par-allelising the work would substantially reduce wall-clock time, making even the most ex-pensive models tractable. In this context, mid- and low-cost generative models offer a compelling balance of skill and computational efficiency. RCMFlow-orog, FlowMatching-v1, ViT-IFCAv1, En-Scale, and ResGAN are less skilful than RCMGEM-mv-orog overall, but their inference 
+
+> –31–
+
+manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES) RMSE Clim 
+
+Mean SDII Rx1day RALSD LHD 
+
+upper-left = CV; lower-right = second period; numbers are metric values 
+
+RMSE Clim 
+
+Mean SDII Rx1day RALSD LHD 
+
+upper-left = CV; lower-right = second period; numbers are metric values 
+
+5.98 
+
+7.15 
+
+6.51 
+
+7.71 
+
+6.30 
+
+7.49 
+
+6.32 
+
+7.54 
+
+6.59 
+
+7.73 
+
+6.54 
+
+7.73 
+
+7.55 
+
+9.27 
+
+7.32 
+
+8.97 
+
+6.96 
+
+8.08 
+
+6.81 
+
+7.95 
+
+7.06 
+
+8.41 
+
+6.93 
+
+8.27 
+
+6.71 
+
+7.83 
+
+6.79 
+
+7.95 
+
+6.12 
+
+7.38 
+
+5.96 
+
+7.06 
+
+5.97 
+
+7.07 
+
+8.11 
+
+9.05 
+
+7.49 
+
+8.79 
+
+6.46 
+
+7.58 
+
+6.48 
+
+7.57 
+
+8.82 
+
+10.7 
+
+6.34 
+
+7.53 
+
+6.14 
+
+7.25 
+
+6.14 
+
+7.22 
+
+6.51 
+
+7.54 
+
+7.20 
+
+8.84 
+
+6.95 
+
+8.47 
+
+6.72 
+
+8.07 
+
+6.63 
+
+7.92 
+
+6.74 
+
+8.12 
+
+6.65 
+
+7.82 
+
+6.55 
+
+7.74 
+
+6.69 
+
+7.83 
+
+6.69 
+
+7.86 
+
+6.67 
+
+9.84 
+
+6.89 
+
+8.19 
+
+5.71 
+
+6.86 
+
+7.56 
+
+8.69 
+
+6.57 
+
+7.82 
+
+0.24 
+
+0.37 
+
+0.39 
+
+0.69 
+
+0.34 
+
+0.50 
+
+0.32 
+
+0.54 
+
+0.57 
+
+0.68 
+
+0.56 
+
+0.74 
+
+0.46 
+
+0.68 
+
+0.32 
+
+0.53 
+
+0.31 
+
+0.53 
+
+0.30 
+
+0.53 
+
+0.47 
+
+0.71 
+
+0.39 
+
+0.59 
+
+0.24 
+
+0.49 
+
+0.70 
+
+0.83 
+
+1.03 
+
+1.08 
+
+0.88 
+
+1.00 
+
+0.84 
+
+0.94 
+
+1.13 
+
+1.19 
+
+1.38 
+
+1.54 
+
+0.28 
+
+0.48 
+
+0.54 
+
+0.58 
+
+0.20 
+
+0.38 
+
+0.68 
+
+0.80 
+
+0.43 
+
+0.58 
+
+0.40 
+
+0.46 
+
+0.60 
+
+0.69 
+
+0.76 
+
+0.90 
+
+0.66 
+
+0.78 
+
+0.72 
+
+0.92 
+
+0.63 
+
+0.83 
+
+0.56 
+
+0.81 
+
+0.22 
+
+0.52 
+
+0.24 
+
+0.56 
+
+0.27 
+
+0.37 
+
+0.29 
+
+0.47 
+
+0.29 
+
+3.09 
+
+1.43 
+
+1.71 
+
+0.24 
+
+0.42 
+
+2.06 
+
+2.18 
+
+0.71 
+
+1.00 
+
+0.87 
+
+1.46 
+
+1.00 
+
+2.00 
+
+1.51 
+
+1.64 
+
+1.39 
+
+1.76 
+
+1.42 
+
+2.13 
+
+1.01 
+
+1.40 
+
+0.86 
+
+1.42 
+
+0.83 
+
+1.40 
+
+0.94 
+
+1.52 
+
+1.01 
+
+1.70 
+
+1.42 
+
+2.31 
+
+1.47 
+
+2.20 
+
+2.58 
+
+3.10 
+
+1.27 
+
+1.50 
+
+1.73 
+
+2.52 
+
+2.52 
+
+3.24 
+
+2.55 
+
+3.27 
+
+2.33 
+
+2.76 
+
+2.60 
+
+3.18 
+
+0.92 
+
+1.42 
+
+1.19 
+
+1.19 
+
+0.69 
+
+1.22 
+
+1.62 
+
+1.87 
+
+2.06 
+
+2.70 
+
+1.80 
+
+2.34 
+
+1.65 
+
+2.30 
+
+1.98 
+
+2.50 
+
+1.97 
+
+2.46 
+
+2.23 
+
+3.14 
+
+2.25 
+
+3.05 
+
+2.55 
+
+2.79 
+
+3.06 
+
+4.34 
+
+2.96 
+
+4.20 
+
+2.73 
+
+3.07 
+
+2.73 
+
+3.06 
+
+2.97 
+
+3.63 
+
+3.87 
+
+4.82 
+
+2.28 
+
+2.88 
+
+4.79 
+
+5.28 
+
+2.82 
+
+2.69 
+
+14.6 
+
+22.5 
+
+12.9 
+
+25.2 
+
+15.5 
+
+26.4 
+
+17.6 
+
+29.5 
+
+16.3 
+
+23.9 
+
+13.7 
+
+20.3 
+
+13.3 
+
+23.3 
+
+12.4 
+
+21.7 
+
+19.8 
+
+31.4 
+
+25.2 
+
+38.6 
+
+16.9 
+
+27.6 
+
+17.2 
+
+26.4 
+
+22.7 
+
+29.6 
+
+18.3 
+
+22.0 
+
+23.6 
+
+35.2 
+
+36.2 
+
+48.2 
+
+36.1 
+
+47.9 
+
+61.5 
+
+60.2 
+
+33.0 
+
+43.3 
+
+30.8 
+
+44.3 
+
+33.9 
+
+47.1 
+
+23.7 
+
+34.5 
+
+29.8 
+
+39.7 
+
+35.0 
+
+47.8 
+
+35.2 
+
+47.8 
+
+30.8 
+
+44.8 
+
+20.3 
+
+29.3 
+
+22.7 
+
+29.3 
+
+27.5 
+
+40.0 
+
+27.4 
+
+39.8 
+
+29.7 
+
+37.2 
+
+34.6 
+
+52.6 
+
+34.6 
+
+53.5 
+
+48.4 
+
+60.7 
+
+48.0 
+
+60.3 
+
+41.1 
+
+49.3 
+
+46.3 
+
+62.4 
+
+31.1 
+
+42.2 
+
+58.0 
+
+71.0 
+
+48.2 
+
+58.4 
+
+1.47 
+
+2.57 
+
+2.39 
+
+7.45 
+
+13.7 
+
+11.1 
+
+16.7 
+
+13.7 
+
+1.38 
+
+3.40 
+
+0.83 
+
+2.62 
+
+8.03 
+
+5.69 
+
+5.46 
+
+3.62 
+
+12.6 
+
+8.94 
+
+19.5 
+
+21.9 
+
+7.50 
+
+6.42 
+
+6.58 
+
+5.44 
+
+13.8 
+
+9.28 
+
+4.74 
+
+7.49 
+
+2.21 
+
+20.7 
+
+29.3 
+
+38.7 
+
+29.8 
+
+39.9 
+
+66.6 
+
+43.3 
+
+11.2 
+
+8.27 
+
+51.4 
+
+62.0 
+
+30.5 
+
+36.8 
+
+207 
+
+196 
+
+335 
+
+369 
+
+84.4 
+
+109 
+
+83.2 
+
+102 
+
+145 
+
+176 
+
+199 
+
+179 
+
+113 
+
+104 
+
+123 
+
+135 
+
+99.0 
+
+110 
+
+77.7 
+
+82.6 
+
+77.8 
+
+124 
+
+74.8 
+
+123 
+
+90.8 
+
+98.4 
+
+96.2 
+
+96.6 
+
+45.9 
+
+47.6 
+
+325 
+
+395 
+
+158 
+
+175 
+
+1018 
+
+1040 
+
+328 
+
+324 
+
+0.87 
+
+1.47 
+
+0.49 
+
+1.15 
+
+1.36 
+
+2.15 
+
+1.15 
+
+2.01 
+
+1.00 
+
+1.27 
+
+0.87 
+
+1.25 
+
+0.79 
+
+1.23 
+
+0.42 
+
+0.99 
+
+0.60 
+
+1.01 
+
+1.51 
+
+2.20 
+
+0.66 
+
+1.08 
+
+0.78 
+
+1.08 
+
+0.82 
+
+0.75 
+
+1.35 
+
+1.15 
+
+0.84 
+
+1.44 
+
+2.70 
+
+3.03 
+
+2.69 
+
+3.01 
+
+1.09 
+
+0.74 
+
+0.57 
+
+0.75 
+
+2.41 
+
+2.85 
+
+2.58 
+
+3.02 
+
+1.61 
+
+1.66 
+
+1.82 
+
+2.07 
+
+2.75 
+
+3.06 
+
+2.70 
+
+2.96 
+
+2.18 
+
+2.88 
+
+1.03 
+
+1.19 
+
+0.83 
+
+0.99 
+
+1.31 
+
+1.67 
+
+1.39 
+
+1.82 
+
+1.48 
+
+1.59 
+
+2.87 
+
+4.04 
+
+2.73 
+
+3.78 
+
+3.91 
+
+3.88 
+
+3.84 
+
+3.94 
+
+2.83 
+
+2.52 
+
+3.84 
+
+4.66 
+
+3.74 
+
+4.16 
+
+2.66 
+
+2.72 
+
+4.20 
+
+3.93 
+
+5.80 
+
+6.60 
+
+6.24 
+
+7.00 
+
+6.09 
+
+6.92 
+
+6.10 
+
+6.92 
+
+6.51 
+
+7.32 
+
+6.35 
+
+7.20 
+
+7.38 
+
+8.17 
+
+7.26 
+
+8.10 
+
+7.00 
+
+7.72 
+
+6.76 
+
+7.51 
+
+7.30 
+
+8.01 
+
+7.38 
+
+8.06 
+
+6.76 
+
+7.52 
+
+6.17 
+
+6.98 
+
+6.13 
+
+6.94 
+
+5.74 
+
+6.54 
+
+5.77 
+
+6.57 
+
+7.11 
+
+7.86 
+
+6.95 
+
+7.73 
+
+6.17 
+
+6.95 
+
+6.42 
+
+7.20 
+
+8.82 
+
+9.83 
+
+5.96 
+
+6.74 
+
+5.91 
+
+6.68 
+
+5.92 
+
+6.67 
+
+6.40 
+
+7.15 
+
+6.88 
+
+7.64 
+
+6.74 
+
+7.58 
+
+6.81 
+
+7.52 
+
+6.89 
+
+7.59 
+
+6.56 
+
+7.42 
+
+6.29 
+
+7.04 
+
+6.16 
+
+6.94 
+
+6.55 
+
+7.38 
+
+6.57 
+
+7.39 
+
+6.46 
+
+7.30 
+
+6.64 
+
+7.46 
+
+5.54 
+
+6.30 
+
+7.15 
+
+7.84 
+
+6.64 
+
+7.48 
+
+0.19 
+
+0.18 
+
+0.26 
+
+0.22 
+
+0.30 
+
+0.36 
+
+0.29 
+
+0.31 
+
+0.66 
+
+0.67 
+
+0.53 
+
+0.59 
+
+0.44 
+
+0.41 
+
+0.30 
+
+0.27 
+
+0.33 
+
+0.30 
+
+0.28 
+
+0.29 
+
+0.35 
+
+0.32 
+
+0.32 
+
+0.24 
+
+0.26 
+
+0.29 
+
+0.13 
+
+0.14 
+
+1.52 
+
+1.63 
+
+0.68 
+
+0.79 
+
+0.68 
+
+0.79 
+
+1.23 
+
+1.26 
+
+0.90 
+
+0.92 
+
+0.20 
+
+0.23 
+
+0.85 
+
+0.85 
+
+0.20 
+
+0.20 
+
+0.60 
+
+0.62 
+
+0.39 
+
+0.42 
+
+0.39 
+
+0.43 
+
+0.60 
+
+0.67 
+
+0.77 
+
+0.83 
+
+0.59 
+
+0.65 
+
+0.53 
+
+0.62 
+
+0.39 
+
+0.46 
+
+0.52 
+
+0.51 
+
+0.26 
+
+0.23 
+
+0.22 
+
+0.21 
+
+0.22 
+
+0.27 
+
+0.27 
+
+0.33 
+
+0.17 
+
+0.14 
+
+1.22 
+
+1.33 
+
+0.24 
+
+0.22 
+
+1.30 
+
+1.40 
+
+0.85 
+
+0.92 
+
+0.38 
+
+0.47 
+
+0.48 
+
+0.59 
+
+1.28 
+
+1.60 
+
+1.12 
+
+1.28 
+
+1.20 
+
+1.31 
+
+1.12 
+
+1.33 
+
+0.90 
+
+0.89 
+
+0.75 
+
+0.72 
+
+0.89 
+
+0.98 
+
+0.81 
+
+1.06 
+
+0.68 
+
+0.83 
+
+0.63 
+
+0.70 
+
+2.26 
+
+2.79 
+
+0.36 
+
+0.44 
+
+2.30 
+
+2.61 
+
+1.91 
+
+2.30 
+
+1.89 
+
+2.27 
+
+2.47 
+
+2.63 
+
+1.99 
+
+2.24 
+
+0.94 
+
+0.98 
+
+1.46 
+
+1.38 
+
+0.61 
+
+0.77 
+
+1.89 
+
+2.13 
+
+1.44 
+
+1.68 
+
+1.45 
+
+1.70 
+
+1.24 
+
+1.56 
+
+1.94 
+
+2.25 
+
+1.69 
+
+1.98 
+
+1.54 
+
+1.90 
+
+1.28 
+
+1.63 
+
+2.56 
+
+2.65 
+
+2.76 
+
+3.07 
+
+2.69 
+
+3.00 
+
+2.65 
+
+3.07 
+
+2.74 
+
+3.17 
+
+3.06 
+
+3.51 
+
+3.44 
+
+3.92 
+
+2.07 
+
+2.33 
+
+2.97 
+
+3.14 
+
+3.36 
+
+3.76 
+
+7.54 
+
+9.26 
+
+10.6 
+
+11.2 
+
+14.3 
+
+17.8 
+
+14.8 
+
+18.5 
+
+16.5 
+
+19.3 
+
+16.4 
+
+20.3 
+
+15.2 
+
+14.9 
+
+14.7 
+
+14.8 
+
+21.0 
+
+22.8 
+
+19.5 
+
+28.2 
+
+12.1 
+
+13.4 
+
+11.5 
+
+12.9 
+
+26.2 
+
+29.8 
+
+8.14 
+
+11.2 
+
+27.8 
+
+34.0 
+
+30.3 
+
+37.6 
+
+29.9 
+
+37.2 
+
+31.5 
+
+34.6 
+
+25.2 
+
+31.3 
+
+15.9 
+
+22.9 
+
+32.3 
+
+41.7 
+
+24.6 
+
+26.7 
+
+32.3 
+
+39.1 
+
+28.4 
+
+35.3 
+
+29.4 
+
+36.9 
+
+27.2 
+
+37.0 
+
+20.7 
+
+26.2 
+
+20.9 
+
+25.9 
+
+17.5 
+
+24.4 
+
+16.0 
+
+23.1 
+
+30.3 
+
+35.8 
+
+29.3 
+
+36.6 
+
+29.5 
+
+37.7 
+
+47.2 
+
+57.0 
+
+47.8 
+
+57.9 
+
+41.2 
+
+50.4 
+
+42.6 
+
+51.9 
+
+27.4 
+
+33.3 
+
+52.3 
+
+61.7 
+
+50.3 
+
+60.3 
+
+0.068 
+
+0.20 
+
+3.99 
+
+2.62 
+
+18.0 
+
+15.7 
+
+10.2 
+
+8.10 
+
+1.40 
+
+1.53 
+
+3.99 
+
+5.42 
+
+7.11 
+
+5.10 
+
+9.67 
+
+7.58 
+
+24.0 
+
+15.8 
+
+19.4 
+
+18.7 
+
+6.47 
+
+4.39 
+
+8.52 
+
+5.76 
+
+36.4 
+
+26.8 
+
+0.84 
+
+1.69 
+
+16.1 
+
+31.2 
+
+16.0 
+
+22.8 
+
+16.6 
+
+24.0 
+
+31.3 
+
+22.3 
+
+12.1 
+
+9.12 
+
+42.0 
+
+45.9 
+
+28.3 
+
+28.8 
+
+211 
+
+199 
+
+298 
+
+318 
+
+82.9 
+
+91.8 
+
+82.2 
+
+92.6 
+
+164 
+
+189 
+
+159 
+
+179 
+
+110 
+
+129 
+
+101 
+
+117 
+
+75.7 
+
+89.9 
+
+86.9 
+
+89.3 
+
+80.6 
+
+89.7 
+
+79.3 
+
+89.2 
+
+96.5 
+
+112 
+
+105 
+
+120 
+
+49.3 
+
+46.1 
+
+315 
+
+344 
+
+133 
+
+146 
+
+295 
+
+405 
+
+327 
+
+356 
+
+0.32 
+
+0.36 
+
+0.65 
+
+0.38 
+
+0.86 
+
+1.05 
+
+0.83 
+
+0.94 
+
+0.79 
+
+0.68 
+
+0.82 
+
+0.86 
+
+0.69 
+
+0.25 
+
+0.65 
+
+0.33 
+
+0.85 
+
+0.67 
+
+1.08 
+
+1.71 
+
+0.64 
+
+0.26 
+
+0.68 
+
+0.29 
+
+1.04 
+
+0.74 
+
+0.27 
+
+0.42 
+
+0.84 
+
+0.92 
+
+2.06 
+
+2.25 
+
+1.97 
+
+2.17 
+
+0.95 
+
+0.73 
+
+0.61 
+
+0.44 
+
+1.11 
+
+1.42 
+
+1.97 
+
+2.19 
+
+1.76 
+
+1.27 
+
+2.06 
+
+1.96 
+
+2.11 
+
+1.94 
+
+2.02 
+
+2.28 
+
+2.05 
+
+2.08 
+
+0.95 
+
+1.15 
+
+0.87 
+
+1.21 
+
+0.75 
+
+1.14 
+
+0.69 
+
+0.97 
+
+1.31 
+
+1.13 
+
+2.17 
+
+2.06 
+
+1.91 
+
+1.83 
+
+3.65 
+
+3.93 
+
+3.39 
+
+3.86 
+
+2.96 
+
+0.33 
+
+3.64 
+
+3.94 
+
+3.43 
+
+3.83 
+
+5.27 
+
+5.02 
+
+4.11 
+
+4.04 
+
+RCMGEM-mv-orog 
+
+RCMFlow-orog 
+
+ViT-IFCAv1 
+
+ViT-IFCAv1-orog 
+
+FlowMatching-v1 
+
+FlowMatching-v1-orog 
+
+ResGAN-v2 
+
+ResGAN-v2-orog 
+
+EnScale 
+
+EnScale-orog 
+
+ResGAN 
+
+ResGAN-orog 
+
+EnScale-linex 
+
+ParamDiffusion-orog 
+
+UiBCorrDiff-orog 
+
+CorrDiff-TW1_NTNU-CWA 
+
+CorrDiff-TW1_NTNU-CWA-orog 
+
+spaGAN 
+
+spaGAN-orog 
+
+DeepESDcrps_IFCAv2 
+
+DeepESDcrps_IFCAv2-orog 
+
+DeepESD_IDL 
+
+ParamUNET 
+
+DeepESD-IFCAv1 
+
+DeepESD-IFCAv1-orog 
+
+CNRM-UNeT 
+
+DetUNet-v2 
+
+DetUNet-v2-orog 
+
+DetUNet 
+
+DetUNet-orog 
+
+GNN4CD-orog 
+
+Rossby-UNet 
+
+Rossby-UNet-orog 
+
+ANN 
+
+ANN-orog 
+
+XGBoost_IDL 
+
+Prithvi-UNet 
+
+Prithvi-UNet-orog 
+
+DeepSensor 
+
+DeepSensor-orog 
+
+Generative Models 
+
+Deterministic Models 
+
+ESD | CV / Extrap. Emulator Hist-Future | CV / Interp. 
+
+Highest 
+
+performing 
+
+Lowest 
+
+performing 
+
+Metric performance upper-left: cross-validation 
+
+lower-right: extrapolation/interpolation 
+
+gold outline: best in column 
+
+CORDEX-ML-Bench Precipitation Scorecard (region-averaged) 
+
+Cells show metric values; shading and gold outlines are based on within-column performance. 
+
+Figure 11. Ranking scorecard for precipitation (pr) in the ESD (left) and RCM Emulator experiment (right). Within each scorecard, cell shading indicates relative rank for each met-ric (column). Each cell is split diagonally, with the shading of the upper-left triangle showing the rank during the historical cross-validation (1981—2010) period and the lower-right triangle showing the rank during the out-of-sample future period (2041–2060; extrapolation for ESD; interpolation for the RCM Emulator experiment). Lighter shading indicates higher rank (better performance); darker shading indicates lower rank. Values within each triangle are the absolute metric scores. A yellow border marks the best-performing model for each column. Metrics are av-eraged across three domains (Alps, New Zealand and Southern Africa). Rows are sorted by each model’s average rank across all metrics, periods and experiments (ESD and RCM Emulator). The values within each cell are the absolute metric scores. –32– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES) RMSE Clim 
+
+Mean TXx RALSD PSS IAV 
+
+upper-left = CV; lower-right = second period; numbers are metric values 
+
+RMSE Clim 
+
+Mean TXx RALSD PSS IAV 
+
+upper-left = CV; lower-right = second period; numbers are metric values 
+
+1.13 
+
+1.40 
+
+1.37 
+
+1.57 
+
+1.23 
+
+1.67 
+
+1.28 
+
+1.69 
+
+1.33 
+
+1.67 
+
+1.21 
+
+2.10 
+
+1.42 
+
+1.93 
+
+1.42 
+
+1.93 
+
+1.22 
+
+1.99 
+
+1.23 
+
+1.98 
+
+1.35 
+
+1.84 
+
+1.51 
+
+2.05 
+
+1.45 
+
+1.97 
+
+1.35 
+
+2.23 
+
+1.34 
+
+2.24 
+
+2.47 
+
+2.88 
+
+2.52 
+
+2.92 
+
+3.14 
+
+3.82 
+
+3.13 
+
+3.72 
+
+1.31 
+
+1.71 
+
+1.48 
+
+1.84 
+
+1.31 
+
+1.85 
+
+1.32 
+
+1.93 
+
+1.58 
+
+1.91 
+
+1.38 
+
+1.63 
+
+1.43 
+
+1.99 
+
+1.34 
+
+1.87 
+
+1.28 
+
+2.16 
+
+1.27 
+
+2.19 
+
+1.41 
+
+2.54 
+
+1.36 
+
+2.34 
+
+1.50 
+
+2.55 
+
+1.37 
+
+1.58 
+
+2.15 
+
+2.30 
+
+1.50 
+
+1.65 
+
+1.91 
+
+6.18 
+
+1.58 
+
+1.83 
+
+2.22 
+
+3.26 
+
+1.57 
+
+1.85 
+
+8.91 
+
+9.09 
+
+0.13 
+
+0.38 
+
+0.18 
+
+0.48 
+
+0.38 
+
+0.70 
+
+0.36 
+
+0.66 
+
+0.40 
+
+0.57 
+
+0.16 
+
+1.31 
+
+0.14 
+
+0.89 
+
+0.14 
+
+0.89 
+
+0.17 
+
+0.69 
+
+0.21 
+
+0.73 
+
+0.35 
+
+0.82 
+
+0.16 
+
+0.67 
+
+0.16 
+
+0.65 
+
+0.26 
+
+1.37 
+
+0.29 
+
+1.41 
+
+2.08 
+
+2.52 
+
+2.12 
+
+2.55 
+
+2.29 
+
+2.68 
+
+2.27 
+
+2.69 
+
+0.44 
+
+0.71 
+
+0.30 
+
+0.60 
+
+0.13 
+
+0.57 
+
+0.26 
+
+1.10 
+
+0.48 
+
+0.63 
+
+0.49 
+
+0.69 
+
+0.15 
+
+0.66 
+
+0.17 
+
+0.61 
+
+0.27 
+
+1.36 
+
+0.29 
+
+1.41 
+
+0.16 
+
+1.54 
+
+0.17 
+
+1.28 
+
+0.22 
+
+1.34 
+
+0.19 
+
+0.46 
+
+1.11 
+
+1.16 
+
+0.44 
+
+0.47 
+
+0.19 
+
+1.52 
+
+0.16 
+
+0.52 
+
+0.29 
+
+1.58 
+
+0.27 
+
+0.69 
+
+2.10 
+
+3.12 
+
+0.36 
+
+0.78 
+
+0.71 
+
+1.00 
+
+0.54 
+
+2.15 
+
+0.64 
+
+1.97 
+
+0.81 
+
+1.68 
+
+0.61 
+
+2.36 
+
+0.81 
+
+1.37 
+
+0.77 
+
+1.29 
+
+0.62 
+
+2.43 
+
+0.70 
+
+2.37 
+
+1.30 
+
+2.52 
+
+0.73 
+
+2.64 
+
+0.73 
+
+2.50 
+
+0.64 
+
+2.48 
+
+1.07 
+
+3.04 
+
+3.10 
+
+3.91 
+
+3.06 
+
+3.88 
+
+2.61 
+
+4.36 
+
+2.49 
+
+4.33 
+
+1.15 
+
+2.60 
+
+1.16 
+
+2.39 
+
+1.12 
+
+4.02 
+
+0.89 
+
+2.60 
+
+0.93 
+
+2.38 
+
+0.94 
+
+1.69 
+
+1.15 
+
+3.16 
+
+0.73 
+
+2.65 
+
+0.92 
+
+2.89 
+
+1.38 
+
+3.42 
+
+1.07 
+
+4.17 
+
+0.91 
+
+3.42 
+
+0.93 
+
+2.21 
+
+0.83 
+
+0.97 
+
+2.37 
+
+2.67 
+
+1.10 
+
+1.52 
+
+1.98 
+
+20.1 
+
+1.08 
+
+1.48 
+
+5.27 
+
+7.52 
+
+1.12 
+
+1.91 
+
+7.48 
+
+6.01 
+
+0.049 
+
+0.19 
+
+1.72 
+
+1.69 
+
+5.14 
+
+5.54 
+
+0.53 
+
+0.51 
+
+0.33 
+
+0.39 
+
+0.35 
+
+0.69 
+
+1.46 
+
+2.73 
+
+2.15 
+
+3.32 
+
+5.79 
+
+6.63 
+
+5.83 
+
+6.88 
+
+1.90 
+
+5.50 
+
+1.60 
+
+1.23 
+
+2.78 
+
+1.98 
+
+2.44 
+
+1.63 
+
+0.85 
+
+0.49 
+
+0.54 
+
+0.84 
+
+0.57 
+
+0.75 
+
+3.46 
+
+4.73 
+
+3.39 
+
+4.54 
+
+14.6 
+
+13.1 
+
+8.63 
+
+7.69 
+
+12.2 
+
+16.4 
+
+15.7 
+
+18.1 
+
+5.09 
+
+3.22 
+
+40.9 
+
+44.0 
+
+5.59 
+
+3.98 
+
+4.89 
+
+3.24 
+
+5.49 
+
+3.98 
+
+4.97 
+
+3.65 
+
+2.30 
+
+1.39 
+
+2.27 
+
+0.96 
+
+6.41 
+
+7.61 
+
+3.60 
+
+2.24 
+
+157 
+
+160 
+
+94.3 
+
+93.9 
+
+4.28 
+
+6.96 
+
+3.61 
+
+1.94 
+
+35.2 
+
+34.5 
+
+2.27 
+
+1.47 
+
+10.1 
+
+11.6 
+
+0.99 
+
+0.95 
+
+0.98 
+
+0.96 
+
+0.98 
+
+0.92 
+
+0.98 
+
+0.93 
+
+0.96 
+
+0.92 
+
+0.98 
+
+0.86 
+
+0.99 
+
+0.91 
+
+0.99 
+
+0.91 
+
+0.99 
+
+0.93 
+
+0.98 
+
+0.93 
+
+0.97 
+
+0.93 
+
+0.98 
+
+0.91 
+
+0.98 
+
+0.92 
+
+0.98 
+
+0.87 
+
+0.98 
+
+0.86 
+
+0.85 
+
+0.82 
+
+0.85 
+
+0.81 
+
+0.97 
+
+0.91 
+
+0.97 
+
+0.95 
+
+0.99 
+
+0.95 
+
+0.98 
+
+0.93 
+
+0.98 
+
+0.90 
+
+0.98 
+
+0.89 
+
+0.97 
+
+0.94 
+
+0.97 
+
+0.94 
+
+0.97 
+
+0.91 
+
+0.98 
+
+0.92 
+
+0.98 
+
+0.87 
+
+0.98 
+
+0.92 
+
+0.98 
+
+0.83 
+
+0.98 
+
+0.86 
+
+0.98 
+
+0.88 
+
+0.98 
+
+0.96 
+
+0.96 
+
+0.95 
+
+0.97 
+
+0.96 
+
+0.97 
+
+0.87 
+
+0.97 
+
+0.96 
+
+0.91 
+
+0.83 
+
+0.98 
+
+0.95 
+
+0.82 
+
+0.80 
+
+0.13 
+
+0.14 
+
+0.15 
+
+0.15 
+
+0.13 
+
+0.21 
+
+0.14 
+
+0.19 
+
+0.15 
+
+0.20 
+
+0.19 
+
+0.52 
+
+0.16 
+
+0.29 
+
+0.16 
+
+0.29 
+
+0.14 
+
+0.39 
+
+0.13 
+
+0.40 
+
+0.13 
+
+0.23 
+
+0.18 
+
+0.31 
+
+0.17 
+
+0.27 
+
+0.20 
+
+0.50 
+
+0.21 
+
+0.49 
+
+0.16 
+
+0.20 
+
+0.16 
+
+0.21 
+
+0.19 
+
+0.43 
+
+0.20 
+
+0.42 
+
+0.13 
+
+0.20 
+
+0.12 
+
+0.18 
+
+0.16 
+
+0.30 
+
+0.19 
+
+0.37 
+
+0.14 
+
+0.27 
+
+0.13 
+
+0.17 
+
+0.18 
+
+0.29 
+
+0.17 
+
+0.26 
+
+0.20 
+
+0.49 
+
+0.21 
+
+0.49 
+
+0.20 
+
+0.78 
+
+0.19 
+
+0.67 
+
+0.15 
+
+0.78 
+
+0.13 
+
+0.15 
+
+0.12 
+
+0.11 
+
+0.11 
+
+0.11 
+
+0.18 
+
+1.41 
+
+0.17 
+
+0.18 
+
+0.12 
+
+0.75 
+
+0.16 
+
+0.23 
+
+0.41 
+
+0.57 
+
+1.08 
+
+1.10 
+
+1.32 
+
+1.36 
+
+1.19 
+
+1.22 
+
+1.22 
+
+1.26 
+
+1.24 
+
+1.26 
+
+1.67 
+
+1.39 
+
+1.36 
+
+1.41 
+
+1.37 
+
+1.41 
+
+1.17 
+
+1.21 
+
+1.17 
+
+1.20 
+
+1.17 
+
+1.21 
+
+1.47 
+
+1.45 
+
+1.47 
+
+1.43 
+
+1.63 
+
+1.40 
+
+1.66 
+
+1.38 
+
+1.20 
+
+1.24 
+
+1.23 
+
+1.28 
+
+3.16 
+
+3.13 
+
+3.02 
+
+3.03 
+
+1.22 
+
+1.27 
+
+1.42 
+
+1.47 
+
+1.25 
+
+1.28 
+
+1.23 
+
+1.28 
+
+1.50 
+
+1.52 
+
+1.26 
+
+1.31 
+
+1.38 
+
+1.34 
+
+1.36 
+
+1.32 
+
+1.56 
+
+1.32 
+
+1.61 
+
+1.31 
+
+1.27 
+
+1.34 
+
+1.21 
+
+1.28 
+
+1.39 
+
+1.42 
+
+1.35 
+
+1.37 
+
+1.91 
+
+1.98 
+
+1.49 
+
+1.67 
+
+1.68 
+
+1.73 
+
+1.49 
+
+1.55 
+
+1.66 
+
+1.71 
+
+1.53 
+
+1.55 
+
+6.86 
+
+7.41 
+
+0.094 
+
+0.12 
+
+0.13 
+
+0.15 
+
+0.40 
+
+0.41 
+
+0.33 
+
+0.38 
+
+0.33 
+
+0.32 
+
+1.08 
+
+0.69 
+
+0.16 
+
+0.17 
+
+0.16 
+
+0.17 
+
+0.22 
+
+0.25 
+
+0.22 
+
+0.22 
+
+0.095 
+
+0.10 
+
+0.35 
+
+0.27 
+
+0.40 
+
+0.29 
+
+0.90 
+
+0.49 
+
+0.95 
+
+0.51 
+
+0.26 
+
+0.28 
+
+0.27 
+
+0.29 
+
+2.42 
+
+2.32 
+
+2.24 
+
+2.16 
+
+0.33 
+
+0.33 
+
+0.34 
+
+0.32 
+
+0.10 
+
+0.14 
+
+0.21 
+
+0.22 
+
+0.38 
+
+0.31 
+
+0.37 
+
+0.44 
+
+0.34 
+
+0.26 
+
+0.38 
+
+0.28 
+
+0.89 
+
+0.48 
+
+0.97 
+
+0.52 
+
+0.15 
+
+0.13 
+
+0.14 
+
+0.15 
+
+0.21 
+
+0.25 
+
+0.26 
+
+0.23 
+
+0.85 
+
+0.89 
+
+0.45 
+
+0.48 
+
+0.21 
+
+0.28 
+
+0.22 
+
+0.26 
+
+0.33 
+
+0.35 
+
+0.33 
+
+0.28 
+
+1.29 
+
+1.52 
+
+0.63 
+
+0.65 
+
+0.85 
+
+0.90 
+
+0.66 
+
+0.72 
+
+0.64 
+
+0.65 
+
+0.61 
+
+0.65 
+
+1.66 
+
+1.24 
+
+0.86 
+
+0.94 
+
+0.86 
+
+0.91 
+
+0.70 
+
+0.82 
+
+0.76 
+
+0.82 
+
+0.36 
+
+0.41 
+
+0.85 
+
+0.86 
+
+0.91 
+
+0.95 
+
+1.28 
+
+0.87 
+
+1.26 
+
+0.82 
+
+0.43 
+
+0.50 
+
+0.44 
+
+0.49 
+
+2.50 
+
+2.58 
+
+2.23 
+
+2.49 
+
+0.89 
+
+1.03 
+
+0.89 
+
+0.96 
+
+0.68 
+
+0.69 
+
+0.62 
+
+0.63 
+
+0.93 
+
+0.92 
+
+0.69 
+
+0.73 
+
+0.66 
+
+0.65 
+
+0.64 
+
+0.63 
+
+1.00 
+
+0.68 
+
+1.00 
+
+0.60 
+
+0.75 
+
+0.69 
+
+0.69 
+
+0.66 
+
+0.84 
+
+0.86 
+
+0.84 
+
+0.85 
+
+1.85 
+
+1.96 
+
+0.96 
+
+2.03 
+
+1.52 
+
+1.53 
+
+1.23 
+
+1.28 
+
+1.84 
+
+2.02 
+
+1.36 
+
+1.41 
+
+5.24 
+
+5.08 
+
+0.074 
+
+0.077 
+
+2.45 
+
+2.19 
+
+0.90 
+
+2.11 
+
+0.24 
+
+0.27 
+
+0.35 
+
+0.34 
+
+0.58 
+
+0.55 
+
+1.44 
+
+1.61 
+
+2.22 
+
+2.37 
+
+4.96 
+
+4.73 
+
+5.55 
+
+5.21 
+
+0.96 
+
+0.82 
+
+2.29 
+
+1.58 
+
+1.11 
+
+0.68 
+
+0.67 
+
+0.32 
+
+0.74 
+
+0.59 
+
+0.80 
+
+0.61 
+
+0.55 
+
+0.60 
+
+2.98 
+
+3.46 
+
+3.23 
+
+3.60 
+
+17.4 
+
+16.1 
+
+8.04 
+
+7.70 
+
+12.3 
+
+12.6 
+
+11.1 
+
+12.0 
+
+7.89 
+
+5.99 
+
+24.7 
+
+26.0 
+
+7.68 
+
+5.70 
+
+7.25 
+
+5.48 
+
+7.03 
+
+5.52 
+
+4.84 
+
+3.72 
+
+4.27 
+
+3.14 
+
+4.24 
+
+3.11 
+
+4.73 
+
+4.63 
+
+4.01 
+
+3.69 
+
+146 
+
+149 
+
+109 
+
+113 
+
+5.80 
+
+5.38 
+
+4.67 
+
+4.18 
+
+12.8 
+
+12.5 
+
+2.66 
+
+2.35 
+
+9.90 
+
+10.0 
+
+0.99 
+
+0.99 
+
+0.99 
+
+0.99 
+
+0.97 
+
+0.97 
+
+0.98 
+
+0.98 
+
+0.98 
+
+0.98 
+
+0.91 
+
+0.98 
+
+0.98 
+
+0.99 
+
+0.98 
+
+0.99 
+
+0.98 
+
+0.99 
+
+0.98 
+
+0.99 
+
+0.99 
+
+1.00 
+
+0.96 
+
+0.98 
+
+0.95 
+
+0.98 
+
+0.92 
+
+0.98 
+
+0.91 
+
+0.98 
+
+0.98 
+
+0.98 
+
+0.98 
+
+0.98 
+
+0.97 
+
+0.97 
+
+0.97 
+
+0.98 
+
+0.98 
+
+0.98 
+
+0.97 
+
+0.98 
+
+0.98 
+
+1.00 
+
+0.98 
+
+0.98 
+
+0.97 
+
+0.99 
+
+0.98 
+
+0.99 
+
+0.96 
+
+0.98 
+
+0.95 
+
+0.98 
+
+0.92 
+
+0.98 
+
+0.91 
+
+0.95 
+
+0.99 
+
+0.99 
+
+0.99 
+
+0.99 
+
+0.98 
+
+0.98 
+
+0.97 
+
+0.98 
+
+0.96 
+
+0.96 
+
+0.97 
+
+0.96 
+
+0.97 
+
+0.97 
+
+0.97 
+
+0.97 
+
+0.96 
+
+0.96 
+
+0.97 
+
+0.98 
+
+0.86 
+
+0.91 
+
+0.11 
+
+0.091 
+
+0.13 
+
+0.11 
+
+0.12 
+
+0.100 
+
+0.11 
+
+0.091 
+
+0.12 
+
+0.099 
+
+0.14 
+
+0.14 
+
+0.14 
+
+0.11 
+
+0.14 
+
+0.11 
+
+0.12 
+
+0.095 
+
+0.12 
+
+0.099 
+
+0.12 
+
+0.092 
+
+0.14 
+
+0.12 
+
+0.14 
+
+0.11 
+
+0.17 
+
+0.15 
+
+0.16 
+
+0.15 
+
+0.100 
+
+0.085 
+
+0.099 
+
+0.083 
+
+0.18 
+
+0.14 
+
+0.17 
+
+0.11 
+
+0.13 
+
+0.10 
+
+0.10 
+
+0.099 
+
+0.15 
+
+0.12 
+
+0.16 
+
+0.11 
+
+0.12 
+
+0.11 
+
+0.11 
+
+0.10 
+
+0.14 
+
+0.12 
+
+0.14 
+
+0.11 
+
+0.17 
+
+0.15 
+
+0.16 
+
+0.15 
+
+0.15 
+
+0.067 
+
+0.15 
+
+0.071 
+
+0.13 
+
+0.11 
+
+0.13 
+
+0.11 
+
+0.14 
+
+0.11 
+
+0.12 
+
+0.11 
+
+0.17 
+
+0.13 
+
+0.16 
+
+0.13 
+
+0.14 
+
+0.095 
+
+0.15 
+
+0.12 
+
+0.28 
+
+0.21 
+
+RCMGEM-mv-orog 
+
+EnScale-linex 
+
+UiBCorrDiff-orog 
+
+FlowMatching-v1 
+
+FlowMatching-v1-orog 
+
+RCMFlow-orog 
+
+EnScale 
+
+EnScale-orog 
+
+ViT-IFCAv1 
+
+ViT-IFCAv1-orog 
+
+ParamDiffusion-orog 
+
+ResGAN-v2 
+
+ResGAN-v2-orog 
+
+ResGAN 
+
+ResGAN-orog 
+
+CorrDiff-TW1_NTNU-CWA 
+
+CorrDiff-TW1_NTNU-CWA-orog 
+
+spaGAN 
+
+spaGAN-orog 
+
+ParamUNET 
+
+GNN4CD-orog 
+
+XGBoost_IDL 
+
+CNRM-UNeT 
+
+Prithvi-UNet 
+
+Prithvi-UNet-orog 
+
+DetUNet-v2 
+
+DetUNet-v2-orog 
+
+DetUNet 
+
+DetUNet-orog 
+
+Rossby-UNet 
+
+Rossby-UNet-orog 
+
+DeepESD-IFCAv1 
+
+DeepESD-IFCAv1-orog 
+
+DeepSensor 
+
+DeepSensor-orog 
+
+ANN 
+
+ANN-orog 
+
+DeepESDcrps_IFCAv2 
+
+DeepESDcrps_IFCAv2-orog 
+
+DeepESD_IDL 
+
+Generative Models 
+
+Deterministic Models 
+
+ESD | CV / Extrap. Emulator Hist-Future | CV / Interp. 
+
+Highest 
+
+performing 
+
+Lowest 
+
+performing 
+
+Metric performance upper-left: cross-validation 
+
+lower-right: extrapolation/interpolation 
+
+gold outline: best in column 
+
+CORDEX-ML-Bench Maximum Temperature Scorecard (region-averaged) 
+
+Cells show metric values; shading and gold outlines are based on within-column performance. 
+
+Figure 12. As Figure 11, but for maximum temperature (tasmax). Metrics differ from precip-itation and include TXx RMSE (in place of Rx1day) and interannual variability bias. –33– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES) Precipitation (pr) Max. temp. (tasmax) 
+
+ESD 
+
+CV / Extrap. 
+
+Emulator 
+
+CV / Interp. 
+
+ESD 
+
+CV / Extrap. 
+
+Emulator 
+
+CV / Interp. 
+
+1 1
+
+9 6
+
+4 2
+
+5 5
+
+8 9
+
+17 13 
+
+2 4
+
+13 12 
+
+10 10 
+
+15 16 
+
+6 8
+
+3 3
+
+14 19 
+
+11 11 
+
+7 7
+
+27 29 
+
+30 31 
+
+35 30 
+
+26 26 
+
+25 27 
+
+34 38 
+
+29 21 
+
+23 32 
+
+20 25 
+
+24 24 
+
+22 20 
+
+12 14 
+
+16 15 
+
+28 23 
+
+19 17 
+
+33 35 
+
+31 36 
+
+32 28 
+
+18 18 
+
+39 39 
+
+21 22 
+
+36 33 
+
+37 34 
+
+40 40 
+
+38 37 
+
+1 1
+
+11 9
+
+9 11 
+
+8 10 
+
+4 7
+
+3 3
+
+2 2
+
+17 16 
+
+15 13 
+
+13 14 
+
+12 8
+
+7 6
+
+27 27 
+
+6 5
+
+5 4
+
+22 24 
+
+20 23 
+
+34 30 
+
+19 21 
+
+30 34 
+
+33 22 
+
+32 35 
+
+16 18 
+
+14 15 
+
+21 19 
+
+23 25 
+
+10 12 
+
+26 28 
+
+29 32 
+
+25 29 
+
+31 31 
+
+28 26 
+
+35 33 
+
+18 17 
+
+38 38 
+
+24 20 
+
+36 36 
+
+37 37 
+
+40 40 
+
+39 39 
+
+1 2
+
+11 8
+
+23 6
+
+3 24 
+
+9 29 
+
+19 14 
+
+2 23 
+
+8 3
+
+7 17 
+
+10 18 
+
+15 20 
+
+6 16 
+
+4 10 
+
+14 31 
+
+18 30 
+
+34 26 
+
+35 28 
+
+37 37 
+
+33 33 
+
+22 25 
+
+16 19 
+
+20 12 
+
+17 32 
+
+24 27 
+
+26 35 
+
+12 1
+
+39 39 
+
+30 11 
+
+25 21 
+
+5 15 
+
+21 36 
+
+13 34 
+
+27 9
+
+40 40 
+
+31 13 
+
+29 7
+
+36 38 
+
+28 4
+
+38 22 
+
+32 5
+
+3 2
+
+7 8
+
+9 12 
+
+6 9
+
+10 7
+
+1 1
+
+32 29 
+
+13 14 
+
+17 16 
+
+19 18 
+
+24 22 
+
+26 26 
+
+8 13 
+
+31 25 
+
+33 21 
+
+2 4
+
+4 6
+
+36 35 
+
+30 32 
+
+12 10 
+
+14 11 
+
+16 23 
+
+34 24 
+
+35 28 
+
+20 27 
+
+15 17 
+
+38 36 
+
+28 34 
+
+23 20 
+
+22 15 
+
+11 5
+
+5 3
+
+21 31 
+
+40 40 
+
+25 30 
+
+18 19 
+
+37 37 
+
+27 33 
+
+39 38 
+
+29 39 
+
+RCMGEM-mv-orog 
+
+FlowMatching-v1 
+
+> FlowMatching-v1-orog
+
+ViT-IFCAv1 
+
+> ViT-IFCAv1-orog
+
+ParamDiffusion-orog 
+
+RCMFlow-orog 
+
+EnScale-linex 
+
+EnScale 
+
+> EnScale-orog
+
+ResGAN-v2 
+
+> ResGAN-v2-orog
+
+UiBCorrDiff-orog 
+
+ResGAN 
+
+> ResGAN-orog
+
+CorrDiff-TW1_NTNU-CWA 
+
+> CorrDiff-TW1_NTNU-CWA-orog
+
+spaGAN 
+
+> spaGAN-orog
+
+CNRM-UNeT 
+
+XGBoost_IDL 
+
+ParamUNET 
+
+DetUNet 
+
+> DetUNet-orog
+
+DeepESD-IFCAv1 
+
+> DeepESD-IFCAv1-orog
+
+DeepESDcrps_IFCAv2 
+
+> DeepESDcrps_IFCAv2-orog
+
+DetUNet-v2 
+
+> DetUNet-v2-orog
+
+Rossby-UNet 
+
+> Rossby-UNet-orog
+
+GNN4CD-orog 
+
+DeepESD_IDL 
+
+Prithvi-UNet 
+
+> Prithvi-UNet-orog
+
+ANN 
+
+> ANN-orog
+
+DeepSensor 
+
+> DeepSensor-orog
+
+Generative Models 
+
+Deterministic Models 
+
+Highest 
+
+performing 
+
+Lowest 
+
+performing 
+
+Overall rank upper-left: cross-validation 
+
+lower-right: extrapolation/interpolation 
+
+gold outline: best in column 
+
+CORDEX-ML-Bench Overall Rank 
+
+Rows are complete models only by default; lower rank is better. 
+
+Figure 13. Overall rank summary across all experiments and evaluation periods for both precipitation and temperature. Each panel shows the overall rank (aggregated across all metrics and domains) for each model in each of the four experiment–variable combinations: precipitation ESD, precipitation Emulator, temperature ESD, and temperature Emulator. Within each cell, the upper-left triangle shows the cross-validation rank and the lower-right triangle shows the ex-trapolation or interpolation rank. Models are separated into generative and deterministic groups. Lighter shading indicates higher rank. –34– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES) 
+
+cost is one to two orders of magnitude lower — making them more tractable for large-scale ensemble applications where computational budget is a practical constraint. A key reason RCMFlow-orog and FlowMatching-v1 are more computationally efficient than RCMGEM-mv-orog is that they require far fewer neural function (flow or diffusion time) evaluations during inference. For example, RCMFlow-orog uses flow matching with an Adams–Bashforth third-order solver, requiring only 25 function evaluations per sample, compared to the hundreds or thousands required by typical score-based SDE samplers such as RCMGEM-mv-orog and ParamDiffusion-orog (e.g., Song et al., 2020). Non-diffusion generative mod-els such as EnScale and ViT-IFCAv1 go a step further, generating ensemble members in a single forward pass and thus incurring no multi-step cost whatsoever. Adopting sim-ilar sampling strategies represents a clear path to reducing inference cost for these slower diffusion-based models, and further cost optimisations may be possible. Moreover, choos-ing the optimal model involves a trade-off: skill versus computational cost. We there-fore recommend that future benchmarking efforts, and ML downscaling studies more gen-erally, continue to report compute cost alongside skill metrics. Note, the results in Fig-ure 14 should be interpreted with care. Computational costs are approximate, as the al-gorithms used different codebases and hardware configurations, making consistent nor-malisation difficult. 
+
+4.2 Extrapolation and transferability 
+
+A central aim of CORDEX-ML-Bench is to evaluate extrapolation — the ability of ML models to generate physically credible fields under climate conditions not present in their training data. The results presented in this study are from the perfect-framework setting, where predictor fields are obtained by coarsening the same RCM used to gen-erate the targets. This isolates the downscaling function from discrepancies between the GCM and RCM atmospheric states (i.e., the imperfect framework). The main finding is that ESD-trained models systematically underestimate mid-century TXx and Rx1day climate change signals, whereas models trained in the RCM Emulator experiment repro-duce these signals more accurately. The benefit of including future periods in training is evident in Figure 14: models trained on the RCM Emulator configuration have sub-stantially lower errors on average than those trained on historical climate alone, consis-tent with earlier work (Doury et al., 2023; Rampal et al., 2024a; Baño-Medina et al., 2024). These results in the perfect framework will thus likely represent lower bounds on the ex-trapolation errors expected in operational use. When the models trained here are ap-plied in an imperfect setting (i.e. operationally), where models trained on coarsened RCM fields are driven by raw GCM predictors, skill is likely to degrade further (Rampal et al., 2025a; Baño-Medina et al., 2024; Doury et al., 2023; Boé et al., 2023). GCM–RCM pairs exhibit systematic differences in the phase and amplitude of large-scale atmospheric vari-ability because RCMs are constrained by GCMs only at lateral boundaries or are nudged to a specific scale (spectral nudging), while their interior states evolve quasi-independently. These inconsistencies are not uniform across variables or regions, and the extent to which they degrade downscaled fields appears to be architecture-dependent (Baño-Medina et al., 2024; Kendon et al., 2025; González-Abad and Gutiérrez, 2025). A further consideration is resolution: coarsening RCM fields in the perfect frame-work averages high-resolution variability and leaves an imprint of the fine-scale field on the predictors, so even small differences in spatial variability between coarsened RCM and native GCM predictors may affect model performance. A thorough characterisation of imperfect evaluation, including the interaction between imperfect predictors and out-of-distribution climate states — is therefore an important subject we plan to address in future work. In particular, a systematic assessment of the climate change signal under imperfect extrapolation, stratified by architecture and region, is needed to determine whether the rankings established under the perfect framework are preserved when models are ap-plied to real CMIP predictor outputs. Previous work suggests that generative architec-tures may be more robust to predictor perturbations from imperfect conditions than de- 
+
+> –35– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES)
+
+terministic approaches (Rampal et al., 2025b; Addison et al., 2026), but this has not yet been tested at the scale of CORDEX-ML-Bench (i.e., across multiple models and regions). Strategies that make perfect-framework training more representative of inference con-ditions may prove a useful research direction, and studies such as Aich et al. (2026) of-fer some guidance through spectral smoothing approaches. A related question is the transferability of ML models to driving GCMs not seen during training, as the present study focuses on a single training GCM. The evaluation matrix in Table 2 includes perfect and imperfect transfer to an independent driving GCM (MPI-ESM-LR for the Alps, NorESM2-MM for South Africa, EC-Earth3 for New Zealand), but for conciseness the analyses presented here are restricted to a single GCM. Cross-GCM evaluation tests a stricter form of generalisation: whether a model has learned a physically meaningful large-scale-to-local mapping, or has instead fit features specific to the training GCM. Preliminary work (Rampal et al., 2025a; Addison et al., 2026; Doury et al., 2024) has shown that models which appear competitive under the training GCM can degrade substantially when applied to another GCM, so testing this systematically across all 40 models is a natural next step. 
+
+4.3 Architectural and training choices 
+
+Most ML algorithms in the benchmark were provided in paired configurations that differ only in whether a static high-resolution orography field was included as a predic-tor, yielding an approximately controlled experiment for the importance of explicit to-pographic information. A systematic analysis of orography versus no-orography pairs is beyond the scope of this paper and will be addressed in future work. For some architec-tures, incorporating orography consistently improves skill across most metrics (e.g., Prithvi-UNet, ResGAN, Det-UNet, and DeepSensor), as illustrated in Figure 14, but this result is not universal. The inconsistency across architectures suggests that orography does not simply act as additional free information; rather, it interacts with each architecture’s in-ductive biases in ways that are not straightforward to predict. Several other architec-tural and training choices are currently confounded with one another in our analysis. These include the loss function (MSE, asymmetric, quantile, Bernoulli-Gamma negative log-likelihood, or CRPS-spectral), the normalisation strategy for precipitation (log-transform, square-root, percentile scaling, or per-grid-point standardisation), training checkpoints and whether models are trained jointly on precipitation and temperature or independently on each variable. Some of these choices have clear motivations — Bernoulli-Gamma losses explicitly address the zero-inflated character of daily precipitation (Cannon, 2008; Baño-Medina et al., 2020). A controlled study in which a single backbone architecture is trained under different loss functions, normalisation strategies, and variable coupling approaches would allow these choices to be isolated from other sources of inter-model variance. 
+
+4.4 Outlook and Future Extensions of the Benchmark 
+
+The metrics in this first release of CORDEX-ML-Bench are a deliberately chosen core set that covers the main aspects of downscaling evaluation while remaining simple to compute, to encourage rapid uptake in the ML downscaling community. This set is intended to evolve iteratively as new results and user needs emerge from ongoing bench-mark activity, with future releases expanding and refining the metrics accordingly. One notable omission from the scorecard reported in Section 3.4 is the climate change sig-nal. We excluded it because signal-error metrics are ineffective at discriminating between models when the underlying signal is spatially noisy, as for Rx1day — although the same metrics were informative for TXx (Section 3.3) — and more careful metric design is needed before such measures can be meaningfully incorporated. Beyond the improvements already noted, several research directions are worth pur-suing. First, combining a spatially aggregated area-mean change with a pattern-correlation 
+
+> –36–
+
+manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES) 0.01 0.1 1 10 100 1 000 10 000 
+
+10 
+
+20 
+
+30 
+
+40 
+
+50 
+
+60 
+
+> RX1Day RMSE  (mm day  −1 )
+
+Precipitation | Emulator 
+
+ANN DeepESD-IFCAv1-orog DeepESDcrps_IFCAv2-orog DetUNet DetUNet-v2 Prithvi-UNet-orog Rossby-UNet-orog ViT-IFCAv1-orog CorrDi ff -TW1_NTNU-CWA EnScale-orog FlowMatching-v1 ResGAN ResGAN-v2 spaGAN ANN-orog CNRM-UNeT DeepESD-IFCAv1 DeepESDcrps_IFCAv2 DeepESD_IDL DetUNet-orog DetUNet-v2-orog GNN4CD-orog ParamUNET Prithvi-UNet Rossby-UNet ViT-IFCAv1 XGBoost_IDL CorrDi ff -TW1_NTNU-CWA-orog EnScale EnScale-linex FlowMatching-v1-orog ParamDi ff usion-orog RCMFlow-orog RCMGEM-mv-orog ResGAN-orog ResGAN-v2-orog UiBCorrDi ff -orog spaGAN-orog 
+
+0.01 0.1 1 10 100 1 000 10 000 
+
+10 
+
+20 
+
+30 
+
+40 
+
+50 
+
+60 
+
+Precipitation | ESD 
+
+ANN DeepESD-IFCAv1-orog DeepESDcrps_IFCAv2-orog DetUNet DetUNet-v2 Prithvi-UNet-orog Rossby-UNet-orog ViT-IFCAv1-orog CorrDi ff -TW1_NTNU-CWA EnScale-orog FlowMatching-v1 ResGAN ResGAN-v2 spaGAN ANN-orog CNRM-UNeT DeepESD-IFCAv1 DeepESDcrps_IFCAv2 DeepESD_IDL DetUNet-orog DetUNet-v2-orog GNN4CD-orog ParamUNET Prithvi-UNet Rossby-UNet ViT-IFCAv1 XGBoost_IDL CorrDi ff -TW1_NTNU-CWA-orog EnScale EnScale-linex FlowMatching-v1-orog ParamDi ff usion-orog RCMFlow-orog RCMGEM-mv-orog ResGAN-orog ResGAN-v2-orog UiBCorrDi ff -orog spaGAN-orog 
+
+0.01 0.1 1 10 100 1 000 10 000 
+
+Inference time (s yr −1 ; A100-equiv.) 
+
+10 0
+
+10 1
+
+> TXx RMSE  (°C)
+
+Max. temperature | Emulator 
+
+ANN DeepESD-IFCAv1-orog DeepESDcrps_IFCAv2-orog DetUNet DetUNet-v2 Prithvi-UNet-orog Rossby-UNet-orog ViT-IFCAv1-orog CorrDi ff -TW1_NTNU-CWA EnScale-orog FlowMatching-v1 ResGAN ResGAN-v2 spaGAN ANN-orog CNRM-UNeT DeepESD-IFCAv1 DeepESDcrps_IFCAv2 DeepESD_IDL DetUNet-orog DetUNet-v2-orog GNN4CD-orog ParamUNET Prithvi-UNet Rossby-UNet ViT-IFCAv1 XGBoost_IDL CorrDi ff -TW1_NTNU-CWA-orog EnScale EnScale-linex FlowMatching-v1-orog ParamDi ff usion-orog RCMFlow-orog RCMGEM-mv-orog ResGAN-orog ResGAN-v2-orog UiBCorrDi ff -orog spaGAN-orog 
+
+0.01 0.1 1 10 100 1 000 10 000 
+
+Inference time (s yr −1 ; A100-equiv.) 
+
+10 0
+
+10 1
+
+Max. temperature | ESD 
+
+ANN DeepESD-IFCAv1-orog DeepESDcrps_IFCAv2-orog DetUNet DetUNet-v2 Prithvi-UNet-orog Rossby-UNet-orog ViT-IFCAv1-orog CorrDi ff -TW1_NTNU-CWA EnScale-orog FlowMatching-v1 ResGAN ResGAN-v2 spaGAN ANN-orog CNRM-UNeT DeepESD-IFCAv1 DeepESDcrps_IFCAv2 DeepESD_IDL DetUNet-orog DetUNet-v2-orog GNN4CD-orog ParamUNET Prithvi-UNet Rossby-UNet ViT-IFCAv1 XGBoost_IDL CorrDi ff -TW1_NTNU-CWA-orog EnScale EnScale-linex FlowMatching-v1-orog ParamDi ff usion-orog RCMFlow-orog RCMGEM-mv-orog ResGAN-orog ResGAN-v2-orog UiBCorrDi ff -orog spaGAN-orog 
+
+10 010 110 2
+
+> Training cost (A100-equiv. hours)
+
+GPU class (A100-equiv. factor) 
+
+H/GH-class x2.0 vs A100 A100 x1.0 (ref.) A30/A40 x0.55-0.65 V100 x0.50 Workstation x0.35 A10 x0.55 CPU only (not normalised) 
+
+Parameters 
+
+1 M 10 M 100 M 272 M 
+
+Orog selection 
+
+Best variant (lower RMSE) Suboptimal variant (faded) 
+
+Figure 14. Skill–compute relationship across CORDEX-ML-Bench models. The hori-zontal axis shows inference cost as wall-clock time per simulated year per ensemble mem-ber, expressed as a single A100-GPU equivalent. To enable hardware-agnostic comparison, recorded times are scaled by the approximate throughput of each GPU class relative to an A100 (H100/H200/GH200: ×2.0; A40: ×0.65; A30/A10: ×0.55; V100: ×0.50; RTX 6000: ×0.35; CPU: unchanged). For multi-GPU algorithms, the per-GPU wall-clock time is multiplied by the num-ber of GPUs used; for multivariate models (trained jointly on precipitation and temperature), the cost is halved to give a per-variable equivalent. The vertical axis shows spatially averaged RMSE of annual maximum daily precipitation (Rx1day; top) and annual maximum daily temperature (TXx; bottom) across all three CORDEX domains. Left and right columns show results for the Emulator and ESD experiments, respectively, evaluated over 2041–2060. Marker colour indicates A100-equivalent training cost; marker size scales with total parameter count; marker shape de-notes GPU class (see legend). Where both orographic and non-orographic variants of a model were submitted, the better-performing variant (lower composite RMSE) is shown at full opacity and the weaker variant is faded. –37– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES) 
+
+metric would allow evaluation to separately assess biases in the magnitude and spatial distribution of the response — two distinct error types that are both relevant to captur-ing the climate change signal. Second, supplementary metrics such as return-period curves and block-maxima or peak-over-threshold distributions would extend evaluation beyond the 20-year mean of Rx1day to the upper tail of the precipitation distribution, which is most directly relevant to impact assessment (e.g., Trenberth et al., 2003). Third, the bench-mark uses different training data lengths for the ESD and RCM Emulator experiments (20 vs. 40 years), which could in principle contribute to differences in performance. We expect this accounts for some, but not all, of the difference: historical cross-validation performance is similar across both experiments for most models (Figures 11–12); had ESD scores been systematically lower, a training-length effect would have been the natural explanation. This suggests that the skill improvement of models trained in the Emula-tor experiment stems from exposure to a warmer future climate during training, rather than from training-length differences — a finding consistent with results over New Zealand (Rampal et al., 2024a). A further extension concerns ensemble-based evaluation. Many algorithms are generative and produce ensembles of downscaled fields, yet the current benchmark does not assess ensemble spread or calibration — properties that would of-fer valuable insight into the reliability, and added value, of probabilistic outputs (e.g., Addison et al., 2026; Rampal et al., 2025a; Schillinger et al., 2025). Proper scoring rules such as the continuous ranked probability score (CRPS), spread–skill diagrams, and rank histograms are standard tools in probabilistic forecasting (Gneiting and Raftery, 2007) and should be integrated into future benchmark releases. Several extensions of CORDEX-ML-Bench are planned for subsequent releases, sum-marised here in approximate order of priority. The most important next step is the ex-tension to imperfect evaluation discussed in Section 4.2, for which the required exper-iments are already available. This is particularly important because it directly reflects the operational use case that motivates this work, for both ESD and RCM emulation strate-gies. This extension covers evaluation with raw GCM forcing, transfer to independent GCMs unseen during training (e.g., training on CNRM-CM5, testing on MPI-ESM-LR), and end-of-century conditions (2080–2099). Future phases will revisit these questions more thoroughly and extend to others, including transferability across RCM/GCM simulation pairs and the importance of orography as a co-variate across different ML architectures. Second, expansion to additional CORDEX domains — particularly tropical, semi-arid, and monsoon-dominated regions, as well as high-latitude domains — would test the ge-ographic generality of the conclusions drawn here. Third, extension to additional vari-ables, including near-surface wind, humidity, radiation, and sub-daily precipitation — would support a broader range of impact applications, including hydrology, renewable energy, and urban heat assessment (Johannsen et al., 2024). Sub-daily resolution is a par-ticular priority, as diurnal-cycle errors are a well-documented limitation of climate mod-els (Christopoulos and Schneider, 2021; Dai and Trenberth, 2004; Flato et al., 2014), and data-driven downscaling has shown early promise at these time-scales (Johannsen et al., 2024; Glawion et al., 2023, 2025). Fourth, convection-permitting (kilometre-scale) tar-gets are the logical endpoint of this progression (e.g., Addison et al., 2026): the factor-of-8 resolution ratio currently evaluated (approximately 2 ◦ to 10 km) is modest by the standards of operational convection-permitting downscaling, and scaling to the full ra-tio required by kilometre-scale targets will challenge current architectures in new ways (Kendon et al., 2025; Rampal et al., 2024b). 
+
+5 Conclusions 
+
+To our knowledge, CORDEX-ML-Bench is the first coordinated multi-domain, multi-architecture benchmark for data-driven regional climate downscaling. It provides three primary contributions. First, it aligns with the CORDEX to assess model skill under op-erational conditions relevant to climate-impact assessments, serving as a foundational  
+
+> –38– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES)
+
+release intended for community extension. Second, it evaluates over 40 diverse models—ranging from traditional machine learning baselines to advanced generative architectures—across three regions with different characteristics, enabling systematic, architecture-level com-parisons. Third, it evaluates model skill both within and beyond training distributions, distinguishing between cross-validation and out-of-sample performance (extrapolation for ESD models and interpolation for RCM emulators). Beyond these contributions, the benchmark was designed to address two key questions: first, how well do models trained on historical climate extrapolate to future conditions, and does including future train-ing data improve out-of-sample performance; and second, are certain architectures con-sistently superior across regions and evaluation criteria? The remainder of this section summarises our findings on each. On the first question, an important result of this benchmark concerns the ability of models to extrapolate beyond their training distribution. When trained exclusively on a historical period of simulation (the ESD experiment), nearly all 40 models system-atically underestimate mid-century climate-change signals for temperature (TXx) and precipitation (Rx1day) extremes. This systematic bias across architectures and regions reinforces recent literature highlighting the potential limitations of using purely histor-ical data to extrapolate non-stationary climate relationships (Rampal et al., 2024b; Kendon et al., 2025). Furthermore, because our simulation-based experiments are idealized, we anticipate these extrapolation challenges would be amplified in noisier, observation-based, real-world settings which often use coarse-resolution reanalysis as predictors and grid-ded observations as targets (Rampal et al., 2024b). In such settings, the choice of ob-servational data set itself constitutes an additional source of uncertainty, substantially modifying the downscaled climate change signal, particularly for extremes (Reyes-Elgueta et al., 2026). Training on a combined historical and future period largely resolves the underes-timation of the TXx climate change signal across all three domains. We attribute this primarily to exposure to future climate conditions during training, with the larger train-ing set (40 vs. 20 years) playing a secondary role — consistent with previous studies (Chad-wick et al., 2011; Rampal et al., 2024a). For Rx1day, the combined training period re-duces but does not eliminate underestimation of the climate-change signal, and this bias is consistent across virtually all architectures. This likely reflects the inherent difficulty of learning the climate-change response of precipitation extremes, which is further chal-lenged by the low frequency of extreme events in training data. Additionally, these re-sults should be interpreted in light of the benchmark’s experimental design, where the validation approach was not constrained to climate-change diagnostics; future work could explore incorporating such metrics into model selection and hyperparameter tuning. As for the second question, across both experiments and all three pilot domains, generative model families—specifically score-based diffusion and flow-matching approaches—achieve the highest overall skill. They consistently outperform deterministic architectures in cap-turing spatial variability (RALSD) and extreme precipitation (Rx1day), though this ad-vantage narrows for maximum temperature, where several deterministic models remain competitive. A key finding is that pixelwise daily RMSE is a poor proxy for overall down-scaling skill. Models with low RMSE often rank poorly on climatological and extreme-value metrics, and vice versa —highlighting the importance for a multi-metric evalua-tion framework. While our analysis provides a comprehensive overview of model skill, important avenues for future work remain. These include process-based validation (e.g., evaluating cyclone-induced rainfall) and, for generative models, assessment of ensemble dispersion and calibration. Furthermore, it is important to evaluate model skill in pre-dicting events rarer than those considered here (e.g., 1-in-100-year extremes). This is par-ticularly important because the computational efficiency of data-driven models enables the generation of large ensembles, allowing us to sample and study these rare climate events at fine spatial scales.  
+
+> –39– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES)
+
+Although all approaches are far more efficient than dynamical downscaling, infer-ence costs span over two orders of magnitude across models. Flow-matching and GAN-based architectures offer favourable skill-to-compute ratios, making them well-suited to regions with limited GPU infrastructure, while the higher cost of more expensive mod-els can be readily mitigated through multi-GPU parallelisation where resources permit. We recommend that future benchmarking efforts report inference cost alongside skill met-rics as a standard evaluation axis, following the approach adopted in WeatherBench 2 (Rasp et al., 2024). Future extensions of CORDEX-ML-Bench will expand the bench-mark by evaluating models in the imperfect setting (applying models trained on coars-ened RCM predictors to raw GCM fields), further analysing the ESD experiment to bet-ter characterise model behaviour under climate change conditions, incorporating new CORDEX domains (tropical, high-latitude, and monsoon regions), and targeting sub-daily, convection-permitting kilometer-scale resolutions. We view CORDEX-ML-Bench as an early step toward building trust in these methods. Realising that goal will require sustained effort beyond the benchmark itself, in particular, systematic comparisons against observations and closer engagement with the impacts-modelling and climate-services communities, to ensure that ML downscaling products are evaluated, deployed, and interpreted in ways that genuinely serve end users. 
+
+Open Research 
+
+The CORDEX-ML-Bench benchmark dataset and code used in this study is pub-licly available on Zenodo under a Creative Commons licence (Rampal et al., 2026), pro-vided as regional NetCDF files in compressed archives (approximately 30 GB total; ap-proximately 5 GB per domain) at daily temporal resolution. The benchmark framework, data loading utilities, and training infrastructure are available at https://github.com/ WCRP-CORDEX/ml-benchmark ; individual model repositories are linked therein, and ad-ditional model submissions are actively encouraged. All evaluation metrics and score-cards were produced using the CORDEX-ML-Bench evaluation suite, available at https: //github.com/jgonzalezab/cordex-bench-eval . Code for the models trained in the benchmark is listed in Supplementary Table T3. 
+
+Supplementary Material 
+
+Supplementary Material can be found in https://zenodo.org/records/20985924 
+
+Author Contributions 
+
+N.R., J.G.-A., and J.M.G. planned and designed the benchmark, and coordinated its development with all contributing members. N.R. and J.G.-A. processed the data, with support from J.S. (Steinkopf), C.H., and F.E. N.R., J.G.-A., H.A., V.B., S.D.G., J.O-D., A.D., R.F.-F., L.G., M.I., H.K.L., M.N.L., M.O., J.P., M.S.J.R., M.S. (Schillinger), S.S. (Sharma), W.T., J.-B.T., R.T., K.-C.W., and T.W. were involved in training ML models and ML algorithm design. M.L.B., B.B., E.C., F.E., P.B.G., C.H., A.O., M.S.J.R., P.M.M.S., S.S. (Sobolowski), J.S. (Steinkopf), J.B-M, Y.-C.W., P.A.G.W., T.W. (Wetherell), and M.W. contributed to supervision of model training, development of evaluation metrics, and reviewing and editing of the manuscript. 
+
+Conflict of Interest 
+
+The authors declare no conflicts of interest.  
+
+> –40– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES)
+
+Acknowledgments 
+
+Authors N.R. and P.B.G. acknowledge support from the New Zealand Ministry of Business, Innovation and Employment (MBIE) Endeavour Fund Smart Ideas programme, grant NIW2504. J.G.-A., J.B.-M., J.M.G., S.S (Sobolowski), H.A. and J.O.-D acknowl-edge support from the Copernicus Climate Change Service (C3S), under contract C3S2_384, implemented by ECMWF on behalf of the European Union. H.A. and P.A.G.W. were supported by Natural Environment Research Council grant NE/Z000076/1. M.L.B. ac-knowledges support from CREATOR-ANR-25-CE56-3663. V.B., E.C., and A.D. acknowl-edge support from Horizon Europe project Impetus4Change (I4C; grant 101081555). J.O.-D is funded by a European Union Horizon 2020 Marie Skłodowska-Curie Action (grant 101151904). R.F.-F. and M.I. acknowledge support from the Bolin Centre for Climate Research and the Horizon Europe AI4PEX project (grant 101137682). L.G. acknowledges Helmholtz Research Field Earth and Environment support through the Innovation Pool Project ACTUATE. H.K.L.’s work was carried out at the Jet Propulsion Laboratory, California Institute of Technology, under a contract with the National Aeronautics and Space Administration (80NM0018D0004). M.N.L. received funding from Agence Nationale de la Recherche – France 2030 as part of the PEPR TRACCS programme under grant numbers ANR-22-EXTR-0005 and ANR-22-EXTR-0011, with computing and storage resources from GENCI at IDRIS on Jean Zay. M.O. is funded by the AI4Science PN070500 fellowship within the Generación D initiative, funded by the European Union NextGen-erationEU funds through PRTR. A.O., M.S.J.R., S.S., and M.W. acknowledge support from UKRI/NERC; A.O., S.S., and M.W. were funded by the grant Drivers and Impacts of Extreme Weather Events in Antarctica (ExtAnt; NE/Y503307/1), and A.O. and M.S.J.R. also acknowledge the NERC National Capability International grant SURface FluxEs In AnTarctica (SURFEIT; NE/X009319/1). J.P. was funded by the HClimRep project as part of the Helmholtz Foundation Model Initiative, with collaboration enabled through a research stay supported by Karlsruhe House of Young Scientists. M.S. is part of SPEED2ZERO, a joint initiative co-financed by the ETH Board. P.M.M.S. and R.T. acknowledge fund-ing from FCT, I.P./MCTES through national funds (PIDDAC): LA/P/0068/2020, UID/50019/2025, and European Union NextGenerationEU projects UID/PRR/50019/2025 and UID/PRR2/50019/2025. J.-B.T., K.-C.W., and Y.-C.W. were funded by the National Science and Technology Coun-cil, Taiwan (grants 113-2111-M-003-005, 114-2111-M-003-007, and 112-2923-M-001-003-MY4); J.-B.T. and K.-C.W. also acknowledge the Central Weather Administration, Tai-wan. The CCAM simulations contributing to this benchmark for the South Africa do-main were produced through TIPPECC (Climate change information for adapting to re-gional tipping Points), part of the Southern African Science Services Centre for Climate Change and Adaptive Land Management (SASSCAL) 2.0 Research Programme; C.H. is additionally supported by the Wits-Nedbank Chair in Climate Modelling via dona-tion from the Nedbank Eyethu Community Trust. This work was facilitated by the CORDEX Machine Learning Task Force, established under the World Climate Research Programme Coordinated Regional Climate Downscaling Experiment. The authors thank the mod-elling groups, data centres, and contributing research institutions whose simulations and model submissions made this community benchmark possible. 
+
+References 
+
+Aalbers, E. E., Lenderink, G., Van Meijgaard, E., and Van Den Hurk, B. J. (2018). Local-scale changes in mean and heavy precipitation in western europe, climate change or internal variability? Climate Dynamics , 50(11):4745–4766. Addison, H., Kendon, E. J., Ravuri, S., Aitchison, L., and Watson, P. A. (2026). Machine learning emulation of precipitation from km-scale uk regional climate simulations using a diffusion model. Journal of Advances in Modeling Earth Sys-tems , 18(3):e2025MS005140.  
+
+> –41– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES)
+
+Aich, M., Hess, P., Pan, B., Bathiany, S., Huang, Y., and Boers, N. (2026). Condi-tional diffusion models for downscaling and bias correction of earth system model precipitation. Geoscientific Model Development , 19(4):1791–1808. Andersson, T. R., Bruinsma, W. P., Markou, S., Requeima, J., Coca-Castro, A., Vaughan, A., Ellis, A.-L., Lazzara, M. A., Jones, D., Hosking, S., et al. (2023). Environmental sensor placement with convolutional gaussian neural processes. 
+
+Environmental Data Science , 2:e32. Balmaceda-Huarte, R., Baño-Medina, J., Olmo, M. E., and Bettolli, M. L. (2024). On the use of convolutional neural networks for downscaling daily temperatures over southern south america in a climate change scenario. Climate Dynamics ,62(1):383–397. Baño-Medina, J., Iturbide, M., Fernández, J., and Gutiérrez, J. M. (2024). Trans-ferability and explainability of deep learning emulators for regional climate model projections: Perspectives for future applications. Artificial Intelligence for the Earth Systems , 3(4):e230099. Baño-Medina, J., Manzanas, R., Cimadevilla, E., Fernández, J., González-Abad, J., Cofiño, A. S., and Gutiérrez, J. M. (2022). Downscaling multi-model climate projection ensembles with deep learning (deepesd): contribution to cordex eur-44. 
+
+Geoscientific Model Development Discussions , 2022:1–14. Baño-Medina, J., Manzanas, R., and Gutiérrez, J. M. (2020). Configuration and in-tercomparison of deep learning neural models for statistical downscaling. Geosci-entific Model Development , 13(4):2109–2124. Baño-Medina, J., Manzanas, R., and Gutiérrez, J. M. (2021). On the suitability of deep convolutional neural networks for continental-wide downscaling of climate change projections. Climate Dynamics , 57:2941–2951. Blamey, R. and Reason, C. (2013). The role of mesoscale convective complexes in southern africa summer rainfall. Journal of climate , 26(5):1654–1668. Blasone, V., Coppola, E., Sanguinetti, G., Arora, V., Di Gioia, S., and Bortolussi, L. (2025). Graph neural networks for hourly precipitation projections at the con-vection permitting scale with a novel hybrid imperfect framework. Environmental Data Science , 4:e47. Boé, J., Mass, A., and Deman, J. (2023). A simple hybrid statistical–dynamical downscaling method for emulating regional climate models over western europe. evaluation, application, and role of added value? Climate Dynamics , 61(1):271– 294. Bushenkova, A., Soares, P. M., Johannsen, F., and Lima, D. C. (2024). Towards an improved representation of the urban heat island effect: A multi-scale application of xgboost for madrid. Urban Climate , 55:101982. Campbell, I., Gibson, P. B., Stuart, S., Broadbent, A. M., Sood, A., Pirooz, A. A., and Rampal, N. (2024). Comparison of three reanalysis-driven regional climate models over new zealand: Climatology and extreme events. International Journal of Climatology , 44(12):4219–4244. Cannon, A. J. (2008). Probabilistic multisite precipitation downscaling by an expanded bernoulli–gamma density network. Journal of Hydrometeorology ,9(6):1284–1300. Chadwick, R., Coppola, E., and Giorgi, F. (2011). An artificial neural network tech-nique for downscaling gcm outputs to rcm spatial scale. Nonlinear Processes in Geophysics , 18(6):1013–1028. Chapman, S., Syktus, J., Trancoso, R., Thatcher, M., Toombs, N., Wong, K. K.-H., and Takbash, A. (2023). Evaluation of dynamically downscaled cmip6-ccam models over australia. Earth’s Future , 11(11):e2023EF003548. Christopoulos, C. and Schneider, T. (2021). Assessing biases and climate implica-tions of the diurnal precipitation cycle in climate models. Geophysical Research Letters , 48(13):e2021GL093017.  
+
+> –42– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES)
+
+Dai, A. and Trenberth, K. E. (2004). The diurnal cycle and its depiction in the com-munity climate system model. Journal of climate , 17(5):930–951. Deser, C., Lehner, F., Rodgers, K. B., Ault, T., Delworth, T. L., DiNezio, P. N., Fiore, A., Frankignoul, C., Fyfe, J. C., Horton, D. E., et al. (2020). Insights from earth system model initial-condition large ensembles and future prospects. Nature climate change , 10(4):277–286. Dosovitskiy, A., Beyer, L., Kolesnikov, A., Weissenborn, D., Zhai, X., Unterthiner, T., Dehghani, M., Minderer, M., Heigold, G., Gelly, S., et al. (2020). An image is worth 16x16 words: Transformers for image recognition at scale. arXiv preprint arXiv:2010.11929 .Doury, A., Somot, S., and Gadat, S. (2024). On the suitability of a convolutional neural network based rcm-emulator for fine spatio-temporal precipitation. Climate Dynamics , 62(9):8587–8613. Doury, A., Somot, S., Gadat, S., Ribes, A., and Corre, L. (2023). Regional climate model emulator based on deep learning: Concept and first evaluation of a novel hybrid downscaling approach. Climate Dynamics , 60(5):1751–1779. Engelbrecht, F. A., Steinkopf, J., Chang, N., Biskop, S., Malherbe, J., Engelbrecht, C. J., Grab, S., Le Roux, A., Vogel, C., Padavatan, J., et al. (2025). Extreme event attribution using km-scale simulations reveals the pronounced role of cli-mate change in the durban floods. Communications Earth & Environment ,6(1):506. Flato, G., Marotzke, J., Abiodun, B., Braconnot, P., Chou, S. C., Collins, W., Cox, P., Driouech, F., Emori, S., Eyring, V., et al. (2014). Evaluation of climate mod-els. In Climate change 2013: the physical science basis. Contribution of Working Group I to the Fifth Assessment Report of the Intergovernmental Panel on Cli-mate Change , pages 741–866. Cambridge University Press. Fuentes-Franco, R., Krus, K., Ivanov, M., Koenigk, T., Wang, F., and Aldama-Campino, A. (2025). Pan-european high-resolution downscaling using deep learn-ing. Journal of Geophysical Research: Machine Learning and Computation ,2(4):e2025JH000630. Gibson, P. B., Lewis, H., Campbell, I., Rampal, N., Fauchereau, N., and Harring-ton, L. J. (2025). Downscaled climate projections of tropical and ex-tropical cy-clones over the southwest pacific. Journal of Geophysical Research: Atmospheres ,130(14):e2025JD043833. Gibson, P. B., Stone, D., Thatcher, M., Broadbent, A., Dean, S., Rosier, S. M., Stu-art, S., and Sood, A. (2023). High-resolution ccam simulations over new zealand and the south pacific for the detection and attribution of weather extremes. Jour-nal of Geophysical Research: Atmospheres , 128(14):e2023JD038530. Gibson, P. B., Stuart, S., Sood, A., Stone, D., Rampal, N., Lewis, H., Broadbent, A., Thatcher, M., and Morgenstern, O. (2024). Dynamical downscaling cmip6 models over new zealand: added value of climatology and extremes. Climate Dynamics ,62(8):8255–8281. Giorgi, F. and Gutowski Jr, W. J. (2015). Regional dynamical downscaling and the cordex initiative. Annual review of environment and resources , 40:467–490. Giorgi, F., Jones, C., Asrar, G. R., et al. (2009). Addressing climate information needs at the regional level: the cordex framework. World Meteorological Organiza-tion (WMO) Bulletin , 58(3):175. Glawion, L., Polz, J., Kunstmann, H., Fersch, B., and Chwala, C. (2023). spategan: spatio-temporal downscaling of rainfall fields using a cgan approach. Earth and Space Science , 10(10):e2023EA002906. Glawion, L., Polz, J., Kunstmann, H., Fersch, B., and Chwala, C. (2025). Global spatio-temporal era5 precipitation downscaling to km and sub-hourly scale using generative ai. npj Climate and Atmospheric Science , 8(1):219.  
+
+> –43– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES)
+
+Gneiting, T. and Raftery, A. E. (2007). Strictly proper scoring rules, prediction, and estimation. Journal of the American statistical Association , 102(477):359–378. Goddard, F. W., Gibson, P. B., and Rampal, N. (2025). High-resolution climate change projections of atmospheric rivers over the south pacific. Journal of Geo-physical Research: Atmospheres , 130(6):e2024JD041572. González-Abad, J. and Gutiérrez, J. M. (2025). Are deep learning methods suitable for downscaling global climate projections? an intercomparison for tempera-ture and precipitation over spain. Artificial Intelligence for the Earth Systems ,4(4):240121. Gutiérrez, J. M., Maraun, D., Widmann, M., Huth, R., Hertig, E., Benestad, R., Roessler, O., Wibig, J., Wilcke, R., Kotlarski, S., et al. (2019). An intercompar-ison of a large ensemble of statistical downscaling methods over europe: Results from the value perfect predictor cross-validation experiment. International journal of climatology , 39(9):3750–3785. Gutiérrez, J. M., Rampal, N., Baño-Medina, J., Bettollli, M. L., Driouech, F., Fuentes-Franco, R., Gibson, P. B., Orr, A., Soares, P. M. M., and Watson, P. A. G. (2026). Machine learning for climate downscaling in CORDEX: Opportuni-ties and challenges. PLOS Climate . Manuscript in preparation. Gutowski Jr, W. J., Giorgi, F., Timbal, B., Frigon, A., Jacob, D., Kang, H.-S., Raghavan, K., Lee, B., Lennard, C., Nikulin, G., et al. (2016). Wcrp coordinated regional downscaling experiment (cordex): a diagnostic mip for cmip6. Geoscien-tific Model Development , 9(11):4087–4095. Harder, P., Schmidt, L., Pelletier, F., Ludwig, N., Chantry, M., Lessig, C., Hernandez-Garcia, A., and Rolnick, D. (2026). Benchmarking the geographic generalization of deep learning models for precipitation downscaling. Scientific Reports , 16(1):3733. Harris, L., McRae, A. T., Chantry, M., Dueben, P. D., and Palmer, T. N. (2022). A generative deep learning approach to stochastic downscaling of precipitation forecasts. Journal of Advances in Modeling Earth Systems , 14(10):e2022MS003120. Hawkins, E. and Sutton, R. (2009). The potential to narrow uncertainty in regional climate predictions. Bulletin of the American Meteorological Society , 90(8):1095– 1108. Henn, B., Bretherton, C. S., Kodunov, N., Lessig, C., Molina, M. J., Arcomano, T., Watt-Meyer, O., Couairon, G., Singh, R., Brunstein, R., et al. (2026). Aimip phase 1: systematic evaluations of ai weather and climate models. arXiv preprint arXiv:2605.06944 .Holden, P. B., Edwards, N. R., Garthwaite, P. H., and Wilkinson, R. D. (2015). Em-ulation and interpretation of high-dimensional climate model outputs. Journal of Applied Statistics , 42(9):2038–2055. Johannsen, F., Soares, P. M., and Langendijk, G. S. (2024). On the deep learning approach for improving the representation of urban climate: The paris urban heat island and temperature extremes. Urban Climate , 56:102039. Kendon, E. J., Addison, H., Doury, A., Somot, S., Watson, P. A., Booth, B. B., Coppola, E., Gutiérrez, J. M., Murphy, J., and Scullion, C. (2025). Potential for machine learning emulators to augment regional climate simulations in provision of local climate change information. Bulletin of the American Meteorological Society , 106(6):E1175–E1203. Langguth, M., Harder, P., Schicker, I., Patnala, A., Lehner, S., Mayer, K., and Dabernig, M. (2024). A benchmark dataset for meteorological downscaling. In 
+
+Proc. International Conference on Learning Representations .Legasa, M. N., Doury, A., Gellens, A., Lguensat, R., Naldesi, C., Thao, S., and Vrac, M. (2026). Regional climate model emulation with diffusion approaches: What is the added value of generative machine learning? arXiv preprint arXiv:2407.12517 . 
+
+> –44– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES)
+
+Lehner, F. and Deser, C. (2023). Origin, importance, and predictive limits of inter-nal climate variability. Environmental Research: Climate , 2:023001. Lewis, H., Rampal, N., Gibson, P. B., Harrington, L. J., Holgate, C. M., Ukkola, A., and Maher, N. M. (2025). Generative ai-downscaling of large ensembles project unprecedented future droughts. arXiv preprint arXiv:2509.21844 .Lipman, Y., Chen, R. T., Ben-Hamu, H., Nickel, M., and Le, M. (2022). Flow matching for generative modeling. arXiv preprint arXiv:2210.02747 .Maher, N., Milinski, S., and Ludwig, R. (2021). Large ensemble climate model simu-lations: introduction, overview, and future prospects for utilising multiple types of large ensemble. Earth System Dynamics , 12(2):401–418. Maraun, D., Wetterhall, F., Ireson, A. M., Chandler, R. E., Kendon, E. J., Wid-mann, M., Brienen, S., Rust, H. W., Sauter, T., Themeßl, M., et al. (2010). Pre-cipitation downscaling under climate change: Recent developments to bridge the gap between dynamical models and the end user. Reviews of geophysics , 48(3). Maraun, D., Widmann, M., Gutiérrez, J. M., Kotlarski, S., Chandler, R. E., Hertig, E., Wibig, J., Huth, R., and Wilcke, R. A. (2015). Value: A framework to validate downscaling approaches for climate change studies. Earth’s Future , 3(1):1–14. Mardani, M., Brenowitz, N., Cohen, Y., Pathak, J., Chen, C.-Y., Liu, C.-C., Vahdat, A., Nabian, M. A., Ge, T., Subramaniam, A., et al. (2025). Residual corrective diffusion modeling for km-scale atmospheric downscaling. Communications Earth & Environment , 6(1):124. McGregor, J. L. and Dix, M. R. (2008). An updated description of the conformal-cubic atmospheric model. In High resolution numerical modelling of the atmo-sphere and ocean , pages 51–75. Springer. Nabat, P., Somot, S., Cassou, C., Mallet, M., Michou, M., Bouniol, D., Decharme, B., Drugé, T., Roehrig, R., and Saint-Martin, D. (2020). Modulation of radiative aerosols effects by atmospheric circulation over the euro-mediterranean region. 
+
+Atmospheric Chemistry and Physics , 20(14):8315–8349. Nordhagen, E. M., Haugen, H. H., Salihi, A. F. S., Ingstad, M. S., Nipen, T. N., Seierstad, I. A., Frogner, I.-L., Clare, M., Lang, S., Chantry, M., et al. (2025). High-resolution probabilistic data-driven weather modeling with a stretched-grid. 
+
+arXiv preprint arXiv:2511.23043 .Olmo, M. E. and Bettolli, M. L. (2022). Statistical downscaling of daily precipitation over southeastern south america: Assessing the performance in extreme events. In-ternational Journal of Climatology , 42(2):1283–1302. O’Gorman, P. A. (2015). Precipitation extremes under climate change. Current cli-mate change reports , 1(2):49–59. Perkins, S., Pitman, A., Holbrook, N. J., and Mcaneney, J. (2007). Evaluation of the ar4 climate models’ simulated daily maximum temperature, minimum tempera-ture, and precipitation over australia using probability density functions. Journal of climate , 20(17):4356–4376. Pfahl, S., O’Gorman, P. A., and Fischer, E. M. (2017). Understanding the regional pattern of projected future changes in extreme precipitation. Nature Climate Change , 7(6):423–427. Rampal, N., Gibson, P. B., Sherwood, S., and Abramowitz, G. (2024a). On the extrapolation of generative adversarial networks for downscaling precipitation ex-tremes in warmer climates. Geophysical Research Letters , 51(23):e2024GL112492. Rampal, N., Gibson, P. B., Sherwood, S., Abramowitz, G., and Hobeichi, S. (2025a). A reliable generative adversarial network approach for climate down-scaling and weather generation. Journal of Advances in Modeling Earth Systems ,17(1):e2024MS004668. Rampal, N., Gibson, P. B., Sherwood, S. C., Queen, L. E., Lewis, H., and Abramowitz, G. (2025b). Downscaling with ai reveals the large role of in-ternal variability in fine-scale projections of climate extremes. arXiv preprint  
+
+> –45– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES)
+
+arXiv:2507.06527 .Rampal, N., Gibson, P. B., Sood, A., Stuart, S., Fauchereau, N. C., Brandolino, C., Noll, B., and Meyers, T. (2022). High-resolution downscaling with interpretable deep learning: Rainfall extremes over new zealand. Weather and Climate Ex-tremes , 38:100525. Rampal, N., González-Abad, J., Gibson, P., Engelbrecht, F., Steinkopf, J., and Hardy, C. (2026). Cordex-ml-bench companion dataset. Companion dataset for Rampal et al., CORDEX-ML-Bench: A Benchmark for Data-Driven Regional Climate Downscaling—Experiment Design and Overview. Rampal, N., Hobeichi, S., Gibson, P. B., Baño-Medina, J., Abramowitz, G., Beucler, T., González-Abad, J., Chapman, W., Harder, P., and Gutiérrez, J. M. (2024b). Enhancing regional climate downscaling through advances in machine learning. 
+
+Artificial Intelligence for the Earth Systems , 3(2):230066. Rasp, S., Dueben, P. D., Scher, S., Weyn, J. A., Mouatadid, S., and Thuerey, N. (2020). Weatherbench: a benchmark data set for data-driven weather forecasting. 
+
+Journal of Advances in Modeling Earth Systems , 12(11):e2020MS002203. Rasp, S., Hoyer, S., Merose, A., Langmore, I., Battaglia, P., Russell, T., Sanchez-Gonzalez, A., Yang, V., Carver, R., Agrawal, S., et al. (2024). Weatherbench 2: A benchmark for the next generation of data-driven global weather models. Journal of Advances in Modeling Earth Systems , 16(6):e2023MS004019. Ratnam, J., Behera, S., Ratna, S. B., Rautenbach, C. d. W., Lennard, C., Luo, J.-J., Masumoto, Y., Takahashi, K., and Yamagata, T. (2013). Dynamical downscaling of austral summer climate forecasts over southern africa using a regional coupled model. Journal of climate , 26(16):6015–6032. Ravuri, S., Lenc, K., Willson, M., Kangin, D., Lam, R., Mirowski, P., Fitzsimons, M., Athanassiadou, M., Kashem, S., Madge, S., et al. (2021). Skilful precipitation nowcasting using deep generative models of radar. Nature , 597(7878):672–677. Reyes-Elgueta, S., González-Abad, J., Diez-Sierra, J., Herrera, S., and Gutiérrez, J. M. (2026). Observational uncertainty in deep learning climate downscaling and projections. Earth and Space Science , 13. Ronneberger, O., Fischer, P., and Brox, T. (2015). U-net: Convolutional networks for biomedical image segmentation. In International Conference on Medical image computing and computer-assisted intervention , pages 234–241. Springer. Rummukainen, M. (2016). Added value in regional climate modeling. Wiley Interdis-ciplinary Reviews: Climate Change , 7(1):145–159. Schillinger, M., Samarin, M., Shen, X., Knutti, R., and Meinshausen, N. (2025). Enscale: Temporally-consistent multivariate generative downscaling via proper scoring rules. arXiv preprint arXiv:2509.26258 .Schmude, J., Roy, S., Trojak, W., Jakubik, J., Civitarese, D. S., Singh, S., Kuehnert, J., Ankur, K., Gupta, A., Phillips, C. E., et al. (2024). Prithvi wxc: Foundation model for weather and climate. arXiv preprint arXiv:2409.13598 .Soares, P. M., Careto, J. A., and Lima, D. C. (2024a). Future extreme and com-pound events in angola: Cordex-africa regional climate modelling projections. 
+
+Weather and Climate Extremes , 45:100691. Soares, P. M., Johannsen, F., Lima, D. C., Lemos, G., Bento, V. A., and Bushenkova, A. (2024b). High-resolution downscaling of cmip6 earth system and global climate models using deep learning for iberia. Geoscientific Model Development , 17(1):229–259. Song, Y., Sohl-Dickstein, J., Kingma, D. P., Kumar, A., Ermon, S., and Poole, B. (2020). Score-based generative modeling through stochastic differential equations. 
+
+arXiv preprint arXiv:2011.13456 .Subich, C., Husain, S. Z., Separovic, L., and Yang, J. (2025). Fixing the double penalty in data-driven weather forecasting through a modified spherical harmonic loss function. arXiv preprint arXiv:2501.19374 . 
+
+> –46– manuscript submitted to Journal of Advances in Modeling Earth Systems (JAMES)
+
+Sun, Y., Deng, K., Ren, K., Liu, J., Deng, C., and Jin, Y. (2024). Deep learning in statistical downscaling for deriving high spatial resolution gridded meteorologi-cal data: A systematic review. ISPRS Journal of Photogrammetry and Remote Sensing , 208:14–38. Thatcher, M. and McGregor, J. L. (2009). Using a scale-selective filter for dynamical downscaling with the conformal cubic atmospheric model. Monthly Weather Re-view , 137(6):1742–1752. Trenberth, K. E., Dai, A., Rasmussen, R. M., and Parsons, D. B. (2003). The chang-ing character of precipitation. Bulletin of the American Meteorological Society ,84(9):1205–1218. Truong, S. C., Ramsay, H. A., Rafter, T., and Thatcher, M. J. (2025). Simulation of an intense tropical cyclone in the conformal cubic atmospheric model and its sensitivity to horizontal resolution. Weather and Climate Extremes , 47:100744. Van Der Meer, M., de Roda Husman, S., and Lhermitte, S. (2023). Deep learning re-gional climate model emulators: A comparison of two downscaling training frame-works. Journal of Advances in Modeling Earth Systems , 15(6):e2022MS003593. Voldoire, A., Sanchez-Gomez, E., Salas y Mélia, D., Decharme, B., Cassou, C., Sénési, S., Valcke, S., Beau, I., Alias, A., Chevallier, M., et al. (2013). The cnrm-cm5. 1 global climate model: description and basic evaluation. Climate dynamics ,40(9):2091–2121. Vosper, E., Watson, P., Harris, L., McRae, A., Santos-Rodriguez, R., Aitchison, L., and Mitchell, D. (2023). Deep learning for downscaling tropical cyclone rainfall to hazard-relevant spatial scales. Journal of Geophysical Research: Atmospheres ,128(10):e2022JD038163. Vrac, M., Stein, M., Hayhoe, K., and Liang, X.-Z. (2007). A general method for val-idating statistical downscaling methods under future climate change. Geophysical Research Letters , 34(18). Ward-Leikis, B., Rampal, N., Koh, Y. S., Gibson, P. B., Liu, H.-Y., Kitsios, V., Meyers, T., Adie, J., Juntao, Y., and Sherwood, S. C. (2025). An intercompari-son of generative machine learning methods for downscaling precipitation at fine spatial scales. arXiv preprint arXiv:2512.13987 .Wetherell, T. (2026). Flow matching for convective-scale precipitation downscaling. 
+
+arXiv preprint arXiv:2606.00281 .Woo, S., Park, J., Lee, J.-Y., and Kweon, I. S. (2018). Cbam: Convolutional block attention module. In Proceedings of the European conference on computer vision (ECCV) , pages 3–19. Zhang, X., Alexander, L., Hegerl, G. C., Jones, P., Tank, A. K., Peterson, T. C., Trewin, B., and Zwiers, F. W. (2011). Indices for monitoring changes in extremes based on daily temperature and precipitation data. Wiley Interdisciplinary Re-views: Climate Change , 2(6):851–870.

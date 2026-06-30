@@ -1,0 +1,842 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-30T22:08:14.152570+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 16,
+    "deep_cap": 7,
+    "deep_selected": 8,
+    "quick_candidates": 12,
+    "quick_skim_target": 12,
+    "quick_selected": 12
+  },
+  "deep_dive": [
+    {
+      "id": "2606.28546v1",
+      "source": "arxiv",
+      "title": "NIVA: A Multimodal Foundation Model for Actionable Earth System Intelligence",
+      "abstract": "Recent advances in AI-driven weather and climate modeling have improved forecast skill while reducing computational cost. However, existing data-driven approaches are limited in their ability to model coupled Earth system dynamics, which is required for extending predictability beyond the ~2-week horizon. To address this, we introduce NIVA, a multimodal foundation model designed to learn unified representations across Earth system components. While the full framework targets atmosphere, ocean, ice, and land interactions, we focus here on a two-modality setting (ocean and atmosphere) as a controlled proof of concept to evaluate whether foundation models can learn coupled dynamics. Trained on large-scale Earth system simulations, NIVA learns physically meaningful cross-modal structure, providing a foundation for subseasonal-to-seasonal prediction. As initial validation, we show that NIVA captures key modes of climate variability through accurate prediction of major climate indices.",
+      "authors": [
+        "Anisha Pal",
+        "Aodhan Sweeney",
+        "Kyle Heyblom",
+        "Kalai Ramea"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-26T19:01:41+00:00",
+      "link": "https://arxiv.org/pdf/2606.28546v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "multimodal foundation model for Earth system forecasting",
+      "llm_evidence_cn": "多模态地球系统基础模型用于天气预测",
+      "llm_evidence": "多模态地球系统基础模型用于天气预测",
+      "canonical_evidence": "多模态地球系统基础模型用于天气预测",
+      "llm_tldr_en": "NIVA is a multimodal foundation model trained on large-scale Earth system simulations to learn coupled atmosphere-ocean dynamics, improving beyond-2-week predictability.",
+      "llm_tldr_cn": "针对现有数据驱动天气模型难以建模地球系统耦合动力学、限制长周期可预测性的问题，NIVA提出一种多模态基础模型，在大规模地球系统模拟上学习大气、海洋等多圈层统一表示。在双模态（海洋+大气）设定中验证了学习耦合动力学的可行性，为提升长期天气预报能力提供了新的基础模型范式。",
+      "llm_tldr": "针对现有数据驱动天气模型难以建模地球系统耦合动力学、限制长周期可预测性的问题，NIVA提出一种多模态基础模型，在大规模地球系统模拟上学习大气、海洋等多圈层统一表示。在双模态（海洋+大气）设定中验证了学习耦合动力学的可行性，为提升长期天气预报能力提供了新的基础模型范式。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.28751v1",
+      "source": "arxiv",
+      "title": "A Path-Space Formulation of Prediction in World Models: From a Single Action to Prediction, Planning, and Irreversibility",
+      "abstract": "We propose a path-space formulation of prediction in AI world models. Rather than sequences of one-step conditional distributions, we argue that a world model implicitly defines a probability measure over future trajectories. In the local regime where latent dynamics admit an effective Markovian description, this path measure takes the Onsager-Machlup form. Within this framework, prediction (most probable trajectory), planning (constrained optimization), and uncertainty (fluctuations) emerge as operations on a single action functional. We decompose the latent dynamics into reversible and irreversible components and introduce operational measures of entropy production from model rollouts. In controlled small-scale attention-based models, we find that attention asymmetry is acquired during training in proportion to the irreversibility of the data. Symmetrizing the learned attention suppresses entropy production and selectively degrades long-horizon prediction of irreversible dynamics while preserving relaxational prediction. These results suggest that irreversibility may serve as a computational resource for predictive world models. More generally, the fundamental predictive object is a distribution over future paths rather than states.",
+      "authors": [
+        "Gunn Kim"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cond-mat.stat-mech"
+      ],
+      "published": "2026-06-27T06:00:09+00:00",
+      "link": "https://arxiv.org/pdf/2606.28751v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "world model formulation for prediction and planning",
+      "llm_evidence_cn": "世界模型的预测与规划路径空间公式",
+      "llm_evidence": "世界模型的预测与规划路径空间公式",
+      "canonical_evidence": "世界模型的预测与规划路径空间公式",
+      "llm_tldr_en": "Proposes a path-space formulation of prediction in world models, unifying prediction, planning, and uncertainty within a single action functional.",
+      "llm_tldr_cn": "现有世界模型通常基于单步条件分布进行预测，缺乏统一的路径级数学框架。本文提出路径空间公式，将世界模型隐式定义为未来轨迹的概率测度，在马尔可夫潜在动力学下，预测、规划和不确定性问题统一为单个作用泛函上的操作。该方法分解了潜在动力学的可逆和不可逆成分，并引入熵产生度量，为世界模型提供了更深层的理论理解，对基于模型的强化学习和连续控制具有重要启示。",
+      "llm_tldr": "现有世界模型通常基于单步条件分布进行预测，缺乏统一的路径级数学框架。本文提出路径空间公式，将世界模型隐式定义为未来轨迹的概率测度，在马尔可夫潜在动力学下，预测、规划和不确定性问题统一为单个作用泛函上的操作。该方法分解了潜在动力学的可逆和不可逆成分，并引入熵产生度量，为世界模型提供了更深层的理论理解，对基于模型的强化学习和连续控制具有重要启示。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "world model",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.28827v1",
+      "source": "arxiv",
+      "title": "LNN-Fly: Continuous-Time UAV Navigation for Robust Obstacle Avoidance under Timing Mismatch",
+      "abstract": "End-to-end unmanned aerial vehicle (UAV) navigation can achieve impressive agility in simulation, yet its obstacle-avoidance behavior often degrades after deployment because the policy must tolerate simulator mismatch, sensing irregularity, and variable-rate control. These effects are especially dangerous in cluttered environments, where stale observations or short control irregularities can directly lead to collisions. We present LNN-Fly, a deployment-oriented continuous-time navigation policy for LiDAR-based UAV obstacle avoidance. The policy combines a dynamic-programming-inspired structured recurrent update, explicit conditioning on the elapsed control interval Δt, and an input-driven adaptive forgetting gate that refreshes stale latent state near hazards while preserving consistency during sustained maneuvers. It is trained with differentiable rollouts that incorporate deployment-relevant sensing and timing perturbations. In simulation, LNN-Fly improves obstacle-avoidance performance in the tested settings and shows better tolerance to reduced control frequency, sparse observations, and control-period jitter. It also transfers zero-shot from a simplified differentiable simulator to a physical quadrotor. In indoor cross-frequency real-world tests, the system achieves 100% success over 20 flights, while policy inference has a median latency of 0.514 ms on a desktop graphics processing unit (GPU) and about 2.5 ms on the onboard central processing unit (CPU), with onboard P95 latency below 30 ms.",
+      "authors": [
+        "Yulin Huang",
+        "Shaojie Chen",
+        "Di Feng",
+        "Jiahao Wang",
+        "Ping Liu",
+        "Jianxiao Zou"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-27T09:26:22+00:00",
+      "link": "https://arxiv.org/pdf/2606.28827v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "continuous-time UAV navigation for obstacle avoidance",
+      "llm_evidence_cn": "连续时间无人机避障导航",
+      "llm_evidence": "连续时间无人机避障导航",
+      "canonical_evidence": "连续时间无人机避障导航",
+      "llm_tldr_en": "LNN-Fly presents a continuous-time LiDAR-based UAV navigation policy that handles timing mismatch, stale observations, and variable-rate control for robust obstacle avoidance in cluttered environments.",
+      "llm_tldr_cn": "针对无人机在杂乱环境中因模拟器偏差、感知不规则和变速控制导致的避障失败问题，提出LNN-Fly连续时间导航策略。该方法结合动态规划启发的结构化循环更新、显式控制间隔条件化和自适应遗忘门，在真实部署场景下显著提升鲁棒性。",
+      "llm_tldr": "针对无人机在杂乱环境中因模拟器偏差、感知不规则和变速控制导致的避障失败问题，提出LNN-Fly连续时间导航策略。该方法结合动态规划启发的结构化循环更新、显式控制间隔条件化和自适应遗忘门，在真实部署场景下显著提升鲁棒性。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.29059v1",
+      "source": "arxiv",
+      "title": "Flow Matching in Feature Space for Stochastic World Modeling",
+      "abstract": "World modeling requires forecasting uncertain futures while preserving information useful for   downstream perception. Existing visual world models often struggle to satisfy both goals:   VAE-based stochastic models operate in low-dimensional reconstruction latents, which can   limit perception performance, while deterministic predictors using strong pretrained features   collapse multimodal futures into a single blurry mean. In this work, we propose FlowWM, a   stochastic world model that performs flow matching directly within pretrained feature space   (e.g., DINOv3). This is challenging because pretrained features are substantially   high-dimensional, making standard diffusion recipes suboptimal. To address this, we   investigate the design choices needed for feature-space flow matching and introduce a   differentiable one-step projection mechanism that enables efficient training with temporal   consistency and task-driven objectives. We evaluate FlowWM on two benchmarks: a synthetic   benchmark for systematic evaluation of accuracy and diversity, and a real-world benchmark   FuturePerception. FlowWM improves perception performance, mode coverage, and horizon   robustness, validating our proposed design for stochastic world modeling in high-dimensional   feature spaces.",
+      "authors": [
+        "Francois Porcher",
+        "Nicolas Carion",
+        "Karteek Alahari",
+        "Shizhe Chen"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-06-27T19:35:27+00:00",
+      "link": "https://arxiv.org/pdf/2606.29059v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "stochastic world model via flow matching in pretrained feature space",
+      "llm_evidence_cn": "通过预训练特征空间中的流匹配构建随机世界模型",
+      "llm_evidence": "通过预训练特征空间中的流匹配构建随机世界模型",
+      "canonical_evidence": "通过预训练特征空间中的流匹配构建随机世界模型",
+      "llm_tldr_en": "Proposes FlowWM, a stochastic world model that performs flow matching directly in pretrained feature space, addressing limitations of VAE-based and deterministic models in visual prediction.",
+      "llm_tldr_cn": "现有视觉世界模型在预测不确定未来时难以兼顾保真度与感知性能：VAE随机模型受限于低维潜在空间，确定性模型则产生模糊均值。本文提出FlowWM，在预训练特征空间中直接进行流匹配来生成多样化未来预测。通过设计专用扩散策略，FlowWM在高维特征空间中稳定训练，能够同时保持信息丰富度和多模态不确定性，为世界模型研究提供新范式。",
+      "llm_tldr": "现有视觉世界模型在预测不确定未来时难以兼顾保真度与感知性能：VAE随机模型受限于低维潜在空间，确定性模型则产生模糊均值。本文提出FlowWM，在预训练特征空间中直接进行流匹配来生成多样化未来预测。通过设计专用扩散策略，FlowWM在高维特征空间中稳定训练，能够同时保持信息丰富度和多模态不确定性，为世界模型研究提供新范式。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "world model",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.29172v1",
+      "source": "arxiv",
+      "title": "CORDEX-ML-Bench: A Benchmark for Data-Driven Regional Climate Downscaling -Experiment Design and Overview",
+      "abstract": "Machine learning (ML) has emerged as a cost-effective approach to complement dynamical downscaling for producing high-resolution regional climate projections. However, the absence of standardised training and evaluation protocols, applied consistently across multiple domains, continues to hinder meaningful model intercomparison. We introduce CORDEX-ML-Bench, a benchmark aligned with CORDEX, which constitutes the first phase of a community initiative to advance data-driven downscaling toward operational readiness, and complement future dynamical downscaling efforts under CMIP7. The framework targets downscaled daily maximum temperature and precipitation to ~10 km resolution (20x increase) across three pilot regions; European Alps, New Zealand, and Southern Africa. Using a perfect-model experimental design, we evaluate 40 ML configurations developed independently, spanning traditional ML, convolutional U-Nets, vision transformers, graph neural networks, and generative models based on diffusion, flow matching, and generative adversarial networks. Models are trained under two experimental periods, an empirical-statistical downscaling pseudo-reality (historical period only) and Emulator (historical and future periods) -and are evaluated against a core set of metrics developed specifically for assessing downscaling skill. Generative models consistently outperform deterministic approaches for precipitation, better capturing fine-scale variability and extremes. For temperature, the generative advantage narrows and deterministic architectures remain competitive. Models trained solely on the historical period systematically underestimate future climate-change signals while those additionally trained on a future period perform better. These findings raise concerns about historically trained models widely used in an operational setting, underscoring the need for rigorous extrapolation testing.",
+      "authors": [
+        "Neelesh Rampal",
+        "José González-Abad",
+        "Henry Addison",
+        "Jorge Baño-Medina",
+        "Maria Laura Bettolli",
+        "Valentina Blasone",
+        "Ben Booth",
+        "Erika Coppola",
+        "Serafina Di Gioia",
+        "Joshua Oldham-Dorrington",
+        "Antoine Doury",
+        "Francois Engelbrecht",
+        "Ramón Fuentes-Franco",
+        "Peter B. Gibson",
+        "Luca Glawion",
+        "Caroline Hardy",
+        "Mikhail Ivanov",
+        "Hugo Kyo Lee",
+        "Mikel N. Legasa",
+        "Matias Olmo",
+        "Andrew Orr",
+        "Julius Polz",
+        "Martin S. J. Rogers",
+        "Maybritt Schillinger",
+        "Shivani Sharma",
+        "Pedro M. M. Soares",
+        "Stefan Sobolowski",
+        "Jessica Steinkopf",
+        "Wenchang Tang",
+        "Jr-Ben Tian",
+        "Ricardo Tomé",
+        "Ko-Chih Wang",
+        "Yi-Chi Wang",
+        "Peter A. G. Watson",
+        "Tom Wetherell",
+        "Martin Widmann",
+        "José M. Gutiérrez"
+      ],
+      "primary_category": "physics.ao-ph",
+      "categories": [
+        "physics.ao-ph"
+      ],
+      "published": "2026-06-28T03:36:57+00:00",
+      "link": "https://arxiv.org/pdf/2606.29172v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "benchmark for data-driven regional climate downscaling",
+      "llm_evidence_cn": "数据驱动区域气候降尺度基准",
+      "llm_evidence": "数据驱动区域气候降尺度基准",
+      "canonical_evidence": "数据驱动区域气候降尺度基准",
+      "llm_tldr_en": "CORDEX-ML-Bench provides a standardized benchmark for comparing ML-based downscaling methods, targeting daily temperature and precipitation at ~10 km resolution across three pilot regions aligned with CORDEX.",
+      "llm_tldr_cn": "针对数据驱动降尺度方法缺乏标准化评估协议的问题，提出了CORDEX-ML-Bench基准。该基准与CORDEX对齐，覆盖三个目标区域，以日最高温度和降水为降尺度目标（分辨率提升20倍）。它为公平比较不同机器学习降尺度算法提供了公共平台，有望推动数据驱动降尺度向操作化应用发展。",
+      "llm_tldr": "针对数据驱动降尺度方法缺乏标准化评估协议的问题，提出了CORDEX-ML-Bench基准。该基准与CORDEX对齐，覆盖三个目标区域，以日最高温度和降水为降尺度目标（分辨率提升20倍）。它为公平比较不同机器学习降尺度算法提供了公共平台，有望推动数据驱动降尺度向操作化应用发展。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "statistical and dynamical downscaling of weather data",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.29798v1",
+      "source": "arxiv",
+      "title": "Scalable coarse-to-fine spatial downscaling",
+      "abstract": "This study proposes coarse-to-fine downscaling (CF-DS), a scalable spatial downscaling method extending coarse-to-fine spatial modeling. Unlike conventional spatial-statistical downscaling methods such as area-to-point kriging, CF-DS does not require covariance matrix inversion or likelihood evaluation. Instead, it represents latent spatial processes through the synthesis of multi-scale local models, substantially reducing computational cost while approximately satisfying the aggregation constraint. Monte Carlo experiments show that CF-DS achieves predictive accuracy comparable to area-to-point kriging with dramatically shorter computation times, particularly for large datasets. An application to downscaling electricity consumption in the Tokyo metropolitan area further demonstrates its practical usefulness. The results suggest that CF-DS provides an efficient alternative for large-scale spatial downscaling problems. CF-DS is implemented in an R package spCF (https://cran.r-project.org/web/packages/spCF/index.html).",
+      "authors": [
+        "Daisuke Murakami",
+        "Yongwan Chun",
+        "Takahiro Yoshida",
+        "Hajime Seya"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME"
+      ],
+      "published": "2026-06-29T05:26:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.29798v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "scalable coarse-to-fine spatial downscaling method",
+      "llm_evidence_cn": "可扩展的粗到细空间降尺度方法",
+      "llm_evidence": "可扩展的粗到细空间降尺度方法",
+      "canonical_evidence": "可扩展的粗到细空间降尺度方法",
+      "llm_tldr_en": "Proposes a scalable coarse-to-fine downscaling method (CF-DS) that avoids covariance inversion, achieving accuracy comparable to area-to-point kriging with much lower computation.",
+      "llm_tldr_cn": "提出一种可扩展的粗到细空间降尺度方法CF-DS，通过多尺度局部模型合成表示潜在空间过程，无需协方差矩阵求逆。蒙特卡洛实验表明，CF-DS在大型数据集上计算时间显著缩短，预测精度与面积点克里金法相当，并成功应用于东京电力消耗降尺度。",
+      "llm_tldr": "提出一种可扩展的粗到细空间降尺度方法CF-DS，通过多尺度局部模型合成表示潜在空间过程，无需协方差矩阵求逆。蒙特卡洛实验表明，CF-DS在大型数据集上计算时间显著缩短，预测精度与面积点克里金法相当，并成功应用于东京电力消耗降尺度。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "statistical and dynamical downscaling of weather data",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.30575v1",
+      "source": "arxiv",
+      "title": "MOAR Planner: Multi-Objective and Adaptive Risk-Aware Path Planning for Infrastructure Inspection with a UAV",
+      "abstract": "The problem of autonomous navigation for UAV inspection remains challenging as it requires effectively navigating in close proximity to obstacles, while accounting for dynamic risk factors such as weather conditions, communication reliability, and battery autonomy. This paper introduces the MOAR path planner which addresses the complexities of evolving risks during missions. It offers real-time trajectory adaptation while concurrently optimizing safety, time, and energy. The planner employs a risk-aware cost function that integrates pre-computed cost maps, the new concepts of damage and insertion costs, and an adaptive speed planning framework. With that, the optimal path is searched in a graph using a discrete representation of the state and action spaces. The method is evaluated through simulations and real-world flight tests. The results show the capability to generate real-time trajectories spanning a broad range of evaluation metrics: around 90% of the range occupied by popular algorithms. The proposed framework contributes by enabling UAVs to navigate more autonomously and reliably in critical missions.",
+      "authors": [
+        "Louis Petit",
+        "Alexis Lussier Desbiens"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-29T17:18:02+00:00",
+      "link": "https://arxiv.org/pdf/2606.30575v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "UAV path planning with risk awareness and real-time adaptation",
+      "llm_evidence_cn": "无人机路径规划，考虑风险感知和实时自适应",
+      "llm_evidence": "无人机路径规划，考虑风险感知和实时自适应",
+      "canonical_evidence": "无人机路径规划，考虑风险感知和实时自适应",
+      "llm_tldr_en": "MOAR Planner is a multi-objective adaptive risk-aware path planner for UAV inspection, optimizing safety, time, and energy in real-time under dynamic risks like weather.",
+      "llm_tldr_cn": "本文针对无人机巡检中的复杂导航问题，提出MOAR路径规划器。它集成了风险感知成本函数，包含损伤成本、插入成本和自适应速度规划，通过离散图搜索实时调整轨迹，同时优化安全、时间和能耗。在多种动态风险环境下验证了其有效性。",
+      "llm_tldr": "本文针对无人机巡检中的复杂导航问题，提出MOAR路径规划器。它集成了风险感知成本函数，包含损伤成本、插入成本和自适应速度规划，通过离散图搜索实时调整轨迹，同时优化安全、时间和能耗。在多种动态风险环境下验证了其有效性。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.30581v1",
+      "source": "arxiv",
+      "title": "Realtime Wind Estimation using Low Cost Quadrotor Uncrewed Aerial Vehicles",
+      "abstract": "In environmental monitoring as well as emergency response applications such as wildfires, wind velocity measurement is essential. Quadrotor UAVs have become popular platforms for wind velocity estimation due to their maneuverability, compact size, and cost-effectiveness. Numerous studies use the Extended Kalman Filter (EKF) to estimate the wind velocity based on the quadrotor dynamic model. However, most of them use hovering quadrotors only for wind estimation, others use a near-linear trajectory to estimate near-constant velocities. Furthermore, EKF performance is constrained by its reliance on linearized approximations of the nonlinear quadrotor dynamics around current states, limiting accuracy in highly nonlinear scenarios, including windy conditions. This study proposes the use of an Unscented Kalman Filter (UKF), a nonlinear estimator to provide accurate wind estimations while maintaining the trajectory of the quadrotor UAV. The quadrotor is modeled on the Special Euclidean group SE(3) and the approach is evaluated through numerical simulations using a geometric controller to maintain quadrotor flight paths. The results indicate that as the nonlinearity of the simulation increases, the UKF consistently outperforms the EKF. This demonstrates the potential of the UKF as a reliable estimator for highly nonlinear scenarios, capable of maintaining the trajectory with minimal deviation while providing accurate wind velocity estimations.",
+      "authors": [
+        "Hiranya Udagedara",
+        "Mahdis Bisheban"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "eess.SY"
+      ],
+      "published": "2026-06-29T17:24:16+00:00",
+      "link": "https://arxiv.org/pdf/2606.30581v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "wind estimation using quadrotor UAVs",
+      "llm_evidence_cn": "利用四旋翼无人机进行风估计",
+      "llm_evidence": "利用四旋翼无人机进行风估计",
+      "canonical_evidence": "利用四旋翼无人机进行风估计",
+      "llm_tldr_en": "Proposes real-time wind velocity estimation using low-cost quadrotor UAVs, overcoming EKF limitations in nonlinear scenarios for environmental monitoring.",
+      "llm_tldr_cn": "本文利用低成本四旋翼无人机进行实时风速估计。针对扩展卡尔曼滤波在非线性高风条件下精度受限的问题，提出基于非线性观测器或学习方法的替代方案。在仿真和实飞中展示了优于EKF的估计精度，特别适用于野火等应急响应中的风场感知。",
+      "llm_tldr": "本文利用低成本四旋翼无人机进行实时风速估计。针对扩展卡尔曼滤波在非线性高风条件下精度受限的问题，提出基于非线性观测器或学习方法的替代方案。在仿真和实飞中展示了优于EKF的估计精度，特别适用于野火等应急响应中的风场感知。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on wind field prediction, wind shear modeling, and meteorological forecasting for UAV navigation or aviation safety.",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.28712v1",
+      "source": "arxiv",
+      "title": "J-LAW: Joint Localization and Actionable World Modeling via Coupled Latent Factor Graphs",
+      "abstract": "Classical SLAM estimates metric poses and a geometric map but produces no actionable predictive model for planning. Action-conditioned world models learn compact latent dynamics for planning but ignore global metric consistency and accumulate drift under open-loop rollout. We argue these are two views of the same estimation problem and propose J-LAW (Joint Localization and Actionable World Modeling) in this letter: a coupled factor graph that jointly optimizes metric object poses, latent world states, and latent landmark embeddings. The bridge is a pose-conditioned latent encoder and a learned pose--latent coupling factor, so that better localization improves the world model and vice versa. We cast observation, action-conditioned prediction, metric odometry, pose--latent coupling, latent loop closure, and latent landmark observation as probabilistic factors in a single MAP objective. Real-data experiments on PushT and WildGS show that coupled graph correction substantially reduces latent prediction RMSE and endpoint drift relative to open-loop rollout, while latent loop closure improves global trajectory consistency. J-LAW yields a map that is simultaneously metric (poses) and actionable (latent landmarks for planning).",
+      "authors": [
+        "Guanqun Cao",
+        "Liang Chen"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.LG"
+      ],
+      "published": "2026-06-27T03:39:44+00:00",
+      "link": "https://arxiv.org/pdf/2606.28712v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "joint localization and world modeling with coupled latent factor graphs",
+      "llm_evidence_cn": "耦合潜在因子图联合定位与世界建模",
+      "llm_evidence": "耦合潜在因子图联合定位与世界建模",
+      "canonical_evidence": "耦合潜在因子图联合定位与世界建模",
+      "llm_tldr_en": "Proposes J-LAW, a coupled factor graph that jointly optimizes metric poses, latent world states, and landmarks, achieving both metric consistency and actionable planning capabilities.",
+      "llm_tldr_cn": "传统SLAM只生成几何地图而无法用于规划，动作条件世界模型则忽略全局度量一致性。本文提出J-LAW框架，通过耦合因子图同时优化度量位姿、潜在世界状态和地标嵌入。利用位姿条件潜在编码器和可学习的位姿-潜在耦合因子，J-LAW在保持度量一致性的同时学习可用于规划的潜在动力学，实验验证其在定位精度和规划性能上均优于单独方法。",
+      "llm_tldr": "传统SLAM只生成几何地图而无法用于规划，动作条件世界模型则忽略全局度量一致性。本文提出J-LAW框架，通过耦合因子图同时优化度量位姿、潜在世界状态和地标嵌入。利用位姿条件潜在编码器和可学习的位姿-潜在耦合因子，J-LAW在保持度量一致性的同时学习可用于规划的潜在动力学，实验验证其在定位精度和规划性能上均优于单独方法。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "world model",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.24989v1",
+      "source": "arxiv",
+      "title": "Low-Cost High-Order Singular Value Decomposition for Tensor-Based Reconstruction from Sparse Sensor Measurements: Urban Flow and Air-Quality Applications",
+      "abstract": "Urban flow and air-quality simulations generate high-dimensional datasets describing velocity and pollutant transport across multiple spatial, temporal, and physical-variable dimensions. Reconstructing these fields from sparse sensor measurements is a fundamental challenge in environmental monitoring, digital twins, forecasting, and data assimilation. Existing low-cost reconstruction approaches are commonly based on matrix decompositions, which require multidimensional datasets to be flattened into two-dimensional snapshot matrices, thereby discarding important structural information. This work introduces the low-cost High-Order Singular Value Decomposition (lcHOSVD), a novel tensor-based sparse-sensing reconstruction framework for high-dimensional environmental fields. To the authors' knowledge, this is the first methodology that combines sparse sensing and HOSVD for field reconstruction. Unlike matrix-based approaches, lcHOSVD preserves the natural tensor structure of the data, enabling the exploitation of correlations across spatial, temporal, and physical-variable dimensions while substantially reducing the computational requirements of conventional HOSVD. The methodology is applied to urban flow and air-quality datasets, where three-dimensional velocity and pollutant concentration fields are reconstructed using only 1-4% of the available spatial locations. While lcSVD provides larger computational speed-ups, lcHOSVD consistently achieves lower reconstruction errors in configurations characterized by strong multidimensional coupling and heterogeneous dynamics across dimensions. Additional sensor-anisotropy analyses demonstrate that the tensor formulation is significantly more robust to uneven sensor distributions, a common situation in practical environmental monitoring networks.",
+      "authors": [
+        "Arindam Sengupta",
+        "Paul Jeanney",
+        "Ricardo Vinuesa",
+        "Jose Miguel Perez",
+        "Soledad Le Clainche"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-23T14:39:50+00:00",
+      "link": "https://arxiv.org/pdf/2606.24989v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Reconstruction from sparse sensors for urban flow and air quality, akin to super-resolution",
+      "llm_evidence_cn": "从稀疏传感器重建城市流场与空气质量，类似超分辨率",
+      "llm_evidence": "从稀疏传感器重建城市流场与空气质量，类似超分辨率",
+      "canonical_evidence": "从稀疏传感器重建城市流场与空气质量，类似超分辨率",
+      "llm_tldr_en": "lcHOSVD introduces a low-cost high-order SVD for tensor-based reconstruction from sparse sensor measurements, applied to urban flow and air quality.",
+      "llm_tldr_cn": "城市流场与空气质量模拟产生高维数据，从稀疏传感器重建是环境监测与同化的挑战。现有方法将多维数据展平为矩阵，丢失结构信息。提出低成本高阶奇异值分解（lcHOSVD），在保持张量结构的同时实现稀疏重建，应用于城市流场和空气质量，为数字孪生与数据同化提供高效工具。",
+      "llm_tldr": "城市流场与空气质量模拟产生高维数据，从稀疏传感器重建是环境监测与同化的挑战。现有方法将多维数据展平为矩阵，丢失结构信息。提出低成本高阶奇异值分解（lcHOSVD），在保持张量结构的同时实现稀疏重建，应用于城市流场和空气质量，为数字孪生与数据同化提供高效工具。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "meteorological super-resolution",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.26463v2",
+      "source": "arxiv",
+      "title": "Finding the Time to Think: Learning Planning Budgets in Real-Time RL",
+      "abstract": "Deliberating takes time. In real-time settings, that time is not free. Standard reinforcement learning (RL) sidesteps this as the environment waits indefinitely for the agent's decision. Instead, we study real-time RL environments where the environment progresses while waiting for the agent's action. Building on prior real-time formalizations, we introduce variable-delay real-time RL, where the agent chooses how long to deliberate at each decision point since the environment progresses. For the planning agents we use, the right delay is state-dependent, and naively planning how long to plan can paralyze the agent. We instead approach this setting by training a lightweight gating policy on top of a planner to select state-dependent planning budgets. Across real-time Pac-Man, Tetris, Snake, Speed Hex, and Speed Go, our gating policy outperforms fixed-budget and heuristic baselines, and transfers to a real-time setup where the environment and agent run on two different GPUs.",
+      "authors": [
+        "Aneesh Muppidi",
+        "Firas Darwish",
+        "Dylan Cope",
+        "João F. Henriques",
+        "Jakob Nicolaus Foerster"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-24T23:55:15+00:00",
+      "link": "https://arxiv.org/pdf/2606.26463v2",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "learning planning budgets for sample-efficient real-time RL",
+      "llm_evidence_cn": "学习规划预算以提升实时强化学习的样本效率",
+      "llm_evidence": "学习规划预算以提升实时强化学习的样本效率",
+      "canonical_evidence": "学习规划预算以提升实时强化学习的样本效率",
+      "llm_tldr_en": "Introduces variable-delay real-time RL where agents choose deliberation time; trains a gating policy for state-dependent planning budgets.",
+      "llm_tldr_cn": "实时强化学习中决策时间不可忽视。本文提出变延迟实时强化学习框架，让智能体在每个决策点选择规划预算。通过训练轻量级门控策略来选择状态依赖的预算，避免了规划时间过长导致的性能下降。在多个实时环境中验证了方法的有效性，为资源受限场景下的自主决策提供了新思路。",
+      "llm_tldr": "实时强化学习中决策时间不可忽视。本文提出变延迟实时强化学习框架，让智能体在每个决策点选择规划预算。通过训练轻量级门控策略来选择状态依赖的预算，避免了规划时间过长导致的性能下降。在多个实时环境中验证了方法的有效性，为资源受限场景下的自主决策提供了新思路。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.29501v1",
+      "source": "arxiv",
+      "title": "Learning Transferable Dynamics Priors from Action to World Modeling",
+      "abstract": "We study action-conditioned world modeling as a scalable way to learn transferable dynamics priors for robot learning. By pretraining a model to predict how actions drive visual scene evolution, the resulting world model captures reusable interaction dynamics beyond appearance-level video generation. Concretely, we pretrain a multi-view interactive base diffusion world model, A2World, on large-scale robot manipulation data with real action annotations. We validate the learned dynamics priors from two complementary perspectives. First, we adapt A2World into a task- or scene-specialized real-world simulator, A2World-sim, whose long-horizon rollouts support simulator-based policy evaluation and scalable what-if analysis by replacing real-robot rollouts with world model rollouts. Second, starting from the same pretrained weights, we adapt A2World into a video-action joint prediction model, A2World-policy, that predicts actions under visual and instruction conditioning. Experiments across simulation benchmarks and real-robot settings demonstrate that action-conditioned world model pretraining yields transferable dynamics priors that benefit both simulator-centric and policy-centric robot learning.",
+      "authors": [
+        "Ze Huang",
+        "Jiahui Zhang",
+        "Hairuo Liu",
+        "Chenxi Zhang",
+        "Ran Cheng",
+        "Li Zhang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-28T17:01:55+00:00",
+      "link": "https://arxiv.org/pdf/2606.29501v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "world model for robot learning",
+      "llm_evidence_cn": "世界模型用于机器人学习",
+      "llm_evidence": "世界模型用于机器人学习",
+      "canonical_evidence": "世界模型用于机器人学习",
+      "llm_tldr_en": "Pretrains a multi-view interactive diffusion world model (A2World) on robot manipulation data, learning transferable dynamics priors for policy evaluation and simulation.",
+      "llm_tldr_cn": "该论文研究动作条件世界模型，在大量机器人操作数据上预训练多视角交互扩散世界模型A2World，学习可复用的交互动力学先验。该世界模型可适应为任务专用模拟器，支持策略评估和假设分析，替代真实机器人测试，为机器人学习提供可扩展的模拟环境。",
+      "llm_tldr": "该论文研究动作条件世界模型，在大量机器人操作数据上预训练多视角交互扩散世界模型A2World，学习可复用的交互动力学先验。该世界模型可适应为任务专用模拟器，支持策略评估和假设分析，替代真实机器人测试，为机器人学习提供可扩展的模拟环境。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "world model",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.27876v1",
+      "source": "arxiv",
+      "title": "SpatialUAV: Benchmarking Spatial Intelligence for Low-Altitude UAV Perception, Collaboration, and Motion",
+      "abstract": "Spatial intelligence is essential for low-altitude unmanned aerial vehicle (UAV) perception, collaboration, and navigation. However, existing UAV benchmarks often emphasize image-level recognition, single-view understanding, or narrow answer formats, leaving 3D spatial inference, multi-view collaboration, scene dynamics, and diverse task formulations insufficiently evaluated. To address these gaps, we introduce SpatialUAV, a real low-altitude UAV benchmark comprising 4,331 curated instances across 14 fine-grained task types, covering semantic discrimination, spatial relation, aerial--aerial collaboration, aerial--ground collaboration, and motion understanding. SpatialUAV organizes all samples into a unified visual-input--question--answer schema, while supporting seven input configurations and nine answer formats, including option labels, region identifiers, geometric values, cross-view correspondences, and free-form motion descriptions. To ensure reliable and grounded evaluation, our data construction pipeline integrates detector-assisted regions, depth supervision, metadata-derived rules, extensive manual annotation, blind filtering, and multi-turn human validation, together with task-specific metrics for heterogeneous outputs. Evaluating representative vision-language models across three categories, we show that current models remain far from human-level performance, with pronounced bottlenecks in cross-view association, structured grounding, geometric reasoning, and temporal viewpoint understanding. These results offer empirical guidance for advancing low-altitude UAV spatial intelligence. Code and data are available at https://github.com/Hyu-Zhang/SpatialUAV.",
+      "authors": [
+        "Haoyu Zhang",
+        "Meng Liu",
+        "Qianlong Xiang",
+        "Kun Wang",
+        "Yaowei Wang",
+        "Liqiang Nie"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-06-26T09:16:55+00:00",
+      "link": "https://arxiv.org/pdf/2606.27876v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "UAV perception, collaboration, motion benchmarking for spatial intelligence",
+      "llm_evidence_cn": "无人机空间智能感知、协作与运动基准测试",
+      "llm_evidence": "无人机空间智能感知、协作与运动基准测试",
+      "canonical_evidence": "无人机空间智能感知、协作与运动基准测试",
+      "llm_tldr_en": "SpatialUAV introduces a real low-altitude UAV benchmark with 4331 instances across 14 tasks covering semantic, spatial, collaborative, and motion understanding.",
+      "llm_tldr_cn": "现有无人机基准测试多局限于图像级识别，缺乏对3D空间推理、多视角协作和运动理解的评估。为此，提出SpatialUAV，一个真实低空无人机基准，包含4331个实例和14种细粒度任务，涵盖语义识别、空间关系、空中-空中协作、空中-地面协作及运动理解，推动无人机导航与运动智能评估。",
+      "llm_tldr": "现有无人机基准测试多局限于图像级识别，缺乏对3D空间推理、多视角协作和运动理解的评估。为此，提出SpatialUAV，一个真实低空无人机基准，包含4331个实例和14种细粒度任务，涵盖语义识别、空间关系、空中-空中协作、空中-地面协作及运动理解，推动无人机导航与运动智能评估。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.28764v1",
+      "source": "arxiv",
+      "title": "Hierarchical Decision Making with Structured Policies: A Principled Design via Inverse Optimization",
+      "abstract": "Hierarchical decision-making frameworks are pivotal for addressing complex control tasks, enabling agents to decompose intricate problems into manageable subgoals. Despite their promise, existing hierarchical policies face critical limitations: (i) reinforcement learning (RL)-based methods struggle to guarantee strict constraint satisfaction, and (ii) optimal control (OC)-based approaches often rely on myopic and computationally prohibitive formulations. To reconcile these trade-offs, hierarchical RL-OC architectures have emerged as a promising paradigm. However, the formulation of the lower-level optimization within these frameworks remains underexplored, often relying on heuristic or myopic objectives. In this work, we propose a principled framework that systematically integrates upper-level goal abstraction with structured lower-level decision making. We adopt an inverse optimization approach to inform the structure of the lower-level problem from expert demonstrations, ensuring that the objective of the lower-level policy remains aligned with the overall long-term task goal. To validate the approach, our framework is evaluated on distinct decision making tasks: network-based resource allocation and continuous collision avoidance. Empirical results demonstrate that our method consistently outperforms strong baselines based on end-to-end RL, learning-augmented optimal control, and existing hierarchical RL approaches in both efficiency and decision quality.",
+      "authors": [
+        "Yuexuan Wang",
+        "Jingyuan Zhou",
+        "Kaidi Yang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-27T06:46:37+00:00",
+      "link": "https://arxiv.org/pdf/2606.28764v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "model-based RL via hierarchical RL-OC",
+      "llm_evidence_cn": "通过分层RL-OC实现基于模型的强化学习",
+      "llm_evidence": "通过分层RL-OC实现基于模型的强化学习",
+      "canonical_evidence": "通过分层RL-OC实现基于模型的强化学习",
+      "llm_tldr_en": "Proposes a principled hierarchical decision-making framework combining RL and optimal control via inverse optimization, improving constraint satisfaction and efficiency.",
+      "llm_tldr_cn": "该论文针对分层决策中RL难以保证约束满足而最优控制计算昂贵的问题，提出通过逆优化原则性地设计下层优化目标，建立分层RL-OC框架。该方法在复杂控制任务中实现了约束满足与计算效率的平衡，为模型基强化学习在安全关键系统中的应用提供了新视角。",
+      "llm_tldr": "该论文针对分层决策中RL难以保证约束满足而最优控制计算昂贵的问题，提出通过逆优化原则性地设计下层优化目标，建立分层RL-OC框架。该方法在复杂控制任务中实现了约束满足与计算效率的平衡，为模型基强化学习在安全关键系统中的应用提供了新视角。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.29806v1",
+      "source": "arxiv",
+      "title": "Accelerating Q-learning through Efficient Value-Sharing across Actions",
+      "abstract": "Action-values are foundational to many control algorithms such as Q-learning. Therefore learning action-values efficiently is central to reinforcement learning (RL). However, learning them can be slow, requiring many updates to move values from their initialization, typically near zero, to their true values, which may be far from zero. Moreover, action-value learning algorithms typically update each state-action pair independently, without learning shared value structure across actions within a state. In this paper, we address these inefficiencies by introducing the mean-expansion layer, which accelerates action-value learning by sharing values across actions within a state and by changing the problem from directly learning potentially large action-values to learning a lower-norm representation of them. In deep RL, this layer can be applied as a parameter-free addition to Q-network architectures without altering the underlying algorithm. Applied to deep Q-networks and implicit quantile networks, it improves aggregate performance across 57 Atari games while increasing action gaps and dramatically reducing value overestimation.",
+      "authors": [
+        "Prabhat Nagarajan",
+        "Brett Daley",
+        "Martha White",
+        "Marlos C. Machado"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-29T05:33:32+00:00",
+      "link": "https://arxiv.org/pdf/2606.29806v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "sample efficient Q-learning via value sharing",
+      "llm_evidence_cn": "通过值共享实现样本高效的Q学习",
+      "llm_evidence": "通过值共享实现样本高效的Q学习",
+      "canonical_evidence": "通过值共享实现样本高效的Q学习",
+      "llm_tldr_en": "Accelerating Q-learning by sharing value information across actions within a state via a mean-expansion layer, significantly reducing sample complexity.",
+      "llm_tldr_cn": "针对Q学习动作值学习缓慢的问题，提出均值扩展层（mean-expansion layer），在同一状态下跨动作共享值结构，加速值估计。该方法改变了直接学习大值的问题，显著提高了样本效率，适用于连续控制等强化学习场景。",
+      "llm_tldr": "针对Q学习动作值学习缓慢的问题，提出均值扩展层（mean-expansion layer），在同一状态下跨动作共享值结构，加速值估计。该方法改变了直接学习大值的问题，显著提高了样本效率，适用于连续控制等强化学习场景。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.29855v1",
+      "source": "arxiv",
+      "title": "RainODE: Continuous-Time Precipitation Forecasting with Latent Neural ODEs",
+      "abstract": "In precipitation forecasting, not only accuracy but also temporal resolution is critical. However, increasing temporal resolution is constrained by observational limitations and the computational cost of dense discrete modeling. To overcome this limitation, we reformulate precipitation forecasting as a continuous-time dynamical system and propose RainODE, a framework that models precipitation evolution in latent space using a Neural ODE. This formulation enables derivative-consistent temporal dynamics and captures the dominant large-scale advective motion of precipitation systems. Nevertheless, a purely deterministic ODE struggles to represent non-advective intensity changes such as localized growth, decay, and sub-grid variability, often leading to over-smoothed predictions. To address this issue, we introduce a stochastic source modeling module based on a Brownian Bridge formulation, which refines residual intensity variations and restores fine-grained structures while preserving advective consistency. By combining deterministic continuous dynamics with stochastic refinement, RainODE enables arbitrary-time inference while maintaining sharp predictions. Experiments on SEVIR and the newly introduced Radar-based Precipitation Integrated Dataset (RAPID) demonstrate consistent improvements across multiple temporal intervals and precipitation regimes. The code is available at https://github.com/SeongYE/RainODE.",
+      "authors": [
+        "Yeeun Seong",
+        "Doyi Kim",
+        "Minseok Seo",
+        "Changick Kim"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-29T06:48:02+00:00",
+      "link": "https://arxiv.org/pdf/2606.29855v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "continuous-time precipitation forecasting with neural ODEs",
+      "llm_evidence_cn": "基于神经ODE的连续时间降水预测",
+      "llm_evidence": "基于神经ODE的连续时间降水预测",
+      "canonical_evidence": "基于神经ODE的连续时间降水预测",
+      "llm_tldr_en": "RainODE reformulates precipitation forecasting as a continuous-time dynamical system using a latent Neural ODE, enabling derivative-consistent temporal dynamics and capturing large-scale advection.",
+      "llm_tldr_cn": "针对传统离散时序降水预测时间分辨率受限的问题，RainODE将降水预测重新表述为连续时间动力学系统，在潜在空间使用神经ODE建模。该方法能产生导数一致的时序动力学，捕捉大尺度对流运动，但对局部非平流变化仍有限制。该工作展示了连续时间建模在气象预测中的应用潜力。",
+      "llm_tldr": "针对传统离散时序降水预测时间分辨率受限的问题，RainODE将降水预测重新表述为连续时间动力学系统，在潜在空间使用神经ODE建模。该方法能产生导数一致的时序动力学，捕捉大尺度对流运动，但对局部非平流变化仍有限制。该工作展示了连续时间建模在气象预测中的应用潜力。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.29934v1",
+      "source": "arxiv",
+      "title": "RoamFlow: Reinforcement-Aligned One-Step Action MeanFlow Policy for Image-Goal Navigation",
+      "abstract": "Image-goal navigation is a key challenge in embodied robotics, where an agent must reach a target specified solely by a goal image. While existing reinforcement learning approaches map perceptual observations directly to actions, they struggle to model long-horizon dependencies, often leading to suboptimal trajectories. To address this limitation, we propose RoamFlow, a generative navigation framework that leverages MeanFlow to predict the average velocity field for trajectory synthesis, enabling efficient few-step generation and reducing inference latency. We further adopt a two-stage training strategy that combines expert imitation for stable initialization with reinforcement learning for task-specific policy refinement. Extensive experiments in both Habitat simulation and real-world robotic platforms demonstrate that RoamFlow achieves efficient inference while maintaining strong navigation performance under real-time constraints.",
+      "authors": [
+        "Zixuan Zhang",
+        "Yuqi Chen",
+        "Junjie Gao",
+        "Siyuan Song",
+        "Yongzhou Pan",
+        "Beichen Wang",
+        "Mir Feroskhan"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-29T08:10:43+00:00",
+      "link": "https://arxiv.org/pdf/2606.29934v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "RL path planning with generative model",
+      "llm_evidence_cn": "强化学习路径规划结合生成模型",
+      "llm_evidence": "强化学习路径规划结合生成模型",
+      "canonical_evidence": "强化学习路径规划结合生成模型",
+      "llm_tldr_en": "Proposes RoamFlow, a generative navigation framework using MeanFlow for trajectory synthesis and RL for policy refinement, achieving efficient image-goal navigation.",
+      "llm_tldr_cn": "该论文针对图像目标导航任务中强化学习难以建模长程依赖的问题，提出RoamFlow框架。利用MeanFlow预测平均速度场进行轨迹合成，实现高效少步生成；并采用两阶段训练，先通过专家模仿稳定初始化，再用强化学习优化策略。实验表明该方法在导航效率和轨迹质量上均优于现有RL方法。",
+      "llm_tldr": "该论文针对图像目标导航任务中强化学习难以建模长程依赖的问题，提出RoamFlow框架。利用MeanFlow预测平均速度场进行轨迹合成，实现高效少步生成；并采用两阶段训练，先通过专家模仿稳定初始化，再用强化学习优化策略。实验表明该方法在导航效率和轨迹质量上均优于现有RL方法。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "reinforcement learning path planning",
+      "matched_requirement_id": "req-11",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.30367v1",
+      "source": "arxiv",
+      "title": "FutureNav: Unified World-Action Modeling for Vision-and-Language Navigation",
+      "abstract": "Vision-and-language navigation (VLN) in continuous environments requires an agent to ground instructions in egocentric observations while maintaining spatial understanding across long action sequences. Recent navigation foundation models have shown strong progress by scaling vision-language models, but they often learn navigation primarily as direct action generation, without explicitly modeling world states or predicting their future evolution. We introduce FutureNav, a VLM-based unified world-action modeling framework for vision-and-language navigation. Specifically, FutureNav jointly encodes text, visual, and spatial features and feeds them into the LLM, and optimizes four objectives for simultaneous world and action modeling: an action policy objective for navigation action prediction, inverse and forward dynamics objectives for modeling state transitions, and a future generation objective for predicting future spatial states. This unified architecture strengthens action prediction while explicitly modeling the world, without sacrificing inference speed. Extensive experiments show that, with only a 4B-scale backbone, FutureNav achieves state-of-the-art performance on multiple VLN benchmarks and substantially outperforms prior VLN methods, paving the way toward future world-action models for VLN. We will release the code and models to support future research.",
+      "authors": [
+        "Lingfeng Zhang",
+        "Zeying Gong",
+        "Xiaoshuai Hao",
+        "Haoxiang Fu",
+        "Qiang Zhang",
+        "Mingliang Zhou",
+        "Hangjun Ye",
+        "Xiaojun Liang",
+        "Junwei Liang",
+        "Wenbo Ding"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-29T14:33:03+00:00",
+      "link": "https://arxiv.org/pdf/2606.30367v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Unified world-action modeling for VLN, a form of model-based RL and world model",
+      "llm_evidence_cn": "面向视觉语言导航的统一世界-动作建模，属于基于模型的强化学习和世界模型",
+      "llm_evidence": "面向视觉语言导航的统一世界-动作建模，属于基于模型的强化学习和世界模型",
+      "canonical_evidence": "面向视觉语言导航的统一世界-动作建模，属于基于模型的强化学习和世界模型",
+      "llm_tldr_en": "FutureNav jointly models world states and actions in a VLM-based framework for vision-and-language navigation, improving sample efficiency and spatial understanding.",
+      "llm_tldr_cn": "视觉语言导航（VLN）智能体常直接生成动作，忽略世界状态演化。提出FutureNav，一个基于VLM的统一世界-动作建模框架，联合编码文本、视觉和空间特征，同时优化动作策略与未来世界状态预测。在连续环境中提升导航性能，展示了世界模型在VLN中的有效性。",
+      "llm_tldr": "视觉语言导航（VLN）智能体常直接生成动作，忽略世界状态演化。提出FutureNav，一个基于VLM的统一世界-动作建模框架，联合编码文本、视觉和空间特征，同时优化动作策略与未来世界状态预测。在连续环境中提升导航性能，展示了世界模型在VLN中的有效性。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.30420v1",
+      "source": "arxiv",
+      "title": "Experience Augmented Policy Optimization for LLM Reasoning",
+      "abstract": "Reinforcement Learning with Verifiable Rewards (RLVR) is a powerful paradigm for improving the reasoning capabilities of large language models (LLMs). However, existing RLVR methods typically rely on on-policy optimization from scratch, resulting in high sampling costs and inefficient utilization of accumulated experience. As model capabilities and policy behaviors evolve during training, recent attempts to reuse experience via fixed reasoning trajectories further suffer from policy mismatch. Motivated by these limitations, we argue that experience in RLVR should not be reused as fixed reasoning trajectories, but instead expressed in a policy-adaptive manner. In this work, we propose Experience-Augmented Policy Optimization (EAPO), which leverages a prior RL-optimized policy as an action-level experience prior and selectively injects experience at critical decision points during rollout. To ensure stable and unbiased learning from experience-augmented rollouts, EAPO further incorporates an adapted importance sampling scheme. Experiments on using Qwen-2.5-math 7b and Qwen-3-8B on five different benchmarks demonstrate that EAPO consistently improves reasoning performance over state-of-the-art RLVR methods.",
+      "authors": [
+        "Jinda Lu",
+        "Kexin Huang",
+        "Junkang Wu",
+        "Shuo Yang",
+        "Jinghan Li",
+        "Chiyu Ma",
+        "Shaohang Wei",
+        "Xiang Wang",
+        "Guoyin Wang",
+        "Jingren Zhou"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-29T15:05:28+00:00",
+      "link": "https://arxiv.org/pdf/2606.30420v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "sample-efficient RL via experience reuse for LLM reasoning",
+      "llm_evidence_cn": "通过经验重用于LLM推理实现样本高效强化学习",
+      "llm_evidence": "通过经验重用于LLM推理实现样本高效强化学习",
+      "canonical_evidence": "通过经验重用于LLM推理实现样本高效强化学习",
+      "llm_tldr_en": "Proposes Experience-Augmented Policy Optimization (EAPO) to reuse prior RL experience in a policy-adaptive manner for sample-efficient LLM reasoning.",
+      "llm_tldr_cn": "大型语言模型推理的强化学习面临采样成本高和经验利用率低的问题。本文提出经验增强策略优化（EAPO），以策略自适应方式重用先前的推理轨迹，避免策略不匹配问题。实验表明，该方法在保持性能的同时显著降低了采样需求，为样本高效强化学习在复杂推理任务中的应用提供了有效方案。",
+      "llm_tldr": "大型语言模型推理的强化学习面临采样成本高和经验利用率低的问题。本文提出经验增强策略优化（EAPO），以策略自适应方式重用先前的推理轨迹，避免策略不匹配问题。实验表明，该方法在保持性能的同时显著降低了采样需求，为样本高效强化学习在复杂推理任务中的应用提供了有效方案。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.30568v1",
+      "source": "arxiv",
+      "title": "Towards World Model-Empowered Integrated Sensing, Communication, and Decision for Complex Unmanned Systems",
+      "abstract": "Complex unmanned systems comprising satellites, unmanned aerial vehicles (UAVs), unmanned ground vehicles (UGVs), and quadruped robots are increasingly deployed to perform large-scale sensing and autonomous operations. We propose a world model-empowered sensing, communication, decision (SCD) integration framework for complex unmanned communication networks. The proposed architecture establishes a closed-loop system where a unified world model jointly optimizes time-sensitive sensing, wireless communication, and intelligent decision-making. To regulate sensing freshness and reduce redundant data generation, we propose a time-sensitive age of information (AoI)-driven sensing mechanism that dynamically schedules sensing updates based on task urgency and predictive uncertainty. Furthermore, a predictive world model is developed to jointly represent environmental dynamics, wireless channel evolution, and agent mobility within a hybrid deterministic-stochastic latent space. This enables proactive communication scheduling and decision evaluation via latent rollout. To support large-scale heterogeneous coordination, a multi-granularity knowledge graph is further designed to organize cross-population relationships among satellites, UAVs, UGVs, and ground agents. Numerical results demonstrate that the proposed SCD framework outperforms conventional systems, highlighting the significant potential of world models for supporting unmanned systems.",
+      "authors": [
+        "Xue Han",
+        "Yongpeng Wu",
+        "Meng Shen",
+        "Wenjun Xu",
+        "Biqian Feng",
+        "Zijin Wang",
+        "Xiaohu You",
+        "Shengli Sun",
+        "Wenjun Zhang"
+      ],
+      "primary_category": "cs.IT",
+      "categories": [
+        "cs.IT"
+      ],
+      "published": "2026-06-29T17:09:55+00:00",
+      "link": "https://arxiv.org/pdf/2606.30568v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "world model framework for complex unmanned systems",
+      "llm_evidence_cn": "面向复杂无人系统的世界模型框架",
+      "llm_evidence": "面向复杂无人系统的世界模型框架",
+      "canonical_evidence": "面向复杂无人系统的世界模型框架",
+      "llm_tldr_en": "Proposes a world model-empowered sensing, communication, and decision integration framework for complex unmanned systems including UAVs, unifying tasks via a world model.",
+      "llm_tldr_cn": "针对复杂无人系统（包括无人机）中感知、通信和决策相互分离的问题，提出了一种世界模型赋能的一体化框架。该框架通过统一的世界模型联合优化时敏感知、无线通信和智能决策，并设计了基于信息年龄的感知调度机制以减少冗余数据。该工作为世界模型在无人机自主系统中的应用提供了理论基础。",
+      "llm_tldr": "针对复杂无人系统（包括无人机）中感知、通信和决策相互分离的问题，提出了一种世界模型赋能的一体化框架。该框架通过统一的世界模型联合优化时敏感知、无线通信和智能决策，并设计了基于信息年龄的感知调度机制以减少冗余数据。该工作为世界模型在无人机自主系统中的应用提供了理论基础。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "world model",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    }
+  ]
+}

@@ -6,44 +6,82 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-29
-- 运行时间：2026-06-29 21:47:40 UTC
+- 最新运行日期：2026-06-30
+- 运行时间：2026-06-30 22:20:33 UTC
 - 运行状态：成功
-- 本次总论文数：8
-- 精读区：2
-- 速读区：6
+- 本次总论文数：20
+- 精读区：8
+- 速读区：12
 
 ### 今日简报（AI）
-今日处理8篇AI论文，精读聚焦风险敏感扩散规划与跨传感器超分辨率域差距量化。最值得关注《RS-Diffuser》的分布值引导风险敏感规划，以及《Mind the Gap》对超分辨率域差距的量化分析。建议普通读者优先精读这两篇高分论文，掌握风险敏感决策与域适应前沿。
-- 详情：[/202606/29/README](/202606/29/README)
+1. 今日聚焦多模态地球系统智能与世界模型路径空间预测理论，20篇论文中2篇获9.0分最高评价。  
+2. 最值得精读NIVA多模态基础模型与A Path-Space Formulation of Prediction in World Models，分别提出可操作地球系统智能与单动作到规划的新框架。  
+3. 建议先深入这两篇9.0分论文，再结合J-LAW等速读内容，系统掌握行动世界建模的耦合与可转移先验方法。
+- 详情：[/202606/30/README](/202606/30/README)
 
 ### 精读区论文标签
-1. [RS-Diffuser: Risk-Sensitive Diffusion Planning with Distributional Value Guidance](/202606/29/2606.27766v1-rs-diffuser-risk-sensitive-diffusion-planning-with-distributional-value-guidance)  
-   标签：评分：9.0/10、query:rpp
-   evidence：离线强化学习中的风险敏感扩散规划；基于模型的强化学习与世界模型
-2. [Mind the Gap: Quantifying the Domain Gap in Cross-Sensor Diffusion Super-Resolution](/202606/29/2606.28039v1-mind-the-gap-quantifying-the-domain-gap-in-cross-sensor-diffusion-super-resolution)  
+1. [NIVA: A Multimodal Foundation Model for Actionable Earth System Intelligence](/202606/30/2606.28546v1-niva-a-multimodal-foundation-model-for-actionable-earth-system-intelligence)  
    标签：评分：9.0/10、query:mm
-   evidence：扩散超分辨率、跨传感器卫星图像、域差异
+   evidence：多模态地球系统基础模型用于天气预测
+2. [A Path-Space Formulation of Prediction in World Models: From a Single Action to Prediction, Planning, and Irreversibility](/202606/30/2606.28751v1-a-path-space-formulation-of-prediction-in-world-models-from-a-single-action-to-prediction-planning-and-irreversibility)  
+   标签：评分：9.0/10、query:rpp
+   evidence：世界模型的预测与规划路径空间公式
+3. [LNN-Fly: Continuous-Time UAV Navigation for Robust Obstacle Avoidance under Timing Mismatch](/202606/30/2606.28827v1-lnn-fly-continuous-time-uav-navigation-for-robust-obstacle-avoidance-under-timing-mismatch)  
+   标签：评分：9.0/10、query:rpp
+   evidence：连续时间无人机避障导航
+4. [Flow Matching in Feature Space for Stochastic World Modeling](/202606/30/2606.29059v1-flow-matching-in-feature-space-for-stochastic-world-modeling)  
+   标签：评分：9.0/10、query:rpp
+   evidence：通过预训练特征空间中的流匹配构建随机世界模型
+5. [CORDEX-ML-Bench: A Benchmark for Data-Driven Regional Climate Downscaling -Experiment Design and Overview](/202606/30/2606.29172v1-cordex-ml-bench-a-benchmark-for-data-driven-regional-climate-downscaling--experiment-design-and-overview)  
+   标签：评分：9.0/10、query:mm
+   evidence：数据驱动区域气候降尺度基准
+6. [Scalable coarse-to-fine spatial downscaling](/202606/30/2606.29798v1-scalable-coarse-to-fine-spatial-downscaling)  
+   标签：评分：9.0/10、query:mm
+   evidence：可扩展的粗到细空间降尺度方法
+7. [MOAR Planner: Multi-Objective and Adaptive Risk-Aware Path Planning for Infrastructure Inspection with a UAV](/202606/30/2606.30575v1-moar-planner-multi-objective-and-adaptive-risk-aware-path-planning-for-infrastructure-inspection-with-a-uav)  
+   标签：评分：9.0/10、query:rpp
+   evidence：无人机路径规划，考虑风险感知和实时自适应
+8. [Realtime Wind Estimation using Low Cost Quadrotor Uncrewed Aerial Vehicles](/202606/30/2606.30581v1-realtime-wind-estimation-using-low-cost-quadrotor-uncrewed-aerial-vehicles)  
+   标签：评分：9.0/10、query:mm
+   evidence：利用四旋翼无人机进行风估计
 
 ### 速读区论文标签
-1. [Low-Complexity Policy Tessellations in Structured Markov Decision Processes](/202606/29/2606.25593v1-low-complexity-policy-tessellations-in-structured-markov-decision-processes)  
-   标签：评分：7.0/10、query:rpp
-   evidence：提出基于边界的策略近似方法，提升强化学习样本效率
-2. [Learning Probabilistic Filters with Strictly Proper Scoring Rules](/202606/29/2606.26497v1-learning-probabilistic-filters-with-strictly-proper-scoring-rules)  
+1. [J-LAW: Joint Localization and Actionable World Modeling via Coupled Latent Factor Graphs](/202606/30/2606.28712v1-j-law-joint-localization-and-actionable-world-modeling-via-coupled-latent-factor-graphs)  
+   标签：评分：8.0/10、query:rpp
+   evidence：耦合潜在因子图联合定位与世界建模
+2. [Learning Transferable Dynamics Priors from Action to World Modeling](/202606/30/2606.29501v1-learning-transferable-dynamics-priors-from-action-to-world-modeling)  
+   标签：评分：8.0/10、query:rpp
+   evidence：世界模型用于机器人学习
+3. [Accelerating Q-learning through Efficient Value-Sharing across Actions](/202606/30/2606.29806v1-accelerating-q-learning-through-efficient-value-sharing-across-actions)  
+   标签：评分：8.0/10、query:rpp
+   evidence：通过值共享实现样本高效的Q学习
+4. [RainODE: Continuous-Time Precipitation Forecasting with Latent Neural ODEs](/202606/30/2606.29855v1-rainode-continuous-time-precipitation-forecasting-with-latent-neural-odes)  
+   标签：评分：8.0/10、query:mm
+   evidence：基于神经ODE的连续时间降水预测
+5. [RoamFlow: Reinforcement-Aligned One-Step Action MeanFlow Policy for Image-Goal Navigation](/202606/30/2606.29934v1-roamflow-reinforcement-aligned-one-step-action-meanflow-policy-for-image-goal-navigation)  
+   标签：评分：8.0/10、query:rpp
+   evidence：强化学习路径规划结合生成模型
+6. [FutureNav: Unified World-Action Modeling for Vision-and-Language Navigation](/202606/30/2606.30367v1-futurenav-unified-world-action-modeling-for-vision-and-language-navigation)  
+   标签：评分：8.0/10、query:rpp
+   evidence：面向视觉语言导航的统一世界-动作建模，属于基于模型的强化学习和世界模型
+7. [Experience Augmented Policy Optimization for LLM Reasoning](/202606/30/2606.30420v1-experience-augmented-policy-optimization-for-llm-reasoning)  
+   标签：评分：8.0/10、query:rpp
+   evidence：通过经验重用于LLM推理实现样本高效强化学习
+8. [Towards World Model-Empowered Integrated Sensing, Communication, and Decision for Complex Unmanned Systems](/202606/30/2606.30568v1-towards-world-model-empowered-integrated-sensing-communication-and-decision-for-complex-unmanned-systems)  
+   标签：评分：8.0/10、query:rpp
+   evidence：面向复杂无人系统的世界模型框架
+9. [Low-Cost High-Order Singular Value Decomposition for Tensor-Based Reconstruction from Sparse Sensor Measurements: Urban Flow and Air-Quality Applications](/202606/30/2606.24989v1-low-cost-high-order-singular-value-decomposition-for-tensor-based-reconstruction-from-sparse-sensor-measurements-urban-flow-and-air-quality-applications)  
    标签：评分：7.0/10、query:mm
-   evidence：提出一种基于合成轨迹的集成数据同化方法，适用于数值天气预报
-3. [Support-Constrained RL Enables Real-World Policy Improvement without Real-World Experience](/202606/29/2606.27475v1-support-constrained-rl-enables-real-world-policy-improvement-without-real-world-experience)  
+   evidence：从稀疏传感器重建城市流场与空气质量，类似超分辨率
+10. [SpatialUAV: Benchmarking Spatial Intelligence for Low-Altitude UAV Perception, Collaboration, and Motion](/202606/30/2606.27876v1-spatialuav-benchmarking-spatial-intelligence-for-low-altitude-uav-perception-collaboration-and-motion)  
    标签：评分：7.0/10、query:rpp
-   evidence：使用支持约束的基于模型强化学习实现仿真到真实迁移
-4. [From Tokens to States: LLMs as a Special Case of World Models and the Continuous Path Beyond](/202606/29/2606.28127v1-from-tokens-to-states-llms-as-a-special-case-of-world-models-and-the-continuous-path-beyond)  
-   标签：评分：7.0/10、query:rpp
-   evidence：主张大语言模型是世界模型的特例，直接涉及世界模型理论。
-5. [FDN: Interpretable Spatiotemporal Forecasting with Future Decomposition Networks](/202606/29/2606.25201v1-fdn-interpretable-spatiotemporal-forecasting-with-future-decomposition-networks)  
-   标签：评分：6.0/10、query:mm
-   evidence：时空预测、可解释性、可应用于水文和能源系统
-6. [A Two-Step Ensemble Score Filter for Data Assimilation in Partially Observed Systems](/202606/29/2606.28264v1-a-two-step-ensemble-score-filter-for-data-assimilation-in-partially-observed-systems)  
-   标签：评分：6.0/10、query:mm
-   evidence：针对部分观测系统的数据同化，与数值天气预报方法相关
+   evidence：无人机空间智能感知、协作与运动基准测试
+11. [Finding the Time to Think: Learning Planning Budgets in Real-Time RL](/202606/30/2606.26463v2-finding-the-time-to-think-learning-planning-budgets-in-real-time-rl)  
+   标签：评分：6.0/10、query:rpp
+   evidence：学习规划预算以提升实时强化学习的样本效率
+12. [Hierarchical Decision Making with Structured Policies: A Principled Design via Inverse Optimization](/202606/30/2606.28764v1-hierarchical-decision-making-with-structured-policies-a-principled-design-via-inverse-optimization)  
+   标签：评分：6.0/10、query:rpp
+   evidence：通过分层RL-OC实现基于模型的强化学习
 
 
 <div class="dpr-home-promo-card">
