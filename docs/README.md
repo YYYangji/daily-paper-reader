@@ -6,82 +6,74 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-30
-- 运行时间：2026-06-30 22:20:33 UTC
+- 最新运行日期：2026-07-01
+- 运行时间：2026-07-01 20:52:53 UTC
 - 运行状态：成功
-- 本次总论文数：20
-- 精读区：8
-- 速读区：12
+- 本次总论文数：18
+- 精读区：7
+- 速读区：11
 
 ### 今日简报（AI）
-1. 今日聚焦多模态地球系统智能与世界模型路径空间预测理论，20篇论文中2篇获9.0分最高评价。  
-2. 最值得精读NIVA多模态基础模型与A Path-Space Formulation of Prediction in World Models，分别提出可操作地球系统智能与单动作到规划的新框架。  
-3. 建议先深入这两篇9.0分论文，再结合J-LAW等速读内容，系统掌握行动世界建模的耦合与可转移先验方法。
-- 详情：[/202606/30/README](/202606/30/README)
+今日日报聚焦海洋生物地球化学深度学习模型与概率降尺度的真实偏差校正。最值得关注的方向：深度学习模型可模拟海洋生物地球化学从日到十年的演变，概率降尺度需应对真实世界偏差。建议优先精读这两篇9.0分论文，其方法创新对长期预测和偏差校正有重要参考价值。
+- 详情：[/202607/01/README](/202607/01/README)
 
 ### 精读区论文标签
-1. [NIVA: A Multimodal Foundation Model for Actionable Earth System Intelligence](/202606/30/2606.28546v1-niva-a-multimodal-foundation-model-for-actionable-earth-system-intelligence)  
+1. [Deep learning model emulators for marine biogeochemistry forecasting from days to decades](/202607/01/2606.27168v1-deep-learning-model-emulators-for-marine-biogeochemistry-forecasting-from-days-to-decades)  
    标签：评分：9.0/10、query:mm
-   evidence：多模态地球系统基础模型用于天气预测
-2. [A Path-Space Formulation of Prediction in World Models: From a Single Action to Prediction, Planning, and Irreversibility](/202606/30/2606.28751v1-a-path-space-formulation-of-prediction-in-world-models-from-a-single-action-to-prediction-planning-and-irreversibility)  
-   标签：评分：9.0/10、query:rpp
-   evidence：世界模型的预测与规划路径空间公式
-3. [LNN-Fly: Continuous-Time UAV Navigation for Robust Obstacle Avoidance under Timing Mismatch](/202606/30/2606.28827v1-lnn-fly-continuous-time-uav-navigation-for-robust-obstacle-avoidance-under-timing-mismatch)  
-   标签：评分：9.0/10、query:rpp
-   evidence：连续时间无人机避障导航
-4. [Flow Matching in Feature Space for Stochastic World Modeling](/202606/30/2606.29059v1-flow-matching-in-feature-space-for-stochastic-world-modeling)  
-   标签：评分：9.0/10、query:rpp
-   evidence：通过预训练特征空间中的流匹配构建随机世界模型
-5. [CORDEX-ML-Bench: A Benchmark for Data-Driven Regional Climate Downscaling -Experiment Design and Overview](/202606/30/2606.29172v1-cordex-ml-bench-a-benchmark-for-data-driven-regional-climate-downscaling--experiment-design-and-overview)  
+   evidence：深度学习仿真器用于海洋生物地球化学预报，展示了LSTM和物理信息CNN仿真器在多年代际预报上的成功。
+2. [Mind the Residual Gap: Probabilistic Downscaling under Real-World Bias](/202607/01/2606.30821v1-mind-the-residual-gap-probabilistic-downscaling-under-real-world-bias)  
    标签：评分：9.0/10、query:mm
-   evidence：数据驱动区域气候降尺度基准
-6. [Scalable coarse-to-fine spatial downscaling](/202606/30/2606.29798v1-scalable-coarse-to-fine-spatial-downscaling)  
-   标签：评分：9.0/10、query:mm
-   evidence：可扩展的粗到细空间降尺度方法
-7. [MOAR Planner: Multi-Objective and Adaptive Risk-Aware Path Planning for Infrastructure Inspection with a UAV](/202606/30/2606.30575v1-moar-planner-multi-objective-and-adaptive-risk-aware-path-planning-for-infrastructure-inspection-with-a-uav)  
+   evidence：针对大气科学概率降尺度中残差错配问题
+3. [DynFly: Dynamic-Aware Continuous Trajectory Generation for UAV Vision-Language Navigation in Urban Environments](/202607/01/2606.31654v1-dynfly-dynamic-aware-continuous-trajectory-generation-for-uav-vision-language-navigation-in-urban-environments)  
    标签：评分：9.0/10、query:rpp
-   evidence：无人机路径规划，考虑风险感知和实时自适应
-8. [Realtime Wind Estimation using Low Cost Quadrotor Uncrewed Aerial Vehicles](/202606/30/2606.30581v1-realtime-wind-estimation-using-low-cost-quadrotor-uncrewed-aerial-vehicles)  
-   标签：评分：9.0/10、query:mm
-   evidence：利用四旋翼无人机进行风估计
+   evidence：面向无人机视觉语言导航的动态感知连续轨迹生成
+4. [AdaJEPA: An Adaptive Latent World Model](/202607/01/2606.32026v1-adajepa-an-adaptive-latent-world-model)  
+   标签：评分：9.0/10、query:rpp
+   evidence：自适应潜在世界模型，在MPC闭环中进行测试时适应
+5. [Diffusion-based 4D Trajectory Prediction and Distributed Control for UAV Swarms](/202607/01/2606.31197v1-diffusion-based-4d-trajectory-prediction-and-distributed-control-for-uav-swarms)  
+   标签：评分：8.0/10、query:rpp
+   evidence：基于扩散的无人机集群4D轨迹预测与分布式控制
+6. [Scaling Storm-Resolving Atmospheric AI Simulation to the Entire Planet](/202607/01/2606.31248v1-scaling-storm-resolving-atmospheric-ai-simulation-to-the-entire-planet)  
+   标签：评分：8.0/10、query:mm
+   evidence：全球风暴解析AI大气仿真
+7. [Patch-PODiff-ViT: Structured Latent Diffusion with Patchwise POD for Super-Resolution and Uncertainty Quantification](/202607/01/2606.31290v1-patch-podiff-vit-structured-latent-diffusion-with-patchwise-pod-for-super-resolution-and-uncertainty-quantification)  
+   标签：评分：8.0/10、query:mm
+   evidence：基于补丁POD的结构化潜在扩散用于超分辨率和不确定性量化
 
 ### 速读区论文标签
-1. [J-LAW: Joint Localization and Actionable World Modeling via Coupled Latent Factor Graphs](/202606/30/2606.28712v1-j-law-joint-localization-and-actionable-world-modeling-via-coupled-latent-factor-graphs)  
-   标签：评分：8.0/10、query:rpp
-   evidence：耦合潜在因子图联合定位与世界建模
-2. [Learning Transferable Dynamics Priors from Action to World Modeling](/202606/30/2606.29501v1-learning-transferable-dynamics-priors-from-action-to-world-modeling)  
-   标签：评分：8.0/10、query:rpp
-   evidence：世界模型用于机器人学习
-3. [Accelerating Q-learning through Efficient Value-Sharing across Actions](/202606/30/2606.29806v1-accelerating-q-learning-through-efficient-value-sharing-across-actions)  
-   标签：评分：8.0/10、query:rpp
-   evidence：通过值共享实现样本高效的Q学习
-4. [RainODE: Continuous-Time Precipitation Forecasting with Latent Neural ODEs](/202606/30/2606.29855v1-rainode-continuous-time-precipitation-forecasting-with-latent-neural-odes)  
-   标签：评分：8.0/10、query:mm
-   evidence：基于神经ODE的连续时间降水预测
-5. [RoamFlow: Reinforcement-Aligned One-Step Action MeanFlow Policy for Image-Goal Navigation](/202606/30/2606.29934v1-roamflow-reinforcement-aligned-one-step-action-meanflow-policy-for-image-goal-navigation)  
-   标签：评分：8.0/10、query:rpp
-   evidence：强化学习路径规划结合生成模型
-6. [FutureNav: Unified World-Action Modeling for Vision-and-Language Navigation](/202606/30/2606.30367v1-futurenav-unified-world-action-modeling-for-vision-and-language-navigation)  
-   标签：评分：8.0/10、query:rpp
-   evidence：面向视觉语言导航的统一世界-动作建模，属于基于模型的强化学习和世界模型
-7. [Experience Augmented Policy Optimization for LLM Reasoning](/202606/30/2606.30420v1-experience-augmented-policy-optimization-for-llm-reasoning)  
-   标签：评分：8.0/10、query:rpp
-   evidence：通过经验重用于LLM推理实现样本高效强化学习
-8. [Towards World Model-Empowered Integrated Sensing, Communication, and Decision for Complex Unmanned Systems](/202606/30/2606.30568v1-towards-world-model-empowered-integrated-sensing-communication-and-decision-for-complex-unmanned-systems)  
-   标签：评分：8.0/10、query:rpp
-   evidence：面向复杂无人系统的世界模型框架
-9. [Low-Cost High-Order Singular Value Decomposition for Tensor-Based Reconstruction from Sparse Sensor Measurements: Urban Flow and Air-Quality Applications](/202606/30/2606.24989v1-low-cost-high-order-singular-value-decomposition-for-tensor-based-reconstruction-from-sparse-sensor-measurements-urban-flow-and-air-quality-applications)  
+1. [A Trainable-by-Parts Operator Learning Framework: Bridging DeepONet and Karhunen-Loeve Expansions for Large-Scale Applications](/202607/01/2606.28519v1-a-trainable-by-parts-operator-learning-framework-bridging-deeponet-and-karhunen-loeve-expansions-for-large-scale-applications)  
    标签：评分：7.0/10、query:mm
-   evidence：从稀疏传感器重建城市流场与空气质量，类似超分辨率
-10. [SpatialUAV: Benchmarking Spatial Intelligence for Low-Altitude UAV Perception, Collaboration, and Motion](/202606/30/2606.27876v1-spatialuav-benchmarking-spatial-intelligence-for-low-altitude-uav-perception-collaboration-and-motion)  
+   evidence：算子学习用于大规模偏微分方程，包括气候建模，与数值天气预报相关
+2. [Self-Evolving World Models for LLM Agent Planning](/202607/01/2606.30639v1-self-evolving-world-models-for-llm-agent-planning)  
    标签：评分：7.0/10、query:rpp
-   evidence：无人机空间智能感知、协作与运动基准测试
-11. [Finding the Time to Think: Learning Planning Budgets in Real-Time RL](/202606/30/2606.26463v2-finding-the-time-to-think-learning-planning-budgets-in-real-time-rl)  
+   evidence：用于LLM智能体规划的自演化世界模型
+3. [Sampling-Based Coordination-Informed Multi-Objective Multi-Robot Reinforcement Learning](/202607/01/2606.30893v1-sampling-based-coordination-informed-multi-objective-multi-robot-reinforcement-learning)  
+   标签：评分：7.0/10、query:rpp
+   evidence：多机器人强化学习结合MPPI采样用于协调与轨迹优化
+4. [Conditional Tropical Cyclogenesis Rates via Rare-Event Sampling in a Neural Weather Emulator](/202607/01/2606.30920v1-conditional-tropical-cyclogenesis-rates-via-rare-event-sampling-in-a-neural-weather-emulator)  
+   标签：评分：7.0/10、query:mm
+   evidence：使用稀有事件采样的神经天气模拟器用于热带气旋生成率估计
+5. [Energy-Optimal Spatial Iterative Learning within a Virtual Tube](/202607/01/2606.31487v1-energy-optimal-spatial-iterative-learning-within-a-virtual-tube)  
+   标签：评分：7.0/10、query:rpp
+   evidence：无人机能量最优轨迹规划
+6. [Z-1: Efficient Reinforcement Learning for Vision-Language-Action Models](/202607/01/2606.31846v1-z-1-efficient-reinforcement-learning-for-vision-language-action-models)  
+   标签：评分：7.0/10、query:rpp
+   evidence：强化学习框架提升样本效率，匹配用户对样本高效强化学习的需求
+7. [MVP-Nav: Multi-layer Value Map Planner Navigator](/202607/01/2606.31919v1-mvp-nav-multi-layer-value-map-planner-navigator)  
+   标签：评分：7.0/10、query:rpp
+   evidence：仅RGB导航结合3D占用重建
+8. [Scaling Nonlinear Optimization: Many Problems One GPU](/202607/01/2606.26341v1-scaling-nonlinear-optimization-many-problems-one-gpu)  
    标签：评分：6.0/10、query:rpp
-   evidence：学习规划预算以提升实时强化学习的样本效率
-12. [Hierarchical Decision Making with Structured Policies: A Principled Design via Inverse Optimization](/202606/30/2606.28764v1-hierarchical-decision-making-with-structured-policies-a-principled-design-via-inverse-optimization)  
+   evidence：GPU批处理非线性优化，支持机器人轨迹优化和强化学习
+9. [Regularized Reward-Punishment Reinforcement Learning](/202607/01/2606.28152v1-regularized-reward-punishment-reinforcement-learning)  
    标签：评分：6.0/10、query:rpp
-   evidence：通过分层RL-OC实现基于模型的强化学习
+   evidence：面向奖惩强化学习的KL正则化策略协调方法
+10. [Diffusion Fine-tuning with Rewarded Moment Matching Distillation](/202607/01/2606.30414v1-diffusion-fine-tuning-with-rewarded-moment-matching-distillation)  
+   标签：评分：6.0/10、query:mm
+   evidence：扩散模型微调方法，可应用于气象降尺度/超分辨率
+11. [ELASTIC: Efficiently Learning to Adaptively Scale Test-Time Compute for Generative Control Policies](/202607/01/2606.31132v1-elastic-efficiently-learning-to-adaptively-scale-test-time-compute-for-generative-control-policies)  
+   标签：评分：6.0/10、query:rpp
+   evidence：自适应缩放在线计算以提升生成控制策略的样本效率
 
 
 <div class="dpr-home-promo-card">
