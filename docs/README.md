@@ -6,53 +6,73 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-23 ~ 2026-07-02
-- 运行时间：2026-07-02 03:43:04 UTC
+- 最新运行日期：2026-07-02
+- 运行时间：2026-07-02 20:44:21 UTC
 - 运行状态：成功
-- 本次总论文数：11
-- 精读区：3
-- 速读区：8
+- 本次总论文数：17
+- 精读区：6
+- 速读区：11
 
 ### 今日简报（AI）
-今日推荐11篇论文，精读聚焦全球风暴解析AI模拟与单GPU非线性优化两大高分研究。最值得重点关注《Scaling Storm-Resolving Atmospheric AI Simulation to the Entire Planet》和《Scaling Nonlinear Optimization: Many Problems One GPU》，分别探索AI在大气模拟和优化效率上的突破。建议普通读者优先阅读这两篇高影响力文献，了解如何将大规模AI与物理建模结合，或关注多目标强化学习等前沿方向的对比应用。
-- 详情：[/20260623-20260702/README](/20260623-20260702/README)
+今日精读6篇，重点关注无人机状态估计与安全控制领域。
+最值得看的是SE(3)上EKF与UKF在连续/离散四旋翼模型中的对比，以及基于预测潜在模型的通信-安全感知控制方法。
+建议普通读者进一步关注这些方法在真实环境中的鲁棒性验证与多机协同扩展。
+- 详情：[/202607/02/README](/202607/02/README)
 
 ### 精读区论文标签
-1. [Scaling Storm-Resolving Atmospheric AI Simulation to the Entire Planet](/20260623-20260702/2606.31248v1-scaling-storm-resolving-atmospheric-ai-simulation-to-the-entire-planet)  
+1. [Wind and State Estimation on SE(3): Comparative Evaluation of EKF and UKF with Continuous and Discrete Quadrotor Models](/202607/02/2606.30804v1-wind-and-state-estimation-on-se3-comparative-evaluation-of-ekf-and-ukf-with-continuous-and-discrete-quadrotor-models)  
    标签：评分：9.0/10、query:mm
-   evidence：首个全球风暴解析大气动力学的自回归AI模拟器
-2. [Scaling Nonlinear Optimization: Many Problems One GPU](/20260623-20260702/2606.26341v1-scaling-nonlinear-optimization-many-problems-one-gpu)  
+   evidence：利用四旋翼无人机进行风速估计，服务于气象预测
+2. [Communication-Aware and Safety-Aware UAV Control via Predictive Latent Models](/202607/02/2607.00288v1-communication-aware-and-safety-aware-uav-control-via-predictive-latent-models)  
+   标签：评分：9.0/10、query:rpp
+   evidence：预测潜在模型用于无人机控制
+3. [Robust Autonomous UAV Landing on Maritime Platforms via Multimodal Agentic AI and Active Wave Compensation](/202607/02/2606.31613v1-robust-autonomous-uav-landing-on-maritime-platforms-via-multimodal-agentic-ai-and-active-wave-compensation)  
    标签：评分：8.0/10、query:rpp
-   evidence：GPU加速的非线性规划用于机器人轨迹优化
-3. [Dual-Flow Reinforcement Learning with State-Aware Exploration](/20260623-20260702/2606.29820v1-dual-flow-reinforcement-learning-with-state-aware-exploration)  
+   evidence：基于深度强化学习的自主无人机降落在海上平台，带主动波浪补偿
+4. [Spatio-Temporal Gaussian Process for Building Terrain-Incorporating Wind Power Curves](/202607/02/2607.00051v1-spatio-temporal-gaussian-process-for-building-terrain-incorporating-wind-power-curves)  
+   标签：评分：8.0/10、query:mm
+   evidence：用于风功率曲线的时空高斯过程
+5. [Optimal any-angle path planning in static and dynamic environments](/202607/02/2607.00065v1-optimal-any-angle-path-planning-in-static-and-dynamic-environments)  
    标签：评分：8.0/10、query:rpp
-   evidence：基于双流条件流匹配的强化学习与状态感知探索
+   evidence：静态和动态环境下的最优任意角度路径规划
+6. [Coupling Precipitation Forecasting and Early Warning with Reverse-Martingale Recurrent Neural Networks](/202607/02/2607.00331v1-coupling-precipitation-forecasting-and-early-warning-with-reverse-martingale-recurrent-neural-networks)  
+   标签：评分：8.0/10、query:mm
+   evidence：深度学习降水预报与早期预警
 
 ### 速读区论文标签
-1. [Deterministic Pareto-Optimal Policy Synthesis for Multi-Objective Reinforcement Learning](/20260623-20260702/2606.26397v1-deterministic-pareto-optimal-policy-synthesis-for-multi-objective-reinforcement-learning)  
+1. [MultiUAV-Plat: An LLM-Oriented Platform, Benchmark and Framework for Multi-UAV Collaborative Task Planning](/202607/02/2606.31073v1-multiuav-plat-an-llm-oriented-platform-benchmark-and-framework-for-multi-uav-collaborative-task-planning)  
    标签：评分：7.0/10、query:rpp
-   evidence：多目标强化学习的确定性帕累托最优策略合成
-2. [A Trainable-by-Parts Operator Learning Framework: Bridging DeepONet and Karhunen-Loeve Expansions for Large-Scale Applications](/20260623-20260702/2606.28519v1-a-trainable-by-parts-operator-learning-framework-bridging-deeponet-and-karhunen-loeve-expansions-for-large-scale-applications)  
+   evidence：用于多无人机协作任务规划的仿真平台与基准
+2. [Safe Online Learning via Smooth Safety-Structured Policy Composition](/202607/02/2606.31320v1-safe-online-learning-via-smooth-safety-structured-policy-composition)  
+   标签：评分：7.0/10、query:rpp
+   evidence：安全在线强化学习用于导航和控制
+3. [Learning Generalizable Skill Policy with Data-Efficient Unsupervised RL](/202607/02/2607.00392v1-learning-generalizable-skill-policy-with-data-efficient-unsupervised-rl)  
+   标签：评分：7.0/10、query:rpp
+   evidence：数据高效的无监督强化学习用于技能策略
+4. [VLM-AR3L: Vision-Language Models for Absolute and Relative Rewards in Reinforcement Learning](/202607/02/2607.00483v1-vlm-ar3l-vision-language-models-for-absolute-and-relative-rewards-in-reinforcement-learning)  
+   标签：评分：7.0/10、query:rpp
+   evidence：使用VLM设计强化学习奖励
+5. [Decision-Aware Training for Sample-Based Generative Models](/202607/02/2607.01171v1-decision-aware-training-for-sample-based-generative-models)  
    标签：评分：7.0/10、query:mm
-   evidence：面向大规模PDE的算子学习框架，应用于气候建模
-3. [On the Comparison of Reinforcement Learning and Adaptive Control for Linear Systems under Packet Loss and Uncertainty](/20260623-20260702/2606.32003v1-on-the-comparison-of-reinforcement-learning-and-adaptive-control-for-linear-systems-under-packet-loss-and-uncertainty)  
-   标签：评分：7.0/10、query:rpp
-   evidence：丢包条件下强化学习与自适应控制的比较
-4. [PMDformer: Patch-Mean Decoupling Information Transformer for Long-term Forecasting](/20260623-20260702/2606.26549v1-pmdformer-patch-mean-decoupling-information-transformer-for-long-term-forecasting)  
-   标签：评分：6.0/10、query:mm
-   evidence：基于Transformer的长时预测方法，采用补丁均值解耦技术
-5. [Deep learning model emulators for marine biogeochemistry forecasting from days to decades](/20260623-20260702/2606.27168v1-deep-learning-model-emulators-for-marine-biogeochemistry-forecasting-from-days-to-decades)  
-   标签：评分：6.0/10、query:mm
-   evidence：地球系统模型预报的深度学习模拟器
-6. [Training Observable Control Policies to Expose Agent State Through Actions](/20260623-20260702/2606.27609v1-training-observable-control-policies-to-expose-agent-state-through-actions)  
+   evidence：面向样本生成模型的决策感知训练
+6. [MAPL: Multi-Objective Preference Learning for Robot Locomotion](/202607/02/2606.25398v1-mapl-multi-objective-preference-learning-for-robot-locomotion)  
    标签：评分：6.0/10、query:rpp
-   evidence：通过强化学习训练可观测控制策略
-7. [The Simulacrum: Decision-Theoretic Pretraining for Near-Optimal Time-Series Forecasting and Inference](/20260623-20260702/2606.27711v1-the-simulacrum-decision-theoretic-pretraining-for-near-optimal-time-series-forecasting-and-inference)  
-   标签：评分：6.0/10、query:mm
-   evidence：决策理论预训练用于时间序列预测，可应用于天气
-8. [Sampling-Based Coordination-Informed Multi-Objective Multi-Robot Reinforcement Learning](/20260623-20260702/2606.30893v1-sampling-based-coordination-informed-multi-objective-multi-robot-reinforcement-learning)  
+   evidence：多目标偏好学习用于机器人运动
+7. [FlowAWR: Online Adaptive Flow Reinforcement via Advantage-Weighted Rectification](/202607/02/2606.30376v1-flowawr-online-adaptive-flow-reinforcement-via-advantage-weighted-rectification)  
    标签：评分：6.0/10、query:rpp
-   evidence：多机器人强化学习路径规划的协调方法
+   evidence：通过优势加权修正的在线自适应流强化
+8. [EVOTS: Evolutionary Transformer Search for Time Series Forecasting](/202607/02/2607.00154v1-evots-evolutionary-transformer-search-for-time-series-forecasting)  
+   标签：评分：6.0/10、query:mm
+   evidence：用于时间序列预测的进化神经架构搜索，可应用于天气预测
+9. [TRIE: An Evaluation Framework for Stochastic PDE Surrogates](/202607/02/2607.00196v1-trie-an-evaluation-framework-for-stochastic-pde-surrogates)  
+   标签：评分：6.0/10、query:mm
+   evidence：随机PDE替代模型评估框架，与气象预测相关
+10. [Flow-Map GRPO: Reinforcement Learning for Few-Step Flow-Map Generators via Anchored Stochastic Composition](/202607/02/2607.00535v1-flow-map-grpo-reinforcement-learning-for-few-step-flow-map-generators-via-anchored-stochastic-composition)  
+   标签：评分：6.0/10、query:mm
+   evidence：用于少步流映射生成器的强化学习后训练，类似于扩散模型，可应用于气象超分辨率
+11. [Generative Model Proposal based Particle Filtering for Data Assimilation](/202607/02/2607.01012v1-generative-model-proposal-based-particle-filtering-for-data-assimilation)  
+   标签：评分：6.0/10、query:mm
+   evidence：生成模型用于数据同化
 
 
 <div class="dpr-home-promo-card">
