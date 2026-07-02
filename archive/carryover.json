@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-07-01T20:39:58.539454+00:00",
-  "updated_date": "20260701",
+  "generated_at": "2026-07-02T03:39:09.614336+00:00",
+  "updated_date": "20260623-20260702",
   "carryover_days": 9,
   "tag_states": {
     "mm": {
-      "updated_date": "20260701",
+      "updated_date": "20260623-20260702",
       "carryover_days": 9,
       "items": []
     },
     "rpp": {
-      "updated_date": "20260701",
+      "updated_date": "20260623-20260702",
       "carryover_days": 9,
       "items": []
     }

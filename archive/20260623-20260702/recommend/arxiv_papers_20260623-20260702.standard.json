@@ -1,0 +1,456 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-02T03:39:09.613565+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 3,
+    "deep_cap": 7,
+    "deep_selected": 3,
+    "quick_candidates": 8,
+    "quick_skim_target": 12,
+    "quick_selected": 8
+  },
+  "deep_dive": [
+    {
+      "id": "2606.31248v1",
+      "source": "arxiv",
+      "title": "Scaling Storm-Resolving Atmospheric AI Simulation to the Entire Planet",
+      "abstract": "Kilometer-scale convection shapes precipitation extremes, tropical organization, and cloud feedbacks, but most global atmospheric models approximate these processes at 25-100 km resolution. Global storm-resolving physics models resolve convective systems explicitly, but at a cost -- roughly one MWh per simulated day on exascale supercomputers -- that limits long-duration simulation. We introduce STRATA (Storm-resolving Tile-based autoRegressive Atmosphere Transformer Architecture), the first autoregressive AI emulator for global storm-resolving atmospheric dynamics. STRATA is trained on the highest-resolution atmospheric dataset yet used for global AI emulation: 17 days of SCREAM physics-model output at 4.9-km resolution (~25 million grid cells) sampled every 10 minutes. Our central premise is that on 10-minute timescales atmospheric dynamics are predominantly local, so training on small spatial tiles trades scarce global temporal samples for abundant local spatial samples and enables global rollout via overlapping-tile blending. STRATA combines 3D patch embedding and local 3D neighborhood attention, a novel Stereographic Rotary Position Embedding (StereoRoPE) for grid-invariant encoding, and a pixel-space de-aliasing decoder that suppresses patch-scale rollout artifacts. An iso-FLOP scaling study reveals that km-scale emulation requires ~10x more FLOPs per grid point than coarse-resolution AI weather models, consistent with the higher information density of convective-scale dynamics. Trained on only 17 days of data, STRATA produces stable 24-hour global rollouts with realistic km-scale dynamics across diverse regimes, though large-scale biases develop with lead time. It achieves 48 simulation days per megawatt-hour -- about 50 times better energy efficiency than the SCREAM physics model -- and 741 simulated days per wall-clock day at 512 H100 GPUs. Code and dataset are publicly available.",
+      "authors": [
+        "Zeyuan Hu",
+        "Akshay Subramaniam",
+        "Noel Keen",
+        "Tao Ge",
+        "Jaideep Pathak",
+        "Mohammad Shoaib Abbas",
+        "Suman Ravuri",
+        "Karthik Kashinath",
+        "Naser Mahfouz",
+        "Peter Caldwell",
+        "Mike Pritchard",
+        "Noah Brenowitz"
+      ],
+      "primary_category": "physics.ao-ph",
+      "categories": [
+        "physics.ao-ph",
+        "cs.CE",
+        "cs.LG"
+      ],
+      "published": "2026-06-30T07:24:33+00:00",
+      "link": "https://arxiv.org/pdf/2606.31248v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "first autoregressive AI emulator for global storm-resolving atmospheric dynamics",
+      "llm_evidence_cn": "首个全球风暴解析大气动力学的自回归AI模拟器",
+      "llm_evidence": "首个全球风暴解析大气动力学的自回归AI模拟器",
+      "canonical_evidence": "首个全球风暴解析大气动力学的自回归AI模拟器",
+      "llm_tldr_en": "Introduces STRATA, the first autoregressive AI emulator for global storm-resolving atmospheric dynamics, trained on 4.9-km resolution SCREAM data.",
+      "llm_tldr_cn": "STRATA是全球首个自回归AI模拟器，用于模拟风暴解析尺度的大气动力学。它基于17天4.9公里分辨率的SCREAM数据集训练，实现了与高分辨率物理模型相当的模拟能力，但计算成本大幅降低。",
+      "llm_tldr": "STRATA是全球首个自回归AI模拟器，用于模拟风暴解析尺度的大气动力学。它基于17天4.9公里分辨率的SCREAM数据集训练，实现了与高分辨率物理模型相当的模拟能力，但计算成本大幅降低。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.26341v1",
+      "source": "arxiv",
+      "title": "Scaling Nonlinear Optimization: Many Problems One GPU",
+      "abstract": "Many robotics problems, including trajectory optimization, inverse kinematics, and contact-rich motion planning, reduce to nonlinear programs (NLPs). Mature NLP solvers such as IPOPT can solve these problems, offering hard constraint satisfaction, optimality guarantees, and favorable scaling with problem dimension. These solvers underpin gradient-based methods in robotics, yet remain CPU-bound and solve only one problem at a time, preventing their integration into GPU-batched learning pipelines. On the other hand, sampling-based approaches such as reinforcement learning, model predictive path integral, and imitation learning have become the core of modern robotics research due to their ability to leverage GPU-batched simulators. These simulators can generate orders of magnitude more dynamics rollouts per second than was previously possible. If a GPU-batched NLP solver existed, it would unlock similar speedups in the number of constrained, locally optimal solutions generated per second. This regime of solving many problems concurrently versus solving a single problem at a time is a key requirement for integrating NLP solvers in modern GPU-batched robotics frameworks. To this end, we introduce \\texttt{jaxipm}, the first GPU-batched NLP solver, based on IPOPT, and implemented in JAX. We accomplish this by redesigning IPOPT's algorithm to eliminate control flow with \\textit{heterogeneous iteration fusion}, and by minimizing GPU idle time with \\textit{iteration level batching}. We evaluate \\texttt{jaxipm} on a variety of quadrotor nonlinear model predictive control benchmarks, including reference tracking in the presence of obstacles, multi-quadrotor navigation without collision, and navigation in a cluttered environment. We demonstrate up to a $32.85\\times$ increase in throughput over IPOPT. Our complete open-source codebase is available at https://github.com/johnviljoen/jaxipm.",
+      "authors": [
+        "John Viljoen",
+        "Johanna Haffner",
+        "Masayoshi Tomizuka",
+        "Negar Mehr"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-24T19:34:41+00:00",
+      "link": "https://arxiv.org/pdf/2606.26341v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "GPU-accelerated nonlinear programming for trajectory optimization in robotics",
+      "llm_evidence_cn": "GPU加速的非线性规划用于机器人轨迹优化",
+      "llm_evidence": "GPU加速的非线性规划用于机器人轨迹优化",
+      "canonical_evidence": "GPU加速的非线性规划用于机器人轨迹优化",
+      "llm_tldr_en": "A GPU-batched solver for multiple NLPs simultaneously, enabling integration into robotics pipelines for real-time trajectory optimization and motion planning.",
+      "llm_tldr_cn": "针对机器人轨迹优化等非线性规划问题，传统CPU求解器无法批量处理且速度慢，本文提出GPU批处理求解器，可同时求解多个NLP问题，与学习算法兼容，在优化速度和实时性上显著提升，适用于无人机路径规划。",
+      "llm_tldr": "针对机器人轨迹优化等非线性规划问题，传统CPU求解器无法批量处理且速度慢，本文提出GPU批处理求解器，可同时求解多个NLP问题，与学习算法兼容，在优化速度和实时性上显著提升，适用于无人机路径规划。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.29820v1",
+      "source": "arxiv",
+      "title": "Dual-Flow Reinforcement Learning with State-Aware Exploration",
+      "abstract": "In complex continuous-control reinforcement learning tasks, multimodal optimal actions often coincide with uncertain, multimodal return distributions, making reliable value estimation and multimodal exploration challenging. Existing value estimation methods using unimodal Gaussians restrict expressiveness and yield biased estimates. Recent generative policies can represent multimodal actions but often collapse to a few modes and under-explore high-value areas of the action space. Motivated by these challenges, we propose Dual-Flow RL, a unified actor-critic framework that jointly models a continuous return distribution and a multimodal policy distribution using conditional flow matching (CFM). This design supports reliable value estimation and sustained multimodal exploration. To further enhance exploration, we introduce an Entropy-Covariance Exploration Regulator (ECER) that enables state-aware exploration regulation leveraging policy entropy and action-uncertainty covariance. Experiments on DeepMind Control Suite and Humanoid-Bench show that Dual-Flow RL achieves state-of-the-art performance on most tasks, significantly outperforming prior diffusion-based and flow-based methods.",
+      "authors": [
+        "Qijun Li",
+        "Zheng Fu",
+        "Qi Song",
+        "Yifei He",
+        "Weitao Zhou",
+        "Kun Jiang",
+        "Diange Yang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-29T05:57:33+00:00",
+      "link": "https://arxiv.org/pdf/2606.29820v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "dual-flow reinforcement learning with state-aware exploration",
+      "llm_evidence_cn": "基于双流条件流匹配的强化学习与状态感知探索",
+      "llm_evidence": "基于双流条件流匹配的强化学习与状态感知探索",
+      "canonical_evidence": "基于双流条件流匹配的强化学习与状态感知探索",
+      "llm_tldr_en": "Proposes Dual-Flow RL, a framework using conditional flow matching to model return distribution and multimodal policy jointly, enabling reliable value estimation and sustained diverse exploration in continuous control.",
+      "llm_tldr_cn": "连续控制任务中多模态最优动作与不确定返回分布使价值估计和探索困难。本文提出双流RL，用条件流匹配联合建模连续回报分布和多模态策略分布，以无偏价值估计和持续多样化探索。实验表明该方法在复杂连续控制任务中样本效率大幅提升，为样本高效强化学习提供了新范式。",
+      "llm_tldr": "连续控制任务中多模态最优动作与不确定返回分布使价值估计和探索困难。本文提出双流RL，用条件流匹配联合建模连续回报分布和多模态策略分布，以无偏价值估计和持续多样化探索。实验表明该方法在复杂连续控制任务中样本效率大幅提升，为样本高效强化学习提供了新范式。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.26397v1",
+      "source": "arxiv",
+      "title": "Deterministic Pareto-Optimal Policy Synthesis for Multi-Objective Reinforcement Learning",
+      "abstract": "Real-world decision-making often requires balancing multiple conflicting objectives, a challenge that standard Reinforcement Learning (RL) frequently addresses by aggregating rewards into a single scalar signal. While effective for simple tasks, this approach often fails to capture the full spectrum of optimal trade-offs, known as the Pareto frontier. In this paper, we introduce a novel preference-conditioned Bellman operator, motivated from the Chebyshev scalarization, designed to compute deterministic Pareto-optimal policies for Multi-Objective Markov Decision Processes (MOMDPs). We prove that this operator satisfies an enveloping property, where the estimated value functions upper-bound the true Pareto frontier, and demonstrate that it monotonically converges to a coverage set of this frontier. Furthermore, we also show how to extract deterministic policies from these converged Q-estimates. This ensures the agent can recover a policy for any given preference, capturing the entire Pareto-optimal frontier while guaranteeing each synthesized policy remains approximately Pareto-optimal. Experimental results validate that our algorithm successfully recovers complex trade-offs, providing a solution for deterministic Pareto-optimal policy synthesis.",
+      "authors": [
+        "Aniruddha Joshi",
+        "Niklas Lauffer",
+        "Sanjit Seshia"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-24T21:28:49+00:00",
+      "link": "https://arxiv.org/pdf/2606.26397v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "deterministic Pareto-optimal policy synthesis for multi-objective RL",
+      "llm_evidence_cn": "多目标强化学习的确定性帕累托最优策略合成",
+      "llm_evidence": "多目标强化学习的确定性帕累托最优策略合成",
+      "canonical_evidence": "多目标强化学习的确定性帕累托最优策略合成",
+      "llm_tldr_en": "Introduces a preference-conditioned Bellman operator for multi-objective MDPs that computes deterministic Pareto-optimal policies, with theoretical guarantees of enveloping the true Pareto frontier.",
+      "llm_tldr_cn": "现实决策常需权衡多个冲突目标。本文提出基于切比雪夫标量化的偏好条件Bellman算子，用于多目标MDP的确定性帕累托最优策略合成。理论证明该算子能上界真实帕累托前沿，实验验证了其在连续控制任务中的有效性。为样本高效的模型无关多目标RL提供了新方法。",
+      "llm_tldr": "现实决策常需权衡多个冲突目标。本文提出基于切比雪夫标量化的偏好条件Bellman算子，用于多目标MDP的确定性帕累托最优策略合成。理论证明该算子能上界真实帕累托前沿，实验验证了其在连续控制任务中的有效性。为样本高效的模型无关多目标RL提供了新方法。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.26549v1",
+      "source": "arxiv",
+      "title": "PMDformer: Patch-Mean Decoupling Information Transformer for Long-term Forecasting",
+      "abstract": "Long-term time series forecasting (LTSF) plays a crucial role in fields such as energy management, finance, and traffic prediction. Transformer-based models have adopted patch-based strategies to capture long-range dependencies, but accurately modeling shape similarities across patches and variables remains challenging due to scale differences. To address this, we introduce patch-mean decoupling (PMD), which separates the trend and residual shape information by subtracting the mean of each patch, preserving the original structure and ensuring that the attention mechanism captures true shape similarities. Futhermore, to more effectively model long-range dependencies and capture cross-variable relationships, we propose Trend Restoration Attention (TRA) and Proximal Variable Attention (PVA). The former module reintegrates the decoupled trend from PMD while calculating attention output. And the latter focuses cross-variable attention on the most relevant, recent time segments to avoid overfitting on outdated correlations. Combining these components, we propose PMDformer, a model designed to effectively capture shape similarity in long-term forecasting scenarios. Extensive experiments indicate that PMDformer outperforms existing state-of-the-art methods in stability and accuracy across multiple LTSF benchmarks. The code is available at https://github.com/aohu1105/PMDformer.",
+      "authors": [
+        "Ao Hu",
+        "Liangjian Wen",
+        "Jiang Duan",
+        "Yong Dai",
+        "He Yan",
+        "Dongkai Wang",
+        "Jun Wang",
+        "Yukun Zhang",
+        "Ruoxi Jiang",
+        "Zenglin Xu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-25T02:49:08+00:00",
+      "link": "https://arxiv.org/pdf/2606.26549v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Transformer-based long-term forecasting method with patch-mean decoupling",
+      "llm_evidence_cn": "基于Transformer的长时预测方法，采用补丁均值解耦技术",
+      "llm_evidence": "基于Transformer的长时预测方法，采用补丁均值解耦技术",
+      "canonical_evidence": "基于Transformer的长时预测方法，采用补丁均值解耦技术",
+      "llm_tldr_en": "Proposes PMDformer, a Transformer variant that separates trend and residual shape via patch-mean decoupling for accurate long-term time series forecasting.",
+      "llm_tldr_cn": "该论文提出PMDformer，一种基于Transformer的长期时间序列预测模型。通过补丁均值解耦（PMD）将趋势与残差形状信息分离，确保注意力机制捕获真实的形状相似性。同时提出趋势恢复注意力机制以建模跨变量关系。实验表明该方法在多个长期预测任务上取得优异性能。",
+      "llm_tldr": "该论文提出PMDformer，一种基于Transformer的长期时间序列预测模型。通过补丁均值解耦（PMD）将趋势与残差形状信息分离，确保注意力机制捕获真实的形状相似性。同时提出趋势恢复注意力机制以建模跨变量关系。实验表明该方法在多个长期预测任务上取得优异性能。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.28519v1",
+      "source": "arxiv",
+      "title": "A Trainable-by-Parts Operator Learning Framework: Bridging DeepONet and Karhunen-Loeve Expansions for Large-Scale Applications",
+      "abstract": "Training operator-learning models for large-scale problems governed by partial differential equations (PDEs) is challenging due to the curse of dimensionality, memory constraints, and limited training data. These challenges arise in many scientific and engineering applications, including subsurface flow, climate modeling, and geological carbon storage (GCS). In this work, we propose a scalable operator-learning framework based on the Karhunen-Loeve Deep Neural Network (KL-DNN) and demonstrate its performance for modeling GCS. The model is trained on a dataset comprising 100 samples of large-scale simulations in a three-dimensional domain with 1.7 million cells and 50 time steps. The KL-DNN method constructs latent spaces using low-rank singular value decomposition of static properties and a nested Karhunen-Loeve expansion for dynamic pressure fields, enabling full-resolution predictions without subsampling or spatial coarsening. The KL-DNN model achieves an average root mean square error (RMSE) of 1.1 psi for pressure (0.04% relative error with respect to the average pressure in the domain) and RMSE of 0.0146 for CO2 saturation (5% relative error with respect to the average saturation inside the plume). The model requires 20 minutes of training on a single GPU, representing a 19% reduction in the pressure errors, 7% reduction in the saturation error, and a two-order-of-magnitude speedup compared to DeepONet trained on the same dataset. These results, along with inference time of less than one minute, establish the proposed model as a practical and accurate solution for large-scale PDE problems, enabling rapid uncertainty quantification, history matching, and real-time decision support.",
+      "authors": [
+        "Christian Munoz",
+        "Alexandre Tartakovsky"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-26T18:15:24+00:00",
+      "link": "https://arxiv.org/pdf/2606.28519v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "operator learning framework for large-scale PDEs with climate modeling applications",
+      "llm_evidence_cn": "面向大规模PDE的算子学习框架，应用于气候建模",
+      "llm_evidence": "面向大规模PDE的算子学习框架，应用于气候建模",
+      "canonical_evidence": "面向大规模PDE的算子学习框架，应用于气候建模",
+      "llm_tldr_en": "Proposes KL-DNN, a scalable operator learning framework that bridges DeepONet and Karhunen-Loeve expansions, demonstrated on geological carbon storage with 1.7M cells.",
+      "llm_tldr_cn": "该论文提出KL-DNN，一种可扩展的算子学习框架，结合DeepONet和Karhunen-Loeve展开。该方法通过逐部分训练克服大规模PDE问题中的维数灾难和内存限制。在地质碳封存模拟中展示了有效性，使用100个样本训练，域包含170万个网格单元和50个时间步。该框架可应用于气候建模和数值天气预报。",
+      "llm_tldr": "该论文提出KL-DNN，一种可扩展的算子学习框架，结合DeepONet和Karhunen-Loeve展开。该方法通过逐部分训练克服大规模PDE问题中的维数灾难和内存限制。在地质碳封存模拟中展示了有效性，使用100个样本训练，域包含170万个网格单元和50个时间步。该框架可应用于气候建模和数值天气预报。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "numerical weather prediction models and methods",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.27168v1",
+      "source": "arxiv",
+      "title": "Deep learning model emulators for marine biogeochemistry forecasting from days to decades",
+      "abstract": "Deep-learning emulators have emerged as a promising approach for reducing the computational cost of Earth System Models while potentially improving forecasting skill. Here, we demonstrate the successful emulation of a high-complexity marine biogeochemistry model within a simplified one-dimensional water-column framework. We explore two emulator architectures: Long Short-Term Memory (LSTM) neural networks that emulate a selected subset of variables at daily resolution, and physics-informed one-dimensional Convolutional Neural Networks (1D CNNs) that emulate the full pelagic system throughout the water column also at daily resolution. Using ocean physics simulator inputs, both emulators remain largely stable over multi-decadal timescales and accurately reproduce the parent model in both decadal climate projections and short-range (10-day) forecasting applications. The former includes the ability to predict the timing of phytoplankton Spring blooms several years in advance. When trained on reanalysis data, the emulators substantially outperform the parent model's forecast skill score for several key ecosystem variables, including phytoplankton and zooplankton. If similar performance can be achieved in three-dimensional regional applications, these emulators could provide substantially higher-quality predictions at a fraction of the computational cost. We further apply novel explainability techniques to identify key drivers of emulator behaviour and gain insights into emergent ecosystem dynamics. Performance is evaluated using a range of metrics, including the reproduction of daily variability and extreme events. These approaches have considerable potential for future applications in operational forecasting, climate-scale simulations, and marine autonomous systems.",
+      "authors": [
+        "Jozef Skakala",
+        "Ieuan Higgs",
+        "David Moffat"
+      ],
+      "primary_category": "q-bio.QM",
+      "categories": [
+        "q-bio.QM",
+        "nlin.CD"
+      ],
+      "published": "2026-06-25T15:35:37+00:00",
+      "link": "https://arxiv.org/pdf/2606.27168v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "deep learning emulators for Earth system model forecasting",
+      "llm_evidence_cn": "地球系统模型预报的深度学习模拟器",
+      "llm_evidence": "地球系统模型预报的深度学习模拟器",
+      "canonical_evidence": "地球系统模型预报的深度学习模拟器",
+      "llm_tldr_en": "Demonstrates successful emulation of marine biogeochemistry model using LSTM and physics-informed CNNs for stable multi-decadal forecasting.",
+      "llm_tldr_cn": "该研究展示了使用LSTM和物理信息一维CNN成功模拟高复杂度海洋生物地球化学模型，在日分辨率上保持多年代际稳定预报，为地球系统模型降计算成本提供了有效途径。",
+      "llm_tldr": "该研究展示了使用LSTM和物理信息一维CNN成功模拟高复杂度海洋生物地球化学模型，在日分辨率上保持多年代际稳定预报，为地球系统模型降计算成本提供了有效途径。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.32003v1",
+      "source": "arxiv",
+      "title": "On the Comparison of Reinforcement Learning and Adaptive Control for Linear Systems under Packet Loss and Uncertainty",
+      "abstract": "This paper presents a comparative study between Adaptive Quantized Control (AQC) and Deep Deterministic Policy Gradient (DDPG) reinforcement learning for uncertain linear systems with input quantization over communication channels subject to packet loss. The considered setting also includes dynamic switching from a nominal unstable system to a more unstable one during operation. The AQC is designed for unknown system dynamics using acknowledgment messages to compensate for packet losses, whereas the DDPG controller is trained using the nominal system model without acknowledgment messages. Numerical results show that the DDPG controller achieves faster transient responses and improved damping within its training environment. However, under model uncertainty, packet loss, and dynamic switching, the AQC consistently demonstrates superior robustness owing to its rigorous Lyapunov stability guarantees. These results highlight the trade-off between data-driven performance and model-based robustness, and provide insight into the applicability of reinforcement learning and adaptive control for networked uncertain systems.",
+      "authors": [
+        "Moh Kamalul Wafi"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY"
+      ],
+      "published": "2026-06-30T17:36:20+00:00",
+      "link": "https://arxiv.org/pdf/2606.32003v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "comparison of RL and adaptive control under packet loss",
+      "llm_evidence_cn": "丢包条件下强化学习与自适应控制的比较",
+      "llm_evidence": "丢包条件下强化学习与自适应控制的比较",
+      "canonical_evidence": "丢包条件下强化学习与自适应控制的比较",
+      "llm_tldr_en": "Compares Adaptive Quantized Control and DDPG for uncertain linear systems with packet loss, showing DDPG achieves faster transient response but within its training distribution.",
+      "llm_tldr_cn": "通信丢包影响控制系统稳定性。本文对比自适应量化控制（AQC）与深度确定性策略梯度（DDPG）在不稳定线性系统与丢包场景下的表现。数值结果显示DDPG在训练分布内瞬态响应更快，但泛化性受限。为强化学习在控制受限环境中的样本效率与鲁棒性提供了实验参考。",
+      "llm_tldr": "通信丢包影响控制系统稳定性。本文对比自适应量化控制（AQC）与深度确定性策略梯度（DDPG）在不稳定线性系统与丢包场景下的表现。数值结果显示DDPG在训练分布内瞬态响应更快，但泛化性受限。为强化学习在控制受限环境中的样本效率与鲁棒性提供了实验参考。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.27609v1",
+      "source": "arxiv",
+      "title": "Training Observable Control Policies to Expose Agent State Through Actions",
+      "abstract": "Physical or operational constraints often impose communications limitations on autonomous agents. Such limitations complicate monitoring or multiagent coordination. Even when strong communications are absent, some information may still be available. The remainder of the relevant agent state may be reconstructed via estimation. The actions taken by an agent are a potential source of information -- as the agent interacts with the environment, these actions may be observed even in the absence of explicit communication. We investigate using actions to estimate the state of an agent, using reinforcement learning to develop policies which make the estimation problem more tractable. Policy observability is encouraged through the training reward and is analyzed using simulation of the trained agent. In an aircraft tracking problem a policy with enhanced observability is found that has minimal impact on nominal task performance.",
+      "authors": [
+        "Andres Enriquez Fernandez",
+        "John J. Bird"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "eess.SY"
+      ],
+      "published": "2026-06-25T23:50:14+00:00",
+      "link": "https://arxiv.org/pdf/2606.27609v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "training observable control policies via reinforcement learning",
+      "llm_evidence_cn": "通过强化学习训练可观测控制策略",
+      "llm_evidence": "通过强化学习训练可观测控制策略",
+      "canonical_evidence": "通过强化学习训练可观测控制策略",
+      "llm_tldr_en": "Proposes using reinforcement learning to train policies that make agent state estimation easier from observed actions, encouraging policy observability through reward shaping for monitoring and coordination.",
+      "llm_tldr_cn": "受限通信下智能体状态估计困难。本文利用强化学习训练策略，使智能体动作更便于状态重建，通过奖励塑造鼓励策略可观测性。实验表明该方法可显著提升从动作序列估计状态的准确性，为多智能体协同与监控提供了新的样本高效策略学习方法。",
+      "llm_tldr": "受限通信下智能体状态估计困难。本文利用强化学习训练策略，使智能体动作更便于状态重建，通过奖励塑造鼓励策略可观测性。实验表明该方法可显著提升从动作序列估计状态的准确性，为多智能体协同与监控提供了新的样本高效策略学习方法。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.27711v1",
+      "source": "arxiv",
+      "title": "The Simulacrum: Decision-Theoretic Pretraining for Near-Optimal Time-Series Forecasting and Inference",
+      "abstract": "We introduce a neural network-based framework for learning time series estimators through a process we term decision-theoretic pretraining. Analysts specify a generative world, a distribution over data-generating processes, and a target decision objective. A neural network trained on stratified simulations from this world approximates the corresponding optimal decision rule, yielding a neural estimator that provides forecasts, parameter estimates, predictive intervals, or model-selection for zero-shot inference on previously unseen time series.   The joint specification of the generative world and objective enables the estimators to directly approximate process-level, finite-sample properties: near-optimal risk, bias control, minimax performance, and uniform calibration. Our experiments demonstrate that these neural estimators can outperform traditional baselines such as maximum likelihood estimation and model selection via AICc, for the same model structural model classes. Furthermore, even when trained purely on simulations of structural models, they achieve competitive or state-of-the-art forecasting accuracy on major real-world benchmarks, compared with statistical, neural or large pre-trained models.   We illustrate the framework by addressing two longstanding challenges: finite-sample bias and miscalibration in AR(p) models, and the forecast combination puzzle. These applications highlight the approach's main advantage: its ability to approximate solutions to analytically intractable or computationally prohibitive time series problems, including complex structural equations or optimality criteria. Ultimately, by enabling explicit control over decision-theoretic trade-offs, the framework equips analysts with highly efficient estimation tools tailored to their specific analytical needs.",
+      "authors": [
+        "Pablo Montero-Manso",
+        "Marcel Scharth"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "stat.CO"
+      ],
+      "published": "2026-06-26T04:25:09+00:00",
+      "link": "https://arxiv.org/pdf/2606.27711v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "decision-theoretic pretraining for time-series forecasting, applicable to weather",
+      "llm_evidence_cn": "决策理论预训练用于时间序列预测，可应用于天气",
+      "llm_evidence": "决策理论预训练用于时间序列预测，可应用于天气",
+      "canonical_evidence": "决策理论预训练用于时间序列预测，可应用于天气",
+      "llm_tldr_en": "Introduces a neural framework for time-series forecasting via decision-theoretic pretraining on stratified simulations, enabling near-optimal forecasts and intervals, with potential for weather prediction.",
+      "llm_tldr_cn": "时间序列预测模型通常需要大量真实数据且泛化性不足。该文提出决策理论预训练框架，通过指定生成世界和决策目标，在分层模拟上训练神经网络，使其逼近最优决策规则。得到的神经估计器能提供预测、预测区间和模型选择，可直接用于天气时间序列的零样本推断，实现近最优风险。",
+      "llm_tldr": "时间序列预测模型通常需要大量真实数据且泛化性不足。该文提出决策理论预训练框架，通过指定生成世界和决策目标，在分层模拟上训练神经网络，使其逼近最优决策规则。得到的神经估计器能提供预测、预测区间和模型选择，可直接用于天气时间序列的零样本推断，实现近最优风险。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.30893v1",
+      "source": "arxiv",
+      "title": "Sampling-Based Coordination-Informed Multi-Objective Multi-Robot Reinforcement Learning",
+      "abstract": "Multi-robot systems must simultaneously optimize competing objectives while maintaining coordinated behavior. Existing multi-agent reinforcement learning approaches often rely on fixed or centralized coordination, which limits adaptability and violates distributed constraints. This work introduces the Coordination-Informed Multi-Objective Reinforcement Learning (CIMORL) framework, integrating a distributed weight prediction mechanism, a privileged expert training strategy, and theoretical guarantees for Pareto-optimal solutions. We present the base CIMORL method alongside two sampling-based variants, CIMORL-TS (Tree Search) and CIMORL-MPPI (MPPI), which leverage privileged global information during training to enable fully decentralized deployment. Experimental validation in cooperative and adversarial scenarios demonstrates a $21.2\\%$ hypervolume improvement and superior policy stability compared to state-of-the-art baselines. Real-world experiments with Crazyflie drones further validate the framework's robustness in resource allocation and multi-attacker multi-defend scenarios under partial observability.",
+      "authors": [
+        "Antonio Marino",
+        "Esteban Restrepo",
+        "Soon-jo Chung",
+        "Paolo Robuffo Giordano",
+        "Claudio Pacchierotti"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.MA"
+      ],
+      "published": "2026-06-29T20:31:03+00:00",
+      "link": "https://arxiv.org/pdf/2606.30893v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-robot RL with coordination for path planning",
+      "llm_evidence_cn": "多机器人强化学习路径规划的协调方法",
+      "llm_evidence": "多机器人强化学习路径规划的协调方法",
+      "canonical_evidence": "多机器人强化学习路径规划的协调方法",
+      "llm_tldr_en": "CIMORL framework enables decentralized multi-robot RL with Pareto-optimal coordination for path planning.",
+      "llm_tldr_cn": "多机器人系统需同时优化多个目标并保持协调，现有方法依赖固定或中心化协调。本文提出CIMORL框架，集成分布式权重预测机制和特权专家训练策略，保证帕累托最优解。采样变体CIMORL-TS和CIMORL-MPPI在训练时利用全局信息，实现完全分布式推理，在多种路径规划场景中取得了更好的多目标性能，为无人机集群导航提供了有效方案。",
+      "llm_tldr": "多机器人系统需同时优化多个目标并保持协调，现有方法依赖固定或中心化协调。本文提出CIMORL框架，集成分布式权重预测机制和特权专家训练策略，保证帕累托最优解。采样变体CIMORL-TS和CIMORL-MPPI在训练时利用全局信息，实现完全分布式推理，在多种路径规划场景中取得了更好的多目标性能，为无人机集群导航提供了有效方案。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
