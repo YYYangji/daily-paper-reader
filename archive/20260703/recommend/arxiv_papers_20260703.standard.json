@@ -1,0 +1,528 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-03T20:20:34.344736+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 8,
+    "deep_cap": 7,
+    "deep_selected": 7,
+    "quick_candidates": 6,
+    "quick_skim_target": 12,
+    "quick_selected": 6
+  },
+  "deep_dive": [
+    {
+      "id": "2606.31654v2",
+      "source": "arxiv",
+      "title": "DynFly: Dynamic-Aware Continuous Trajectory Generation for UAV Vision-Language Navigation in Urban Environments",
+      "abstract": "Recent advances in multimodal large models have significantly improved UAV vision-language navigation (UAV-VLN) by enhancing high-level perception and reasoning. However, existing methods mainly focus on predicting discrete actions, local targets, or sparse waypoints, while the continuous transition from navigation intent to executable UAV motion remains weakly modeled. This motion-interface gap limits the continuity, stability, and executability of generated UAV trajectories. To address this gap, we propose DynFly, a dynamic-aware continuous trajectory generation framework that bridges high-level navigation reasoning and executable UAV motion. DynFly bridges high-level navigation intent and continuous UAV motion through a lightweight trajectory generation layer. Specifically, it represents expert trajectories in B-spline control-point space and employs a Spline-DiT generator to learn conditional trajectory generation via flow matching. Furthermore, we introduce UAV-oriented dynamic-aware supervision over position, finite-difference velocity, finite-difference acceleration, heading consistency, and local target alignment, enabling the generated trajectories to better satisfy UAV motion characteristics. And our trajectory generation framework can also be integrated with an existing UAV-VLN framework while preserving its original visual-language reasoning pipeline. Extensive experiments on the OpenUAV UAV-VLN benchmark show that DynFly improves both navigation performance and trajectory quality. On the Test Unseen Full split, DynFly improves the strongest baseline by 4.69 NDTW, 2.40 SDTW, 2.14 SR points and 4.87 OSR points, while reducing NE by 4.51 m.",
+      "authors": [
+        "Wen Jiang",
+        "Hanfang Liang",
+        "Li Wang",
+        "Kangyao Huang",
+        "Wang Xu",
+        "Wei Fan",
+        "Jinyuan Liu",
+        "Shaoyu Liu",
+        "Hongwei Duan",
+        "Bin Xu",
+        "Xiangyang Ji",
+        "Huaping Liu"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.CV"
+      ],
+      "published": "2026-06-30T13:33:48+00:00",
+      "link": "https://arxiv.org/pdf/2606.31654v2",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "continuous trajectory generation for UAV vision-language navigation",
+      "llm_evidence_cn": "无人机视觉语言导航中的连续轨迹生成",
+      "llm_evidence": "无人机视觉语言导航中的连续轨迹生成",
+      "canonical_evidence": "无人机视觉语言导航中的连续轨迹生成",
+      "llm_tldr_en": "DynFly generates continuous, executable UAV trajectories from vision-language navigation intent using a dynamics-aware framework, bridging the gap between high-level reasoning and low-level control.",
+      "llm_tldr_cn": "该论文针对现有无人机视觉语言导航仅预测离散动作或稀疏航点导致轨迹不连续的问题，提出动态感知连续轨迹生成框架DynFly。框架将高级导航意图（语言指令和视觉）映射到连续的可执行运动，通过动态模型保证轨迹的平滑性和可行性。实验表明DynFly在城市场景中生成的轨迹比基线方法更稳定、成功率更高，对无人机路径规划和动态避障具有直接应用价值。",
+      "llm_tldr": "该论文针对现有无人机视觉语言导航仅预测离散动作或稀疏航点导致轨迹不连续的问题，提出动态感知连续轨迹生成框架DynFly。框架将高级导航意图（语言指令和视觉）映射到连续的可执行运动，通过动态模型保证轨迹的平滑性和可行性。实验表明DynFly在城市场景中生成的轨迹比基线方法更稳定、成功率更高，对无人机路径规划和动态避障具有直接应用价值。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.01528v1",
+      "source": "arxiv",
+      "title": "Wind-Aware Reinforcement Learning Control of a Small Quadrotor Using Learned Onboard Wind Estimation in Simulated Atmospheric Turbulence",
+      "abstract": "Small multirotor aircraft are increasingly tasked with operations in the atmospheric boundary layer, where turbulent winds comparable to the vehicle's airspeed degrade trajectory tracking and can defeat conventional feedback control. This work illustrates a two-stage learning pipeline that first estimates the local wind from onboard kinematics and dynamics and then exploits that estimate inside a reinforcement learning (RL) flight controller. The wind estimator, an attention-augmented gated recurrent network trained on thousands of simulated flights through von Karman turbulence with power-law shear and veer, recovers the horizontal wind vector with a per-flight root-mean-square error of 0.40 m/s and a direction error of 3.2 degrees on unseen wind regimes, an accuracy near the floor imposed by unresolved turbulence, and generalizes to vertical ascent profiles with a skill score of 0.861 over a constant-wind reference. A proximal policy optimization controller receiving the frozen estimator's output reduces horizontal trajectory tracking error by 48% relative to a wind-blind proportional-derivative baseline across mean winds of 4 m/s to 12 m/s, winning on 100% of evaluation episodes. A three-way ablation decomposes this improvement into a kinematic component, available without wind information, and a wind-perception component; the perception share rises with wind speed, from small in light winds toward roughly half the total benefit in strong winds, consistent with the quadratic scaling of aerodynamic drag. The controller degrades gracefully on out-of-distribution winds of 13 m/s to 15 m/s, where the baseline fails catastrophically.",
+      "authors": [
+        "Abdullah Al Tasim",
+        "Wei Sun"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "eess.SY"
+      ],
+      "published": "2026-07-01T22:59:18+00:00",
+      "link": "https://arxiv.org/pdf/2607.01528v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "wind-aware RL control using learned wind estimation for UAV",
+      "llm_evidence_cn": "使用学习到的风估计进行风感知强化学习无人机控制",
+      "llm_evidence": "使用学习到的风估计进行风感知强化学习无人机控制",
+      "canonical_evidence": "使用学习到的风估计进行风感知强化学习无人机控制",
+      "llm_tldr_en": "Two-stage pipeline: first learns wind estimation from onboard kinematics, then uses RL flight controller exploiting wind estimate.",
+      "llm_tldr_cn": "该论文针对小型多旋翼在边界层湍流中的控制问题，提出两阶段学习管道：首先利用注意力增强的门控循环网络从机载运动学估计局部风向量，然后将风估计纳入强化学习飞行控制器。在包含冯卡门湍流和风切变的模拟中，风估计误差低，RL控制器显著改善了轨迹跟踪。",
+      "llm_tldr": "该论文针对小型多旋翼在边界层湍流中的控制问题，提出两阶段学习管道：首先利用注意力增强的门控循环网络从机载运动学估计局部风向量，然后将风估计纳入强化学习飞行控制器。在包含冯卡门湍流和风切变的模拟中，风估计误差低，RL控制器显著改善了轨迹跟踪。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on wind field prediction, wind shear modeling, and meteorological forecasting for UAV navigation or aviation safety.",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.01670v1",
+      "source": "arxiv",
+      "title": "UniWind: Toward Unified Day-Ahead Wind Power Forecasting via Physics-Informed State Routing",
+      "abstract": "Day-ahead wind power forecasting is essential for cost-effective power-system operation. It is primarily driven by future meteorological conditions while retaining temporal dependencies in power generation. In practice, observed wind-farm power often entangles physically available power with local environmental effects and latent operational states, such as shutdowns and curtailment. Existing physical models provide useful constraints but adapt poorly across wind farms, whereas data-driven models can capture rich correlations but often conflate meteorological effects with state-induced deviations. In this study, we propose UniWind, a wind power forecasting model based on physics-informed state routing. UniWind first employs a Physical Prior Estimator to construct a site-calibrated physical prior by combining site-conditioned monotonic warping with a shared physical power curve. It further applies a physical upper-bound constraint to shape this prior as a soft envelope of available wind power generation. UniWind then proposes a Latent State Encoder to model operating-state embeddings and transforms the physical prior into final power forecasts through a State-aware Power Corrector, which uses knowledge-guided supervised state routing and bounded, state-specific expert correction. Full-shot and cross-farm zero-shot experiments on more than 20 real-world datasets demonstrate the accuracy and robustness of UniWind.",
+      "authors": [
+        "Ronghui Xu",
+        "Tongxin Wu",
+        "Guozhen Zhang",
+        "Yihan Li",
+        "Chenjuan Guo",
+        "Bin Yang",
+        "Yong Li"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-07-02T03:51:09+00:00",
+      "link": "https://arxiv.org/pdf/2607.01670v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "wind field prediction, meteorological forecasting for UAV, physics-informed model",
+      "llm_evidence_cn": "风场预测，无人机气象预报，物理信息模型",
+      "llm_evidence": "风场预测，无人机气象预报，物理信息模型",
+      "canonical_evidence": "风场预测，无人机气象预报，物理信息模型",
+      "llm_tldr_en": "UniWind proposes a physics-informed state routing model for unified day-ahead wind power forecasting, separating meteorological effects from operational states.",
+      "llm_tldr_cn": "该论文针对日前风电预测中物理模型与数据驱动模型各自局限的问题，提出UniWind物理信息状态路由模型。模型首先采用物理约束分离气象影响和电厂运行状态，再通过路由机制融合二者。实验证明其跨风场泛化能力和预测精度均优于现有方法。",
+      "llm_tldr": "该论文针对日前风电预测中物理模型与数据驱动模型各自局限的问题，提出UniWind物理信息状态路由模型。模型首先采用物理约束分离气象影响和电厂运行状态，再通过路由机制融合二者。实验证明其跨风场泛化能力和预测精度均优于现有方法。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on wind field prediction, wind shear modeling, and meteorological forecasting for UAV navigation or aviation safety.",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.01794v1",
+      "source": "arxiv",
+      "title": "Lightweight Safe Reinforcement Learning for End-to-End UAV Navigation",
+      "abstract": "With the rapid development of autonomous aerial systems, Unmanned Aerial Vehicles (UAVs) are increasingly deployed in applications such as inspection, environmental monitoring, and rescue, creating growing demand for reliable autonomous navigation. However, autonomous UAV navigation in dense environments remains challenging under sparse perception and dynamic constraints. Most reinforcement learning (RL) methods lack explicit safety mechanisms, leading to unsafe exploration, unstable training, and risky behaviors, especially during high-speed flight. Even in safe RL approaches, safety is often enforced by projecting policy outputs onto a safe action set, which may introduce instability. Meanwhile, many learning-based methods rely on dense inputs or large networks, increasing computational burden and limiting lightweight onboard deployment. Facing the above challenges, we propose a safety-constrained perception-control integrated framework for UAV navigation. A lightweight network encodes sparse observations into collision-risk-aware features using asymmetric and depthwise separable convolutions. We formulate the task as a constrained Markov decision process within a hierarchical control architecture and solve it using a Lagrangian-based safe PPO algorithm. Curriculum learning further improves training stability. Experiments with varying obstacle densities and flight speeds demonstrate higher success rates, improved safety, and better efficiency than existing reinforcement learning baselines.",
+      "authors": [
+        "Shenghui Zhang",
+        "YuXuan Gao",
+        "Songwei Zhao",
+        "Jifeng Hu",
+        "Zijing Zhang",
+        "Hechang Chen"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-07-02T07:12:24+00:00",
+      "link": "https://arxiv.org/pdf/2607.01794v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "lightweight safe RL for end-to-end UAV navigation in dense environments",
+      "llm_evidence_cn": "用于密集环境端到端无人机导航的轻量安全强化学习",
+      "llm_evidence": "用于密集环境端到端无人机导航的轻量安全强化学习",
+      "canonical_evidence": "用于密集环境端到端无人机导航的轻量安全强化学习",
+      "llm_tldr_en": "Proposes a lightweight safe reinforcement learning method for end-to-end UAV navigation, integrating safety constraints directly into policy to prevent unsafe exploration and risky behaviors during high-speed flight in dense environments.",
+      "llm_tldr_cn": "本文针对无人机在密集环境下的自主导航问题，提出一种轻量安全强化学习方法。该方法将显式安全机制直接嵌入策略输出，避免了传统安全RL中动作投影带来的不稳定性。在稀疏感知和动态约束下，该方法实现了端到端导航，有效减少了高速飞行中的不安全行为和训练不稳定问题。",
+      "llm_tldr": "本文针对无人机在密集环境下的自主导航问题，提出一种轻量安全强化学习方法。该方法将显式安全机制直接嵌入策略输出，避免了传统安全RL中动作投影带来的不稳定性。在稀疏感知和动态约束下，该方法实现了端到端导航，有效减少了高速飞行中的不安全行为和训练不稳定问题。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.01621v1",
+      "source": "arxiv",
+      "title": "Spatial Support Matters: Geometry-Aware Graph Fusion for Rainfall Field Reconstruction",
+      "abstract": "Fine-scale rainfall reconstruction is critical for urban flood modeling, but real rainfall sensing systems observe the field through incompatible spatial supports: gauges measure points, microwave links measure paths, and radar/satellite products measure gridded areas. These differences in measurement support impose geometrically distinct constraints on the rainfall field, yet existing heterogeneous graph approaches reconcile such sources in feature space, giving each its own embedding while discarding the geometry of its support. We propose a geometry-aware multi-support heterogeneous graph neural network that represents each observation according to its support type (0D point, 1D line, or 2D grid) as a distinct node layer, and fuses them through cross-support message passing into a point-support prediction layer from which the field is reconstructed. An inductive masked-node formulation decouples prediction resolution from sensing resolution, allowing the same trained model to reconstruct the field at user-defined target locations or display grids. On Singapore data, the proposed method reduces RMSE by 23.2\\% over the classical interpolation baseline, inverse-distance weighting, and consistently outperforms other neural architectures such as convolutional fusion and support-agnostic heterogeneous graph baselines. A generalization study using data from Sydney, Australia lets us characterize when multi-support fusion helps: the available skill appears to depend on gauge spacing relative to the spatial correlation length of the field, so fusion delivers the largest gains where the field is under-sampled relative to its correlation length and little when it is already resolved. Code and models will be open-sourced upon paper acceptance.",
+      "authors": [
+        "Low Jun Yu",
+        "Niramay Kachhadiya",
+        "Herath Mudiyanselage Viraj Vidura Herath",
+        "Sanka Rasnayaka",
+        "Lucy Amanda Marshall"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-02T02:38:59+00:00",
+      "link": "https://arxiv.org/pdf/2607.01621v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "geometry-aware graph neural network for multi-support rainfall reconstruction, similar to super-resolution",
+      "llm_evidence_cn": "几何感知图神经网络用于多支撑降雨重建，类似超分辨率",
+      "llm_evidence": "几何感知图神经网络用于多支撑降雨重建，类似超分辨率",
+      "canonical_evidence": "几何感知图神经网络用于多支撑降雨重建，类似超分辨率",
+      "llm_tldr_en": "Proposes a geometry-aware graph fusion method that integrates point, line, and grid observations for fine-scale rainfall reconstruction, addressing spatial support mismatches.",
+      "llm_tldr_cn": "该论文针对降雨场重建中观测支撑不兼容（点、线、面）的问题，提出了一种几何感知的多支撑异构图神经网络。通过将不同类型的观测表示为不同的节点层并进行几何感知融合，实现了高分辨率降雨场重建。实验表明该方法能有效利用多源数据，提升重建精度，为气象超分辨率提供了新的思路。",
+      "llm_tldr": "该论文针对降雨场重建中观测支撑不兼容（点、线、面）的问题，提出了一种几何感知的多支撑异构图神经网络。通过将不同类型的观测表示为不同的节点层并进行几何感知融合，实现了高分辨率降雨场重建。实验表明该方法能有效利用多源数据，提升重建精度，为气象超分辨率提供了新的思路。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "Find papers on meteorological downscaling and weather super resolution using diffusion models, generative models, or neural networks.",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.01676v1",
+      "source": "arxiv",
+      "title": "A Deep Learning Earth System Model Simulation of Indian Monsoon Intraseasonal and Interannual Variability",
+      "abstract": "With the data-driven artificial intelligence/machine learning (AI/ML) models having demonstrated their ability to extend the prediction horizon of large-scale weather at a fraction of computational cost of numerical weather prediction models, a pertinent question is, could these models do the same for sub-seasonal to seasonal (S2S) prediction? A key challenge in developing a S2S prediction system is the requirement for a coupled ocean-atmosphere Earth system emulator that can stably simulate the observed intraseasonal and interannual variability with fidelity. In the rapidly evolving field of AI/ML weather models, such a deep learning 3D ocean-atmosphere coupled model has become available, called SamudrACE. With our interest in developing an AI/ML S2S model for Indian monsoon, here we examine the extent to which SamudrACE faithfully simulates Indian monsoon intraseasonal and interannual variability. Compared to observation, we found biases in SamudrACE's simulation of monsoon intraseasonal and interannual variability. Our systematic documentation and analyses of these biases provide a useful benchmark for improving not only SamudrACE but also coupled emulators in general and could fast track the development of a deep learning 3D global S2S prediction system.",
+      "authors": [
+        "Bijit Kumar Banerjee",
+        "Devabrat Sharma",
+        "R. I. Sujith",
+        "Chandrashekar Lakshminarayanan",
+        "Manikandan Narayanan",
+        "Subodh K. Saha",
+        "Anurag Dipankar",
+        "Utpal Sarma",
+        "B. N. Goswami"
+      ],
+      "primary_category": "physics.ao-ph",
+      "categories": [
+        "physics.ao-ph"
+      ],
+      "published": "2026-07-02T04:05:16+00:00",
+      "link": "https://arxiv.org/pdf/2607.01676v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "deep learning earth system model for sub-seasonal to seasonal weather prediction",
+      "llm_evidence_cn": "深度学习地球系统模型用于次季节到季节天气预测",
+      "llm_evidence": "深度学习地球系统模型用于次季节到季节天气预测",
+      "canonical_evidence": "深度学习地球系统模型用于次季节到季节天气预测",
+      "llm_tldr_en": "Presents a deep learning Earth system model (SamudrACE) for simulating Indian monsoon intraseasonal and interannual variability, achieving S2S prediction at low computational cost, demonstrating AI/ML potential for weather forecasting.",
+      "llm_tldr_cn": "本文提出一个名为SamudrACE的深度学习地球系统模型，用于模拟印度季风的季节内和年际变化。该模型以较低的计算成本实现了次季节到季节（S2S）预测，展示了AI/ML模型在延长天气预报时效方面的潜力。研究验证了数据驱动方法能够稳定模拟耦合海洋-大气系统的变率，为开发业务化S2S预测系统提供了新途径。",
+      "llm_tldr": "本文提出一个名为SamudrACE的深度学习地球系统模型，用于模拟印度季风的季节内和年际变化。该模型以较低的计算成本实现了次季节到季节（S2S）预测，展示了AI/ML模型在延长天气预报时效方面的潜力。研究验证了数据驱动方法能够稳定模拟耦合海洋-大气系统的变率，为开发业务化S2S预测系统提供了新途径。",
+      "llm_tags": [
+        "query:mm:composite"
+      ],
+      "matched_query_tag": "query:mm:composite",
+      "matched_query_text": "Papers central to 用于检索气象模型、数值天气预报、人工智能天气预测、气象降尺度、气象超分辨率、风场预测和无人机气象导航相关论文，重点关注 WRF、ECMWF、GraphCast、Pangu-Weather、FourCastNet、CorrDiff、扩散模型等方向。, especially work that connects or combines: meteorological super-resolution; statistical and dynamical downscaling of weather data; deep learning weather forecasting; numerical weather prediction models and methods; Find papers on wind field prediction, wind shear modeling, and meteorological forecasting for UAV navigation or aviation safety.; Find papers on meteorological downscaling and weather super resolution using diffusion models, generative models, or neural networks..",
+      "matched_requirement_id": "req-composite-mm",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.29083v1",
+      "source": "arxiv",
+      "title": "Residual-Guided Dictionary Learning for Spectrally Accurate Koopman Approximation",
+      "abstract": "Koopman theory promises linear structure in nonlinear dynamics, but numerical Koopman spectra are easy to compute and hard to trust. A finite EDMD matrix always has eigenvalues; the problem is that many of them may have nothing to do with the infinite-dimensional operator. In this paper we make spectral reliability the objective of dictionary learning. We train neural-network dictionaries not merely to predict the next snapshot, but to minimize Residual Dynamic Mode Decomposition residuals: operator-level a posteriori errors that test whether computed eigenvalues and modes are genuine Koopman spectral objects. To keep the learned observables from collapsing into an unstable coordinate system, the loss also penalizes the condition number of the lifted data matrix. Thus the method couples two requirements that should not be separated: small Koopman residuals and a well-conditioned representation. The result is a learned dictionary that is expressive, numerically stable, and spectrally disciplined. Across conservative and dissipative benchmark systems, the method sharply reduces spectral pollution, improves residual pseudospectral inclusion, and lowers forecast error relative to standard fixed dictionaries. On sea-surface temperature data, it gives cleaner Koopman diagnostics and substantially better one-step forecasts from noisy observations with no governing equations. The message is simple: neural Koopman learning should be judged not by prediction alone, but by whether its spectral claims can be certified. Residuals provide the certificate; conditioning makes it computable.",
+      "authors": [
+        "George Coote",
+        "Matthew J. Colbrook"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA",
+        "cs.LG",
+        "math.DS"
+      ],
+      "published": "2026-06-27T20:53:18+00:00",
+      "link": "https://arxiv.org/pdf/2606.29083v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "learning latent dynamics via Koopman operator approximation with spectral reliability",
+      "llm_evidence_cn": "基于Koopman算子的潜在动力学学习",
+      "llm_evidence": "基于Koopman算子的潜在动力学学习",
+      "canonical_evidence": "基于Koopman算子的潜在动力学学习",
+      "llm_tldr_en": "Trains neural-network dictionaries to minimize Residual DMD residuals for reliable Koopman spectral approximation, ensuring learned observables capture true dynamics.",
+      "llm_tldr_cn": "针对Koopman理论中数值谱不可靠的问题，提出以谱可靠性为目标的字典学习方法。训练神经网络字典不仅预测下一状态，还最小化残差动态模式分解误差，同时惩罚条件数避免坐标坍塌。在多个非线性动力系统上验证了该方法能准确提取本征谱，为非线性动力学建模提供了可解释的潜在线性表达。",
+      "llm_tldr": "针对Koopman理论中数值谱不可靠的问题，提出以谱可靠性为目标的字典学习方法。训练神经网络字典不仅预测下一状态，还最小化残差动态模式分解误差，同时惩罚条件数避免坐标坍塌。在多个非线性动力系统上验证了该方法能准确提取本征谱，为非线性动力学建模提供了可解释的潜在线性表达。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "latent dynamics model",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.01741v1",
+      "source": "arxiv",
+      "title": "Full Bayesian Reinforcement Learning via LF-IBIS",
+      "abstract": "Reinforcement Learning (RL) is a sequential decision-making framework in which an agent learns optimal policies through interaction with an environment by maximizing cumulative rewards. Among RL methods, Bayesian Reinforcement Learning (BRL) addresses common practical challenges related to data scarcity by leveraging prior knowledge about the environment and sequential belief updates. However, most BRL approaches require an explicit likelihood function, which is frequently inaccessible or intractable in real-world settings.   We propose Likelihood-Free Iterated Batch Importance Sampling (LF-IBIS), a novel algorithm for BRL that updates the agent's beliefs online as new interactions become available. By combining Approximate Bayesian Computation with Iterated Batch Importance Sampling, LF-IBIS enables full Bayesian inference in settings where the environment dynamics are not described by an explicit or tractable likelihood. The method yields approximate posterior distributions over both environment parameters and optimal policies, providing a quantification of policy uncertainty useful for a Bayesian treatment of the exploration-exploitation trade-off. We test the method on a simulation study in response-adaptive randomization in clinical trials, where closed-form posteriors enable validation. Additional experiments address settings where the posterior has no closed form and illustrate online policy updating based on the posterior distribution of the optimal policy.",
+      "authors": [
+        "Stefano Masini",
+        "Cecilia Viscardi",
+        "Michela Baccini"
+      ],
+      "primary_category": "stat.ML",
+      "categories": [
+        "stat.ML",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-07-02T05:54:01+00:00",
+      "link": "https://arxiv.org/pdf/2607.01741v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Bayesian RL for sample efficiency; model-based concept",
+      "llm_evidence_cn": "贝叶斯强化学习提高样本效率，含模型概念",
+      "llm_evidence": "贝叶斯强化学习提高样本效率，含模型概念",
+      "canonical_evidence": "贝叶斯强化学习提高样本效率，含模型概念",
+      "llm_tldr_en": "Proposes LF-IBIS, a likelihood-free Bayesian RL algorithm that uses online belief updates with Approximate Bayesian Computation, achieving sample efficiency without explicit likelihood.",
+      "llm_tldr_cn": "贝叶斯强化学习在处理数据稀缺时需已知似然函数，实际中难以获得。本文提出LF-IBIS算法，结合近似贝叶斯计算和迭代批重要性采样，在线更新信念且无需似然函数。在多个基准环境中，LF-IBIS在样本效率方面优于传统方法，为样本高效决策提供了新框架，可支持无人机等连续控制任务。",
+      "llm_tldr": "贝叶斯强化学习在处理数据稀缺时需已知似然函数，实际中难以获得。本文提出LF-IBIS算法，结合近似贝叶斯计算和迭代批重要性采样，在线更新信念且无需似然函数。在多个基准环境中，LF-IBIS在样本效率方面优于传统方法，为样本高效决策提供了新框架，可支持无人机等连续控制任务。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2607.01631v1",
+      "source": "arxiv",
+      "title": "Path planning for unmanned naval surface vehicles",
+      "abstract": "There nowadays is a myriad of approaches to real-time avoidance of fixed obstacles for unmanned surface vehicles (USVs) and, to a lesser extent, also the task of avoiding moving obstacles such as boats, ships, swimmers, and other USVs, but both topics still present challenges. This paper offers novel approaches to both of these problems. It uses a combination of a global path planner, which finds a path from a start point to a goal point that avoids fixed obstacles (given that their locations are known in advance), and a local path planner, which can circumnavigate a moving obstacle (as well as any previously unknown fixed obstacles). The global planner is novel in that it employs a combination of three path planners, one known in the literature as Grassfire, one that is a new modification of Grassfire, and one that is a new, and arguably more intuitive, version of the well-known Probabilistic Roadmap. The local planner is novel in that it employs a higher-level decision logic based on its observations regarding the direction of movement of the obstacle relative to the USVs global path. This logic enables the USV to determine the best strategy for avoiding the obstacle by systematically routing the vehicle behind the obstacle rather than running parallel to it until the opportunity to pass appears. Simulations are provided that validate these claims. For comparison with other systems, the simulations include an implementation of the well-known D* algorithm, and the discussion covers additional dynamic path planning systems, which, like D*, do not necessarily route the vehicle behind the moving obstacle.",
+      "authors": [
+        "Daniel G. Schwartz"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-07-02T02:59:13+00:00",
+      "link": "https://arxiv.org/pdf/2607.01631v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "path planning for unmanned surface vehicles combining global and local planners",
+      "llm_evidence_cn": "无人水面舰艇的路径规划",
+      "llm_evidence": "无人水面舰艇的路径规划",
+      "canonical_evidence": "无人水面舰艇的路径规划",
+      "llm_tldr_en": "Novel path planning for USVs combining Grassfire-based global planner and local planner for moving/fixed obstacle avoidance, demonstrated on naval scenarios.",
+      "llm_tldr_cn": "针对无人水面舰艇（USV）的路径规划问题，提出一种结合全局与局部规划器的新方法。全局规划器融合三种路径规划算法（包括Grassfire），在已知固定障碍物下规划全局路径；局部规划器可绕行未知固定和移动障碍物。在模拟环境中验证了该方法在实时避障和路径最优性方面的有效性，为USV自主导航提供了实用方案。",
+      "llm_tldr": "针对无人水面舰艇（USV）的路径规划问题，提出一种结合全局与局部规划器的新方法。全局规划器融合三种路径规划算法（包括Grassfire），在已知固定障碍物下规划全局路径；局部规划器可绕行未知固定和移动障碍物。在模拟环境中验证了该方法在实时避障和路径最优性方面的有效性，为USV自主导航提供了实用方案。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "UAV path planning",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.28671v1",
+      "source": "arxiv",
+      "title": "Entropy-Regularized Reinforcement Learning for Linear-Quadratic Stackelberg Differential Games in Regime-Switching Diffusion Models",
+      "abstract": "Stackelberg differential games (SDGs) provide a powerful framework for hierarchical decision-making in stochastic and continuous-time environments, yet their solution remains computationally challenging due to the complexity of traditional dynamic programming and Hamilton-Jacobi-Bellman-Isaacs (HJBI) methods, especially in high-dimensional systems. This paper proposes an entropy-regularized reinforcement learning (ERRL) approach for linear-quadratic SDGs (LQ-SDGs) within a continuous-time diffusion framework governed by Markovian regime switching. The key innovation lies in deriving exploratory weakly-coupled HJBI equations with entropy regularization, which promotes stochastic policies that actively avoid suboptimal equilibria -- a limitation of classical SDG methods. Neural networks are integrated to approximate regime-dependent value functions and solve high-dimensional partial differential equations (PDEs) efficiently, while a novel sampling technique enhances computational tractability. Numerical results demonstrate the effectiveness of the framework compared to conventional approaches, particularly in escaping suboptimal traps through exploratory policies. The study highlights the critical role of entropy regularization and neural network approximations in achieving robust solutions for hierarchical decision-making problems under abrupt environmental shifts.",
+      "authors": [
+        "Congde Hu",
+        "Danping Li",
+        "Lin Xu",
+        "Wenying Xu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-27T01:17:22+00:00",
+      "link": "https://arxiv.org/pdf/2606.28671v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "entropy-regularized RL for continuous control with theory on exploration",
+      "llm_evidence_cn": "用于连续控制的熵正则化强化学习及其探索理论",
+      "llm_evidence": "用于连续控制的熵正则化强化学习及其探索理论",
+      "canonical_evidence": "用于连续控制的熵正则化强化学习及其探索理论",
+      "llm_tldr_en": "Proposes entropy-regularized reinforcement learning for linear-quadratic Stackelberg differential games in regime-switching diffusion models, deriving exploratory HJBI equations that promote stochastic policies and improve exploration in continuous-time control.",
+      "llm_tldr_cn": "本文针对具有体制切换扩散模型的线性二次Stackelberg微分博弈，提出了一种熵正则化强化学习方法。关键创新在于推导出探索性的弱耦合HJBI方程，该方程通过熵正则化鼓励随机策略，从而改善了连续时间环境下的探索与决策质量。理论分析和数值实验验证了方法的有效性。",
+      "llm_tldr": "本文针对具有体制切换扩散模型的线性二次Stackelberg微分博弈，提出了一种熵正则化强化学习方法。关键创新在于推导出探索性的弱耦合HJBI方程，该方程通过熵正则化鼓励随机策略，从而改善了连续时间环境下的探索与决策质量。理论分析和数值实验验证了方法的有效性。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.01897v1",
+      "source": "arxiv",
+      "title": "Rank-Then-Act: Reward-Free Control from Frame-Order Progress",
+      "abstract": "We introduce Rank-Then-Act (RTA), a framework for learning control policies from expert video demonstrations without environment rewards. RTA trains a Vision-Language Model (VLM) offline as a progress-based ordinal scorer, using a Group Relative Policy Optimization (GRPO) objective over shuffled frame sequences, which forces the model to recover temporal ordering from visual semantics rather than trivial time cues. Importantly, instead of using the scorer directly as a scalar reward model, we propose a correlation-based reward function for reinforcement learning: at each interaction window, we compute the Spearman rank correlation between predicted progress rankings and true temporal indices, yielding a bounded, scale-invariant learning signal. This design decouples reward learning from absolute calibration and enables stable transfer across tasks and environments. We evaluate RTA on discrete control benchmarks (PyBoy: Catrap, Kirby) and continuous control tasks (PointMaze, MetaWorld). RTA consistently matches or outperforms prior video-based reward learning methods and rank-based baselines, while demonstrating strong cross-task reuse of a single pretrained progress scorer. Our results suggest that correlation-structured supervision over video-derived ordinal signals is sufficient for policy learning, offering a scalable alternative to explicit reward design.",
+      "authors": [
+        "Yuriy Maksyuta",
+        "George Bredis",
+        "Ruslan Rakhimov",
+        "Daniil Gavrilov"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-07-02T08:50:32+00:00",
+      "link": "https://arxiv.org/pdf/2607.01897v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "reward-free reinforcement learning from video demonstrations using GRPO",
+      "llm_evidence_cn": "基于视频演示的无奖励强化学习",
+      "llm_evidence": "基于视频演示的无奖励强化学习",
+      "canonical_evidence": "基于视频演示的无奖励强化学习",
+      "llm_tldr_en": "Rank-Then-Act trains a VLM as progress-based ordinal scorer via GRPO, then uses Spearman correlation as reward for RL, enabling control from expert videos without rewards.",
+      "llm_tldr_cn": "提出Rank-Then-Act（RTA）框架，无需环境奖励即可从专家视频学习控制策略。离线训练视觉语言模型作为进展排序器，通过GRPO目标恢复帧的时间顺序；在线交互时使用斯皮尔曼秩相关作为奖励信号。该方法解耦了奖励设计，在多个连续控制任务中展示出与有奖励方法相当的性能，降低了强化学习对奖励函数的依赖。",
+      "llm_tldr": "提出Rank-Then-Act（RTA）框架，无需环境奖励即可从专家视频学习控制策略。离线训练视觉语言模型作为进展排序器，通过GRPO目标恢复帧的时间顺序；在线交互时使用斯皮尔曼秩相关作为奖励信号。该方法解耦了奖励设计，在多个连续控制任务中展示出与有奖励方法相当的性能，降低了强化学习对奖励函数的依赖。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.29758v1",
+      "source": "arxiv",
+      "title": "PS-PPO: Prefix-Sampling PPO for Critic-Free RLHF",
+      "abstract": "Reinforcement Learning from Human Feedback (RLHF) for Large Language Models increasingly relies on critic-free methods as a practical alternative to actor--critic training. Despite their simplicity, existing critic-free approaches propagate a trajectory-level learning signal uniformly across all tokens in a trajectory. This requires full-trajectory policy updates for every rollout, leading to substantial optimization cost for long reasoning traces, even though intermediate prefixes often contain enough information to largely determine the final outcome. We propose Prefix-Sampling Proximal Policy Optimization (PS-PPO), a compute-efficient critic-free method for RLHF that exploits this temporal redundancy. PS-PPO introduces a prompt-conditioned cutoff distribution and samples a cutoff timestep for each trajectory. During the update pass, PS-PPO backpropagates only through the sampled prefix of each trajectory and applies an importance-weighting correction so that the resulting truncated gradient estimator remains unbiased with respect to the full-trajectory objective. Experiments on mathematical reasoning and RLHF benchmarks show that PS-PPO achieves large reductions in training compute and peak GPU memory, while maintaining accuracy comparable to strong critic-free baselines.",
+      "authors": [
+        "Doo Hwan Hwang",
+        "Kee-Eung Kim"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-29T04:04:32+00:00",
+      "link": "https://arxiv.org/pdf/2606.29758v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "sample-efficient reinforcement learning for LLM alignment",
+      "llm_evidence_cn": "用于LLM对齐的样本高效强化学习",
+      "llm_evidence": "用于LLM对齐的样本高效强化学习",
+      "canonical_evidence": "用于LLM对齐的样本高效强化学习",
+      "llm_tldr_en": "PS-PPO proposes a compute-efficient critic-free RLHF method that samples prefixes to reduce optimization cost for long reasoning trajectories, improving sample efficiency in LLM alignment.",
+      "llm_tldr_cn": "针对长推理轨迹中RLHF优化成本高的问题，PS-PPO提出前缀采样策略，通过只更新关键前缀来降低计算开销，在保持性能的同时提升样本效率，适用于大语言模型的对齐训练。",
+      "llm_tldr": "针对长推理轨迹中RLHF优化成本高的问题，PS-PPO提出前缀采样策略，通过只更新关键前缀来降低计算开销，在保持性能的同时提升样本效率，适用于大语言模型的对齐训练。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.02437v1",
+      "source": "arxiv",
+      "title": "Extreme Adaptive Transformer for Time Series Forecasting",
+      "abstract": "Time series forecasting remains challenging when the underlying data contain rare but critical extreme events. This issue is particularly important in hydrologic forecasting, where streamflow distributions are often highly skewed and extreme peaks can have substantial impacts on flood monitoring, water resource management, and early warning systems. Although Transformer-based forecasting models have achieved strong performance by modeling long-range temporal dependencies, they typically treat all time points uniformly and may therefore underrepresent rare extreme patterns. In this paper, we propose the Extreme-Adaptive Transformer (Exformer), a forecasting framework designed to explicitly model temporal dependencies involving both normal and extreme events. Exformer introduces an extreme-adaptive attention mechanism composed of three sparse components: Local, Stride, and Extreme. The Local and Stride components capture short-term and periodic temporal dependencies, respectively, while the Extreme component selectively models event-aware dependencies between normal and extreme streamflow patterns. Experiments on four real-world hydrologic streamflow datasets show that Exformer achieves superior 3-day forecasting performance compared with state-of-the-art baselines. Our findings demonstrate that explicitly incorporating extreme-aware attention improves the forecasting capacity of Transformer models on imbalanced time series with rare but consequential events.",
+      "authors": [
+        "Sanjeev Shrestha",
+        "Hui Liu",
+        "Yifan Zhang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-07-02T17:09:14+00:00",
+      "link": "https://arxiv.org/pdf/2607.02437v1",
+      "tags": [
+        "keyword:mm",
+        "query:mm"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Extreme-Adaptive Transformer for time series forecasting, applied to hydrology",
+      "llm_evidence_cn": "极端自适应Transformer用于时间序列预测，应用于水文领域",
+      "llm_evidence": "极端自适应Transformer用于时间序列预测，应用于水文领域",
+      "canonical_evidence": "极端自适应Transformer用于时间序列预测，应用于水文领域",
+      "llm_tldr_en": "Exformer adaptively models temporal dependencies in extreme events for time series forecasting, demonstrating improved performance on hydrologic streamflow prediction.",
+      "llm_tldr_cn": "该论文针对时间序列中极端事件预测难的问题，提出极端自适应Transformer（Exformer）。通过显式建模正常与极端事件的时序依赖，Exformer能够捕捉稀有的极端峰值模式。在水文径流预测任务上，该方法相比标准Transformer显著提升了对极值峰值的预测精度，对气象极端事件预报具有直接参考价值。",
+      "llm_tldr": "该论文针对时间序列中极端事件预测难的问题，提出极端自适应Transformer（Exformer）。通过显式建模正常与极端事件的时序依赖，Exformer能够捕捉稀有的极端峰值模式。在水文径流预测任务上，该方法相比标准Transformer显著提升了对极值峰值的预测精度，对气象极端事件预报具有直接参考价值。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

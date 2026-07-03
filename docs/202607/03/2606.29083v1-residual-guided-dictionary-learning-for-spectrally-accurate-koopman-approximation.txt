@@ -1,0 +1,808 @@
+Title: Residual-Guided Dictionary Learning for Spectrally Accurate Koopman Approximation
+
+URL Source: https://arxiv.org/pdf/2606.29083v1
+
+Published Time: Tue, 30 Jun 2026 00:50:15 GMT
+
+Number of Pages: 20
+
+Markdown Content:
+## Residual-Guided Dictionary Learning for Spectrally Accurate Koopman Approximation 
+
+GEORGE COOTE *
+
+Department of Applied Mathematics and Theoretical Physics, University of Cambridge, Wilberforce Road, CB3 0WA, United Kingdom 
+
+> AND
+
+MATTHEW J. C OLBROOK 
+
+Department of Applied Mathematics and Theoretical Physics, University of Cambridge, Wilberforce Road, CB3 0WA, United Kingdom 
+
+> *
+
+Corresponding author: m.colbrook@damtp.cam.ac.uk 
+
+Koopman theory promises linear structure in nonlinear dynamics, but numerical Koopman spectra are easy to compute and hard to trust. A finite EDMD matrix always has eigenvalues; the problem is that many of them may have nothing to do with the infinite-dimensional operator. In this paper we make spectral reliability the objective of dictionary learning. We train neural-network dictionaries not merely to predict the next snapshot, but to minimize Residual Dynamic Mode Decomposition residuals: operator-level a posteriori errors that test whether computed eigenvalues and modes are genuine Koopman spectral objects. To keep the learned observables from collapsing into an unstable coordinate system, the loss also penalizes the condition number of the lifted data matrix. Thus the method couples two requirements that should not be separated: small Koopman residuals and a well-conditioned representation. The result is a learned dictionary that is expressive, numerically stable, and spectrally disciplined. Across conservative and dissipative benchmark systems, the method sharply reduces spectral pollution, improves residual pseudospectral inclusion, and lowers forecast error relative to standard fixed dictionaries. On sea-surface temperature data, it gives cleaner Koopman diagnostics and substantially better one-step forecasts from noisy observations with no governing equations. The message is simple: neural Koopman learning should be judged not by prediction alone, but by whether its spectral claims can be certified. Residuals provide the certificate; conditioning makes it computable. 
+
+Keywords: Data-driven dynamics; Koopman operator; neural networks; Residual Dynamic Mode Decomposition. 
+
+1. Introduction 
+
+Koopman theory offers a striking promise: nonlinear dynamics studied through a linear operator on observables. If F : X → X advances the state of a dynamical system, the Koopman operator is the composition operator KF g = g ◦ F. Introduced by Koopman and von Neumann in the 1930s [17, 18], this viewpoint has been transformed by modern data-driven approximation methods [4, 22]. It now appears across control, climate dynamics, epidemiology, neuroscience, non-autonomous systems, and interpretable machine learning [3, 5, 13, 15, 24, 27]. The price of linearity is infinite dimension. Thus the numerical question is not how to compute a finite matrix, but whether that matrix has spectral meaning. The question matters because Koopman spectra are used to identify coherent structures, frequencies, decay rates, metastable states, and reduced-order coordinates. Dynamic Mode Decomposition and Extended Dynamic Mode Decomposition approximate the Koopman operator by projection onto a finite 
+
+> arXiv:2606.29083v1 [math.NA] 27 Jun 2026
+
+2 GEORGE COOTE AND MATTHEW COLBROOK 
+
+dictionary of observables [23, 28, 31]. The dictionary is decisive. A bad choice may give accurate one-step predictions yet produce spurious eigenvalues, miss genuine spectral components, or return modes that are artifacts of the approximation. There are two natural responses. One is to prescribe the dictionary: polynomials, Fourier modes, radial basis functions, Hermite functions, kernels, or delay coordinates. This can be powerful when the geometry is known, and brittle when it is not. The other is to learn the dictionary from data. Neural dictionaries have become a major direction in Koopman learning, from EDMD with dictionary learning [2] and invariant-subspace and deep-DMD methods [30, 32] to autoencoder and latent-linear models that seek coordinates with approximately linear dynamics [1, 19, 21, 25, 26]. Such methods add flexibility. They do not by themselves solve the spectral problem. The obstruction is spectral pollution. A finite EDMD matrix always has eigenvalues, but they need not correspond to spectrum of KF . For infinite-dimensional operators, a convincing eigenvalue plot can be wrong, even if it is stable under different discretizations. What is needed is an a posteriori test: a computed spectral object should be trusted because it has a small residual for the Koopman operator itself, not merely because it is an eigenpair of a finite projection. Residual Dynamic Mode Decomposition supplies such a test [8, 9]. ResDMD augments EDMD with residuals that converge, in the large-data limit, to residuals for the infinite-dimensional Koopman operator. It also computes residual pseudospectra: regions where the dictionary contains observables with small Koopman residual. Thus spectral pollution can be detected, and spectral inclusion assessed. The framework has now been developed for robust Koopman spectral computation, stochastic dynamics, snapshot-limited data, transfer operators, and scientific applications [6, 8, 9, 10, 11, 12, 20, 29]. This paper joins these two threads. We learn neural dictionaries, but train them with ResDMD residuals rather than prediction error alone. The goal is not just a low-dimensional predictor, but a dictionary whose Koopman eigenvalues, eigenfunctions, residuals, and residual pseudospectra have numerical meaning. Learning improves the dictionary; residuals keep the spectral claims honest. Conditioning is crucial, but it has not yet been made part of the learning objective. Residual minimization alone can produce nearly linearly dependent observables. Then the lifted data matrix 
+
+W1/2ΨX is ill-conditioned, the Gram solve defining EDMD becomes unstable, and both eigenvalues and residuals may be fragile. Our loss couples the ResDMD residual with an explicit penalty on 
+
+κ(W1/2ΨX ): the residual term seeks spectrally accurate observables, while the condition-number term prevents collapse to an unstable coordinate system. The result is a Koopman approximation that is expressive, stable, and computable. The numerical effect is substantial. Across benchmarks, the trained dictionaries give smaller forecast errors, better-conditioned lifted data matrices, cleaner residual pseudospectral inclusion, and less spectral pollution. For conservative systems, the learned residual pseudospectra recover the expected unit-circle structure while suppressing spurious interior eigenvalues. For dissipative systems and real data, the same training principle improves both spectral diagnostics and prediction. A sea-surface-temperature example shows that these benefits persist for noisy observations, even when no governing equation is available. The message is simple. In Koopman learning, neural dictionaries should be judged not just by expressivity or prediction error, but by spectral trustworthiness. ResDMD residuals supply the spectral target, and conditioning determines whether the computation is numerically sound. Optimizing both gives learned Koopman approximations that are accurate, stable, and informative beyond what fixed dictionaries alone can deliver. RESIDUAL-GUIDED KOOPMAN APPROXIMATION 3
+
+2. Mathematical Prerequisites 
+
+2.1. Koopman Operators 
+
+We begin by recalling the definition of a Koopman operator; see, for example, [7, Chapter 11]. Let 
+
+X ⊆ Rd be the state space of a dynamical system, and let x ∈ X denote its state at a given time, for example the position of a particle in a fluid. Let ω be a non-atomic, σ -finite Borel measure on X, not necessarily Lebesgue measure, and let F : X → X be Borel measurable. The pushforward of ω by F is the Borel measure 
+
+F#ω(S) = ω(F−1(S)) , S ⊆ X Borel .
+
+We say that F is non-singular with respect to ω if 
+
+ω(S) = 0 =⇒ F#ω(S) = 0,
+
+or equivalently if F#ω ≪ ω. We use the following definition. 
+
+Definition 1 Let X and ω be as above, and let F : X → X be a non-singular Borel map. The Koopman operator associated with F is the operator KF on L ∞(X, ω) defined by 
+
+(KF g)( x) = g(F(x)) , x ∈ X.
+
+Here g denotes any representative of its equivalence class. The non-singularity of F makes this definition independent of the representative. 
+
+By the Radon–Nikodym theorem, there is a Borel measurable density ρF : X → [0, ∞] such that 
+
+F#ω(S) = 
+
+> Z
+> S
+
+ρF dω, S ⊆ X Borel .
+
+Thus F#ω is determined by ρF relative to ω. The operator KF is bounded on L∞(X, ω). For 1 ≤ p < ∞,however, this is no longer automatic: KF need not even map Lp(X, ω) into itself. 
+
+Proposition 1 Suppose that ρF ∈ L∞(X, ω). Then, for every 1 ≤ p < ∞, the Koopman operator KF is bounded on L p(X, ω), and ∥KF ∥Lp→Lp = ∥ρF ∥1/p 
+
+> ∞
+
+.
+
+Throughout the paper we assume that KF is a bounded linear operator on the Hilbert space L2(X, ω).We say that F : X → X is measure preserving if F#ω = ω. If, in addition, KF is invertible on L2(X, ω),we call the associated system invertible. For a measure-preserving map F, the Koopman operator is an isometry on L2(X, ω). Thus, if the system is invertible, KF is unitary, and hence Sp (KF ) ⊆ T.2.2. Dictionaries 
+
+Since L2(X, ω) is infinite-dimensional, KF is not represented by a finite matrix. Numerical computation therefore begins with a finite-dimensional surrogate. We choose a finite set of observables DN =(ψ1, . . . , ψN ) and approximate the compression of KF onto VN = span {ψ1, . . . , ψN }. We call DN adictionary. No orthogonality or normalization is assumed. The associated feature map is 
+
+Ψ(x) = ( ψ1(x), . . . , ψN (x)) ,
+
+which lifts the state x ∈ X to a point in the feature space FN , where F = R or C.4 GEORGE COOTE AND MATTHEW COLBROOK 
+
+We judge finite-dimensional approximations of KF by their spectral accuracy. For this purpose, the dictionary should not only approximate typical observables, but also resolve eigenfunctions and pseudoeigenfunctions. This choice usually reflects information about the dynamics. A periodic dictionary, for example, is natural for highly oscillatory eigenfunctions, but may give poor approximations to eigenfunctions with rapid decay. We first give several one-dimensional examples, then describe how to combine them into dictionaries in higher dimensions. 2.2.1. Fourier Modes A sufficiently regular 1-periodic function has the Fourier expansion 
+
+f (x) = a0 +
+
+> ∞
+
+# ∑
+
+> n=1
+
+ an cos (2πnx ) + bn sin (2πnx ).
+
+Small values of n describe slowly varying structure, while large values describe high-frequency oscillations. Thus, for a reasonably smooth periodic function, a modest number of Fourier modes may already give an accurate approximation. This motivates the one-dimensional trigonometric dictionary formed from 1, cos (2πnx ), and sin (2πnx ).2.2.2. Chebyshev Polynomials For nonperiodic problems on a finite interval, a standard analogue of Fourier modes is the Chebyshev polynomial basis. The Chebyshev polynomial Tn has degree n and is characterized by 
+
+Tn(cos θ ) = cos (nθ ), θ ∈ R.
+
+The polynomials may be evaluated by the three-term recurrence 
+
+Tn+1(x) = 2xT n(x) − Tn−1(x), n ≥ 1,
+
+with T0(x) = 1 and T1(x) = x. We use T0, T1, T2, . . . as one-dimensional dictionary functions, after rescaling the physical interval to [−1, 1] if necessary. 2.2.3. Hermite Functions On the real line, a natural analogue is provided by the Hermite functions. They are the eigenfunctions of the quantum harmonic oscillator and are closely tied to Gauss–Hermite quadrature. Let Pn denote the physicists’ Hermite polynomials, defined by 
+
+Pn+1(x) = 2xP n(x) − 2nP n−1(x), n ≥ 1,
+
+with P0(x) = 1 and P1(x) = 2x. The corresponding Hermite functions are, up to normalization, 
+
+hn(x) = Pn(x)e−x2/2, x ∈ R.
+
+We use the functions h0, h1, h2, . . . as one-dimensional dictionary functions. 2.2.4. Forming Higher-Dimensional Dictionaries Let f , g ∈ L2(R), or more generally f , g ∈ L2(I) for an interval I. Their tensor product is ( f ⊗ g)( x, y) = 
+
+f (x)g(y). Thus f ⊗ g ∈ L2(R2), with the obvious modification on product intervals. If B1 and B2RESIDUAL-GUIDED KOOPMAN APPROXIMATION 5are orthonormal bases for L2(Rd1 ) and L2(Rd2 ), respectively, then { f ⊗ g : f ∈ B1, g ∈ B2} is an orthonormal basis for L2(Rd1+d2 ). Analogous tensor-product constructions apply in many other approximation spaces. The same idea applies to finite dictionaries. One may tensor dictionaries of the same type in each coordinate, or choose different one-dimensional dictionaries to reflect different variables. For example, in a pendulum problem the state consists of an angle and a velocity. A trigonometric dictionary is natural for the angular variable, while a Hermite-type dictionary is more appropriate for the unbounded velocity variable. 2.3. ResDMD 
+
+We summarize Residual Dynamic Mode Decomposition (ResDMD) [8], following [9]. ResDMD augments Extended Dynamic Mode Decomposition (EDMD): in addition to approximate eigenpairs, it computes residuals. These residuals quantify the error in the computed eigenpairs and, in the large-data limit, converge to the corresponding infinite-dimensional residuals. ResDMD is built from snapshot pairs. These may come from one long trajectory or from many shorter ones. Here we sample a collection of initial conditions at random and evolve each for a prescribed number of time steps. The data are written as 
+
+ x(m), y(m)Mm=1, y(m) = F x(m), (2.1) where y(m) is the image of x(m) after one time step. Fix a Koopman operator K = KF , and suppose that we are given the snapshot pairs in Eq. (2.1). Let 
+
+D = ( ψ j) j≥1 be a linearly independent dictionary in L2(X, ω). For N ≥ 1, set VN = span {ψ1, . . . , ψN },and let PN : L2(X, ω) → VN denote the orthogonal projection. We seek the matrix KN ∈ CN×N
+
+representing the compression PN K |VN in this basis. Thus, for i = 1, . . . , N,
+
+K ψi =
+
+> N
+
+# ∑
+
+> j=1
+
+[KN ] ji ψ j + ρi,
+
+where ρi ⊥ VN is the projection residual. Equivalently, the ith column of KN minimizes 
+
+> Z
+> X
+> N
+
+# ∑
+
+> j=1
+
+[KN ] ji ψ j(x) − ψi(F(x)) 
+
+> 2
+
+dω(x).
+
+The associated normal equations are 
+
+> N
+
+# ∑
+
+> j=1
+
+⟨ψ j, ψℓ⟩[KN ] ji = ⟨K ψi, ψℓ⟩, ℓ = 1, . . . , N.
+
+Writing [GN ]ℓ j = ⟨ψ j, ψℓ⟩, the linear independence of the dictionary functions implies that GN is Hermitian positive definite, and hence KN is uniquely determined. In the data-driven setting the inner products above are not known exactly. Instead, we approximate the relevant integrals by a quadrature rule on the snapshot points, 
+
+> Z
+> X
+
+|ρi(x)|2 dω(x) ≈
+
+> M
+
+# ∑
+
+> m=1
+
+wm|ρi(x(m))|2,
+
+with weights wm > 0. We assume that this quadrature converges in the large-data limit. 6 GEORGE COOTE AND MATTHEW COLBROOK 
+
+Let W = diag (w1, . . . , wM ), and recall the feature map Ψ(x) = ( ψ1(x), . . . , ψN (x)) . The lifted data matrices are 
+
+ΨX =
+
+
+
+Ψ(x(1))
+
+...
+
+Ψ(x(M))
+
+ , ΨY =
+
+
+
+Ψ(y(1))
+
+...
+
+Ψ(y(M))
+
+ ∈ CM×N .
+
+Thus [ΨX ]m j = ψ j(x(m)) and [ΨY ]m j = ψ j(y(m)). EDMD chooses K = KN ∈ CN×N to solve the weighted least-squares problem min 
+
+> K∈CN×N
+> M
+
+# ∑
+
+> m=1
+
+wm Ψ(y(m)) − Ψ(x(m))K 2 
+
+> ℓ2
+
+= min  
+
+> K∈CN×N
+
+W1/2ΨY − W1/2ΨX K 2 
+
+> F
+
+.
+
+The Moore–Penrose solution is K = ( W1/2ΨX )†(W1/2ΨY ). If W1/2ΨX has full column rank, this reduces to K = ( Ψ∗ 
+
+> X
+
+WΨX )−1Ψ∗ 
+
+> X
+
+WΨY . In applications, W1/2ΨX is often ill-conditioned. We therefore use the Tikhonov-regularized EDMD matrix 
+
+Kε =  Ψ∗ 
+
+> X
+
+WΨX + εI−1Ψ∗ 
+
+> X
+
+WΨY ,
+
+with ε > 0. The ridge parameter should be large enough to stabilize the inversion of the empirical Gram matrix Ψ∗ 
+
+> X
+
+WΨX , but small enough that it does not dominate the least-squares fit. For a fixed, untrained dictionary, ill-conditioning usually has one of two causes: the dictionary functions are nearly linearly dependent on the sampled data, or the sampled trajectories are themselves highly correlated. The first issue can be addressed by pruning the dictionary. The second can often be reduced by using a more diverse set of trajectories, though for highly regular systems some correlation is unavoidable. The eigenpairs of K provide candidate Koopman eigenpairs. To assess them, we use residuals. If 
+
+K is normal, then for every z ∈ C,dist  z, Sp (K ) = inf 
+
+> g̸=0
+
+∥(K − zI )g∥∥g∥ .
+
+Thus a small residual is direct evidence that z is close to the spectrum. Let g ∈ VN have the expansion 
+
+g =
+
+> N
+
+# ∑
+
+> i=1
+
+giψi, g = ( g1, . . . , gN )⊤.
+
+The empirical residual associated with z ∈ C and g̸ = 0 is res (z, g) = ∥(W1/2ΨY − zW1/2ΨX )g∥ℓ2
+
+∥W1/2ΨX g∥ℓ2
+
+. (2.2) For numerical optimization it is often preferable to work with res (z, g)2, avoiding the square root. Under the assumed convergence of the quadrature rule, and for fixed g ∈ VN ,res (z, g) −→ ∥(K − zI )g∥∥g∥ as M → ∞.
+
+We therefore use τ(z) = inf g̸=0 res (z, g) as a residual pseudospectral diagnostic. This interpretation gives a direct distance-to-spectrum certificate when K is normal; for non-normal operators it remains useful, but should be read with more caution. RESIDUAL-GUIDED KOOPMAN APPROXIMATION 7
+
+Algorithm 1 ResDMD for computing eigendecomposition and residuals 
+
+Input: Snapshot data (( x(m), y(m))) Mm=1, quadrature weights (wm)Mm=1, dictionary (ψ j)Nj=1 with M > N,and ridge parameter ε > 0.  
+
+> 1:
+
+Compute the lifted data matrices ΨX , ΨY , and set W = diag (w1, . . . , wM ). 
+
+> 2:
+
+Compute Kε = ( Ψ∗ 
+
+> X
+
+WΨX + εI)−1Ψ∗ 
+
+> X
+
+WΨY . 
+
+> 3:
+
+Compute the eigendecomposition Kε V = VΛ. 
+
+> 4:
+
+For each eigenpair (λ j, v j), compute 
+
+r j = res (λ j, v j) = ∥(W1/2ΨY − λ jW1/2ΨX )v j∥ℓ2
+
+∥W1/2ΨX v j∥ℓ2
+
+.
+
+Output: Eigenvalues Λ, eigenvectors V ∈ CN×N , and residuals associated with x 7 → Ψ(x)v j.
+
+Algorithm 2 ResDMD for computing pseudospectra 
+
+Input: Snapshot data (( x(m), y(m))) Mm=1, quadrature weights (wm)Mm=1, dictionary (ψ j)Nj=1 with M > N,and grid points (zℓ)k
+
+> ℓ=1
+
+. 
+
+> 1:
+
+Compute the lifted data matrices ΨX , ΨY , and set W = diag (w1, . . . , wM ). 
+
+> 2:
+
+Compute an economy QR factorization W1/2ΨX = QR , where Q ∈ CM×N and R ∈ CN×N . 
+
+> 3:
+
+For each grid point zℓ, compute M(zℓ) defined in (2.3).  
+
+> 4:
+
+Compute τ(zℓ) = pλmin (M(zℓ)) for each grid point zℓ.
+
+Output: The values {τ(zℓ) : 1 ≤ ℓ ≤ k}.It remains to compute τ(z). Assume that W1/2ΨX has full column rank, and take its economy QR factorization W1/2ΨX = QR , where Q∗Q = I and R is upper triangular with positive diagonal entries. Setting w = Rg , we have ∥W1/2ΨX g∥2 
+
+> ℓ2
+
+= ∥w∥2 
+
+> ℓ2
+
+. Hence res (z, g)2 = ∥(W1/2ΨY R−1 − zQ)w∥2
+
+> ℓ2
+
+∥w∥2
+
+> ℓ2
+
+.
+
+Taking the infimum over g̸ = 0, equivalently over w̸ = 0, gives 
+
+τ(z) = σmin 
+
+ W1/2ΨY R−1 − zQ = pλmin (M(z)) ,
+
+where 
+
+M(z) = ( R∗)−1Ψ∗ 
+
+> Y
+
+WΨY R−1 − z(R∗)−1Ψ∗ 
+
+> Y
+
+W1/2Q − z Q∗W1/2ΨY R−1 + |z|2I. (2.3) This is the Hermitian positive semidefinite matrix obtained by expanding 
+
+ W1/2ΨY R−1 − zQ∗ W1/2ΨY R−1 − zQ,
+
+using Q∗Q = I. Algorithms 1 and 2 summarize the computational procedures. 2.4. Neural Networks 
+
+Neural networks provide a flexible way to approximate eigenfunctions. Once trained, they are cheap to evaluate, have a simple compositional structure, and possess strong approximation properties; see, for example, [16, pp. 208–209]. We recall the basic definition. 8 GEORGE COOTE AND MATTHEW COLBROOK 
+
+Definition 2 Let X ⊆ Rd . A feedforward neural network is a map f θ : X → Rq of the form fθ = ΦL ◦ ΦL−1 ◦ · · · ◦ Φ1 X ,
+
+where each layer map Φℓ is determined by trainable weights and biases. Typically, 
+
+Φℓ(z) = σ (Aℓz + bℓ)
+
+for the hidden layers, with an affine or activated affine map at the output. 
+
+The maps Φℓ are called layers. The first layer receives the d-dimensional input, the last layer produces the output, and the intermediate layers are hidden layers. The common dimension of the hidden layers is called the hidden dimension, or width. The activation function, together with the number and widths of the layers, specifies the architecture of the network. Throughout the paper we use the rectified linear unit activation, ReLU (x) = 
+
+(
+
+x, x ≥ 0,
+
+0, x < 0.
+
+For a vector x = ( x1, . . . , xn) ∈ Rn, ReLU is applied componentwise: ReLU (x) =  ReLU (x1), . . . , ReLU (xn).
+
+The appeal of ReLU is twofold: it is cheap to evaluate, and it tends to produce sparse activations, with many hidden units returning zero [14]. In our benchmarks, ReLU layers performed particularly well. We now specify the architecture used in the computations. Fix an input dimension d, a hidden dimension dh, and an integer n ≥ 1. The network has layer maps ς0, ς1, . . . , ςn and scalar output. The first layer is 
+
+ς0(x) = ReLU (W ⊤ 
+
+> 0
+
+x + b0), W0 ∈ Rd×dh , b0 ∈ Rdh .
+
+For 1 ≤ i ≤ n − 1, the hidden layers are 
+
+ςi(x) = ReLU (W ⊤ 
+
+> i
+
+x + bi), Wi ∈ Rdh×dh , bi ∈ Rdh .
+
+The final layer is affine, 
+
+ςn(x) = W ⊤ 
+
+> n
+
+x + bn, Wn ∈ Rdh , bn ∈ R.
+
+No activation is applied at the output, so the network is not artificially restricted in sign or magnitude. The resulting network is 
+
+f (x) = ( ςn ◦ ςn−1 ◦ · · · ◦ ς0)( x), x ∈ X.
+
+Although this notation allows many architectures, the numerical experiments below use shallow networks with widths in the range 8 ≤ dh ≤ 32. To begin the optimization, the weights Wi and biases bi must be initialized. We use the default PyTorch initialization for affine layers: entries of Wi and bi are drawn independently from U(− 1√ki , 1√ki ),
+
+where ki is the input dimension of the layer ςi. Other initializations are possible. A common alternative for ReLU networks is the Kaiming–He normal initialization, N(0, 2 
+
+> ki
+
+).RESIDUAL-GUIDED KOOPMAN APPROXIMATION 9
+
+3. Setup 
+
+The choice of dictionary usually requires prior information about the system. Common fixed choices include radial basis functions, Chebyshev polynomials, and Hermite functions. We call such choices 
+
+untrained dictionaries : they contain no trainable parameters. Even when approximations based on these dictionaries converge, their spectra may exhibit severe pollution, producing numerical modes with no counterpart in the true dynamics. Such eigenvalues must then be removed, for example by residual filtering. At the same time, fixed dictionaries often give good trajectory predictions. This suggests a useful distinction: they may capture local prediction well while introducing unreliable global spectral features. We instead consider trained dictionaries : dictionaries whose elements depend on trainable parameters. Their appeal is that little prior knowledge of the dynamics is required, beyond the choice of architecture and a few hyperparameters. This makes them natural for complex systems whose structure is not known in advance. 3.1. The Loss Function 
+
+Let N ∈ N, and let DΘ = ( ψ1, . . . , ψN ) be a dictionary of neural networks with a common architecture. The networks are initialized independently from the same distribution. We write θ j for the parameter vector of ψ j, and collect the parameters as Θ = ( θ1, . . . , θN ). The value of the jth network at x is denoted by ψ j(x; θ j), and the corresponding feature map is 
+
+Ψ(x; Θ) =  ψ1(x; θ1), . . . , ψN (x; θN ).
+
+We assume snapshot data 
+
+X =  x(m), y(m)Mm=1, N ≪ M,
+
+obtained from simulation or experiment, together with quadrature weights (wm)Mm=1. Set W =
+
+diag (w1, . . . , wM ). For a fixed parameter vector Θ, define the lifted data matrices 
+
+ΨX (Θ) = 
+
+
+
+Ψ(x(1); Θ)
+
+...
+
+Ψ(x(M); Θ)
+
+ , ΨY (Θ) = 
+
+
+
+Ψ(y(1); Θ)
+
+...
+
+Ψ(y(M); Θ)
+
+ ∈ CM×N .
+
+Applying ResDMD, as in Algorithm 1, to the data (X, W) with lifted matrices ΨX (Θ) and 
+
+ΨY (Θ) gives an EDMD matrix K(Θ) ∈ CN×N , eigenpairs  λ j(Θ), v j(Θ)Nj=1, and residuals r j(Θ) = 
+
+res  λ j(Θ), v j(Θ). Equivalently, v j(Θ) represents the observable x 7 → Ψ(x; Θ)v j(Θ). We also define 
+
+κ(Θ) = κ W1/2ΨX (Θ), the condition number of the weighted lifted data matrix. Thus the EDMD matrix, its eigenpairs, the residuals, and the conditioning all depend on Θ through the trained dictionary. We define the loss 
+
+L(X; Θ) = 1
+
+N
+
+> N
+
+# ∑
+
+> j=1
+
+r j(Θ)2 + α ReLU 
+
+
+
+log κ(Θ)
+
+κ0
+
+
+
+, (3.1) where α > 0 and κ0 > 1 are hyperparameters. The first term penalizes large spectral residuals. The second penalizes ill-conditioning, but only once κ(Θ) exceeds the prescribed threshold κ0.10 GEORGE COOTE AND MATTHEW COLBROOK 
+
+Algorithm 3 Training loop 
+
+Input: Training data X0, test data X1, both with weights, initial parameters Θ, and hyperparameters 
+
+(α, κ0, η, p, Emax , P, γ, ε).
+
+Output: Trained parameters Θ⋆. 
+
+> 1:
+
+L⋆ ← +∞, Θ⋆ ← Θ, c ← 0.  
+
+> 2:
+
+for e = 1, . . . , Emax do  
+
+> 3:
+
+Sample X′ 
+
+> 0
+
+⊂ X0 of size ⌊p|X0|⌋ without replacement.  
+
+> 4:
+
+Compute ΨX (Θ) and ΨY (Θ) on X′
+
+> 0
+
+. 
+
+> 5:
+
+Compute K(Θ) via Algorithm 1.  
+
+> 6:
+
+Compute eigenpairs (λ j(Θ), v j(Θ)) , residuals r j(Θ), and condition number κ(Θ). 
+
+> 7:
+
+Evaluate L(X′
+
+> 0
+
+; Θ) via (3.1).  
+
+> 8:
+
+Compute ∇ΘL(X′
+
+> 0
+
+; Θ) using autodifferentiation.  
+
+> 9:
+
+Update Θ ← AdamW (Θ, ∇ΘL, η). 
+
+> 10:
+
+Evaluate test loss L(X1; Θ). 
+
+> 11:
+
+if L(X1; Θ) < (1 − γ)L⋆ then  
+
+> 12:
+
+L⋆ ← L(X1; Θ), Θ⋆ ← Θ, c ← 0.  
+
+> 13:
+
+else  
+
+> 14:
+
+c ← c + 1.  
+
+> 15:
+
+if c ≥ P then  
+
+> 16:
+
+break  
+
+> 17:
+
+end if  
+
+> 18:
+
+end if  
+
+> 19:
+
+end for  
+
+> 20:
+
+return Θ⋆.Training approximately minimizes L(X; Θ) using the AdamW optimizer described in Section 3.2: 
+
+Θ⋆ ≈ arg min 
+
+> Θ
+
+L(X; Θ).
+
+The first term in (3.1) measures spectral accuracy. Ideally, one would minimize the squared distance to Sp (K ), but this quantity is not available. For normal K , the operator residual gives an upper bound on this distance, and the ResDMD residuals converge, in the large-data limit, to the corresponding infinite-dimensional residuals. Thus a small mean-squared residual indicates a more reliable spectral approximation. The second term penalizes ill-conditioning of W1/2ΨX (Θ). A large condition number indicates that the learned dictionary functions are nearly linearly dependent on the sampled data. Equivalently, the empirical Gram matrix ΨX (Θ)∗WΨX (Θ) is close to singular, so the least-squares problem defining the EDMD matrix is ill-conditioned. The penalty therefore serves two purposes: it improves numerical stability and encourages the dictionary to span a full-rank empirical subspace. We use a logarithmic penalty rather than a linear or quadratic one. Since κ is a ratio, log κ places conditioning on an additive scale and avoids the excessive growth of polynomial penalties for large κ.The ReLU gate makes the penalty inactive below the threshold κ0. Thus the loss discourages serious ill-conditioning without penalizing harmless variation in the condition number. RESIDUAL-GUIDED KOOPMAN APPROXIMATION 11 TABLE 1 Summary of benchmark systems (rows 1 to 3) and real-world climate data (row 4). The condition number and one-step forecast error are reported for the trained and benchmark dictionaries; smaller values are better. The symbol ± denotes one standard deviation over the runs.                                                                              
+
+> System Benchmark dictionary Condition number One-step forecast error Pendulum Fourier–Hermite trained: (9.06 ±0.81 )×10 2
+> benchmark: (1.16 ±0.12 )×10 1
+> trained: (5.03 ±0.57 )×10 −4
+> benchmark: (6.18 ±0.54 )×10 −1
+> Undamped oscillator Hermite trained: (2.59 ±0.40 )×10 2
+> benchmark: (4.45 ±0.60 )×10 6
+> trained: (8.47 ±1.09 )×10 −5
+> benchmark: (4.91 ±0.62 )×10 −3
+> Duffing oscillator Chebyshev trained: (7.17 ±0.21 )×10 2
+> benchmark: (4.75 ±0.72 )×10 5
+> trained: (1.24 ±0.12 )×10 −4
+> benchmark: (2.10 ±0.20 )×10 −3
+> Sea-Surface Temperature Quadratic trained (5 dim): 5 .73 ±1.4trained (10 dim): 5 .48 ±2.03 benchmark (5 dim): 7 .32 benchmark (10 dim): 13 .5trained (5 dim): 0 .0433 trained (10 dim): 0 .0569 ±0.0277 benchmark (5 dim): 0 .2194 benchmark (10 dim): 0 .3529
+
+3.2. Training Process 
+
+We minimize L(X; Θ), defined in Section 3.1, by mini-batch stochastic optimization with AdamW. The data consist of snapshot triples (x(m), y(m), wm)Mm=1, where wm is the quadrature weight associated with the pair (x(m), y(m)). We shuffle these triples uniformly at random and split them into a training set X0,containing 70% of the snapshots, and a validation set X1, containing the remaining 30%. This keeps each snapshot pair attached to its weight. After the split, the weighted sums are used as empirical training and test objectives, rather than as independent quadrature rules. The held-out set is used to monitor generalization and to implement early stopping. Unless stated otherwise, we use the following hyperparameters: 1. condition-number penalty weight α = 10 −2 and threshold κ0 = 10 3;2. AdamW learning rate η = 10 −3;3. mini-batch fraction p = 0.1 of X0 per optimization step; 4. maximum number of epochs Emax = 500; 5. early stopping after P = 30 epochs with no improvement in test loss, where improvement means a relative decrease of at least r = 0; 6. candidate ridge parameters ε ∈ { 0.3, 3, 30 , 300 }.
+
+4. Results for Benchmark Systems 
+
+We now present results for three benchmark systems. Table 1 summarizes the systems and the main numerical gains obtained from the trained dictionaries. We plot the training and test losses over the training epochs. When the benchmark loss lies on a comparable scale, it is shown as a horizontal reference line. We give the analogous plot for the condition number. Test condition numbers are reported over 10 runs, with ± denoting one standard deviation. For each system we also show three ResDMD pseudospectral plots: one for a benchmark dictionary chosen using prior knowledge of the system, one for the randomly initialized neural-network dictionary before training, and one for the trained neural-network dictionary. Here “pseudospectrum” refers to the residual pseudospectrum computed in Algorithm 2, rather than to the pseudospectrum of the finite 12 GEORGE COOTE AND MATTHEW COLBROOK 
+
+EDMD matrix alone. At a grid point z, ResDMD computes 
+
+τ(z) = inf 
+
+> g̸=0
+
+∥(W1/2ΨY − zW1/2ΨX )g∥ℓ2
+
+∥W1/2ΨX g∥ℓ2
+
+.
+
+Thus the δ -level set 
+
+ΣM,N 
+
+> δ
+
+= {z ∈ C : τ(z) ≤ δ }
+
+contains spectral parameters for which the dictionary spans an observable with empirical Koopman residual at most δ . In the large-data limit this gives the corresponding infinite-dimensional residual test. In particular, if τ∞(z) ≤ δ , then z lies in the δ -pseudospectrum of K ; when K is normal this gives the concrete inclusion dist  z, Sp (K ) ≤ δ .
+
+Small values of τ(z), shown in yellow, therefore indicate low-residual spectral candidates. EDMD eigenvalues are marked by red crosses. We interpret red crosses lying in large-τ(z) regions as spectral pollution, while low-τ(z) regions without nearby EDMD eigenvalues indicate poor spectral inclusion by the finite matrix. The pseudospectral figures show representative runs; scalar diagnostics are reported across multiple runs where stated. Finally, we report the normalized one-step forecast error ∥ΨY − ΨX K∥2 
+
+> F
+
+/∥ΨY ∥2 
+
+> F
+
+, again over 15 runs. The normalization is important because different dictionary families may operate on very different scales. For example, Hermite dictionaries can take much larger values than the trained neural-network dictionaries, so absolute errors alone are not directly comparable. The same convention for standard deviations is used for the forecast errors. All computations were performed on an NVIDIA RTX 3060 Laptop GPU with 6GB of VRAM. A typical training epoch took 0 .25–1 seconds, giving a total training time of at most about five minutes. Pseudospectral grids were evaluated in batches of 512; a batch typically took 1–2 seconds, for a total time of about 30 seconds to one minute. Trajectory generation was almost instant. 4.1. Pendulum 
+
+Our first example is the nonlinear pendulum. The state is (θ , p) ∈ T × R, where θ is the angle from the vertical and p = ˙θ is the angular velocity. With unit length and no damping, the equations are ˙θ = p, ˙p = −g sin θ , g = 9.81 .
+
+The continuous Hamiltonian flow preserves phase-space measure, and the associated Koopman operator is unitary. We therefore expect the computed spectrum to concentrate near T. We use SciPy’s 
+
+solve_ivp to sample the solution with time step ∆t = 0.1. Trajectory data are generated from 140 initial conditions (θ j, p j) ∈ [−π, π]×[−1, 1], with θ j and p j sampled independently and uniformly from their respective intervals. Each initial condition is evolved for 126 time steps, giving 17 ,640 states in total. Training is run for at most 1000 epochs, with early stopping after 50 epochs without improvement in the training loss. We benchmark the learned dictionary against the size-60 Fourier–Hermite dictionary 
+
+(θ , p) 7 → ϕ j(θ )hk(p) : 0 ≤ j ≤ 9, 0 ≤ k ≤ 5 ,
+
+where (ϕ j)9 
+
+> j=0
+
+are the first ten real Fourier modes in the angle coordinate and hk denotes the kth Hermite function. This choice reflects the geometry of the problem: eigenfunctions should be periodic in θ , while the velocity coordinate is naturally treated on an unbounded domain. RESIDUAL-GUIDED KOOPMAN APPROXIMATION 13                    
+
+> FIG . 1. Pendulum training diagnostics. Left: Training and test loss over 505 epochs, with the Fourier–Hermite tensor dictionary shown as a horizontal reference line. Middle: Condition number over training and test. Right: Forecast error over training and test.
+> FIG . 2. Pendulum residual pseudospectra. Left: Fourier–Hermite dictionary {(θ,p)7→ϕj(θ)hk(p): 0 ≤j≤9,0≤k≤5}.Middle and right: ReLU-based dictionary before and after 505 training epochs.
+
+Fig. 1 shows the decrease in loss, condition number, and forecast error due to training. Over 10 runs, the trained dictionary achieved loss (6 ± 0.5) × 10 −2, condition number 512 ± 68 .7, and forecast error 
+
+(5.03 ± 0.57 ) × 10 −4. By contrast, the Fourier–Hermite dictionary had loss around 0 .6 and forecast error around 0 .62. Fig. 2 compares the ResDMD residual pseudospectra and EDMD eigenvalues. The yellow regions are not merely visual features of the finite matrix: by the residual inclusion above, they identify spectral parameters with small Koopman residuals, and for the unitary pendulum Koopman operator this gives a direct distance-to-spectrum certificate. With the randomly initialized neural-network dictionary, several reliable modes appear near z = 1, but there is significant spectral pollution closer to the centre of the disk and little spectral coverage on the left semicircle. After training, spectral coverage extends around the circle, with a substantial reduction in pollution. 4.2. Undamped Harmonic Oscillator 
+
+The undamped harmonic oscillator is the simplest conservative linear system. Let x denote displacement from equilibrium and let v denote velocity. With unit mass, the equations are ˙x = v, ˙v = −kx , k = 1.
+
+The exact continuous flow preserves phase-space measure, and the Koopman operator is unitary. We therefore regard computed eigenvalues far from T as spurious. 14 GEORGE COOTE AND MATTHEW COLBROOK     
+
+> FIG . 3. Undamped harmonic oscillator diagnostics. Left: Training and test loss over 387 epochs, with the Hermite dictionary shown as a horizontal reference line. Middle: Condition number over training and test. Right: Forecast error over training and test.
+> FIG . 4. Undamped harmonic oscillator residual pseudospectra. Left: Hermite dictionary. Middle and right: ReLU-based dictionary before and after 387 training epochs.
+
+The system admits the exact solution 
+
+x(t)
+
+v(t)
+
+
+
+=
+
+ cos t sin t
+
+− sin t cos t
+
+  x0
+
+v0
+
+
+
+,
+
+where x(0) = x0 and v(0) = v0. We take ∆t = 0.5, dictionary size N = 36, and hidden dimension 
+
+dh = 32. Trajectory data are generated from 300 initial conditions sampled uniformly from [−1, 1]2.Each initial condition is evolved for 60 time steps, giving 18 ,000 states in total. We benchmark the learned dictionary against the size-36 Hermite tensor dictionary 
+
+(x, v) 7 → hn(x)hm(v) : 0 ≤ n ≤ 5, 0 ≤ m ≤ 5 ,
+
+where hn denotes the nth Hermite function. Fig. 3 shows the decrease in loss, condition number, and forecast error due to training. Over 10 runs, the trained dictionary achieved test loss (1.04 ± 0.01 ) × 10 −2, condition number 258 ± 40 .4, and test forecast error (8.47 ± 1.09 ) × 10 −5. Its condition number improved meaningfully during training, from 634 ± 54 .6 to 258 ± 40 .4. By contrast, the Hermite dictionary had loss 0 .232 ± 0.003 and condition number on the order of 10 6. Nonetheless, it provided a reasonable approximation to the harmonic oscillator, with forecast error around 5 × 10 −3.Fig. 4 shows that, before training, the neural-network dictionary already gives reasonable spectral inclusion on the right semicircle, with seven visible modes. Training removes the spurious eigenvalues away from T and resolves additional modes on the left semicircle, although these have slightly larger RESIDUAL-GUIDED KOOPMAN APPROXIMATION 15 
+
+> FIG . 5. Duffing oscillator diagnostics. Left: Training and test loss over 175 epochs, with the benchmark dictionary shown as a horizontal reference line. Middle: Condition number over training and test. Right: Forecast error over training and test.
+> FIG . 6. Duffing oscillator residual pseudospectra. Left: Benchmark dictionary. Middle and right: ReLU-based dictionary before and after 175 training epochs.
+
+residuals than the modes on the right. The Hermite dictionary gives comparable spectral inclusion, but introduces several spurious eigenvalues inside the unit circle. 4.3. Duffing Oscillator 
+
+The Duffing oscillator is the dissipative system ˙x = y, ˙y = −0.3y + x − x3.
+
+We again use SciPy’s solve_ivp to sample the continuous dynamics at discrete time steps. We use time step ∆t = 0.05 and dictionary size N = 100. We sample 1500 initial conditions from the box 
+
+[−3, 3]2 and evolve each for 40 time steps, producing 60 ,000 snapshots in total. As a benchmark, we use the size-100 Chebyshev tensor dictionary 
+
+(x, y) 7 → Tn(L−11 x)Tm(L−12 y) : 0 ≤ n ≤ 9, 0 ≤ m ≤ 9 ,
+
+where Tn denotes the nth Chebyshev polynomial, and the constants L1 and L2 are chosen so that the rescaled snapshots (x(m)/L1, y(m)/L2) lie in [−1, 1]2.Fig. 5 shows the decrease in loss, condition number, and forecast error due to training. Over 10 runs, the trained dictionary achieved loss (3.03 ± 0.47 ) × 10 −2, condition number 717 ± 20 .6, and test forecast error (1.24 ± 0.12 ) × 10 −4. The Chebyshev dictionary had loss around 0 .08 and forecast error 
+
+(2.1 ± 0.2) × 10 −3. Its condition number was substantially larger, on the order of 10 5.A representative set of pseudospectral plots is shown in Fig. 6. The Chebyshev dictionary exhibits significant spectral pollution throughout the disk. The untrained neural-network dictionary also shows 16 GEORGE COOTE AND MATTHEW COLBROOK 
+
+substantial pollution: many eigenvalues cluster near z = 1, while others appear in the interior of the disk. After training, the low-residual regions are more sharply resolved and the spurious interior eigenvalues are substantially reduced. 
+
+5. Sea-Surface Temperature 
+
+We conclude with an example based on real-world climate data, to test whether the improvements above persist for noisy observations not generated from an exact model. We consider monthly sea-surface temperature data. We use the NOAA OISST v2.1 1 dataset, which gives a complete map of ocean surface temperature at 0 .25 ◦ × 0.25 ◦ spatial resolution. We restrict to the tropical Pacific, 120 ◦E ≤ λ ≤ 80 ◦W, 20 ◦S ≤ φ ≤ 20 ◦N,
+
+where λ is longitude and φ is latitude. We use monthly data from September 1981 through May 2026, with provisional values used for the final two weeks. Let S(t, ξ ) denote the mean sea-surface temperature in month t at grid point ξ . The month t = 1 is September 1981, and t = 537 is May 2026. For a month t, let m(t) ∈ { 1, . . . , 12 } denote its calendar month, so that m(1) = 9 and m(537 ) = 5. Let Sm(t)(ξ ) be the climatological average at grid point ξ for calendar month m(t). We form the anomalies 
+
+A(t, ξ ) = S(t, ξ ) − Sm(t)(ξ ).
+
+A naive approach would form a roughly 95 ,000-dimensional vector from the values A(t, ξ ) over the full grid. This is computationally expensive, and the 537 monthly snapshots are too few to reliably resolve such a high-dimensional system. Instead, we perform principal component analysis (PCA). We apply the standard latitude weighting [cos (φξ )] 1/2, where φξ is the latitude of grid point ξ . On a longitude-latitude grid, cells with equal angular resolution have physical area proportional to cos (φξ );the weighting therefore accounts for unequal cell areas. PCA decomposes the anomaly field as a linear combination of empirical orthogonal functions, 
+
+A(t, ξ ) ≈
+
+> r
+
+# ∑
+
+> j=1
+
+a j(t)e j(ξ ).
+
+The first 30 principal components explain around 90% of the variance, with the first 10 explaining around 80% and the first 5 explaining around 70%. We therefore run experiments with r = 5 and r = 10. The reduced states are 
+
+xt = ( a1(t), . . . , ar(t)) ∈ Rr, r = 5, 10 ,
+
+and the snapshot pairs are (xt , xt+1), corresponding to one-month transitions. The ground truth for spectral accuracy is less clear than in the preceding benchmark systems, which are theoretically well understood. We therefore place more emphasis on forecast error when assessing the relevance of the learned dictionary. To prevent data leakage, we use a sequential rather than random split, with the first 70% of the data used for training and the remaining 30% used for testing. We compare the learned dictionaries with quadratic polynomial dictionaries containing 1, xi, and xix j for 1 ≤ i, j ≤ r. As before, trained results are averaged over 15 runs, with standard deviations reported.   
+
+> 1https://www.ncei.noaa.gov/data/sea-surface-temperature-optimum-interpolation/v2.1/access/avhrr/ RESIDUAL-GUIDED KOOPMAN APPROXIMATION
+
+17       
+
+> FIG . 7. SST loss curves for typical runs with r=5 and r=10. The polynomial dictionary loss is shown as a horizontal reference line.
+
+The number of snapshots is small compared with the synthetic examples, which typically had on the order of 10 ,000 snapshots. It is therefore important to choose dictionaries that are expressive enough to capture the dominant dynamics, but not so expressive that they overfit. Indeed, even with modest dictionary sizes and architectures, the test loss may remain roughly flat while the training loss decreases. We therefore use relatively small trained dictionaries. Since the train-test split is deterministic, variation between runs comes only from random initialization; statistics for the fixed polynomial dictionaries are deterministic. With r = 5, using dictionary size 4, one hidden layer, and hidden dimension 64, the trained dictionary achieves loss 0 .1584 ± 0.0232, condition number 5 .7298 ± 1.3507, and forecast error 0.0433 ± 0.0090. The small condition number is partly due to the small dictionary size. The quadratic dictionary achieves loss 0 .3111, condition number 7 .3202, and forecast error 0 .2194. With r = 10, using dictionary size 3, one hidden layer, and hidden dimension 16, the trained dictionary achieves loss 0 .2136 ± 0.0501, condition number 5 .4797 ± 2.0335, and forecast error 0 .0569 ± 0.0277. The quadratic dictionary achieves loss 0 .5866, condition number 13 .5065, and forecast error 0 .3529. The loss, condition number, and forecast error curves are shown in Figs. 7 to 9. The Ni˜ no 3.4 region spans 120 ◦W to 170 ◦W longitude and 5 ◦S to 5 ◦N latitude. Sea-surface temperature in this region is used to monitor El Ni˜ no and La Ni˜ na events. We select the Koopman modes with the strongest amplitude in this region and compare their residuals before and after training, as well as against the polynomial dictionary. For r = 5, training gives a significant reduction in residual, as shown in Fig. 10. Amplitudes are normalized to lie in [−1, 1].
+
+6. Conclusion 
+
+Koopman approximation is not just a problem of prediction. It is a problem of spectral meaning. A finite EDMD matrix always has eigenvalues, but without an operator-level test they may be little more than artifacts of the chosen dictionary. ResDMD supplies the missing test: residuals for the Koopman operator, not just for its finite projection. This paper has used that test as a learning signal. Neural networks provide flexible dictionaries, but flexibility alone is dangerous. Residual minimization drives the dictionary toward spectrally relevant observables; conditioning keeps those observables numerically distinct. The two requirements belong 18 GEORGE COOTE AND MATTHEW COLBROOK 
+
+FIG . 8. SST condition-number curves for typical runs with r = 5 and r = 10. 
+
+FIG . 9. SST forecast-error curves for typical runs with r = 5 and r = 10. The polynomial dictionary forecast error is shown as a horizontal reference line. 
+
+FIG . 10. Koopman mode with strongest amplitude in the Ni˜ no 3.4 region. Training substantially reduces the associated residual. 
+
+together. Without the first, the spectrum is not trustworthy. Without the second, the computation is not stable. The experiments support this view. For conservative systems, training improves residual pseudospectral inclusion and suppresses spurious eigenvalues away from the unit circle. For the RESIDUAL-GUIDED KOOPMAN APPROXIMATION 19 dissipative Duffing oscillator, it sharpens low-residual spectral structure while reducing pollution in the disk. For sea-surface temperature data, where there is no exact model to appeal to, the same principle gives lower residuals and better forecasts than a standard polynomial dictionary. The conclusion is simple. Learned dictionaries should not be judged only by how well they predict the next snapshot. They should be judged by whether they produce Koopman objects that can be trusted. Residuals give the spectral target; conditioning makes the computation viable. Together they turn neural Koopman learning from a flexible fitting procedure into a spectrally disciplined numerical method. 
+
+Code availability 
+
+The implementation used to generate the dictionaries, train the neural networks and reproduce the experiments will be made available at https://github.com/GeorgeCoote/pyresdmd. REFERENCES 
+
+1. Omri Azencot, N. Benjamin Erichson, Vanessa Lin, and Michael Mahoney. Forecasting sequential data using consistent Koopman autoencoders. In Proceedings of the 37th International Conference on Machine Learning ,volume 119 of Proceedings of Machine Learning Research , pages 475–485. PMLR, 2020. 2. Erik M. Bollt, Felix Dietrich, Ioannis G. Kevrekidis, and Qianxiao Li. Extended dynamic mode decomposition with dictionary learning: a data-driven adaptive spectral decomposition of the Koopman operator. Chaos , 27, 2017. 3. Steven L. Brunton, Bingni W. Brunton, Joshua L. Proctor, and J. Nathan Kutz. Koopman invariant subspaces and finite linear representations of nonlinear dynamical systems for control. PLOS ONE , 11(2):e0150171, 2016. 4. Steven L. Brunton, Marko Budiˇ si´ c, Eurika Kaiser, and J. Nathan Kutz. Modern Koopman theory for dynamical systems. SIAM Review , 64(2):229–340, 2022. 5. Steven L. Brunton, Bernd R. Noack, and Petros Koumoutsakos. Machine learning for fluid mechanics. Annual Review of Fluid Mechanics , 52:477–508, 2020. 6. Matthew J. Colbrook. Another look at residual dynamic mode decomposition in the regime of fewer snapshots than dictionary size. Physica D: Nonlinear Phenomena , 469:134341, 2024. 7. Matthew J. Colbrook. Infinite-Dimensional Spectral Computations: Foundations, Algorithms, and Modern Applications . Cambridge University Press, Cambridge, 2026. 8. Matthew J. Colbrook, Lorna J. Ayton, and M´ at´ e Sz˝ oke. Residual dynamic mode decomposition: Robust and verified Koopmanism. Journal of Fluid Mechanics , 955:A21, 2023. 9. Matthew J Colbrook, Zlatko Drmaˇ c, and Andrew Horning. An introductory guide to Koopman learning. In 
+
+Operator Theory , pages 1–49. Springer Basel, 2026. 10. Matthew J. Colbrook, Qin Li, Ryan V. Raut, and Alex Townsend. Beyond expectations: Residual dynamic mode decomposition and variance for stochastic dynamical systems. Nonlinear Dynamics , 112(3):2037–2061, 2024. 11. Matthew J. Colbrook, Igor Mezi´ c, and Alexei Stepanenko. Adversarial dynamical systems characterize when data-driven learning succeeds or fails. Nature Communications , to appear. 12. Matthew J. Colbrook and Alex Townsend. Rigorous data-driven computation of spectral properties of Koopman operators for dynamical systems. Communications on Pure and Applied Mathematics , 77(1):221– 283, 2024. 13. G. Froyland, D. Giannakis, B. Lintner, M. Pike, and J. Slawinska. Spectral analysis of climate dynamics with operator-theoretic approaches. Nature Communications , 12(1):6570, 2021. 14. Xavier Glorot, Antoine Bordes, and Yoshua Bengio. Deep sparse rectifier neural networks. In Proceedings of the 14th International Conference on Artificial Intelligence and Statistics (AISTATS) , 2011. 20 GEORGE COOTE AND MATTHEW COLBROOK 
+
+15. David A. Haggerty, Michael J. Banks, Ervin Kamenar, Alan B. Cao, Patrick C. Curtis, Igor Mezi´ c, and Elliot W. Hawkes. Control of soft robots with inertial dynamics. Science Robotics , 8(81), 2023. 16. Simon S. Haykin. Neural Networks: A Comprehensive Foundation . Prentice Hall, Upper Saddle River, N.J., 1999. 17. B. Koopman. Hamiltonian systems and transformation in hilbert space. Proc. Natl. Acad. Sci. USA ,10:315–318, 1931. 18. B. Koopman and J. Neumann. Dynamical systems of continuous spectra. Proc. Natl. Acad. Sci. USA ,18:255–263, 1932. 19. Nikos Logothetis, Kaidi Shao, Zhongwei Shen, and Yuanchao Xu. Reskoopnet: learning Koopman representations for complex dynamics with spectral residuals. In ICML’25: Proceedings of the 42nd International Conference on Machine Learning , pages 69647–69674, 2025. 20. Paula Lorenzo-Sanchez, Matthew J Colbrook, and Antonio Navarra. Residual pseudospectra reveal a physics-informed Koopman backbone for tropical pacific variability and ENSO prediction. arXiv preprint arXiv:2606.09369 , 2026. 21. Bethany Lusch, J. Nathan Kutz, and Steven L. Brunton. Deep learning for universal linear embeddings of nonlinear dynamics. Nature Communications , 9(1):4950, 2018. 22. Igor Mezi´ c. Spectral properties of dynamical systems, model reduction and decompositions. Nonlinear Dynamics , 41(1):309–325, 2005. 23. Igor Mezi´ c. Analysis of fluid flows via spectral properties of the Koopman operator. Annual Review of Fluid Mechanics , 45(1):357–378, 2013. 24. A. Orvieto et al. Resurrecting recurrent neural networks for long sequences. Proceedings of Machine Learning Research , 202:26670–26698, 2023. Proceedings of the 40th International Conference on Machine Learning. 25. Samuel E. Otto and Clarence W. Rowley. Linearly recurrent autoencoder networks for learning dynamics. 
+
+SIAM Journal on Applied Dynamical Systems , 18(1):558–593, 2019. 26. Shaowu Pan and Karthik Duraisamy. Physics-informed probabilistic learning of linear embeddings of nonlinear dynamics with guaranteed stability. SIAM Journal on Applied Dynamical Systems , 19(1):480–509, 2020. 27. J. Proctor and P. Eckhoff. Discovering dynamic patterns from infectious disease data using dynamic mode decomposition. International Health , 7(2):139–145, 2015. 28. Clarence W. Rowley, Igor Mezi´ c, Shervin Bagheri, Philipp Schlatter, and Dan S. Henningson. Spectral analysis of nonlinear flows. Journal of Fluid Mechanics , 641:115–127, 2009. 29. Roland Schurig, Pieter van Goor, Karl Worthmann, and Rolf Findeisen. On data-driven unbiased predictors using the Koopman operator. arXiv preprint arXiv:2602.04720 , 2026. 30. Naoya Takeishi, Yoshinobu Kawahara, and Takehisa Yairi. Learning Koopman invariant subspaces for dynamic mode decomposition. In Advances in Neural Information Processing Systems , volume 30, pages 1130–1140. Curran Associates, Inc., 2017. 31. Matthew O. Williams, Ioannis G. Kevrekidis, and Clarence W. Rowley. A data-driven approximation of the Koopman operator: Extending dynamic mode decomposition. Journal of Nonlinear Science , 25(6):1307– 1346, 2015. 32. Enoch Yeung, Soumya Kundu, and Nathan Hodas. Learning deep neural network representations for Koopman operators of nonlinear dynamical systems. In 2019 American Control Conference (ACC) , pages 4832–4839. IEEE, 2019.
