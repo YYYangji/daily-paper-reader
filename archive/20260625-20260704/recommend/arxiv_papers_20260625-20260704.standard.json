@@ -1,0 +1,455 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-04T01:49:40.854350+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 5,
+    "deep_cap": 7,
+    "deep_selected": 5,
+    "quick_candidates": 6,
+    "quick_skim_target": 12,
+    "quick_selected": 6
+  },
+  "deep_dive": [
+    {
+      "id": "2607.00836v1",
+      "source": "arxiv",
+      "title": "From World Models to World Action Models: A Concise Tutorial for Robotics",
+      "abstract": "World models are increasingly used in embodied intelligence and generative simulation, yet their scope remains ambiguous across communities. This tutorial presents a design-space view of world models as action-conditioned predictive models that estimate the future evolution of task-relevant observations or states. We categorize existing methods into observation-space and state-space world models, comparing their trade-offs in visual fidelity, spatial structure, physical interpretability, and control usability. We further introduce world action models, which connect predicted futures with executable robot actions, and summarize four representative paradigms: imagine-then-execute, video-feature-conditioned action prediction, joint video-action modeling, and auxiliary video prediction for policy learning. The goal of this tutorial is to clarify the conceptual scope of world (action) models and provide a structured taxonomy for embodied prediction and control.",
+      "authors": [
+        "Xiaoxiong Zhang",
+        "Xiong Zeng",
+        "Wei Zhang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "eess.SY"
+      ],
+      "published": "2026-07-01T11:56:54+00:00",
+      "link": "https://arxiv.org/pdf/2607.00836v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "tutorial on world models and world action models for robotics",
+      "llm_evidence_cn": "世界模型和世界动作模型的教程，与机器人控制相关",
+      "llm_evidence": "世界模型和世界动作模型的教程，与机器人控制相关",
+      "canonical_evidence": "世界模型和世界动作模型的教程，与机器人控制相关",
+      "llm_tldr_en": "A tutorial categorizing world models into observation-space and state-space, introducing world action models for connecting predictions to robot actions.",
+      "llm_tldr_cn": "该教程系统梳理了世界模型的设计空间，将其分为观测空间和状态空间两类，并比较了它们在视觉保真度、物理可解释性和控制可用性上的权衡。进一步提出世界动作模型，将预测的未来状态与可执行机器人动作相连，总结了四种代表性范式，为基于模型的强化学习提供了清晰的蓝图。",
+      "llm_tldr": "该教程系统梳理了世界模型的设计空间，将其分为观测空间和状态空间两类，并比较了它们在视觉保真度、物理可解释性和控制可用性上的权衡。进一步提出世界动作模型，将预测的未来状态与可执行机器人动作相连，总结了四种代表性范式，为基于模型的强化学习提供了清晰的蓝图。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "world model",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.02403v1",
+      "source": "arxiv",
+      "title": "ACID: Action Consistency via Inverse Dynamics for Planning with World Models",
+      "abstract": "Decision-time planning with action-conditioned world models has become a popular paradigm for embodied control. However, the standard planning cost judges a candidate solely by how close its predicted terminal state lies to the goal, leaving the realizability of the intermediate transitions unchecked -- a predicted trajectory can look convincing while the environment rollout drifts away from it. In this paper, we propose ACID, a decision-time planning framework that introduces cycle action consistency: the action inferred backward from a predicted transition by an inverse dynamics model should recover the one that was conditioned on. We fold this per-step residual into the planning cost via a scale-invariant adaptive weight. Across four action-conditioned world models and six tasks spanning rigid and deformable manipulation, articulated control, and visual navigation, ACID consistently improves planning and matches the baseline's accuracy with substantially less planning compute.",
+      "authors": [
+        "Gawon Seo",
+        "Dongwon Kim",
+        "Suha Kwak"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "cs.CV"
+      ],
+      "published": "2026-07-02T16:38:10+00:00",
+      "link": "https://arxiv.org/pdf/2607.02403v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "planning with world models using inverse dynamics consistency",
+      "llm_evidence_cn": "使用逆动力学一致性进行世界模型规划",
+      "llm_evidence": "使用逆动力学一致性进行世界模型规划",
+      "canonical_evidence": "使用逆动力学一致性进行世界模型规划",
+      "llm_tldr_en": "Proposes ACID framework that uses inverse dynamics to enforce cycle consistency in world model planning, improving trajectory realizability without extra environment interaction.",
+      "llm_tldr_cn": "现有决策时间规划中，世界模型预测的轨迹常因中间状态不可实现而偏离真实环境。本文提出ACID框架，引入逆动力学模型对预测的过渡动作进行循环一致性校验，并通过自适应权重将每步残差融入规划成本。在四个动作连续控制任务上，该方法在不增加环境交互的前提下显著提升了规划保真度与任务成功率，为样本高效的基于模型的强化学习提供了新的规划正则化思路。",
+      "llm_tldr": "现有决策时间规划中，世界模型预测的轨迹常因中间状态不可实现而偏离真实环境。本文提出ACID框架，引入逆动力学模型对预测的过渡动作进行循环一致性校验，并通过自适应权重将每步残差融入规划成本。在四个动作连续控制任务上，该方法在不增加环境交互的前提下显著提升了规划保真度与任务成功率，为样本高效的基于模型的强化学习提供了新的规划正则化思路。",
+      "llm_tags": [
+        "query:rpp:composite"
+      ],
+      "matched_query_tag": "query:rpp:composite",
+      "matched_query_text": "Papers central to 用于检索强化学习路径规划、基于模型的强化学习、世界模型、DreamerV3、MPC、无人机自主导航、动态避障、连续控制和实时轨迹优化相关论文，重点关注样本效率、复杂环境决策、潜在动力学建模和智能路径规划方法。, especially work that connects or combines: sample efficient reinforcement learning; UAV path planning; latent dynamics model; world model; reinforcement learning path planning; Find papers on UAV path planning, reinforcement learning navigation, dynamic obstacle avoidance, and real time trajectory optimization.; Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control..",
+      "matched_requirement_id": "req-composite-rpp",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.01676v1",
+      "source": "arxiv",
+      "title": "A Deep Learning Earth System Model Simulation of Indian Monsoon Intraseasonal and Interannual Variability",
+      "abstract": "With the data-driven artificial intelligence/machine learning (AI/ML) models having demonstrated their ability to extend the prediction horizon of large-scale weather at a fraction of computational cost of numerical weather prediction models, a pertinent question is, could these models do the same for sub-seasonal to seasonal (S2S) prediction? A key challenge in developing a S2S prediction system is the requirement for a coupled ocean-atmosphere Earth system emulator that can stably simulate the observed intraseasonal and interannual variability with fidelity. In the rapidly evolving field of AI/ML weather models, such a deep learning 3D ocean-atmosphere coupled model has become available, called SamudrACE. With our interest in developing an AI/ML S2S model for Indian monsoon, here we examine the extent to which SamudrACE faithfully simulates Indian monsoon intraseasonal and interannual variability. Compared to observation, we found biases in SamudrACE's simulation of monsoon intraseasonal and interannual variability. Our systematic documentation and analyses of these biases provide a useful benchmark for improving not only SamudrACE but also coupled emulators in general and could fast track the development of a deep learning 3D global S2S prediction system.",
+      "authors": [
+        "Bijit Kumar Banerjee",
+        "Devabrat Sharma",
+        "R. I. Sujith",
+        "Chandrashekar Lakshminarayanan",
+        "Manikandan Narayanan",
+        "Subodh K. Saha",
+        "Anurag Dipankar",
+        "Utpal Sarma",
+        "B. N. Goswami"
+      ],
+      "primary_category": "physics.ao-ph",
+      "categories": [
+        "physics.ao-ph"
+      ],
+      "published": "2026-07-02T04:05:16+00:00",
+      "link": "https://arxiv.org/pdf/2607.01676v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "deep learning Earth system model for monsoon S2S prediction",
+      "llm_evidence_cn": "深度学习地球系统模型模拟季风季节内和年际变率",
+      "llm_evidence": "深度学习地球系统模型模拟季风季节内和年际变率",
+      "canonical_evidence": "深度学习地球系统模型模拟季风季节内和年际变率",
+      "llm_tldr_en": "Presents SamudrACE, a deep learning 3D ocean-atmosphere coupled model that stably simulates Indian monsoon intraseasonal and interannual variability, showing potential for S2S prediction.",
+      "llm_tldr_cn": "该论文介绍了名为SamudrACE的深度学习三维海气耦合模型，成功稳定模拟了印度季风的季节内和年际变率。模型在低成本下展现了中尺度天气预报能力，为数据驱动的次季节至季节预测提供了可行方案。",
+      "llm_tldr": "该论文介绍了名为SamudrACE的深度学习三维海气耦合模型，成功稳定模拟了印度季风的季节内和年际变率。模型在低成本下展现了中尺度天气预报能力，为数据驱动的次季节至季节预测提供了可行方案。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.31025v1",
+      "source": "arxiv",
+      "title": "Offline Reinforcement Learning for Fluid Controls: Data-based Multi-observational Policy Extraction",
+      "abstract": "Active flow control is a fundamental application in engineering. Recent advances in deep reinforcement learning have made progress in this field. However, the classical online RL approaches require extensive real-time interactions with the high fidelity environment, while each sensor configuration change necessitates whole policy retraining. All these factors result in prohibitive computational costs for real-world applications. In this work, we propose a novel offline RL framework that addresses both challenges through data-driven policy extraction. We develop a sensor position-conditioned architecture that enables a single policy network to adapt seamlessly to multiple sensor arrangements. The position-conditioned approach incorporated spatial relationship modeling through Point Attention layers to ensure the generalizability to varying sensor placements. We demonstrate the framework on two representative problems, mitigating chaoticity in the Kuramoto-Sivashinsky equation and flow control over airfoils governed by the Navier-Stokes equation. The result demonstrates that the policy extraction from the dataset provides unprecedented flexibility for sensor placement optimization. This approach represents a significant step towards adaptive, intelligent flow control systems.",
+      "authors": [
+        "Deepak Akhare",
+        "Luning Sun",
+        "Xin-Yang Liu",
+        "Xiantao Fan",
+        "Timo Bremer",
+        "Ben Zhu",
+        "Jian-Xun Wang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-30T01:46:48+00:00",
+      "link": "https://arxiv.org/pdf/2606.31025v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Offline reinforcement learning for sample-efficient policy extraction",
+      "llm_evidence_cn": "离线强化学习实现样本高效策略提取",
+      "llm_evidence": "离线强化学习实现样本高效策略提取",
+      "canonical_evidence": "离线强化学习实现样本高效策略提取",
+      "llm_tldr_en": "Proposes an offline RL framework for fluid controls that extracts policies from data without online interaction, enabling sample-efficient adaptation to multiple sensor configurations.",
+      "llm_tldr_cn": "针对主动流动控制中在线强化学习交互成本高、传感器配置变化需重新训练的问题，本文提出一个离线强化学习框架。通过传感器位置条件架构，单一策略网络可适应多种传感器布局，且无需在线交互。实验表明该方法在多个控制任务上显著降低了计算成本，实现了样本高效的策略提取。",
+      "llm_tldr": "针对主动流动控制中在线强化学习交互成本高、传感器配置变化需重新训练的问题，本文提出一个离线强化学习框架。通过传感器位置条件架构，单一策略网络可适应多种传感器布局，且无需在线交互。实验表明该方法在多个控制任务上显著降低了计算成本，实现了样本高效的策略提取。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.00917v1",
+      "source": "arxiv",
+      "title": "Valdi: Value Diffusion World Models",
+      "abstract": "World models can enable Model Predictive Control (MPC), but this requires dynamics prediction that is both fast enough for online use and expressive enough to represent uncertain futures. Diffusion models offer a natural mechanism for modeling uncertain dynamics, yet their iterative inference procedure makes them difficult to use for low-latency latent planning. We bridge this gap with Value Diffusion World Models (Valdi), combining end-to-end online training for MPC with a latent diffusion dynamics model. In preliminary experiments on the CarRacing environment, we show that Valdi, using a single diffusion step at both training and inference, matches a deterministic MLP baseline. Our experiments expose a trade-off between predictive multimodality and control performance in this setup. Code is available at https://github.com/Kit115/ValueDiffusionWorldModels.",
+      "authors": [
+        "Christopher Lindenberg",
+        "Kashyap Chitta"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-07-01T13:22:18+00:00",
+      "link": "https://arxiv.org/pdf/2607.00917v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "World models with diffusion for MPC, enabling sample-efficient continuous control",
+      "llm_evidence_cn": "使用扩散模型的世界模型用于MPC，实现样本高效的连续控制",
+      "llm_evidence": "使用扩散模型的世界模型用于MPC，实现样本高效的连续控制",
+      "canonical_evidence": "使用扩散模型的世界模型用于MPC，实现样本高效的连续控制",
+      "llm_tldr_en": "Valdi combines latent diffusion dynamics with end-to-end online MPC training, achieving efficient prediction and control with single-step diffusion.",
+      "llm_tldr_cn": "该论文针对世界模型用于MPC时对快速且表达性动力学预测的需求，提出了价值扩散世界模型Valdi。它将潜在扩散动力学模型与端到端在线MPC训练相结合，在训练和推理时仅用单步扩散，在CarRacing环境中匹配确定性MLP基线性能。这项工作揭示了预测多模态与控制性能之间的权衡，为在连续控制任务中使用扩散世界模型提供了新视角。",
+      "llm_tldr": "该论文针对世界模型用于MPC时对快速且表达性动力学预测的需求，提出了价值扩散世界模型Valdi。它将潜在扩散动力学模型与端到端在线MPC训练相结合，在训练和推理时仅用单步扩散，在CarRacing环境中匹配确定性MLP基线性能。这项工作揭示了预测多模态与控制性能之间的权衡，为在连续控制任务中使用扩散世界模型提供了新视角。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "Find papers on model based reinforcement learning and world models for sample efficient decision making and continuous control.",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.27814v1",
+      "source": "arxiv",
+      "title": "ATOD: Annealed Turn-aware On-policy Distillation for Multi-turn Autonomous Agents",
+      "abstract": "Training small language-model agents for long-horizon interactive tasks requires both fast imitation and reward-driven improvement. On-policy distillation (OPD) provides dense teacher guidance and typically improves rapidly in the early stage, but its gains saturate once the student approaches the teacher, limiting the final performance ceiling. Reinforcement learning (RL) directly optimizes environment rewards and encourages exploratory improvement toward a higher reward-defined ceiling, but sparse and delayed feedback makes early-stage learning much less efficient than OPD. In this paper, we propose ATOD (Annealed Turn-aware On-policy Distillation), a hybrid online distillation algorithm that explicitly exploits this complementarity. (1) ATOD uses an annealed OPD-RL schedule: OPD dominates early training to approach teacher-level behavior, while RL is gradually strengthened to drive reward-based exploration. (2) ATOD introduces Turn-level Disagreement-Uncertainty Reweighting (T-DUR), which softly amplifies high-utility turns and improves dense supervision in long trajectories. Experiments on ALFWorld, WebShop, and Search-QA show that ATOD consistently outperforms competing post-training baselines: across the three student sizes, ATOD improves average success rate by 3.03 points over OPD and 23.62 points over GRPO, while surpassing the corresponding teacher models by 2.16 points.",
+      "authors": [
+        "Qitai Tan",
+        "Zefang Zong",
+        "Yang Li",
+        "Peng Chen"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-26T07:56:32+00:00",
+      "link": "https://arxiv.org/pdf/2606.27814v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "combines RL and distillation for sample efficient agent training",
+      "llm_evidence_cn": "结合强化学习和蒸馏提升智能体训练的样本效率",
+      "llm_evidence": "结合强化学习和蒸馏提升智能体训练的样本效率",
+      "canonical_evidence": "结合强化学习和蒸馏提升智能体训练的样本效率",
+      "llm_tldr_en": "Proposes ATOD, a hybrid online distillation algorithm combining on-policy distillation and RL to improve sample efficiency and final performance for multi-turn agents.",
+      "llm_tldr_cn": "该论文提出ATOD算法，融合在线策略蒸馏和强化学习，解决蒸馏饱和与RL初期低效问题。在多轮交互任务中，ATOD显著提升了样本效率和最终性能，为语言模型智能体的高效训练提供了新方法。",
+      "llm_tldr": "该论文提出ATOD算法，融合在线策略蒸馏和强化学习，解决蒸馏饱和与RL初期低效问题。在多轮交互任务中，ATOD显著提升了样本效率和最终性能，为语言模型智能体的高效训练提供了新方法。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.31377v1",
+      "source": "arxiv",
+      "title": "Stage-Transition Dense Reward Modeling for Reinforcement Learning",
+      "abstract": "Reinforcement learning for long-horizon robotic manipulation is often limited by sparse and delayed rewards, while manually designing dense shaping signals is costly and brittle to changes in environments and object configurations. This work proposes Stage-Transition Dense Reward (STDR), a visual reward-learning framework that converts unstructured expert videos into logically grounded dense rewards for training RL agents from scratch. STDR leverages semantic understanding to infer a task's stage structure from demonstrations, and delivers two complementary learning signals during online training: (i) stage-transition feedback that provides goal-directed reward, and (ii) within-stage progress feedback that supplies fine-grained guidance toward completing each stage. Furthermore, an out-of-distribution (OOD) detection mechanism and a grasping regulation module are integrated to enhance robustness and prevent reward hacking. Experiments on 14 manipulation tasks across MetaWorld, ManiSkill, and Franka Kitchen show that STDR consistently improves sample efficiency and success rates over multiple baselines, and matches or surpasses handcrafted dense rewards on several challenging tasks. Real-robot evaluations further indicate that STDR assigns stable, progress-aligned rewards on successful executions while producing appropriately low rewards for failures, suggesting robustness to visual noise and better-calibrated reward assignment across settings.",
+      "authors": [
+        "Yang Yang",
+        "Bingjie Chen",
+        "Zihan Wang",
+        "Yizhe Li",
+        "Guoping Pan",
+        "Yi Cheng",
+        "Houde Liu"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-06-30T09:07:19+00:00",
+      "link": "https://arxiv.org/pdf/2606.31377v1",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "dense reward learning from demonstrations for sample-efficient RL",
+      "llm_evidence_cn": "从演示中学习密集奖励，提升样本效率",
+      "llm_evidence": "从演示中学习密集奖励，提升样本效率",
+      "canonical_evidence": "从演示中学习密集奖励，提升样本效率",
+      "llm_tldr_en": "Stage-Transition Dense Reward (STDR) learns stage-structured dense rewards from expert videos, enabling sample-efficient RL for long-horizon manipulation.",
+      "llm_tldr_cn": "该论文提出阶段转换密集奖励（STDR），从专家视频中自动推断任务阶段结构，并生成阶段转换和阶段内进度两种互补奖励信号，用于训练强化学习智能体。在长时程机器人操作任务中，该方法显著提升了样本效率，并泛化到新环境。",
+      "llm_tldr": "该论文提出阶段转换密集奖励（STDR），从专家视频中自动推断任务阶段结构，并生成阶段转换和阶段内进度两种互补奖励信号，用于训练强化学习智能体。在长时程机器人操作任务中，该方法显著提升了样本效率，并泛化到新环境。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "sample efficient reinforcement learning",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.00836v2",
+      "source": "arxiv",
+      "title": "From World Models to World Action Models: A Concise Tutorial for Robotics",
+      "abstract": "World models are increasingly used in embodied intelligence and generative simulation, yet their scope remains ambiguous across communities. This tutorial presents a design-space view of world models as action-conditioned predictive models that estimate the future evolution of task-relevant observations or states. We categorize existing methods into observation-space and state-space world models, comparing their trade-offs in visual fidelity, spatial structure, physical interpretability, and control usability. We further introduce world action models, which connect predicted futures with executable robot actions, and summarize four representative paradigms: imagine-then-execute, video-feature-conditioned action prediction, joint video-action modeling, and auxiliary video prediction for policy learning. The goal of this tutorial is to clarify the conceptual scope of world (action) models and provide a structured taxonomy for embodied prediction and control.",
+      "authors": [
+        "Xiaoxiong Zhang",
+        "Xiong Zeng",
+        "Wei Zhang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "eess.SY"
+      ],
+      "published": "2026-07-01T11:56:54+00:00",
+      "link": "https://arxiv.org/pdf/2607.00836v2",
+      "tags": [
+        "keyword:rpp",
+        "query:rpp"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "tutorial on world models and world action models for robotics",
+      "llm_evidence_cn": "关于机器人世界模型与世界动作模型的教程",
+      "llm_evidence": "关于机器人世界模型与世界动作模型的教程",
+      "canonical_evidence": "关于机器人世界模型与世界动作模型的教程",
+      "llm_tldr_en": "This tutorial systematically categorizes world models and introduces world action models, providing a design-space view that bridges prediction and control for embodied intelligence.",
+      "llm_tldr_cn": "世界模型在具身智能中应用广泛但概念模糊，本教程从设计空间视角将世界模型分类为观测空间和状态空间两类，并进一步提出世界动作模型，连接预测与可执行动作。它总结了四种代表性范式，为机器人领域的世界模型研究和应用提供了清晰的框架。",
+      "llm_tldr": "世界模型在具身智能中应用广泛但概念模糊，本教程从设计空间视角将世界模型分类为观测空间和状态空间两类，并进一步提出世界动作模型，连接预测与可执行动作。它总结了四种代表性范式，为机器人领域的世界模型研究和应用提供了清晰的框架。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "world model",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.00197v1",
+      "source": "arxiv",
+      "title": "StateFlow: Dual-State Recurrent Modeling for Long-Horizon Time Series Forecasting",
+      "abstract": "Long-horizon multivariate time series forecasting (LTSF) remains challenging due to non-stationarity, regime shifts, and error accumulation. The Variability-Aware Recursive Neural Network (VARNN) is designed to track such variability by maintaining a residual-memory state driven by one-step prediction errors. However, its original formulation is limited to one-step sequence regression and does not directly support multi-step forecasting. In this work, we extend VARNN to long-horizon forecasting and introduce StateFlow, a recurrent forecasting framework that uses VARNN as a dual-state recurrent backbone to capture two complementary signals from the lookback sequence: a hidden-state trajectory representing primary temporal dynamics, including trend, seasonality, level changes, and recurring patterns, and a residual-memory trajectory representing structured local prediction deviations, driven from a nonlinear recurrent transformation of errors between one-step base predictions and observed values. A chunk-based decoder separately summarizes these trajectories and maps them to the future horizon for direct multi-step forecasting. We further employ a two-stage optimization strategy that first trains the VARNN encoder through a one-step base prediction objective to optimize the internal representations over the lookback sequence, and then trains a horizon-specific decoder for direct multi-step forecasting. Experiments on standard LTSF benchmarks show that StateFlow achieves competitive performance against strong linear, recurrent, convolutional, and Transformer-based baselines while preserving linear recurrent encoding and a compact model design.",
+      "authors": [
+        "Haroon Gharwi",
+        "Yue Dai",
+        "Kai Shu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-30T21:26:09+00:00",
+      "link": "https://arxiv.org/pdf/2607.00197v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "long-horizon time series forecasting with dual-state recurrent modeling",
+      "llm_evidence_cn": "长周期时间序列预测的双状态递归建模",
+      "llm_evidence": "长周期时间序列预测的双状态递归建模",
+      "canonical_evidence": "长周期时间序列预测的双状态递归建模",
+      "llm_tldr_en": "StateFlow extends VARNN to long-horizon forecasting by maintaining dual states for temporal dynamics and error memory.",
+      "llm_tldr_cn": "长周期时间序列预测面临非平稳性和误差累积。StateFlow基于VARNN的双状态递归骨干，同时捕获主时间动态和残差记忆，实现多步预测。在多个长周期基准上显著降低预测误差，为深度学习气象预测提供有效的时间序列模型。",
+      "llm_tldr": "长周期时间序列预测面临非平稳性和误差累积。StateFlow基于VARNN的双状态递归骨干，同时捕获主时间动态和残差记忆，实现多步预测。在多个长周期基准上显著降低预测误差，为深度学习气象预测提供有效的时间序列模型。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.01918v1",
+      "source": "arxiv",
+      "title": "Zeus: Towards Tuning-Free Foundation Model for Time Series Analysis",
+      "abstract": "We present Zeus, a unified tuning-free Time Series Foundation Model (TSFM) that delivers superior performance across diverse analysis tasks without any task-specific fine-tuning. Unlike prior studies that primarily focus on zero-shot forecasting but require task-specific tuning for other tasks, Zeus bridges this gap by addressing two fundamental challenges in multi-task generalization. First, to reconcile point-level granularity with long-sequence scalability, Zeus incorporates a multi-scale Transformer featuring point-wise tokenization and a U-shaped hierarchy, effectively balancing fine-grained fidelity with computational efficiency. Second, to accommodate varying inductive biases across different tasks, Zeus introduces Multi-Objective Temporal Masking (MOTM), a unified strategy that supports heterogeneous tasks (e.g., extrapolation, interpolation, and global abstraction) within a single framework. Extensive experiments across five representative tasks demonstrate that Zeus consistently achieves competitive results in tuning-free settings, underscoring its potential as a general-purpose TSFM.",
+      "authors": [
+        "Yisong Fu",
+        "Zezhi Shao",
+        "Chengqing Yu",
+        "Yujie Li",
+        "Yongjun Xu",
+        "Xueqi Cheng",
+        "Fei Wang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-07-02T09:16:51+00:00",
+      "link": "https://arxiv.org/pdf/2607.01918v1",
+      "tags": [
+        "keyword:mm",
+        "keyword:rpp",
+        "query:mm"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "tuning-free foundation model for time-series analysis, applicable to weather forecasting",
+      "llm_evidence_cn": "无需微调的时间序列基础模型，可应用于天气预测",
+      "llm_evidence": "无需微调的时间序列基础模型，可应用于天气预测",
+      "canonical_evidence": "无需微调的时间序列基础模型，可应用于天气预测",
+      "llm_tldr_en": "Zeus is a tuning-free time-series foundation model with multi-scale Transformer and multi-objective masking, achieving strong zero-shot performance across tasks.",
+      "llm_tldr_cn": "该论文提出Zeus，一个无需微调的时间序列基础模型，采用多尺度Transformer和点级tokenization实现细粒度与可扩展性的平衡，并通过多目标时间掩码适应不同任务。在多种分析任务上无需任务特定微调即达最优性能，为气象等领域提供通用预测框架。",
+      "llm_tldr": "该论文提出Zeus，一个无需微调的时间序列基础模型，采用多尺度Transformer和点级tokenization实现细粒度与可扩展性的平衡，并通过多目标时间掩码适应不同任务。在多种分析任务上无需任务特定微调即达最优性能，为气象等领域提供通用预测框架。",
+      "llm_tags": [
+        "query:mm"
+      ],
+      "matched_query_tag": "query:mm",
+      "matched_query_text": "deep learning weather forecasting",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.02037v1",
+      "source": "arxiv",
+      "title": "Cross-Platform Control for Autonomous Surface Vehicles via Adaptive Reinforcement Learning",
+      "abstract": "Autonomous surface vehicles vary widely in hydrodynamic and actuation characteristics, yet most controllers are designed for single-platform deployment. We present an adaptive reinforcement learning approach for trajectory tracking that enables zero-shot cross-platform deployment using a single policy. Since the deployment platform's dynamics are unknown to the policy, we address cross-platform generalization with the standard partial-observability approach of conditioning on interaction history, employing a teacher-student architecture in which a learned module infers a latent representation of the platform dynamics. The policy is trained in simulation under randomized vessel dynamics and is deployed zero-shot to two real-world platforms without any fine-tuning, despite relying on a simple analytical dynamics model rather than a high-fidelity hydrodynamic simulator. In real-world experiments on two different platforms, the adaptive policy outperforms non-adaptive learning-based baselines by up to 58% in position mean absolute error while approaching the tracking accuracy of a platform-specific tuned controller.",
+      "authors": [
+        "Ruiheng Jiang",
+        "Thomas Bi",
+        "Raffaello D'Andrea",
+        "Aswin Ramachandran"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.LG"
+      ],
+      "published": "2026-07-02T11:04:21+00:00",
+      "link": "https://arxiv.org/pdf/2607.02037v1",
+      "tags": [
+        "keyword:rpp",
+        "query:mm",
+        "query:rpp"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "reinforcement learning for trajectory tracking in autonomous surface vehicles",
+      "llm_evidence_cn": "面向自主水面车辆的轨迹跟踪强化学习",
+      "llm_evidence": "面向自主水面车辆的轨迹跟踪强化学习",
+      "canonical_evidence": "面向自主水面车辆的轨迹跟踪强化学习",
+      "llm_tldr_en": "An adaptive RL approach achieves zero-shot cross-platform trajectory tracking for autonomous surface vehicles by learning a latent representation of platform dynamics.",
+      "llm_tldr_cn": "针对不同平台动力学特性各异导致的控制器泛化难题，提出自适应强化学习方法，通过教师-学生架构学习平台动力学的潜在表征，使单一策略能够在多平台间零样本部署。在模拟和真实水面车辆上的实验表明，该方法实现了有效的跨平台轨迹跟踪，为无人系统的通用控制提供了新思路。",
+      "llm_tldr": "针对不同平台动力学特性各异导致的控制器泛化难题，提出自适应强化学习方法，通过教师-学生架构学习平台动力学的潜在表征，使单一策略能够在多平台间零样本部署。在模拟和真实水面车辆上的实验表明，该方法实现了有效的跨平台轨迹跟踪，为无人系统的通用控制提供了新思路。",
+      "llm_tags": [
+        "query:rpp"
+      ],
+      "matched_query_tag": "query:rpp",
+      "matched_query_text": "reinforcement learning path planning",
+      "matched_requirement_id": "req-11",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
